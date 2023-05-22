@@ -90,11 +90,11 @@ class DataplexServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a lake resource.
   ///
-  /// @param parent  Required. The resource name of the lake location, of the
-  /// form:
+  /// @param parent  Required. The resource name of the lake location, of the form:
   ///  projects/{project_number}/locations/{location_id}
   ///  where `location_id` refers to a GCP region.
   /// @param lake  Required. Lake resource
@@ -108,37 +108,71 @@ class DataplexServiceClient {
   ///  * Must be unique within the customer project / location.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Lake] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.CreateLakeRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L392}
-  /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CreateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L392}
+  /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
       std::string const& parent, google::cloud::dataplex::v1::Lake const& lake,
       std::string const& lake_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a lake resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::CreateLakeRequest,google/cloud/dataplex/v1/service.proto#L392}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.CreateLakeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Lake] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.CreateLakeRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L392}
-  /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CreateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L392}
+  /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
       google::cloud::dataplex::v1::CreateLakeRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a lake resource.
   ///
@@ -147,37 +181,71 @@ class DataplexServiceClient {
   /// @param update_mask  Required. Mask of fields to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Lake] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
-  /// [google.cloud.dataplex.v1.UpdateLakeRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L422}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
+  /// [google.cloud.dataplex.v1.UpdateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L422}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
       google::cloud::dataplex::v1::Lake const& lake,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a lake resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::UpdateLakeRequest,google/cloud/dataplex/v1/service.proto#L422}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.UpdateLakeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Lake] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
-  /// [google.cloud.dataplex.v1.UpdateLakeRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L422}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
+  /// [google.cloud.dataplex.v1.UpdateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L422}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
       google::cloud::dataplex::v1::UpdateLakeRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a lake resource. All zones within the lake must be deleted before
   /// the lake can be deleted.
@@ -186,75 +254,148 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::OperationMetadata,google/cloud/dataplex/v1/service.proto#L770}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.DeleteLakeRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L437}
-  /// [google.cloud.dataplex.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeleteLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L437}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a lake resource. All zones within the lake must be deleted before
   /// the lake can be deleted.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::DeleteLakeRequest,google/cloud/dataplex/v1/service.proto#L437}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.DeleteLakeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::OperationMetadata,google/cloud/dataplex/v1/service.proto#L770}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.DeleteLakeRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L437}
-  /// [google.cloud.dataplex.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeleteLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L437}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
       google::cloud::dataplex::v1::DeleteLakeRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists lake resources in a project and location.
   ///
-  /// @param parent  Required. The resource name of the lake location, of the
-  /// form:
+  /// @param parent  Required. The resource name of the lake location, of the form:
   ///  `projects/{project_number}/locations/{location_id}`
   ///  where `location_id` refers to a GCP region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Lake], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
-  /// [google.cloud.dataplex.v1.ListLakesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L447}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
+  /// [google.cloud.dataplex.v1.ListLakesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L447}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists lake resources in a project and location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::ListLakesRequest,google/cloud/dataplex/v1/service.proto#L447}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.ListLakesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Lake], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
-  /// [google.cloud.dataplex.v1.ListLakesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L447}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
+  /// [google.cloud.dataplex.v1.ListLakesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L447}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
       google::cloud::dataplex::v1::ListLakesRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a lake resource.
   ///
@@ -262,36 +403,58 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Lake])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.GetLakeRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L520}
-  /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.GetLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L520}
+  /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Lake> GetLake(std::string const& name,
                                                       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a lake resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::GetLakeRequest,google/cloud/dataplex/v1/service.proto#L520}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.GetLakeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Lake])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.GetLakeRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L520}
-  /// [google.cloud.dataplex.v1.Lake]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.GetLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L520}
+  /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Lake> GetLake(
       google::cloud::dataplex::v1::GetLakeRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists action resources in a lake.
   ///
@@ -299,36 +462,76 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L313}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Action], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Action]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
-  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L489}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
+  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L489}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListLakeActions(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists action resources in a lake.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::ListLakeActionsRequest,google/cloud/dataplex/v1/service.proto#L489}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.ListLakeActionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L313}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Action], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Action]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
-  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L489}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
+  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L489}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListLakeActions(
       google::cloud::dataplex::v1::ListLakeActionsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a zone resource within a lake.
   ///
@@ -346,37 +549,71 @@ class DataplexServiceClient {
   ///  * Must not be one of the reserved IDs (i.e. "default", "global-temp")
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L150}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Zone] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.CreateZoneRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L530}
-  /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CreateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L530}
+  /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
       std::string const& parent, google::cloud::dataplex::v1::Zone const& zone,
       std::string const& zone_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a zone resource within a lake.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::CreateZoneRequest,google/cloud/dataplex/v1/service.proto#L530}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.CreateZoneRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L150}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Zone] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.CreateZoneRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L530}
-  /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CreateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L530}
+  /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
       google::cloud::dataplex::v1::CreateZoneRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a zone resource.
   ///
@@ -385,37 +622,71 @@ class DataplexServiceClient {
   /// @param update_mask  Required. Mask of fields to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L150}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Zone] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.UpdateZoneRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L558}
-  /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.UpdateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L558}
+  /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
       google::cloud::dataplex::v1::Zone const& zone,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a zone resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::UpdateZoneRequest,google/cloud/dataplex/v1/service.proto#L558}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.UpdateZoneRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L150}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Zone] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.UpdateZoneRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L558}
-  /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.UpdateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L558}
+  /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
       google::cloud::dataplex::v1::UpdateZoneRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a zone resource. All assets within a zone must be deleted before
   /// the zone can be deleted.
@@ -424,37 +695,71 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::OperationMetadata,google/cloud/dataplex/v1/service.proto#L770}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.DeleteZoneRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L573}
-  /// [google.cloud.dataplex.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeleteZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L573}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a zone resource. All assets within a zone must be deleted before
   /// the zone can be deleted.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::DeleteZoneRequest,google/cloud/dataplex/v1/service.proto#L573}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.DeleteZoneRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::OperationMetadata,google/cloud/dataplex/v1/service.proto#L770}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.DeleteZoneRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L573}
-  /// [google.cloud.dataplex.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeleteZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L573}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
       google::cloud::dataplex::v1::DeleteZoneRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists zone resources in a lake.
   ///
@@ -462,35 +767,75 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L150}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Zone], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.ListZonesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L583}
-  /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L583}
+  /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Zone> ListZones(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists zone resources in a lake.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::ListZonesRequest,google/cloud/dataplex/v1/service.proto#L583}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.ListZonesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L150}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Zone], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.ListZonesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L583}
-  /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L583}
+  /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Zone> ListZones(
       google::cloud::dataplex::v1::ListZonesRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a zone resource.
   ///
@@ -498,36 +843,58 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L150}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Zone])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.GetZoneRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L640}
-  /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.GetZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L640}
+  /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Zone> GetZone(std::string const& name,
                                                       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a zone resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::GetZoneRequest,google/cloud/dataplex/v1/service.proto#L640}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.GetZoneRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Zone,google/cloud/dataplex/v1/resources.proto#L150}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Zone])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.GetZoneRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L640}
-  /// [google.cloud.dataplex.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.GetZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L640}
+  /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Zone> GetZone(
       google::cloud::dataplex::v1::GetZoneRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists action resources in a zone.
   ///
@@ -535,36 +902,76 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L313}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Action], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Action]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
-  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L619}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
+  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L619}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListZoneActions(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists action resources in a zone.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::ListZoneActionsRequest,google/cloud/dataplex/v1/service.proto#L619}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.ListZoneActionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L313}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Action], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Action]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
-  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L619}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
+  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L619}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListZoneActions(
       google::cloud::dataplex::v1::ListZoneActionsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an asset resource.
   ///
@@ -572,8 +979,8 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}`.
   /// @param asset  Required. Asset resource.
   /// @param asset_id  Required. Asset identifier.
-  ///  This ID will be used to generate names such as table names when
-  ///  publishing metadata to Hive Metastore and BigQuery.
+  ///  This ID will be used to generate names such as table names when publishing
+  ///  metadata to Hive Metastore and BigQuery.
   ///  * Must contain only lowercase letters, numbers and hyphens.
   ///  * Must start with a letter.
   ///  * Must end with a number or a letter.
@@ -581,38 +988,72 @@ class DataplexServiceClient {
   ///  * Must be unique within the zone.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L503}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Asset] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
-  /// [google.cloud.dataplex.v1.CreateAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L650}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L650}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
       std::string const& parent,
       google::cloud::dataplex::v1::Asset const& asset,
       std::string const& asset_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an asset resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::CreateAssetRequest,google/cloud/dataplex/v1/service.proto#L650}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.CreateAssetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L503}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Asset] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
-  /// [google.cloud.dataplex.v1.CreateAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L650}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L650}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
       google::cloud::dataplex::v1::CreateAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an asset resource.
   ///
@@ -621,37 +1062,71 @@ class DataplexServiceClient {
   /// @param update_mask  Required. Mask of fields to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L503}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Asset] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
-  /// [google.cloud.dataplex.v1.UpdateAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L677}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L677}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
       google::cloud::dataplex::v1::Asset const& asset,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an asset resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::UpdateAssetRequest,google/cloud/dataplex/v1/service.proto#L677}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.UpdateAssetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L503}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Asset] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
-  /// [google.cloud.dataplex.v1.UpdateAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L677}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L677}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
       google::cloud::dataplex::v1::UpdateAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an asset resource. The referenced storage resource is detached
   /// (default) or deleted based on the associated Lifecycle policy.
@@ -660,37 +1135,71 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}/assets/{asset_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::OperationMetadata,google/cloud/dataplex/v1/service.proto#L770}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.DeleteAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L692}
-  /// [google.cloud.dataplex.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L692}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an asset resource. The referenced storage resource is detached
   /// (default) or deleted based on the associated Lifecycle policy.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::DeleteAssetRequest,google/cloud/dataplex/v1/service.proto#L692}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.DeleteAssetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::OperationMetadata,google/cloud/dataplex/v1/service.proto#L770}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.DeleteAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L692}
-  /// [google.cloud.dataplex.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L692}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
       google::cloud::dataplex::v1::DeleteAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists asset resources in a zone.
   ///
@@ -698,36 +1207,76 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L503}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Asset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
-  /// [google.cloud.dataplex.v1.ListAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists asset resources in a zone.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::ListAssetsRequest,google/cloud/dataplex/v1/service.proto#L702}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.ListAssetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L503}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Asset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
-  /// [google.cloud.dataplex.v1.ListAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
       google::cloud::dataplex::v1::ListAssetsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves an asset resource.
   ///
@@ -735,36 +1284,58 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}/assets/{asset_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L503}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Asset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
-  /// [google.cloud.dataplex.v1.GetAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L760}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L760}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(std::string const& name,
                                                         Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves an asset resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::GetAssetRequest,google/cloud/dataplex/v1/service.proto#L760}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.GetAssetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L503}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Asset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
-  /// [google.cloud.dataplex.v1.GetAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L760}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L503}
+  /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L760}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(
       google::cloud::dataplex::v1::GetAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists action resources in an asset.
   ///
@@ -772,36 +1343,76 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}/assets/{asset_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L313}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Action], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Action]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
-  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L739}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
+  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L739}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListAssetActions(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists action resources in an asset.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::ListAssetActionsRequest,google/cloud/dataplex/v1/service.proto#L739}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.ListAssetActionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L313}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Action], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Action]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
-  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L739}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L313}
+  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L739}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListAssetActions(
       google::cloud::dataplex::v1::ListAssetActionsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a task resource within a lake.
   ///
@@ -811,37 +1422,71 @@ class DataplexServiceClient {
   /// @param task_id  Required. Task identifier.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Task] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.CreateTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L800}
-  /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CreateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L800}
+  /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
       std::string const& parent, google::cloud::dataplex::v1::Task const& task,
       std::string const& task_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a task resource within a lake.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::CreateTaskRequest,google/cloud/dataplex/v1/service.proto#L800}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.CreateTaskRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Task] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.CreateTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L800}
-  /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CreateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L800}
+  /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
       google::cloud::dataplex::v1::CreateTaskRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Update the task resource.
   ///
@@ -850,37 +1495,71 @@ class DataplexServiceClient {
   /// @param update_mask  Required. Mask of fields to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Task] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
-  /// [google.cloud.dataplex.v1.UpdateTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L820}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
+  /// [google.cloud.dataplex.v1.UpdateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L820}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
       google::cloud::dataplex::v1::Task const& task,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Update the task resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::UpdateTaskRequest,google/cloud/dataplex/v1/service.proto#L820}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.UpdateTaskRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Task] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
-  /// [google.cloud.dataplex.v1.UpdateTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L820}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
+  /// [google.cloud.dataplex.v1.UpdateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L820}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
       google::cloud::dataplex::v1::UpdateTaskRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Delete the task resource.
   ///
@@ -888,36 +1567,70 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/task/{task_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::OperationMetadata,google/cloud/dataplex/v1/service.proto#L770}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.DeleteTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L835}
-  /// [google.cloud.dataplex.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L835}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Delete the task resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::DeleteTaskRequest,google/cloud/dataplex/v1/service.proto#L835}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.DeleteTaskRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::OperationMetadata,google/cloud/dataplex/v1/service.proto#L770}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.DeleteTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L835}
-  /// [google.cloud.dataplex.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L835}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
       google::cloud::dataplex::v1::DeleteTaskRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists tasks under the given lake.
   ///
@@ -925,35 +1638,75 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Task], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.ListTasksRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L845}
-  /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L845}
+  /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Task> ListTasks(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists tasks under the given lake.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::ListTasksRequest,google/cloud/dataplex/v1/service.proto#L845}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.ListTasksRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Task], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.ListTasksRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L845}
-  /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L845}
+  /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Task> ListTasks(
       google::cloud::dataplex::v1::ListTasksRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Get task resource.
   ///
@@ -961,36 +1714,58 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{tasks_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Task])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.GetTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L884}
-  /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L884}
+  /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Task> GetTask(std::string const& name,
                                                       Options opts = {});
 
+  // clang-format off
   ///
   /// Get task resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::GetTaskRequest,google/cloud/dataplex/v1/service.proto#L884}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.GetTaskRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Task])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.GetTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L884}
-  /// [google.cloud.dataplex.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L884}
+  /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Task> GetTask(
       google::cloud::dataplex::v1::GetTaskRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists Jobs under the given task.
   ///
@@ -998,35 +1773,75 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{task_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L329}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Job], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L329}
-  /// [google.cloud.dataplex.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L918}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L329}
+  /// [google.cloud.dataplex.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L918}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists Jobs under the given task.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::ListJobsRequest,google/cloud/dataplex/v1/service.proto#L918}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.ListJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L329}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Job], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L329}
-  /// [google.cloud.dataplex.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L918}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L329}
+  /// [google.cloud.dataplex.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L918}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
       google::cloud::dataplex::v1::ListJobsRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Run an on demand execution of a Task.
   ///
@@ -1034,36 +1849,58 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{task_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::RunTaskResponse,google/cloud/dataplex/v1/service.proto#L912}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.RunTaskResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.RunTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L903}
-  /// [google.cloud.dataplex.v1.RunTaskResponse]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L912}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.RunTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L903}
+  /// [google.cloud.dataplex.v1.RunTaskResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L912}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Run an on demand execution of a Task.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::RunTaskRequest,google/cloud/dataplex/v1/service.proto#L903}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.RunTaskRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::RunTaskResponse,google/cloud/dataplex/v1/service.proto#L912}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.RunTaskResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.RunTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L903}
-  /// [google.cloud.dataplex.v1.RunTaskResponse]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L912}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.RunTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L903}
+  /// [google.cloud.dataplex.v1.RunTaskResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L912}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
       google::cloud::dataplex::v1::RunTaskRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Get job resource.
   ///
@@ -1071,36 +1908,58 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{task_id}/jobs/{job_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L329}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L894}
-  /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L329}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L894}
+  /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L329}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Job> GetJob(std::string const& name,
                                                     Options opts = {});
 
+  // clang-format off
   ///
   /// Get job resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::GetJobRequest,google/cloud/dataplex/v1/service.proto#L894}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.GetJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L329}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L894}
-  /// [google.cloud.dataplex.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L329}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L894}
+  /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L329}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Job> GetJob(
       google::cloud::dataplex::v1::GetJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Cancel jobs running for the task resource.
   ///
@@ -1108,26 +1967,50 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/task/{task_id}/job/{job_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataplex.v1.CancelJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L949}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L949}
   ///
+  // clang-format on
   Status CancelJob(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Cancel jobs running for the task resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::CancelJobRequest,google/cloud/dataplex/v1/service.proto#L949}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.CancelJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataplex.v1.CancelJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L949}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L949}
   ///
+  // clang-format on
   Status CancelJob(google::cloud::dataplex::v1::CancelJobRequest const& request,
                    Options opts = {});
 
+  // clang-format off
   ///
   /// Create an environment resource.
   ///
@@ -1142,38 +2025,72 @@ class DataplexServiceClient {
   ///  * Must be unique within the lake.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Environment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.CreateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L959}
-  /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L959}
+  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
       std::string const& parent,
       google::cloud::dataplex::v1::Environment const& environment,
       std::string const& environment_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Create an environment resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::CreateEnvironmentRequest,google/cloud/dataplex/v1/service.proto#L959}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.CreateEnvironmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Environment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.CreateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L959}
-  /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L959}
+  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
       google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Update the environment resource.
   ///
@@ -1182,37 +2099,71 @@ class DataplexServiceClient {
   /// @param update_mask  Required. Mask of fields to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Environment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L984}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L984}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
       google::cloud::dataplex::v1::Environment const& environment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Update the environment resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::UpdateEnvironmentRequest,google/cloud/dataplex/v1/service.proto#L984}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.UpdateEnvironmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.Environment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L984}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L984}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Delete the environment resource. All the child resources must have been
   /// deleted before environment deletion can be initiated.
@@ -1221,38 +2172,72 @@ class DataplexServiceClient {
   ///  `projects/{project_id}/locations/{location_id}/lakes/{lake_id}/environments/{environment_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::OperationMetadata,google/cloud/dataplex/v1/service.proto#L770}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.DeleteEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L999}
-  /// [google.cloud.dataplex.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L999}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteEnvironment(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Delete the environment resource. All the child resources must have been
   /// deleted before environment deletion can be initiated.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::DeleteEnvironmentRequest,google/cloud/dataplex/v1/service.proto#L999}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.DeleteEnvironmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::OperationMetadata,google/cloud/dataplex/v1/service.proto#L770}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataplex.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.DeleteEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L999}
-  /// [google.cloud.dataplex.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L999}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteEnvironment(
       google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists environments under the given lake.
   ///
@@ -1260,36 +2245,76 @@ class DataplexServiceClient {
   ///  `projects/{project_id}/locations/{location_id}/lakes/{lake_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Environment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1011}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1011}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Environment> ListEnvironments(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists environments under the given lake.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::ListEnvironmentsRequest,google/cloud/dataplex/v1/service.proto#L1011}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.ListEnvironmentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Environment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1011}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1011}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Environment> ListEnvironments(
       google::cloud::dataplex::v1::ListEnvironmentsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Get environment resource.
   ///
@@ -1297,36 +2322,58 @@ class DataplexServiceClient {
   ///  `projects/{project_id}/locations/{location_id}/lakes/{lake_id}/environments/{environment_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Environment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  /// [google.cloud.dataplex.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1049}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [google.cloud.dataplex.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1049}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Get environment resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::GetEnvironmentRequest,google/cloud/dataplex/v1/service.proto#L1049}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.GetEnvironmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Environment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  /// [google.cloud.dataplex.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1049}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [google.cloud.dataplex.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1049}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
       google::cloud::dataplex::v1::GetEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists session resources in an environment.
   ///
@@ -1334,32 +2381,71 @@ class DataplexServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/environment/{environment_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Session,google/cloud/dataplex/v1/analyze.proto#L261}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Session], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.ListSessionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1061}
-  /// [google.cloud.dataplex.v1.Session]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L261}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1061}
+  /// [google.cloud.dataplex.v1.Session]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L261}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Session> ListSessions(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists session resources in an environment.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::ListSessionsRequest,google/cloud/dataplex/v1/service.proto#L1061}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.ListSessionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Session,google/cloud/dataplex/v1/analyze.proto#L261}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Session], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.ListSessionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1061}
-  /// [google.cloud.dataplex.v1.Session]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L261}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1061}
+  /// [google.cloud.dataplex.v1.Session]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L261}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Session> ListSessions(
       google::cloud::dataplex::v1::ListSessionsRequest request,
       Options opts = {});

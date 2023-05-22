@@ -90,26 +90,46 @@ class ServiceUsageClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Enable a service so that it can be used with a project.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::serviceusage::v1::EnableServiceRequest,google/api/serviceusage/v1/serviceusage.proto#L124}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.serviceusage.v1.EnableServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::serviceusage::v1::EnableServiceResponse,google/api/serviceusage/v1/serviceusage.proto#L142}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.api.serviceusage.v1.EnableServiceResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.api.serviceusage.v1.EnableServiceRequest]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L124}
-  /// [google.api.serviceusage.v1.EnableServiceResponse]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L142}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.serviceusage.v1.EnableServiceRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L124}
+  /// [google.api.serviceusage.v1.EnableServiceResponse]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L142}
   ///
+  // clang-format on
   future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
   EnableService(
       google::api::serviceusage::v1::EnableServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Disable a service so that it can no longer be used with a project.
   /// This prevents unintended usage that may cause unexpected billing
@@ -119,42 +139,74 @@ class ServiceUsageClient {
   /// currently enabled. Callers will receive a `FAILED_PRECONDITION` status if
   /// the target service is not currently enabled.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::serviceusage::v1::DisableServiceRequest,google/api/serviceusage/v1/serviceusage.proto#L148}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.serviceusage.v1.DisableServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::serviceusage::v1::DisableServiceResponse,google/api/serviceusage/v1/serviceusage.proto#L187}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.api.serviceusage.v1.DisableServiceResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.api.serviceusage.v1.DisableServiceRequest]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L148}
-  /// [google.api.serviceusage.v1.DisableServiceResponse]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L187}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.serviceusage.v1.DisableServiceRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L148}
+  /// [google.api.serviceusage.v1.DisableServiceResponse]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L187}
   ///
+  // clang-format on
   future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
   DisableService(
       google::api::serviceusage::v1::DisableServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the service configuration and enabled state for a given service.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::serviceusage::v1::GetServiceRequest,google/api/serviceusage/v1/serviceusage.proto#L193}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.serviceusage.v1.GetServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::serviceusage::v1::Service,google/api/serviceusage/v1/resources.proto#L37}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.api.serviceusage.v1.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.api.serviceusage.v1.GetServiceRequest]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L193}
-  /// [google.api.serviceusage.v1.Service]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/resources.proto#L37}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.serviceusage.v1.GetServiceRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L193}
+  /// [google.api.serviceusage.v1.Service]: @googleapis_reference_link{google/api/serviceusage/v1/resources.proto#L37}
   ///
+  // clang-format on
   StatusOr<google::api::serviceusage::v1::Service> GetService(
       google::api::serviceusage::v1::GetServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// List all services available to the specified project, and the current
   /// state of those services with respect to the project. The list includes
@@ -170,61 +222,113 @@ class ServiceUsageClient {
   /// API](https://cloud.google.com/asset-inventory/docs/apis), which provides
   /// higher throughput and richer filtering capability.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::serviceusage::v1::ListServicesRequest,google/api/serviceusage/v1/serviceusage.proto#L203}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.serviceusage.v1.ListServicesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::serviceusage::v1::Service,google/api/serviceusage/v1/resources.proto#L37}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.api.serviceusage.v1.Service], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.api.serviceusage.v1.ListServicesRequest]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L203}
-  /// [google.api.serviceusage.v1.Service]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/resources.proto#L37}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.serviceusage.v1.ListServicesRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L203}
+  /// [google.api.serviceusage.v1.Service]: @googleapis_reference_link{google/api/serviceusage/v1/resources.proto#L37}
   ///
+  // clang-format on
   StreamRange<google::api::serviceusage::v1::Service> ListServices(
       google::api::serviceusage::v1::ListServicesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Enable multiple services on a project. The operation is atomic: if
-  /// enabling any service fails, then the entire batch fails, and no state
-  /// changes occur. To enable a single service, use the `EnableService` method
-  /// instead.
+  /// Enable multiple services on a project. The operation is atomic: if enabling
+  /// any service fails, then the entire batch fails, and no state changes occur.
+  /// To enable a single service, use the `EnableService` method instead.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::serviceusage::v1::BatchEnableServicesRequest,google/api/serviceusage/v1/serviceusage.proto#L235}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.serviceusage.v1.BatchEnableServicesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::serviceusage::v1::BatchEnableServicesResponse,google/api/serviceusage/v1/serviceusage.proto#L261}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.api.serviceusage.v1.BatchEnableServicesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.api.serviceusage.v1.BatchEnableServicesRequest]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L235}
-  /// [google.api.serviceusage.v1.BatchEnableServicesResponse]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L261}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.serviceusage.v1.BatchEnableServicesRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L235}
+  /// [google.api.serviceusage.v1.BatchEnableServicesResponse]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L261}
   ///
+  // clang-format on
   future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
   BatchEnableServices(
       google::api::serviceusage::v1::BatchEnableServicesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the service configurations and enabled states for a given list of
   /// services.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::serviceusage::v1::BatchGetServicesRequest,google/api/serviceusage/v1/serviceusage.proto#L280}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.serviceusage.v1.BatchGetServicesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::serviceusage::v1::BatchGetServicesResponse,google/api/serviceusage/v1/serviceusage.proto#L298}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.api.serviceusage.v1.BatchGetServicesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.api.serviceusage.v1.BatchGetServicesRequest]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L280}
-  /// [google.api.serviceusage.v1.BatchGetServicesResponse]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L298}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.serviceusage.v1.BatchGetServicesRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L280}
+  /// [google.api.serviceusage.v1.BatchGetServicesResponse]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L298}
   ///
+  // clang-format on
   StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
   BatchGetServices(
       google::api::serviceusage::v1::BatchGetServicesRequest const& request,

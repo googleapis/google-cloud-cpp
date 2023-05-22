@@ -100,92 +100,153 @@ class ReservationServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new reservation resource.
   ///
   /// @param parent  Required. Project, location. E.g.,
   ///  `projects/myproject/locations/US`
   /// @param reservation  Definition of the new reservation to create.
-  /// @param reservation_id  The reservation ID. It must only contain lower case
-  /// alphanumeric
+  /// @param reservation_id  The reservation ID. It must only contain lower case alphanumeric
   ///  characters or dashes. It must start with a letter and must not end
   ///  with a dash. Its maximum length is 64 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.Reservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.CreateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L617}
-  /// [google.cloud.bigquery.reservation.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.CreateReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L617}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   CreateReservation(
       std::string const& parent,
       google::cloud::bigquery::reservation::v1::Reservation const& reservation,
       std::string const& reservation_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new reservation resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CreateReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L617}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.CreateReservationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.Reservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.CreateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L617}
-  /// [google.cloud.bigquery.reservation.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.CreateReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L617}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   CreateReservation(
       google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all the reservations for the project in the specified location.
   ///
-  /// @param parent  Required. The parent resource name containing project and
-  /// location, e.g.:
+  /// @param parent  Required. The parent resource name containing project and location, e.g.:
   ///    `projects/myproject/locations/US`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.reservation.v1.Reservation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.reservation.v1.ListReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L638}
-  /// [google.cloud.bigquery.reservation.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L638}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
   ListReservations(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all the reservations for the project in the specified location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::ListReservationsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L638}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.ListReservationsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.reservation.v1.Reservation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.reservation.v1.ListReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L638}
-  /// [google.cloud.bigquery.reservation.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L638}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
   ListReservations(
       google::cloud::bigquery::reservation::v1::ListReservationsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about the reservation.
   ///
@@ -193,38 +254,60 @@ class ReservationServiceClient {
   ///     `projects/myproject/locations/US/reservations/team1-prod`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.Reservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.GetReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L668}
-  /// [google.cloud.bigquery.reservation.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.GetReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L668}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   GetReservation(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about the reservation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::GetReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L668}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.GetReservationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.Reservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.GetReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L668}
-  /// [google.cloud.bigquery.reservation.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.GetReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L668}
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   GetReservation(
       google::cloud::bigquery::reservation::v1::GetReservationRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a reservation.
   /// Returns `google.rpc.Code.FAILED_PRECONDITION` when reservation has
@@ -234,72 +317,117 @@ class ReservationServiceClient {
   ///     `projects/myproject/locations/US/reservations/team1-prod`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.reservation.v1.DeleteReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L681}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.DeleteReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L681}
   ///
+  // clang-format on
   Status DeleteReservation(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a reservation.
   /// Returns `google.rpc.Code.FAILED_PRECONDITION` when reservation has
   /// assignments.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::DeleteReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L681}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.DeleteReservationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.reservation.v1.DeleteReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L681}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.DeleteReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L681}
   ///
+  // clang-format on
   Status DeleteReservation(
       google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing reservation resource.
   ///
   /// @param reservation  Content of the reservation to update.
-  /// @param update_mask  Standard field mask for the set of fields to be
-  /// updated.
+  /// @param update_mask  Standard field mask for the set of fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.Reservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
-  /// [google.cloud.bigquery.reservation.v1.UpdateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L694}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// [google.cloud.bigquery.reservation.v1.UpdateReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L694}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   UpdateReservation(
       google::cloud::bigquery::reservation::v1::Reservation const& reservation,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing reservation resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::UpdateReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L694}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.UpdateReservationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.Reservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
-  /// [google.cloud.bigquery.reservation.v1.UpdateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L694}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Reservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
+  /// [google.cloud.bigquery.reservation.v1.UpdateReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L694}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   UpdateReservation(
       google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new capacity commitment resource.
   ///
@@ -308,14 +436,22 @@ class ReservationServiceClient {
   /// @param capacity_commitment  Content of the capacity commitment to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.CapacityCommitment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
-  /// [google.cloud.bigquery.reservation.v1.CreateCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L704}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// [google.cloud.bigquery.reservation.v1.CreateCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L704}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   CreateCapacityCommitment(
       std::string const& parent,
@@ -323,26 +459,40 @@ class ReservationServiceClient {
           capacity_commitment,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new capacity commitment resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CreateCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L704}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.CreateCapacityCommitmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.CapacityCommitment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
-  /// [google.cloud.bigquery.reservation.v1.CreateCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L704}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// [google.cloud.bigquery.reservation.v1.CreateCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L704}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   CreateCapacityCommitment(google::cloud::bigquery::reservation::v1::
                                CreateCapacityCommitmentRequest const& request,
                            Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all the capacity commitments for the admin project.
   ///
@@ -350,111 +500,195 @@ class ReservationServiceClient {
   ///     `projects/myproject/locations/US`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.reservation.v1.CapacityCommitment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
-  /// [google.cloud.bigquery.reservation.v1.ListCapacityCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L731}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// [google.cloud.bigquery.reservation.v1.ListCapacityCommitmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L731}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   ListCapacityCommitments(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all the capacity commitments for the admin project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L731}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.ListCapacityCommitmentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.reservation.v1.CapacityCommitment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
-  /// [google.cloud.bigquery.reservation.v1.ListCapacityCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L731}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// [google.cloud.bigquery.reservation.v1.ListCapacityCommitmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L731}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   ListCapacityCommitments(
       google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about the capacity commitment.
   ///
-  /// @param name  Required. Resource name of the capacity commitment to
-  /// retrieve. E.g.,
+  /// @param name  Required. Resource name of the capacity commitment to retrieve. E.g.,
   ///     `projects/myproject/locations/US/capacityCommitments/123`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.CapacityCommitment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
-  /// [google.cloud.bigquery.reservation.v1.GetCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L761}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// [google.cloud.bigquery.reservation.v1.GetCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L761}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   GetCapacityCommitment(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about the capacity commitment.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::GetCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L761}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.GetCapacityCommitmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.CapacityCommitment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
-  /// [google.cloud.bigquery.reservation.v1.GetCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L761}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// [google.cloud.bigquery.reservation.v1.GetCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L761}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   GetCapacityCommitment(google::cloud::bigquery::reservation::v1::
                             GetCapacityCommitmentRequest const& request,
                         Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a capacity commitment. Attempting to delete capacity commitment
   /// before its commitment_end_time will fail with the error code
   /// `google.rpc.Code.FAILED_PRECONDITION`.
   ///
-  /// @param name  Required. Resource name of the capacity commitment to delete.
-  /// E.g.,
+  /// @param name  Required. Resource name of the capacity commitment to delete. E.g.,
   ///     `projects/myproject/locations/US/capacityCommitments/123`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.reservation.v1.DeleteCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L774}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.DeleteCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L774}
   ///
+  // clang-format on
   Status DeleteCapacityCommitment(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a capacity commitment. Attempting to delete capacity commitment
   /// before its commitment_end_time will fail with the error code
   /// `google.rpc.Code.FAILED_PRECONDITION`.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::DeleteCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L774}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.DeleteCapacityCommitmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.reservation.v1.DeleteCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L774}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.DeleteCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L774}
   ///
+  // clang-format on
   Status DeleteCapacityCommitment(
       google::cloud::bigquery::reservation::v1::
           DeleteCapacityCommitmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing capacity commitment.
   ///
@@ -465,24 +699,32 @@ class ReservationServiceClient {
   /// with the error code `google.rpc.Code.FAILED_PRECONDITION`.
   ///
   /// @param capacity_commitment  Content of the capacity commitment to update.
-  /// @param update_mask  Standard field mask for the set of fields to be
-  /// updated.
+  /// @param update_mask  Standard field mask for the set of fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.CapacityCommitment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
-  /// [google.cloud.bigquery.reservation.v1.UpdateCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L792}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// [google.cloud.bigquery.reservation.v1.UpdateCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L792}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   UpdateCapacityCommitment(
       google::cloud::bigquery::reservation::v1::CapacityCommitment const&
           capacity_commitment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing capacity commitment.
   ///
@@ -492,23 +734,36 @@ class ReservationServiceClient {
   /// Attempting to change to a plan with shorter commitment period will fail
   /// with the error code `google.rpc.Code.FAILED_PRECONDITION`.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::UpdateCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L792}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.UpdateCapacityCommitmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.CapacityCommitment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
-  /// [google.cloud.bigquery.reservation.v1.UpdateCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L792}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// [google.cloud.bigquery.reservation.v1.UpdateCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L792}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   UpdateCapacityCommitment(google::cloud::bigquery::reservation::v1::
                                UpdateCapacityCommitmentRequest const& request,
                            Options opts = {});
 
+  // clang-format off
   ///
   /// Splits capacity commitment to two commitments of the same plan and
   /// `commitment_end_time`.
@@ -521,23 +776,31 @@ class ReservationServiceClient {
   ///
   /// @param name  Required. The resource name e.g.,:
   ///   `projects/myproject/locations/US/capacityCommitments/123`
-  /// @param slot_count  Number of slots in the capacity commitment after the
-  /// split.
+  /// @param slot_count  Number of slots in the capacity commitment after the split.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse,google/cloud/bigquery/reservation/v1/reservation.proto#L818}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L802}
-  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L818}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L802}
+  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentResponse]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L818}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
   SplitCapacityCommitment(std::string const& name, std::int64_t slot_count,
                           Options opts = {});
 
+  // clang-format off
   ///
   /// Splits capacity commitment to two commitments of the same plan and
   /// `commitment_end_time`.
@@ -548,24 +811,37 @@ class ReservationServiceClient {
   /// split a 10000 capacity commitment into commitments of 2000 and 8000. Then,
   /// you delete the first one after the commitment end time passes.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L802}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse,google/cloud/bigquery/reservation/v1/reservation.proto#L818}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L802}
-  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L818}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L802}
+  /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentResponse]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L818}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
   SplitCapacityCommitment(google::cloud::bigquery::reservation::v1::
                               SplitCapacityCommitmentRequest const& request,
                           Options opts = {});
 
+  // clang-format off
   ///
   /// Merges capacity commitments of the same plan into a single commitment.
   ///
@@ -575,8 +851,7 @@ class ReservationServiceClient {
   /// Attempting to merge capacity commitments of different plan will fail
   /// with the error code `google.rpc.Code.FAILED_PRECONDITION`.
   ///
-  /// @param parent  Parent resource that identifies admin project and location
-  /// e.g.,
+  /// @param parent  Parent resource that identifies admin project and location e.g.,
   ///   `projects/myproject/locations/us`
   /// @param capacity_commitment_ids  Ids of capacity commitments to merge.
   ///  These capacity commitments must exist under admin project and location
@@ -585,20 +860,29 @@ class ReservationServiceClient {
   ///  projects/myproject/locations/US/capacityCommitments/abc
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.CapacityCommitment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
-  /// [google.cloud.bigquery.reservation.v1.MergeCapacityCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L828}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// [google.cloud.bigquery.reservation.v1.MergeCapacityCommitmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L828}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   MergeCapacityCommitments(
       std::string const& parent,
       std::vector<std::string> const& capacity_commitment_ids,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Merges capacity commitments of the same plan into a single commitment.
   ///
@@ -608,23 +892,36 @@ class ReservationServiceClient {
   /// Attempting to merge capacity commitments of different plan will fail
   /// with the error code `google.rpc.Code.FAILED_PRECONDITION`.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::MergeCapacityCommitmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L828}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.MergeCapacityCommitmentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.CapacityCommitment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
-  /// [google.cloud.bigquery.reservation.v1.MergeCapacityCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L828}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
+  /// [google.cloud.bigquery.reservation.v1.MergeCapacityCommitmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L828}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   MergeCapacityCommitments(google::cloud::bigquery::reservation::v1::
                                MergeCapacityCommitmentsRequest const& request,
                            Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an assignment object which allows the given project to submit jobs
   /// of a certain type using slots from the specified reservation.
@@ -639,8 +936,8 @@ class ReservationServiceClient {
   /// the assignment is looked up at the project, folder and organization levels
   /// in that order. The first assignment found is applied to the query.
   ///
-  /// When creating assignments, it does not matter if other assignments exist
-  /// at higher levels.
+  /// When creating assignments, it does not matter if other assignments exist at
+  /// higher levels.
   ///
   /// Example:
   ///
@@ -667,20 +964,29 @@ class ReservationServiceClient {
   /// @param assignment  Assignment resource to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.Assignment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
-  /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L907}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L907}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   CreateAssignment(
       std::string const& parent,
       google::cloud::bigquery::reservation::v1::Assignment const& assignment,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an assignment object which allows the given project to submit jobs
   /// of a certain type using slots from the specified reservation.
@@ -695,8 +1001,8 @@ class ReservationServiceClient {
   /// the assignment is looked up at the project, folder and organization levels
   /// in that order. The first assignment found is applied to the query.
   ///
-  /// When creating assignments, it does not matter if other assignments exist
-  /// at higher levels.
+  /// When creating assignments, it does not matter if other assignments exist at
+  /// higher levels.
   ///
   /// Example:
   ///
@@ -718,24 +1024,37 @@ class ReservationServiceClient {
   /// Returns `google.rpc.Code.INVALID_ARGUMENT` when location of the assignment
   /// does not match location of the reservation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CreateAssignmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L907}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.Assignment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
-  /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L907}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L907}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   CreateAssignment(
       google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists assignments.
   ///
@@ -750,8 +1069,8 @@ class ReservationServiceClient {
   ///   associations between entities and reservations: `<organizationA, res1>`
   ///   and `<project1, res1>`
   ///
-  /// In this example, ListAssignments will just return the above two
-  /// assignments for reservation `res1`, and no expansion/merge will happen.
+  /// In this example, ListAssignments will just return the above two assignments
+  /// for reservation `res1`, and no expansion/merge will happen.
   ///
   /// The wildcard "-" can be used for
   /// reservations in the request. In that case all assignments belongs to the
@@ -765,17 +1084,35 @@ class ReservationServiceClient {
   ///  `projects/myproject/locations/US/reservations/-`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.reservation.v1.Assignment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
-  /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L929}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L929}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   ListAssignments(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists assignments.
   ///
@@ -790,8 +1127,8 @@ class ReservationServiceClient {
   ///   associations between entities and reservations: `<organizationA, res1>`
   ///   and `<project1, res1>`
   ///
-  /// In this example, ListAssignments will just return the above two
-  /// assignments for reservation `res1`, and no expansion/merge will happen.
+  /// In this example, ListAssignments will just return the above two assignments
+  /// for reservation `res1`, and no expansion/merge will happen.
   ///
   /// The wildcard "-" can be used for
   /// reservations in the request. In that case all assignments belongs to the
@@ -799,23 +1136,45 @@ class ReservationServiceClient {
   ///
   /// **Note** "-" cannot be used for projects nor locations.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::ListAssignmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L929}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.reservation.v1.Assignment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
-  /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L929}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L929}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   ListAssignments(
       google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a assignment. No expansion will happen.
   ///
@@ -837,12 +1196,22 @@ class ReservationServiceClient {
   ///    `projects/myproject/locations/US/reservations/team1-prod/assignments/123`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L966}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L966}
   ///
+  // clang-format on
   Status DeleteAssignment(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a assignment. No expansion will happen.
   ///
@@ -860,19 +1229,33 @@ class ReservationServiceClient {
   /// queries from `project1` will still use `res1` while queries from
   /// `project2` will switch to use on-demand mode.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L966}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L966}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L966}
   ///
+  // clang-format on
   Status DeleteAssignment(
       google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deprecated: Looks up assignments for a specified resource for a particular
   /// region. If the request is about a project:
@@ -898,8 +1281,7 @@ class ReservationServiceClient {
   /// **Note** "-" cannot be used for projects
   /// nor locations.
   ///
-  /// @param parent  Required. The resource name of the admin project(containing
-  /// project and
+  /// @param parent  Required. The resource name of the admin project(containing project and
   ///  location), e.g.:
   ///    `projects/myproject/locations/US`.
   /// @param query  Please specify resource name as assignee in the query.
@@ -909,18 +1291,36 @@ class ReservationServiceClient {
   ///  * `assignee=organizations/456`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.reservation.v1.Assignment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
-  /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L981}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L981}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   SearchAssignments(std::string const& parent, std::string const& query,
                     Options opts = {});
 
+  // clang-format off
   ///
   /// Deprecated: Looks up assignments for a specified resource for a particular
   /// region. If the request is about a project:
@@ -946,24 +1346,46 @@ class ReservationServiceClient {
   /// **Note** "-" cannot be used for projects
   /// nor locations.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L981}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.reservation.v1.Assignment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
-  /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L981}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L981}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   SearchAssignments(
       google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Looks up assignments for a specified resource for a particular region.
   /// If the request is about a project:
@@ -986,8 +1408,7 @@ class ReservationServiceClient {
   /// 3. Parent here is `projects/*/locations/*`, instead of
   ///    `projects/*/locations/*reservations/*`.
   ///
-  /// @param parent  Required. The resource name with location (project name
-  /// could be the
+  /// @param parent  Required. The resource name with location (project name could be the
   ///  wildcard '-'), e.g.:
   ///    `projects/-/locations/US`.
   /// @param query  Please specify resource name as assignee in the query.
@@ -997,18 +1418,36 @@ class ReservationServiceClient {
   ///  * `assignee=organizations/456`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.reservation.v1.Assignment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
-  /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1012}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1012}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   SearchAllAssignments(std::string const& parent, std::string const& query,
                        Options opts = {});
 
+  // clang-format off
   ///
   /// Looks up assignments for a specified resource for a particular region.
   /// If the request is about a project:
@@ -1031,24 +1470,46 @@ class ReservationServiceClient {
   /// 3. Parent here is `projects/*/locations/*`, instead of
   ///    `projects/*/locations/*reservations/*`.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1012}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.reservation.v1.Assignment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
-  /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1012}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1012}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   SearchAllAssignments(
       google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Moves an assignment under a new reservation.
   ///
@@ -1063,18 +1524,27 @@ class ReservationServiceClient {
   ///    `projects/myotherproject/locations/US/reservations/team2-prod`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.Assignment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
-  /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1070}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1070}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment> MoveAssignment(
       std::string const& name, std::string const& destination_id,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Moves an assignment under a new reservation.
   ///
@@ -1082,69 +1552,103 @@ class ReservationServiceClient {
   /// by providing a transactional change that ensures an assignee always has an
   /// associated reservation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::MoveAssignmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1070}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.Assignment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
-  /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1070}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1070}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment> MoveAssignment(
       google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing assignment.
   ///
   /// Only the `priority` field can be updated.
   ///
   /// @param assignment  Content of the assignment to update.
-  /// @param update_mask  Standard field mask for the set of fields to be
-  /// updated.
+  /// @param update_mask  Standard field mask for the set of fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.Assignment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
-  /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1097}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1097}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   UpdateAssignment(
       google::cloud::bigquery::reservation::v1::Assignment const& assignment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing assignment.
   ///
   /// Only the `priority` field can be updated.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1097}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.Assignment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
-  /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1097}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.Assignment]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
+  /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1097}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   UpdateAssignment(
       google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a BI reservation.
   ///
@@ -1152,38 +1656,60 @@ class ReservationServiceClient {
   ///  `projects/{project_id}/locations/{location_id}/biReservation`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::BiReservation,google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.BiReservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.BiReservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
-  /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1142}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
+  /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1142}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   GetBiReservation(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a BI reservation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::GetBiReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1142}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.GetBiReservationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::BiReservation,google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.BiReservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.BiReservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
-  /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1142}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
+  /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1142}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   GetBiReservation(
       google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a BI reservation.
   ///
@@ -1198,20 +1724,29 @@ class ReservationServiceClient {
   /// @param update_mask  A list of fields to be updated in this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::BiReservation,google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.BiReservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.BiReservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
-  /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1154}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
+  /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1154}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   UpdateBiReservation(
       google::cloud::bigquery::reservation::v1::BiReservation const&
           bi_reservation,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a BI reservation.
   ///
@@ -1222,18 +1757,30 @@ class ReservationServiceClient {
   /// greater than 0. In order to release BI capacity reservation size
   /// must be set to 0.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1154}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::BiReservation,google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.reservation.v1.BiReservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.reservation.v1.BiReservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
-  /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1154}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.reservation.v1.BiReservation]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
+  /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1154}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   UpdateBiReservation(google::cloud::bigquery::reservation::v1::
                           UpdateBiReservationRequest const& request,

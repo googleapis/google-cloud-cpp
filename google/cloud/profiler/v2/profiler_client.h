@@ -90,12 +90,13 @@ class ProfilerServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// CreateProfile creates a new profile resource in the online mode.
   ///
-  /// The server ensures that the new profiles are created at a constant rate
-  /// per deployment, so the creation request may hang for some time until the
-  /// next profile session is available.
+  /// The server ensures that the new profiles are created at a constant rate per
+  /// deployment, so the creation request may hang for some time until the next
+  /// profile session is available.
   ///
   /// The request may fail with ABORTED error if the creation is not available
   /// within ~1m, the response will indicate the duration of the backoff the
@@ -106,66 +107,101 @@ class ProfilerServiceClient {
   /// "google.rpc.retryinfo-bin".
   ///
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::CreateProfileRequest,google/devtools/cloudprofiler/v2/profiler.proto#L97}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudprofiler.v2.CreateProfileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudprofiler.v2.Profile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudprofiler.v2.CreateProfileRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L97}
-  /// [google.devtools.cloudprofiler.v2.Profile]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudprofiler.v2.CreateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L97}
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
       google::devtools::cloudprofiler::v2::CreateProfileRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// CreateOfflineProfile creates a new profile resource in the offline mode.
-  /// The client provides the profile to create along with the profile bytes,
-  /// the server records it.
+  /// The client provides the profile to create along with the profile bytes, the
+  /// server records it.
   ///
   /// @param parent  Parent project to create the profile in.
   /// @param profile  Contents of the profile to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudprofiler.v2.Profile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L112}
-  /// [google.devtools.cloudprofiler.v2.Profile]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L112}
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
       std::string const& parent,
       google::devtools::cloudprofiler::v2::Profile const& profile,
       Options opts = {});
 
+  // clang-format off
   ///
   /// CreateOfflineProfile creates a new profile resource in the offline mode.
-  /// The client provides the profile to create along with the profile bytes,
-  /// the server records it.
+  /// The client provides the profile to create along with the profile bytes, the
+  /// server records it.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest,google/devtools/cloudprofiler/v2/profiler.proto#L112}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudprofiler.v2.Profile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L112}
-  /// [google.devtools.cloudprofiler.v2.Profile]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L112}
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
       google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// UpdateProfile updates the profile bytes and labels on the profile resource
   /// created in the online mode. Updating the bytes for profiles created in the
@@ -173,43 +209,63 @@ class ProfilerServiceClient {
   /// provided at the time of the profile creation.
   ///
   /// @param profile  Profile to update.
-  /// @param update_mask  Field mask used to specify the fields to be
-  /// overwritten. Currently only
+  /// @param update_mask  Field mask used to specify the fields to be overwritten. Currently only
   ///  profile_bytes and labels fields are supported by UpdateProfile, so only
   ///  those fields can be specified in the mask. When no mask is provided, all
   ///  fields are overwritten.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudprofiler.v2.Profile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudprofiler.v2.Profile]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
-  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L123}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L123}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
       google::devtools::cloudprofiler::v2::Profile const& profile,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// UpdateProfile updates the profile bytes and labels on the profile resource
   /// created in the online mode. Updating the bytes for profiles created in the
   /// offline mode is currently not supported: the profile content must be
   /// provided at the time of the profile creation.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::UpdateProfileRequest,google/devtools/cloudprofiler/v2/profiler.proto#L123}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudprofiler.v2.UpdateProfileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudprofiler.v2.Profile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudprofiler.v2.Profile]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
-  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L123}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L123}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
       google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request,
       Options opts = {});

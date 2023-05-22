@@ -87,125 +87,189 @@ class AdminServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new topic.
   ///
   /// @param parent  Required. The parent location in which to create the topic.
   ///  Structured like `projects/{project_number}/locations/{location}`.
-  /// @param topic  Required. Configuration of the topic to create. Its `name`
-  /// field is
+  /// @param topic  Required. Configuration of the topic to create. Its `name` field is
   ///  ignored.
-  /// @param topic_id  Required. The ID to use for the topic, which will become
-  /// the final
+  /// @param topic_id  Required. The ID to use for the topic, which will become the final
   ///  component of the topic's name.
   ///  This value is structured like: `my-topic-name`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Topic])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.CreateTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L236}
-  /// [google.cloud.pubsublite.v1.Topic]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.CreateTopicRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L236}
+  /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
       std::string const& parent,
       google::cloud::pubsublite::v1::Topic const& topic,
       std::string const& topic_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new topic.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::CreateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L236}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.CreateTopicRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Topic])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.CreateTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L236}
-  /// [google.cloud.pubsublite.v1.Topic]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.CreateTopicRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L236}
+  /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
       google::cloud::pubsublite::v1::CreateTopicRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the topic configuration.
   ///
-  /// @param name  Required. The name of the topic whose configuration to
-  /// return.
+  /// @param name  Required. The name of the topic whose configuration to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Topic])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.GetTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L258}
-  /// [google.cloud.pubsublite.v1.Topic]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.GetTopicRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L258}
+  /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the topic configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicRequest,google/cloud/pubsublite/v1/admin.proto#L258}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.GetTopicRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Topic])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.GetTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L258}
-  /// [google.cloud.pubsublite.v1.Topic]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.GetTopicRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L258}
+  /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
       google::cloud::pubsublite::v1::GetTopicRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the partition information for the requested topic.
   ///
   /// @param name  Required. The topic whose partition information to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L280}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.TopicPartitions])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L269}
-  /// [google.cloud.pubsublite.v1.TopicPartitions]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L269}
+  /// [google.cloud.pubsublite.v1.TopicPartitions]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the partition information for the requested topic.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicPartitionsRequest,google/cloud/pubsublite/v1/admin.proto#L269}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.GetTopicPartitionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L280}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.TopicPartitions])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L269}
-  /// [google.cloud.pubsublite.v1.TopicPartitions]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L269}
+  /// [google.cloud.pubsublite.v1.TopicPartitions]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
       google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of topics for the given project.
   ///
@@ -213,217 +277,381 @@ class AdminServiceClient {
   ///  Structured like `projects/{project_number}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.pubsublite.v1.Topic], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.pubsublite.v1.ListTopicsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L286}
-  /// [google.cloud.pubsublite.v1.Topic]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.ListTopicsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L286}
+  /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
+  // clang-format on
   StreamRange<google::cloud::pubsublite::v1::Topic> ListTopics(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of topics for the given project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L286}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.ListTopicsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.pubsublite.v1.Topic], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.pubsublite.v1.ListTopicsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L286}
-  /// [google.cloud.pubsublite.v1.Topic]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.ListTopicsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L286}
+  /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
+  // clang-format on
   StreamRange<google::cloud::pubsublite::v1::Topic> ListTopics(
       google::cloud::pubsublite::v1::ListTopicsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates properties of the specified topic.
   ///
-  /// @param topic  Required. The topic to update. Its `name` field must be
-  /// populated.
-  /// @param update_mask  Required. A mask specifying the topic fields to
-  /// change.
+  /// @param topic  Required. The topic to update. Its `name` field must be populated.
+  /// @param update_mask  Required. A mask specifying the topic fields to change.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Topic])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.Topic]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
-  /// [google.cloud.pubsublite.v1.UpdateTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L321}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  /// [google.cloud.pubsublite.v1.UpdateTopicRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L321}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
       google::cloud::pubsublite::v1::Topic const& topic,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates properties of the specified topic.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L321}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.UpdateTopicRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Topic])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.Topic]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
-  /// [google.cloud.pubsublite.v1.UpdateTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L321}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.Topic]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  /// [google.cloud.pubsublite.v1.UpdateTopicRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L321}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
       google::cloud::pubsublite::v1::UpdateTopicRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified topic.
   ///
   /// @param name  Required. The name of the topic to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.pubsublite.v1.DeleteTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L331}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.DeleteTopicRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L331}
   ///
+  // clang-format on
   Status DeleteTopic(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified topic.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteTopicRequest,google/cloud/pubsublite/v1/admin.proto#L331}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.DeleteTopicRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.pubsublite.v1.DeleteTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L331}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.DeleteTopicRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L331}
   ///
+  // clang-format on
   Status DeleteTopic(
       google::cloud::pubsublite::v1::DeleteTopicRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the subscriptions attached to the specified topic.
   ///
   /// @param name  Required. The name of the topic whose subscriptions to list.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return std::string
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains a
+  ///     [`std::string`].
   ///
-  /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L342}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L342}
   ///
+  // clang-format on
   StreamRange<std::string> ListTopicSubscriptions(std::string const& name,
                                                   Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the subscriptions attached to the specified topic.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L342}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return std::string
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains a
+  ///     [`std::string`].
   ///
-  /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L342}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L342}
   ///
+  // clang-format on
   StreamRange<std::string> ListTopicSubscriptions(
       google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new subscription.
   ///
-  /// @param parent  Required. The parent location in which to create the
-  /// subscription.
+  /// @param parent  Required. The parent location in which to create the subscription.
   ///  Structured like `projects/{project_number}/locations/{location}`.
-  /// @param subscription  Required. Configuration of the subscription to
-  /// create. Its `name` field is
+  /// @param subscription  Required. Configuration of the subscription to create. Its `name` field is
   ///  ignored.
-  /// @param subscription_id  Required. The ID to use for the subscription,
-  /// which will become the final
+  /// @param subscription_id  Required. The ID to use for the subscription, which will become the final
   ///  component of the subscription's name.
   ///  This value is structured like: `my-sub-name`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Subscription])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.CreateSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L376}
-  /// [google.cloud.pubsublite.v1.Subscription]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.CreateSubscriptionRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L376}
+  /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Subscription> CreateSubscription(
       std::string const& parent,
       google::cloud::pubsublite::v1::Subscription const& subscription,
       std::string const& subscription_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new subscription.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::CreateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L376}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.CreateSubscriptionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Subscription])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.CreateSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L376}
-  /// [google.cloud.pubsublite.v1.Subscription]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.CreateSubscriptionRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L376}
+  /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Subscription> CreateSubscription(
       google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the subscription configuration.
   ///
-  /// @param name  Required. The name of the subscription whose configuration to
-  /// return.
+  /// @param name  Required. The name of the subscription whose configuration to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Subscription])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.GetSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L403}
-  /// [google.cloud.pubsublite.v1.Subscription]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L403}
+  /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the subscription configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::GetSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L403}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.GetSubscriptionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Subscription])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.GetSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L403}
-  /// [google.cloud.pubsublite.v1.Subscription]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L403}
+  /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
       google::cloud::pubsublite::v1::GetSubscriptionRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of subscriptions for the given project.
   ///
@@ -431,104 +659,188 @@ class AdminServiceClient {
   ///  Structured like `projects/{project_number}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.pubsublite.v1.Subscription], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.pubsublite.v1.ListSubscriptionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L414}
-  /// [google.cloud.pubsublite.v1.Subscription]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L414}
+  /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
+  // clang-format on
   StreamRange<google::cloud::pubsublite::v1::Subscription> ListSubscriptions(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of subscriptions for the given project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ListSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L414}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.ListSubscriptionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.pubsublite.v1.Subscription], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.pubsublite.v1.ListSubscriptionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L414}
-  /// [google.cloud.pubsublite.v1.Subscription]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L414}
+  /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
+  // clang-format on
   StreamRange<google::cloud::pubsublite::v1::Subscription> ListSubscriptions(
       google::cloud::pubsublite::v1::ListSubscriptionsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates properties of the specified subscription.
   ///
-  /// @param subscription  Required. The subscription to update. Its `name`
-  /// field must be populated.
+  /// @param subscription  Required. The subscription to update. Its `name` field must be populated.
   ///  Topic field must not be populated.
-  /// @param update_mask  Required. A mask specifying the subscription fields to
-  /// change.
+  /// @param update_mask  Required. A mask specifying the subscription fields to change.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Subscription])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.Subscription]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
-  /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L449}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
+  /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L449}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
       google::cloud::pubsublite::v1::Subscription const& subscription,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates properties of the specified subscription.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L449}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.UpdateSubscriptionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Subscription])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.Subscription]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
-  /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L449}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.Subscription]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
+  /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L449}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
       google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified subscription.
   ///
   /// @param name  Required. The name of the subscription to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L460}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L460}
   ///
+  // clang-format on
   Status DeleteSubscription(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified subscription.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L460}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.DeleteSubscriptionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L460}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L460}
   ///
+  // clang-format on
   Status DeleteSubscription(
       google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Performs an out-of-band seek for a subscription to a specified target,
   /// which may be timestamps or named positions within the message backlog.
@@ -552,109 +864,168 @@ class AdminServiceClient {
   /// If the previous seek operation has not yet completed, it will be aborted
   /// and the new invocation of seek will supersede it.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::SeekSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L471}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.SeekSubscriptionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::SeekSubscriptionResponse,google/cloud/pubsublite/v1/admin.proto#L506}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.pubsublite.v1.SeekSubscriptionResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.pubsublite.v1.SeekSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L471}
-  /// [google.cloud.pubsublite.v1.SeekSubscriptionResponse]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L506}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.SeekSubscriptionRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L471}
+  /// [google.cloud.pubsublite.v1.SeekSubscriptionResponse]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L506}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
   SeekSubscription(
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new reservation.
   ///
-  /// @param parent  Required. The parent location in which to create the
-  /// reservation.
+  /// @param parent  Required. The parent location in which to create the reservation.
   ///  Structured like `projects/{project_number}/locations/{location}`.
-  /// @param reservation  Required. Configuration of the reservation to create.
-  /// Its `name` field is
+  /// @param reservation  Required. Configuration of the reservation to create. Its `name` field is
   ///  ignored.
-  /// @param reservation_id  Required. The ID to use for the reservation, which
-  /// will become the final
+  /// @param reservation_id  Required. The ID to use for the reservation, which will become the final
   ///  component of the reservation's name.
   ///  This value is structured like: `my-reservation-name`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Reservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.CreateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L527}
-  /// [google.cloud.pubsublite.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.CreateReservationRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L527}
+  /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
       std::string const& parent,
       google::cloud::pubsublite::v1::Reservation const& reservation,
       std::string const& reservation_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new reservation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::CreateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L527}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.CreateReservationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Reservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.CreateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L527}
-  /// [google.cloud.pubsublite.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.CreateReservationRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L527}
+  /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
       google::cloud::pubsublite::v1::CreateReservationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the reservation configuration.
   ///
-  /// @param name  Required. The name of the reservation whose configuration to
-  /// return.
+  /// @param name  Required. The name of the reservation whose configuration to return.
   ///  Structured like:
   ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Reservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.GetReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L549}
-  /// [google.cloud.pubsublite.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.GetReservationRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L549}
+  /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the reservation configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::GetReservationRequest,google/cloud/pubsublite/v1/admin.proto#L549}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.GetReservationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Reservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.GetReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L549}
-  /// [google.cloud.pubsublite.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.GetReservationRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L549}
+  /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
       google::cloud::pubsublite::v1::GetReservationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of reservations for the given project.
   ///
@@ -662,76 +1033,136 @@ class AdminServiceClient {
   ///  Structured like `projects/{project_number}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.pubsublite.v1.Reservation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.pubsublite.v1.ListReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L562}
-  /// [google.cloud.pubsublite.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L562}
+  /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
+  // clang-format on
   StreamRange<google::cloud::pubsublite::v1::Reservation> ListReservations(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of reservations for the given project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationsRequest,google/cloud/pubsublite/v1/admin.proto#L562}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.ListReservationsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.pubsublite.v1.Reservation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.pubsublite.v1.ListReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L562}
-  /// [google.cloud.pubsublite.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L562}
+  /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
+  // clang-format on
   StreamRange<google::cloud::pubsublite::v1::Reservation> ListReservations(
       google::cloud::pubsublite::v1::ListReservationsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates properties of the specified reservation.
   ///
-  /// @param reservation  Required. The reservation to update. Its `name` field
-  /// must be populated.
-  /// @param update_mask  Required. A mask specifying the reservation fields to
-  /// change.
+  /// @param reservation  Required. The reservation to update. Its `name` field must be populated.
+  /// @param update_mask  Required. A mask specifying the reservation fields to change.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Reservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
-  /// [google.cloud.pubsublite.v1.UpdateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L597}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  /// [google.cloud.pubsublite.v1.UpdateReservationRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L597}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
       google::cloud::pubsublite::v1::Reservation const& reservation,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates properties of the specified reservation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L597}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.UpdateReservationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.Reservation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
-  /// [google.cloud.pubsublite.v1.UpdateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L597}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.Reservation]: @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  /// [google.cloud.pubsublite.v1.UpdateReservationRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L597}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
       google::cloud::pubsublite::v1::UpdateReservationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified reservation.
   ///
@@ -740,27 +1171,51 @@ class AdminServiceClient {
   ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.pubsublite.v1.DeleteReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L607}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.DeleteReservationRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L607}
   ///
+  // clang-format on
   Status DeleteReservation(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified reservation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteReservationRequest,google/cloud/pubsublite/v1/admin.proto#L607}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.DeleteReservationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.pubsublite.v1.DeleteReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L607}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.DeleteReservationRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L607}
   ///
+  // clang-format on
   Status DeleteReservation(
       google::cloud::pubsublite::v1::DeleteReservationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the topics attached to the specified reservation.
   ///
@@ -769,62 +1224,123 @@ class AdminServiceClient {
   ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return std::string
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains a
+  ///     [`std::string`].
   ///
-  /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L620}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L620}
   ///
+  // clang-format on
   StreamRange<std::string> ListReservationTopics(std::string const& name,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the topics attached to the specified reservation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L620}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.ListReservationTopicsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return std::string
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains a
+  ///     [`std::string`].
   ///
-  /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L620}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L620}
   ///
+  // clang-format on
   StreamRange<std::string> ListReservationTopics(
       google::cloud::pubsublite::v1::ListReservationTopicsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the partition information for the requested topic.
   ///
   /// @param name  Required. The topic whose partition information to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L280}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.TopicPartitions])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L269}
-  /// [google.cloud.pubsublite.v1.TopicPartitions]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L269}
+  /// [google.cloud.pubsublite.v1.TopicPartitions]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
   AsyncGetTopicPartitions(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the partition information for the requested topic.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicPartitionsRequest,google/cloud/pubsublite/v1/admin.proto#L269}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.GetTopicPartitionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L280}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.TopicPartitions])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L269}
-  /// [google.cloud.pubsublite.v1.TopicPartitions]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L269}
+  /// [google.cloud.pubsublite.v1.TopicPartitions]: @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
   AsyncGetTopicPartitions(
       google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request,

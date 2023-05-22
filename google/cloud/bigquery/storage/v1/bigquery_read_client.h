@@ -86,12 +86,13 @@ class BigQueryReadClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new read session. A read session divides the contents of a
   /// BigQuery table into one or more streams, which can then be used to read
   /// data from the table. The read session also specifies properties of the
-  /// data to be read, such as a list of columns or a push-down filter
-  /// describing the rows to be returned.
+  /// data to be read, such as a list of columns or a push-down filter describing
+  /// the rows to be returned.
   ///
   /// A particular row can be read by at most one stream. When the caller has
   /// reached the end of each stream in the session, then all the data in the
@@ -107,40 +108,48 @@ class BigQueryReadClient {
   /// Read sessions automatically expire 6 hours after they are created and do
   /// not require manual clean-up by the caller.
   ///
-  /// @param parent  Required. The request project that owns the session, in the
-  /// form of
+  /// @param parent  Required. The request project that owns the session, in the form of
   ///  `projects/{project_id}`.
   /// @param read_session  Required. Session to be created.
-  /// @param max_stream_count  Max initial number of streams. If unset or zero,
-  /// the server will
-  ///  provide a value of streams so as to produce reasonable throughput. Must
-  ///  be non-negative. The number of streams may be lower than the requested
-  ///  number, depending on the amount parallelism that is reasonable for the
-  ///  table. There is a default system max limit of 1,000. This must be greater
-  ///  than or equal to preferred_min_stream_count. Typically, clients should
-  ///  either leave this unset to let the system to determine an upper bound OR
-  ///  set this a size for the maximum "units of work" it can gracefully handle.
+  /// @param max_stream_count  Max initial number of streams. If unset or zero, the server will
+  ///  provide a value of streams so as to produce reasonable throughput. Must be
+  ///  non-negative. The number of streams may be lower than the requested number,
+  ///  depending on the amount parallelism that is reasonable for the table.
+  ///  There is a default system max limit of 1,000.
+  ///  This must be greater than or equal to preferred_min_stream_count.
+  ///  Typically, clients should either leave this unset to let the system to
+  ///  determine an upper bound OR set this a size for the maximum "units of work"
+  ///  it can gracefully handle.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadSession,google/cloud/bigquery/storage/v1/stream.proto#L48}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.ReadSession])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.CreateReadSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L232}
-  /// [google.cloud.bigquery.storage.v1.ReadSession]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L48}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.CreateReadSessionRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L232}
+  /// [google.cloud.bigquery.storage.v1.ReadSession]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L48}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       std::string const& parent,
       google::cloud::bigquery::storage::v1::ReadSession const& read_session,
       std::int32_t max_stream_count, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new read session. A read session divides the contents of a
   /// BigQuery table into one or more streams, which can then be used to read
   /// data from the table. The read session also specifies properties of the
-  /// data to be read, such as a list of columns or a push-down filter
-  /// describing the rows to be returned.
+  /// data to be read, such as a list of columns or a push-down filter describing
+  /// the rows to be returned.
   ///
   /// A particular row can be read by at most one stream. When the caller has
   /// reached the end of each stream in the session, then all the data in the
@@ -156,75 +165,109 @@ class BigQueryReadClient {
   /// Read sessions automatically expire 6 hours after they are created and do
   /// not require manual clean-up by the caller.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::CreateReadSessionRequest,google/cloud/bigquery/storage/v1/storage.proto#L232}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.storage.v1.CreateReadSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadSession,google/cloud/bigquery/storage/v1/stream.proto#L48}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.ReadSession])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.CreateReadSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L232}
-  /// [google.cloud.bigquery.storage.v1.ReadSession]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L48}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.CreateReadSessionRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L232}
+  /// [google.cloud.bigquery.storage.v1.ReadSession]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L48}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Reads rows from the stream in the format prescribed by the ReadSession.
   /// Each response contains one or more table rows, up to a maximum of 100 MiB
   /// per response; read requests which attempt to read individual rows larger
   /// than 100 MiB will fail.
   ///
-  /// Each request also returns a set of stream statistics reflecting the
-  /// current state of the stream.
+  /// Each request also returns a set of stream statistics reflecting the current
+  /// state of the stream.
   ///
   /// @param read_stream  Required. Stream to read rows from.
-  /// @param offset  The offset requested must be less than the last row read
-  /// from Read.
+  /// @param offset  The offset requested must be less than the last row read from Read.
   ///  Requesting a larger offset is undefined. If not specified, start reading
   ///  from offset zero.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L319}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.ReadRowsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.ReadRowsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L269}
-  /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L319}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.ReadRowsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L269}
+  /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L319}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
       std::string const& read_stream, std::int64_t offset, Options opts = {});
 
+  // clang-format off
   ///
   /// Reads rows from the stream in the format prescribed by the ReadSession.
   /// Each response contains one or more table rows, up to a maximum of 100 MiB
   /// per response; read requests which attempt to read individual rows larger
   /// than 100 MiB will fail.
   ///
-  /// Each request also returns a set of stream statistics reflecting the
-  /// current state of the stream.
+  /// Each request also returns a set of stream statistics reflecting the current
+  /// state of the stream.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsRequest,google/cloud/bigquery/storage/v1/storage.proto#L269}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.storage.v1.ReadRowsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::ReadRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L319}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.ReadRowsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.ReadRowsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L269}
-  /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L319}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.ReadRowsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L269}
+  /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L319}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
       google::cloud::bigquery::storage::v1::ReadRowsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Splits a given `ReadStream` into two `ReadStream` objects. These
   /// `ReadStream` objects are referred to as the primary and the residual
@@ -239,18 +282,30 @@ class BigQueryReadClient {
   /// original[j-n] = residual[0-m] once the streams have been read to
   /// completion.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L354}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.storage.v1.SplitReadStreamRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::SplitReadStreamResponse,google/cloud/bigquery/storage/v1/storage.proto#L374}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.SplitReadStreamResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.SplitReadStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L354}
-  /// [google.cloud.bigquery.storage.v1.SplitReadStreamResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L374}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.SplitReadStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L354}
+  /// [google.cloud.bigquery.storage.v1.SplitReadStreamResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L374}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
   SplitReadStream(
       google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&

@@ -86,223 +86,363 @@ class JobControllerClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Submits a job to a cluster.
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// that the job
+  /// @param project_id  Required. The ID of the Google Cloud Platform project that the job
   ///  belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
+  /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param job  Required. The job resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L684}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
-  /// [google.cloud.dataproc.v1.SubmitJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L819}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
+  /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L819}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
       std::string const& project_id, std::string const& region,
       google::cloud::dataproc::v1::Job const& job, Options opts = {});
 
+  // clang-format off
   ///
   /// Submits a job to a cluster.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::SubmitJobRequest,google/cloud/dataproc/v1/jobs.proto#L819}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.SubmitJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L684}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
-  /// [google.cloud.dataproc.v1.SubmitJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L819}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
+  /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L819}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
       google::cloud::dataproc::v1::SubmitJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Submits job to a cluster.
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// that the job
+  /// @param project_id  Required. The ID of the Google Cloud Platform project that the job
   ///  belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
+  /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param job  Required. The job resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L684}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.Job] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
-  /// [google.cloud.dataproc.v1.SubmitJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L819}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
+  /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L819}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
       std::string const& project_id, std::string const& region,
       google::cloud::dataproc::v1::Job const& job, Options opts = {});
 
+  // clang-format off
   ///
   /// Submits job to a cluster.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::SubmitJobRequest,google/cloud/dataproc/v1/jobs.proto#L819}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.SubmitJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L684}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.Job] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
-  /// [google.cloud.dataproc.v1.SubmitJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L819}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
+  /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L819}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
       google::cloud::dataproc::v1::SubmitJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the resource representation for a job in a project.
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// that the job
+  /// @param project_id  Required. The ID of the Google Cloud Platform project that the job
   ///  belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
+  /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param job_id  Required. The job ID.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L684}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L862}
-  /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L862}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> GetJob(
       std::string const& project_id, std::string const& region,
       std::string const& job_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the resource representation for a job in a project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::GetJobRequest,google/cloud/dataproc/v1/jobs.proto#L862}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.GetJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L684}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L862}
-  /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L862}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> GetJob(
       google::cloud::dataproc::v1::GetJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists regions/{region}/jobs in a project.
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// that the job
+  /// @param project_id  Required. The ID of the Google Cloud Platform project that the job
   ///  belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
+  /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L684}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataproc.v1.Job], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
-  /// [google.cloud.dataproc.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L875}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
+  /// [google.cloud.dataproc.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L875}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
       std::string const& project_id, std::string const& region,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists regions/{region}/jobs in a project.
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// that the job
+  /// @param project_id  Required. The ID of the Google Cloud Platform project that the job
   ///  belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
-  /// @param filter  Optional. A filter constraining the jobs to list. Filters
-  /// are
+  /// @param region  Required. The Dataproc region in which to handle the request.
+  /// @param filter  Optional. A filter constraining the jobs to list. Filters are
   ///  case-sensitive and have the following syntax:
   ///  [field = value] AND [field [= value]] ...
-  ///  where **field** is `status.state` or `labels.[KEY]`, and `[KEY]` is a
-  ///  label key. **value** can be `*` to match all values. `status.state` can
-  ///  be either `ACTIVE` or `NON_ACTIVE`. Only the logical `AND` operator is
-  ///  supported; space-separated items are treated as having an implicit `AND`
-  ///  operator. Example filter: status.state = ACTIVE AND labels.env = staging
-  ///  AND labels.starred = *
+  ///  where **field** is `status.state` or `labels.[KEY]`, and `[KEY]` is a label
+  ///  key. **value** can be `*` to match all values.
+  ///  `status.state` can be either `ACTIVE` or `NON_ACTIVE`.
+  ///  Only the logical `AND` operator is supported; space-separated items are
+  ///  treated as having an implicit `AND` operator.
+  ///  Example filter:
+  ///  status.state = ACTIVE AND labels.env = staging AND labels.starred = *
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L684}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataproc.v1.Job], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
-  /// [google.cloud.dataproc.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L875}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
+  /// [google.cloud.dataproc.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L875}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
       std::string const& project_id, std::string const& region,
       std::string const& filter, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists regions/{region}/jobs in a project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::ListJobsRequest,google/cloud/dataproc/v1/jobs.proto#L875}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.ListJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L684}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataproc.v1.Job], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
-  /// [google.cloud.dataproc.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L875}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
+  /// [google.cloud.dataproc.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L875}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
       google::cloud::dataproc::v1::ListJobsRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a job in a project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::UpdateJobRequest,google/cloud/dataproc/v1/jobs.proto#L932}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.UpdateJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L684}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
-  /// [google.cloud.dataproc.v1.UpdateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L932}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
+  /// [google.cloud.dataproc.v1.UpdateJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L932}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> UpdateJob(
       google::cloud::dataproc::v1::UpdateJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Starts a job cancellation request. To access the job resource
   /// after cancellation, call
@@ -310,26 +450,33 @@ class JobControllerClient {
   /// or
   /// [regions/{region}/jobs.get](https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/get).
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// that the job
+  /// @param project_id  Required. The ID of the Google Cloud Platform project that the job
   ///  belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
+  /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param job_id  Required. The job ID.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L684}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.CancelJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L968}
-  /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L968}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> CancelJob(
       std::string const& project_id, std::string const& region,
       std::string const& job_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Starts a job cancellation request. To access the job resource
   /// after cancellation, call
@@ -337,53 +484,87 @@ class JobControllerClient {
   /// or
   /// [regions/{region}/jobs.get](https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/get).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::CancelJobRequest,google/cloud/dataproc/v1/jobs.proto#L968}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.CancelJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L684}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.CancelJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L968}
-  /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L968}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L684}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> CancelJob(
       google::cloud::dataproc::v1::CancelJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the job from the project. If the job is active, the delete fails,
   /// and the response returns `FAILED_PRECONDITION`.
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// that the job
+  /// @param project_id  Required. The ID of the Google Cloud Platform project that the job
   ///  belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
+  /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param job_id  Required. The job ID.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataproc.v1.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L981}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L981}
   ///
+  // clang-format on
   Status DeleteJob(std::string const& project_id, std::string const& region,
                    std::string const& job_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the job from the project. If the job is active, the delete fails,
   /// and the response returns `FAILED_PRECONDITION`.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::DeleteJobRequest,google/cloud/dataproc/v1/jobs.proto#L981}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.DeleteJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataproc.v1.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L981}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L981}
   ///
+  // clang-format on
   Status DeleteJob(google::cloud::dataproc::v1::DeleteJobRequest const& request,
                    Options opts = {});
 

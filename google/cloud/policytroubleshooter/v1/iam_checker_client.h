@@ -85,22 +85,35 @@ class IamCheckerClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Checks whether a member has a specific permission for a specific resource,
   /// and explains why the member does or does not have that permission.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest,google/cloud/policytroubleshooter/v1/checker.proto#L51}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.policytroubleshooter.v1.TroubleshootIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse,google/cloud/policytroubleshooter/v1/checker.proto#L58}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.policytroubleshooter.v1.TroubleshootIamPolicyResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.policytroubleshooter.v1.TroubleshootIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/policytroubleshooter/v1/checker.proto#L51}
-  /// [google.cloud.policytroubleshooter.v1.TroubleshootIamPolicyResponse]:
-  /// @googleapis_reference_link{google/cloud/policytroubleshooter/v1/checker.proto#L58}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.policytroubleshooter.v1.TroubleshootIamPolicyRequest]: @googleapis_reference_link{google/cloud/policytroubleshooter/v1/checker.proto#L51}
+  /// [google.cloud.policytroubleshooter.v1.TroubleshootIamPolicyResponse]: @googleapis_reference_link{google/cloud/policytroubleshooter/v1/checker.proto#L58}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
   TroubleshootIamPolicy(google::cloud::policytroubleshooter::v1::

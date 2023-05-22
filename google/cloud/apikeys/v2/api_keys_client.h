@@ -84,6 +84,7 @@ class ApiKeysClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new API key.
   ///
@@ -94,8 +95,7 @@ class ApiKeysClient {
   /// @param key  Required. The API key fields to set at creation time.
   ///  You can configure only the `display_name`, `restrictions`, and
   ///  `annotations` fields.
-  /// @param key_id  User specified key id (optional). If specified, it will
-  /// become the final
+  /// @param key_id  User specified key id (optional). If specified, it will become the final
   ///  component of the key resource name.
   ///  The id must be unique within the project, must conform with RFC-1034,
   ///  is restricted to lower-cased letters, and has a maximum length of 63
@@ -104,40 +104,74 @@ class ApiKeysClient {
   ///  The id must NOT be a UUID-like string.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.api.apikeys.v2.Key] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.api.apikeys.v2.CreateKeyRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L154}
-  /// [google.api.apikeys.v2.Key]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.CreateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L154}
+  /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
+  // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
       std::string const& parent, google::api::apikeys::v2::Key const& key,
       std::string const& key_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new API key.
   ///
   /// NOTE: Key is a global resource; hence the only supported value for
   /// location is `global`.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::apikeys::v2::CreateKeyRequest,google/api/apikeys/v2/apikeys.proto#L154}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.apikeys.v2.CreateKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.api.apikeys.v2.Key] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.api.apikeys.v2.CreateKeyRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L154}
-  /// [google.api.apikeys.v2.Key]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.CreateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L154}
+  /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
+  // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
       google::api::apikeys::v2::CreateKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the API keys owned by a project. The key string of the API key
   /// isn't included in the response.
@@ -148,17 +182,35 @@ class ApiKeysClient {
   /// @param parent  Required. Lists all API keys associated with this project.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.api.apikeys.v2.Key], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.api.apikeys.v2.Key]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
-  /// [google.api.apikeys.v2.ListKeysRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L181}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [google.api.apikeys.v2.ListKeysRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L181}
   ///
+  // clang-format on
   StreamRange<google::api::apikeys::v2::Key> ListKeys(std::string const& parent,
                                                       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the API keys owned by a project. The key string of the API key
   /// isn't included in the response.
@@ -166,21 +218,43 @@ class ApiKeysClient {
   /// NOTE: Key is a global resource; hence the only supported value for
   /// location is `global`.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::apikeys::v2::ListKeysRequest,google/api/apikeys/v2/apikeys.proto#L181}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.apikeys.v2.ListKeysRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.api.apikeys.v2.Key], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.api.apikeys.v2.Key]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
-  /// [google.api.apikeys.v2.ListKeysRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L181}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [google.api.apikeys.v2.ListKeysRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L181}
   ///
+  // clang-format on
   StreamRange<google::api::apikeys::v2::Key> ListKeys(
       google::api::apikeys::v2::ListKeysRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the metadata for an API key. The key string of the API key
   /// isn't included in the response.
@@ -191,17 +265,26 @@ class ApiKeysClient {
   /// @param name  Required. The resource name of the API key to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.api.apikeys.v2.Key])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.api.apikeys.v2.GetKeyRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L211}
-  /// [google.api.apikeys.v2.Key]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.GetKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L211}
+  /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::api::apikeys::v2::Key> GetKey(std::string const& name,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the metadata for an API key. The key string of the API key
   /// isn't included in the response.
@@ -209,22 +292,35 @@ class ApiKeysClient {
   /// NOTE: Key is a global resource; hence the only supported value for
   /// location is `global`.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::apikeys::v2::GetKeyRequest,google/api/apikeys/v2/apikeys.proto#L211}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.apikeys.v2.GetKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.api.apikeys.v2.Key])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.api.apikeys.v2.GetKeyRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L211}
-  /// [google.api.apikeys.v2.Key]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.GetKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L211}
+  /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::api::apikeys::v2::Key> GetKey(
       google::api::apikeys::v2::GetKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Get the key string for an API key.
   ///
@@ -234,39 +330,61 @@ class ApiKeysClient {
   /// @param name  Required. The resource name of the API key to be retrieved.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::GetKeyStringResponse,google/api/apikeys/v2/apikeys.proto#L229}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.api.apikeys.v2.GetKeyStringResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.api.apikeys.v2.GetKeyStringRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L220}
-  /// [google.api.apikeys.v2.GetKeyStringResponse]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L229}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.GetKeyStringRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L220}
+  /// [google.api.apikeys.v2.GetKeyStringResponse]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L229}
   ///
+  // clang-format on
   StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Get the key string for an API key.
   ///
   /// NOTE: Key is a global resource; hence the only supported value for
   /// location is `global`.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::apikeys::v2::GetKeyStringRequest,google/api/apikeys/v2/apikeys.proto#L220}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.apikeys.v2.GetKeyStringRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::GetKeyStringResponse,google/api/apikeys/v2/apikeys.proto#L229}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.api.apikeys.v2.GetKeyStringResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.api.apikeys.v2.GetKeyStringRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L220}
-  /// [google.api.apikeys.v2.GetKeyStringResponse]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L229}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.GetKeyStringRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L220}
+  /// [google.api.apikeys.v2.GetKeyStringResponse]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L229}
   ///
+  // clang-format on
   StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
       google::api::apikeys::v2::GetKeyStringRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Patches the modifiable fields of an API key.
   /// The key string of the API key isn't included in the response.
@@ -274,32 +392,45 @@ class ApiKeysClient {
   /// NOTE: Key is a global resource; hence the only supported value for
   /// location is `global`.
   ///
-  /// @param key  Required. Set the `name` field to the resource name of the API
-  /// key to be
+  /// @param key  Required. Set the `name` field to the resource name of the API key to be
   ///  updated. You can update only the `display_name`, `restrictions`, and
   ///  `annotations` fields.
-  /// @param update_mask  The field mask specifies which fields to be updated as
-  /// part of this
+  /// @param update_mask  The field mask specifies which fields to be updated as part of this
   ///  request. All other fields are ignored.
   ///  Mutable fields are: `display_name`, `restrictions`, and `annotations`.
-  ///  If an update mask is not provided, the service treats it as an implied
-  ///  mask equivalent to all allowed fields that are set on the wire. If the
-  ///  field mask has a special value "*", the service treats it equivalent to
-  ///  replace all allowed mutable fields.
+  ///  If an update mask is not provided, the service treats it as an implied mask
+  ///  equivalent to all allowed fields that are set on the wire. If the field
+  ///  mask has a special value "*", the service treats it equivalent to replace
+  ///  all allowed mutable fields.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.api.apikeys.v2.Key] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.api.apikeys.v2.Key]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
-  /// [google.api.apikeys.v2.UpdateKeyRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L235}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [google.api.apikeys.v2.UpdateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L235}
   ///
+  // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
       google::api::apikeys::v2::Key const& key,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Patches the modifiable fields of an API key.
   /// The key string of the API key isn't included in the response.
@@ -307,22 +438,41 @@ class ApiKeysClient {
   /// NOTE: Key is a global resource; hence the only supported value for
   /// location is `global`.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::apikeys::v2::UpdateKeyRequest,google/api/apikeys/v2/apikeys.proto#L235}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.apikeys.v2.UpdateKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.api.apikeys.v2.Key] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.api.apikeys.v2.Key]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
-  /// [google.api.apikeys.v2.UpdateKeyRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L235}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [google.api.apikeys.v2.UpdateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L235}
   ///
+  // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
       google::api::apikeys::v2::UpdateKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an API key. Deleted key can be retrieved within 30 days of
   /// deletion. Afterward, key will be purged from the project.
@@ -333,17 +483,32 @@ class ApiKeysClient {
   /// @param name  Required. The resource name of the API key to be deleted.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.api.apikeys.v2.Key] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.api.apikeys.v2.DeleteKeyRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L252}
-  /// [google.api.apikeys.v2.Key]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.DeleteKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L252}
+  /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
+  // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an API key. Deleted key can be retrieved within 30 days of
   /// deletion. Afterward, key will be purged from the project.
@@ -351,44 +516,82 @@ class ApiKeysClient {
   /// NOTE: Key is a global resource; hence the only supported value for
   /// location is `global`.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::apikeys::v2::DeleteKeyRequest,google/api/apikeys/v2/apikeys.proto#L252}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.apikeys.v2.DeleteKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.api.apikeys.v2.Key] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.api.apikeys.v2.DeleteKeyRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L252}
-  /// [google.api.apikeys.v2.Key]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.DeleteKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L252}
+  /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
+  // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
       google::api::apikeys::v2::DeleteKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Undeletes an API key which was deleted within 30 days.
   ///
   /// NOTE: Key is a global resource; hence the only supported value for
   /// location is `global`.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::apikeys::v2::UndeleteKeyRequest,google/api/apikeys/v2/apikeys.proto#L265}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.apikeys.v2.UndeleteKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.api.apikeys.v2.Key] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.api.apikeys.v2.Key]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
-  /// [google.api.apikeys.v2.UndeleteKeyRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L265}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [google.api.apikeys.v2.UndeleteKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L265}
   ///
+  // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
       google::api::apikeys::v2::UndeleteKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Find the parent project and resource name of the API
   /// key that matches the key string in the request. If the API key has been
@@ -396,18 +599,30 @@ class ApiKeysClient {
   /// The service account must have the `apikeys.keys.lookup` permission
   /// on the parent project.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::apikeys::v2::LookupKeyRequest,google/api/apikeys/v2/apikeys.proto#L274}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.apikeys.v2.LookupKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::apikeys::v2::LookupKeyResponse,google/api/apikeys/v2/apikeys.proto#L280}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.api.apikeys.v2.LookupKeyResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.api.apikeys.v2.LookupKeyRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L274}
-  /// [google.api.apikeys.v2.LookupKeyResponse]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.apikeys.v2.LookupKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L274}
+  /// [google.api.apikeys.v2.LookupKeyResponse]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L280}
   ///
+  // clang-format on
   StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
       google::api::apikeys::v2::LookupKeyRequest const& request,
       Options opts = {});

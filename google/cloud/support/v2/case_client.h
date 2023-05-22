@@ -84,197 +84,323 @@ class CaseServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Retrieve the specified case.
   ///
   /// @param name  Required. The fully qualified name of a case to be retrieved.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::support::v2::Case,google/cloud/support/v2/case.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.support.v2.Case])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.support.v2.Case]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.GetCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L143}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
+  /// [google.cloud.support.v2.GetCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L143}
   ///
+  // clang-format on
   StatusOr<google::cloud::support::v2::Case> GetCase(std::string const& name,
                                                      Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieve the specified case.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::support::v2::GetCaseRequest,google/cloud/support/v2/case_service.proto#L143}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.support.v2.GetCaseRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::support::v2::Case,google/cloud/support/v2/case.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.support.v2.Case])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.support.v2.Case]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.GetCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L143}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
+  /// [google.cloud.support.v2.GetCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L143}
   ///
+  // clang-format on
   StatusOr<google::cloud::support::v2::Case> GetCase(
       google::cloud::support::v2::GetCaseRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieve all cases under the specified parent.
   ///
   /// Note: Listing cases under an Organization returns only the cases directly
-  /// parented by that organization. To retrieve all cases under an
-  /// organization, including cases parented by projects under that
-  /// organization, use `cases.search`.
+  /// parented by that organization. To retrieve all cases under an organization,
+  /// including cases parented by projects under that organization, use
+  /// `cases.search`.
   ///
-  /// @param parent  Required. The fully qualified name of parent resource to
-  /// list cases under.
+  /// @param parent  Required. The fully qualified name of parent resource to list cases under.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::support::v2::Case,google/cloud/support/v2/case.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.support.v2.Case], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.support.v2.Case]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.ListCasesRequest]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L169}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
+  /// [google.cloud.support.v2.ListCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L169}
   ///
+  // clang-format on
   StreamRange<google::cloud::support::v2::Case> ListCases(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieve all cases under the specified parent.
   ///
   /// Note: Listing cases under an Organization returns only the cases directly
-  /// parented by that organization. To retrieve all cases under an
-  /// organization, including cases parented by projects under that
-  /// organization, use `cases.search`.
+  /// parented by that organization. To retrieve all cases under an organization,
+  /// including cases parented by projects under that organization, use
+  /// `cases.search`.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::support::v2::ListCasesRequest,google/cloud/support/v2/case_service.proto#L169}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.support.v2.ListCasesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::support::v2::Case,google/cloud/support/v2/case.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.support.v2.Case], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.support.v2.Case]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.ListCasesRequest]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L169}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
+  /// [google.cloud.support.v2.ListCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L169}
   ///
+  // clang-format on
   StreamRange<google::cloud::support::v2::Case> ListCases(
       google::cloud::support::v2::ListCasesRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Search cases using the specified query.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::support::v2::SearchCasesRequest,google/cloud/support/v2/case_service.proto#L218}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.support.v2.SearchCasesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::support::v2::Case,google/cloud/support/v2/case.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.support.v2.Case], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.support.v2.Case]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.SearchCasesRequest]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L218}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
+  /// [google.cloud.support.v2.SearchCasesRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L218}
   ///
+  // clang-format on
   StreamRange<google::cloud::support::v2::Case> SearchCases(
       google::cloud::support::v2::SearchCasesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create a new case and associate it with the given Google Cloud Resource.
   /// The case object must have the following fields set: `display_name`,
   /// `description`, `classification`, and `priority`.
   ///
-  /// @param parent  Required. The name of the Google Cloud Resource under which
-  /// the case should
+  /// @param parent  Required. The name of the Google Cloud Resource under which the case should
   ///  be created.
   /// @param case_  Required. The case to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::support::v2::Case,google/cloud/support/v2/case.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.support.v2.Case])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.support.v2.Case]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.CreateCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L154}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
+  /// [google.cloud.support.v2.CreateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L154}
   ///
+  // clang-format on
   StatusOr<google::cloud::support::v2::Case> CreateCase(
       std::string const& parent, google::cloud::support::v2::Case const& case_,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create a new case and associate it with the given Google Cloud Resource.
   /// The case object must have the following fields set: `display_name`,
   /// `description`, `classification`, and `priority`.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::support::v2::CreateCaseRequest,google/cloud/support/v2/case_service.proto#L154}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.support.v2.CreateCaseRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::support::v2::Case,google/cloud/support/v2/case.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.support.v2.Case])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.support.v2.Case]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.CreateCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L154}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
+  /// [google.cloud.support.v2.CreateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L154}
   ///
+  // clang-format on
   StatusOr<google::cloud::support::v2::Case> CreateCase(
       google::cloud::support::v2::CreateCaseRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Update the specified case. Only a subset of fields can be updated.
   ///
   /// @param case_  Required. The case object to update.
-  /// @param update_mask  A list of attributes of the case object that should be
-  /// updated
+  /// @param update_mask  A list of attributes of the case object that should be updated
   ///  as part of this request. Supported values are `priority`, `display_name`,
-  ///  and `subscriber_email_addresses`. If no fields are specified, all
-  ///  supported fields are updated. WARNING: If you do not provide a field
-  ///  mask, then you might accidentally clear some fields. For example, if you
-  ///  leave the field mask empty and do not provide a value for
-  ///  `subscriber_email_addresses`, then `subscriber_email_addresses` is
-  ///  updated to empty.
+  ///  and `subscriber_email_addresses`. If no fields are specified, all supported
+  ///  fields are updated.
+  ///  WARNING: If you do not provide a field mask, then you might accidentally
+  ///  clear some fields. For example, if you leave the field mask empty and do
+  ///  not provide a value for `subscriber_email_addresses`, then
+  ///  `subscriber_email_addresses` is updated to empty.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::support::v2::Case,google/cloud/support/v2/case.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.support.v2.Case])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.support.v2.Case]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.UpdateCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
+  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L295}
   ///
+  // clang-format on
   StatusOr<google::cloud::support::v2::Case> UpdateCase(
       google::cloud::support::v2::Case const& case_,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Update the specified case. Only a subset of fields can be updated.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::support::v2::UpdateCaseRequest,google/cloud/support/v2/case_service.proto#L295}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.support.v2.UpdateCaseRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::support::v2::Case,google/cloud/support/v2/case.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.support.v2.Case])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.support.v2.Case]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.UpdateCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
+  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L295}
   ///
+  // clang-format on
   StatusOr<google::cloud::support::v2::Case> UpdateCase(
       google::cloud::support::v2::UpdateCaseRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Escalate a case. Escalating a case will initiate the Google Cloud Support
   /// escalation management process.
@@ -284,59 +410,106 @@ class CaseServiceClient {
   /// escalations' in the feature list to find out which tiers are able to
   /// perform escalations.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::support::v2::EscalateCaseRequest,google/cloud/support/v2/case_service.proto#L281}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.support.v2.EscalateCaseRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::support::v2::Case,google/cloud/support/v2/case.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.support.v2.Case])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.support.v2.Case]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.EscalateCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L281}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
+  /// [google.cloud.support.v2.EscalateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L281}
   ///
+  // clang-format on
   StatusOr<google::cloud::support::v2::Case> EscalateCase(
       google::cloud::support::v2::EscalateCaseRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Close the specified case.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::support::v2::CloseCaseRequest,google/cloud/support/v2/case_service.proto#L312}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.support.v2.CloseCaseRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::support::v2::Case,google/cloud/support/v2/case.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.support.v2.Case])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.support.v2.Case]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
-  /// [google.cloud.support.v2.CloseCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L312}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L33}
+  /// [google.cloud.support.v2.CloseCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L312}
   ///
+  // clang-format on
   StatusOr<google::cloud::support::v2::Case> CloseCase(
       google::cloud::support::v2::CloseCaseRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieve valid classifications to be used when creating a support case.
   /// The classications are hierarchical, with each classification containing
   /// all levels of the hierarchy, separated by " > ". For example "Technical
   /// Issue > Compute > Compute Engine".
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::support::v2::SearchCaseClassificationsRequest,google/cloud/support/v2/case_service.proto#L323}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.support.v2.SearchCaseClassificationsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::support::v2::CaseClassification,google/cloud/support/v2/case.proto#L149}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.support.v2.CaseClassification], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.support.v2.CaseClassification]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case.proto#L149}
-  /// [google.cloud.support.v2.SearchCaseClassificationsRequest]:
-  /// @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L323}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.CaseClassification]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L149}
+  /// [google.cloud.support.v2.SearchCaseClassificationsRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L323}
   ///
+  // clang-format on
   StreamRange<google::cloud::support::v2::CaseClassification>
   SearchCaseClassifications(
       google::cloud::support::v2::SearchCaseClassificationsRequest request,

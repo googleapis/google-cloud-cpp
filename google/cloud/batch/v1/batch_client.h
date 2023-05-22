@@ -88,233 +88,410 @@ class BatchServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Create a Job.
   ///
-  /// @param parent  Required. The parent resource name where the Job will be
-  /// created.
+  /// @param parent  Required. The parent resource name where the Job will be created.
   ///  Pattern: "projects/{project}/locations/{location}"
   /// @param job  Required. The Job to create.
-  /// @param job_id  ID used to uniquely identify the Job within its parent
-  /// scope.
+  /// @param job_id  ID used to uniquely identify the Job within its parent scope.
   ///  This field should contain at most 63 characters and must start with
   ///  lowercase characters.
   ///  Only lowercase characters, numbers and '-' are accepted.
   ///  The '-' character cannot be the first or the last one.
   ///  A system generated ID will be used if the field is not set.
-  ///  The job.name field in the request will be ignored and the created
-  ///  resource name of the Job will be "{parent}/jobs/{job_id}".
+  ///  The job.name field in the request will be ignored and the created resource
+  ///  name of the Job will be "{parent}/jobs/{job_id}".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.batch.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.batch.v1.CreateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L101}
-  /// [google.cloud.batch.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L101}
+  /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
+  // clang-format on
   StatusOr<google::cloud::batch::v1::Job> CreateJob(
       std::string const& parent, google::cloud::batch::v1::Job const& job,
       std::string const& job_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Create a Job.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::batch::v1::CreateJobRequest,google/cloud/batch/v1/batch.proto#L101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.batch.v1.CreateJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.batch.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.batch.v1.CreateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L101}
-  /// [google.cloud.batch.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L101}
+  /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
+  // clang-format on
   StatusOr<google::cloud::batch::v1::Job> CreateJob(
       google::cloud::batch::v1::CreateJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Get a Job specified by its resource name.
   ///
   /// @param name  Required. Job name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.batch.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.batch.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L140}
-  /// [google.cloud.batch.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L140}
+  /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
+  // clang-format on
   StatusOr<google::cloud::batch::v1::Job> GetJob(std::string const& name,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Get a Job specified by its resource name.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::batch::v1::GetJobRequest,google/cloud/batch/v1/batch.proto#L140}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.batch.v1.GetJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.batch.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.batch.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L140}
-  /// [google.cloud.batch.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L140}
+  /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
+  // clang-format on
   StatusOr<google::cloud::batch::v1::Job> GetJob(
       google::cloud::batch::v1::GetJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Delete a Job.
   ///
   /// @param name  Job name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::batch::v1::OperationMetadata,google/cloud/batch/v1/batch.proto#L243}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.batch.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.batch.v1.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L149}
-  /// [google.cloud.batch.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L243}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L149}
+  /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L243}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Delete a Job.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::batch::v1::DeleteJobRequest,google/cloud/batch/v1/batch.proto#L149}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.batch.v1.DeleteJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::batch::v1::OperationMetadata,google/cloud/batch/v1/batch.proto#L243}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.batch.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.batch.v1.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L149}
-  /// [google.cloud.batch.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L243}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L149}
+  /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L243}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
       google::cloud::batch::v1::DeleteJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// List all Jobs for a project within a region.
   ///
   /// @param parent  Parent path.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.batch.v1.Job], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.batch.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
-  /// [google.cloud.batch.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L173}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
+  /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L173}
   ///
+  // clang-format on
   StreamRange<google::cloud::batch::v1::Job> ListJobs(std::string const& parent,
                                                       Options opts = {});
 
+  // clang-format off
   ///
   /// List all Jobs for a project within a region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::batch::v1::ListJobsRequest,google/cloud/batch/v1/batch.proto#L173}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.batch.v1.ListJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.batch.v1.Job], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.batch.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
-  /// [google.cloud.batch.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L173}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
+  /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L173}
   ///
+  // clang-format on
   StreamRange<google::cloud::batch::v1::Job> ListJobs(
       google::cloud::batch::v1::ListJobsRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Return a single Task.
   ///
   /// @param name  Required. Task name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L295}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.batch.v1.Task])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.batch.v1.GetTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L234}
-  /// [google.cloud.batch.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L234}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L295}
   ///
+  // clang-format on
   StatusOr<google::cloud::batch::v1::Task> GetTask(std::string const& name,
                                                    Options opts = {});
 
+  // clang-format off
   ///
   /// Return a single Task.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::batch::v1::GetTaskRequest,google/cloud/batch/v1/batch.proto#L234}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.batch.v1.GetTaskRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L295}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.batch.v1.Task])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.batch.v1.GetTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L234}
-  /// [google.cloud.batch.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L234}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L295}
   ///
+  // clang-format on
   StatusOr<google::cloud::batch::v1::Task> GetTask(
       google::cloud::batch::v1::GetTaskRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// List Tasks associated with a job.
   ///
-  /// @param parent  Required. Name of a TaskGroup from which Tasks are being
-  /// requested.
+  /// @param parent  Required. Name of a TaskGroup from which Tasks are being requested.
   ///  Pattern:
   ///  "projects/{project}/locations/{location}/jobs/{job}/taskGroups/{task_group}"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L295}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.batch.v1.Task], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.batch.v1.ListTasksRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L200}
-  /// [google.cloud.batch.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L200}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L295}
   ///
+  // clang-format on
   StreamRange<google::cloud::batch::v1::Task> ListTasks(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// List Tasks associated with a job.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::batch::v1::ListTasksRequest,google/cloud/batch/v1/batch.proto#L200}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.batch.v1.ListTasksRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L295}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.batch.v1.Task], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.batch.v1.ListTasksRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L200}
-  /// [google.cloud.batch.v1.Task]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L200}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L295}
   ///
+  // clang-format on
   StreamRange<google::cloud::batch::v1::Task> ListTasks(
       google::cloud::batch::v1::ListTasksRequest request, Options opts = {});
 

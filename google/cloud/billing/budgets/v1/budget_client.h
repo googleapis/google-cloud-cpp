@@ -85,53 +85,73 @@ class BudgetServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new budget. See
   /// [Quotas and limits](https://cloud.google.com/billing/quotas)
-  /// for more information on the limits of the number of budgets you can
-  /// create.
+  /// for more information on the limits of the number of budgets you can create.
   ///
-  /// @param parent  Required. The name of the billing account to create the
-  /// budget in. Values
+  /// @param parent  Required. The name of the billing account to create the budget in. Values
   ///  are of the form `billingAccounts/{billingAccountId}`.
   /// @param budget  Required. Budget to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.budgets.v1.Budget])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.budgets.v1.Budget]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
-  /// [google.cloud.billing.budgets.v1.CreateBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L100}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.budgets.v1.Budget]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.CreateBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L100}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
       std::string const& parent,
       google::cloud::billing::budgets::v1::Budget const& budget,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new budget. See
   /// [Quotas and limits](https://cloud.google.com/billing/quotas)
-  /// for more information on the limits of the number of budgets you can
-  /// create.
+  /// for more information on the limits of the number of budgets you can create.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::billing::budgets::v1::CreateBudgetRequest,google/cloud/billing/budgets/v1/budget_service.proto#L100}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.billing.budgets.v1.CreateBudgetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.budgets.v1.Budget])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.budgets.v1.Budget]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
-  /// [google.cloud.billing.budgets.v1.CreateBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L100}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.budgets.v1.Budget]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.CreateBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L100}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
       google::cloud::billing::budgets::v1::CreateBudgetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a budget and returns the updated budget.
   ///
@@ -141,27 +161,35 @@ class BudgetServiceClient {
   ///
   /// @param budget  Required. The updated budget object.
   ///  The budget to update is specified by the budget name in the budget.
-  /// @param update_mask  Optional. Indicates which fields in the provided
-  /// budget to update.
+  /// @param update_mask  Optional. Indicates which fields in the provided budget to update.
   ///  Read-only fields (such as `name`) cannot be changed. If this is not
   ///  provided, then only fields with non-default values from the request are
   ///  updated. See
-  ///  https://developers.google.com/protocol-buffers/docs/proto3#default for
-  ///  more details about default values.
+  ///  https://developers.google.com/protocol-buffers/docs/proto3#default for more
+  ///  details about default values.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.budgets.v1.Budget])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.budgets.v1.Budget]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
-  /// [google.cloud.billing.budgets.v1.UpdateBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L115}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.budgets.v1.Budget]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.UpdateBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L115}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
       google::cloud::billing::budgets::v1::Budget const& budget,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a budget and returns the updated budget.
   ///
@@ -169,22 +197,35 @@ class BudgetServiceClient {
   /// aren't available on this API. Budget fields that are not exposed in
   /// this API will not be changed by this method.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::billing::budgets::v1::UpdateBudgetRequest,google/cloud/billing/budgets/v1/budget_service.proto#L115}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.billing.budgets.v1.UpdateBudgetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.budgets.v1.Budget])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.budgets.v1.Budget]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
-  /// [google.cloud.billing.budgets.v1.UpdateBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L115}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.budgets.v1.Budget]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.UpdateBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L115}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
       google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a budget.
   ///
@@ -197,17 +238,26 @@ class BudgetServiceClient {
   ///  `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.budgets.v1.Budget])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.budgets.v1.Budget]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
-  /// [google.cloud.billing.budgets.v1.GetBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L131}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.budgets.v1.Budget]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.GetBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L131}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a budget.
   ///
@@ -216,22 +266,35 @@ class BudgetServiceClient {
   /// see these fields in the return value, though they may have been set
   /// in the Cloud Console.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::billing::budgets::v1::GetBudgetRequest,google/cloud/billing/budgets/v1/budget_service.proto#L131}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.billing.budgets.v1.GetBudgetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.budgets.v1.Budget])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.budgets.v1.Budget]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
-  /// [google.cloud.billing.budgets.v1.GetBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L131}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.budgets.v1.Budget]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.GetBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L131}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
       google::cloud::billing::budgets::v1::GetBudgetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of budgets for a billing account.
   ///
@@ -240,22 +303,39 @@ class BudgetServiceClient {
   /// see these fields in the return value, though they may have been set
   /// in the Cloud Console.
   ///
-  /// @param parent  Required. Name of billing account to list budgets under.
-  /// Values
+  /// @param parent  Required. Name of billing account to list budgets under. Values
   ///  are of the form `billingAccounts/{billingAccountId}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.billing.budgets.v1.Budget], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.billing.budgets.v1.Budget]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
-  /// [google.cloud.billing.budgets.v1.ListBudgetsRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L143}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.budgets.v1.Budget]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.ListBudgetsRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L143}
   ///
+  // clang-format on
   StreamRange<google::cloud::billing::budgets::v1::Budget> ListBudgets(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of budgets for a billing account.
   ///
@@ -264,47 +344,91 @@ class BudgetServiceClient {
   /// see these fields in the return value, though they may have been set
   /// in the Cloud Console.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::billing::budgets::v1::ListBudgetsRequest,google/cloud/billing/budgets/v1/budget_service.proto#L143}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.billing.budgets.v1.ListBudgetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.billing.budgets.v1.Budget], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.billing.budgets.v1.Budget]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
-  /// [google.cloud.billing.budgets.v1.ListBudgetsRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L143}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.budgets.v1.Budget]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.ListBudgetsRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L143}
   ///
+  // clang-format on
   StreamRange<google::cloud::billing::budgets::v1::Budget> ListBudgets(
       google::cloud::billing::budgets::v1::ListBudgetsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a budget. Returns successfully if already deleted.
   ///
-  /// @param name  Required. Name of the budget to delete. Values are of the
-  /// form
+  /// @param name  Required. Name of the budget to delete. Values are of the form
   ///  `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.billing.budgets.v1.DeleteBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L174}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.budgets.v1.DeleteBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L174}
   ///
+  // clang-format on
   Status DeleteBudget(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a budget. Returns successfully if already deleted.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::billing::budgets::v1::DeleteBudgetRequest,google/cloud/billing/budgets/v1/budget_service.proto#L174}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.billing.budgets.v1.DeleteBudgetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.billing.budgets.v1.DeleteBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L174}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.budgets.v1.DeleteBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L174}
   ///
+  // clang-format on
   Status DeleteBudget(
       google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request,
       Options opts = {});

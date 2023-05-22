@@ -84,68 +84,97 @@ class TextToSpeechClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Returns a list of Voice supported for synthesis.
   ///
   /// @param language_code  Optional. Recommended.
   ///  [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
   ///  If not specified, the API will return all supported voices.
-  ///  If specified, the ListVoices call will only return voices that can be
-  ///  used to synthesize this language_code. For example, if you specify
-  ///  `"en-NZ"`, all `"en-NZ"` voices will be returned. If you specify `"no"`,
-  ///  both
+  ///  If specified, the ListVoices call will only return voices that can be used
+  ///  to synthesize this language_code. For example, if you specify `"en-NZ"`,
+  ///  all `"en-NZ"` voices will be returned. If you specify `"no"`, both
   ///  `"no-\*"` (Norwegian) and `"nb-\*"` (Norwegian Bokmal) voices will be
   ///  returned.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::texttospeech::v1::ListVoicesResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L126}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.texttospeech.v1.ListVoicesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.texttospeech.v1.ListVoicesRequest]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L113}
-  /// [google.cloud.texttospeech.v1.ListVoicesResponse]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L126}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.texttospeech.v1.ListVoicesRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L113}
+  /// [google.cloud.texttospeech.v1.ListVoicesResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L126}
   ///
+  // clang-format on
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
       std::string const& language_code, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of Voice supported for synthesis.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::texttospeech::v1::ListVoicesRequest,google/cloud/texttospeech/v1/cloud_tts.proto#L113}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.texttospeech.v1.ListVoicesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::texttospeech::v1::ListVoicesResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L126}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.texttospeech.v1.ListVoicesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.texttospeech.v1.ListVoicesRequest]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L113}
-  /// [google.cloud.texttospeech.v1.ListVoicesResponse]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L126}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.texttospeech.v1.ListVoicesRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L113}
+  /// [google.cloud.texttospeech.v1.ListVoicesResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L126}
   ///
+  // clang-format on
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
       google::cloud::texttospeech::v1::ListVoicesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Synthesizes speech synchronously: receive results after all text input
   /// has been processed.
   ///
-  /// @param input  Required. The Synthesizer requires either plain text or SSML
-  /// as input.
+  /// @param input  Required. The Synthesizer requires either plain text or SSML as input.
   /// @param voice  Required. The desired voice of the synthesized audio.
   /// @param audio_config  Required. The configuration of the synthesized audio.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::texttospeech::v1::SynthesizeSpeechResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L297}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.texttospeech.v1.SynthesizeSpeechResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L149}
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L297}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L149}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L297}
   ///
+  // clang-format on
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
   SynthesizeSpeech(
       google::cloud::texttospeech::v1::SynthesisInput const& input,
@@ -153,22 +182,35 @@ class TextToSpeechClient {
       google::cloud::texttospeech::v1::AudioConfig const& audio_config,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Synthesizes speech synchronously: receive results after all text input
   /// has been processed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::texttospeech::v1::SynthesizeSpeechRequest,google/cloud/texttospeech/v1/cloud_tts.proto#L149}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.texttospeech.v1.SynthesizeSpeechRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::texttospeech::v1::SynthesizeSpeechResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L297}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.texttospeech.v1.SynthesizeSpeechResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L149}
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L297}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L149}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L297}
   ///
+  // clang-format on
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
   SynthesizeSpeech(
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request,

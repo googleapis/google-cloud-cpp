@@ -86,308 +86,484 @@ class AssetServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Exports assets with time and resource types to a given Cloud Storage
   /// location/BigQuery table. For Cloud Storage location destinations, the
   /// output format is newline-delimited JSON. Each line represents a
   /// [google.cloud.asset.v1.Asset][google.cloud.asset.v1.Asset] in the JSON
-  /// format; for BigQuery table destinations, the output table stores the
-  /// fields in asset Protobuf as columns. This API implements the
+  /// format; for BigQuery table destinations, the output table stores the fields
+  /// in asset Protobuf as columns. This API implements the
   /// [google.longrunning.Operation][google.longrunning.Operation] API, which
   /// allows you to keep track of the export. We recommend intervals of at least
   /// 2 seconds with exponential retry to poll the export operation result. For
   /// regular-size resource parent, the export operation usually finishes within
   /// 5 minutes.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::ExportAssetsRequest,google/cloud/asset/v1/asset_service.proto#L331}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.ExportAssetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::ExportAssetsResponse,google/cloud/asset/v1/asset_service.proto#L401}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.asset.v1.ExportAssetsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L96}
-  /// [google.cloud.asset.v1.ExportAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L331}
-  /// [google.cloud.asset.v1.ExportAssetsResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L401}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.Asset]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L96}
+  /// [google.cloud.asset.v1.ExportAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L331}
+  /// [google.cloud.asset.v1.ExportAssetsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L401}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>> ExportAssets(
       google::cloud::asset::v1::ExportAssetsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists assets with time and resource types and returns paged results in
   /// response.
   ///
-  /// @param parent  Required. Name of the organization, folder, or project the
-  /// assets belong
+  /// @param parent  Required. Name of the organization, folder, or project the assets belong
   ///  to. Format: "organizations/[organization-number]" (such as
   ///  "organizations/123"), "projects/[project-id]" (such as
   ///  "projects/my-project-id"), "projects/[project-number]" (such as
-  ///  "projects/12345"), or "folders/[folder-number]" (such as
-  ///  "folders/12345").
+  ///  "projects/12345"), or "folders/[folder-number]" (such as "folders/12345").
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::Asset,google/cloud/asset/v1/assets.proto#L96}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.Asset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L96}
-  /// [google.cloud.asset.v1.ListAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L417}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.Asset]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L96}
+  /// [google.cloud.asset.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L417}
   ///
+  // clang-format on
   StreamRange<google::cloud::asset::v1::Asset> ListAssets(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists assets with time and resource types and returns paged results in
   /// response.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::ListAssetsRequest,google/cloud/asset/v1/asset_service.proto#L417}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.ListAssetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::Asset,google/cloud/asset/v1/assets.proto#L96}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.Asset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.Asset]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L96}
-  /// [google.cloud.asset.v1.ListAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L417}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.Asset]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L96}
+  /// [google.cloud.asset.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L417}
   ///
+  // clang-format on
   StreamRange<google::cloud::asset::v1::Asset> ListAssets(
       google::cloud::asset::v1::ListAssetsRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Batch gets the update history of assets that overlap a time window.
   /// For IAM_POLICY content, this API outputs history when the asset and its
-  /// attached IAM POLICY both exist. This can create gaps in the output
-  /// history. Otherwise, this API outputs history with asset in both non-delete
-  /// or deleted status. If a specified asset does not exist, this API returns
-  /// an INVALID_ARGUMENT error.
+  /// attached IAM POLICY both exist. This can create gaps in the output history.
+  /// Otherwise, this API outputs history with asset in both non-delete or
+  /// deleted status.
+  /// If a specified asset does not exist, this API returns an INVALID_ARGUMENT
+  /// error.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::BatchGetAssetsHistoryRequest,google/cloud/asset/v1/asset_service.proto#L503}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.BatchGetAssetsHistoryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::BatchGetAssetsHistoryResponse,google/cloud/asset/v1/asset_service.proto#L556}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.BatchGetAssetsHistoryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.BatchGetAssetsHistoryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L503}
-  /// [google.cloud.asset.v1.BatchGetAssetsHistoryResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L556}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.BatchGetAssetsHistoryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L503}
+  /// [google.cloud.asset.v1.BatchGetAssetsHistoryResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L556}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
   BatchGetAssetsHistory(
       google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a feed in a parent project/folder/organization to listen to its
   /// asset updates.
   ///
-  /// @param parent  Required. The name of the project/folder/organization where
-  /// this feed
+  /// @param parent  Required. The name of the project/folder/organization where this feed
   ///  should be created in. It can only be an organization number (such as
-  ///  "organizations/123"), a folder number (such as "folders/123"), a project
-  ///  ID (such as "projects/my-project-id"), or a project number (such as
+  ///  "organizations/123"), a folder number (such as "folders/123"), a project ID
+  ///  (such as "projects/my-project-id"), or a project number (such as
   ///  "projects/12345").
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::Feed,google/cloud/asset/v1/asset_service.proto#L812}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.Feed])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.CreateFeedRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L562}
-  /// [google.cloud.asset.v1.Feed]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.CreateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L562}
+  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::Feed> CreateFeed(std::string const& parent,
                                                       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a feed in a parent project/folder/organization to listen to its
   /// asset updates.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::CreateFeedRequest,google/cloud/asset/v1/asset_service.proto#L562}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.CreateFeedRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::Feed,google/cloud/asset/v1/asset_service.proto#L812}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.Feed])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.CreateFeedRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L562}
-  /// [google.cloud.asset.v1.Feed]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.CreateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L562}
+  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::Feed> CreateFeed(
       google::cloud::asset::v1::CreateFeedRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets details about an asset feed.
   ///
-  /// @param name  Required. The name of the Feed and it must be in the format
-  /// of:
+  /// @param name  Required. The name of the Feed and it must be in the format of:
   ///  projects/project_number/feeds/feed_id
   ///  folders/folder_number/feeds/feed_id
   ///  organizations/organization_number/feeds/feed_id
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::Feed,google/cloud/asset/v1/asset_service.proto#L812}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.Feed])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.Feed]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
-  /// [google.cloud.asset.v1.GetFeedRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L582}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
+  /// [google.cloud.asset.v1.GetFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L582}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::Feed> GetFeed(std::string const& name,
                                                    Options opts = {});
 
+  // clang-format off
   ///
   /// Gets details about an asset feed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::GetFeedRequest,google/cloud/asset/v1/asset_service.proto#L582}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.GetFeedRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::Feed,google/cloud/asset/v1/asset_service.proto#L812}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.Feed])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.Feed]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
-  /// [google.cloud.asset.v1.GetFeedRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L582}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
+  /// [google.cloud.asset.v1.GetFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L582}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::Feed> GetFeed(
       google::cloud::asset::v1::GetFeedRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all asset feeds in a parent project/folder/organization.
   ///
-  /// @param parent  Required. The parent project/folder/organization whose
-  /// feeds are to be
+  /// @param parent  Required. The parent project/folder/organization whose feeds are to be
   ///  listed. It can only be using project/folder/organization number (such as
   ///  "folders/12345"), or a project ID (such as "projects/my-project-id").
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::ListFeedsResponse,google/cloud/asset/v1/asset_service.proto#L601}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.ListFeedsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.ListFeedsRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L594}
-  /// [google.cloud.asset.v1.ListFeedsResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L601}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.ListFeedsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L594}
+  /// [google.cloud.asset.v1.ListFeedsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L601}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::ListFeedsResponse> ListFeeds(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all asset feeds in a parent project/folder/organization.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::ListFeedsRequest,google/cloud/asset/v1/asset_service.proto#L594}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.ListFeedsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::ListFeedsResponse,google/cloud/asset/v1/asset_service.proto#L601}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.ListFeedsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.ListFeedsRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L594}
-  /// [google.cloud.asset.v1.ListFeedsResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L601}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.ListFeedsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L594}
+  /// [google.cloud.asset.v1.ListFeedsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L601}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::ListFeedsResponse> ListFeeds(
       google::cloud::asset::v1::ListFeedsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an asset feed configuration.
   ///
-  /// @param feed  Required. The new values of feed details. It must match an
-  /// existing feed
+  /// @param feed  Required. The new values of feed details. It must match an existing feed
   ///  and the field `name` must be in the format of:
   ///  projects/project_number/feeds/feed_id or
   ///  folders/folder_number/feeds/feed_id or
   ///  organizations/organization_number/feeds/feed_id.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::Feed,google/cloud/asset/v1/asset_service.proto#L812}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.Feed])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.Feed]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
-  /// [google.cloud.asset.v1.UpdateFeedRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L607}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
+  /// [google.cloud.asset.v1.UpdateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L607}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::Feed> UpdateFeed(
       google::cloud::asset::v1::Feed const& feed, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an asset feed configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::UpdateFeedRequest,google/cloud/asset/v1/asset_service.proto#L607}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.UpdateFeedRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::Feed,google/cloud/asset/v1/asset_service.proto#L812}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.Feed])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.Feed]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
-  /// [google.cloud.asset.v1.UpdateFeedRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L607}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
+  /// [google.cloud.asset.v1.UpdateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L607}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::Feed> UpdateFeed(
       google::cloud::asset::v1::UpdateFeedRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an asset feed.
   ///
-  /// @param name  Required. The name of the feed and it must be in the format
-  /// of:
+  /// @param name  Required. The name of the feed and it must be in the format of:
   ///  projects/project_number/feeds/feed_id
   ///  folders/folder_number/feeds/feed_id
   ///  organizations/organization_number/feeds/feed_id
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.asset.v1.DeleteFeedRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L622}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.DeleteFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L622}
   ///
+  // clang-format on
   Status DeleteFeed(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an asset feed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::DeleteFeedRequest,google/cloud/asset/v1/asset_service.proto#L622}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.DeleteFeedRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.asset.v1.DeleteFeedRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L622}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.DeleteFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L622}
   ///
+  // clang-format on
   Status DeleteFeed(google::cloud::asset::v1::DeleteFeedRequest const& request,
                     Options opts = {});
 
+  // clang-format off
   ///
   /// Searches all Google Cloud resources within the specified scope, such as a
   /// project, folder, or organization. The caller must be granted the
   /// `cloudasset.assets.searchAllResources` permission on the desired scope,
   /// otherwise the request will be rejected.
   ///
-  /// @param scope  Required. A scope can be a project, a folder, or an
-  /// organization. The
+  /// @param scope  Required. A scope can be a project, a folder, or an organization. The
   ///  search is limited to the resources within the `scope`. The caller must be
   ///  granted the
   ///  [`cloudasset.assets.searchAllResources`](https://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
@@ -404,116 +580,145 @@ class AssetServiceClient {
   ///  Examples:
   ///  * `name:Important` to find Google Cloud resources whose name contains
   ///    "Important" as a word.
-  ///  * `name=Important` to find the Google Cloud resource whose name is
-  ///  exactly
+  ///  * `name=Important` to find the Google Cloud resource whose name is exactly
   ///    "Important".
   ///  * `displayName:Impor*` to find Google Cloud resources whose display name
   ///    contains "Impor" as a prefix of any word in the field.
   ///  * `location:us-west*` to find Google Cloud resources whose location
   ///    contains both "us" and "west" as prefixes.
-  ///  * `labels:prod` to find Google Cloud resources whose labels contain
-  ///  "prod"
+  ///  * `labels:prod` to find Google Cloud resources whose labels contain "prod"
   ///    as a key or value.
-  ///  * `labels.env:prod` to find Google Cloud resources that have a label
-  ///  "env"
+  ///  * `labels.env:prod` to find Google Cloud resources that have a label "env"
   ///    and its value is "prod".
   ///  * `labels.env:*` to find Google Cloud resources that have a label "env".
   ///  * `kmsKey:key` to find Google Cloud resources encrypted with a
-  ///    customer-managed encryption key whose name contains "key" as a word.
-  ///    This field is deprecated. Please use the `kmsKeys` field to retrieve
-  ///    Cloud KMS key information.
+  ///    customer-managed encryption key whose name contains "key" as a word. This
+  ///    field is deprecated. Please use the `kmsKeys` field to retrieve Cloud KMS
+  ///    key information.
   ///  * `kmsKeys:key` to find Google Cloud resources encrypted with
   ///    customer-managed encryption keys whose name contains the word "key".
-  ///  * `relationships:instance-group-1` to find Google Cloud resources that
-  ///  have
+  ///  * `relationships:instance-group-1` to find Google Cloud resources that have
   ///    relationships with "instance-group-1" in the related resource name.
   ///  * `relationships:INSTANCE_TO_INSTANCEGROUP` to find Compute Engine
   ///    instances that have relationships of type "INSTANCE_TO_INSTANCEGROUP".
   ///  * `relationships.INSTANCE_TO_INSTANCEGROUP:instance-group-1` to find
-  ///    Compute Engine instances that have relationships with
-  ///    "instance-group-1" in the Compute Engine instance group resource name,
-  ///    for relationship type "INSTANCE_TO_INSTANCEGROUP".
+  ///    Compute Engine instances that have relationships with "instance-group-1"
+  ///    in the Compute Engine instance group resource name, for relationship type
+  ///    "INSTANCE_TO_INSTANCEGROUP".
   ///  * `state:ACTIVE` to find Google Cloud resources whose state contains
   ///    "ACTIVE" as a word.
   ///  * `NOT state:ACTIVE` to find Google Cloud resources whose state doesn't
   ///    contain "ACTIVE" as a word.
-  ///  * `createTime<1609459200` to find Google Cloud resources that were
-  ///  created
+  ///  * `createTime<1609459200` to find Google Cloud resources that were created
   ///    before "2021-01-01 00:00:00 UTC". 1609459200 is the epoch timestamp of
   ///    "2021-01-01 00:00:00 UTC" in seconds.
-  ///  * `updateTime>1609459200` to find Google Cloud resources that were
-  ///  updated
+  ///  * `updateTime>1609459200` to find Google Cloud resources that were updated
   ///    after "2021-01-01 00:00:00 UTC". 1609459200 is the epoch timestamp of
   ///    "2021-01-01 00:00:00 UTC" in seconds.
-  ///  * `Important` to find Google Cloud resources that contain "Important" as
-  ///  a
+  ///  * `Important` to find Google Cloud resources that contain "Important" as a
   ///    word in any of the searchable fields.
-  ///  * `Impor*` to find Google Cloud resources that contain "Impor" as a
-  ///  prefix
+  ///  * `Impor*` to find Google Cloud resources that contain "Impor" as a prefix
   ///    of any word in any of the searchable fields.
   ///  * `Important location:(us-west1 OR global)` to find Google Cloud
   ///    resources that contain "Important" as a word in any of the searchable
   ///    fields and are also located in the "us-west1" region or the "global"
   ///    location.
-  /// @param asset_types  Optional. A list of asset types that this request
-  /// searches for. If empty,
+  /// @param asset_types  Optional. A list of asset types that this request searches for. If empty,
   ///  it will search all the [searchable asset
   ///  types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
   ///  Regular expressions are also supported. For example:
   ///  * "compute.googleapis.com.*" snapshots resources whose asset type starts
   ///  with "compute.googleapis.com".
   ///  * ".*Instance" snapshots resources whose asset type ends with "Instance".
-  ///  * ".*Instance.*" snapshots resources whose asset type contains
-  ///  "Instance". See [RE2](https://github.com/google/re2/wiki/Syntax) for all
-  ///  supported regular expression syntax. If the regular expression does not
-  ///  match any supported asset type, an INVALID_ARGUMENT error will be
-  ///  returned.
+  ///  * ".*Instance.*" snapshots resources whose asset type contains "Instance".
+  ///  See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported
+  ///  regular expression syntax. If the regular expression does not match any
+  ///  supported asset type, an INVALID_ARGUMENT error will be returned.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::ResourceSearchResult,google/cloud/asset/v1/assets.proto#L311}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.ResourceSearchResult], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.ResourceSearchResult]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L311}
-  /// [google.cloud.asset.v1.SearchAllResourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L891}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.ResourceSearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L311}
+  /// [google.cloud.asset.v1.SearchAllResourcesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L891}
   ///
+  // clang-format on
   StreamRange<google::cloud::asset::v1::ResourceSearchResult>
   SearchAllResources(std::string const& scope, std::string const& query,
                      std::vector<std::string> const& asset_types,
                      Options opts = {});
 
+  // clang-format off
   ///
   /// Searches all Google Cloud resources within the specified scope, such as a
   /// project, folder, or organization. The caller must be granted the
   /// `cloudasset.assets.searchAllResources` permission on the desired scope,
   /// otherwise the request will be rejected.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::SearchAllResourcesRequest,google/cloud/asset/v1/asset_service.proto#L891}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.SearchAllResourcesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::ResourceSearchResult,google/cloud/asset/v1/assets.proto#L311}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.ResourceSearchResult], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.ResourceSearchResult]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L311}
-  /// [google.cloud.asset.v1.SearchAllResourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L891}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.ResourceSearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L311}
+  /// [google.cloud.asset.v1.SearchAllResourcesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L891}
   ///
+  // clang-format on
   StreamRange<google::cloud::asset::v1::ResourceSearchResult>
   SearchAllResources(
       google::cloud::asset::v1::SearchAllResourcesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Searches all IAM policies within the specified scope, such as a project,
   /// folder, or organization. The caller must be granted the
   /// `cloudasset.assets.searchAllIamPolicies` permission on the desired scope,
   /// otherwise the request will be rejected.
   ///
-  /// @param scope  Required. A scope can be a project, a folder, or an
-  /// organization. The
+  /// @param scope  Required. A scope can be a project, a folder, or an organization. The
   ///  search is limited to the IAM policies within the `scope`. The caller must
   ///  be granted the
   ///  [`cloudasset.assets.searchAllIamPolicies`](https://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
@@ -542,10 +747,9 @@ class AssetServiceClient {
   ///  * `policy.role.permissions:storage.buckets.update` to find IAM policy
   ///    bindings that specify a role containing "storage.buckets.update"
   ///    permission. Note that if callers don't have `iam.roles.get` access to a
-  ///    role's included permissions, policy bindings that specify this role
-  ///    will be dropped from the search results.
-  ///  * `policy.role.permissions:upd*` to find IAM policy bindings that specify
-  ///  a
+  ///    role's included permissions, policy bindings that specify this role will
+  ///    be dropped from the search results.
+  ///  * `policy.role.permissions:upd*` to find IAM policy bindings that specify a
   ///    role containing "upd" as a prefix of any word in the role permission.
   ///    Note that if callers don't have `iam.roles.get` access to a role's
   ///    included permissions, policy bindings that specify this role will be
@@ -560,73 +764,125 @@ class AssetServiceClient {
   ///  * `resource:(instance1 OR instance2) policy:amy` to find
   ///    IAM policy bindings that are set on resources "instance1" or
   ///    "instance2" and also specify user "amy".
-  ///  * `roles:roles/compute.admin` to find IAM policy bindings that specify
-  ///  the
+  ///  * `roles:roles/compute.admin` to find IAM policy bindings that specify the
   ///    Compute Admin role.
   ///  * `memberTypes:user` to find IAM policy bindings that contain the
   ///    principal type "user".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::IamPolicySearchResult,google/cloud/asset/v1/assets.proto#L667}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.IamPolicySearchResult], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.IamPolicySearchResult]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L667}
-  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1062}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.IamPolicySearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L667}
+  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1062}
   ///
+  // clang-format on
   StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
   SearchAllIamPolicies(std::string const& scope, std::string const& query,
                        Options opts = {});
 
+  // clang-format off
   ///
   /// Searches all IAM policies within the specified scope, such as a project,
   /// folder, or organization. The caller must be granted the
   /// `cloudasset.assets.searchAllIamPolicies` permission on the desired scope,
   /// otherwise the request will be rejected.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::SearchAllIamPoliciesRequest,google/cloud/asset/v1/asset_service.proto#L1062}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.SearchAllIamPoliciesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::IamPolicySearchResult,google/cloud/asset/v1/assets.proto#L667}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.IamPolicySearchResult], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.IamPolicySearchResult]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L667}
-  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1062}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.IamPolicySearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L667}
+  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1062}
   ///
+  // clang-format on
   StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
   SearchAllIamPolicies(
       google::cloud::asset::v1::SearchAllIamPoliciesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes IAM policies to answer which identities have what accesses on
   /// which resources.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeIamPolicyRequest,google/cloud/asset/v1/asset_service.proto#L1373}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.AnalyzeIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeIamPolicyResponse,google/cloud/asset/v1/asset_service.proto#L1413}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.AnalyzeIamPolicyResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1373}
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1413}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1373}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1413}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse> AnalyzeIamPolicy(
       google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes IAM policies asynchronously to answer which identities have what
   /// accesses on which resources, and writes the analysis results to a Google
-  /// Cloud Storage or a BigQuery destination. For Cloud Storage destination,
-  /// the output format is the JSON format that represents a
+  /// Cloud Storage or a BigQuery destination. For Cloud Storage destination, the
+  /// output format is the JSON format that represents a
   /// [AnalyzeIamPolicyResponse][google.cloud.asset.v1.AnalyzeIamPolicyResponse].
   /// This method implements the
   /// [google.longrunning.Operation][google.longrunning.Operation], which allows
@@ -634,22 +890,38 @@ class AssetServiceClient {
   /// seconds with exponential backoff retry to poll the operation result. The
   /// metadata contains the metadata for the long-running operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest,google/cloud/asset/v1/asset_service.proto#L1529}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse,google/cloud/asset/v1/asset_service.proto#L1560}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1529}
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1560}
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1413}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1529}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1560}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1413}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
   AnalyzeIamPolicyLongrunning(
@@ -657,6 +929,7 @@ class AssetServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Analyze moving a resource to a specified destination without kicking off
   /// the actual move. The analysis is best effort depending on the user's
@@ -664,22 +937,35 @@ class AssetServiceClient {
   /// The policies and configuration are subject to change before the actual
   /// resource migration takes place.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeMoveRequest,google/cloud/asset/v1/asset_service.proto#L1743}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.AnalyzeMoveRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeMoveResponse,google/cloud/asset/v1/asset_service.proto#L1778}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.AnalyzeMoveResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.AnalyzeMoveRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1743}
-  /// [google.cloud.asset.v1.AnalyzeMoveResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1778}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.AnalyzeMoveRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1743}
+  /// [google.cloud.asset.v1.AnalyzeMoveResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1778}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
       google::cloud::asset::v1::AnalyzeMoveRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Issue a job that queries assets using a SQL statement compatible with
   /// [BigQuery Standard
@@ -696,36 +982,46 @@ class AssetServiceClient {
   /// https://cloud.google.com/bigquery/docs/best-practices-performance-output,
   /// queries return larger results will result in errors.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::QueryAssetsRequest,google/cloud/asset/v1/asset_service.proto#L1849}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.QueryAssetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::QueryAssetsResponse,google/cloud/asset/v1/asset_service.proto#L1935}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.QueryAssetsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.QueryAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1849}
-  /// [google.cloud.asset.v1.QueryAssetsResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1935}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.QueryAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1849}
+  /// [google.cloud.asset.v1.QueryAssetsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1935}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::QueryAssetsResponse> QueryAssets(
       google::cloud::asset::v1::QueryAssetsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a saved query in a parent project/folder/organization.
   ///
-  /// @param parent  Required. The name of the project/folder/organization where
-  /// this
+  /// @param parent  Required. The name of the project/folder/organization where this
   ///  saved_query should be created in. It can only be an organization number
   ///  (such as "organizations/123"), a folder number (such as "folders/123"), a
-  ///  project ID (such as "projects/my-project-id"), or a project number (such
-  ///  as "projects/12345").
-  /// @param saved_query  Required. The saved_query details. The `name` field
-  /// must be empty as it
+  ///  project ID (such as "projects/my-project-id"), or a project number (such as
+  ///  "projects/12345").
+  /// @param saved_query  Required. The saved_query details. The `name` field must be empty as it
   ///  will be generated based on the parent and saved_query_id.
-  /// @param saved_query_id  Required. The ID to use for the saved query, which
-  /// must be unique in the
+  /// @param saved_query_id  Required. The ID to use for the saved query, which must be unique in the
   ///  specified parent. It will become the final component of the saved query's
   ///  resource name.
   ///  This value should be 4-63 characters, and valid characters
@@ -734,117 +1030,199 @@ class AssetServiceClient {
   ///  `name` field of the `saved_query` will be ignored.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1563}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.SavedQuery])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.CreateSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1620}
-  /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.CreateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1620}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
       std::string const& parent,
       google::cloud::asset::v1::SavedQuery const& saved_query,
       std::string const& saved_query_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a saved query in a parent project/folder/organization.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::CreateSavedQueryRequest,google/cloud/asset/v1/asset_service.proto#L1620}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.CreateSavedQueryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1563}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.SavedQuery])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.CreateSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1620}
-  /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.CreateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1620}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
       google::cloud::asset::v1::CreateSavedQueryRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets details about a saved query.
   ///
-  /// @param name  Required. The name of the saved query and it must be in the
-  /// format of:
+  /// @param name  Required. The name of the saved query and it must be in the format of:
   ///  * projects/project_number/savedQueries/saved_query_id
   ///  * folders/folder_number/savedQueries/saved_query_id
   ///  * organizations/organization_number/savedQueries/saved_query_id
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1563}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.SavedQuery])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.GetSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1650}
-  /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.GetSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1650}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets details about a saved query.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::GetSavedQueryRequest,google/cloud/asset/v1/asset_service.proto#L1650}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.GetSavedQueryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1563}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.SavedQuery])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.GetSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1650}
-  /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.GetSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1650}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
       google::cloud::asset::v1::GetSavedQueryRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all saved queries in a parent project/folder/organization.
   ///
-  /// @param parent  Required. The parent project/folder/organization whose
-  /// savedQueries are to
-  ///  be listed. It can only be using project/folder/organization number (such
-  ///  as "folders/12345"), or a project ID (such as "projects/my-project-id").
+  /// @param parent  Required. The parent project/folder/organization whose savedQueries are to
+  ///  be listed. It can only be using project/folder/organization number (such as
+  ///  "folders/12345"), or a project ID (such as "projects/my-project-id").
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1563}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.SavedQuery], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.ListSavedQueriesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1665}
-  /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1665}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
   ///
+  // clang-format on
   StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all saved queries in a parent project/folder/organization.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::ListSavedQueriesRequest,google/cloud/asset/v1/asset_service.proto#L1665}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.ListSavedQueriesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1563}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.SavedQuery], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.ListSavedQueriesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1665}
-  /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1665}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
   ///
+  // clang-format on
   StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
       google::cloud::asset::v1::ListSavedQueriesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a saved query.
   ///
@@ -857,101 +1235,157 @@ class AssetServiceClient {
   /// @param update_mask  Required. The list of fields to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1563}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.SavedQuery])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
-  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1710}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
+  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1710}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
       google::cloud::asset::v1::SavedQuery const& saved_query,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a saved query.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::UpdateSavedQueryRequest,google/cloud/asset/v1/asset_service.proto#L1710}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.UpdateSavedQueryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1563}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.SavedQuery])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.SavedQuery]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
-  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1710}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
+  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1710}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
       google::cloud::asset::v1::UpdateSavedQueryRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a saved query.
   ///
-  /// @param name  Required. The name of the saved query to delete. It must be
-  /// in the format
+  /// @param name  Required. The name of the saved query to delete. It must be in the format
   ///  of:
   ///  * projects/project_number/savedQueries/saved_query_id
   ///  * folders/folder_number/savedQueries/saved_query_id
   ///  * organizations/organization_number/savedQueries/saved_query_id
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.asset.v1.DeleteSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1727}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1727}
   ///
+  // clang-format on
   Status DeleteSavedQuery(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a saved query.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::DeleteSavedQueryRequest,google/cloud/asset/v1/asset_service.proto#L1727}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.DeleteSavedQueryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.asset.v1.DeleteSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1727}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1727}
   ///
+  // clang-format on
   Status DeleteSavedQuery(
       google::cloud::asset::v1::DeleteSavedQueryRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets effective IAM policies for a batch of resources.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest,google/cloud/asset/v1/asset_service.proto#L2020}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse,google/cloud/asset/v1/asset_service.proto#L2050}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.asset.v1.BatchGetEffectiveIamPoliciesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2020}
-  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesResponse]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2050}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2020}
+  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2050}
   ///
+  // clang-format on
   StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
   BatchGetEffectiveIamPolicies(
       google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes organization policies under a scope.
   ///
-  /// @param scope  Required. The organization to scope the request. Only
-  /// organization
+  /// @param scope  Required. The organization to scope the request. Only organization
   ///  policies within the scope will be analyzed.
   ///  * organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456")
-  /// @param constraint  Required. The name of the constraint to analyze
-  /// organization policies for.
-  ///  The response only contains analyzed organization policies for the
-  ///  provided constraint.
+  /// @param constraint  Required. The name of the constraint to analyze organization policies for.
+  ///  The response only contains analyzed organization policies for the provided
+  ///  constraint.
   /// @param filter  The expression to filter
   ///  [AnalyzeOrgPoliciesResponse.org_policy_results][google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.org_policy_results].
   ///  The only supported field is `consolidated_policy.attached_resource`, and
@@ -961,70 +1395,125 @@ class AssetServiceClient {
   ///  will return the org policy results of"folders/001".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult,google/cloud/asset/v1/asset_service.proto#L2360}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2325}
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2360}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2325}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2360}
   ///
+  // clang-format on
   StreamRange<
       google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
   AnalyzeOrgPolicies(std::string const& scope, std::string const& constraint,
                      std::string const& filter, Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes organization policies under a scope.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeOrgPoliciesRequest,google/cloud/asset/v1/asset_service.proto#L2325}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult,google/cloud/asset/v1/asset_service.proto#L2360}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2325}
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2360}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2325}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2360}
   ///
+  // clang-format on
   StreamRange<
       google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
   AnalyzeOrgPolicies(
       google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes organization policies governed containers (projects, folders or
   /// organization) under a scope.
   ///
-  /// @param scope  Required. The organization to scope the request. Only
-  /// organization
+  /// @param scope  Required. The organization to scope the request. Only organization
   ///  policies within the scope will be analyzed. The output containers will
   ///  also be limited to the ones governed by those in-scope organization
   ///  policies.
   ///  * organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456")
-  /// @param constraint  Required. The name of the constraint to analyze
-  /// governed containers for.
+  /// @param constraint  Required. The name of the constraint to analyze governed containers for.
   ///  The analysis only contains organization policies for the provided
   ///  constraint.
   /// @param filter  The expression to filter the governed containers in result.
   ///  The only supported field is `parent`, and the only supported operator is
   ///  `=`.
   ///  Example:
-  ///  parent="//cloudresourcemanager.googleapis.com/folders/001" will return
-  ///  all containers under "folders/001".
+  ///  parent="//cloudresourcemanager.googleapis.com/folders/001" will return all
+  ///  containers under "folders/001".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer,google/cloud/asset/v1/asset_service.proto#L2431}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2393}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2431}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2393}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2431}
   ///
+  // clang-format on
   StreamRange<google::cloud::asset::v1::
                   AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
   AnalyzeOrgPolicyGovernedContainers(std::string const& scope,
@@ -1032,22 +1521,44 @@ class AssetServiceClient {
                                      std::string const& filter,
                                      Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes organization policies governed containers (projects, folders or
   /// organization) under a scope.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest,google/cloud/asset/v1/asset_service.proto#L2393}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer,google/cloud/asset/v1/asset_service.proto#L2431}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2393}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2431}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2393}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2431}
   ///
+  // clang-format on
   StreamRange<google::cloud::asset::v1::
                   AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
   AnalyzeOrgPolicyGovernedContainers(
@@ -1055,6 +1566,7 @@ class AssetServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes organization policies governed assets (Google Cloud resources or
   /// policies) under a scope. This RPC supports custom constraints and the
@@ -1076,43 +1588,58 @@ class AssetServiceClient {
   /// types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types),
   /// or IAM policies.
   ///
-  /// @param scope  Required. The organization to scope the request. Only
-  /// organization
+  /// @param scope  Required. The organization to scope the request. Only organization
   ///  policies within the scope will be analyzed. The output assets will
   ///  also be limited to the ones governed by those in-scope organization
   ///  policies.
   ///  * organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456")
-  /// @param constraint  Required. The name of the constraint to analyze
-  /// governed assets for. The
+  /// @param constraint  Required. The name of the constraint to analyze governed assets for. The
   ///  analysis only contains analyzed organization policies for the provided
   ///  constraint.
-  /// @param filter  The expression to filter the governed assets in result. The
-  /// only supported
+  /// @param filter  The expression to filter the governed assets in result. The only supported
   ///  fields for governed resources are `governed_resource.project` and
   ///  `governed_resource.folders`. The only supported fields for governed iam
   ///  policies are `governed_iam_policy.project` and
   ///  `governed_iam_policy.folders`. The only supported operator is `=`.
-  ///  Example 1: governed_resource.project="projects/12345678" filter will
-  ///  return all governed resources under projects/12345678 including the
-  ///  project ifself, if applicable. Example 2:
-  ///  governed_iam_policy.folders="folders/12345678" filter will return all
-  ///  governed iam policies under folders/12345678, if applicable.
+  ///  Example 1: governed_resource.project="projects/12345678" filter will return
+  ///  all governed resources under projects/12345678 including the project
+  ///  ifself, if applicable.
+  ///  Example 2: governed_iam_policy.folders="folders/12345678" filter will
+  ///  return all governed iam policies under folders/12345678, if applicable.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset,google/cloud/asset/v1/asset_service.proto#L2575}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2472}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2575}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2472}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2575}
   ///
+  // clang-format on
   StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
                   GovernedAsset>
   AnalyzeOrgPolicyGovernedAssets(std::string const& scope,
                                  std::string const& constraint,
                                  std::string const& filter, Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes organization policies governed assets (Google Cloud resources or
   /// policies) under a scope. This RPC supports custom constraints and the
@@ -1134,18 +1661,39 @@ class AssetServiceClient {
   /// types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types),
   /// or IAM policies.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest,google/cloud/asset/v1/asset_service.proto#L2472}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset,google/cloud/asset/v1/asset_service.proto#L2575}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2472}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2575}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2472}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2575}
   ///
+  // clang-format on
   StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
                   GovernedAsset>
   AnalyzeOrgPolicyGovernedAssets(

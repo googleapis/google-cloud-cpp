@@ -93,51 +93,73 @@ class Debugger2Client {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Sets the breakpoint to the debuggee.
   ///
-  /// @param debuggee_id  Required. ID of the debuggee where the breakpoint is
-  /// to be set.
+  /// @param debuggee_id  Required. ID of the debuggee where the breakpoint is to be set.
   /// @param breakpoint  Required. Breakpoint specification to set.
   ///  The field `location` of the breakpoint must be set.
   /// @param client_version  Required. The client version making the call.
   ///  Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::SetBreakpointResponse,google/devtools/clouddebugger/v2/debugger.proto#L109}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.SetBreakpointResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.SetBreakpointRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L95}
-  /// [google.devtools.clouddebugger.v2.SetBreakpointResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L109}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.SetBreakpointRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L95}
+  /// [google.devtools.clouddebugger.v2.SetBreakpointResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L109}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::SetBreakpointResponse>
   SetBreakpoint(
       std::string const& debuggee_id,
       google::devtools::clouddebugger::v2::Breakpoint const& breakpoint,
       std::string const& client_version, Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the breakpoint to the debuggee.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::clouddebugger::v2::SetBreakpointRequest,google/devtools/clouddebugger/v2/debugger.proto#L95}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.clouddebugger.v2.SetBreakpointRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::SetBreakpointResponse,google/devtools/clouddebugger/v2/debugger.proto#L109}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.SetBreakpointResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.SetBreakpointRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L95}
-  /// [google.devtools.clouddebugger.v2.SetBreakpointResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L109}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.SetBreakpointRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L95}
+  /// [google.devtools.clouddebugger.v2.SetBreakpointResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L109}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::SetBreakpointResponse>
   SetBreakpoint(
       google::devtools::clouddebugger::v2::SetBreakpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets breakpoint information.
   ///
@@ -147,151 +169,237 @@ class Debugger2Client {
   ///  Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::GetBreakpointResponse,google/devtools/clouddebugger/v2/debugger.proto#L129}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.GetBreakpointResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.GetBreakpointRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L116}
-  /// [google.devtools.clouddebugger.v2.GetBreakpointResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L129}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.GetBreakpointRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L116}
+  /// [google.devtools.clouddebugger.v2.GetBreakpointResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L129}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::GetBreakpointResponse>
   GetBreakpoint(std::string const& debuggee_id,
                 std::string const& breakpoint_id,
                 std::string const& client_version, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets breakpoint information.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::clouddebugger::v2::GetBreakpointRequest,google/devtools/clouddebugger/v2/debugger.proto#L116}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.clouddebugger.v2.GetBreakpointRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::GetBreakpointResponse,google/devtools/clouddebugger/v2/debugger.proto#L129}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.GetBreakpointResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.GetBreakpointRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L116}
-  /// [google.devtools.clouddebugger.v2.GetBreakpointResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L129}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.GetBreakpointRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L116}
+  /// [google.devtools.clouddebugger.v2.GetBreakpointResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L129}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::GetBreakpointResponse>
   GetBreakpoint(
       google::devtools::clouddebugger::v2::GetBreakpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the breakpoint from the debuggee.
   ///
-  /// @param debuggee_id  Required. ID of the debuggee whose breakpoint to
-  /// delete.
+  /// @param debuggee_id  Required. ID of the debuggee whose breakpoint to delete.
   /// @param breakpoint_id  Required. ID of the breakpoint to delete.
   /// @param client_version  Required. The client version making the call.
   ///  Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.devtools.clouddebugger.v2.DeleteBreakpointRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L136}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.DeleteBreakpointRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L136}
   ///
+  // clang-format on
   Status DeleteBreakpoint(std::string const& debuggee_id,
                           std::string const& breakpoint_id,
                           std::string const& client_version, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the breakpoint from the debuggee.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::clouddebugger::v2::DeleteBreakpointRequest,google/devtools/clouddebugger/v2/debugger.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.clouddebugger.v2.DeleteBreakpointRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.devtools.clouddebugger.v2.DeleteBreakpointRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L136}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.DeleteBreakpointRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L136}
   ///
+  // clang-format on
   Status DeleteBreakpoint(
       google::devtools::clouddebugger::v2::DeleteBreakpointRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all breakpoints for the debuggee.
   ///
-  /// @param debuggee_id  Required. ID of the debuggee whose breakpoints to
-  /// list.
+  /// @param debuggee_id  Required. ID of the debuggee whose breakpoints to list.
   /// @param client_version  Required. The client version making the call.
   ///  Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::ListBreakpointsResponse,google/devtools/clouddebugger/v2/debugger.proto#L188}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.ListBreakpointsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.ListBreakpointsRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L149}
-  /// [google.devtools.clouddebugger.v2.ListBreakpointsResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L188}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.ListBreakpointsRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L149}
+  /// [google.devtools.clouddebugger.v2.ListBreakpointsResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L188}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::ListBreakpointsResponse>
   ListBreakpoints(std::string const& debuggee_id,
                   std::string const& client_version, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all breakpoints for the debuggee.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::clouddebugger::v2::ListBreakpointsRequest,google/devtools/clouddebugger/v2/debugger.proto#L149}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.clouddebugger.v2.ListBreakpointsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::ListBreakpointsResponse,google/devtools/clouddebugger/v2/debugger.proto#L188}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.ListBreakpointsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.ListBreakpointsRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L149}
-  /// [google.devtools.clouddebugger.v2.ListBreakpointsResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L188}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.ListBreakpointsRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L149}
+  /// [google.devtools.clouddebugger.v2.ListBreakpointsResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L188}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::ListBreakpointsResponse>
   ListBreakpoints(
       google::devtools::clouddebugger::v2::ListBreakpointsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all the debuggees that the user has access to.
   ///
-  /// @param project  Required. Project number of a Google Cloud project whose
-  /// debuggees to list.
+  /// @param project  Required. Project number of a Google Cloud project whose debuggees to list.
   /// @param client_version  Required. The client version making the call.
   ///  Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::ListDebuggeesResponse,google/devtools/clouddebugger/v2/debugger.proto#L215}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.ListDebuggeesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.ListDebuggeesRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L201}
-  /// [google.devtools.clouddebugger.v2.ListDebuggeesResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L215}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.ListDebuggeesRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L201}
+  /// [google.devtools.clouddebugger.v2.ListDebuggeesResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L215}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::ListDebuggeesResponse>
   ListDebuggees(std::string const& project, std::string const& client_version,
                 Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all the debuggees that the user has access to.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::clouddebugger::v2::ListDebuggeesRequest,google/devtools/clouddebugger/v2/debugger.proto#L201}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.clouddebugger.v2.ListDebuggeesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::ListDebuggeesResponse,google/devtools/clouddebugger/v2/debugger.proto#L215}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.ListDebuggeesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.ListDebuggeesRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L201}
-  /// [google.devtools.clouddebugger.v2.ListDebuggeesResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L215}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.ListDebuggeesRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L201}
+  /// [google.devtools.clouddebugger.v2.ListDebuggeesResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/debugger.proto#L215}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::ListDebuggeesResponse>
   ListDebuggees(
       google::devtools::clouddebugger::v2::ListDebuggeesRequest const& request,

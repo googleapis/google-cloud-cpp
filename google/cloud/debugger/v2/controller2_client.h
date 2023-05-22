@@ -103,13 +103,14 @@ class Controller2Client {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Registers the debuggee with the controller service.
   ///
   /// All agents attached to the same application must call this method with
-  /// exactly the same request content to get back the same stable
-  /// `debuggee_id`. Agents should call this method again whenever
-  /// `google.rpc.Code.NOT_FOUND` is returned from any controller method.
+  /// exactly the same request content to get back the same stable `debuggee_id`.
+  /// Agents should call this method again whenever `google.rpc.Code.NOT_FOUND`
+  /// is returned from any controller method.
   ///
   /// This protocol allows the controller service to disable debuggees, recover
   /// from data loss, or change the `debuggee_id` format. Agents must handle
@@ -120,49 +121,71 @@ class Controller2Client {
   ///  of the debuggee must be set.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::RegisterDebuggeeResponse,google/devtools/clouddebugger/v2/controller.proto#L123}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.RegisterDebuggeeResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.RegisterDebuggeeRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L115}
-  /// [google.devtools.clouddebugger.v2.RegisterDebuggeeResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L123}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.RegisterDebuggeeRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L115}
+  /// [google.devtools.clouddebugger.v2.RegisterDebuggeeResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L123}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>
   RegisterDebuggee(
       google::devtools::clouddebugger::v2::Debuggee const& debuggee,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Registers the debuggee with the controller service.
   ///
   /// All agents attached to the same application must call this method with
-  /// exactly the same request content to get back the same stable
-  /// `debuggee_id`. Agents should call this method again whenever
-  /// `google.rpc.Code.NOT_FOUND` is returned from any controller method.
+  /// exactly the same request content to get back the same stable `debuggee_id`.
+  /// Agents should call this method again whenever `google.rpc.Code.NOT_FOUND`
+  /// is returned from any controller method.
   ///
   /// This protocol allows the controller service to disable debuggees, recover
   /// from data loss, or change the `debuggee_id` format. Agents must handle
   /// `debuggee_id` value changing upon re-registration.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::clouddebugger::v2::RegisterDebuggeeRequest,google/devtools/clouddebugger/v2/controller.proto#L115}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.clouddebugger.v2.RegisterDebuggeeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::RegisterDebuggeeResponse,google/devtools/clouddebugger/v2/controller.proto#L123}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.RegisterDebuggeeResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.RegisterDebuggeeRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L115}
-  /// [google.devtools.clouddebugger.v2.RegisterDebuggeeResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L123}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.RegisterDebuggeeRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L115}
+  /// [google.devtools.clouddebugger.v2.RegisterDebuggeeResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L123}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>
   RegisterDebuggee(
       google::devtools::clouddebugger::v2::RegisterDebuggeeRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of all active breakpoints for the debuggee.
   ///
@@ -172,8 +195,8 @@ class Controller2Client {
   /// to reflect the actual line where the breakpoint was set, but this
   /// doesn't change the breakpoint semantics.
   ///
-  /// This means that an agent does not need to check if a breakpoint has
-  /// changed when it encounters the same breakpoint on a successive call.
+  /// This means that an agent does not need to check if a breakpoint has changed
+  /// when it encounters the same breakpoint on a successive call.
   /// Moreover, an agent should remember the breakpoints that are completed
   /// until the controller removes them from the active list to avoid
   /// setting those breakpoints again.
@@ -181,17 +204,26 @@ class Controller2Client {
   /// @param debuggee_id  Required. Identifies the debuggee.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse,google/devtools/clouddebugger/v2/controller.proto#L153}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.ListActiveBreakpointsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.ListActiveBreakpointsRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L133}
-  /// [google.devtools.clouddebugger.v2.ListActiveBreakpointsResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L153}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.ListActiveBreakpointsRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L133}
+  /// [google.devtools.clouddebugger.v2.ListActiveBreakpointsResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L153}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse>
   ListActiveBreakpoints(std::string const& debuggee_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of all active breakpoints for the debuggee.
   ///
@@ -201,30 +233,43 @@ class Controller2Client {
   /// to reflect the actual line where the breakpoint was set, but this
   /// doesn't change the breakpoint semantics.
   ///
-  /// This means that an agent does not need to check if a breakpoint has
-  /// changed when it encounters the same breakpoint on a successive call.
+  /// This means that an agent does not need to check if a breakpoint has changed
+  /// when it encounters the same breakpoint on a successive call.
   /// Moreover, an agent should remember the breakpoints that are completed
   /// until the controller removes them from the active list to avoid
   /// setting those breakpoints again.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest,google/devtools/clouddebugger/v2/controller.proto#L133}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.clouddebugger.v2.ListActiveBreakpointsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse,google/devtools/clouddebugger/v2/controller.proto#L153}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.ListActiveBreakpointsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.ListActiveBreakpointsRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L133}
-  /// [google.devtools.clouddebugger.v2.ListActiveBreakpointsResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L153}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.ListActiveBreakpointsRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L133}
+  /// [google.devtools.clouddebugger.v2.ListActiveBreakpointsResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L153}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse>
   ListActiveBreakpoints(
       google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the breakpoint state or mutable fields.
   /// The entire Breakpoint message must be sent back to the controller service.
@@ -241,20 +286,29 @@ class Controller2Client {
   ///  The agent must echo all Breakpoint specification fields in the update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse,google/devtools/clouddebugger/v2/controller.proto#L181}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.UpdateActiveBreakpointResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.UpdateActiveBreakpointRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L169}
-  /// [google.devtools.clouddebugger.v2.UpdateActiveBreakpointResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L181}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.UpdateActiveBreakpointRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L169}
+  /// [google.devtools.clouddebugger.v2.UpdateActiveBreakpointResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L181}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse>
   UpdateActiveBreakpoint(
       std::string const& debuggee_id,
       google::devtools::clouddebugger::v2::Breakpoint const& breakpoint,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the breakpoint state or mutable fields.
   /// The entire Breakpoint message must be sent back to the controller service.
@@ -265,18 +319,30 @@ class Controller2Client {
   /// semantics. These may only make changes such as canonicalizing a value
   /// or snapping the location to the correct line of code.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest,google/devtools/clouddebugger/v2/controller.proto#L169}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.clouddebugger.v2.UpdateActiveBreakpointRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse,google/devtools/clouddebugger/v2/controller.proto#L181}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.clouddebugger.v2.UpdateActiveBreakpointResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.clouddebugger.v2.UpdateActiveBreakpointRequest]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L169}
-  /// [google.devtools.clouddebugger.v2.UpdateActiveBreakpointResponse]:
-  /// @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L181}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.clouddebugger.v2.UpdateActiveBreakpointRequest]: @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L169}
+  /// [google.devtools.clouddebugger.v2.UpdateActiveBreakpointResponse]: @googleapis_reference_link{google/devtools/clouddebugger/v2/controller.proto#L181}
   ///
+  // clang-format on
   StatusOr<google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse>
   UpdateActiveBreakpoint(
       google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest const&

@@ -90,14 +90,13 @@ class WorkflowTemplateServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates new workflow template.
   ///
-  /// @param parent  Required. The resource name of the region or location, as
-  /// described
+  /// @param parent  Required. The resource name of the region or location, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
-  ///  * For `projects.regions.workflowTemplates.create`, the resource name of
-  ///  the
+  ///  * For `projects.regions.workflowTemplates.create`, the resource name of the
   ///    region has the following format:
   ///    `projects/{project_id}/regions/{region}`
   ///  * For `projects.locations.workflowTemplates.create`, the resource name of
@@ -106,91 +105,133 @@ class WorkflowTemplateServiceClient {
   /// @param template_  Required. The Dataproc workflow template to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.WorkflowTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.CreateWorkflowTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L639}
-  /// [google.cloud.dataproc.v1.WorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.CreateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L639}
+  /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   CreateWorkflowTemplate(
       std::string const& parent,
       google::cloud::dataproc::v1::WorkflowTemplate const& template_,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates new workflow template.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::CreateWorkflowTemplateRequest,google/cloud/dataproc/v1/workflow_templates.proto#L639}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.CreateWorkflowTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.WorkflowTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.CreateWorkflowTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L639}
-  /// [google.cloud.dataproc.v1.WorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.CreateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L639}
+  /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   CreateWorkflowTemplate(
       google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves the latest workflow template.
   ///
   /// Can retrieve previously instantiated template by specifying optional
   /// version parameter.
   ///
-  /// @param name  Required. The resource name of the workflow template, as
-  /// described
+  /// @param name  Required. The resource name of the workflow template, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
   ///  * For `projects.regions.workflowTemplates.get`, the resource name of the
   ///    template has the following format:
   ///    `projects/{project_id}/regions/{region}/workflowTemplates/{template_id}`
-  ///  * For `projects.locations.workflowTemplates.get`, the resource name of
-  ///  the
+  ///  * For `projects.locations.workflowTemplates.get`, the resource name of the
   ///    template has the following format:
   ///    `projects/{project_id}/locations/{location}/workflowTemplates/{template_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.WorkflowTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.GetWorkflowTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L662}
-  /// [google.cloud.dataproc.v1.WorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.GetWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L662}
+  /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate> GetWorkflowTemplate(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves the latest workflow template.
   ///
   /// Can retrieve previously instantiated template by specifying optional
   /// version parameter.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::GetWorkflowTemplateRequest,google/cloud/dataproc/v1/workflow_templates.proto#L662}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.GetWorkflowTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.WorkflowTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.GetWorkflowTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L662}
-  /// [google.cloud.dataproc.v1.WorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.GetWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L662}
+  /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate> GetWorkflowTemplate(
       google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Instantiates a template and begins execution.
   ///
@@ -213,39 +254,47 @@ class WorkflowTemplateServiceClient {
   /// [Operation.response][google.longrunning.Operation.response] will be
   /// [Empty][google.protobuf.Empty].
   ///
-  /// @param name  Required. The resource name of the workflow template, as
-  /// described
+  /// @param name  Required. The resource name of the workflow template, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
   ///  * For `projects.regions.workflowTemplates.instantiate`, the resource name
   ///  of the template has the following format:
   ///    `projects/{project_id}/regions/{region}/workflowTemplates/{template_id}`
-  ///  * For `projects.locations.workflowTemplates.instantiate`, the resource
-  ///  name
+  ///  * For `projects.locations.workflowTemplates.instantiate`, the resource name
   ///    of the template has the following format:
   ///    `projects/{project_id}/locations/{location}/workflowTemplates/{template_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::WorkflowMetadata,google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.WorkflowMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.InstantiateWorkflowTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L688}
-  /// [google.cloud.dataproc.v1.WorkflowMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
-  /// [google.longrunning.Operations.CancelOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L105}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
-  /// [google.protobuf.Empty]:
-  /// @googleapis_reference_link{google/protobuf/empty.proto#L51}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.InstantiateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L688}
+  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operations.CancelOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L105}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L51}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateWorkflowTemplate(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Instantiates a template and begins execution.
   ///
@@ -268,44 +317,51 @@ class WorkflowTemplateServiceClient {
   /// [Operation.response][google.longrunning.Operation.response] will be
   /// [Empty][google.protobuf.Empty].
   ///
-  /// @param name  Required. The resource name of the workflow template, as
-  /// described
+  /// @param name  Required. The resource name of the workflow template, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
   ///  * For `projects.regions.workflowTemplates.instantiate`, the resource name
   ///  of the template has the following format:
   ///    `projects/{project_id}/regions/{region}/workflowTemplates/{template_id}`
-  ///  * For `projects.locations.workflowTemplates.instantiate`, the resource
-  ///  name
+  ///  * For `projects.locations.workflowTemplates.instantiate`, the resource name
   ///    of the template has the following format:
   ///    `projects/{project_id}/locations/{location}/workflowTemplates/{template_id}`
-  /// @param parameters  Optional. Map from parameter names to values that
-  /// should be used for those
+  /// @param parameters  Optional. Map from parameter names to values that should be used for those
   ///  parameters. Values may not exceed 1000 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::WorkflowMetadata,google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.WorkflowMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.InstantiateWorkflowTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L688}
-  /// [google.cloud.dataproc.v1.WorkflowMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
-  /// [google.longrunning.Operations.CancelOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L105}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
-  /// [google.protobuf.Empty]:
-  /// @googleapis_reference_link{google/protobuf/empty.proto#L51}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.InstantiateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L688}
+  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operations.CancelOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L105}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L51}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateWorkflowTemplate(
       std::string const& name,
       std::map<std::string, std::string> const& parameters, Options opts = {});
 
+  // clang-format off
   ///
   /// Instantiates a template and begins execution.
   ///
@@ -328,34 +384,48 @@ class WorkflowTemplateServiceClient {
   /// [Operation.response][google.longrunning.Operation.response] will be
   /// [Empty][google.protobuf.Empty].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest,google/cloud/dataproc/v1/workflow_templates.proto#L688}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.InstantiateWorkflowTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::WorkflowMetadata,google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.WorkflowMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.InstantiateWorkflowTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L688}
-  /// [google.cloud.dataproc.v1.WorkflowMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
-  /// [google.longrunning.Operations.CancelOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L105}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
-  /// [google.protobuf.Empty]:
-  /// @googleapis_reference_link{google/protobuf/empty.proto#L51}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.InstantiateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L688}
+  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operations.CancelOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L105}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L51}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateWorkflowTemplate(
       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Instantiates a template and begins execution.
   ///
@@ -383,11 +453,9 @@ class WorkflowTemplateServiceClient {
   /// [Operation.response][google.longrunning.Operation.response] will be
   /// [Empty][google.protobuf.Empty].
   ///
-  /// @param parent  Required. The resource name of the region or location, as
-  /// described
+  /// @param parent  Required. The resource name of the region or location, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
-  ///  * For `projects.regions.workflowTemplates,instantiateinline`, the
-  ///  resource
+  ///  * For `projects.regions.workflowTemplates,instantiateinline`, the resource
   ///    name of the region has the following format:
   ///    `projects/{project_id}/regions/{region}`
   ///  * For `projects.locations.workflowTemplates.instantiateinline`, the
@@ -396,36 +464,43 @@ class WorkflowTemplateServiceClient {
   /// @param template_  Required. The workflow template to instantiate.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::WorkflowMetadata,google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.WorkflowMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.InstantiateInlineWorkflowTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L731}
-  /// [google.cloud.dataproc.v1.WorkflowMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
-  /// [google.cloud.dataproc.v1.WorkflowTemplateService.CreateWorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L43}
-  /// [google.cloud.dataproc.v1.WorkflowTemplateService.DeleteWorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L180}
-  /// [google.cloud.dataproc.v1.WorkflowTemplateService.InstantiateWorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L91}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
-  /// [google.longrunning.Operations.CancelOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L105}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
-  /// [google.protobuf.Empty]:
-  /// @googleapis_reference_link{google/protobuf/empty.proto#L51}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.InstantiateInlineWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L731}
+  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// [google.cloud.dataproc.v1.WorkflowTemplateService.CreateWorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L43}
+  /// [google.cloud.dataproc.v1.WorkflowTemplateService.DeleteWorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L180}
+  /// [google.cloud.dataproc.v1.WorkflowTemplateService.InstantiateWorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L91}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operations.CancelOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L105}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L51}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateInlineWorkflowTemplate(
       std::string const& parent,
       google::cloud::dataproc::v1::WorkflowTemplate const& template_,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Instantiates a template and begins execution.
   ///
@@ -453,40 +528,51 @@ class WorkflowTemplateServiceClient {
   /// [Operation.response][google.longrunning.Operation.response] will be
   /// [Empty][google.protobuf.Empty].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest,google/cloud/dataproc/v1/workflow_templates.proto#L731}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.InstantiateInlineWorkflowTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::WorkflowMetadata,google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.WorkflowMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.InstantiateInlineWorkflowTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L731}
-  /// [google.cloud.dataproc.v1.WorkflowMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
-  /// [google.cloud.dataproc.v1.WorkflowTemplateService.CreateWorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L43}
-  /// [google.cloud.dataproc.v1.WorkflowTemplateService.DeleteWorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L180}
-  /// [google.cloud.dataproc.v1.WorkflowTemplateService.InstantiateWorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L91}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
-  /// [google.longrunning.Operations.CancelOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L105}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
-  /// [google.protobuf.Empty]:
-  /// @googleapis_reference_link{google/protobuf/empty.proto#L51}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.InstantiateInlineWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L731}
+  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// [google.cloud.dataproc.v1.WorkflowTemplateService.CreateWorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L43}
+  /// [google.cloud.dataproc.v1.WorkflowTemplateService.DeleteWorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L180}
+  /// [google.cloud.dataproc.v1.WorkflowTemplateService.InstantiateWorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L91}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operations.CancelOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L105}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L51}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateInlineWorkflowTemplate(
       google::cloud::dataproc::v1::
           InstantiateInlineWorkflowTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates (replaces) workflow template. The updated template
   /// must contain version that matches the current server version.
@@ -495,45 +581,66 @@ class WorkflowTemplateServiceClient {
   ///  The `template.version` field must match the current version.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.WorkflowTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.UpdateWorkflowTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L765}
-  /// [google.cloud.dataproc.v1.WorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.UpdateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L765}
+  /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   UpdateWorkflowTemplate(
       google::cloud::dataproc::v1::WorkflowTemplate const& template_,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates (replaces) workflow template. The updated template
   /// must contain version that matches the current server version.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest,google/cloud/dataproc/v1/workflow_templates.proto#L765}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.UpdateWorkflowTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.WorkflowTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.UpdateWorkflowTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L765}
-  /// [google.cloud.dataproc.v1.WorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.UpdateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L765}
+  /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   UpdateWorkflowTemplate(
       google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists workflows that match the specified filter in the request.
   ///
-  /// @param parent  Required. The resource name of the region or location, as
-  /// described
+  /// @param parent  Required. The resource name of the region or location, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
   ///  * For `projects.regions.workflowTemplates,list`, the resource
   ///    name of the region has the following format:
@@ -543,69 +650,130 @@ class WorkflowTemplateServiceClient {
   ///    `projects/{project_id}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataproc.v1.WorkflowTemplate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.ListWorkflowTemplatesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L773}
-  /// [google.cloud.dataproc.v1.WorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.ListWorkflowTemplatesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L773}
+  /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
   ListWorkflowTemplates(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists workflows that match the specified filter in the request.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::ListWorkflowTemplatesRequest,google/cloud/dataproc/v1/workflow_templates.proto#L773}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.ListWorkflowTemplatesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::WorkflowTemplate,google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataproc.v1.WorkflowTemplate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.ListWorkflowTemplatesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L773}
-  /// [google.cloud.dataproc.v1.WorkflowTemplate]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.ListWorkflowTemplatesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L773}
+  /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
   ListWorkflowTemplates(
       google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a workflow template. It does not cancel in-progress workflows.
   ///
-  /// @param name  Required. The resource name of the workflow template, as
-  /// described
+  /// @param name  Required. The resource name of the workflow template, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
   ///  * For `projects.regions.workflowTemplates.delete`, the resource name
   ///  of the template has the following format:
   ///    `projects/{project_id}/regions/{region}/workflowTemplates/{template_id}`
-  ///  * For `projects.locations.workflowTemplates.instantiate`, the resource
-  ///  name
+  ///  * For `projects.locations.workflowTemplates.instantiate`, the resource name
   ///    of the template has the following format:
   ///    `projects/{project_id}/locations/{location}/workflowTemplates/{template_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataproc.v1.DeleteWorkflowTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L814}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.DeleteWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L814}
   ///
+  // clang-format on
   Status DeleteWorkflowTemplate(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a workflow template. It does not cancel in-progress workflows.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest,google/cloud/dataproc/v1/workflow_templates.proto#L814}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.DeleteWorkflowTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataproc.v1.DeleteWorkflowTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L814}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.DeleteWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L814}
   ///
+  // clang-format on
   Status DeleteWorkflowTemplate(
       google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request,
       Options opts = {});

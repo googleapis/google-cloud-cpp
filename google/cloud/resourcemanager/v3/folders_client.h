@@ -86,6 +86,7 @@ class FoldersClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Retrieves a folder identified by the supplied resource name.
   /// Valid folder resource names have the format `folders/{folder_id}`
@@ -97,17 +98,26 @@ class FoldersClient {
   ///  Must be of the form `folders/{folder_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.resourcemanager.v3.Folder])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
-  /// [google.cloud.resourcemanager.v3.GetFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L335}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.GetFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L335}
   ///
+  // clang-format on
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a folder identified by the supplied resource name.
   /// Valid folder resource names have the format `folders/{folder_id}`
@@ -115,32 +125,45 @@ class FoldersClient {
   /// The caller must have `resourcemanager.folders.get` permission on the
   /// identified folder.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::GetFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L335}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.GetFolderRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.resourcemanager.v3.Folder])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
-  /// [google.cloud.resourcemanager.v3.GetFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L335}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.GetFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L335}
   ///
+  // clang-format on
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       google::cloud::resourcemanager::v3::GetFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the folders that are direct descendants of supplied parent resource.
   /// `list()` provides a strongly consistent view of the folders underneath
   /// the specified parent resource.
-  /// `list()` returns folders sorted based upon the (ascending) lexical
-  /// ordering of their display_name. The caller must have
-  /// `resourcemanager.folders.list` permission on the identified parent.
+  /// `list()` returns folders sorted based upon the (ascending) lexical ordering
+  /// of their display_name.
+  /// The caller must have `resourcemanager.folders.list` permission on the
+  /// identified parent.
   ///
-  /// @param parent  Required. The name of the parent resource whose folders are
-  /// being listed.
+  /// @param parent  Required. The name of the parent resource whose folders are being listed.
   ///  Only children of this parent resource are listed; descendants are not
   ///  listed.
   ///  If the parent is a folder, use the value `folders/{folder_id}`. If the
@@ -149,51 +172,91 @@ class FoldersClient {
   ///  `resourcemanager.folders.list` permission on the `parent`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.resourcemanager.v3.Folder], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
-  /// [google.cloud.resourcemanager.v3.ListFoldersRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L347}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.ListFoldersRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L347}
   ///
+  // clang-format on
   StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the folders that are direct descendants of supplied parent resource.
   /// `list()` provides a strongly consistent view of the folders underneath
   /// the specified parent resource.
-  /// `list()` returns folders sorted based upon the (ascending) lexical
-  /// ordering of their display_name. The caller must have
-  /// `resourcemanager.folders.list` permission on the identified parent.
+  /// `list()` returns folders sorted based upon the (ascending) lexical ordering
+  /// of their display_name.
+  /// The caller must have `resourcemanager.folders.list` permission on the
+  /// identified parent.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::ListFoldersRequest,google/cloud/resourcemanager/v3/folders.proto#L347}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.ListFoldersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.resourcemanager.v3.Folder], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
-  /// [google.cloud.resourcemanager.v3.ListFoldersRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L347}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.ListFoldersRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L347}
   ///
+  // clang-format on
   StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
       google::cloud::resourcemanager::v3::ListFoldersRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Search for folders that match specific filter criteria.
-  /// `search()` provides an eventually consistent view of the folders a user
-  /// has access to which meet the specified filter criteria.
+  /// `search()` provides an eventually consistent view of the folders a user has
+  /// access to which meet the specified filter criteria.
   ///
   /// This will only return folders on which the caller has the
   /// permission `resourcemanager.folders.get`.
   ///
-  /// @param query  Optional. Search criteria used to select the folders to
-  /// return.
+  /// @param query  Optional. Search criteria used to select the folders to return.
   ///  If no search criteria is specified then all accessible folders will be
   ///  returned.
   ///  Query expressions can be used to restrict results based upon displayName,
@@ -205,8 +268,8 @@ class FoldersClient {
   ///  | Field                   | Description                            |
   ///  |-------------------------|----------------------------------------|
   ///  | displayName             | Filters by displayName.                |
-  ///  | parent                  | Filters by parent (for example: folders/123).
-  ///  | | state, lifecycleState   | Filters by state.                      |
+  ///  | parent                  | Filters by parent (for example: folders/123). |
+  ///  | state, lifecycleState   | Filters by state.                      |
   ///  ```
   ///  Some example queries are:
   ///  * Query `displayName=Test*` returns Folder resources whose display name
@@ -221,41 +284,81 @@ class FoldersClient {
   ///  display names that include both "Test" and "String".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.resourcemanager.v3.Folder], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
-  /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L389}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L389}
   ///
+  // clang-format on
   StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
       std::string const& query, Options opts = {});
 
+  // clang-format off
   ///
   /// Search for folders that match specific filter criteria.
-  /// `search()` provides an eventually consistent view of the folders a user
-  /// has access to which meet the specified filter criteria.
+  /// `search()` provides an eventually consistent view of the folders a user has
+  /// access to which meet the specified filter criteria.
   ///
   /// This will only return folders on which the caller has the
   /// permission `resourcemanager.folders.get`.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::SearchFoldersRequest,google/cloud/resourcemanager/v3/folders.proto#L389}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.SearchFoldersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.resourcemanager.v3.Folder], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
-  /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L389}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L389}
   ///
+  // clang-format on
   StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
       google::cloud::resourcemanager::v3::SearchFoldersRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a folder in the resource hierarchy.
   /// Returns an `Operation` which can be used to track the progress of the
@@ -279,29 +382,43 @@ class FoldersClient {
   /// may be returned by the `CreateFolder` request, with status code
   /// `FAILED_PRECONDITION` and an error description. Other folder constraint
   /// violations will be communicated in the `Operation`, with the specific
-  /// `PreconditionFailure` returned in the details list in the
-  /// `Operation.error` field.
+  /// `PreconditionFailure` returned in the details list in the `Operation.error`
+  /// field.
   ///
   /// The caller must have `resourcemanager.folders.create` permission on the
   /// identified parent.
   ///
-  /// @param folder  Required. The folder being created, only the display name
-  /// and parent will
+  /// @param folder  Required. The folder being created, only the display name and parent will
   ///  be consulted. All other fields will be ignored.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Folder] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.CreateFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L445}
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.CreateFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L445}
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
       google::cloud::resourcemanager::v3::Folder const& folder,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a folder in the resource hierarchy.
   /// Returns an `Operation` which can be used to track the progress of the
@@ -325,28 +442,47 @@ class FoldersClient {
   /// may be returned by the `CreateFolder` request, with status code
   /// `FAILED_PRECONDITION` and an error description. Other folder constraint
   /// violations will be communicated in the `Operation`, with the specific
-  /// `PreconditionFailure` returned in the details list in the
-  /// `Operation.error` field.
+  /// `PreconditionFailure` returned in the details list in the `Operation.error`
+  /// field.
   ///
   /// The caller must have `resourcemanager.folders.create` permission on the
   /// identified parent.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::CreateFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L445}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.CreateFolderRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Folder] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.CreateFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L445}
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.CreateFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L445}
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
       google::cloud::resourcemanager::v3::CreateFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a folder, changing its `display_name`.
   /// Changes to the folder `display_name` will be rejected if they violate
@@ -366,27 +502,40 @@ class FoldersClient {
   /// `PreconditionFailure` explaining this violation will be returned
   /// in the Status.details field.
   ///
-  /// @param folder  Required. The new definition of the Folder. It must include
-  /// the `name`
+  /// @param folder  Required. The new definition of the Folder. It must include the `name`
   ///  field, which cannot be changed.
   /// @param update_mask  Required. Fields to be updated.
   ///  Only the `display_name` can be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Folder] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
-  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
-  /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
+  /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
       google::cloud::resourcemanager::v3::Folder const& folder,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a folder, changing its `display_name`.
   /// Changes to the folder `display_name` will be rejected if they violate
@@ -406,24 +555,42 @@ class FoldersClient {
   /// `PreconditionFailure` explaining this violation will be returned
   /// in the Status.details field.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::UpdateFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L469}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.UpdateFolderRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Folder] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
-  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
-  /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
+  /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Moves a folder under a new resource parent.
   /// Returns an `Operation` which can be used to track the progress of the
@@ -445,26 +612,39 @@ class FoldersClient {
   ///
   /// @param name  Required. The resource name of the Folder to move.
   ///  Must be of the form folders/{folder_id}
-  /// @param destination_parent  Required. The resource name of the folder or
-  /// organization which should be
+  /// @param destination_parent  Required. The resource name of the folder or organization which should be
   ///  the folder's new parent. Must be of the form `folders/{folder_id}` or
   ///  `organizations/{org_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Folder] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
-  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
-  /// [google.cloud.resourcemanager.v3.MoveFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L485}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
+  /// [google.cloud.resourcemanager.v3.MoveFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L485}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
       std::string const& name, std::string const& destination_parent,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Moves a folder under a new resource parent.
   /// Returns an `Operation` which can be used to track the progress of the
@@ -484,24 +664,42 @@ class FoldersClient {
   /// documentation. The caller must have `resourcemanager.folders.move`
   /// permission on the folder's current and proposed new parent.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::MoveFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L485}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.MoveFolderRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Folder] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
-  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
-  /// [google.cloud.resourcemanager.v3.MoveFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L485}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
+  /// [google.cloud.resourcemanager.v3.MoveFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L485}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Requests deletion of a folder. The folder is moved into the
   /// [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Folder.State.DELETE_REQUESTED]
@@ -519,17 +717,32 @@ class FoldersClient {
   ///  Must be of the form `folders/{folder_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Folder] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.DeleteFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L517}
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.DeleteFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L517}
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Requests deletion of a folder. The folder is moved into the
   /// [DELETE_REQUESTED][google.cloud.resourcemanager.v3.Folder.State.DELETE_REQUESTED]
@@ -543,22 +756,41 @@ class FoldersClient {
   /// The caller must have `resourcemanager.folders.delete` permission on the
   /// identified folder.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::DeleteFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L517}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.DeleteFolderRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Folder] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.DeleteFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L517}
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.DeleteFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L517}
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
       google::cloud::resourcemanager::v3::DeleteFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Cancels the deletion request for a folder. This method may be called on a
   /// folder in any state. If the folder is in the
@@ -576,19 +808,33 @@ class FoldersClient {
   ///  Must be of the form `folders/{folder_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Folder] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
-  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
-  /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L533}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
+  /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L533}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Cancels the deletion request for a folder. This method may be called on a
   /// folder in any state. If the folder is in the
@@ -602,24 +848,42 @@ class FoldersClient {
   /// documentation. The caller must have `resourcemanager.folders.undelete`
   /// permission on the identified folder.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::UndeleteFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L533}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.UndeleteFolderRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Folder] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
-  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
-  /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L533}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
+  /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L533}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the access control policy for a folder. The returned policy may be
   /// empty if no such policy or resource exists. The `resource` field should
@@ -627,22 +891,30 @@ class FoldersClient {
   /// The caller must have `resourcemanager.folders.getIamPolicy` permission
   /// on the identified folder.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// requested.
+  /// @param resource  REQUIRED: The resource for which the policy is being requested.
   ///  See the operation documentation for the appropriate value for this field.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the access control policy for a folder. The returned policy may be
   /// empty if no such policy or resource exists. The `resource` field should
@@ -650,21 +922,34 @@ class FoldersClient {
   /// The caller must have `resourcemanager.folders.getIamPolicy` permission
   /// on the identified folder.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the access control policy on a folder, replacing any existing policy.
   /// The `resource` field should be the folder's resource name, for example:
@@ -672,24 +957,30 @@ class FoldersClient {
   /// The caller must have `resourcemanager.folders.setIamPolicy` permission
   /// on the identified folder.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// specified.
+  /// @param resource  REQUIRED: The resource for which the policy is being specified.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param policy  REQUIRED: The complete policy to be applied to the
-  /// `resource`. The size of
+  /// @param policy  REQUIRED: The complete policy to be applied to the `resource`. The size of
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
       Options opts = {});
@@ -718,6 +1009,7 @@ class FoldersClient {
                                                  IamUpdater const& updater,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the access control policy on a folder, replacing any existing policy.
   /// The `resource` field should be the folder's resource name, for example:
@@ -725,21 +1017,34 @@ class FoldersClient {
   /// The caller must have `resourcemanager.folders.setIamPolicy` permission
   /// on the identified folder.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns permissions that a caller has on the specified folder.
   /// The `resource` field should be the folder's resource name,
@@ -747,28 +1052,35 @@ class FoldersClient {
   ///
   /// There are no permissions required for making this API call.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy detail is
-  /// being requested.
+  /// @param resource  REQUIRED: The resource for which the policy detail is being requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param permissions  The set of permissions to check for the `resource`.
-  /// Permissions with
+  /// @param permissions  The set of permissions to check for the `resource`. Permissions with
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns permissions that a caller has on the specified folder.
   /// The `resource` field should be the folder's resource name,
@@ -776,18 +1088,30 @@ class FoldersClient {
   ///
   /// There are no permissions required for making this API call.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});

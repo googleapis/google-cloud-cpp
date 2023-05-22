@@ -88,252 +88,458 @@ class WebSecurityScannerClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new ScanConfig.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::CreateScanConfigRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L142}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.websecurityscanner.v1.CreateScanConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanConfig,google/cloud/websecurityscanner/v1/scan_config.proto#L31}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.websecurityscanner.v1.ScanConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.websecurityscanner.v1.CreateScanConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L142}
-  /// [google.cloud.websecurityscanner.v1.ScanConfig]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_config.proto#L31}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.websecurityscanner.v1.CreateScanConfigRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L142}
+  /// [google.cloud.websecurityscanner.v1.ScanConfig]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_config.proto#L31}
   ///
+  // clang-format on
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> CreateScanConfig(
       google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an existing ScanConfig and its child resources.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::DeleteScanConfigRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L152}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.websecurityscanner.v1.DeleteScanConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.websecurityscanner.v1.DeleteScanConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L152}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.websecurityscanner.v1.DeleteScanConfigRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L152}
   ///
+  // clang-format on
   Status DeleteScanConfig(
       google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a ScanConfig.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::GetScanConfigRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L159}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.websecurityscanner.v1.GetScanConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanConfig,google/cloud/websecurityscanner/v1/scan_config.proto#L31}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.websecurityscanner.v1.ScanConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.websecurityscanner.v1.GetScanConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L159}
-  /// [google.cloud.websecurityscanner.v1.ScanConfig]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_config.proto#L31}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.websecurityscanner.v1.GetScanConfigRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L159}
+  /// [google.cloud.websecurityscanner.v1.ScanConfig]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_config.proto#L31}
   ///
+  // clang-format on
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> GetScanConfig(
       google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists ScanConfigs under a given project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ListScanConfigsRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L166}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.websecurityscanner.v1.ListScanConfigsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanConfig,google/cloud/websecurityscanner/v1/scan_config.proto#L31}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.websecurityscanner.v1.ScanConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.websecurityscanner.v1.ListScanConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L166}
-  /// [google.cloud.websecurityscanner.v1.ScanConfig]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_config.proto#L31}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.websecurityscanner.v1.ListScanConfigsRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L166}
+  /// [google.cloud.websecurityscanner.v1.ScanConfig]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_config.proto#L31}
   ///
+  // clang-format on
   StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
   ListScanConfigs(
       google::cloud::websecurityscanner::v1::ListScanConfigsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a ScanConfig. This method support partial update of a ScanConfig.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::UpdateScanConfigRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L183}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.websecurityscanner.v1.UpdateScanConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanConfig,google/cloud/websecurityscanner/v1/scan_config.proto#L31}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.websecurityscanner.v1.ScanConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.websecurityscanner.v1.ScanConfig]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_config.proto#L31}
-  /// [google.cloud.websecurityscanner.v1.UpdateScanConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L183}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.websecurityscanner.v1.ScanConfig]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_config.proto#L31}
+  /// [google.cloud.websecurityscanner.v1.UpdateScanConfigRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L183}
   ///
+  // clang-format on
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> UpdateScanConfig(
       google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Start a ScanRun according to the given ScanConfig.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::StartScanRunRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L206}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.websecurityscanner.v1.StartScanRunRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanRun,google/cloud/websecurityscanner/v1/scan_run.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.websecurityscanner.v1.ScanRun])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.websecurityscanner.v1.ScanRun]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_run.proto#L33}
-  /// [google.cloud.websecurityscanner.v1.StartScanRunRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L206}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.websecurityscanner.v1.ScanRun]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_run.proto#L33}
+  /// [google.cloud.websecurityscanner.v1.StartScanRunRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L206}
   ///
+  // clang-format on
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StartScanRun(
       google::cloud::websecurityscanner::v1::StartScanRunRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a ScanRun.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::GetScanRunRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L213}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.websecurityscanner.v1.GetScanRunRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanRun,google/cloud/websecurityscanner/v1/scan_run.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.websecurityscanner.v1.ScanRun])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.websecurityscanner.v1.GetScanRunRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L213}
-  /// [google.cloud.websecurityscanner.v1.ScanRun]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_run.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.websecurityscanner.v1.GetScanRunRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L213}
+  /// [google.cloud.websecurityscanner.v1.ScanRun]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_run.proto#L33}
   ///
+  // clang-format on
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> GetScanRun(
       google::cloud::websecurityscanner::v1::GetScanRunRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists ScanRuns under a given ScanConfig, in descending order of ScanRun
   /// stop time.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ListScanRunsRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L221}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.websecurityscanner.v1.ListScanRunsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanRun,google/cloud/websecurityscanner/v1/scan_run.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.websecurityscanner.v1.ScanRun], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.websecurityscanner.v1.ListScanRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L221}
-  /// [google.cloud.websecurityscanner.v1.ScanRun]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_run.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.websecurityscanner.v1.ListScanRunsRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L221}
+  /// [google.cloud.websecurityscanner.v1.ScanRun]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_run.proto#L33}
   ///
+  // clang-format on
   StreamRange<google::cloud::websecurityscanner::v1::ScanRun> ListScanRuns(
       google::cloud::websecurityscanner::v1::ListScanRunsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Stops a ScanRun. The stopped ScanRun is returned.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::StopScanRunRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L248}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.websecurityscanner.v1.StopScanRunRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanRun,google/cloud/websecurityscanner/v1/scan_run.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.websecurityscanner.v1.ScanRun])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.websecurityscanner.v1.ScanRun]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_run.proto#L33}
-  /// [google.cloud.websecurityscanner.v1.StopScanRunRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L248}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.websecurityscanner.v1.ScanRun]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_run.proto#L33}
+  /// [google.cloud.websecurityscanner.v1.StopScanRunRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L248}
   ///
+  // clang-format on
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StopScanRun(
       google::cloud::websecurityscanner::v1::StopScanRunRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// List CrawledUrls under a given ScanRun.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L256}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.websecurityscanner.v1.ListCrawledUrlsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::CrawledUrl,google/cloud/websecurityscanner/v1/crawled_url.proto#L30}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.websecurityscanner.v1.CrawledUrl], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.websecurityscanner.v1.CrawledUrl]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/crawled_url.proto#L30}
-  /// [google.cloud.websecurityscanner.v1.ListCrawledUrlsRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L256}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.websecurityscanner.v1.CrawledUrl]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/crawled_url.proto#L30}
+  /// [google.cloud.websecurityscanner.v1.ListCrawledUrlsRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L256}
   ///
+  // clang-format on
   StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
   ListCrawledUrls(
       google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a Finding.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::GetFindingRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L284}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.websecurityscanner.v1.GetFindingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::Finding,google/cloud/websecurityscanner/v1/finding.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.websecurityscanner.v1.Finding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.websecurityscanner.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/finding.proto#L33}
-  /// [google.cloud.websecurityscanner.v1.GetFindingRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L284}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.websecurityscanner.v1.Finding]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/finding.proto#L33}
+  /// [google.cloud.websecurityscanner.v1.GetFindingRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L284}
   ///
+  // clang-format on
   StatusOr<google::cloud::websecurityscanner::v1::Finding> GetFinding(
       google::cloud::websecurityscanner::v1::GetFindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// List Findings under a given ScanRun.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ListFindingsRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L292}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.websecurityscanner.v1.ListFindingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::Finding,google/cloud/websecurityscanner/v1/finding.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.websecurityscanner.v1.Finding], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.websecurityscanner.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/finding.proto#L33}
-  /// [google.cloud.websecurityscanner.v1.ListFindingsRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L292}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.websecurityscanner.v1.Finding]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/finding.proto#L33}
+  /// [google.cloud.websecurityscanner.v1.ListFindingsRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L292}
   ///
+  // clang-format on
   StreamRange<google::cloud::websecurityscanner::v1::Finding> ListFindings(
       google::cloud::websecurityscanner::v1::ListFindingsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// List all FindingTypeStats under a given ScanRun.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L326}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.websecurityscanner.v1.ListFindingTypeStatsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse,google/cloud/websecurityscanner/v1/web_security_scanner.proto#L334}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.websecurityscanner.v1.ListFindingTypeStatsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.websecurityscanner.v1.ListFindingTypeStatsRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L326}
-  /// [google.cloud.websecurityscanner.v1.ListFindingTypeStatsResponse]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L334}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.websecurityscanner.v1.ListFindingTypeStatsRequest]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L326}
+  /// [google.cloud.websecurityscanner.v1.ListFindingTypeStatsResponse]: @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L334}
   ///
+  // clang-format on
   StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
   ListFindingTypeStats(
       google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&

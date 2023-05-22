@@ -86,98 +86,174 @@ class WorkstationsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Returns the requested workstation cluster.
   ///
   /// @param name  Required. Name of the requested resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.workstations.v1.WorkstationCluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.workstations.v1.GetWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L707}
-  /// [google.cloud.workstations.v1.WorkstationCluster]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.GetWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L707}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
+  // clang-format on
   StatusOr<google::cloud::workstations::v1::WorkstationCluster>
   GetWorkstationCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the requested workstation cluster.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::GetWorkstationClusterRequest,google/cloud/workstations/v1/workstations.proto#L707}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.GetWorkstationClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.workstations.v1.WorkstationCluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.workstations.v1.GetWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L707}
-  /// [google.cloud.workstations.v1.WorkstationCluster]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.GetWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L707}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
+  // clang-format on
   StatusOr<google::cloud::workstations::v1::WorkstationCluster>
   GetWorkstationCluster(
       google::cloud::workstations::v1::GetWorkstationClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns all workstation clusters in the specified location.
   ///
   /// @param parent  Required. Parent resource name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.workstations.v1.WorkstationCluster], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.ListWorkstationClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L718}
-  /// [google.cloud.workstations.v1.WorkstationCluster]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.ListWorkstationClustersRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L718}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
+  // clang-format on
   StreamRange<google::cloud::workstations::v1::WorkstationCluster>
   ListWorkstationClusters(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns all workstation clusters in the specified location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::ListWorkstationClustersRequest,google/cloud/workstations/v1/workstations.proto#L718}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.ListWorkstationClustersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.workstations.v1.WorkstationCluster], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.ListWorkstationClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L718}
-  /// [google.cloud.workstations.v1.WorkstationCluster]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.ListWorkstationClustersRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L718}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
+  // clang-format on
   StreamRange<google::cloud::workstations::v1::WorkstationCluster>
   ListWorkstationClusters(
       google::cloud::workstations::v1::ListWorkstationClustersRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new workstation cluster.
   ///
   /// @param parent  Required. Parent resource name.
   /// @param workstation_cluster  Required. Workstation cluster to create.
-  /// @param workstation_cluster_id  Required. ID to use for the workstation
-  /// cluster.
+  /// @param workstation_cluster_id  Required. ID to use for the workstation cluster.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.WorkstationCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.CreateWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L748}
-  /// [google.cloud.workstations.v1.WorkstationCluster]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.CreateWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L748}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   CreateWorkstationCluster(
       std::string const& parent,
@@ -185,184 +261,333 @@ class WorkstationsClient {
           workstation_cluster,
       std::string const& workstation_cluster_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new workstation cluster.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::CreateWorkstationClusterRequest,google/cloud/workstations/v1/workstations.proto#L748}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.CreateWorkstationClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.WorkstationCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.CreateWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L748}
-  /// [google.cloud.workstations.v1.WorkstationCluster]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.CreateWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L748}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   CreateWorkstationCluster(
       google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing workstation cluster.
   ///
   /// @param workstation_cluster  Required. Workstation cluster to update.
-  /// @param update_mask  Required. Mask that specifies which fields in the
-  /// workstation cluster
+  /// @param update_mask  Required. Mask that specifies which fields in the workstation cluster
   ///  should be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.WorkstationCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.UpdateWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L770}
-  /// [google.cloud.workstations.v1.WorkstationCluster]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.UpdateWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L770}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   UpdateWorkstationCluster(
       google::cloud::workstations::v1::WorkstationCluster const&
           workstation_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing workstation cluster.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::UpdateWorkstationClusterRequest,google/cloud/workstations/v1/workstations.proto#L770}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.UpdateWorkstationClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.WorkstationCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.UpdateWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L770}
-  /// [google.cloud.workstations.v1.WorkstationCluster]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.UpdateWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L770}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   UpdateWorkstationCluster(
       google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified workstation cluster.
   ///
   /// @param name  Required. Name of the workstation cluster to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.WorkstationCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.DeleteWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L790}
-  /// [google.cloud.workstations.v1.WorkstationCluster]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.DeleteWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L790}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   DeleteWorkstationCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified workstation cluster.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::DeleteWorkstationClusterRequest,google/cloud/workstations/v1/workstations.proto#L790}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.DeleteWorkstationClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.WorkstationCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.DeleteWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L790}
-  /// [google.cloud.workstations.v1.WorkstationCluster]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.DeleteWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L790}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   DeleteWorkstationCluster(
       google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the requested workstation configuration.
   ///
   /// @param name  Required. Name of the requested resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.workstations.v1.WorkstationConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.workstations.v1.GetWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L813}
-  /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.GetWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L813}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
+  // clang-format on
   StatusOr<google::cloud::workstations::v1::WorkstationConfig>
   GetWorkstationConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the requested workstation configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::GetWorkstationConfigRequest,google/cloud/workstations/v1/workstations.proto#L813}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.GetWorkstationConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.workstations.v1.WorkstationConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.workstations.v1.GetWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L813}
-  /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.GetWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L813}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
+  // clang-format on
   StatusOr<google::cloud::workstations::v1::WorkstationConfig>
   GetWorkstationConfig(
       google::cloud::workstations::v1::GetWorkstationConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns all workstation configurations in the specified cluster.
   ///
   /// @param parent  Required. Parent resource name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.workstations.v1.WorkstationConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.ListWorkstationConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L824}
-  /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.ListWorkstationConfigsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L824}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
+  // clang-format on
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
   ListWorkstationConfigs(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns all workstation configurations in the specified cluster.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::ListWorkstationConfigsRequest,google/cloud/workstations/v1/workstations.proto#L824}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.ListWorkstationConfigsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.workstations.v1.WorkstationConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.ListWorkstationConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L824}
-  /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.ListWorkstationConfigsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L824}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
+  // clang-format on
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
   ListWorkstationConfigs(
       google::cloud::workstations::v1::ListWorkstationConfigsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns all workstation configurations in the specified cluster on which
   /// the caller has the "workstations.workstation.create" permission.
@@ -370,56 +595,109 @@ class WorkstationsClient {
   /// @param parent  Required. Parent resource name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.workstations.v1.WorkstationConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.ListUsableWorkstationConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L854}
-  /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.ListUsableWorkstationConfigsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L854}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
+  // clang-format on
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
   ListUsableWorkstationConfigs(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns all workstation configurations in the specified cluster on which
   /// the caller has the "workstations.workstation.create" permission.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest,google/cloud/workstations/v1/workstations.proto#L854}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.ListUsableWorkstationConfigsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.workstations.v1.WorkstationConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.ListUsableWorkstationConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L854}
-  /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.ListUsableWorkstationConfigsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L854}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
+  // clang-format on
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
   ListUsableWorkstationConfigs(
       google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new workstation configuration.
   ///
   /// @param parent  Required. Parent resource name.
   /// @param workstation_config  Required. Config to create.
-  /// @param workstation_config_id  Required. ID to use for the workstation
-  /// configuration.
+  /// @param workstation_config_id  Required. ID to use for the workstation configuration.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.WorkstationConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.CreateWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L884}
-  /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.CreateWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L884}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   CreateWorkstationConfig(
       std::string const& parent,
@@ -427,181 +705,330 @@ class WorkstationsClient {
           workstation_config,
       std::string const& workstation_config_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new workstation configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::CreateWorkstationConfigRequest,google/cloud/workstations/v1/workstations.proto#L884}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.CreateWorkstationConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.WorkstationConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.CreateWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L884}
-  /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.CreateWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L884}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   CreateWorkstationConfig(
       google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing workstation configuration.
   ///
   /// @param workstation_config  Required. Config to update.
-  /// @param update_mask  Required. Mask specifying which fields in the
-  /// workstation configuration
+  /// @param update_mask  Required. Mask specifying which fields in the workstation configuration
   ///  should be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.WorkstationConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.UpdateWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L906}
-  /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.UpdateWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L906}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   UpdateWorkstationConfig(
       google::cloud::workstations::v1::WorkstationConfig const&
           workstation_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing workstation configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::UpdateWorkstationConfigRequest,google/cloud/workstations/v1/workstations.proto#L906}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.UpdateWorkstationConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.WorkstationConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.UpdateWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L906}
-  /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.UpdateWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L906}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   UpdateWorkstationConfig(
       google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified workstation configuration.
   ///
   /// @param name  Required. Name of the workstation configuration to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.WorkstationConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.DeleteWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L927}
-  /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.DeleteWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L927}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   DeleteWorkstationConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified workstation configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::DeleteWorkstationConfigRequest,google/cloud/workstations/v1/workstations.proto#L927}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.DeleteWorkstationConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.WorkstationConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.DeleteWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L927}
-  /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.DeleteWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L927}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   DeleteWorkstationConfig(
       google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the requested workstation.
   ///
   /// @param name  Required. Name of the requested resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.workstations.v1.Workstation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.workstations.v1.GetWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L951}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.GetWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L951}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the requested workstation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::GetWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L951}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.GetWorkstationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.workstations.v1.Workstation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.workstations.v1.GetWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L951}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.GetWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L951}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
       google::cloud::workstations::v1::GetWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns all Workstations using the specified workstation configuration.
   ///
   /// @param parent  Required. Parent resource name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.workstations.v1.Workstation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.ListWorkstationsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L962}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.ListWorkstationsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L962}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   StreamRange<google::cloud::workstations::v1::Workstation> ListWorkstations(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns all Workstations using the specified workstation configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::ListWorkstationsRequest,google/cloud/workstations/v1/workstations.proto#L962}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.ListWorkstationsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.workstations.v1.Workstation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.ListWorkstationsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L962}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.ListWorkstationsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L962}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   StreamRange<google::cloud::workstations::v1::Workstation> ListWorkstations(
       google::cloud::workstations::v1::ListWorkstationsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns all workstations using the specified workstation configuration
   /// on which the caller has the "workstations.workstations.use" permission.
@@ -609,38 +1036,78 @@ class WorkstationsClient {
   /// @param parent  Required. Parent resource name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.workstations.v1.Workstation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.ListUsableWorkstationsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L992}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.ListUsableWorkstationsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L992}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   StreamRange<google::cloud::workstations::v1::Workstation>
   ListUsableWorkstations(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns all workstations using the specified workstation configuration
   /// on which the caller has the "workstations.workstations.use" permission.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::ListUsableWorkstationsRequest,google/cloud/workstations/v1/workstations.proto#L992}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.ListUsableWorkstationsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.workstations.v1.Workstation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.ListUsableWorkstationsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L992}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.ListUsableWorkstationsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L992}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   StreamRange<google::cloud::workstations::v1::Workstation>
   ListUsableWorkstations(
       google::cloud::workstations::v1::ListUsableWorkstationsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new workstation.
   ///
@@ -649,229 +1116,418 @@ class WorkstationsClient {
   /// @param workstation_id  Required. ID to use for the workstation.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.Workstation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.CreateWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1022}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.CreateWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1022}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   CreateWorkstation(
       std::string const& parent,
       google::cloud::workstations::v1::Workstation const& workstation,
       std::string const& workstation_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new workstation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::CreateWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1022}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.CreateWorkstationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.Workstation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.CreateWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1022}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.CreateWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1022}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   CreateWorkstation(
       google::cloud::workstations::v1::CreateWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing workstation.
   ///
   /// @param workstation  Required. Workstation to update.
-  /// @param update_mask  Required. Mask specifying which fields in the
-  /// workstation configuration
+  /// @param update_mask  Required. Mask specifying which fields in the workstation configuration
   ///  should be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.Workstation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.UpdateWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1043}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.UpdateWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1043}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   UpdateWorkstation(
       google::cloud::workstations::v1::Workstation const& workstation,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing workstation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::UpdateWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1043}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.UpdateWorkstationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.Workstation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.UpdateWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1043}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.UpdateWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1043}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   UpdateWorkstation(
       google::cloud::workstations::v1::UpdateWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified workstation.
   ///
   /// @param name  Required. Name of the workstation to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.Workstation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.DeleteWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1063}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.DeleteWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1063}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   DeleteWorkstation(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified workstation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::DeleteWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1063}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.DeleteWorkstationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.Workstation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.DeleteWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1063}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.DeleteWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1063}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   DeleteWorkstation(
       google::cloud::workstations::v1::DeleteWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Starts running a workstation so that users can connect to it.
   ///
   /// @param name  Required. Name of the workstation to start.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.Workstation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.StartWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1082}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.StartWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1082}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StartWorkstation(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Starts running a workstation so that users can connect to it.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::StartWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1082}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.StartWorkstationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.Workstation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.StartWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1082}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.StartWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1082}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StartWorkstation(
       google::cloud::workstations::v1::StartWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Stops running a workstation, reducing costs.
   ///
   /// @param name  Required. Name of the workstation to stop.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.Workstation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.StopWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1101}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.StopWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1101}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StopWorkstation(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Stops running a workstation, reducing costs.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::StopWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.StopWorkstationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.workstations.v1.Workstation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.workstations.v1.StopWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1101}
-  /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.StopWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1101}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StopWorkstation(
       google::cloud::workstations::v1::StopWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Returns a short-lived credential that can be used to send authenticated
-  /// and authorized traffic to a workstation.
+  /// Returns a short-lived credential that can be used to send authenticated and
+  /// authorized traffic to a workstation.
   ///
-  /// @param workstation  Required. Name of the workstation for which the access
-  /// token should be
+  /// @param workstation  Required. Name of the workstation for which the access token should be
   ///  generated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::GenerateAccessTokenResponse,google/cloud/workstations/v1/workstations.proto#L1146}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.workstations.v1.GenerateAccessTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.workstations.v1.GenerateAccessTokenRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1120}
-  /// [google.cloud.workstations.v1.GenerateAccessTokenResponse]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1146}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1120}
+  /// [google.cloud.workstations.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1146}
   ///
+  // clang-format on
   StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(std::string const& workstation, Options opts = {});
 
+  // clang-format off
   ///
-  /// Returns a short-lived credential that can be used to send authenticated
-  /// and authorized traffic to a workstation.
+  /// Returns a short-lived credential that can be used to send authenticated and
+  /// authorized traffic to a workstation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::GenerateAccessTokenRequest,google/cloud/workstations/v1/workstations.proto#L1120}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.workstations.v1.GenerateAccessTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::GenerateAccessTokenResponse,google/cloud/workstations/v1/workstations.proto#L1146}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.workstations.v1.GenerateAccessTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.workstations.v1.GenerateAccessTokenRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1120}
-  /// [google.cloud.workstations.v1.GenerateAccessTokenResponse]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1146}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.workstations.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1120}
+  /// [google.cloud.workstations.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1146}
   ///
+  // clang-format on
   StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
       google::cloud::workstations::v1::GenerateAccessTokenRequest const&

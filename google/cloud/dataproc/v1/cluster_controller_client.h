@@ -88,73 +88,101 @@ class ClusterControllerClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a cluster in a project. The returned
   /// [Operation.metadata][google.longrunning.Operation.metadata] will be
   /// [ClusterOperationMetadata](https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// that the cluster
+  /// @param project_id  Required. The ID of the Google Cloud Platform project that the cluster
   ///  belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
+  /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param cluster  Required. The cluster to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L156}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.Cluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
-  /// [google.cloud.dataproc.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1156}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1156}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
       std::string const& project_id, std::string const& region,
       google::cloud::dataproc::v1::Cluster const& cluster, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a cluster in a project. The returned
   /// [Operation.metadata][google.longrunning.Operation.metadata] will be
   /// [ClusterOperationMetadata](https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::CreateClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1156}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.CreateClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L156}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.Cluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
-  /// [google.cloud.dataproc.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1156}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1156}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
       google::cloud::dataproc::v1::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a cluster in a project. The returned
   /// [Operation.metadata][google.longrunning.Operation.metadata] will be
   /// [ClusterOperationMetadata](https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
   /// The cluster must be in a
-  /// [`RUNNING`][google.cloud.dataproc.v1.ClusterStatus.State] state or an
-  /// error is returned.
+  /// [`RUNNING`][google.cloud.dataproc.v1.ClusterStatus.State] state or an error
+  /// is returned.
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// the
+  /// @param project_id  Required. The ID of the Google Cloud Platform project the
   ///  cluster belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
+  /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param cluster_name  Required. The cluster name.
   /// @param cluster  Required. The changes to the cluster.
-  /// @param update_mask  Required. Specifies the path, relative to `Cluster`,
-  /// of
+  /// @param update_mask  Required. Specifies the path, relative to `Cluster`, of
   ///  the field to update. For example, to change the number of workers
   ///  in a cluster to 5, the `update_mask` parameter would be
   ///  specified as `config.worker_config.num_instances`,
@@ -177,8 +205,7 @@ class ClusterControllerClient {
   ///          }
   ///        }
   ///      }
-  ///  <strong>Note:</strong> Currently, only the following fields can be
-  ///  updated:
+  ///  <strong>Note:</strong> Currently, only the following fields can be updated:
   ///   <table>
   ///   <!--<tbody>-->
   ///   <tr>
@@ -205,260 +232,433 @@ class ClusterControllerClient {
   ///   </table>
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L156}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.Cluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
-  /// [google.cloud.dataproc.v1.ClusterStatus.State]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L812}
-  /// [google.cloud.dataproc.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1187}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.ClusterStatus.State]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L812}
+  /// [google.cloud.dataproc.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1187}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
       std::string const& project_id, std::string const& region,
       std::string const& cluster_name,
       google::cloud::dataproc::v1::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a cluster in a project. The returned
   /// [Operation.metadata][google.longrunning.Operation.metadata] will be
   /// [ClusterOperationMetadata](https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
   /// The cluster must be in a
-  /// [`RUNNING`][google.cloud.dataproc.v1.ClusterStatus.State] state or an
-  /// error is returned.
+  /// [`RUNNING`][google.cloud.dataproc.v1.ClusterStatus.State] state or an error
+  /// is returned.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::UpdateClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1187}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.UpdateClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L156}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.Cluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
-  /// [google.cloud.dataproc.v1.ClusterStatus.State]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L812}
-  /// [google.cloud.dataproc.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1187}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.ClusterStatus.State]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L812}
+  /// [google.cloud.dataproc.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1187}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
       google::cloud::dataproc::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Stops a cluster in a project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::StopClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1283}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.StopClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L156}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.Cluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
-  /// [google.cloud.dataproc.v1.StopClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1283}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.StopClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1283}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
       google::cloud::dataproc::v1::StopClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Starts a cluster in a project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::StartClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1314}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.StartClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L156}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.Cluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
-  /// [google.cloud.dataproc.v1.StartClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1314}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.StartClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1314}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
       google::cloud::dataproc::v1::StartClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a cluster in a project. The returned
   /// [Operation.metadata][google.longrunning.Operation.metadata] will be
   /// [ClusterOperationMetadata](https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// that the cluster
+  /// @param project_id  Required. The ID of the Google Cloud Platform project that the cluster
   ///  belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
+  /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param cluster_name  Required. The cluster name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::ClusterOperationMetadata,google/cloud/dataproc/v1/operations.proto#L95}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.ClusterOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.ClusterOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/operations.proto#L95}
-  /// [google.cloud.dataproc.v1.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1345}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.ClusterOperationMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/operations.proto#L95}
+  /// [google.cloud.dataproc.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1345}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
   DeleteCluster(std::string const& project_id, std::string const& region,
                 std::string const& cluster_name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a cluster in a project. The returned
   /// [Operation.metadata][google.longrunning.Operation.metadata] will be
   /// [ClusterOperationMetadata](https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::DeleteClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1345}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.DeleteClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::ClusterOperationMetadata,google/cloud/dataproc/v1/operations.proto#L95}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.ClusterOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.ClusterOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/operations.proto#L95}
-  /// [google.cloud.dataproc.v1.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1345}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.ClusterOperationMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/operations.proto#L95}
+  /// [google.cloud.dataproc.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1345}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
   DeleteCluster(
       google::cloud::dataproc::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the resource representation for a cluster in a project.
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// that the cluster
+  /// @param project_id  Required. The ID of the Google Cloud Platform project that the cluster
   ///  belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
+  /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param cluster_name  Required. The cluster name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L156}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.Cluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
-  /// [google.cloud.dataproc.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1376}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1376}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
       std::string const& project_id, std::string const& region,
       std::string const& cluster_name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the resource representation for a cluster in a project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::GetClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1376}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.GetClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L156}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.Cluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
-  /// [google.cloud.dataproc.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1376}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1376}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
       google::cloud::dataproc::v1::GetClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all regions/{region}/clusters in a project alphabetically.
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// that the cluster
+  /// @param project_id  Required. The ID of the Google Cloud Platform project that the cluster
   ///  belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
+  /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L156}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataproc.v1.Cluster], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
-  /// [google.cloud.dataproc.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1389}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1389}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataproc::v1::Cluster> ListClusters(
       std::string const& project_id, std::string const& region,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all regions/{region}/clusters in a project alphabetically.
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// that the cluster
+  /// @param project_id  Required. The ID of the Google Cloud Platform project that the cluster
   ///  belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
-  /// @param filter  Optional. A filter constraining the clusters to list.
-  /// Filters are
+  /// @param region  Required. The Dataproc region in which to handle the request.
+  /// @param filter  Optional. A filter constraining the clusters to list. Filters are
   ///  case-sensitive and have the following syntax:
   ///  field = value [AND [field = value]] ...
-  ///  where **field** is one of `status.state`, `clusterName`, or
-  ///  `labels.[KEY]`, and `[KEY]` is a label key. **value** can be `*` to match
-  ///  all values. `status.state` can be one of the following: `ACTIVE`,
-  ///  `INACTIVE`, `CREATING`, `RUNNING`, `ERROR`, `DELETING`, or `UPDATING`.
-  ///  `ACTIVE` contains the `CREATING`, `UPDATING`, and `RUNNING` states.
-  ///  `INACTIVE` contains the `DELETING` and `ERROR` states. `clusterName` is
-  ///  the name of the cluster provided at creation time. Only the logical `AND`
-  ///  operator is supported; space-separated items are treated as having an
-  ///  implicit `AND` operator. Example filter: status.state = ACTIVE AND
-  ///  clusterName = mycluster AND labels.env = staging AND labels.starred = *
+  ///  where **field** is one of `status.state`, `clusterName`, or `labels.[KEY]`,
+  ///  and `[KEY]` is a label key. **value** can be `*` to match all values.
+  ///  `status.state` can be one of the following: `ACTIVE`, `INACTIVE`,
+  ///  `CREATING`, `RUNNING`, `ERROR`, `DELETING`, or `UPDATING`. `ACTIVE`
+  ///  contains the `CREATING`, `UPDATING`, and `RUNNING` states. `INACTIVE`
+  ///  contains the `DELETING` and `ERROR` states.
+  ///  `clusterName` is the name of the cluster provided at creation time.
+  ///  Only the logical `AND` operator is supported; space-separated items are
+  ///  treated as having an implicit `AND` operator.
+  ///  Example filter:
+  ///  status.state = ACTIVE AND clusterName = mycluster
+  ///  AND labels.env = staging AND labels.starred = *
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L156}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataproc.v1.Cluster], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
-  /// [google.cloud.dataproc.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1389}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1389}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataproc::v1::Cluster> ListClusters(
       std::string const& project_id, std::string const& region,
       std::string const& filter, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all regions/{region}/clusters in a project alphabetically.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::ListClustersRequest,google/cloud/dataproc/v1/clusters.proto#L1389}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.ListClustersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L156}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataproc.v1.Cluster], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
-  /// [google.cloud.dataproc.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1389}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1389}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataproc::v1::Cluster> ListClusters(
       google::cloud::dataproc::v1::ListClustersRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets cluster diagnostic information. The returned
   /// [Operation.metadata][google.longrunning.Operation.metadata] will be
@@ -468,30 +668,41 @@ class ClusterControllerClient {
   /// contains
   /// [DiagnoseClusterResults](https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).
   ///
-  /// @param project_id  Required. The ID of the Google Cloud Platform project
-  /// that the cluster
+  /// @param project_id  Required. The ID of the Google Cloud Platform project that the cluster
   ///  belongs to.
-  /// @param region  Required. The Dataproc region in which to handle the
-  /// request.
+  /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param cluster_name  Required. The cluster name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::DiagnoseClusterResults,google/cloud/dataproc/v1/clusters.proto#L1450}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.DiagnoseClusterResults] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.DiagnoseClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1437}
-  /// [google.cloud.dataproc.v1.DiagnoseClusterResults]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1450}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.DiagnoseClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1437}
+  /// [google.cloud.dataproc.v1.DiagnoseClusterResults]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1450}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
   DiagnoseCluster(std::string const& project_id, std::string const& region,
                   std::string const& cluster_name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets cluster diagnostic information. The returned
   /// [Operation.metadata][google.longrunning.Operation.metadata] will be
@@ -501,22 +712,38 @@ class ClusterControllerClient {
   /// contains
   /// [DiagnoseClusterResults](https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::DiagnoseClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1437}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.DiagnoseClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::DiagnoseClusterResults,google/cloud/dataproc/v1/clusters.proto#L1450}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.DiagnoseClusterResults] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.DiagnoseClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1437}
-  /// [google.cloud.dataproc.v1.DiagnoseClusterResults]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1450}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.DiagnoseClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1437}
+  /// [google.cloud.dataproc.v1.DiagnoseClusterResults]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1450}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
   DiagnoseCluster(
       google::cloud::dataproc::v1::DiagnoseClusterRequest const& request,

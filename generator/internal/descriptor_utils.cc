@@ -527,10 +527,16 @@ std::string FormatMethodCommentsMethodSignature(
 
 std::string FormatMethodCommentsProtobufRequest(
     google::protobuf::MethodDescriptor const& method) {
-  google::protobuf::Descriptor const* input_type = method.input_type();
-  auto parameter_comment = absl::StrFormat("  /// @param %s %s\n", "request",
-                                           FormatDoxygenLink(*input_type));
-  return FormatMethodComments(method, std::move(parameter_comment));
+  auto constexpr kRequestParam =
+      R"""(  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [%s].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+)""";
+  return FormatMethodComments(
+      method, absl::StrFormat(kRequestParam, method.input_type()->full_name()));
 }
 
 bool CheckParameterCommentSubstitutions() {

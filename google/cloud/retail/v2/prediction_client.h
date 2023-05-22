@@ -86,21 +86,34 @@ class PredictionServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Makes a recommendation prediction.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::PredictRequest,google/cloud/retail/v2/prediction_service.proto#L55}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.PredictRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::PredictResponse,google/cloud/retail/v2/prediction_service.proto#L194}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.retail.v2.PredictResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.retail.v2.PredictRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/prediction_service.proto#L55}
-  /// [google.cloud.retail.v2.PredictResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/prediction_service.proto#L194}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.PredictRequest]: @googleapis_reference_link{google/cloud/retail/v2/prediction_service.proto#L55}
+  /// [google.cloud.retail.v2.PredictResponse]: @googleapis_reference_link{google/cloud/retail/v2/prediction_service.proto#L194}
   ///
+  // clang-format on
   StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
       google::cloud::retail::v2::PredictRequest const& request,
       Options opts = {});

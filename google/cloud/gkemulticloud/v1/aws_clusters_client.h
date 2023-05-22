@@ -87,6 +87,7 @@ class AwsClustersClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   /// resource on a given Google Cloud Platform project and region.
@@ -98,39 +99,50 @@ class AwsClustersClient {
   /// @param parent  Required. The parent location where this
   ///  [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resource will be
   ///  created.
-  ///  Location names are formatted as
-  ///  `projects/<project-id>/locations/<region>`. See [Resource
-  ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on Google Cloud resource names.
+  ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
+  ///  for more details on Google Cloud resource names.
   /// @param aws_cluster  Required. The specification of the
   ///  [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] to create.
-  /// @param aws_cluster_id  Required. A client provided ID the resource. Must
-  /// be unique within the
+  /// @param aws_cluster_id  Required. A client provided ID the resource. Must be unique within the
   ///  parent resource.
   ///  The provided ID will be part of the
   ///  [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resource name
   ///  formatted as
   ///  `projects/<project-id>/locations/<region>/awsClusters/<cluster-id>`.
-  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63
-  ///  characters.
+  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsCluster,google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AwsCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L208}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L208}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   CreateAwsCluster(
       std::string const& parent,
       google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
       std::string const& aws_cluster_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   /// resource on a given Google Cloud Platform project and region.
@@ -139,35 +151,51 @@ class AwsClustersClient {
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::CreateAwsClusterRequest,google/cloud/gkemulticloud/v1/aws_service.proto#L208}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsCluster,google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AwsCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L208}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L208}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   CreateAwsCluster(
       google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster].
   ///
-  /// @param aws_cluster  Required. The
-  /// [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
+  /// @param aws_cluster  Required. The [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   ///  resource to update.
-  /// @param update_mask  Required. Mask of fields to update. At least one path
-  /// must be supplied in
-  ///  this field. The elements of the repeated paths field can only include
-  ///  these fields from [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]:
+  /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
+  ///  this field. The elements of the repeated paths field can only include these
+  ///  fields from [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]:
   ///   *   `description`.
   ///   *   `annotations`.
   ///   *   `control_plane.version`.
@@ -193,42 +221,76 @@ class AwsClustersClient {
   ///   *   `monitoring_config.managed_prometheus_config.enabled`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsCluster,google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AwsCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L244}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L244}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   UpdateAwsCluster(
       google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest,google/cloud/gkemulticloud/v1/aws_service.proto#L244}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsCluster,google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AwsCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L244}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L244}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   UpdateAwsCluster(
       google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Describes a specific
-  /// [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resource.
+  /// Describes a specific [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
+  /// resource.
   ///
   /// @param name  Required. The name of the
   ///  [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resource to
@@ -239,80 +301,141 @@ class AwsClustersClient {
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsCluster,google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AwsCluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L284}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L284}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
-  /// Describes a specific
-  /// [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resource.
+  /// Describes a specific [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
+  /// resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAwsClusterRequest,google/cloud/gkemulticloud/v1/aws_service.proto#L284}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GetAwsClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsCluster,google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AwsCluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L284}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L284}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
       google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resources
   /// on a given Google Cloud project and region.
   ///
   /// @param parent  Required. The parent location which owns this collection of
   ///  [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resources.
-  ///  Location names are formatted as
-  ///  `projects/<project-id>/locations/<region>`. See [Resource
-  ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on Google Cloud Platform resource names.
+  ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
+  ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsCluster,google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkemulticloud.v1.AwsCluster], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L303}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L303}
   ///
+  // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AwsCluster> ListAwsClusters(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resources
   /// on a given Google Cloud project and region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::ListAwsClustersRequest,google/cloud/gkemulticloud/v1/aws_service.proto#L303}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.ListAwsClustersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsCluster,google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkemulticloud.v1.AwsCluster], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L303}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L303}
   ///
+  // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AwsCluster> ListAwsClusters(
       google::cloud::gkemulticloud::v1::ListAwsClustersRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a specific [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   /// resource.
@@ -332,23 +455,35 @@ class AwsClustersClient {
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L345}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L345}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a specific [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   /// resource.
@@ -360,64 +495,90 @@ class AwsClustersClient {
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest,google/cloud/gkemulticloud/v1/aws_service.proto#L345}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L345}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L345}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsCluster(
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Generates a short-lived access token to authenticate to a given
   /// [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest,google/cloud/gkemulticloud/v1/aws_service.proto#L579}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse,google/cloud/gkemulticloud/v1/aws_service.proto#L598}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L579}
-  /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenResponse]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L598}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L579}
+  /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L598}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
   GenerateAwsAccessToken(
       google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool],
-  /// attached to a given
-  /// [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster].
+  /// attached to a given [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster].
   ///
   /// If successful, the response contains a newly created
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param parent  Required. The
-  /// [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
+  /// @param parent  Required. The [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   ///  resource where this node pool will be created.
   ///  `AwsCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/awsClusters/<cluster-id>`.
@@ -425,76 +586,100 @@ class AwsClustersClient {
   ///  for more details on Google Cloud resource names.
   /// @param aws_node_pool  Required. The specification of the
   ///  [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] to create.
-  /// @param aws_node_pool_id  Required. A client provided ID the resource. Must
-  /// be unique within the
+  /// @param aws_node_pool_id  Required. A client provided ID the resource. Must be unique within the
   ///  parent resource.
   ///  The provided ID will be part of the
   ///  [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] resource name
   ///  formatted as
   ///  `projects/<project-id>/locations/<region>/awsClusters/<cluster-id>/awsNodePools/<node-pool-id>`.
-  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63
-  ///  characters.
+  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsNodePool,google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AwsNodePool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L383}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L383}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   CreateAwsNodePool(
       std::string const& parent,
       google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
       std::string const& aws_node_pool_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool],
-  /// attached to a given
-  /// [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster].
+  /// attached to a given [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster].
   ///
   /// If successful, the response contains a newly created
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest,google/cloud/gkemulticloud/v1/aws_service.proto#L383}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsNodePool,google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AwsNodePool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L383}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L383}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   CreateAwsNodePool(
       google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool].
   ///
-  /// @param aws_node_pool  Required. The
-  /// [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]
+  /// @param aws_node_pool  Required. The [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]
   ///  resource to update.
-  /// @param update_mask  Required. Mask of fields to update. At least one path
-  /// must be supplied in
-  ///  this field. The elements of the repeated paths field can only include
-  ///  these fields from
-  ///  [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]:
+  /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
+  ///  this field. The elements of the repeated paths field can only include these
+  ///  fields from [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]:
   ///   *   `annotations`.
   ///   *   `version`.
   ///   *   `autoscaling.min_node_count`.
@@ -519,39 +704,73 @@ class AwsClustersClient {
   ///   *   `config.autoscaling_metrics_collection.metrics`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsNodePool,google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AwsNodePool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L420}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// [google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L420}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   UpdateAwsNodePool(
       google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest,google/cloud/gkemulticloud/v1/aws_service.proto#L420}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsNodePool,google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AwsNodePool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L420}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// [google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L420}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   UpdateAwsNodePool(
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Describes a specific
   /// [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] resource.
@@ -565,44 +784,65 @@ class AwsClustersClient {
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsNodePool,google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AwsNodePool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L459}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L459}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Describes a specific
   /// [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest,google/cloud/gkemulticloud/v1/aws_service.proto#L459}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsNodePool,google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AwsNodePool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L459}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L459}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
       google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]
   /// resources on a given
   /// [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster].
   ///
-  /// @param parent  Required. The parent `AwsCluster` which owns this
-  /// collection of
+  /// @param parent  Required. The parent `AwsCluster` which owns this collection of
   ///  [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] resources.
   ///  `AwsCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/awsClusters/<cluster-id>`.
@@ -610,45 +850,83 @@ class AwsClustersClient {
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsNodePool,google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkemulticloud.v1.AwsNodePool], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L478}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L478}
   ///
+  // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool> ListAwsNodePools(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]
   /// resources on a given
   /// [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest,google/cloud/gkemulticloud/v1/aws_service.proto#L478}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsNodePool,google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkemulticloud.v1.AwsNodePool], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L478}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L478}
   ///
+  // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool> ListAwsNodePools(
       google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Deletes a specific
-  /// [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] resource.
+  /// Deletes a specific [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]
+  /// resource.
   ///
   /// If successful, the response contains a newly created
   /// [Operation][google.longrunning.Operation] resource that can be
@@ -662,50 +940,80 @@ class AwsClustersClient {
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L521}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L521}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
-  /// Deletes a specific
-  /// [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] resource.
+  /// Deletes a specific [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]
+  /// resource.
   ///
   /// If successful, the response contains a newly created
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest,google/cloud/gkemulticloud/v1/aws_service.proto#L521}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
-  /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L521}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
+  /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L521}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information, such as supported AWS regions and Kubernetes
   /// versions, on a given Google Cloud location.
@@ -719,33 +1027,54 @@ class AwsClustersClient {
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsServerConfig,google/cloud/gkemulticloud/v1/aws_resources.proto#L529}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AwsServerConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L529}
-  /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L560}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L529}
+  /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L560}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
   GetAwsServerConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information, such as supported AWS regions and Kubernetes
   /// versions, on a given Google Cloud location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest,google/cloud/gkemulticloud/v1/aws_service.proto#L560}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsServerConfig,google/cloud/gkemulticloud/v1/aws_resources.proto#L529}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AwsServerConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L529}
-  /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L560}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L529}
+  /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L560}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
   GetAwsServerConfig(
       google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&

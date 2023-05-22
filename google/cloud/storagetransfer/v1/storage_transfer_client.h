@@ -90,6 +90,7 @@ class StorageTransferServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Returns the Google service account that is used by Storage Transfer
   /// Service to access buckets in the project where transfers
@@ -100,183 +101,316 @@ class StorageTransferServiceClient {
   /// account is created and owned by Storage Transfer Service and can
   /// only be used by Storage Transfer Service.
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::GetGoogleServiceAccountRequest,google/storagetransfer/v1/transfer.proto#L175}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.GetGoogleServiceAccountRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::GoogleServiceAccount,google/storagetransfer/v1/transfer_types.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storagetransfer.v1.GoogleServiceAccount])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.storagetransfer.v1.GetGoogleServiceAccountRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L175}
-  /// [google.storagetransfer.v1.GoogleServiceAccount]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.GetGoogleServiceAccountRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L175}
+  /// [google.storagetransfer.v1.GoogleServiceAccount]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
   GetGoogleServiceAccount(
       google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a transfer job that runs periodically.
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::CreateTransferJobRequest,google/storagetransfer/v1/transfer.proto#L182}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.CreateTransferJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::TransferJob,google/storagetransfer/v1/transfer_types.proto#L842}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storagetransfer.v1.TransferJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.storagetransfer.v1.CreateTransferJobRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L182}
-  /// [google.storagetransfer.v1.TransferJob]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.CreateTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L182}
+  /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
   ///
+  // clang-format on
   StatusOr<google::storagetransfer::v1::TransferJob> CreateTransferJob(
       google::storagetransfer::v1::CreateTransferJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a transfer job. Updating a job's transfer spec does not affect
   /// transfer operations that are running already.
   ///
-  /// **Note:** The job's [status][google.storagetransfer.v1.TransferJob.status]
-  /// field can be modified using this RPC (for example, to set a job's status
-  /// to [DELETED][google.storagetransfer.v1.TransferJob.Status.DELETED],
+  /// **Note:** The job's [status][google.storagetransfer.v1.TransferJob.status] field can be modified
+  /// using this RPC (for example, to set a job's status to
+  /// [DELETED][google.storagetransfer.v1.TransferJob.Status.DELETED],
   /// [DISABLED][google.storagetransfer.v1.TransferJob.Status.DISABLED], or
   /// [ENABLED][google.storagetransfer.v1.TransferJob.Status.ENABLED]).
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::UpdateTransferJobRequest,google/storagetransfer/v1/transfer.proto#L188}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.UpdateTransferJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::TransferJob,google/storagetransfer/v1/transfer_types.proto#L842}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storagetransfer.v1.TransferJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.storagetransfer.v1.TransferJob]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
-  /// [google.storagetransfer.v1.TransferJob.status]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L919}
-  /// [google.storagetransfer.v1.UpdateTransferJobRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L188}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
+  /// [google.storagetransfer.v1.TransferJob.status]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L919}
+  /// [google.storagetransfer.v1.UpdateTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L188}
   ///
+  // clang-format on
   StatusOr<google::storagetransfer::v1::TransferJob> UpdateTransferJob(
       google::storagetransfer::v1::UpdateTransferJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a transfer job.
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::GetTransferJobRequest,google/storagetransfer/v1/transfer.proto#L222}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.GetTransferJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::TransferJob,google/storagetransfer/v1/transfer_types.proto#L842}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storagetransfer.v1.TransferJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.storagetransfer.v1.GetTransferJobRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L222}
-  /// [google.storagetransfer.v1.TransferJob]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.GetTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L222}
+  /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
   ///
+  // clang-format on
   StatusOr<google::storagetransfer::v1::TransferJob> GetTransferJob(
       google::storagetransfer::v1::GetTransferJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists transfer jobs.
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::ListTransferJobsRequest,google/storagetransfer/v1/transfer.proto#L243}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.ListTransferJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::TransferJob,google/storagetransfer/v1/transfer_types.proto#L842}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.storagetransfer.v1.TransferJob], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.storagetransfer.v1.ListTransferJobsRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L243}
-  /// [google.storagetransfer.v1.TransferJob]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.ListTransferJobsRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L243}
+  /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
   ///
+  // clang-format on
   StreamRange<google::storagetransfer::v1::TransferJob> ListTransferJobs(
       google::storagetransfer::v1::ListTransferJobsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Pauses a transfer operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::PauseTransferOperationRequest,google/storagetransfer/v1/transfer.proto#L275}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.PauseTransferOperationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.storagetransfer.v1.PauseTransferOperationRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L275}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.PauseTransferOperationRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L275}
   ///
+  // clang-format on
   Status PauseTransferOperation(
       google::storagetransfer::v1::PauseTransferOperationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Resumes a transfer operation that is paused.
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::ResumeTransferOperationRequest,google/storagetransfer/v1/transfer.proto#L281}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.ResumeTransferOperationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.storagetransfer.v1.ResumeTransferOperationRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L281}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.ResumeTransferOperationRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L281}
   ///
+  // clang-format on
   Status ResumeTransferOperation(
       google::storagetransfer::v1::ResumeTransferOperationRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Attempts to start a new TransferOperation for the current TransferJob. A
   /// TransferJob has a maximum of one active TransferOperation. If this method
   /// is called while a TransferOperation is active, an error will be returned.
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::RunTransferJobRequest,google/storagetransfer/v1/transfer.proto#L287}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.RunTransferJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::TransferOperation,google/storagetransfer/v1/transfer_types.proto#L1173}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.storagetransfer.v1.TransferOperation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.storagetransfer.v1.RunTransferJobRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L287}
-  /// [google.storagetransfer.v1.TransferOperation]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1173}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.RunTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L287}
+  /// [google.storagetransfer.v1.TransferOperation]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1173}
   ///
+  // clang-format on
   future<StatusOr<google::storagetransfer::v1::TransferOperation>>
   RunTransferJob(
       google::storagetransfer::v1::RunTransferJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a transfer job. Deleting a transfer job sets its status to
   /// [DELETED][google.storagetransfer.v1.TransferJob.Status.DELETED].
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::DeleteTransferJobRequest,google/storagetransfer/v1/transfer.proto#L232}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.DeleteTransferJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.storagetransfer.v1.DeleteTransferJobRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L232}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.DeleteTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L232}
   ///
+  // clang-format on
   Status DeleteTransferJob(
       google::storagetransfer::v1::DeleteTransferJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an agent pool resource.
   ///
-  /// @param project_id  Required. The ID of the Google Cloud project that owns
-  /// the
+  /// @param project_id  Required. The ID of the Google Cloud project that owns the
   ///  agent pool.
   /// @param agent_pool  Required. The agent pool to create.
   /// @param agent_pool_id  Required. The ID of the agent pool to create.
@@ -291,43 +425,64 @@ class StorageTransferServiceClient {
   ///  `^(?!goog)[a-z]([a-z0-9-._~]*[a-z0-9])?$`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storagetransfer.v1.AgentPool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
-  /// [google.storagetransfer.v1.CreateAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L297}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.CreateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L297}
   ///
+  // clang-format on
   StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
       std::string const& project_id,
       google::storagetransfer::v1::AgentPool const& agent_pool,
       std::string const& agent_pool_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an agent pool resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::CreateAgentPoolRequest,google/storagetransfer/v1/transfer.proto#L297}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.CreateAgentPoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storagetransfer.v1.AgentPool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
-  /// [google.storagetransfer.v1.CreateAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L297}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.CreateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L297}
   ///
+  // clang-format on
   StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
       google::storagetransfer::v1::CreateAgentPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing agent pool resource.
   ///
-  /// @param agent_pool  Required. The agent pool to update. `agent_pool` is
-  /// expected to specify following
+  /// @param agent_pool  Required. The agent pool to update. `agent_pool` is expected to specify following
   ///  fields:
   ///  *  [name][google.storagetransfer.v1.AgentPool.name]
   ///  *  [display_name][google.storagetransfer.v1.AgentPool.display_name]
@@ -342,133 +497,239 @@ class StorageTransferServiceClient {
   ///  *  [bandwidth_limit][google.storagetransfer.v1.AgentPool.bandwidth_limit]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storagetransfer.v1.AgentPool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
-  /// [google.storagetransfer.v1.UpdateAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L322}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.UpdateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L322}
   ///
+  // clang-format on
   StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
       google::storagetransfer::v1::AgentPool const& agent_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing agent pool resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::UpdateAgentPoolRequest,google/storagetransfer/v1/transfer.proto#L322}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.UpdateAgentPoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storagetransfer.v1.AgentPool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
-  /// [google.storagetransfer.v1.UpdateAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L322}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.UpdateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L322}
   ///
+  // clang-format on
   StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
       google::storagetransfer::v1::UpdateAgentPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an agent pool.
   ///
   /// @param name  Required. The name of the agent pool to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storagetransfer.v1.AgentPool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
-  /// [google.storagetransfer.v1.GetAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L347}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.GetAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L347}
   ///
+  // clang-format on
   StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an agent pool.
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::GetAgentPoolRequest,google/storagetransfer/v1/transfer.proto#L347}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.GetAgentPoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storagetransfer.v1.AgentPool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
-  /// [google.storagetransfer.v1.GetAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L347}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.GetAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L347}
   ///
+  // clang-format on
   StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
       google::storagetransfer::v1::GetAgentPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists agent pools.
   ///
-  /// @param project_id  Required. The ID of the Google Cloud project that owns
-  /// the job.
+  /// @param project_id  Required. The ID of the Google Cloud project that owns the job.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.storagetransfer.v1.AgentPool], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
-  /// [google.storagetransfer.v1.ListAgentPoolsRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.ListAgentPoolsRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
   ///
+  // clang-format on
   StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
       std::string const& project_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists agent pools.
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::ListAgentPoolsRequest,google/storagetransfer/v1/transfer.proto#L359}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.ListAgentPoolsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.storagetransfer.v1.AgentPool], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.storagetransfer.v1.AgentPool]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
-  /// [google.storagetransfer.v1.ListAgentPoolsRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.ListAgentPoolsRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
   ///
+  // clang-format on
   StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
       google::storagetransfer::v1::ListAgentPoolsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an agent pool.
   ///
   /// @param name  Required. The name of the agent pool to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.storagetransfer.v1.DeleteAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L353}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.DeleteAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L353}
   ///
+  // clang-format on
   Status DeleteAgentPool(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an agent pool.
   ///
-  /// @param request
-  /// @googleapis_link{google::storagetransfer::v1::DeleteAgentPoolRequest,google/storagetransfer/v1/transfer.proto#L353}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storagetransfer.v1.DeleteAgentPoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.storagetransfer.v1.DeleteAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L353}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storagetransfer.v1.DeleteAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L353}
   ///
+  // clang-format on
   Status DeleteAgentPool(
       google::storagetransfer::v1::DeleteAgentPoolRequest const& request,
       Options opts = {});

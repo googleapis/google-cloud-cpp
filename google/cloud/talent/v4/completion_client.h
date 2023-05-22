@@ -82,22 +82,35 @@ class CompletionClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Completes the specified prefix with keyword suggestions.
   /// Intended for use by a job search auto-complete search box.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::CompleteQueryRequest,google/cloud/talent/v4/completion_service.proto#L48}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.CompleteQueryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::CompleteQueryResponse,google/cloud/talent/v4/completion_service.proto#L143}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.CompleteQueryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.CompleteQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/completion_service.proto#L48}
-  /// [google.cloud.talent.v4.CompleteQueryResponse]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/completion_service.proto#L143}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.CompleteQueryRequest]: @googleapis_reference_link{google/cloud/talent/v4/completion_service.proto#L48}
+  /// [google.cloud.talent.v4.CompleteQueryResponse]: @googleapis_reference_link{google/cloud/talent/v4/completion_service.proto#L143}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
       google::cloud::talent::v4::CompleteQueryRequest const& request,
       Options opts = {});

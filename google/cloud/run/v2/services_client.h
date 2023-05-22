@@ -84,51 +84,84 @@ class ServicesClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new Service in a given project and location.
   ///
-  /// @param parent  Required. The location and project in which this service
-  /// should be created.
+  /// @param parent  Required. The location and project in which this service should be created.
   ///  Format: projects/{project}/locations/{location}, where {project} can be
   ///  project id or number. Only lowercase characters, digits, and hyphens.
   /// @param service  Required. The Service instance to create.
-  /// @param service_id  Required. The unique identifier for the Service. It
-  /// must begin with letter,
+  /// @param service_id  Required. The unique identifier for the Service. It must begin with letter,
   ///  and cannot end with hyphen; must contain fewer than 50 characters.
   ///  The name of the service becomes {parent}/services/{service_id}.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.run.v2.Service] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.run.v2.CreateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L166}
-  /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.CreateServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L166}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Service>> CreateService(
       std::string const& parent, google::cloud::run::v2::Service const& service,
       std::string const& service_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new Service in a given project and location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::run::v2::CreateServiceRequest,google/cloud/run/v2/service.proto#L166}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.run.v2.CreateServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.run.v2.Service] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.run.v2.CreateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L166}
-  /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.CreateServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L166}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Service>> CreateService(
       google::cloud::run::v2::CreateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about a Service.
   ///
@@ -137,110 +170,206 @@ class ServicesClient {
   ///  {project} can be project id or number.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.run.v2.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.run.v2.GetServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L240}
-  /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.GetServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L240}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
+  // clang-format on
   StatusOr<google::cloud::run::v2::Service> GetService(std::string const& name,
                                                        Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about a Service.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::run::v2::GetServiceRequest,google/cloud/run/v2/service.proto#L240}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.run.v2.GetServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.run.v2.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.run.v2.GetServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L240}
-  /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.GetServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L240}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
+  // clang-format on
   StatusOr<google::cloud::run::v2::Service> GetService(
       google::cloud::run::v2::GetServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists Services.
   ///
   /// @param parent  Required. The location and project to list resources on.
   ///  Location must be a valid Google Cloud region, and cannot be the "-"
-  ///  wildcard. Format: projects/{project}/locations/{location}, where
-  ///  {project} can be project id or number.
+  ///  wildcard. Format: projects/{project}/locations/{location}, where {project}
+  ///  can be project id or number.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.run.v2.Service], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.run.v2.ListServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L206}
-  /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.ListServicesRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L206}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
+  // clang-format on
   StreamRange<google::cloud::run::v2::Service> ListServices(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists Services.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::run::v2::ListServicesRequest,google/cloud/run/v2/service.proto#L206}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.run.v2.ListServicesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.run.v2.Service], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.run.v2.ListServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L206}
-  /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.ListServicesRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L206}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
+  // clang-format on
   StreamRange<google::cloud::run::v2::Service> ListServices(
       google::cloud::run::v2::ListServicesRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a Service.
   ///
   /// @param service  Required. The Service to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.run.v2.Service] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
-  /// [google.cloud.run.v2.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L191}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
+  /// [google.cloud.run.v2.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L191}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Service>> UpdateService(
       google::cloud::run::v2::Service const& service, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a Service.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::run::v2::UpdateServiceRequest,google/cloud/run/v2/service.proto#L191}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.run.v2.UpdateServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.run.v2.Service] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
-  /// [google.cloud.run.v2.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L191}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
+  /// [google.cloud.run.v2.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L191}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Service>> UpdateService(
       google::cloud::run::v2::UpdateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a Service.
   /// This will cause the Service to stop serving traffic and will delete all
@@ -251,93 +380,165 @@ class ServicesClient {
   ///  {project} can be project id or number.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.run.v2.Service] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.run.v2.DeleteServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L251}
-  /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L251}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Service>> DeleteService(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a Service.
   /// This will cause the Service to stop serving traffic and will delete all
   /// revisions.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::run::v2::DeleteServiceRequest,google/cloud/run/v2/service.proto#L251}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.run.v2.DeleteServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.run.v2.Service] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.run.v2.DeleteServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L251}
-  /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L251}
+  /// [google.cloud.run.v2.Service]: @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Service>> DeleteService(
       google::cloud::run::v2::DeleteServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the IAM Access Control policy currently in effect for the given
   /// Cloud Run Service. This result does not include any inherited policies.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the IAM Access control policy for the specified Service. Overwrites
   /// any existing policy.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns permissions that a caller has on the specified Project.
   ///
   /// There are no permissions required for making this API call.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});

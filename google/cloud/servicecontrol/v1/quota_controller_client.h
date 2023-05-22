@@ -87,6 +87,7 @@ class QuotaControllerClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Attempts to allocate quota for the specified consumer. It should be called
   /// before the operation is executed.
@@ -100,18 +101,30 @@ class QuotaControllerClient {
   /// reliability, the server may inject these errors to prohibit any hard
   /// dependency on the quota functionality.
   ///
-  /// @param request
-  /// @googleapis_link{google::api::servicecontrol::v1::AllocateQuotaRequest,google/api/servicecontrol/v1/quota_controller.proto#L63}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.servicecontrol.v1.AllocateQuotaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::servicecontrol::v1::AllocateQuotaResponse,google/api/servicecontrol/v1/quota_controller.proto#L178}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.api.servicecontrol.v1.AllocateQuotaResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.api.servicecontrol.v1.AllocateQuotaRequest]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v1/quota_controller.proto#L63}
-  /// [google.api.servicecontrol.v1.AllocateQuotaResponse]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v1/quota_controller.proto#L178}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.servicecontrol.v1.AllocateQuotaRequest]: @googleapis_reference_link{google/api/servicecontrol/v1/quota_controller.proto#L63}
+  /// [google.api.servicecontrol.v1.AllocateQuotaResponse]: @googleapis_reference_link{google/api/servicecontrol/v1/quota_controller.proto#L178}
   ///
+  // clang-format on
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
   AllocateQuota(
       google::api::servicecontrol::v1::AllocateQuotaRequest const& request,

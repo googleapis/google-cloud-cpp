@@ -89,6 +89,7 @@ class AttachedClustersClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new
   /// [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
@@ -101,40 +102,50 @@ class AttachedClustersClient {
   /// @param parent  Required. The parent location where this
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   ///  will be created.
-  ///  Location names are formatted as
-  ///  `projects/<project-id>/locations/<region>`. See [Resource
-  ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on Google Cloud resource names.
+  ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
+  ///  for more details on Google Cloud resource names.
   /// @param attached_cluster  Required. The specification of the
-  ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] to
-  ///  create.
-  /// @param attached_cluster_id  Required. A client provided ID the resource.
-  /// Must be unique within the
+  ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] to create.
+  /// @param attached_cluster_id  Required. A client provided ID the resource. Must be unique within the
   ///  parent resource.
   ///  The provided ID will be part of the
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   ///  name formatted as
   ///  `projects/<project-id>/locations/<region>/attachedClusters/<cluster-id>`.
-  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63
-  ///  characters.
+  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AttachedCluster,google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AttachedCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.CreateAttachedClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L212}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.CreateAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L212}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   CreateAttachedCluster(
       std::string const& parent,
       google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
       std::string const& attached_cluster_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new
   /// [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
@@ -144,26 +155,44 @@ class AttachedClustersClient {
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest,google/cloud/gkemulticloud/v1/attached_service.proto#L212}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.CreateAttachedClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AttachedCluster,google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AttachedCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.CreateAttachedClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L212}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.CreateAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L212}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   CreateAttachedCluster(
       google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an
   /// [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster].
@@ -171,10 +200,9 @@ class AttachedClustersClient {
   /// @param attached_cluster  Required. The
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   ///  to update.
-  /// @param update_mask  Required. Mask of fields to update. At least one path
-  /// must be supplied in
-  ///  this field. The elements of the repeated paths field can only include
-  ///  these fields from
+  /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
+  ///  this field. The elements of the repeated paths field can only include these
+  ///  fields from
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster]:
   ///   *   `description`.
   ///   *   `annotations`.
@@ -184,48 +212,82 @@ class AttachedClustersClient {
   ///   *   `monitoring_config.managed_prometheus_config.enabled`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AttachedCluster,google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AttachedCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.UpdateAttachedClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L284}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.UpdateAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L284}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   UpdateAttachedCluster(
       google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an
   /// [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest,google/cloud/gkemulticloud/v1/attached_service.proto#L284}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.UpdateAttachedClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AttachedCluster,google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AttachedCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.UpdateAttachedClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L284}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.UpdateAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L284}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   UpdateAttachedCluster(
       google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Imports creates a new
   /// [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   /// by importing an existing Fleet Membership resource.
   ///
-  /// Attached Clusters created before the introduction of the Anthos
-  /// Multi-Cloud API can be imported through this method.
+  /// Attached Clusters created before the introduction of the Anthos Multi-Cloud
+  /// API can be imported through this method.
   ///
   /// If successful, the response contains a newly created
   /// [Operation][google.longrunning.Operation] resource that can be
@@ -234,60 +296,90 @@ class AttachedClustersClient {
   /// @param parent  Required. The parent location where this
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   ///  will be created.
-  ///  Location names are formatted as
-  ///  `projects/<project-id>/locations/<region>`. See [Resource
-  ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on Google Cloud resource names.
-  /// @param fleet_membership  Required. The name of the fleet membership
-  /// resource to import.
+  ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
+  ///  for more details on Google Cloud resource names.
+  /// @param fleet_membership  Required. The name of the fleet membership resource to import.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AttachedCluster,google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AttachedCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ImportAttachedClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L248}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.ImportAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L248}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   ImportAttachedCluster(std::string const& parent,
                         std::string const& fleet_membership, Options opts = {});
 
+  // clang-format off
   ///
   /// Imports creates a new
   /// [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   /// by importing an existing Fleet Membership resource.
   ///
-  /// Attached Clusters created before the introduction of the Anthos
-  /// Multi-Cloud API can be imported through this method.
+  /// Attached Clusters created before the introduction of the Anthos Multi-Cloud
+  /// API can be imported through this method.
   ///
   /// If successful, the response contains a newly created
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest,google/cloud/gkemulticloud/v1/attached_service.proto#L248}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.ImportAttachedClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AttachedCluster,google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AttachedCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ImportAttachedClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L248}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.ImportAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L248}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   ImportAttachedCluster(
       google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Describes a specific
   /// [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource.
@@ -301,83 +393,144 @@ class AttachedClustersClient {
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AttachedCluster,google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AttachedCluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GetAttachedClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L309}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.GetAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L309}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
   GetAttachedCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Describes a specific
   /// [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAttachedClusterRequest,google/cloud/gkemulticloud/v1/attached_service.proto#L309}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GetAttachedClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AttachedCluster,google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AttachedCluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GetAttachedClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L309}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.GetAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L309}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
   GetAttachedCluster(
       google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster]
   /// resources on a given Google Cloud project and region.
   ///
   /// @param parent  Required. The parent location which owns this collection of
-  ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster]
-  ///  resources. Location names are formatted as
-  ///  `projects/<project-id>/locations/<region>`. See [Resource
-  ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on Google Cloud Platform resource names.
+  ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resources.
+  ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
+  ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AttachedCluster,google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkemulticloud.v1.AttachedCluster], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ListAttachedClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L328}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.ListAttachedClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L328}
   ///
+  // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>
   ListAttachedClusters(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster]
   /// resources on a given Google Cloud project and region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::ListAttachedClustersRequest,google/cloud/gkemulticloud/v1/attached_service.proto#L328}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.ListAttachedClustersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AttachedCluster,google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkemulticloud.v1.AttachedCluster], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ListAttachedClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L328}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.ListAttachedClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L328}
   ///
+  // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>
   ListAttachedClusters(
       google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a specific
   /// [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource.
@@ -387,28 +540,41 @@ class AttachedClustersClient {
   /// described to track the status of the operation.
   ///
   /// @param name  Required. The resource name the
-  ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] to
-  ///  delete. `AttachedCluster` names are formatted as
+  ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] to delete.
+  ///  `AttachedCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/attachedClusters/<cluster-id>`.
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L370}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L370}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAttachedCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a specific
   /// [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource.
@@ -417,28 +583,45 @@ class AttachedClustersClient {
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest,google/cloud/gkemulticloud/v1/attached_service.proto#L370}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L370}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L370}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAttachedCluster(
       google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information, such as supported Kubernetes versions, on a given
   /// Google Cloud location.
@@ -452,92 +635,133 @@ class AttachedClustersClient {
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AttachedServerConfig,google/cloud/gkemulticloud/v1/attached_resources.proto#L207}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AttachedServerConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedServerConfig]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L207}
-  /// [google.cloud.gkemulticloud.v1.GetAttachedServerConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L416}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L207}
+  /// [google.cloud.gkemulticloud.v1.GetAttachedServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L416}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
   GetAttachedServerConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information, such as supported Kubernetes versions, on a given
   /// Google Cloud location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest,google/cloud/gkemulticloud/v1/attached_service.proto#L416}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GetAttachedServerConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AttachedServerConfig,google/cloud/gkemulticloud/v1/attached_resources.proto#L207}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AttachedServerConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AttachedServerConfig]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L207}
-  /// [google.cloud.gkemulticloud.v1.GetAttachedServerConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L416}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AttachedServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L207}
+  /// [google.cloud.gkemulticloud.v1.GetAttachedServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L416}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
   GetAttachedServerConfig(
       google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Generates the install manifest to be installed on the target cluster.
   ///
   /// @param parent  Required. The parent location where this
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   ///  will be created.
-  ///  Location names are formatted as
-  ///  `projects/<project-id>/locations/<region>`. See [Resource
-  ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on Google Cloud resource names.
-  /// @param attached_cluster_id  Required. A client provided ID of the
-  /// resource. Must be unique within the
+  ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
+  ///  for more details on Google Cloud resource names.
+  /// @param attached_cluster_id  Required. A client provided ID of the resource. Must be unique within the
   ///  parent resource.
   ///  The provided ID will be part of the
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   ///  name formatted as
   ///  `projects/<project-id>/locations/<region>/attachedClusters/<cluster-id>`.
-  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63
-  ///  characters. When generating an install manifest for importing an existing
-  ///  Membership resource, the attached_cluster_id field must be the Membership
-  ///  id. Membership names are formatted as
+  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
+  ///  When generating an install manifest for importing an existing Membership
+  ///  resource, the attached_cluster_id field must be the Membership id.
+  ///  Membership names are formatted as
   ///  `projects/<project-id>/locations/<region>/memberships/<membership-id>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestResponse,google/cloud/gkemulticloud/v1/attached_service.proto#L205}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L162}
-  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestResponse]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L205}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L162}
+  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L205}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::
                GenerateAttachedClusterInstallManifestResponse>
   GenerateAttachedClusterInstallManifest(std::string const& parent,
                                          std::string const& attached_cluster_id,
                                          Options opts = {});
 
+  // clang-format off
   ///
   /// Generates the install manifest to be installed on the target cluster.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestRequest,google/cloud/gkemulticloud/v1/attached_service.proto#L162}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestResponse,google/cloud/gkemulticloud/v1/attached_service.proto#L205}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L162}
-  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestResponse]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L205}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L162}
+  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L205}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::
                GenerateAttachedClusterInstallManifestResponse>
   GenerateAttachedClusterInstallManifest(

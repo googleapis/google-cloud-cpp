@@ -85,97 +85,152 @@ class JobServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new job.
   ///
   /// Typically, the job becomes searchable within 10 seconds, but it may take
   /// up to 5 minutes.
   ///
-  /// @param parent  Required. The resource name of the tenant under which the
-  /// job is created.
+  /// @param parent  Required. The resource name of the tenant under which the job is created.
   ///  The format is "projects/{project_id}/tenants/{tenant_id}". For example,
   ///  "projects/foo/tenants/bar".
   /// @param job  Required. The Job to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.CreateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L175}
-  /// [google.cloud.talent.v4.Job]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.CreateJobRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L175}
+  /// [google.cloud.talent.v4.Job]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Job> CreateJob(
       std::string const& parent, google::cloud::talent::v4::Job const& job,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new job.
   ///
   /// Typically, the job becomes searchable within 10 seconds, but it may take
   /// up to 5 minutes.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::CreateJobRequest,google/cloud/talent/v4/job_service.proto#L175}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.CreateJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.CreateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L175}
-  /// [google.cloud.talent.v4.Job]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.CreateJobRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L175}
+  /// [google.cloud.talent.v4.Job]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Job> CreateJob(
       google::cloud::talent::v4::CreateJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Begins executing a batch create jobs operation.
   ///
-  /// @param parent  Required. The resource name of the tenant under which the
-  /// job is created.
+  /// @param parent  Required. The resource name of the tenant under which the job is created.
   ///  The format is "projects/{project_id}/tenants/{tenant_id}". For example,
   ///  "projects/foo/tenants/bar".
   /// @param jobs  Required. The jobs to be created.
   ///  A maximum of 200 jobs can be created in a batch.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::BatchCreateJobsResponse,google/cloud/talent/v4/job_service.proto#L987}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.talent.v4.BatchCreateJobsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.talent.v4.BatchCreateJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L895}
-  /// [google.cloud.talent.v4.BatchCreateJobsResponse]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L987}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.BatchCreateJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L895}
+  /// [google.cloud.talent.v4.BatchCreateJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L987}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
   BatchCreateJobs(std::string const& parent,
                   std::vector<google::cloud::talent::v4::Job> const& jobs,
                   Options opts = {});
 
+  // clang-format off
   ///
   /// Begins executing a batch create jobs operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::BatchCreateJobsRequest,google/cloud/talent/v4/job_service.proto#L895}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.BatchCreateJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::BatchCreateJobsResponse,google/cloud/talent/v4/job_service.proto#L987}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.talent.v4.BatchCreateJobsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.talent.v4.BatchCreateJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L895}
-  /// [google.cloud.talent.v4.BatchCreateJobsResponse]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L987}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.BatchCreateJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L895}
+  /// [google.cloud.talent.v4.BatchCreateJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L987}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
   BatchCreateJobs(
       google::cloud::talent::v4::BatchCreateJobsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves the specified job, whose status is OPEN or recently EXPIRED
   /// within the last 90 days.
@@ -186,37 +241,59 @@ class JobServiceClient {
   ///  example, "projects/foo/tenants/bar/jobs/baz".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L190}
-  /// [google.cloud.talent.v4.Job]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.GetJobRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L190}
+  /// [google.cloud.talent.v4.Job]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Job> GetJob(std::string const& name,
                                                   Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves the specified job, whose status is OPEN or recently EXPIRED
   /// within the last 90 days.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::GetJobRequest,google/cloud/talent/v4/job_service.proto#L190}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.GetJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L190}
-  /// [google.cloud.talent.v4.Job]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.GetJobRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L190}
+  /// [google.cloud.talent.v4.Job]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Job> GetJob(
       google::cloud::talent::v4::GetJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates specified job.
   ///
@@ -233,84 +310,139 @@ class JobServiceClient {
   ///  top level fields of [Job][google.cloud.talent.v4.Job] are supported.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.Job]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
-  /// [google.cloud.talent.v4.UpdateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L203}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Job]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
+  /// [google.cloud.talent.v4.UpdateJobRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L203}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Job> UpdateJob(
       google::cloud::talent::v4::Job const& job,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates specified job.
   ///
   /// Typically, updated contents become visible in search results within 10
   /// seconds, but it may take up to 5 minutes.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::UpdateJobRequest,google/cloud/talent/v4/job_service.proto#L203}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.UpdateJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.Job]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
-  /// [google.cloud.talent.v4.UpdateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L203}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Job]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
+  /// [google.cloud.talent.v4.UpdateJobRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L203}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Job> UpdateJob(
       google::cloud::talent::v4::UpdateJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Begins executing a batch update jobs operation.
   ///
-  /// @param parent  Required. The resource name of the tenant under which the
-  /// job is created.
+  /// @param parent  Required. The resource name of the tenant under which the job is created.
   ///  The format is "projects/{project_id}/tenants/{tenant_id}". For example,
   ///  "projects/foo/tenants/bar".
   /// @param jobs  Required. The jobs to be updated.
   ///  A maximum of 200 jobs can be updated in a batch.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::BatchUpdateJobsResponse,google/cloud/talent/v4/job_service.proto#L998}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.talent.v4.BatchUpdateJobsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.talent.v4.BatchUpdateJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L911}
-  /// [google.cloud.talent.v4.BatchUpdateJobsResponse]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L998}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.BatchUpdateJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L911}
+  /// [google.cloud.talent.v4.BatchUpdateJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L998}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
   BatchUpdateJobs(std::string const& parent,
                   std::vector<google::cloud::talent::v4::Job> const& jobs,
                   Options opts = {});
 
+  // clang-format off
   ///
   /// Begins executing a batch update jobs operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::BatchUpdateJobsRequest,google/cloud/talent/v4/job_service.proto#L911}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.BatchUpdateJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::BatchUpdateJobsResponse,google/cloud/talent/v4/job_service.proto#L998}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.talent.v4.BatchUpdateJobsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.talent.v4.BatchUpdateJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L911}
-  /// [google.cloud.talent.v4.BatchUpdateJobsResponse]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L998}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.BatchUpdateJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L911}
+  /// [google.cloud.talent.v4.BatchUpdateJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L998}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
   BatchUpdateJobs(
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified job.
   ///
@@ -323,34 +455,57 @@ class JobServiceClient {
   ///  example, "projects/foo/tenants/bar/jobs/baz".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.talent.v4.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L220}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.DeleteJobRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L220}
   ///
+  // clang-format on
   Status DeleteJob(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified job.
   ///
   /// Typically, the job becomes unsearchable within 10 seconds, but it may take
   /// up to 5 minutes.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::DeleteJobRequest,google/cloud/talent/v4/job_service.proto#L220}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.DeleteJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.talent.v4.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L220}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.DeleteJobRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L220}
   ///
+  // clang-format on
   Status DeleteJob(google::cloud::talent::v4::DeleteJobRequest const& request,
                    Options opts = {});
 
+  // clang-format off
   ///
   /// Begins executing a batch delete jobs operation.
   ///
-  /// @param parent  Required. The resource name of the tenant under which the
-  /// job is created.
+  /// @param parent  Required. The resource name of the tenant under which the job is created.
   ///  The format is "projects/{project_id}/tenants/{tenant_id}". For example,
   ///  "projects/foo/tenants/bar".
   ///  The parent of all of the jobs specified in `names` must match this field.
@@ -360,47 +515,79 @@ class JobServiceClient {
   ///  A maximum of 200 jobs can be deleted in a batch.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::BatchDeleteJobsResponse,google/cloud/talent/v4/job_service.proto#L1009}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.talent.v4.BatchDeleteJobsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.talent.v4.BatchDeleteJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L945}
-  /// [google.cloud.talent.v4.BatchDeleteJobsResponse]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1009}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.BatchDeleteJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L945}
+  /// [google.cloud.talent.v4.BatchDeleteJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1009}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
   BatchDeleteJobs(std::string const& parent,
                   std::vector<std::string> const& names, Options opts = {});
 
+  // clang-format off
   ///
   /// Begins executing a batch delete jobs operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::BatchDeleteJobsRequest,google/cloud/talent/v4/job_service.proto#L945}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.BatchDeleteJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::BatchDeleteJobsResponse,google/cloud/talent/v4/job_service.proto#L1009}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.talent.v4.BatchDeleteJobsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.talent.v4.BatchDeleteJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L945}
-  /// [google.cloud.talent.v4.BatchDeleteJobsResponse]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1009}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.BatchDeleteJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L945}
+  /// [google.cloud.talent.v4.BatchDeleteJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1009}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
   BatchDeleteJobs(
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists jobs by filter.
   ///
-  /// @param parent  Required. The resource name of the tenant under which the
-  /// job is created.
+  /// @param parent  Required. The resource name of the tenant under which the job is created.
   ///  The format is "projects/{project_id}/tenants/{tenant_id}". For example,
   ///  "projects/foo/tenants/bar".
-  /// @param filter  Required. The filter string specifies the jobs to be
-  /// enumerated.
+  /// @param filter  Required. The filter string specifies the jobs to be enumerated.
   ///  Supported operator: =, AND
   ///  The fields eligible for filtering are:
   ///  * `companyName`
@@ -419,35 +606,75 @@ class JobServiceClient {
   ///  * requisitionId = "req-1" AND status = "EXPIRED"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.talent.v4.Job], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.talent.v4.Job]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
-  /// [google.cloud.talent.v4.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L271}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Job]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
+  /// [google.cloud.talent.v4.ListJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L271}
   ///
+  // clang-format on
   StreamRange<google::cloud::talent::v4::Job> ListJobs(
       std::string const& parent, std::string const& filter, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists jobs by filter.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::ListJobsRequest,google/cloud/talent/v4/job_service.proto#L271}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.ListJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.talent.v4.Job], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.talent.v4.Job]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
-  /// [google.cloud.talent.v4.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L271}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Job]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
+  /// [google.cloud.talent.v4.ListJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L271}
   ///
+  // clang-format on
   StreamRange<google::cloud::talent::v4::Job> ListJobs(
       google::cloud::talent::v4::ListJobsRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Searches for jobs using the provided
   /// [SearchJobsRequest][google.cloud.talent.v4.SearchJobsRequest].
@@ -457,24 +684,36 @@ class JobServiceClient {
   /// database, and only returns jobs that the caller has permission to search
   /// against.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::SearchJobsRequest,google/cloud/talent/v4/job_service.proto#L343}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.SearchJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::SearchJobsResponse,google/cloud/talent/v4/job_service.proto#L812}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.SearchJobsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.Job.visibility]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L296}
-  /// [google.cloud.talent.v4.SearchJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L343}
-  /// [google.cloud.talent.v4.SearchJobsResponse]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L812}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Job.visibility]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L296}
+  /// [google.cloud.talent.v4.SearchJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L343}
+  /// [google.cloud.talent.v4.SearchJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L812}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobs(
       google::cloud::talent::v4::SearchJobsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Searches for jobs using the provided
   /// [SearchJobsRequest][google.cloud.talent.v4.SearchJobsRequest].
@@ -489,20 +728,31 @@ class JobServiceClient {
   /// database, and only returns jobs the caller has permission to search
   /// against.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::SearchJobsRequest,google/cloud/talent/v4/job_service.proto#L343}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.SearchJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::SearchJobsResponse,google/cloud/talent/v4/job_service.proto#L812}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.SearchJobsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.Job.visibility]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L296}
-  /// [google.cloud.talent.v4.SearchJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L343}
-  /// [google.cloud.talent.v4.SearchJobsResponse]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L812}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Job.visibility]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L296}
+  /// [google.cloud.talent.v4.SearchJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L343}
+  /// [google.cloud.talent.v4.SearchJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L812}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobsForAlert(
       google::cloud::talent::v4::SearchJobsRequest const& request,
       Options opts = {});

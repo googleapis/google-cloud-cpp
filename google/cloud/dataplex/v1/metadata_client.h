@@ -85,6 +85,7 @@ class MetadataServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Create a metadata entity.
   ///
@@ -93,56 +94,91 @@ class MetadataServiceClient {
   /// @param entity  Required. Entity resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Entity,google/cloud/dataplex/v1/metadata.proto#L347}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Entity])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.CreateEntityRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L114}
-  /// [google.cloud.dataplex.v1.Entity]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CreateEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L114}
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Entity> CreateEntity(
       std::string const& parent,
       google::cloud::dataplex::v1::Entity const& entity, Options opts = {});
 
+  // clang-format off
   ///
   /// Create a metadata entity.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::CreateEntityRequest,google/cloud/dataplex/v1/metadata.proto#L114}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.CreateEntityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Entity,google/cloud/dataplex/v1/metadata.proto#L347}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Entity])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.CreateEntityRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L114}
-  /// [google.cloud.dataplex.v1.Entity]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CreateEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L114}
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Entity> CreateEntity(
       google::cloud::dataplex::v1::CreateEntityRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Update a metadata entity. Only supports full resource update.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::UpdateEntityRequest,google/cloud/dataplex/v1/metadata.proto#L134}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.UpdateEntityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Entity,google/cloud/dataplex/v1/metadata.proto#L347}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Entity])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.Entity]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
-  /// [google.cloud.dataplex.v1.UpdateEntityRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L134}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [google.cloud.dataplex.v1.UpdateEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L134}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Entity> UpdateEntity(
       google::cloud::dataplex::v1::UpdateEntityRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Delete a metadata entity.
   ///
@@ -150,27 +186,51 @@ class MetadataServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}/entities/{entity_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataplex.v1.DeleteEntityRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L144}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeleteEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L144}
   ///
+  // clang-format on
   Status DeleteEntity(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Delete a metadata entity.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::DeleteEntityRequest,google/cloud/dataplex/v1/metadata.proto#L144}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.DeleteEntityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataplex.v1.DeleteEntityRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L144}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeleteEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L144}
   ///
+  // clang-format on
   Status DeleteEntity(
       google::cloud::dataplex::v1::DeleteEntityRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Get a metadata entity.
   ///
@@ -178,36 +238,58 @@ class MetadataServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}/entities/{entity_id}.`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Entity,google/cloud/dataplex/v1/metadata.proto#L347}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Entity])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.Entity]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
-  /// [google.cloud.dataplex.v1.GetEntityRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L216}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [google.cloud.dataplex.v1.GetEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L216}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Entity> GetEntity(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Get a metadata entity.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::GetEntityRequest,google/cloud/dataplex/v1/metadata.proto#L216}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.GetEntityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Entity,google/cloud/dataplex/v1/metadata.proto#L347}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Entity])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.Entity]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
-  /// [google.cloud.dataplex.v1.GetEntityRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L216}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [google.cloud.dataplex.v1.GetEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L216}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Entity> GetEntity(
       google::cloud::dataplex::v1::GetEntityRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// List metadata entities in a zone.
   ///
@@ -215,36 +297,76 @@ class MetadataServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Entity,google/cloud/dataplex/v1/metadata.proto#L347}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Entity], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Entity]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
-  /// [google.cloud.dataplex.v1.ListEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L158}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [google.cloud.dataplex.v1.ListEntitiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L158}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Entity> ListEntities(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// List metadata entities in a zone.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::ListEntitiesRequest,google/cloud/dataplex/v1/metadata.proto#L158}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.ListEntitiesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Entity,google/cloud/dataplex/v1/metadata.proto#L347}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Entity], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.Entity]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
-  /// [google.cloud.dataplex.v1.ListEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L158}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [google.cloud.dataplex.v1.ListEntitiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L158}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Entity> ListEntities(
       google::cloud::dataplex::v1::ListEntitiesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create a metadata partition.
   ///
@@ -253,38 +375,60 @@ class MetadataServiceClient {
   /// @param partition  Required. Partition resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L480}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Partition])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.CreatePartitionRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L288}
-  /// [google.cloud.dataplex.v1.Partition]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CreatePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L288}
+  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Partition> CreatePartition(
       std::string const& parent,
       google::cloud::dataplex::v1::Partition const& partition,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create a metadata partition.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::CreatePartitionRequest,google/cloud/dataplex/v1/metadata.proto#L288}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.CreatePartitionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L480}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Partition])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.CreatePartitionRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L288}
-  /// [google.cloud.dataplex.v1.Partition]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CreatePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L288}
+  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Partition> CreatePartition(
       google::cloud::dataplex::v1::CreatePartitionRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Delete a metadata partition.
   ///
@@ -295,27 +439,51 @@ class MetadataServiceClient {
   ///  partition values separated by "/". All values must be provided.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataplex.v1.DeletePartitionRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L305}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeletePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L305}
   ///
+  // clang-format on
   Status DeletePartition(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Delete a metadata partition.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::DeletePartitionRequest,google/cloud/dataplex/v1/metadata.proto#L305}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.DeletePartitionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataplex.v1.DeletePartitionRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L305}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.DeletePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L305}
   ///
+  // clang-format on
   Status DeletePartition(
       google::cloud::dataplex::v1::DeletePartitionRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Get a metadata partition of an entity.
   ///
@@ -325,36 +493,58 @@ class MetadataServiceClient {
   ///  partition values separated by "/". All values must be provided.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L480}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Partition])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.GetPartitionRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L333}
-  /// [google.cloud.dataplex.v1.Partition]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.GetPartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L333}
+  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Partition> GetPartition(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Get a metadata partition of an entity.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::GetPartitionRequest,google/cloud/dataplex/v1/metadata.proto#L333}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.GetPartitionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L480}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.Partition])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataplex.v1.GetPartitionRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L333}
-  /// [google.cloud.dataplex.v1.Partition]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.GetPartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L333}
+  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataplex::v1::Partition> GetPartition(
       google::cloud::dataplex::v1::GetPartitionRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// List metadata partitions of an entity.
   ///
@@ -362,32 +552,71 @@ class MetadataServiceClient {
   ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}/entities/{entity_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L480}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Partition], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.ListPartitionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L245}
-  /// [google.cloud.dataplex.v1.Partition]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.ListPartitionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L245}
+  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Partition> ListPartitions(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// List metadata partitions of an entity.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataplex::v1::ListPartitionsRequest,google/cloud/dataplex/v1/metadata.proto#L245}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.ListPartitionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L480}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataplex.v1.Partition], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataplex.v1.ListPartitionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L245}
-  /// [google.cloud.dataplex.v1.Partition]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.ListPartitionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L245}
+  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataplex::v1::Partition> ListPartitions(
       google::cloud::dataplex::v1::ListPartitionsRequest request,
       Options opts = {});

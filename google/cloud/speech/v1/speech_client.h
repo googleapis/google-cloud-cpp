@@ -83,49 +83,71 @@ class SpeechClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Performs synchronous speech recognition: receive results after all audio
   /// has been sent and processed.
   ///
-  /// @param config  Required. Provides information to the recognizer that
-  /// specifies how to
+  /// @param config  Required. Provides information to the recognizer that specifies how to
   ///  process the request.
   /// @param audio  Required. The audio data to be recognized.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v1::RecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L670}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v1.RecognizeResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v1.RecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L78}
-  /// [google.cloud.speech.v1.RecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L670}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v1.RecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L78}
+  /// [google.cloud.speech.v1.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L670}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
       google::cloud::speech::v1::RecognitionConfig const& config,
       google::cloud::speech::v1::RecognitionAudio const& audio,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Performs synchronous speech recognition: receive results after all audio
   /// has been sent and processed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v1::RecognizeRequest,google/cloud/speech/v1/cloud_speech.proto#L78}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v1.RecognizeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v1::RecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L670}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v1.RecognizeResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v1.RecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L78}
-  /// [google.cloud.speech.v1.RecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L670}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v1.RecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L78}
+  /// [google.cloud.speech.v1.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L670}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
       google::cloud::speech::v1::RecognizeRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Performs asynchronous speech recognition: receive results via the
   /// google.longrunning.Operations interface. Returns either an
@@ -134,26 +156,40 @@ class SpeechClient {
   /// For more information on asynchronous speech recognition, see the
   /// [how-to](https://cloud.google.com/speech-to-text/docs/async-recognize).
   ///
-  /// @param config  Required. Provides information to the recognizer that
-  /// specifies how to
+  /// @param config  Required. Provides information to the recognizer that specifies how to
   ///  process the request.
   /// @param audio  Required. The audio data to be recognized.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v1::LongRunningRecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L691}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v1.LongRunningRecognizeResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v1.LongRunningRecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L89}
-  /// [google.cloud.speech.v1.LongRunningRecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L691}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v1.LongRunningRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L89}
+  /// [google.cloud.speech.v1.LongRunningRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L691}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
   LongRunningRecognize(
       google::cloud::speech::v1::RecognitionConfig const& config,
       google::cloud::speech::v1::RecognitionAudio const& audio,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Performs asynchronous speech recognition: receive results via the
   /// google.longrunning.Operations interface. Returns either an
@@ -162,39 +198,68 @@ class SpeechClient {
   /// For more information on asynchronous speech recognition, see the
   /// [how-to](https://cloud.google.com/speech-to-text/docs/async-recognize).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v1::LongRunningRecognizeRequest,google/cloud/speech/v1/cloud_speech.proto#L89}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v1.LongRunningRecognizeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v1::LongRunningRecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L691}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v1.LongRunningRecognizeResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v1.LongRunningRecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L89}
-  /// [google.cloud.speech.v1.LongRunningRecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L691}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v1.LongRunningRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L89}
+  /// [google.cloud.speech.v1.LongRunningRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L691}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
   LongRunningRecognize(
       google::cloud::speech::v1::LongRunningRecognizeRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Performs bidirectional streaming speech recognition: receive results while
   /// sending audio. This method is only available via the gRPC API (not REST).
   ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return A bidirectional streaming interface with request (write) type:
-  /// @googleapis_link{google::cloud::speech::v1::StreamingRecognizeRequest,google/cloud/speech/v1/cloud_speech.proto#L117}
-  /// and response (read) type:
-  /// @googleapis_link{google::cloud::speech::v1::StreamingRecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L781}
+  /// @return An object representing the bidirectional streaming
+  ///     RPC. Applications can send multiple request messages and receive
+  ///     multiple response messages through this API. Bidirectional streaming
+  ///     RPCs can impose restrictions on the sequence of request and response
+  ///     messages. Please consult the service documentation for details.
+  ///     The request message type ([google.cloud.speech.v1.StreamingRecognizeRequest]) and response messages
+  ///     ([google.cloud.speech.v1.StreamingRecognizeResponse]) are mapped to C++ classes using the
+  ///     [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v1.StreamingRecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L117}
-  /// [google.cloud.speech.v1.StreamingRecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L781}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v1.StreamingRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L117}
+  /// [google.cloud.speech.v1.StreamingRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L781}
   ///
+  // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
       google::cloud::speech::v1::StreamingRecognizeResponse>>

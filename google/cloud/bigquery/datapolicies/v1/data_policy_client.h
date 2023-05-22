@@ -85,307 +85,490 @@ class DataPolicyServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new data policy under a project with the given `dataPolicyId`
   /// (used as the display name), policy tag, and data policy type.
   ///
-  /// @param parent  Required. Resource name of the project that the data policy
-  /// will belong to.
+  /// @param parent  Required. Resource name of the project that the data policy will belong to.
   ///  The format is `projects/{project_number}/locations/{location_id}`.
-  /// @param data_policy  Required. The data policy to create. The `name` field
-  /// does not need to be
+  /// @param data_policy  Required. The data policy to create. The `name` field does not need to be
   ///  provided for the data policy creation.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datapolicies.v1.DataPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.CreateDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L127}
-  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datapolicies.v1.CreateDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L127}
+  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   CreateDataPolicy(
       std::string const& parent,
       google::cloud::bigquery::datapolicies::v1::DataPolicy const& data_policy,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new data policy under a project with the given `dataPolicyId`
   /// (used as the display name), policy tag, and data policy type.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L127}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datapolicies.v1.CreateDataPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datapolicies.v1.DataPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.CreateDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L127}
-  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datapolicies.v1.CreateDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L127}
+  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   CreateDataPolicy(
       google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the metadata for an existing data policy. The target data policy
   /// can be specified by the resource name.
   ///
   /// @param data_policy  Required. Update the data policy's metadata.
   ///  The target data policy is determined by the `name` field.
-  ///  Other fields are updated to the specified values based on the field
-  ///  masks.
-  /// @param update_mask  The update mask applies to the resource. For the
-  /// `FieldMask` definition,
+  ///  Other fields are updated to the specified values based on the field masks.
+  /// @param update_mask  The update mask applies to the resource. For the `FieldMask` definition,
   ///  see
   ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
   ///  If not set, defaults to all of the fields that are allowed to update.
   ///  Updates to the `name` and `dataPolicyId` fields are not allowed.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datapolicies.v1.DataPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
-  /// [google.cloud.bigquery.datapolicies.v1.UpdateDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L143}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.UpdateDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L143}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   UpdateDataPolicy(
       google::cloud::bigquery::datapolicies::v1::DataPolicy const& data_policy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the metadata for an existing data policy. The target data policy
   /// can be specified by the resource name.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L143}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datapolicies.v1.UpdateDataPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datapolicies.v1.DataPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
-  /// [google.cloud.bigquery.datapolicies.v1.UpdateDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L143}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.UpdateDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L143}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   UpdateDataPolicy(
       google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Renames the id (display name) of the specified data policy.
   ///
-  /// @param name  Required. Resource name of the data policy to rename. The
-  /// format is
+  /// @param name  Required. Resource name of the data policy to rename. The format is
   ///  `projects/{project_number}/locations/{location_id}/dataPolicies/{data_policy_id}`
   /// @param new_data_policy_id  Required. The new data policy id.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datapolicies.v1.DataPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
-  /// [google.cloud.bigquery.datapolicies.v1.RenameDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.RenameDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L160}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   RenameDataPolicy(std::string const& name,
                    std::string const& new_data_policy_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Renames the id (display name) of the specified data policy.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L160}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datapolicies.v1.RenameDataPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datapolicies.v1.DataPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
-  /// [google.cloud.bigquery.datapolicies.v1.RenameDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.RenameDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L160}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   RenameDataPolicy(
       google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the data policy specified by its resource name.
   ///
-  /// @param name  Required. Resource name of the data policy to delete. Format
-  /// is
+  /// @param name  Required. Resource name of the data policy to delete. Format is
   ///  `projects/{project_number}/locations/{location_id}/dataPolicies/{data_policy_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.DeleteDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L170}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datapolicies.v1.DeleteDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L170}
   ///
+  // clang-format on
   Status DeleteDataPolicy(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the data policy specified by its resource name.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L170}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datapolicies.v1.DeleteDataPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.DeleteDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L170}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datapolicies.v1.DeleteDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L170}
   ///
+  // clang-format on
   Status DeleteDataPolicy(
       google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the data policy specified by its resource name.
   ///
-  /// @param name  Required. Resource name of the requested data policy. Format
-  /// is
+  /// @param name  Required. Resource name of the requested data policy. Format is
   ///  `projects/{project_number}/locations/{location_id}/dataPolicies/{data_policy_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datapolicies.v1.DataPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
-  /// [google.cloud.bigquery.datapolicies.v1.GetDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L182}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.GetDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L182}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> GetDataPolicy(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the data policy specified by its resource name.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L182}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datapolicies.v1.GetDataPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datapolicies.v1.DataPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
-  /// [google.cloud.bigquery.datapolicies.v1.GetDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L182}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.GetDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L182}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> GetDataPolicy(
       google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// List all of the data policies in the specified parent project.
   ///
-  /// @param parent  Required. Resource name of the project for which to list
-  /// data policies.
+  /// @param parent  Required. Resource name of the project for which to list data policies.
   ///  Format is `projects/{project_number}/locations/{location_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.datapolicies.v1.DataPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
-  /// [google.cloud.bigquery.datapolicies.v1.ListDataPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L194}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.ListDataPoliciesRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L194}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   ListDataPolicies(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// List all of the data policies in the specified parent project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L194}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datapolicies.v1.ListDataPoliciesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.datapolicies.v1.DataPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
-  /// [google.cloud.bigquery.datapolicies.v1.ListDataPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L194}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.ListDataPoliciesRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L194}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   ListDataPolicies(
       google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the IAM policy for the specified data policy.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the IAM policy for the specified data policy.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the caller's permission on the specified data policy resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});

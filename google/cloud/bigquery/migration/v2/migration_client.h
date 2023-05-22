@@ -86,23 +86,31 @@ class MigrationServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a migration workflow.
   ///
-  /// @param parent  Required. The name of the project to which this migration
-  /// workflow belongs.
+  /// @param parent  Required. The name of the project to which this migration workflow belongs.
   ///  Example: `projects/foo/locations/bar`
   /// @param migration_workflow  Required. The migration workflow to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationWorkflow,google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.migration.v2.MigrationWorkflow])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.migration.v2.CreateMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L110}
-  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.CreateMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L110}
+  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
   CreateMigrationWorkflow(
       std::string const& parent,
@@ -110,26 +118,40 @@ class MigrationServiceClient {
           migration_workflow,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a migration workflow.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L110}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.migration.v2.CreateMigrationWorkflowRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationWorkflow,google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.migration.v2.MigrationWorkflow])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.migration.v2.CreateMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L110}
-  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.CreateMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L110}
+  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
   CreateMigrationWorkflow(google::cloud::bigquery::migration::v2::
                               CreateMigrationWorkflowRequest const& request,
                           Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a previously created migration workflow.
   ///
@@ -137,78 +159,139 @@ class MigrationServiceClient {
   ///  Example: `projects/123/locations/us/workflows/1234`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationWorkflow,google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.migration.v2.MigrationWorkflow])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.migration.v2.GetMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L126}
-  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.GetMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L126}
+  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
   GetMigrationWorkflow(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a previously created migration workflow.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L126}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.migration.v2.GetMigrationWorkflowRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationWorkflow,google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.migration.v2.MigrationWorkflow])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.migration.v2.GetMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L126}
-  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.GetMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L126}
+  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
   GetMigrationWorkflow(
       google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists previously created migration workflow.
   ///
-  /// @param parent  Required. The project and location of the migration
-  /// workflows to list.
+  /// @param parent  Required. The project and location of the migration workflows to list.
   ///  Example: `projects/123/locations/us`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationWorkflow,google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.migration.v2.MigrationWorkflow], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.migration.v2.ListMigrationWorkflowsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L141}
-  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.ListMigrationWorkflowsRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L141}
+  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>
   ListMigrationWorkflows(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists previously created migration workflow.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L141}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.migration.v2.ListMigrationWorkflowsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationWorkflow,google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.migration.v2.MigrationWorkflow], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.migration.v2.ListMigrationWorkflowsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L141}
-  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.ListMigrationWorkflowsRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L141}
+  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>
   ListMigrationWorkflows(
       google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a migration workflow by name.
   ///
@@ -216,63 +299,111 @@ class MigrationServiceClient {
   ///  Example: `projects/123/locations/us/workflows/1234`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.migration.v2.DeleteMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L177}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.DeleteMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L177}
   ///
+  // clang-format on
   Status DeleteMigrationWorkflow(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a migration workflow by name.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L177}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.migration.v2.DeleteMigrationWorkflowRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.migration.v2.DeleteMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L177}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.DeleteMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L177}
   ///
+  // clang-format on
   Status DeleteMigrationWorkflow(
       google::cloud::bigquery::migration::v2::
           DeleteMigrationWorkflowRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Starts a previously created migration workflow. I.e., the state
-  /// transitions from DRAFT to RUNNING. This is a no-op if the state is already
-  /// RUNNING. An error will be signaled if the state is anything other than
-  /// DRAFT or RUNNING.
+  /// Starts a previously created migration workflow. I.e., the state transitions
+  /// from DRAFT to RUNNING. This is a no-op if the state is already RUNNING.
+  /// An error will be signaled if the state is anything other than DRAFT or
+  /// RUNNING.
   ///
   /// @param name  Required. The unique identifier for the migration workflow.
   ///  Example: `projects/123/locations/us/workflows/1234`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.migration.v2.StartMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L189}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.StartMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L189}
   ///
+  // clang-format on
   Status StartMigrationWorkflow(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
-  /// Starts a previously created migration workflow. I.e., the state
-  /// transitions from DRAFT to RUNNING. This is a no-op if the state is already
-  /// RUNNING. An error will be signaled if the state is anything other than
-  /// DRAFT or RUNNING.
+  /// Starts a previously created migration workflow. I.e., the state transitions
+  /// from DRAFT to RUNNING. This is a no-op if the state is already RUNNING.
+  /// An error will be signaled if the state is anything other than DRAFT or
+  /// RUNNING.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L189}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.migration.v2.StartMigrationWorkflowRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.migration.v2.StartMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L189}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.StartMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L189}
   ///
+  // clang-format on
   Status StartMigrationWorkflow(
       google::cloud::bigquery::migration::v2::
           StartMigrationWorkflowRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a previously created migration subtask.
   ///
@@ -280,38 +411,60 @@ class MigrationServiceClient {
   ///  Example: `projects/123/locations/us/workflows/1234/subtasks/543`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationSubtask,google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.migration.v2.MigrationSubtask])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.migration.v2.GetMigrationSubtaskRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L201}
-  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.GetMigrationSubtaskRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L201}
+  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
   GetMigrationSubtask(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a previously created migration subtask.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L201}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.migration.v2.GetMigrationSubtaskRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationSubtask,google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.migration.v2.MigrationSubtask])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.migration.v2.GetMigrationSubtaskRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L201}
-  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.GetMigrationSubtaskRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L201}
+  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
   GetMigrationSubtask(
       google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists previously created migration subtasks.
   ///
@@ -319,32 +472,71 @@ class MigrationServiceClient {
   ///  Example: `projects/123/locations/us/workflows/1234`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationSubtask,google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.migration.v2.MigrationSubtask], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.migration.v2.ListMigrationSubtasksRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L217}
-  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.ListMigrationSubtasksRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L217}
+  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>
   ListMigrationSubtasks(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists previously created migration subtasks.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L217}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.migration.v2.ListMigrationSubtasksRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationSubtask,google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.migration.v2.MigrationSubtask], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.migration.v2.ListMigrationSubtasksRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L217}
-  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.migration.v2.ListMigrationSubtasksRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L217}
+  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>
   ListMigrationSubtasks(
       google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest
