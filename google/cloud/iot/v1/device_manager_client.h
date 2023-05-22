@@ -283,7 +283,7 @@ class DeviceManagerClient {
   ///  `projects/example-project/locations/us-central1/registries/my-registry`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -310,7 +310,7 @@ class DeviceManagerClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -603,7 +603,7 @@ class DeviceManagerClient {
   ///  `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -630,7 +630,7 @@ class DeviceManagerClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/

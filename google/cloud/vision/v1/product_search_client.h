@@ -428,7 +428,7 @@ class ProductSearchClient {
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -458,7 +458,7 @@ class ProductSearchClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -816,7 +816,7 @@ class ProductSearchClient {
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -847,7 +847,7 @@ class ProductSearchClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -983,7 +983,7 @@ class ProductSearchClient {
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -1016,7 +1016,7 @@ class ProductSearchClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -1210,7 +1210,7 @@ class ProductSearchClient {
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -1245,7 +1245,7 @@ class ProductSearchClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -1274,7 +1274,7 @@ class ProductSearchClient {
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -1303,7 +1303,7 @@ class ProductSearchClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/

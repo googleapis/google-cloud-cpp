@@ -382,7 +382,7 @@ class RegistrationServiceClient {
   /// @param name  Required. The name of the namespace to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -410,7 +410,7 @@ class RegistrationServiceClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -699,7 +699,7 @@ class RegistrationServiceClient {
   /// @param name  Required. The name of the service to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -727,7 +727,7 @@ class RegistrationServiceClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -1014,7 +1014,7 @@ class RegistrationServiceClient {
   /// @param name  Required. The name of the endpoint to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -1041,7 +1041,7 @@ class RegistrationServiceClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/

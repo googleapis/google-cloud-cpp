@@ -413,7 +413,7 @@ class AdminServiceClient {
   /// @param name  Required. The name of the topic to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -440,7 +440,7 @@ class AdminServiceClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -796,7 +796,7 @@ class AdminServiceClient {
   /// @param name  Required. The name of the subscription to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -823,7 +823,7 @@ class AdminServiceClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -1171,7 +1171,7 @@ class AdminServiceClient {
   ///  projects/{project_number}/locations/{location}/reservations/{reservation_id}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -1198,7 +1198,7 @@ class AdminServiceClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/

@@ -422,7 +422,7 @@ class BigtableInstanceAdminClient {
   ///  Values are of the form `projects/{project}/instances/{instance}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -449,7 +449,7 @@ class BigtableInstanceAdminClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -819,7 +819,7 @@ class BigtableInstanceAdminClient {
   ///  `projects/{project}/instances/{instance}/clusters/{cluster}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -846,7 +846,7 @@ class BigtableInstanceAdminClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
@@ -1154,7 +1154,7 @@ class BigtableInstanceAdminClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed the
+  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
