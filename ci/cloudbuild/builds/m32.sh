@@ -34,7 +34,8 @@ readonly ENABLED_FEATURES
 # This is the build to test with -m32, which requires a toolchain file.
 io::run cmake "${cmake_args[@]}" \
   "--toolchain" "${PROJECT_ROOT}/ci/etc/m32-toolchain.cmake" \
-  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
+  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON
 io::run cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
 io::run env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"

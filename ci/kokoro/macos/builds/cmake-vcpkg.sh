@@ -59,6 +59,7 @@ cmake_flags=(
   "-DCMAKE_INSTALL_PREFIX=${HOME}/staging"
   "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
   "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON"
+  "-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON"
 )
 
 # The downloads can fail, therefore require a retry loop.

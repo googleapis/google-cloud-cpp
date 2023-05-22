@@ -54,7 +54,8 @@ $cmake_args=@(
     "-DVCPKG_TARGET_TRIPLET=${env:VCPKG_TRIPLET}",
     "-DCMAKE_C_COMPILER=cl.exe",
     "-DCMAKE_CXX_COMPILER=cl.exe",
-    "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON"
+    "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON",
+    "-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON"
 )
 
 # Configure CMake and create the build directory.
