@@ -41,7 +41,7 @@ std::shared_ptr<ProjectConnection> CreateTestingConnection(
   ProjectLimitedErrorCountRetryPolicy retry(
       /*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
-      /*initial_delay=*/std::chrono::microseconds(1),
+      /*minimum_delay=*/std::chrono::microseconds(1),
       /*maximum_delay=*/std::chrono::microseconds(1),
       /*scaling=*/2.0);
   auto options = ProjectDefaultOptions(

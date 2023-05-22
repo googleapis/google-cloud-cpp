@@ -250,7 +250,7 @@ Options MakeLimitedTimeOptions() {
               std::chrono::minutes(10)))
       .set<spanner::SpannerBackoffPolicyOption>(
           std::make_shared<spanner::ExponentialBackoffPolicy>(
-              /*initial_delay=*/std::chrono::microseconds(1),
+              /*minimum_delay=*/std::chrono::microseconds(1),
               /*maximum_delay=*/std::chrono::microseconds(1),
               /*scaling=*/2.0));
 }
@@ -265,7 +265,7 @@ Options MakeLimitedRetryOptions() {
               /*maximum_failures=*/2))
       .set<spanner::SpannerBackoffPolicyOption>(
           std::make_shared<spanner::ExponentialBackoffPolicy>(
-              /*initial_delay=*/std::chrono::microseconds(1),
+              /*minimum_delay=*/std::chrono::microseconds(1),
               /*maximum_delay=*/std::chrono::microseconds(1),
               /*scaling=*/2.0));
 }

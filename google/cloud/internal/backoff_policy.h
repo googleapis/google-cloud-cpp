@@ -103,7 +103,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    * auto r2 = ExponentialBackoffPolicy<S,T>(10min, 10min + 2s, 1.002);
    * @endcode
    *
-   * @param initial_delay how long to wait after the first (unsuccessful)
+   * @param minimum_delay how long to wait after the first (unsuccessful)
    *     operation and the minimum value for the delay between operations.
    * @param maximum_delay the maximum value for the delay between operations.
    * @param scaling how fast does the delay increase between iterations.
@@ -130,8 +130,9 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
                            std::chrono::duration<Rep2, Period2> maximum_delay,
                            double scaling)
       : ExponentialBackoffPolicy(
+            minimum_delay,
             /*initial_delay_upper_bound=*/minimum_delay * scaling,
-            minimum_delay, maximum_delay, scaling) {}
+            maximum_delay, scaling) {}
 
   /**
    * Constructor for an exponential backoff policy with an initial delay upper
@@ -148,24 +149,27 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    * auto r1 = ExponentialBackoffPolicy<S,T>(0ms, 10ms, 500ms, 1.618);
    * @endcode
    *
-   * @param initial_delay_upper_bound how long to wait after the first
-   *     (unsuccessful) operation.
+   * @param minimum_delay the minimum value for the delay between operations.
+   * @param initial_delay_upper_bound the longest possible delay to wait after
+   *     the first (unsuccessful) operation.
    * @param minimum_delay the minimum value for the delay between operations.
    * @param maximum_delay the maximum value for the delay between operations.
    * @param scaling how fast does the delay increase between iterations.
    *
    * @tparam Rep1 a placeholder to match the Rep tparam for
-   *     @p initial_delay_upper_bound's type. The semantics of this template
+   *     @p minimum_delay's type. The semantics of this template
    *     parameter are documented in `std::chrono::duration<>` (in brief, the
    *     underlying arithmetic type used to store the number of ticks). For our
    *     purposes, it is simply a formal parameter.
    * @tparam Period1 a placeholder to match the Period tparam for
-   *     @p initial_delay_upper_bound's type. The semantics of this template
+   *     @p minimum_delay's type. The semantics of this template
    *     parameter are documented in `std::chrono::duration<>` (in brief, the
    *     underlying arithmetic type used to store the number of ticks). For our
    *     purposes, it is simply a formal parameter.
-   * @tparam Rep2 similar formal parameter for the type of @p minimum_delay.
-   * @tparam Period2 similar formal parameter for the type of @p minimum_delay.
+   * @tparam Rep2 similar formal parameter for the type of
+   *    @p initial_delay_upper_bound.
+   * @tparam Period2 similar formal parameter for the type of
+   *    @p initial_delay_upper_bound.
    * @tparam Rep3 similar formal parameter for the type of @p maximum_delay.
    * @tparam Period3 similar formal parameter for the type of @p maximum_delay.
    *
@@ -176,21 +180,17 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   template <typename Rep1, typename Period1, typename Rep2, typename Period2,
             typename Rep3, typename Period3>
   ExponentialBackoffPolicy(
-      std::chrono::duration<Rep1, Period1> initial_delay_upper_bound,
-      std::chrono::duration<Rep2, Period2> minimum_delay,
+      std::chrono::duration<Rep1, Period1> minimum_delay,
+      std::chrono::duration<Rep2, Period2> initial_delay_upper_bound,
       std::chrono::duration<Rep3, Period3> maximum_delay, double scaling)
-      : initial_delay_upper_bound_(initial_delay_upper_bound),
-        minimum_delay_(minimum_delay),
+      : minimum_delay_(minimum_delay),
+        initial_delay_upper_bound_(initial_delay_upper_bound),
         maximum_delay_(maximum_delay),
         scaling_(scaling),
         current_delay_end_(initial_delay_upper_bound_) {
     if (initial_delay_upper_bound_ < minimum_delay_) {
       google::cloud::internal::ThrowInvalidArgument(
           "initial delay upper bound must be >= minimum delay");
-    }
-    if (initial_delay_upper_bound_.count() == 0) {
-      google::cloud::internal::ThrowInvalidArgument(
-          "initial delay upper bound must be non zero");
     }
     if (scaling_ <= 1.0) {
       google::cloud::internal::ThrowInvalidArgument(
@@ -203,8 +203,8 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   //    know specifically which one is at fault)
   //  - We want uncorrelated data streams for each copy anyway.
   ExponentialBackoffPolicy(ExponentialBackoffPolicy const& rhs) noexcept
-      : initial_delay_upper_bound_(rhs.initial_delay_upper_bound_),
-        minimum_delay_(rhs.minimum_delay_),
+      : minimum_delay_(rhs.minimum_delay_),
+        initial_delay_upper_bound_(rhs.initial_delay_upper_bound_),
         maximum_delay_(rhs.maximum_delay_),
         scaling_(rhs.scaling_),
         current_delay_end_(rhs.current_delay_end_) {}
@@ -214,8 +214,8 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
 
  private:
   using DoubleMicroseconds = std::chrono::duration<double, std::micro>;
-  DoubleMicroseconds initial_delay_upper_bound_;
   DoubleMicroseconds minimum_delay_;
+  DoubleMicroseconds initial_delay_upper_bound_;
   DoubleMicroseconds maximum_delay_;
   double scaling_;
   DoubleMicroseconds current_delay_end_;
