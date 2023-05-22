@@ -32,7 +32,6 @@
 
 namespace {
 namespace gcs = ::google::cloud::storage;
-namespace gcs_ex = ::google::cloud::storage_experimental;
 namespace gcs_bm = ::google::cloud::storage_benchmarks;
 using gcs_bm::ExperimentLibrary;
 using gcs_bm::ExperimentTransport;
@@ -291,18 +290,18 @@ gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
     auto opts = google::cloud::Options{options.client_options}
                     .set<gcs::ProjectIdOption>(options.project_id);
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-    using ::google::cloud::storage_experimental::DefaultGrpcClient;
+    namespace gcs_ex = ::google::cloud::storage_experimental;
     if (t == ExperimentTransport::kDirectPath) {
       opts = google::cloud::internal::MergeOptions(options.direct_path_options,
                                                    std::move(opts));
       opts.set<gcs_ex::GrpcPluginOption>("media");
-      return DefaultGrpcClient(std::move(opts));
+      return gcs_ex::DefaultGrpcClient(std::move(opts));
     }
     if (t == ExperimentTransport::kGrpc) {
       opts = google::cloud::internal::MergeOptions(options.grpc_options,
                                                    std::move(opts));
       opts.set<gcs_ex::GrpcPluginOption>("media");
-      return DefaultGrpcClient(std::move(opts));
+      return gcs_ex::DefaultGrpcClient(std::move(opts));
     }
 #else
     (void)t;  // disable unused parameter warning
