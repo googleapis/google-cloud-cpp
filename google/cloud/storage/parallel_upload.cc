@@ -97,7 +97,7 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
       shared_from_this(), idx, std::move(raw_client), request,
       std::move(create->upload_id), create->committed_size,
       std::move(create->metadata),
-      raw_client->client_options().upload_buffer_size()));
+      raw_client->options().get<UploadBufferSizeOption>()));
 }
 
 std::string ParallelUploadPersistentState::ToString() const {

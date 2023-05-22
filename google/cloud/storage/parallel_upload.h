@@ -1118,8 +1118,8 @@ struct CreateParallelUploadShards {
     auto upload_buffer_size =
         google::cloud::storage::internal::ClientImplDetails::GetRawClient(
             client)
-            ->client_options()
-            .upload_buffer_size();
+            ->options()
+            .get<UploadBufferSizeOption>();
 
     file_split_points.emplace_back(file_size);
     assert(file_split_points.size() == state->shards().size());

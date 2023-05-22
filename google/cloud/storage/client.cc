@@ -104,8 +104,9 @@ ObjectWriteStream Client::WriteObjectImpl(
     error_stream.Close();
     return error_stream;
   }
+  auto const& current = google::cloud::internal::CurrentOptions();
   auto const buffer_size = request.GetOption<UploadBufferSize>().value_or(
-      raw_client_->client_options().upload_buffer_size());
+      current.get<UploadBufferSizeOption>());
   return ObjectWriteStream(std::make_unique<internal::ObjectWriteStreambuf>(
       raw_client_, request, std::move(response->upload_id),
       response->committed_size, std::move(response->metadata), buffer_size,
@@ -119,14 +120,14 @@ ObjectWriteStream Client::WriteObjectImpl(
           AutoFinalizeConfig::kEnabled)));
 }
 
-bool Client::UseSimpleUpload(std::string const& file_name,
-                             std::size_t& size) const {
+bool Client::UseSimpleUpload(std::string const& file_name, std::size_t& size) {
   auto status = google::cloud::internal::status(file_name);
   if (!is_regular(status)) {
     return false;
   }
   auto const fs = google::cloud::internal::file_size(file_name);
-  if (fs <= raw_client_->client_options().maximum_simple_upload_size()) {
+  auto const& current = google::cloud::internal::CurrentOptions();
+  if (fs <= current.get<MaximumSimpleUploadSizeOption>()) {
     size = static_cast<std::size_t>(fs);
     return true;
   }
@@ -248,8 +249,9 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
   source.seekg(committed_size, std::ios::cur);
 
   // GCS requires chunks to be a multiple of 256KiB.
+  auto const& current = google::cloud::internal::CurrentOptions();
   auto chunk_size = internal::UploadChunkRequest::RoundUpToQuantum(
-      raw_client_->client_options().upload_buffer_size());
+      current.get<UploadBufferSizeOption>());
 
   // We iterate while `source` is good, the upload size does not reach the
   // `UploadLimit` and the retry policy has not been exhausted.
@@ -325,11 +327,12 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
         Status(StatusCode::kInvalidArgument, "ofstream::open()"));
   }
 
-  std::vector<char> buffer(
-      raw_client_->client_options().download_buffer_size());
+  auto const& current = google::cloud::internal::CurrentOptions();
+  auto const size = current.get<DownloadBufferSizeOption>();
+  std::unique_ptr<char[]> buffer(new char[size]);
   do {
-    stream.read(buffer.data(), buffer.size());
-    os.write(buffer.data(), stream.gcount());
+    stream.read(buffer.get(), size);
+    os.write(buffer.get(), stream.gcount());
   } while (os.good() && stream.good());
   os.close();
   if (!os.good()) {
