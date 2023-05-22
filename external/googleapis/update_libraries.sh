@@ -295,3 +295,9 @@ for library in "${keys[@]}"; do
     mv "${file}.sorted" "${file}"
   done
 done
+
+# TODO(#11694) - the Bazel file introduces a dependency that we do not build.
+#    Fortunately (maybe?) we do not use or need the dep until the issue is
+#    resolved.
+sed -i '/@com_google_googleapis\/\/google\/cloud\/location:location_proto/d' \
+  "external/googleapis/protodeps/datamigration.deps"
