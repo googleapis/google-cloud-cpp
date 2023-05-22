@@ -62,7 +62,7 @@ TEST(ExponentialBackoffRetryPolicy, Clone) {
   auto tested = original.clone();
 
   EXPECT_GE(10_ms, tested->OnCompletion(GrpcTransientError()));
-  EXPECT_LE(10_ms, tested->OnCompletion(GrpcTransientError()));
+  EXPECT_GE(20_ms, tested->OnCompletion(GrpcTransientError()));
 
   // Ensure the initial state of the policy is cloned, not the current state.
   tested = tested->clone();
@@ -72,7 +72,7 @@ TEST(ExponentialBackoffRetryPolicy, Clone) {
   auto common = bigtable_internal::MakeCommonBackoffPolicy(original.clone());
   auto common_clone = common->clone();
   EXPECT_GE(10_ms, common_clone->OnCompletion());
-  EXPECT_LE(10_ms, common_clone->OnCompletion());
+  EXPECT_GE(20_ms, common_clone->OnCompletion());
 
   // Ensure the initial state of the policy is cloned, not the current state.
   common_clone = common_clone->clone();
