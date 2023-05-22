@@ -135,6 +135,7 @@ target_link_libraries(
            nlohmann_json::nlohmann_json
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_routing_protos
+           google-cloud-cpp::cloud_extended_operations_protos
            google-cloud-cpp::longrunning_operations_protos
            absl::str_format
            protobuf::libprotoc

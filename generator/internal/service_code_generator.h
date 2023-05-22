@@ -112,10 +112,16 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool IsExperimental() const;
 
   /**
+   * Determines if the service contains at least one method that requires
+   * LRO handling. This could be AIP-151 compatible or something custom.
+   */
+  bool HasLongrunningMethod() const;
+
+  /**
    * Determines if the service contains at least one method that returns a
    * google::longrunning::Operation.
    */
-  bool HasLongrunningMethod() const;
+  bool HasGRPCLongrunningOperation() const;
 
   /**
    * Determines if any async methods are generated for the service.

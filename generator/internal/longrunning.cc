@@ -16,6 +16,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "absl/types/variant.h"
+#include <google/cloud/extended_operations.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <string>
 
@@ -84,7 +85,12 @@ DeduceLongrunningOperationResponseType(
 }  // namespace
 
 bool IsLongrunningOperation(MethodDescriptor const& method) {
-  return method.output_type()->full_name() == "google.longrunning.Operation";
+  bool grpc_lro =
+      method.output_type()->full_name() == "google.longrunning.Operation";
+  auto operation_service_extension =
+      method.options().GetExtension(google::cloud::operation_service);
+  bool http_lro = !operation_service_extension.empty();
+  return grpc_lro || http_lro;
 }
 
 bool IsLongrunningMetadataTypeUsedAsResponse(MethodDescriptor const& method) {
@@ -96,8 +102,9 @@ bool IsLongrunningMetadataTypeUsedAsResponse(MethodDescriptor const& method) {
   return false;
 }
 
-void SetLongrunningOperationMethodVars(MethodDescriptor const& method,
-                                       VarsDictionary& method_vars) {
+void SetLongrunningOperationMethodVars(
+    google::protobuf::MethodDescriptor const& method,
+    VarsDictionary& method_vars) {
   if (method.output_type()->full_name() == "google.longrunning.Operation") {
     auto operation_info =
         method.options().GetExtension(google::longrunning::operation_info);
@@ -115,6 +122,148 @@ void SetLongrunningOperationMethodVars(MethodDescriptor const& method,
         method_vars["longrunning_deduced_response_message_type"]);
     method_vars["method_longrunning_deduced_return_doxygen_link"] =
         absl::visit(FormatDoxygenLinkVisitor{}, deduced_response_type);
+    return;
+  }
+
+  auto operation_service_extension =
+      method.options().GetExtension(google::cloud::operation_service);
+  if (!operation_service_extension.empty()) {
+    method_vars["longrunning_response_type"] = ProtoNameToCppName(absl::visit(
+        FullyQualifiedMessageTypeVisitor(),
+        FullyQualifyMessageType(method, method.output_type()->full_name())));
+    absl::variant<std::string, google::protobuf::Descriptor const*>
+        deduced_response_type = method.output_type();
+    method_vars["longrunning_deduced_response_message_type"] =
+        absl::visit(FullyQualifiedMessageTypeVisitor(), deduced_response_type);
+    method_vars["longrunning_deduced_response_type"] = ProtoNameToCppName(
+        method_vars["longrunning_deduced_response_message_type"]);
+    method_vars["method_longrunning_deduced_return_doxygen_link"] =
+        absl::visit(FormatDoxygenLinkVisitor{}, deduced_response_type);
+  }
+}
+
+bool IsGRPCLongrunningOperation(MethodDescriptor const& method) {
+  return method.output_type()->full_name() == "google.longrunning.Operation";
+}
+
+void SetLongrunningOperationServiceVars(
+    google::protobuf::ServiceDescriptor const& service,
+    VarsDictionary& service_vars) {
+  for (int i = 0; i != service.method_count(); ++i) {
+    auto const* method = service.method(i);
+    if (method->output_type()->full_name() == "google.longrunning.Operation") {
+      service_vars["longrunning_operation_include_header"] =
+          "google/longrunning/operations.pb.h";
+      service_vars["longrunning_response_type"] =
+          "google::longrunning::Operation";
+      service_vars["longrunning_get_operation_request_type"] =
+          "google::longrunning::GetOperationRequest";
+      service_vars["longrunning_cancel_operation_request_type"] =
+          "google::longrunning::CancelOperationRequest";
+      return;
+    }
+    if (!method->options()
+             .GetExtension(google::cloud::operation_service)
+             .empty()) {
+      service_vars["longrunning_response_type"] = ProtoNameToCppName(
+          absl::visit(FullyQualifiedMessageTypeVisitor(),
+                      FullyQualifyMessageType(
+                          *method, method->output_type()->full_name())));
+      auto operation_service_extension =
+          method->options().GetExtension(google::cloud::operation_service);
+      if (operation_service_extension == "GlobalOperations") {
+        service_vars["longrunning_operation_include_header"] =
+            "google/cloud/compute/global_operations/v1/global_operations.pb.h";
+        service_vars["longrunning_get_operation_request_type"] =
+            "google::cloud::cpp::compute::global_operations::v1::"
+            "GetGlobalOperationsRequest";
+        service_vars["longrunning_cancel_operation_request_type"] =
+            "google::cloud::cpp::compute::global_operations::v1::"
+            "DeleteGlobalOperationsRequest";
+        service_vars["longrunning_set_operation_fields"] = R"""(
+      r.set_project(request.project());
+      r.set_operation(op);
+)""";
+        service_vars["longrunning_get_operation_path"] =
+            R"""(absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/operations/",
+                             request.operation()))""";
+        service_vars["longrunning_cancel_operation_path"] =
+            R"""(absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/operations/",
+                             request.operation()))""";
+      } else if (operation_service_extension ==
+                 "GlobalOrganizationOperations") {
+        service_vars["longrunning_operation_include_header"] =
+            "google/cloud/compute/global_organization_operations/v1/"
+            "global_organization_operations.pb.h";
+        service_vars["longrunning_get_operation_request_type"] =
+            "google::cloud::cpp::compute::global_organization_operations::v1::"
+            "GetGlobalOrganizationOperationsRequest";
+        service_vars["longrunning_cancel_operation_request_type"] =
+            "google::cloud::cpp::compute::global_organization_operations::v1::"
+            "DeleteGlobalOrganizationOperationsRequest";
+        service_vars["longrunning_set_operation_fields"] = R"""(
+      r.set_operation(op);
+)""";
+        service_vars["longrunning_get_operation_path"] =
+            R"""(absl::StrCat("/compute/v1/locations/global/operations/",
+                             request.operation()))""";
+        service_vars["longrunning_cancel_operation_path"] =
+            R"""(absl::StrCat("/compute/v1/locations/global/operations/",
+                             request.operation()))""";
+      } else if (operation_service_extension == "RegionOperations") {
+        service_vars["longrunning_operation_include_header"] =
+            "google/cloud/compute/region_operations/v1/region_operations.pb.h";
+        service_vars["longrunning_get_operation_request_type"] =
+            "google::cloud::cpp::compute::region_operations::v1::"
+            "GetRegionOperationsRequest";
+        service_vars["longrunning_cancel_operation_request_type"] =
+            "google::cloud::cpp::compute::region_operations::v1::"
+            "DeleteRegionOperationsRequest";
+        service_vars["longrunning_set_operation_fields"] = R"""(
+      r.set_project(request.project());
+      r.set_region(request.region());
+      r.set_operation(op);
+)""";
+        service_vars["longrunning_get_operation_path"] =
+            R"""(absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/operations/",
+                             request.operation()))""";
+        service_vars["longrunning_cancel_operation_path"] =
+            R"""(absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/operations/",
+                             request.operation()))""";
+      } else if (operation_service_extension == "ZoneOperations") {
+        service_vars["longrunning_operation_include_header"] =
+            "google/cloud/compute/zone_operations/v1/zone_operations.pb.h";
+        service_vars["longrunning_get_operation_request_type"] =
+            "google::cloud::cpp::compute::zone_operations::v1::"
+            "GetZoneOperationsRequest";
+        service_vars["longrunning_cancel_operation_request_type"] =
+            "google::cloud::cpp::compute::zone_operations::v1::"
+            "DeleteZoneOperationsRequest";
+        service_vars["longrunning_set_operation_fields"] = R"""(
+      r.set_project(request.project());
+      r.set_zone(request.zone());
+      r.set_operation(op);
+)""";
+        service_vars["longrunning_get_operation_path"] =
+            R"""(absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/zones/", request.zone(), "/operations/",
+                             request.operation()))""";
+        service_vars["longrunning_cancel_operation_path"] =
+            R"""(absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/zones/", request.zone(), "/operations/",
+                             request.operation()))""";
+      } else {
+        std::cerr << __func__ << " Unknown operation_service_extension="
+                  << operation_service_extension << std::endl;
+        std::exit(1);
+      }
+
+      return;
+    }
   }
 }
 

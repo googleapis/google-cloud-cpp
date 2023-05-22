@@ -35,7 +35,7 @@ using ::testing::Contains;
 using ::testing::NotNull;
 using ::testing::Pair;
 
-TEST(LongrunningTest, IsLongrunningOperation) {
+TEST(LongrunningTest, IsGRPCLongrunningOperation) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -63,6 +63,8 @@ TEST(LongrunningTest, IsLongrunningOperation) {
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(
       IsLongrunningOperation(*service_file_descriptor->service(0)->method(0)));
+  EXPECT_TRUE(IsGRPCLongrunningOperation(
+      *service_file_descriptor->service(0)->method(0)));
   EXPECT_FALSE(
       IsLongrunningOperation(*service_file_descriptor->service(0)->method(1)));
 }
@@ -247,6 +249,26 @@ char const* const kLongrunningOperationsProto =
     "  string metadata_type = 2;\n"
     "}\n";
 
+char const* const kExtendedOperationsProto =
+    "syntax = \"proto3\";\n"
+    "package google.cloud;\n"
+    "import \"google/protobuf/descriptor.proto\";\n"
+    "extend google.protobuf.FieldOptions {\n"
+    "  OperationResponseMapping operation_field = 1149;\n"
+    "  string operation_request_field = 1150;\n"
+    "  string operation_response_field = 1151;\n"
+    "}\n"
+    "extend google.protobuf.MethodOptions {\n"
+    "  string operation_service = 1249;\n"
+    "}\n"
+    "enum OperationResponseMapping {\n"
+    "  UNDEFINED = 0;\n"
+    "  NAME = 1;\n"
+    "  STATUS = 2;\n"
+    "  ERROR_CODE = 3;\n"
+    "  ERROR_MESSAGE = 4;\n"
+    "}\n";
+
 char const* const kServiceProto =
     "syntax = \"proto3\";\n"
     "package google.protobuf;\n"
@@ -254,14 +276,93 @@ char const* const kServiceProto =
     "import \"google/api/client.proto\";\n"
     "import \"google/api/http.proto\";\n"
     "import \"google/longrunning/operation.proto\";\n"
+    "import \"google/cloud/extended_operations.proto\";\n"
     "// Leading comments about message Bar.\n"
     "message Bar {\n"
     "  string parent = 1;\n"
     "}\n"
     "// Leading comments about message Empty.\n"
     "message Empty {}\n"
-    "// Leading comments about service Service.\n"
-    "service Service {\n"
+    "// Leading comments about message Disk.\n"
+    "message Disk {\n"
+    "  string name = 1;\n"
+    "}\n"
+    "// Leading comments about message ErrorInfo.\n"
+    "message ErrorInfo {\n"
+    "  optional string domain = 1;\n"
+    "  map<string, string> metadatas = 2;\n"
+    "  optional string reason = 3;\n"
+    "}"
+    "// Leading comments about message Operation.\n"
+    "message Operation {\n"
+    "  optional string client_operation_id = 1;\n"
+    "  optional string creation_timestamp = 2;\n"
+    "  optional string description = 3;\n"
+    "  optional string end_time = 4;\n"
+    "  message Error {\n"
+    "    message ErrorsItem {\n"
+    "      optional string code = 1;\n"
+    "      message ErrorDetailsItem {\n"
+    "        optional ErrorInfo error_info = 1;\n"
+    "      }\n"
+    "      repeated ErrorDetailsItem error_details = 2;\n"
+    "      optional string location = 3;\n"
+    "      optional string message = 4;\n"
+    "    }\n"
+    "    repeated ErrorsItem errors = 1;\n"
+    "  }\n"
+    "  optional Error error = 5;\n"
+    "  optional string http_error_message = 6 [(google.cloud.operation_field) "
+    "= ERROR_MESSAGE];\n"
+    "  optional int32 http_error_status_code = 7 "
+    "[(google.cloud.operation_field) = ERROR_CODE];\n"
+    "  optional string id = 8;\n"
+    "  optional string insert_time = 9;\n"
+    "  optional string kind = 10;\n"
+    "  optional string name = 11 [(google.cloud.operation_field) = NAME];\n"
+    "  optional string operation_group_id = 12;\n"
+    "  optional string operation_type = 13;\n"
+    "  optional int32 progress = 14;\n"
+    "  optional string region = 15;\n"
+    "  optional string self_link = 16;\n"
+    "  optional string start_time = 17;\n"
+    "  // [Output Only] The status of the operation, which can be one of the\n"
+    "  // following: `PENDING`, `RUNNING`, or `DONE`.\n"
+    "  // DONE:\n"
+    "  // PENDING:\n"
+    "  // RUNNING:\n"
+    "  optional string status = 18 [(google.cloud.operation_field) = STATUS];\n"
+    "  optional string status_message = 19;\n"
+    "  optional string target_id = 20;\n"
+    "  optional string target_link = 21;\n"
+    "  optional string user = 22;\n"
+    "  message WarningsItem {\n"
+    "    optional string code = 1;\n"
+    "    message DataItem {\n"
+    "      optional string key = 1;\n"
+    "      optional string value = 2;\n"
+    "    }\n"
+    "    repeated DataItem data = 2;\n"
+    "    optional string message = 3;\n"
+    "  }\n"
+    "  repeated WarningsItem warnings = 23;\n"
+    "  optional string zone = 24;\n"
+    "}"
+    "// Leading comments about message DiskRequest.\n"
+    "message DiskRequest {\n"
+    "  optional Disk disk_resource = 1\n"
+    "      [json_name = \"resource\"];\n"
+    "  string project = 2 [\n"
+    "    (google.cloud.operation_request_field) = \"project\"\n"
+    "  ];\n"
+    "  optional string request_id = 3;\n"
+    "  optional string source_image = 4;\n"
+    "  string zone = 5 [\n"
+    "    (google.cloud.operation_request_field) = \"zone\"\n"
+    "  ];\n"
+    "}"
+    "// Leading comments about service Service0.\n"
+    "service Service0 {\n"
     "  // Leading comments about rpc Method0$.\n"
     "  rpc Method0(Bar) returns (google.longrunning.Operation) {\n"
     "    option (google.api.http) = {\n"
@@ -294,17 +395,76 @@ char const* const kServiceProto =
     "      metadata_type: \"google.protobuf.Method2Metadata\"\n"
     "    };\n"
     "  }\n"
+    "}\n"
+    "// Leading comments about service Service1.\n"
+    "service Service1 {\n"
+    "  // Leading comments about rpc Method0.\n"
+    "  rpc Method0(DiskRequest) returns (Operation) {\n"
+    "    option (google.api.http) = {\n"
+    "      post: "
+    "\"/compute/v1/projects/{project=project}/zones/{zone=zone}/disks\"\n"
+    "      body: \"disk_resource\"\n"
+    "    };\n"
+    "    option (google.api.method_signature) = "
+    "\"project,zone,disk_resource\";\n"
+    "    option (google.cloud.operation_service) = \"ZoneOperations\";"
+    "  }\n"
+    "}\n"
+    "// Leading comments about service Service2.\n"
+    "service Service2 {\n"
+    "  // Leading comments about rpc Method0.\n"
+    "  rpc Method0(DiskRequest) returns (Operation) {\n"
+    "    option (google.api.http) = {\n"
+    "      post: "
+    "\"/compute/v1/projects/{project=project}/regions/{region=region}/disks\"\n"
+    "      body: \"disk_resource\"\n"
+    "    };\n"
+    "    option (google.api.method_signature) = "
+    "\"project,zone,disk_resource\";\n"
+    "    option (google.cloud.operation_service) = \"RegionOperations\";"
+    "  }\n"
+    "}\n"
+    "// Leading comments about service Service3.\n"
+    "service Service3 {\n"
+    "  // Leading comments about rpc Method0.\n"
+    "  rpc Method0(DiskRequest) returns (Operation) {\n"
+    "    option (google.api.http) = {\n"
+    "      post: "
+    "\"/compute/v1/projects/{project=project}/global/disks\"\n"
+    "      body: \"disk_resource\"\n"
+    "    };\n"
+    "    option (google.api.method_signature) = "
+    "\"project,zone,disk_resource\";\n"
+    "    option (google.cloud.operation_service) = \"GlobalOperations\";"
+    "  }\n"
+    "}\n"
+    "// Leading comments about service Service4.\n"
+    "service Service4 {\n"
+    "  // Leading comments about rpc Method0.\n"
+    "  rpc Method0(DiskRequest) returns (Operation) {\n"
+    "    option (google.api.http) = {\n"
+    "      post: "
+    "\"/compute/v1/locations/global/disks\"\n"
+    "      body: \"disk_resource\"\n"
+    "    };\n"
+    "    option (google.api.method_signature) = "
+    "\"project,zone,disk_resource\";\n"
+    "    option (google.cloud.operation_service) = "
+    "\"GlobalOrganizationOperations\";"
+    "  }\n"
     "}\n";
 
-class LongrunningMethodVarsTest : public testing::Test {
+class LongrunningVarsTest : public testing::Test {
  public:
-  LongrunningMethodVarsTest()
+  LongrunningVarsTest()
       : source_tree_(std::map<std::string, std::string>{
             {std::string("google/api/client.proto"), kClientProto},
             {std::string("google/api/http.proto"), kHttpProto},
             {std::string("google/api/annotations.proto"), kAnnotationsProto},
             {std::string("google/longrunning/operation.proto"),
              kLongrunningOperationsProto},
+            {std::string("google/cloud/extended_operations.proto"),
+             kExtendedOperationsProto},
             {std::string("google/foo/v1/service.proto"), kServiceProto}}),
         source_tree_db_(&source_tree_),
         merged_db_(&simple_db_, &source_tree_db_),
@@ -327,7 +487,7 @@ class LongrunningMethodVarsTest : public testing::Test {
   DescriptorPool pool_;
 };
 
-TEST_F(LongrunningMethodVarsTest, FilesParseSuccessfully) {
+TEST_F(LongrunningVarsTest, FilesParseSuccessfully) {
   EXPECT_THAT(pool_.FindFileByName("google/api/client.proto"), NotNull());
   EXPECT_THAT(pool_.FindFileByName("google/api/http.proto"), NotNull());
   EXPECT_THAT(pool_.FindFileByName("google/api/annotations.proto"), NotNull());
@@ -336,7 +496,7 @@ TEST_F(LongrunningMethodVarsTest, FilesParseSuccessfully) {
   EXPECT_THAT(pool_.FindFileByName("google/foo/v1/service.proto"), NotNull());
 }
 
-TEST_F(LongrunningMethodVarsTest,
+TEST_F(LongrunningVarsTest,
        SetLongrunningOperationMethodVarsResponseAndMetadata) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
@@ -355,10 +515,10 @@ TEST_F(LongrunningMethodVarsTest,
   EXPECT_THAT(vars, Contains(Pair(
                         "method_longrunning_deduced_return_doxygen_link",
                         "@googleapis_link{google::protobuf::Bar,google/foo/v1/"
-                        "service.proto#L8}")));
+                        "service.proto#L9}")));
 }
 
-TEST_F(LongrunningMethodVarsTest,
+TEST_F(LongrunningVarsTest,
        SetLongrunningOperationMethodVarsEmptyResponseAndMetadata) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
@@ -379,7 +539,7 @@ TEST_F(LongrunningMethodVarsTest,
                             "google::protobuf::Struct")));
 }
 
-TEST_F(LongrunningMethodVarsTest,
+TEST_F(LongrunningVarsTest,
        SetLongrunningOperationMethodVarsUnqualifiedResponseAndMetadata) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
@@ -398,7 +558,193 @@ TEST_F(LongrunningMethodVarsTest,
   EXPECT_THAT(vars, Contains(Pair(
                         "method_longrunning_deduced_return_doxygen_link",
                         "@googleapis_link{google::protobuf::Bar,google/foo/v1/"
-                        "service.proto#L8}")));
+                        "service.proto#L9}")));
+}
+
+TEST_F(LongrunningVarsTest, SetLongrunningOperationMethodVarsBespokseLRO) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(1)->method(0);
+  VarsDictionary vars;
+  EXPECT_TRUE(IsLongrunningOperation(*method));
+  EXPECT_FALSE(IsGRPCLongrunningOperation(*method));
+  SetLongrunningOperationMethodVars(*method, vars);
+  EXPECT_THAT(vars, Contains(Pair("longrunning_response_type",
+                                  "google::protobuf::Operation")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_message_type",
+                                  "google.protobuf.Operation")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_type",
+                                  "google::protobuf::Operation")));
+  EXPECT_THAT(vars,
+              Contains(Pair("method_longrunning_deduced_return_doxygen_link",
+                            "@googleapis_link{google::protobuf::Operation,"
+                            "google/foo/v1/service.proto#L24}")));
+}
+
+TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsGRPC) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  VarsDictionary vars;
+  SetLongrunningOperationServiceVars(*service_file_descriptor->service(0),
+                                     vars);
+  EXPECT_THAT(vars, Contains(Pair("longrunning_operation_include_header",
+                                  "google/longrunning/operations.pb.h")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_response_type",
+                                  "google::longrunning::Operation")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_request_type",
+                                  "google::longrunning::GetOperationRequest")));
+  EXPECT_THAT(vars,
+              Contains(Pair("longrunning_cancel_operation_request_type",
+                            "google::longrunning::CancelOperationRequest")));
+}
+
+TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCGlobal) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  VarsDictionary vars;
+  SetLongrunningOperationServiceVars(*service_file_descriptor->service(3),
+                                     vars);
+  EXPECT_THAT(
+      vars,
+      Contains(Pair(
+          "longrunning_operation_include_header",
+          "google/cloud/compute/global_operations/v1/global_operations.pb.h")));
+  EXPECT_THAT(vars,
+              Contains(Pair("longrunning_get_operation_request_type",
+                            "google::cloud::cpp::compute::global_"
+                            "operations::v1::GetGlobalOperationsRequest")));
+  EXPECT_THAT(
+      vars, Contains(Pair("longrunning_cancel_operation_request_type",
+                          "google::cloud::cpp::compute::global_operations::v1::"
+                          "DeleteGlobalOperationsRequest")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_set_operation_fields", R"""(
+      r.set_project(request.project());
+      r.set_operation(op);
+)""")));
+  EXPECT_THAT(vars,
+              Contains(Pair(
+                  "longrunning_get_operation_path",
+                  R"""(absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/operations/",
+                             request.operation()))""")));
+  EXPECT_THAT(vars,
+              Contains(Pair(
+                  "longrunning_cancel_operation_path",
+                  R"""(absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/operations/",
+                             request.operation()))""")));
+}
+
+TEST_F(LongrunningVarsTest,
+       SetLongrunningOperationServiceVarsNonGRPCGlobalOrg) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  VarsDictionary vars;
+  SetLongrunningOperationServiceVars(*service_file_descriptor->service(4),
+                                     vars);
+  EXPECT_THAT(
+      vars, Contains(Pair("longrunning_operation_include_header",
+                          "google/cloud/compute/global_organization_operations/"
+                          "v1/global_organization_operations.pb.h")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_request_type",
+                                  "google::cloud::cpp::compute::global_"
+                                  "organization_operations::v1::"
+                                  "GetGlobalOrganizationOperationsRequest")));
+  EXPECT_THAT(
+      vars,
+      Contains(Pair(
+          "longrunning_cancel_operation_request_type",
+          "google::cloud::cpp::compute::global_organization_operations::v1::"
+          "DeleteGlobalOrganizationOperationsRequest")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_set_operation_fields", R"""(
+      r.set_operation(op);
+)""")));
+  EXPECT_THAT(vars,
+              Contains(Pair(
+                  "longrunning_get_operation_path",
+                  R"""(absl::StrCat("/compute/v1/locations/global/operations/",
+                             request.operation()))""")));
+  EXPECT_THAT(vars,
+              Contains(Pair(
+                  "longrunning_cancel_operation_path",
+                  R"""(absl::StrCat("/compute/v1/locations/global/operations/",
+                             request.operation()))""")));
+}
+
+TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCRegion) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  VarsDictionary vars;
+  SetLongrunningOperationServiceVars(*service_file_descriptor->service(2),
+                                     vars);
+  EXPECT_THAT(
+      vars,
+      Contains(Pair(
+          "longrunning_operation_include_header",
+          "google/cloud/compute/region_operations/v1/region_operations.pb.h")));
+  EXPECT_THAT(vars,
+              Contains(Pair("longrunning_get_operation_request_type",
+                            "google::cloud::cpp::compute::region_"
+                            "operations::v1::GetRegionOperationsRequest")));
+  EXPECT_THAT(
+      vars, Contains(Pair("longrunning_cancel_operation_request_type",
+                          "google::cloud::cpp::compute::region_operations::v1::"
+                          "DeleteRegionOperationsRequest")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_set_operation_fields", R"""(
+      r.set_project(request.project());
+      r.set_region(request.region());
+      r.set_operation(op);
+)""")));
+  EXPECT_THAT(vars,
+              Contains(Pair(
+                  "longrunning_get_operation_path",
+                  R"""(absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/operations/",
+                             request.operation()))""")));
+  EXPECT_THAT(vars,
+              Contains(Pair(
+                  "longrunning_cancel_operation_path",
+                  R"""(absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/operations/",
+                             request.operation()))""")));
+}
+
+TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCZone) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  VarsDictionary vars;
+  SetLongrunningOperationServiceVars(*service_file_descriptor->service(1),
+                                     vars);
+  EXPECT_THAT(
+      vars,
+      Contains(Pair(
+          "longrunning_operation_include_header",
+          "google/cloud/compute/zone_operations/v1/zone_operations.pb.h")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_request_type",
+                                  "google::cloud::cpp::compute::zone_"
+                                  "operations::v1::GetZoneOperationsRequest")));
+  EXPECT_THAT(vars,
+              Contains(Pair("longrunning_cancel_operation_request_type",
+                            "google::cloud::cpp::compute::zone_operations::v1::"
+                            "DeleteZoneOperationsRequest")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_set_operation_fields", R"""(
+      r.set_project(request.project());
+      r.set_zone(request.zone());
+      r.set_operation(op);
+)""")));
+  EXPECT_THAT(vars,
+              Contains(Pair(
+                  "longrunning_get_operation_path",
+                  R"""(absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/zones/", request.zone(), "/operations/",
+                             request.operation()))""")));
+  EXPECT_THAT(vars,
+              Contains(Pair(
+                  "longrunning_cancel_operation_path",
+                  R"""(absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/zones/", request.zone(), "/operations/",
+                             request.operation()))""")));
 }
 
 }  // namespace
