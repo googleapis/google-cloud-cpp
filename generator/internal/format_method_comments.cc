@@ -99,7 +99,7 @@ std::string ReturnCommentString(
         info->second->full_name());
   }
   if (IsResponseTypeEmpty(method)) {
-    return R"""(  /// @return a [`Status`] object. If the request failed the
+    return R"""(  /// @return a [`Status`] object. If the request failed, the
   ///     status contains the details of the failure.
 )""";
   }
