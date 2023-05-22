@@ -133,7 +133,7 @@ void PatchDefaultObjectAcl(google::cloud::storage::Client client,
 
 void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
                                  std::vector<std::string> const& argv) {
-  //! [patch default object acl no-read]
+  //! [patch no-read]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
@@ -148,7 +148,7 @@ void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
               << " in bucket " << patched_acl->bucket() << " is now "
               << *patched_acl << "\n";
   }
-  //! [patch default object acl no-read]
+  //! [patch no-read]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 

@@ -2472,8 +2472,7 @@ class Client {
    * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
-   * @snippet storage_default_object_acl_samples.cc patch default object acl
-   * no-read
+   * @snippet storage_default_object_acl_samples.cc patch no-read
    *
    * @see
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
