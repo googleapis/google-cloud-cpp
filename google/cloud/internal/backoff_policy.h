@@ -103,8 +103,9 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    * auto r2 = ExponentialBackoffPolicy<S,T>(10min, 10min + 2s, 1.002);
    * @endcode
    *
-   * @param minimum_delay how long to wait after the first (unsuccessful)
-   *     operation and the minimum value for the delay between operations.
+   * @param initial_delay the longest possible delay after the first
+   *     (unsuccessful) operation and the minimum value for the delay between
+   *     operations.
    * @param maximum_delay the maximum value for the delay between operations.
    * @param scaling how fast does the delay increase between iterations.
    *
