@@ -35,6 +35,7 @@ storage_client_testing_hdrs = [
 
 storage_client_testing_srcs = [
     "testing/client_unit_test.cc",
+    "testing/mock_client.cc",
     "testing/mock_http_request.cc",
     "testing/object_integration_test.cc",
     "testing/random_names.cc",

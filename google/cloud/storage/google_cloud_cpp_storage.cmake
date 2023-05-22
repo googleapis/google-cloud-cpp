@@ -406,6 +406,7 @@ if (BUILD_TESTING)
         testing/client_unit_test.cc
         testing/client_unit_test.h
         testing/constants.h
+        testing/mock_client.cc
         testing/mock_client.h
         testing/mock_http_request.cc
         testing/mock_http_request.h

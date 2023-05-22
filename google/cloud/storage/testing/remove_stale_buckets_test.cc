@@ -72,7 +72,7 @@ TEST(CleanupStaleBucketsTest, RemoveBucketContents) {
   EXPECT_CALL(*mock, GetBucketMetadata)
       .WillOnce(
           Return(make_status_or(BucketMetadata{}.set_name("fake-bucket"))));
-  auto client = internal::ClientImplDetails::CreateWithoutDecorations(mock);
+  auto client = UndecoratedClientFromMock(mock);
   auto const actual = RemoveBucketAndContents(client, "fake-bucket");
   EXPECT_STATUS_OK(actual);
 }
@@ -114,7 +114,7 @@ TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
         return response;
       });
 
-  auto client = internal::ClientImplDetails::CreateWithoutDecorations(mock);
+  auto client = UndecoratedClientFromMock(mock);
   auto const actual = RemoveStaleBuckets(client, "matching", create_time_limit);
   EXPECT_STATUS_OK(actual);
 }
