@@ -23,6 +23,11 @@ if (NOT GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     set_target_properties(
         google_cloud_cpp_storage_grpc
         PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage-grpc")
+    if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+        target_compile_definitions(
+            google_cloud_cpp_storage_grpc
+            INTERFACE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+    endif ()
 else ()
     add_library(
         google_cloud_cpp_storage_grpc # cmake-format: sort

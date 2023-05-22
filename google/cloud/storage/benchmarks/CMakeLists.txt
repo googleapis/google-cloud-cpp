@@ -37,9 +37,13 @@ add_library(
     throughput_result.h)
 target_link_libraries(
     storage_benchmarks
-    PUBLIC storage_client_testing google_cloud_cpp_testing
-           google-cloud-cpp::storage google-cloud-cpp::grpc_utils
-           google-cloud-cpp::storage_protos CURL::libcurl)
+    PUBLIC storage_client_testing
+           google_cloud_cpp_testing
+           google-cloud-cpp::experimental-storage-grpc
+           google-cloud-cpp::storage
+           google-cloud-cpp::grpc_utils
+           google-cloud-cpp::storage_protos
+           CURL::libcurl)
 google_cloud_cpp_add_common_options(storage_benchmarks)
 
 include(CreateBazelConfig)
