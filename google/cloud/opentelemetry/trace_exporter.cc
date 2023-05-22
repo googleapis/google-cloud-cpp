@@ -14,6 +14,7 @@
 
 #include "google/cloud/opentelemetry/trace_exporter.h"
 #include "google/cloud/trace/v2/trace_client.h"
+#include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -30,14 +31,24 @@ class TraceExporter final : public opentelemetry::sdk::trace::SpanExporter {
 
   std::unique_ptr<opentelemetry::sdk::trace::Recordable>
   MakeRecordable() noexcept override {
-    return std::make_unique<otel_internal::Recordable>(project_);
+    auto recordable = internal::NoExceptAction<
+        std::unique_ptr<opentelemetry::sdk::trace::Recordable>>(
+        [&] { return std::make_unique<otel_internal::Recordable>(project_); });
+    if (recordable) return *std::move(recordable);
+    GCP_LOG(WARNING) << "Exception thrown while creating span.";
+    return nullptr;
   }
 
   opentelemetry::sdk::common::ExportResult Export(
       opentelemetry::nostd::span<
           std::unique_ptr<opentelemetry::sdk::trace::Recordable>> const&
           spans) noexcept override {
-    return ExportImpl(spans);
+    auto result =
+        internal::NoExceptAction<opentelemetry::sdk::common::ExportResult>(
+            [&] { return ExportImpl(spans); });
+    if (result) return *std::move(result);
+    GCP_LOG(WARNING) << "Exception thrown while exporting spans.";
+    return opentelemetry::sdk::common::ExportResult::kFailure;
   }
 
   bool Shutdown(std::chrono::microseconds) noexcept override { return true; }
@@ -52,6 +63,7 @@ class TraceExporter final : public opentelemetry::sdk::trace::SpanExporter {
     for (auto& recordable : spans) {
       auto span = std::unique_ptr<otel_internal::Recordable>(
           static_cast<otel_internal::Recordable*>(recordable.release()));
+      if (!span || !span->valid()) continue;
       *request.add_spans() = std::move(*span).as_proto();
     }
 

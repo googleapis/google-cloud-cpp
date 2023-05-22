@@ -14,6 +14,7 @@
 
 #include "google/cloud/opentelemetry/internal/recordable.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/time/time.h"
 #include <google/rpc/code.pb.h>
@@ -195,44 +196,55 @@ google::devtools::cloudtrace::v2::Span&& Recordable::as_proto() && {
 void Recordable::SetIdentity(
     opentelemetry::trace::SpanContext const& span_context,
     opentelemetry::trace::SpanId parent_span_id) noexcept {
-  SetIdentityImpl(span_context, parent_span_id);
+  valid_ = valid_ && internal::NoExceptAction([&] {
+             SetIdentityImpl(span_context, parent_span_id);
+           });
 }
 
 void Recordable::SetAttribute(
     opentelemetry::nostd::string_view key,
     opentelemetry::common::AttributeValue const& value) noexcept {
-  AddAttribute(*span_.mutable_attributes(), key, value, kSpanAttributeLimit);
+  valid_ = valid_ && internal::NoExceptAction([&] {
+             AddAttribute(*span_.mutable_attributes(), key, value,
+                          kSpanAttributeLimit);
+           });
 }
 
 void Recordable::AddEvent(
     opentelemetry::nostd::string_view name,
     opentelemetry::common::SystemTimestamp timestamp,
     opentelemetry::common::KeyValueIterable const& attributes) noexcept {
-  AddEventImpl(name, timestamp, attributes);
+  valid_ = valid_ && internal::NoExceptAction(
+                         [&] { AddEventImpl(name, timestamp, attributes); });
 }
 
 void Recordable::AddLink(
     opentelemetry::trace::SpanContext const& span_context,
     opentelemetry::common::KeyValueIterable const& attributes) noexcept {
-  AddLinkImpl(span_context, attributes);
+  valid_ = valid_ && internal::NoExceptAction(
+                         [&] { AddLinkImpl(span_context, attributes); });
 }
 
 void Recordable::SetStatus(
     opentelemetry::trace::StatusCode code,
     opentelemetry::nostd::string_view description) noexcept {
-  SetStatusImpl(code, description);
+  valid_ = valid_ &&
+           internal::NoExceptAction([&] { SetStatusImpl(code, description); });
 }
 
 void Recordable::SetName(opentelemetry::nostd::string_view name) noexcept {
-  // Note that the `name` field in the `Span` proto refers to the GCP resource
-  // name. We want to set the `display_name` field.
-  SetTruncatableString(*span_.mutable_display_name(), name,
-                       kDisplayNameStringLimit);
+  valid_ = valid_ && internal::NoExceptAction([&] {
+             // Note that the `name` field in the `Span` proto refers to the GCP
+             // resource name. We want to set the `display_name` field.
+             SetTruncatableString(*span_.mutable_display_name(), name,
+                                  kDisplayNameStringLimit);
+           });
 }
 
 void Recordable::SetSpanKind(
     opentelemetry::trace::SpanKind span_kind) noexcept {
-  span_.set_span_kind(MapSpanKind(span_kind));
+  valid_ = valid_ && internal::NoExceptAction(
+                         [&] { span_.set_span_kind(MapSpanKind(span_kind)); });
 }
 
 void Recordable::SetResource(
@@ -240,26 +252,34 @@ void Recordable::SetResource(
 
 void Recordable::SetStartTime(
     opentelemetry::common::SystemTimestamp start_time) noexcept {
-  // std::chrono::system_clock may not have nanosecond resolution on some
-  // platforms, so we avoid using it for conversions between OpenTelemetry time
-  // and Protobuf time.
-  auto t = absl::FromUnixNanos(start_time.time_since_epoch().count());
-  *span_.mutable_start_time() = internal::ToProtoTimestamp(t);
+  valid_ = valid_ && internal::NoExceptAction([&] {
+             // std::chrono::system_clock may not have nanosecond resolution on
+             // some platforms, so we avoid using it for conversions between
+             // OpenTelemetry time and Protobuf time.
+             auto t =
+                 absl::FromUnixNanos(start_time.time_since_epoch().count());
+             *span_.mutable_start_time() = internal::ToProtoTimestamp(t);
+           });
 }
 
 void Recordable::SetDuration(std::chrono::nanoseconds duration) noexcept {
-  auto end_time =
-      internal::ToAbslTime(span_.start_time()) + absl::FromChrono(duration);
-  *span_.mutable_end_time() = internal::ToProtoTimestamp(end_time);
+  valid_ = valid_ && internal::NoExceptAction([&] {
+             auto end_time = internal::ToAbslTime(span_.start_time()) +
+                             absl::FromChrono(duration);
+             *span_.mutable_end_time() = internal::ToProtoTimestamp(end_time);
+           });
 }
 
 void Recordable::SetInstrumentationScope(
     opentelemetry::sdk::instrumentationscope::InstrumentationScope const&
         instrumentation_scope) noexcept {
-  SetAttribute("otel.scope.name", instrumentation_scope.GetName());
-  if (!instrumentation_scope.GetVersion().empty()) {
-    SetAttribute("otel.scope.version", instrumentation_scope.GetVersion());
-  }
+  valid_ = valid_ && internal::NoExceptAction([&] {
+             SetAttribute("otel.scope.name", instrumentation_scope.GetName());
+             if (!instrumentation_scope.GetVersion().empty()) {
+               SetAttribute("otel.scope.version",
+                            instrumentation_scope.GetVersion());
+             }
+           });
 }
 
 void Recordable::SetIdentityImpl(
