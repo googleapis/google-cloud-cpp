@@ -24,8 +24,10 @@ namespace cloud {
 /**
  * Contains experimental features for the GCS C++ Client Library.
  *
- * The types, functions, aliases, and objects in this namespace are subject to
- * change without notice, including removal.
+ * @warning The types, functions, aliases, and objects in this namespace are
+ *   subject to change without notice. Some of these features depend on aspects
+ *   of the service that are not generally available, do not have an SLA, and
+ *   may require projects to be allow-listed.
  */
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
@@ -58,7 +60,8 @@ struct GrpcPluginOption {
  * @warning This is an experimental feature, and subject to change without
  *     notice.
  *
- * @par Example storage_grpc_samples.cc grpc-read-write
+ * @par Example
+ * @snippet storage_grpc_samples.cc grpc-read-write
  */
 google::cloud::storage::Client DefaultGrpcClient(Options opts = {});
 
