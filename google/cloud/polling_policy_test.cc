@@ -145,7 +145,7 @@ TEST(GenericPollingPolicy, WaitPeriod) {
   EXPECT_LE(ms(10), delay);
   EXPECT_GE(ms(20), delay);
   delay = tested.WaitPeriod();
-  EXPECT_LE(ms(20), delay);
+  EXPECT_LE(ms(10), delay);
   EXPECT_GE(ms(40), delay);
 }
 

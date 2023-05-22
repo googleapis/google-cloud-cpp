@@ -45,7 +45,7 @@ std::shared_ptr<golden::GoldenKitchenSinkConnection> CreateTestingConnection(
   golden::GoldenKitchenSinkLimitedErrorCountRetryPolicy retry(
       /*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
-      /*initial_delay=*/std::chrono::microseconds(1),
+      /*minimum_delay=*/std::chrono::microseconds(1),
       /*maximum_delay=*/std::chrono::microseconds(1),
       /*scaling=*/2.0);
   GenericPollingPolicy<golden::GoldenKitchenSinkLimitedErrorCountRetryPolicy,
