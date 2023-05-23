@@ -26,10 +26,10 @@ google::cloud::storage::Client DefaultGrpcClient(Options opts) {
   using ::google::cloud::internal::GetEnv;
   auto const config = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
                           .value_or(opts.get<GrpcPluginOption>());
-  if (config == "none" || config.empty()) {
+  if (config == "none") {
     return google::cloud::storage::Client(std::move(opts));
   }
-  if (config == "metadata") {
+  if (config == "metadata" || config.empty()) {
     opts = google::cloud::storage_internal::DefaultOptionsGrpc(std::move(opts));
     return storage::internal::ClientImplDetails::CreateClient(
         storage_internal::GrpcClient::Create(opts));

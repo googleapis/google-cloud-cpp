@@ -76,7 +76,7 @@ TEST(GrpcPluginTest, EnvironmentOverrides) {
   ASSERT_THAT(grpc, IsNull());
 }
 
-TEST(GrpcPluginTest, UnsetConfigCreatesCurl) {
+TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
@@ -86,8 +86,8 @@ TEST(GrpcPluginTest, UnsetConfigCreatesCurl) {
   auto const* const retry =
       dynamic_cast<RetryClient*>(ClientImplDetails::GetRawClient(client).get());
   ASSERT_THAT(retry, NotNull());
-  auto const* const rest = dynamic_cast<RestClient*>(retry->client().get());
-  ASSERT_THAT(rest, NotNull());
+  auto const* const grpc = dynamic_cast<GrpcClient*>(retry->client().get());
+  ASSERT_THAT(grpc, NotNull());
 }
 
 TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
