@@ -746,6 +746,83 @@ TEST(Doxygen2Syntax, Constructor) {
   EXPECT_EQ(actual, kExpected);
 }
 
+TEST(Doxygen2SyntaxContent, FunctionException) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+      <memberdef kind="function" id="classgoogle_1_1cloud_1_1future_1a23b7c9cabdcf116d3b908c32e627c7af" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T</type>
+        <definition>T google::cloud::future&lt; T &gt;::get</definition>
+        <argsstring>()</argsstring>
+        <name>get</name>
+        <qualifiedname>google::cloud::future::get</qualifiedname>
+        <briefdescription>
+          <para>Waits until the shared state becomes ready, then retrieves the value stored in the shared state. </para>
+        </briefdescription>
+        <detaileddescription>
+          <para><simplesect kind="note"><para>This operation invalidates the future, subsequent calls will fail, the application should capture the returned value because it would.</para>
+            </simplesect>
+            <parameterlist kind="exception"><parameteritem>
+            <parameternamelist>
+            <parametername>...</parametername>
+            </parameternamelist>
+            <parameterdescription>
+            <para>any exceptions stored in the shared state.</para>
+            </parameterdescription>
+            </parameteritem>
+            <parameteritem>
+            <parameternamelist>
+            <parametername>std::future_error</parametername>
+            </parameternamelist>
+            <parameterdescription>
+            <para>with std::no_state if the future does not have a shared state.</para>
+            </parameterdescription>
+            </parameteritem>
+            </parameterlist>
+          </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="future_generic.h" line="84" column="5" bodyfile="future_generic.h" bodystart="84" bodyend="89"/>
+      </memberdef>)xml";
+
+  auto constexpr kExpected =
+      R"""(syntax:
+  contents: |
+    T
+    google::cloud::future::get ()
+  return:
+    type:
+      - "T"
+  exceptions:
+    - var_type: "..."
+      description: |
+        any exceptions stored in the shared state.
+    - var_type: "std::future_error"
+      description: |
+        with std::no_state if the future does not have a shared state.
+  source:
+    id: get
+    path: google/cloud/future_generic.h
+    startLine: 84
+    remote:
+      repo: https://github.com/googleapis/google-cloud-cpp/
+      branch: main
+      path: google/cloud/future_generic.h)""";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node(
+      "//"
+      "*[@id='classgoogle_1_1cloud_1_1future_"
+      "1a23b7c9cabdcf116d3b908c32e627c7af']");
+  ASSERT_TRUE(selected);
+  YamlContext ctx;
+  YAML::Emitter yaml;
+  yaml << YAML::BeginMap;
+  AppendFunctionSyntax(yaml, ctx, selected.node());
+  yaml << YAML::EndMap;
+  auto const actual = std::string{yaml.c_str()};
+  EXPECT_EQ(actual, kExpected);
+}
+
 TEST(Doxygen2Syntax, Class) {
   auto constexpr kExpected = R"yml(syntax:
   contents: |
