@@ -71,7 +71,7 @@ class future<void> final : private internal::future_base<void> {
    * Waits until the shared state becomes ready, then retrieves the value stored
    * in the shared state.
    *
-   * @throws any exceptions stored in the shared state.
+   * @throws ... any exceptions stored in the shared state.
    * @throws std::future_error with std::no_state if the future does not have
    *   a shared state.
    */
