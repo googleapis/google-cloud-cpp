@@ -370,7 +370,24 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
     case CURLE_LDAP_INVALID_URL:
     case CURLE_FILESIZE_EXCEEDED:
     case CURLE_USE_SSL_FAILED:
+      code = StatusCode::kUnknown;
+      break;
+
     case CURLE_SEND_FAIL_REWIND:
+      // We use curl callbacks to send data in PUT and POST requests. libcurl
+      // may need to "rewind" the data. The documentation for the error is
+      // sparse, but the documentation for the "rewind" callbacks goes into
+      // more detail:
+      //   https://curl.se/libcurl/c/CURLOPT_SEEKFUNCTION.html
+      //     This may happen when doing an HTTP PUT or POST with a multi-pass
+      //     authentication method, or when an existing HTTP connection is
+      //     reused too late and the server closes the connection.
+      //
+      // All these cases seem retryable, though it seems more efficient to
+      // implement the rewind callback.
+      code = StatusCode::kUnavailable;
+      break;
+
     case CURLE_SSL_ENGINE_SETFAILED:
     case CURLE_LOGIN_DENIED:
     case CURLE_TFTP_NOTFOUND:
