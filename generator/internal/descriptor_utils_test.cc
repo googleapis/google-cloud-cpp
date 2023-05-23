@@ -441,7 +441,7 @@ char const* const kServiceProto =
     "message Baz {\n"
     "  string project = 1;\n"
     "  string instance = 2;\n"
-    "  Foo foo_resource = 3 [json_name=\"resource\"];\n"
+    "  Foo foo_resource = 3 [json_name=\"__json_request_body\"];\n"
     "}\n"
     "// Leading comments about service Service.\n"
     "service Service {\n"

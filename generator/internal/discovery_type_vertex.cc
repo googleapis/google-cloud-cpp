@@ -273,7 +273,7 @@ std::string DiscoveryTypeVertex::FormatFieldOptions(
                                absl::StrCat("\"", field_name, "\""));
   }
   if (field_json.value("is_resource", false)) {
-    field_options.emplace_back("json_name", "resource");
+    field_options.emplace_back("json_name", "__json_request_body");
   }
 
   if (!field_options.empty()) {
