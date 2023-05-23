@@ -31,30 +31,13 @@ class WriteVector {
   explicit WriteVector(std::vector<absl::Span<char const>> v)
       : original_(std::move(v)), writev_(original_.begin(), original_.end()) {}
 
-  std::size_t size() const {
-    std::size_t size = 0;
-    for (auto const& s : writev_) {
-      size += s.size();
-    }
-    return size;
-  }
+  /// Returns the number of bytes available in the write vector.
+  std::size_t size() const;
 
-  std::size_t MoveTo(absl::Span<char> dst) {
-    auto const avail = dst.size();
-    while (!writev_.empty()) {
-      auto& src = writev_.front();
-      if (src.size() > dst.size()) {
-        std::copy(src.begin(), src.begin() + dst.size(), dst.begin());
-        src.remove_prefix(dst.size());
-        dst.remove_prefix(dst.size());
-        break;
-      }
-      std::copy(src.begin(), src.end(), dst.begin());
-      dst.remove_prefix(src.size());
-      writev_.pop_front();
-    }
-    return avail - dst.size();
-  }
+  /// Copies as much data as possible from the internal vector to @p dst.
+  ///
+  /// @return the number of bytes copied.
+  std::size_t MoveTo(absl::Span<char> dst);
 
   /// Implements a CURLOPT_SEEKFUNCTION callback.
   ///
