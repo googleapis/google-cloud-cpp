@@ -203,7 +203,9 @@ Client ClientFromMock(std::shared_ptr<MockClient> const& mock,
  *
  * This client does not retry on transient errors.
  */
-Client UndecoratedClientFromMock(std::shared_ptr<MockClient> mock);
+inline Client UndecoratedClientFromMock(std::shared_ptr<MockClient> mock) {
+  return internal::ClientImplDetails::CreateWithoutDecorations(std::move(mock));
+}
 
 }  // namespace testing
 }  // namespace storage
