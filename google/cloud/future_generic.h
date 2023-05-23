@@ -77,7 +77,7 @@ class future final : private internal::future_base<T> {
    * @note This operation invalidates the future, subsequent calls will fail,
    *   the application should capture the returned value because it would.
    *
-   * @throws any exceptions stored in the shared state.
+   * @throws ... any exceptions stored in the shared state.
    * @throws std::future_error with std::no_state if the future does not have
    *   a shared state.
    */
