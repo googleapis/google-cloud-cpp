@@ -176,11 +176,21 @@ class StatusOr final {
    *
    * @param rhs the value used to initialize the object.
    *
-   * @throws only if `T`'s move constructor throws.
+   * @throws ... If `T` move constructor throws.
    */
   // NOLINTNEXTLINE(google-explicit-constructor)
   StatusOr(T&& rhs) : value_(std::move(rhs)) {}
 
+  /**
+   * Creates a new `StatusOr<T>` holding the value @p rhs.
+   *
+   * @par Post-conditions
+   * `ok() == true` and `value() == rhs`.
+   *
+   * @param rhs the value used to initialize the object.
+   *
+   * @throws ... If `T` copy constructor throws.
+   */
   // NOLINTNEXTLINE(google-explicit-constructor)
   StatusOr(T const& rhs) : value_(rhs) {}
 
@@ -240,7 +250,7 @@ class StatusOr final {
    * @return All these member functions return a (properly ref and
    *     const-qualified) reference to the underlying value.
    *
-   * @throws `RuntimeStatusError` with the contents of `status()` if the object
+   * @throws RuntimeStatusError with the contents of `status()` if the object
    *   does not contain a value, i.e., if `ok() == false`.
    */
   T& value() & {
