@@ -189,7 +189,7 @@ class MockStreambuf : public internal::ObjectWriteStreambuf {
  * Create a client configured to use the given mock.
  *
  * Unless you specifically need to mock the behavior of retries, prefer
- * #google::cloud::storage::testing::UndecoratedClientFromMock
+ * `UndecoratedClientFromMock()`.
  */
 template <typename... Policies>
 Client ClientFromMock(std::shared_ptr<MockClient> const& mock,
