@@ -176,7 +176,7 @@ class StatusOr final {
    *
    * @param rhs the value used to initialize the object.
    *
-   * @throws ... If `T` move constructor throws.
+   * @throws ... If `T`'s move constructor throws.
    */
   // NOLINTNEXTLINE(google-explicit-constructor)
   StatusOr(T&& rhs) : value_(std::move(rhs)) {}
