@@ -117,7 +117,7 @@ class BigQueryWriteClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.storage.v1.CreateWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L386}
-  /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
+  /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L243}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
@@ -155,7 +155,7 @@ class BigQueryWriteClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.storage.v1.CreateWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L386}
-  /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
+  /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L243}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
@@ -245,7 +245,7 @@ class BigQueryWriteClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.storage.v1.GetWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L550}
-  /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
+  /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L243}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
@@ -276,7 +276,7 @@ class BigQueryWriteClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.storage.v1.GetWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L550}
-  /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
+  /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L243}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(

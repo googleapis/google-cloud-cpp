@@ -21,6 +21,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
@@ -90,6 +91,34 @@ WebRiskServiceConnectionImpl::CreateSubmission(
         return stub_->CreateSubmission(context, request);
       },
       request, __func__);
+}
+
+future<StatusOr<google::cloud::webrisk::v1::Submission>>
+WebRiskServiceConnectionImpl::SubmitUri(
+    google::cloud::webrisk::v1::SubmitUriRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::webrisk::v1::Submission>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::webrisk::v1::SubmitUriRequest const& request) {
+        return stub->AsyncSubmitUri(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::webrisk::v1::Submission>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->SubmitUri(request), polling_policy(), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

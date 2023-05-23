@@ -59,6 +59,14 @@ WebRiskServiceConnection::CreateSubmission(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::webrisk::v1::Submission>>
+WebRiskServiceConnection::SubmitUri(
+    google::cloud::webrisk::v1::SubmitUriRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::webrisk::v1::Submission>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<WebRiskServiceConnection> MakeWebRiskServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

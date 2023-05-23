@@ -137,6 +137,126 @@ class DataMigrationServiceAuth : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreatePrivateConnection(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::clouddms::v1::PrivateConnection> GetPrivateConnection(
+      grpc::ClientContext& context,
+      google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request)
+      override;
+
+  StatusOr<google::cloud::clouddms::v1::ListPrivateConnectionsResponse>
+  ListPrivateConnections(
+      grpc::ClientContext& context,
+      google::cloud::clouddms::v1::ListPrivateConnectionsRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeletePrivateConnection(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
+  GetConversionWorkspace(
+      grpc::ClientContext& context,
+      google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request)
+      override;
+
+  StatusOr<google::cloud::clouddms::v1::ListConversionWorkspacesResponse>
+  ListConversionWorkspaces(
+      grpc::ClientContext& context,
+      google::cloud::clouddms::v1::ListConversionWorkspacesRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateConversionWorkspace(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateConversionWorkspace(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteConversionWorkspace(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncSeedConversionWorkspace(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncImportMappingRules(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::clouddms::v1::ImportMappingRulesRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncConvertConversionWorkspace(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCommitConversionWorkspace(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncRollbackConversionWorkspace(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncApplyConversionWorkspace(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+          request) override;
+
+  StatusOr<google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse>
+  DescribeDatabaseEntities(
+      grpc::ClientContext& context,
+      google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
+  SearchBackgroundJobs(
+      grpc::ClientContext& context,
+      google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request)
+      override;
+
+  StatusOr<
+      google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
+  DescribeConversionWorkspaceRevisions(
+      grpc::ClientContext& context,
+      google::cloud::clouddms::v1::
+          DescribeConversionWorkspaceRevisionsRequest const& request) override;
+
+  StatusOr<google::cloud::clouddms::v1::FetchStaticIpsResponse> FetchStaticIps(
+      grpc::ClientContext& context,
+      google::cloud::clouddms::v1::FetchStaticIpsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

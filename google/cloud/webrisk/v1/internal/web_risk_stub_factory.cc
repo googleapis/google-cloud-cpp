@@ -45,7 +45,9 @@ std::shared_ptr<WebRiskServiceStub> CreateDefaultWebRiskServiceStub(
   auto service_grpc_stub =
       google::cloud::webrisk::v1::WebRiskService::NewStub(channel);
   std::shared_ptr<WebRiskServiceStub> stub =
-      std::make_shared<DefaultWebRiskServiceStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultWebRiskServiceStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
     stub =

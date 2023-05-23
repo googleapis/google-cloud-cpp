@@ -187,6 +187,193 @@ DataMigrationServiceMetadata::AsyncDeleteConnectionProfile(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DataMigrationServiceMetadata::AsyncCreatePrivateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+        request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncCreatePrivateConnection(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::clouddms::v1::PrivateConnection>
+DataMigrationServiceMetadata::GetPrivateConnection(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetPrivateConnection(context, request);
+}
+
+StatusOr<google::cloud::clouddms::v1::ListPrivateConnectionsResponse>
+DataMigrationServiceMetadata::ListPrivateConnections(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::ListPrivateConnectionsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListPrivateConnections(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataMigrationServiceMetadata::AsyncDeletePrivateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeletePrivateConnection(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
+DataMigrationServiceMetadata::GetConversionWorkspace(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetConversionWorkspace(context, request);
+}
+
+StatusOr<google::cloud::clouddms::v1::ListConversionWorkspacesResponse>
+DataMigrationServiceMetadata::ListConversionWorkspaces(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::ListConversionWorkspacesRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListConversionWorkspaces(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataMigrationServiceMetadata::AsyncCreateConversionWorkspace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncCreateConversionWorkspace(cq, std::move(context),
+                                                request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataMigrationServiceMetadata::AsyncUpdateConversionWorkspace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(*context, "conversion_workspace.name=" +
+                            request.conversion_workspace().name());
+  return child_->AsyncUpdateConversionWorkspace(cq, std::move(context),
+                                                request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataMigrationServiceMetadata::AsyncDeleteConversionWorkspace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeleteConversionWorkspace(cq, std::move(context),
+                                                request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataMigrationServiceMetadata::AsyncSeedConversionWorkspace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncSeedConversionWorkspace(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataMigrationServiceMetadata::AsyncImportMappingRules(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncImportMappingRules(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataMigrationServiceMetadata::AsyncConvertConversionWorkspace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncConvertConversionWorkspace(cq, std::move(context),
+                                                 request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataMigrationServiceMetadata::AsyncCommitConversionWorkspace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncCommitConversionWorkspace(cq, std::move(context),
+                                                request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataMigrationServiceMetadata::AsyncRollbackConversionWorkspace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncRollbackConversionWorkspace(cq, std::move(context),
+                                                  request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataMigrationServiceMetadata::AsyncApplyConversionWorkspace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncApplyConversionWorkspace(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse>
+DataMigrationServiceMetadata::DescribeDatabaseEntities(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const&
+        request) {
+  SetMetadata(context,
+              "conversion_workspace=" + request.conversion_workspace());
+  return child_->DescribeDatabaseEntities(context, request);
+}
+
+StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
+DataMigrationServiceMetadata::SearchBackgroundJobs(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request) {
+  SetMetadata(context,
+              "conversion_workspace=" + request.conversion_workspace());
+  return child_->SearchBackgroundJobs(context, request);
+}
+
+StatusOr<
+    google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
+DataMigrationServiceMetadata::DescribeConversionWorkspaceRevisions(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::
+        DescribeConversionWorkspaceRevisionsRequest const& request) {
+  SetMetadata(context,
+              "conversion_workspace=" + request.conversion_workspace());
+  return child_->DescribeConversionWorkspaceRevisions(context, request);
+}
+
+StatusOr<google::cloud::clouddms::v1::FetchStaticIpsResponse>
+DataMigrationServiceMetadata::FetchStaticIps(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::FetchStaticIpsRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->FetchStaticIps(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
