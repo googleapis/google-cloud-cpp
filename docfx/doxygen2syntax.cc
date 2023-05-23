@@ -18,6 +18,7 @@
 #include "docfx/function_classifiers.h"
 #include "docfx/linked_text_type.h"
 #include "docfx/yaml_emit.h"
+#include <iostream>
 
 namespace docfx {
 namespace {
@@ -129,6 +130,14 @@ bool ParameterItemMatchesName(std::string_view parameter_name,
   return false;
 }
 
+std::string ParameterItemDescription(pugi::xml_node parameteritem) {
+  std::ostringstream os;
+  MarkdownContext mdctx;
+  mdctx.paragraph_start = "";
+  AppendDescriptionType(os, mdctx, parameteritem.child("parameterdescription"));
+  return std::move(os).str();
+}
+
 std::string ParameterDescription(YamlContext const& /*ctx*/,
                                  pugi::xml_node node,
                                  std::string_view parameter_name) {
@@ -138,11 +147,7 @@ std::string ParameterDescription(YamlContext const& /*ctx*/,
   if (!selected) return {};
   for (auto const item : selected.node()) {
     if (!ParameterItemMatchesName(parameter_name, item)) continue;
-    std::ostringstream os;
-    MarkdownContext mdctx;
-    mdctx.paragraph_start = "";
-    AppendDescriptionType(os, mdctx, item.child("parameterdescription"));
-    return std::move(os).str();
+    return ParameterItemDescription(item);
   }
   return {};
 }
@@ -160,11 +165,7 @@ std::string TemplateParameterDescription(YamlContext const& /*ctx*/,
   if (!selected) return {};
   for (auto const item : selected.node()) {
     if (!ParameterItemMatchesName(type, item)) continue;
-    std::ostringstream os;
-    MarkdownContext mdctx;
-    mdctx.paragraph_start = "";
-    AppendDescriptionType(os, mdctx, item.child("parameterdescription"));
-    return std::move(os).str();
+    return ParameterItemDescription(item);
   }
   return {};
 }
@@ -357,6 +358,23 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
              << description;
       }
       yaml << YAML::EndMap;
+    }
+    yaml << YAML::EndSeq;
+  }
+  auto exceptions = node.select_node(".//parameterlist[@kind='exception']");
+  if (!!exceptions && !exceptions.node().children().empty()) {
+    yaml << YAML::Key << "exceptions" << YAML::Value << YAML::BeginSeq;
+    for (auto const item : exceptions.node()) {
+      auto const description = ParameterItemDescription(item);
+      for (auto const name : item.child("parameternamelist")) {
+        auto exception_type = LinkedTextType(name);
+        yaml << YAML::BeginMap                             //
+             << YAML::Key << "var_type" << YAML::Value     //
+             << YAML::DoubleQuoted << exception_type       //
+             << YAML::Key << "description" << YAML::Value  //
+             << YAML::Literal << description               //
+             << YAML::EndMap;
+      }
     }
     yaml << YAML::EndSeq;
   }
