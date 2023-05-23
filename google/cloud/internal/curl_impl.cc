@@ -18,6 +18,7 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/curl_options.h"
+#include "google/cloud/internal/curl_writev.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -25,8 +26,6 @@
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
 #include <algorithm>
-#include <cstdio>
-#include <deque>
 #include <sstream>
 #include <thread>
 
@@ -87,64 +86,7 @@ Status AsStatus(CURLMcode result, char const* where) {
   return internal::UnknownError(std::move(os).str());
 }
 
-// Vector of data chunks to satisfy requests from libcurl.
-class WriteVector {
- public:
-  explicit WriteVector(std::vector<absl::Span<char const>> v)
-      : original_(std::move(v)), writev_(original_.begin(), original_.end()) {}
-
-  std::size_t size() const {
-    std::size_t size = 0;
-    for (auto const& s : writev_) {
-      size += s.size();
-    }
-    return size;
-  }
-
-  std::size_t MoveTo(absl::Span<char> dst) {
-    auto const avail = dst.size();
-    while (!writev_.empty()) {
-      auto& src = writev_.front();
-      if (src.size() > dst.size()) {
-        std::copy(src.begin(), src.begin() + dst.size(), dst.begin());
-        src.remove_prefix(dst.size());
-        dst.remove_prefix(dst.size());
-        break;
-      }
-      std::copy(src.begin(), src.end(), dst.begin());
-      dst.remove_prefix(src.size());
-      writev_.pop_front();
-    }
-    return avail - dst.size();
-  }
-
-  /// Implements a CURLOPT_SEEKFUNCTION callback.
-  ///
-  /// @see https://curl.se/libcurl/c/CURLOPT_SEEKFUNCTION.html
-  /// @returns true if the seek operation was successful.
-  bool Seek(std::size_t offset, int origin) {
-    // libcurl claims to only req
-    if (origin != SEEK_SET) return false;
-    writev_.assign(original_.begin(), original_.end());
-    // Reverse the vector so the first chunk is at the end.
-    std::reverse(writev_.begin(), writev_.end());
-    while (!writev_.empty()) {
-      auto& src = writev_.front();
-      if (src.size() >= offset) {
-        src.remove_prefix(offset);
-        offset = 0;
-        break;
-      }
-      offset -= src.size();
-      writev_.pop_front();
-    }
-    return offset == 0;
-  }
-
- private:
-  std::vector<absl::Span<char const>> original_;
-  std::deque<absl::Span<char const>> writev_;
-};
+}  // namespace
 
 extern "C" {  // libcurl callbacks
 
@@ -152,27 +94,28 @@ extern "C" {  // libcurl callbacks
 // our own buffers (i.e., without an extra copy). But, there is no such API.
 
 // Receive response data from peer.
-std::size_t WriteFunction(char* ptr, size_t size, size_t nmemb,
-                          void* userdata) {
+static std::size_t WriteFunction(  // NOLINT(misc-use-anonymous-namespace)
+    char* ptr, size_t size, size_t nmemb, void* userdata) {
   auto* const request = reinterpret_cast<CurlImpl*>(userdata);
   return request->WriteCallback(absl::MakeSpan(ptr, size * nmemb));
 }
 
 // Receive a response header from peer.
-std::size_t HeaderFunction(char* buffer, std::size_t size, std::size_t nitems,
-                           void* userdata) {
+static std::size_t HeaderFunction(  // NOLINT(misc-use-anonymous-namespace)
+    char* buffer, std::size_t size, std::size_t nitems, void* userdata) {
   auto* const request = reinterpret_cast<CurlImpl*>(userdata);
   return request->HeaderCallback(absl::MakeSpan(buffer, size * nitems));
 }
 
 // Fill buffer to send data to peer (POST/PUT).
-std::size_t ReadFunction(char* buffer, std::size_t size, std::size_t nitems,
-                         void* userdata) {
+static std::size_t ReadFunction(  // NOLINT(misc-use-anonymous-namespace)
+    char* buffer, std::size_t size, std::size_t nitems, void* userdata) {
   auto* const writev = reinterpret_cast<WriteVector*>(userdata);
   return writev->MoveTo(absl::MakeSpan(buffer, size * nitems));
 }
 
-int SeekFunction(void* userdata, curl_off_t offset, int origin) {
+static int SeekFunction(  // NOLINT(misc-use-anonymous-namespace)
+    void* userdata, curl_off_t offset, int origin) {
   auto* const writev = reinterpret_cast<WriteVector*>(userdata);
   return writev->Seek(static_cast<std::size_t>(offset), origin)
              ? CURL_SEEKFUNC_OK
@@ -180,8 +123,6 @@ int SeekFunction(void* userdata, curl_off_t offset, int origin) {
 }
 
 }  // extern "C"
-
-}  // namespace
 
 std::size_t SpillBuffer::CopyFrom(absl::Span<char const> src) {
   // capacity() is CURL_MAX_WRITE_SIZE, the maximum amount of data that

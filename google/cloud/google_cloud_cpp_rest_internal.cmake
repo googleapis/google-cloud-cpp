@@ -38,6 +38,8 @@ add_library(
     internal/curl_rest_response.h
     internal/curl_wrappers.cc
     internal/curl_wrappers.h
+    internal/curl_writev.cc
+    internal/curl_writev.h
     internal/external_account_source_format.cc
     internal/external_account_source_format.h
     internal/external_account_token_source_aws.cc
@@ -221,6 +223,7 @@ if (BUILD_TESTING)
         internal/curl_wrappers_locking_disabled_test.cc
         internal/curl_wrappers_locking_enabled_test.cc
         internal/curl_wrappers_test.cc
+        internal/curl_writev_test.cc
         internal/external_account_source_format_test.cc
         internal/external_account_token_source_aws_test.cc
         internal/external_account_token_source_file_test.cc
