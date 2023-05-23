@@ -78,7 +78,8 @@ std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
 
 StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
     nlohmann::json const& method_json, std::string const& base_path,
-    DiscoveryTypeVertex const* request_type) {
+    std::set<std::string> const& operation_services,
+    DiscoveryTypeVertex const* request_type) const {
   std::vector<std::string> rpc_options;
   std::string verb = absl::AsciiStrToLower(method_json.value("httpMethod", ""));
   std::string path = method_json.value("path", "");
@@ -129,9 +130,18 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
         })));
   }
 
+  // Only services NOT considered operation_services should be generated
+  // using the asynchronous LRO framework.
   if (method_json.contains("response") &&
-      method_json["response"].value("$ref", "") == "Operation") {
-    if (operation_scope.empty()) operation_scope = "GlobalOperations";
+      method_json["response"].value("$ref", "") == "Operation" &&
+      !internal::Contains(operation_services, CapitalizeFirstLetter(name_))) {
+    if (operation_scope.empty()) {
+      if (internal::Contains(params, "project")) {
+        operation_scope = "GlobalOperations";
+      } else {
+        operation_scope = "GlobalOrganizationOperations";
+      }
+    }
     rpc_options.push_back(
         absl::StrFormat("    option (google.cloud.operation_service) = \"%s\";",
                         operation_scope));
@@ -239,8 +249,9 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService(
     rpc_text.push_back(absl::StrFormat("  rpc %s(%s) returns (%s) {",
                                        method_name, request_type_name,
                                        response_type_name));
-    auto rpc_options = FormatRpcOptions(
-        method_json, document_properties.base_path, request_type);
+    auto rpc_options =
+        FormatRpcOptions(method_json, document_properties.base_path,
+                         document_properties.operation_services, request_type);
     if (!rpc_options) return std::move(rpc_options).status();
     rpc_text.push_back(*std::move(rpc_options));
     rpc_text.emplace_back("  }");

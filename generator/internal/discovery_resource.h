@@ -59,9 +59,10 @@ class DiscoveryResource {
 
   // Examines the method JSON to determine the google.api.http,
   // google.api.method_signature, and google.cloud.operation_service options.
-  static StatusOr<std::string> FormatRpcOptions(
+  StatusOr<std::string> FormatRpcOptions(
       nlohmann::json const& method_json, std::string const& base_path,
-      DiscoveryTypeVertex const* request_type);
+      std::set<std::string> const& operation_services,
+      DiscoveryTypeVertex const* request_type) const;
 
   // Summarize all the scopes found in the resource methods for inclusion as
   // a service level google.api.oauth_scopes option.

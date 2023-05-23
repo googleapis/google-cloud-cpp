@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_DOCUMENT_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_DOCUMENT_H
 
+#include <set>
 #include <string>
 
 namespace google {
@@ -26,6 +27,7 @@ struct DiscoveryDocumentProperties {
   std::string default_hostname;
   std::string product_name;
   std::string version;
+  std::set<std::string> operation_services;
 };
 
 }  // namespace generator_internal
