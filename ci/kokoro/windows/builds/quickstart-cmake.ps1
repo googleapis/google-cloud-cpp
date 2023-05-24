@@ -47,8 +47,6 @@ function Get-Vcpkg-Features {
         Where-Object { $_.StartsWith("${package}[") } |
         ForEach-Object { $_.replace("${package}[", "") -replace "].*", "" } |
         Where-Object { -not (
-            # TODO(#8145) - does not compile on Windows.
-            "asset",
             # TODO(#8125) - does not compile on Windows.
             "channel" -contains $_) } |
         # These are convenience features to refactor dependencies; they do not have quickstarts.
