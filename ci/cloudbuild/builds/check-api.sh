@@ -41,9 +41,13 @@ io::run cmake "${cmake_args[@]}" \
 io::run cmake --build cmake-out
 io::run cmake --install cmake-out >/dev/null
 
-mapfile -t ga_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-libraries.cmake 2>&1)
-# These libraries are not "features", but they are part of the public API
-ga_list+=("common" "grpc_utils")
+if [ -z "${GOOGLE_CLOUD_CPP_CHECK_API}" ]; then
+  mapfile -t library_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-libraries.cmake 2>&1)
+  # These libraries are not "features", but they are part of the public API
+  library_list+=("common" "grpc_utils")
+else
+  IFS=',' read -ra library_list <<< "${GOOGLE_CLOUD_CPP_CHECK_API}"
+fi
 
 # Uses `abi-dumper` to dump the ABI for the given library, which should
 # be installed at the given @p prefix, and `abi-compliance-checker` to
@@ -131,7 +135,7 @@ function check_abi() {
 }
 export -f check_abi # enables this function to be called from a subshell
 
-mapfile -t libraries < <(printf "google_cloud_cpp_%s\n" "${ga_list[@]}")
+mapfile -t libraries < <(printf "google_cloud_cpp_%s\n" "${library_list[@]}")
 
 # Run the check_abi function for each library in parallel since it is slow.
 echo "${libraries[@]}" | xargs -P "$(nproc)" -n 1 \
