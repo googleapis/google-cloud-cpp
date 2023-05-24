@@ -766,6 +766,7 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_tracing_stub.h");
   SetRetryStatusCodeExpression(vars);
+  SetLongrunningOperationServiceVars(descriptor, vars);
   return vars;
 }
 

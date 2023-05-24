@@ -114,10 +114,11 @@ Status MetadataDecoratorRestGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("stub_rest_header_path"), "google/cloud/future.h",
                        "google/cloud/rest_options.h",
                        "google/cloud/version.h"});
-  HeaderSystemIncludes(
-      {vars("proto_header_path"),
-       HasLongrunningMethod() ? "google/longrunning/operations.pb.h" : "",
-       "memory", "string"});
+  HeaderSystemIncludes({vars("proto_header_path"),
+                        HasLongrunningMethod()
+                            ? vars("longrunning_operation_include_header")
+                            : "",
+                        "memory", "string"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -136,7 +137,7 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
 
     if (IsLongrunningOperation(method)) {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  google::cloud::future<StatusOr<google::longrunning::Operation>> Async$method_name$(
+  google::cloud::future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       $request_type$ const& request) override;
@@ -180,8 +181,9 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
 
   if (HasLongrunningMethod()) {
     // long running operation support methods
-    HeaderPrint(
-        R"""(
+    if (HasGRPCLongrunningOperation()) {
+      HeaderPrint(
+          R"""(
   google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -192,6 +194,20 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::longrunning::CancelOperationRequest const& request) override;
 )""");
+    } else {
+      HeaderPrint(
+          R"""(
+  google::cloud::future<StatusOr<$longrunning_response_type$>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      $longrunning_get_operation_request_type$ const& request) override;
+
+  google::cloud::future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      $longrunning_cancel_operation_request_type$ const& request) override;
+)""");
+    }
   }
 
   HeaderPrint(R"""(
@@ -248,7 +264,7 @@ $metadata_rest_class_name$::$metadata_rest_class_name$(
     if (!HasHttpAnnotation(method)) continue;
     if (IsLongrunningOperation(method)) {
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-future<StatusOr<google::longrunning::Operation>>
+future<StatusOr<$response_type$>>
 $metadata_rest_class_name$::Async$method_name$(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -327,7 +343,9 @@ $metadata_rest_class_name$::Async$method_name$(
 
   if (HasLongrunningMethod()) {
     // long running operation support methods
-    CcPrint(R"""(
+    if (HasGRPCLongrunningOperation()) {
+      CcPrint(
+          R"""(
 future<StatusOr<google::longrunning::Operation>>
 $metadata_rest_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -346,6 +364,28 @@ $metadata_rest_class_name$::AsyncCancelOperation(
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }
 )""");
+    } else {
+      CcPrint(
+          R"""(
+future<StatusOr<$longrunning_response_type$>>
+$metadata_rest_class_name$::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    $longrunning_get_operation_request_type$ const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
+}
+
+future<Status>
+$metadata_rest_class_name$::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    $longrunning_cancel_operation_request_type$ const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+}
+)""");
+    }
   }
 
   // The metadata options supported come from
