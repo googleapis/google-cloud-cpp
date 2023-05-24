@@ -103,7 +103,6 @@ cc_library(
         "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
         "@com_google_absl//absl/strings",
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
-        "@com_google_protobuf//:protoc_lib",
     ],
 )
 
