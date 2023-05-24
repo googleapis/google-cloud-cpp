@@ -252,17 +252,15 @@ TEST(TableTest, AsyncBulkApply) {
 
 TEST(TableTest, ReadRows) {
   auto mock = std::make_shared<MockDataConnection>();
-  EXPECT_CALL(*mock, ReadRows)
-      .WillOnce([](std::string const& table_name,
-                   bigtable::RowSet const& row_set, std::int64_t rows_limit,
-                   bigtable::Filter const& filter) {
-        CheckCurrentOptions();
-        EXPECT_EQ(kTableName, table_name);
-        EXPECT_THAT(row_set, IsTestRowSet());
-        EXPECT_EQ(rows_limit, RowReader::NO_ROWS_LIMIT);
-        EXPECT_THAT(filter, IsTestFilter());
-        return bigtable_mocks::MakeRowReader({}, PermanentError());
-      });
+  EXPECT_CALL(*mock, ReadRowsFull).WillOnce([](ReadRowsParams const& params) {
+    CheckCurrentOptions();
+    EXPECT_EQ(params.table_name, kTableName);
+    EXPECT_EQ(params.app_profile_id, kAppProfileId);
+    EXPECT_THAT(params.row_set, IsTestRowSet());
+    EXPECT_EQ(params.rows_limit, RowReader::NO_ROWS_LIMIT);
+    EXPECT_THAT(params.filter, IsTestFilter());
+    return bigtable_mocks::MakeRowReader({}, PermanentError());
+  });
 
   auto table = TestTable(std::move(mock));
   auto reader = table.ReadRows(TestRowSet(), TestFilter(), CallOptions());
@@ -273,6 +271,28 @@ TEST(TableTest, ReadRows) {
 
 TEST(TableTest, ReadRowsWithRowLimit) {
   auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadRowsFull).WillOnce([](ReadRowsParams const& params) {
+    CheckCurrentOptions();
+    EXPECT_EQ(params.table_name, kTableName);
+    EXPECT_EQ(params.app_profile_id, kAppProfileId);
+    EXPECT_THAT(params.row_set, IsTestRowSet());
+    EXPECT_EQ(params.rows_limit, 42);
+    EXPECT_THAT(params.filter, IsTestFilter());
+    return bigtable_mocks::MakeRowReader({}, PermanentError());
+  });
+
+  auto table = TestTable(std::move(mock));
+  auto reader = table.ReadRows(TestRowSet(), 42, TestFilter(), CallOptions());
+  auto it = reader.begin();
+  EXPECT_THAT(*it, StatusIs(StatusCode::kPermissionDenied));
+  EXPECT_EQ(++it, reader.end());
+}
+
+TEST(TableTest, ReadRowsMockBackwardsCompatibility) {
+  auto mock = std::make_shared<MockDataConnection>();
+  // Ensure that existing mocks which set expectations on the legacy `ReadRows`
+  // method continue to work. This is more a test of `MockDataConnection` than
+  // of `Table`.
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](std::string const& table_name,
                    bigtable::RowSet const& row_set, std::int64_t rows_limit,

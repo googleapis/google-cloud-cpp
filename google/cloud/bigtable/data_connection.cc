@@ -74,9 +74,17 @@ future<std::vector<FailedMutation>> DataConnection::AsyncBulkApply(
       Status(StatusCode::kUnimplemented, "not-implemented"), mut.size()));
 }
 
-RowReader DataConnection::ReadRows(
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::string const&, RowSet, std::int64_t, Filter) {
+RowReader DataConnection::ReadRows(std::string const& table_name,
+                                   RowSet row_set, std::int64_t rows_limit,
+                                   Filter filter) {
+  return ReadRowsFull(ReadRowsParams{
+      std::move(table_name),
+      google::cloud::internal::CurrentOptions().get<AppProfileIdOption>(),
+      std::move(row_set), rows_limit, std::move(filter)});
+}
+
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+RowReader DataConnection::ReadRowsFull(ReadRowsParams) {
   return MakeRowReader(std::make_shared<bigtable_internal::StatusOnlyRowReader>(
       Status(StatusCode::kUnimplemented, "not implemented")));
 }
