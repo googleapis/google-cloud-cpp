@@ -111,14 +111,14 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
   // that we need to introduce additional in the future if we come across other
   // LRO defining conventions.
   // https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources
-  std::string operation_scope;
+  std::string longrunning_operation_service;
   std::vector<std::string> params =
       method_json.value("parameterOrder", std::vector<std::string>{});
   if (!params.empty()) {
     if (internal::Contains(params, "zone")) {
-      operation_scope = "ZoneOperations";
+      longrunning_operation_service = "ZoneOperations";
     } else if (internal::Contains(params, "region")) {
-      operation_scope = "RegionOperations";
+      longrunning_operation_service = "RegionOperations";
     }
     if (!request_resource_field_name.empty()) {
       params.push_back(request_resource_field_name);
@@ -135,16 +135,16 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
   if (method_json.contains("response") &&
       method_json["response"].value("$ref", "") == "Operation" &&
       !internal::Contains(operation_services, CapitalizeFirstLetter(name_))) {
-    if (operation_scope.empty()) {
+    if (longrunning_operation_service.empty()) {
       if (internal::Contains(params, "project")) {
-        operation_scope = "GlobalOperations";
+        longrunning_operation_service = "GlobalOperations";
       } else {
-        operation_scope = "GlobalOrganizationOperations";
+        longrunning_operation_service = "GlobalOrganizationOperations";
       }
     }
     rpc_options.push_back(
         absl::StrFormat("    option (google.cloud.operation_service) = \"%s\";",
-                        operation_scope));
+                        longrunning_operation_service));
   }
   return absl::StrJoin(rpc_options, "\n");
 }

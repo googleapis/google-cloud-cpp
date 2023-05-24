@@ -210,13 +210,8 @@ google::cloud::Status GenerateProtosForRestProducts(
         google::cloud::generator_internal::GenerateProtosFromDiscoveryDoc(
             *doc, generator_args.protobuf_proto_path,
             generator_args.googleapis_proto_path, generator_args.output_path,
-            [&]() {
-              std::set<std::string> s;
-              for (auto const& e : p.operation_services()) {
-                s.insert(e);
-              }
-              return s;
-            }());
+            std::set<std::string>(p.operation_services().begin(),
+                                  p.operation_services().end()));
     if (!status.ok()) return status;
   }
 
