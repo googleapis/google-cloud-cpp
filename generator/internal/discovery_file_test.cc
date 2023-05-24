@@ -231,7 +231,7 @@ message GetMyResourcesRequest {
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{
-      "my/service", "https://default.host", "my_product", "v1"};
+      "my/service", "https://default.host", "my_product", "v1", {}};
   auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
@@ -331,7 +331,7 @@ message GetMyResourcesRequest {
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{
-      "my/service", "https://default.host", "my_product", "v1"};
+      "my/service", "https://default.host", "my_product", "v1", {}};
   auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
@@ -395,7 +395,8 @@ message GetMyResourcesRequest {
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  DiscoveryDocumentProperties document_properties{"", "", "my_product", "v1"};
+  DiscoveryDocumentProperties document_properties{
+      "", "", "my_product", "v1", {}};
   auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
@@ -454,7 +455,7 @@ service MyResources {
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{
-      "my/service", "https://default.host", "my_product", "v1"};
+      "my/service", "https://default.host", "my_product", "v1", {}};
   auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
@@ -509,7 +510,8 @@ TEST(DiscoveryFile, FormatFileResourceScopeError) {
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  DiscoveryDocumentProperties document_properties{"", "", "my_product", "v1"};
+  DiscoveryDocumentProperties document_properties{
+      "", "", "my_product", "v1", {}};
   auto result = f.FormatFile(document_properties, types, os);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument, HasSubstr("scope")));
@@ -564,7 +566,8 @@ TEST(DiscoveryFile, FormatFileTypeMissingError) {
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  DiscoveryDocumentProperties document_properties{"", "", "my_product", "v1"};
+  DiscoveryDocumentProperties document_properties{
+      "", "", "my_product", "v1", {}};
   auto result = f.FormatFile(document_properties, types, os);
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("neither $ref nor type")));

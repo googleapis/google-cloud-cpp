@@ -154,6 +154,12 @@ message DiscoveryDocumentDefinedProduct {
   // Location of Discovery Document for services that only support REST.
   string discovery_document_url = 1;
 
+  // Products that do not use google::longrunning::Operation to handle long
+  // running operations typically define their own operation type and services
+  // to handle them. We need to take care to generate these as simple,
+  // synchronous services.
+  repeated string operation_services = 3;
+
   // Services that are generated from the protos created from the
   // discovery document.
   repeated ServiceConfiguration rest_services = 2;

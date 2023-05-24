@@ -118,12 +118,13 @@ std::map<std::string, DiscoveryResource> ExtractResources(
     std::string resource_name = r.key();
     resources.emplace(
         resource_name,
-        DiscoveryResource{
-            resource_name,
-            absl::StrFormat(kResourcePackageNameFormat,
-                            document_properties.product_name, resource_name,
-                            document_properties.version),
-            r.value()});
+        DiscoveryResource{resource_name,
+                          absl::StrFormat(kResourcePackageNameFormat,
+                                          CamelCaseToSnakeCase(
+                                              document_properties.product_name),
+                                          CamelCaseToSnakeCase(resource_name),
+                                          document_properties.version),
+                          r.value()});
   }
   return resources;
 }
@@ -368,15 +369,16 @@ StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
   return parsed_discovery_doc;
 }
 
-Status GenerateProtosFromDiscoveryDoc(nlohmann::json const& discovery_doc,
-                                      std::string const&, std::string const&,
-                                      std::string const& output_path) {
+Status GenerateProtosFromDiscoveryDoc(
+    nlohmann::json const& discovery_doc, std::string const&, std::string const&,
+    std::string const& output_path, std::set<std::string> operation_services) {
   auto default_hostname = DefaultHostFromRootUrl(discovery_doc);
   if (!default_hostname) return std::move(default_hostname).status();
 
   DiscoveryDocumentProperties document_properties{
       discovery_doc.value("basePath", ""), *default_hostname,
-      discovery_doc.value("name", ""), discovery_doc.value("version", "")};
+      discovery_doc.value("name", ""), discovery_doc.value("version", ""),
+      std::move(operation_services)};
 
   if (document_properties.base_path.empty() ||
       document_properties.default_hostname.empty() ||

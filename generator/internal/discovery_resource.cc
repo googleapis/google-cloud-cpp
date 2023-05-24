@@ -26,6 +26,39 @@
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
+
+// Defining long running operations in Discovery Documents relies upon
+// conventions. This implements the convention used by compute. It may be
+// that we need to introduce additional in the future if we come across other
+// LRO defining conventions.
+// https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources
+absl::optional<std::string> DetermineLongRunningOperationService(
+    nlohmann::json const& method_json, std::vector<std::string> const& params,
+    std::set<std::string> const& operation_services,
+    std::string const& resource_name) {
+  // Only services NOT considered operation_services should be generated
+  // using the asynchronous LRO framework, even if they have a response of type
+  // Operation.
+  if (method_json.contains("response") &&
+      method_json["response"].value("$ref", "") == "Operation" &&
+      !internal::Contains(operation_services,
+                          CapitalizeFirstLetter(resource_name))) {
+    if (internal::Contains(params, "zone")) {
+      return "ZoneOperations";
+    }
+    if (internal::Contains(params, "region")) {
+      return "RegionOperations";
+    }
+    if (internal::Contains(params, "project")) {
+      return "GlobalOperations";
+    }
+    return "GlobalOrganizationOperations";
+  }
+  return absl::nullopt;
+}
+
+}  // namespace
 
 DiscoveryResource::DiscoveryResource() : json_("") {}
 
@@ -78,7 +111,8 @@ std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
 
 StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
     nlohmann::json const& method_json, std::string const& base_path,
-    DiscoveryTypeVertex const* request_type) {
+    std::set<std::string> const& operation_services,
+    DiscoveryTypeVertex const* request_type) const {
   std::vector<std::string> rpc_options;
   std::string verb = absl::AsciiStrToLower(method_json.value("httpMethod", ""));
   std::string path = method_json.value("path", "");
@@ -105,20 +139,9 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
   }
   rpc_options.push_back(absl::StrCat(http_option, "    };"));
 
-  // Defining long running operations in Discovery Documents relies upon
-  // conventions. This implements the convention used by compute. It may be
-  // that we need to introduce additional in the future if we come across other
-  // LRO defining conventions.
-  // https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources
-  std::string operation_scope;
   std::vector<std::string> params =
       method_json.value("parameterOrder", std::vector<std::string>{});
   if (!params.empty()) {
-    if (internal::Contains(params, "zone")) {
-      operation_scope = "ZoneOperations";
-    } else if (internal::Contains(params, "region")) {
-      operation_scope = "RegionOperations";
-    }
     if (!request_resource_field_name.empty()) {
       params.push_back(request_resource_field_name);
     }
@@ -129,13 +152,14 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
         })));
   }
 
-  if (method_json.contains("response") &&
-      method_json["response"].value("$ref", "") == "Operation") {
-    if (operation_scope.empty()) operation_scope = "GlobalOperations";
+  auto longrunning_operation_service = DetermineLongRunningOperationService(
+      method_json, params, operation_services, name_);
+  if (longrunning_operation_service) {
     rpc_options.push_back(
         absl::StrFormat("    option (google.cloud.operation_service) = \"%s\";",
-                        operation_scope));
+                        *longrunning_operation_service));
   }
+
   return absl::StrJoin(rpc_options, "\n");
 }
 
@@ -239,8 +263,9 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService(
     rpc_text.push_back(absl::StrFormat("  rpc %s(%s) returns (%s) {",
                                        method_name, request_type_name,
                                        response_type_name));
-    auto rpc_options = FormatRpcOptions(
-        method_json, document_properties.base_path, request_type);
+    auto rpc_options =
+        FormatRpcOptions(method_json, document_properties.base_path,
+                         document_properties.operation_services, request_type);
     if (!rpc_options) return std::move(rpc_options).status();
     rpc_text.push_back(*std::move(rpc_options));
     rpc_text.emplace_back("  }");
