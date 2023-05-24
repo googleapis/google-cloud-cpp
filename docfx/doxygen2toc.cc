@@ -196,17 +196,17 @@ TocItems ClassToc(YamlContext const& ctx, pugi::xml_document const& doc,
     std::string_view name;
     TocItemsProducer producer;
   } nodes[] = {
-      {"Types", [&] { return Recurse(nested, doc, node, IsTypedef); }},
+      // Skip these. They also appear as `<innerclass>` elements in the
+      // namespace.
+      // {"Classes", [&] { return Recurse(cfg, doc, node, IsClass); }},
+      // {"Structs", [&] { return Recurse(cfg, doc, node, IsStruct); }},
       {"Constructors",
        [&] { return Recurse(nested, doc, node, IsConstructor); }},
       {"Operators", [&] { return Recurse(nested, doc, node, IsOperator); }},
       {"Functions",
        [&] { return Recurse(nested, doc, node, IsPlainFunction); }},
       {"Enums", [&] { return Recurse(nested, doc, node, IsEnum); }},
-      // Skip these. They also appear as `<innerclass>` elements in the
-      // namespace.
-      // {"Classes", [&] { return Recurse(cfg, doc, node, IsClass); }},
-      // {"Structs", [&] { return Recurse(cfg, doc, node, IsStruct); }},
+      {"Types", [&] { return Recurse(nested, doc, node, IsTypedef); }},
   };
   for (auto const& [name, generator] : nodes) {
     auto items = generator();
