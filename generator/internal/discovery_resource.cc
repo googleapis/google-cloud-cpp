@@ -26,6 +26,39 @@
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
+
+// Defining long running operations in Discovery Documents relies upon
+// conventions. This implements the convention used by compute. It may be
+// that we need to introduce additional in the future if we come across other
+// LRO defining conventions.
+// https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources
+absl::optional<std::string> DetermineLongRunningOperationService(
+    nlohmann::json const& method_json, std::vector<std::string> const& params,
+    std::set<std::string> const& operation_services,
+    std::string const& resource_name) {
+  // Only services NOT considered operation_services should be generated
+  // using the asynchronous LRO framework, even if they have a response of type
+  // Operation.
+  if (method_json.contains("response") &&
+      method_json["response"].value("$ref", "") == "Operation" &&
+      !internal::Contains(operation_services,
+                          CapitalizeFirstLetter(resource_name))) {
+    if (internal::Contains(params, "zone")) {
+      return "ZoneOperations";
+    }
+    if (internal::Contains(params, "region")) {
+      return "RegionOperations";
+    }
+    if (internal::Contains(params, "project")) {
+      return "GlobalOperations";
+    }
+    return "GlobalOrganizationOperations";
+  }
+  return absl::nullopt;
+}
+
+}  // namespace
 
 DiscoveryResource::DiscoveryResource() : json_("") {}
 
@@ -106,20 +139,9 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
   }
   rpc_options.push_back(absl::StrCat(http_option, "    };"));
 
-  // Defining long running operations in Discovery Documents relies upon
-  // conventions. This implements the convention used by compute. It may be
-  // that we need to introduce additional in the future if we come across other
-  // LRO defining conventions.
-  // https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources
-  std::string longrunning_operation_service;
   std::vector<std::string> params =
       method_json.value("parameterOrder", std::vector<std::string>{});
   if (!params.empty()) {
-    if (internal::Contains(params, "zone")) {
-      longrunning_operation_service = "ZoneOperations";
-    } else if (internal::Contains(params, "region")) {
-      longrunning_operation_service = "RegionOperations";
-    }
     if (!request_resource_field_name.empty()) {
       params.push_back(request_resource_field_name);
     }
@@ -130,22 +152,14 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
         })));
   }
 
-  // Only services NOT considered operation_services should be generated
-  // using the asynchronous LRO framework.
-  if (method_json.contains("response") &&
-      method_json["response"].value("$ref", "") == "Operation" &&
-      !internal::Contains(operation_services, CapitalizeFirstLetter(name_))) {
-    if (longrunning_operation_service.empty()) {
-      if (internal::Contains(params, "project")) {
-        longrunning_operation_service = "GlobalOperations";
-      } else {
-        longrunning_operation_service = "GlobalOrganizationOperations";
-      }
-    }
+  auto longrunning_operation_service = DetermineLongRunningOperationService(
+      method_json, params, operation_services, name_);
+  if (longrunning_operation_service) {
     rpc_options.push_back(
         absl::StrFormat("    option (google.cloud.operation_service) = \"%s\";",
-                        longrunning_operation_service));
+                        *longrunning_operation_service));
   }
+
   return absl::StrJoin(rpc_options, "\n");
 }
 
