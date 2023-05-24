@@ -43,9 +43,10 @@ function Get-Released-Quickstarts {
     bazelisk $bazel_common_flags query --noshow_progress --noshow_loading_progress "filter(/quickstart:quickstart$, kind(cc_binary, @google_cloud_cpp//google/...))" |
         ForEach-Object { $_.replace("@google_cloud_cpp//google/cloud/", "").replace("/quickstart:quickstart", "") } |
         # The following quickstarts have problems building on Windows:
+        #   TODO(#8145) - asset (TRUE/FALSE macros)
         #   TODO(#8125) - channel (DOMAIN macro)
         #   TODO(#10737) - dialogflow_es triggers bug in Bazel 6.0.0
-        Where-Object { -not ("channel", "dialogflow_es" -contains $_) } |
+        Where-Object { -not ("asset", "channel", "dialogflow_es" -contains $_) } |
         # TODO(#9923) - compiling all quickstarts on Windows is too slow
         Get-Random -Count 10
     Pop-Location
