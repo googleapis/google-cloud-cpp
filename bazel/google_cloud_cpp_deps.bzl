@@ -17,8 +17,66 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
+def google_cloud_cpp_development_deps(name = None):
+    """Loads dependencies needed to develop the google-cloud-cpp libraries.
+
+    google-cloud-cpp developers call this function from the top-level WORKSPACE
+    file to obtain all the necessary *development* dependencies for
+    google-cloud-cpp. This includes testing dependencies and dependencies used
+    by development tools.
+
+    It is a bug if the targets used for google-cloud-cpp can be used outside
+    the package. All such targets should have their visibility restricted, or
+    are deprecated. If you still need to use such targets, this function may
+    be useful in your own WORKSPACE file.
+
+    This function only loads dependencies that have not been previously loaded,
+    allowing developers to override the version of the dependencies they want to
+    use.
+
+    Args:
+        name: Unused. It is conventional to provide a `name` argument to all
+            workspace functions.
+    """
+
+    # This is only needed to run the microbenchmarks.
+    maybe(
+        http_archive,
+        name = "com_google_benchmark",
+        urls = [
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.8.0.tar.gz",
+            "https://github.com/google/benchmark/archive/v1.8.0.tar.gz",
+        ],
+        sha256 = "ea2e94c24ddf6594d15c711c06ccd4486434d9cf3eca954e2af8a20c88f9f172",
+        strip_prefix = "benchmark-1.8.0",
+    )
+
+    # PugiXML, this is only used in the docfx internal tool.
+    maybe(
+        http_archive,
+        name = "com_github_zeux_pugixml",
+        urls = [
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_zeux_pugixml/v1.13.tar.gz",
+            "https://github.com/zeux/pugixml/archive/v1.13.tar.gz",
+        ],
+        sha256 = "5c5ad5d7caeb791420408042a7d88c2c6180781bf218feca259fd9d840a888e1",
+        strip_prefix = "pugixml-1.13",
+        build_file = Label("//bazel:pugixml.BUILD"),
+    )
+
+    maybe(
+        http_archive,
+        name = "com_github_jbeder_yaml_cpp",
+        urls = [
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_jbeder_yaml_cpp/yaml-cpp-0.7.0.tar.gz",
+            "https://github.com/jbeder/yaml-cpp/archive/yaml-cpp-0.7.0.tar.gz",
+        ],
+        sha256 = "43e6a9fcb146ad871515f0d0873947e5d497a1c9c60c58cb102a97b47208b7c3",
+        strip_prefix = "yaml-cpp-yaml-cpp-0.7.0",
+    )
+
 def google_cloud_cpp_deps(name = None):
-    """Loads dependencies need to compile the google-cloud-cpp library.
+    """Loads dependencies need to compile the google-cloud-cpp libraries.
 
     Application developers can call this function from their WORKSPACE file
     to obtain all the necessary dependencies for google-cloud-cpp, including
@@ -66,7 +124,8 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "abseil-cpp-20230125.3",
     )
 
-    # Load a version of googletest that we know works.
+    # Load a version of googletest that we know works. This is needed to create
+    # //:.*mocks targets, which are public.
     maybe(
         http_archive,
         name = "com_google_googletest",
@@ -76,18 +135,6 @@ def google_cloud_cpp_deps(name = None):
         ],
         sha256 = "ad7fdba11ea011c1d925b3289cf4af2c66a352e18d4c7264392fead75e919363",
         strip_prefix = "googletest-1.13.0",
-    )
-
-    # Load a version of benchmark that we know works.
-    maybe(
-        http_archive,
-        name = "com_google_benchmark",
-        urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.8.0.tar.gz",
-            "https://github.com/google/benchmark/archive/v1.8.0.tar.gz",
-        ],
-        sha256 = "ea2e94c24ddf6594d15c711c06ccd4486434d9cf3eca954e2af8a20c88f9f172",
-        strip_prefix = "benchmark-1.8.0",
     )
 
     # Load the googleapis dependency.
@@ -215,28 +262,4 @@ def google_cloud_cpp_deps(name = None):
         ],
         sha256 = "0fdbefbdc2c154634728097e26de52a8210ed95cb032beb5f35da0a493cd5066",
         strip_prefix = "opentelemetry-cpp-1.9.0",
-    )
-
-    # PugiXML, this is only used in the docfx internal tool.
-    maybe(
-        http_archive,
-        name = "com_github_zeux_pugixml",
-        urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_zeux_pugixml/v1.13.tar.gz",
-            "https://github.com/zeux/pugixml/archive/v1.13.tar.gz",
-        ],
-        sha256 = "5c5ad5d7caeb791420408042a7d88c2c6180781bf218feca259fd9d840a888e1",
-        strip_prefix = "pugixml-1.13",
-        build_file = Label("//bazel:pugixml.BUILD"),
-    )
-
-    maybe(
-        http_archive,
-        name = "com_github_jbeder_yaml_cpp",
-        urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_jbeder_yaml_cpp/yaml-cpp-0.7.0.tar.gz",
-            "https://github.com/jbeder/yaml-cpp/archive/yaml-cpp-0.7.0.tar.gz",
-        ],
-        sha256 = "43e6a9fcb146ad871515f0d0873947e5d497a1c9c60c58cb102a97b47208b7c3",
-        strip_prefix = "yaml-cpp-yaml-cpp-0.7.0",
     )
