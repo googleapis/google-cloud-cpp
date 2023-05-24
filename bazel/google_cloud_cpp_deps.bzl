@@ -18,14 +18,17 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
 def google_cloud_cpp_development_deps(name = None):
-    """Loads dependencies need to develop the google-cloud-cpp libraries.
+    """Loads dependencies needed to develop the google-cloud-cpp libraries.
 
     google-cloud-cpp developers call this function from the top-level WORKSPACE
     file to obtain all the necessary *development* dependencies for
-    google-cloud-cpp, this includes testing dependencies and dependencies used
+    google-cloud-cpp. This includes testing dependencies and dependencies used
     by development tools.
 
-    While primarily intended for google-cloud-cpp developers
+    It is a bug if the targets used for google-cloud-cpp can be used outside
+    the package. All such targets should have their visibility restricted, or
+    are deprecated. If you still need to use such targets, this function may
+    be useful in your own WORKSPACE file.
 
     This function only loads dependencies that have not been previously loaded,
     allowing developers to override the version of the dependencies they want to
@@ -122,7 +125,7 @@ def google_cloud_cpp_deps(name = None):
     )
 
     # Load a version of googletest that we know works. This is needed to create
-    # google_cloud_cpp_*_mocks libraries.
+    # //:.*mocks targets, which are public.
     maybe(
         http_archive,
         name = "com_google_googletest",
