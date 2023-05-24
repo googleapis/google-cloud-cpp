@@ -42,7 +42,7 @@ TEST(MockTableTest, ReadRowsSuccess) {
   // yield "r1" then "r2":
   //! [simulate-call]
   std::vector<cbt::Row> rows = {cbt::Row("r1", {}), cbt::Row("r2", {})};
-  EXPECT_CALL(*mock, ReadRows)
+  EXPECT_CALL(*mock, ReadRowsFull)
       .WillOnce(Return(ByMove(cbtm::MakeRowReader(rows))));
   //! [simulate-call]
 
@@ -72,7 +72,7 @@ TEST(MockTableTest, ReadRowsFailure) {
 
   // Return a `RowReader` that yields only a failing status (no rows).
   gc::Status final_status(gc::StatusCode::kPermissionDenied, "fail");
-  EXPECT_CALL(*mock, ReadRows)
+  EXPECT_CALL(*mock, ReadRowsFull)
       .WillOnce(Return(ByMove(cbtm::MakeRowReader({}, final_status))));
 
   cbt::Table table(mock, cbt::TableResource("project", "instance", "table"));
