@@ -287,10 +287,6 @@ class Table {
   /**
    * Makes asynchronous attempts to apply the mutation to a row.
    *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
    * @param mut the mutation. Note that this function takes ownership
    *     (and then discards) the data in the mutation.  In general, a
    *     `SingleRowMutation` can be used to modify and/or delete
@@ -502,10 +498,6 @@ class Table {
   /**
    * Make an asynchronous request to conditionally mutate a row.
    *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
    * @param row_key the row key on which the conditional mutation will be
    *     performed
    * @param filter the condition, depending on which the mutation will be
@@ -634,10 +626,6 @@ class Table {
   /**
    * Make an asynchronous request to atomically read and modify a row.
    *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
    * @tparam Args this is zero or more ReadModifyWriteRules to apply on a row.
    *     Options to override the class-level options, such as retry, backoff,
    *     and idempotency policies are also be passed via this parameter pack.
@@ -692,10 +680,6 @@ class Table {
   /**
    * Asynchronously reads a set of rows from the table.
    *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
-   *
    * @param on_row the callback to be invoked on each successfully read row; it
    *     should be invocable with `Row` and return a future<bool>; the returned
    *     `future<bool>` should be satisfied with `true` when the user is ready
@@ -730,10 +714,6 @@ class Table {
 
   /**
    * Asynchronously reads a set of rows from the table.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
    *
    * @param on_row the callback to be invoked on each successfully read row; it
    *     should be invocable with `Row` and return a future<bool>; the returned
@@ -820,10 +800,6 @@ class Table {
 
   /**
    * Asynchronously read and return a single row from the table.
-   *
-   * @warning This is an early version of the asynchronous APIs for Cloud
-   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
-   *     is not subject to any SLA or deprecation policy.
    *
    * @param row_key the row to read.
    * @param filter a filter expression, can be used to select a subset of the
