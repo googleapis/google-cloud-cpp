@@ -214,23 +214,8 @@ class Default$stub_rest_class_name$ : public $stub_rest_class_name$ {
   }
 
   if (HasLongrunningMethod()) {
-    // long running operation support methods
-    if (HasGRPCLongrunningOperation()) {
-      HeaderPrint(
-          R"""(
-  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::longrunning::GetOperationRequest const& request) override;
-
-  future<Status> AsyncCancelOperation(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::longrunning::CancelOperationRequest const& request) override;
-)""");
-    } else {
-      HeaderPrint(
-          R"""(
+    HeaderPrint(
+        R"""(
   future<StatusOr<$longrunning_response_type$>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -241,7 +226,6 @@ class Default$stub_rest_class_name$ : public $stub_rest_class_name$ {
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       $longrunning_cancel_operation_request_type$ const& request) override;
 )""");
-    }
   }
 
   // private members and close default stub class definition

@@ -297,7 +297,7 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ request) {
   auto extractor = [&] {
     if (IsGRPCLongrunningOperation(method)) {
       // One of the variations is how to extract the value from the operation
-      // result, some operations use the metadata, some the data. We need to
+      // result. Some operations use the metadata, some the data. We need to
       // provide the right function to
       // internal::AsyncRestLongRunningOperation.
       if (IsLongrunningMetadataTypeUsedAsResponse(method)) {
@@ -310,12 +310,7 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ request) {
     // TODO(#11639): improve error handling by interrogating error details in
     // the Operation type (if available).
     return R"""(
-    [](StatusOr<$longrunning_deduced_response_type$> op, std::string const&) -> StatusOr<$longrunning_deduced_response_type$>{
-        if (!op) {
-          // TODO(#11639): improve error handling by interrogating error
-          // details in the Operation type (if available).
-          return op.status();
-        }
+    [](StatusOr<$longrunning_deduced_response_type$> op, std::string const&) {
         return op;
     },)""";
   };
@@ -328,7 +323,7 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ request) {
     },)""";
   };
 
-  auto get_request_set_operation_name = [&] {
+  auto get_request_set_operation = [&] {
     if (IsGRPCLongrunningOperation(method)) return "";
     return R"""(
     [request](std::string const& op, $longrunning_get_operation_request_type$& r) {
@@ -336,7 +331,7 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ request) {
     },)""";
   };
 
-  auto cancel_request_set_operation_name = [&] {
+  auto cancel_request_set_operation = [&] {
     if (IsGRPCLongrunningOperation(method)) return "";
     return R"""(
     [request](std::string const& op, $longrunning_cancel_operation_request_type$& r) {
@@ -383,8 +378,8 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ const& request) 
     retry_policy(), backoff_policy(),
     idempotency_policy()->$method_name$(request),
     polling_policy(), __func__)""",
-        is_operation_done(), get_request_set_operation_name(),
-        cancel_request_set_operation_name(), R"""())""",
+        is_operation_done(), get_request_set_operation(),
+        cancel_request_set_operation(), R"""())""",
         // Finally, the internal::AsyncRestLongRunningOperation helper may
         // return `future<StatusOr<google::protobuf::Empty>>`, in this case we
         // add a bit of code to drop the `protobuf::Empty`:
