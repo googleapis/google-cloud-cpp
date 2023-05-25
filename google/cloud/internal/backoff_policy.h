@@ -81,8 +81,7 @@ class BackoffPolicy {
  * retry policy, the client library will wait for an initial delay after
  * the specified minimum delay before trying again. If the second attempt fails
  * the delay time is increased, using a scaling factor. The delay time begins at
- * the minimum delay. If no minimum is specified the constructor will
- * use the initial delay as the minimum. The delay time growth stops at a
+ * the minimum delay. The delay time growth stops at a
  * maximum delay time. The policy also randomizes the delay each time, to
  * avoid the [thundering herd
  * problem](https://en.wikipedia.org/wiki/Thundering_herd_problem).
@@ -127,23 +126,19 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    *     for more details.
    */
   template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-  ExponentialBackoffPolicy(std::chrono::duration<Rep1, Period1> minimum_delay,
+  ExponentialBackoffPolicy(std::chrono::duration<Rep1, Period1> initial_delay,
                            std::chrono::duration<Rep2, Period2> maximum_delay,
                            double scaling)
-      : ExponentialBackoffPolicy(
-            minimum_delay,
-            /*initial_delay_upper_bound=*/minimum_delay * scaling,
-            maximum_delay, /*scaling_lower_bound=*/scaling,
-            /*scaling_upper_bound=*/scaling) {}
+      : ExponentialBackoffPolicy(initial_delay, initial_delay * scaling,
+                                 maximum_delay, scaling, scaling) {}
 
   /**
    * Constructor for an exponential backoff policy that supports full jitter.
    *
-   * Define the initial delay upper bound, minimum delay, maximum delay, lower
-   * bound scaling factor, and upper bound scaling factor for an instance of the
-   * policy. While the constructor accepts `std::chrono::duration` objects at
-   * any resolution, the data is kept internally in microseconds.
-   * Sub-microsecond delays seem unnecessarily precise for this application.
+   * Define a policy with a customizable delay intervals and scaling factors.
+   * While the constructor accepts `std::chrono::duration` objects at any
+   * resolution, the data is kept internally in microseconds. Sub-microsecond
+   * delays seem unnecessarily precise for this application.
    *
    * @code
    * using namespace std::chrono_literals; // C++14
@@ -153,11 +148,10 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    * @param minimum_delay the minimum value for the delay between operations.
    * @param initial_delay_upper_bound the longest possible delay to wait after
    *     the first (unsuccessful) operation.
-   * @param minimum_delay the minimum value for the delay between operations.
    * @param maximum_delay the maximum value for the delay between operations.
    * @param scaling_lower_bound how fast the delay's lower bound increases
    *     between iterations.
-   * @param scaling_lower_bound how fast the delay's upper bound increases
+   * @param scaling_upper_bound how fast the delay's upper bound increases
    *     between iterations.
    *
    * @tparam Rep1 a placeholder to match the Rep tparam for

@@ -89,6 +89,27 @@ TEST(ExponentialBackoffPolicy, VerifyMinJitterPolicy) {
   EXPECT_GE(ms(50), delay);
 }
 
+/// @test Verify the lower bound grows when the maximum is reached.
+TEST(ExponentialBackoffPolicy, VerifyLowerBoundGrowsWhenMaximumReached) {
+  ExponentialBackoffPolicy tested(ms(1), ms(10), ms(10), 2.0, 2.0);
+
+  auto delay = tested.OnCompletion();
+  EXPECT_LE(ms(1), delay);
+  EXPECT_GE(ms(10), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(2), delay);
+  EXPECT_GE(ms(10), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(4), delay);
+  EXPECT_GE(ms(10), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(5), delay);
+  EXPECT_GE(ms(10), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(5), delay);
+  EXPECT_GE(ms(10), delay);
+}
+
 /// @test Verify the initial and maximum delay are respected.
 TEST(ExponentialBackoffPolicy, RespectMinimumAndMaximumDelay) {
   ExponentialBackoffPolicy tested(ms(10), ms(12), 2.0);
