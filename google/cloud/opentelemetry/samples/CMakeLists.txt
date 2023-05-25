@@ -14,4 +14,6 @@
 # limitations under the License.
 # ~~~
 
-google_cloud_cpp_add_samples("opentelemetry")
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    google_cloud_cpp_add_samples("opentelemetry")
+endif ()
