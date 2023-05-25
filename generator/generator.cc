@@ -16,6 +16,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/generator_interface.h"
+#include "generator/internal/make_generators.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/status_or.h"

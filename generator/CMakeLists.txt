@@ -79,6 +79,8 @@ add_library(
     internal/logging_decorator_rest_generator.h
     internal/longrunning.cc
     internal/longrunning.h
+    internal/make_generators.cc
+    internal/make_generators.h
     internal/metadata_decorator_generator.cc
     internal/metadata_decorator_generator.h
     internal/metadata_decorator_rest_generator.cc
@@ -225,6 +227,7 @@ function (google_cloud_cpp_generator_define_tests)
         internal/format_method_comments_test.cc
         internal/http_option_utils_test.cc
         internal/longrunning_test.cc
+        internal/make_generators_test.cc
         internal/pagination_test.cc
         internal/predicate_utils_test.cc
         internal/printer_test.cc
