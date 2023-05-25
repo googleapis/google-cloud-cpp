@@ -46,7 +46,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *   std::vector<cbt::Row> rows = {cbt::Row("r1", {}), cbt::Row("r2", {})};
  *
  *   auto mock = std::shared_ptr<cbtm::MockDataConnection>();
- *   EXPECT_CALL(*mock, ReadRows)
+ *   EXPECT_CALL(*mock, ReadRowsFull)
  *       .WillOnce(Return(cbtm::MakeRowReader(rows)));
  *
  *   auto table = cbt::Table(mock);

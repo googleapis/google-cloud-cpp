@@ -227,7 +227,7 @@ TEST(DataTracingConnection, ReadRows) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockDataConnection>();
-  EXPECT_CALL(*mock, ReadRows).WillOnce([] {
+  EXPECT_CALL(*mock, ReadRowsFull).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return bigtable_mocks::MakeRowReader({}, internal::AbortedError("fail"));
   });
@@ -235,6 +235,33 @@ TEST(DataTracingConnection, ReadRows) {
   auto under_test = MakeDataTracingConnection(mock);
   auto reader = under_test->ReadRows(kTableName, bigtable::RowSet(), 0,
                                      bigtable::Filter::PassAllFilter());
+  auto it = reader.begin();
+  EXPECT_THAT(*it, StatusIs(StatusCode::kAborted));
+  EXPECT_EQ(++it, reader.end());
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("bigtable::Table::ReadRows"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+}
+
+TEST(DataTracingConnection, ReadRowsFull) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadRowsFull).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return bigtable_mocks::MakeRowReader({}, internal::AbortedError("fail"));
+  });
+
+  auto under_test = MakeDataTracingConnection(mock);
+  auto reader = under_test->ReadRowsFull(
+      bigtable::ReadRowsParams{kTableName, "app-profile-id", bigtable::RowSet(),
+                               0, bigtable::Filter::PassAllFilter()});
   auto it = reader.begin();
   EXPECT_THAT(*it, StatusIs(StatusCode::kAborted));
   EXPECT_EQ(++it, reader.end());

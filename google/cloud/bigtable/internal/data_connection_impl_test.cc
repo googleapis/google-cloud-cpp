@@ -704,6 +704,30 @@ TEST(DataConnectionTest, ReadRows) {
   EXPECT_EQ(reader.begin(), reader.end());
 }
 
+// The DefaultRowReader is tested extensively in `default_row_reader_test.cc`.
+// In this test, we just verify that the configuration is passed along.
+TEST(DataConnectionTest, ReadRowsFull) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([](auto, google::bigtable::v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ(42, request.rows_limit());
+        EXPECT_THAT(request, HasTestRowSet());
+        EXPECT_THAT(request.filter(), IsTestFilter());
+
+        auto stream = std::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  auto reader = conn->ReadRowsFull(bigtable::ReadRowsParams{
+      kTableName, kAppProfile, TestRowSet(), 42, TestFilter()});
+  EXPECT_EQ(reader.begin(), reader.end());
+}
+
 TEST(DataConnectionTest, ReadRowEmpty) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadRows)
