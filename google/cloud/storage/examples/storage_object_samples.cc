@@ -585,7 +585,7 @@ google::cloud::storage::Client StorageRetries(std::vector<std::string> const&) {
   // than 1 minute.
   options.set<gcs::BackoffPolicyOption>(
       gcs::ExponentialBackoffPolicy(
-          /*minimum_delay=*/std::chrono::seconds(1),
+          /*initial_delay=*/std::chrono::seconds(1),
           /*maximum_delay=*/std::chrono::minutes(1),
           /*scaling=*/3.0)
           .clone());

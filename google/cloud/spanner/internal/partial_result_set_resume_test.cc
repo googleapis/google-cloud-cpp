@@ -62,7 +62,7 @@ std::unique_ptr<PartialResultSetReader> MakeTestResume(
       std::move(factory), idempotency,
       spanner::LimitedErrorCountRetryPolicy(/*maximum_failures=*/2).clone(),
       spanner::ExponentialBackoffPolicy(
-          /*minimum_delay=*/std::chrono::microseconds(1),
+          /*initial_delay=*/std::chrono::microseconds(1),
           /*maximum_delay=*/std::chrono::microseconds(1),
           /*scaling=*/2.0)
           .clone());

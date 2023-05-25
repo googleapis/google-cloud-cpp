@@ -56,7 +56,7 @@ std::shared_ptr<GoldenThingAdminConnection> CreateTestingConnection(
   GoldenThingAdminLimitedErrorCountRetryPolicy retry(
       /*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
-      /*minimum_delay=*/std::chrono::microseconds(1),
+      /*initial_delay=*/std::chrono::microseconds(1),
       /*maximum_delay=*/std::chrono::microseconds(1),
       /*scaling=*/2.0);
   GenericPollingPolicy<GoldenThingAdminLimitedErrorCountRetryPolicy,

@@ -133,21 +133,21 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
       : ExponentialBackoffPolicy(
             minimum_delay,
             /*initial_delay_upper_bound=*/minimum_delay * scaling,
-            maximum_delay, scaling) {}
+            maximum_delay, /*scaling_lower_bound=*/scaling,
+            /*scaling_upper_bound=*/scaling) {}
 
   /**
-   * Constructor for an exponential backoff policy with an initial delay upper
-   * bound and minimum delay.
+   * Constructor for an exponential backoff policy that supports full jitter.
    *
-   * Define the initial delay upper bound, minimum delay, maximum delay, and
-   * scaling factor for an instance of the policy. While the constructor accepts
-   * `std::chrono::duration` objects at any resolution, the data is kept
-   * internally in microseconds. Sub-microsecond delays seem unnecessarily
-   * precise for this application.
+   * Define the initial delay upper bound, minimum delay, maximum delay, lower
+   * bound scaling factor, and upper bound scaling factor for an instance of the
+   * policy. While the constructor accepts `std::chrono::duration` objects at
+   * any resolution, the data is kept internally in microseconds.
+   * Sub-microsecond delays seem unnecessarily precise for this application.
    *
    * @code
    * using namespace std::chrono_literals; // C++14
-   * auto r1 = ExponentialBackoffPolicy<S,T>(0ms, 10ms, 500ms, 1.618);
+   * auto r1 = ExponentialBackoffPolicy<S,T>(0ms, 10ms, 500ms, 1.0, 1.618);
    * @endcode
    *
    * @param minimum_delay the minimum value for the delay between operations.
@@ -155,7 +155,10 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    *     the first (unsuccessful) operation.
    * @param minimum_delay the minimum value for the delay between operations.
    * @param maximum_delay the maximum value for the delay between operations.
-   * @param scaling how fast does the delay increase between iterations.
+   * @param scaling_lower_bound how fast the delay's lower bound increases
+   *     between iterations.
+   * @param scaling_lower_bound how fast the delay's upper bound increases
+   *     between iterations.
    *
    * @tparam Rep1 a placeholder to match the Rep tparam for
    *     @p minimum_delay's type. The semantics of this template
@@ -183,19 +186,30 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   ExponentialBackoffPolicy(
       std::chrono::duration<Rep1, Period1> minimum_delay,
       std::chrono::duration<Rep2, Period2> initial_delay_upper_bound,
-      std::chrono::duration<Rep3, Period3> maximum_delay, double scaling)
+      std::chrono::duration<Rep3, Period3> maximum_delay,
+      double scaling_lower_bound, double scaling_upper_bound)
       : minimum_delay_(minimum_delay),
         initial_delay_upper_bound_(initial_delay_upper_bound),
         maximum_delay_(maximum_delay),
-        scaling_(scaling),
+        scaling_lower_bound_(scaling_lower_bound),
+        scaling_upper_bound_(scaling_upper_bound),
+        current_delay_start_(minimum_delay_),
         current_delay_end_(initial_delay_upper_bound_) {
     if (initial_delay_upper_bound_ < minimum_delay_) {
       google::cloud::internal::ThrowInvalidArgument(
           "initial delay upper bound must be >= minimum delay");
     }
-    if (scaling_ <= 1.0) {
+    if (scaling_lower_bound_ < 1.0) {
       google::cloud::internal::ThrowInvalidArgument(
-          "scaling factor must be > 1.0");
+          "scaling lower bound factor must be >= 1.0");
+    }
+    if (scaling_upper_bound_ <= 1.0) {
+      google::cloud::internal::ThrowInvalidArgument(
+          "scaling upper bound factor must be > 1.0");
+    }
+    if (scaling_lower_bound > scaling_upper_bound) {
+      google::cloud::internal::ThrowInvalidArgument(
+          "scaling lower bound must be <= scaling upper bound");
     }
   }
 
@@ -207,7 +221,9 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
       : minimum_delay_(rhs.minimum_delay_),
         initial_delay_upper_bound_(rhs.initial_delay_upper_bound_),
         maximum_delay_(rhs.maximum_delay_),
-        scaling_(rhs.scaling_),
+        scaling_lower_bound_(rhs.scaling_lower_bound_),
+        scaling_upper_bound_(rhs.scaling_upper_bound_),
+        current_delay_start_(rhs.current_delay_start_),
         current_delay_end_(rhs.current_delay_end_) {}
 
   std::unique_ptr<BackoffPolicy> clone() const override;
@@ -218,7 +234,9 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   DoubleMicroseconds minimum_delay_;
   DoubleMicroseconds initial_delay_upper_bound_;
   DoubleMicroseconds maximum_delay_;
-  double scaling_;
+  double scaling_lower_bound_;
+  double scaling_upper_bound_;
+  DoubleMicroseconds current_delay_start_;
   DoubleMicroseconds current_delay_end_;
   absl::optional<DefaultPRNG> generator_;
 };

@@ -217,7 +217,7 @@ std::unique_ptr<TransactionRerunPolicy> RerunPolicyForTesting() {
 
 std::unique_ptr<BackoffPolicy> BackoffPolicyForTesting() {
   return ExponentialBackoffPolicy(
-             /*minimum_delay=*/std::chrono::microseconds(1),
+             /*initial_delay=*/std::chrono::microseconds(1),
              /*maximum_delay=*/std::chrono::microseconds(1), /*scaling=*/2.0)
       .clone();
 }

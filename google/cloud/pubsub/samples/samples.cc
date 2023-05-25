@@ -1612,7 +1612,7 @@ void PublisherRetrySettings(std::vector<std::string> const& argv) {
                     .clone())
             .set<pubsub::BackoffPolicyOption>(
                 pubsub::ExponentialBackoffPolicy(
-                    /*minimum_delay=*/std::chrono::milliseconds(200),
+                    /*initial_delay=*/std::chrono::milliseconds(200),
                     /*maximum_delay=*/std::chrono::seconds(45),
                     /*scaling=*/2.0)
                     .clone())));
@@ -1656,7 +1656,7 @@ void PublisherDisableRetries(std::vector<std::string> const& argv) {
                     .clone())
             .set<pubsub::BackoffPolicyOption>(
                 pubsub::ExponentialBackoffPolicy(
-                    /*minimum_delay=*/std::chrono::milliseconds(200),
+                    /*initial_delay=*/std::chrono::milliseconds(200),
                     /*maximum_delay=*/std::chrono::seconds(45),
                     /*scaling=*/2.0)
                     .clone())));
@@ -1934,7 +1934,7 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
                     .clone())
             .set<pubsub::BackoffPolicyOption>(
                 pubsub::ExponentialBackoffPolicy(
-                    /*minimum_delay=*/std::chrono::milliseconds(200),
+                    /*initial_delay=*/std::chrono::milliseconds(200),
                     /*maximum_delay=*/std::chrono::seconds(10),
                     /*scaling=*/2.0)
                     .clone())));

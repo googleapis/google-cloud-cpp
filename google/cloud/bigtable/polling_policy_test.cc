@@ -84,27 +84,27 @@ TEST(GenericPollingPolicy, Clone) {
   EXPECT_TRUE(original.OnFailure(TransientError()));
   EXPECT_FALSE(original.OnFailure(TransientError()));
   EXPECT_GE(10_ms, original.WaitPeriod());
-  EXPECT_GE(20_ms, original.WaitPeriod());
+  EXPECT_LE(10_ms, original.WaitPeriod());
 
   // Ensure the initial state of the policy is cloned, not the current state.
   auto clone = original.clone();
   EXPECT_TRUE(clone->OnFailure(TransientError()));
   EXPECT_FALSE(clone->OnFailure(TransientError()));
   EXPECT_GE(10_ms, clone->WaitPeriod());
-  EXPECT_GE(20_ms, clone->WaitPeriod());
+  EXPECT_LE(10_ms, clone->WaitPeriod());
 
   auto common = bigtable_internal::MakeCommonPollingPolicy(original.clone());
   EXPECT_TRUE(common->OnFailure(TransientError()));
   EXPECT_FALSE(common->OnFailure(TransientError()));
   EXPECT_GE(10_ms, common->WaitPeriod());
-  EXPECT_GE(20_ms, common->WaitPeriod());
+  EXPECT_LE(10_ms, common->WaitPeriod());
 
   // Ensure the initial state of the policy is cloned, not the current state.
   auto common_clone = common->clone();
   EXPECT_TRUE(common_clone->OnFailure(TransientError()));
   EXPECT_FALSE(common_clone->OnFailure(TransientError()));
   EXPECT_GE(10_ms, common_clone->WaitPeriod());
-  EXPECT_GE(20_ms, common_clone->WaitPeriod());
+  EXPECT_LE(10_ms, common_clone->WaitPeriod());
 }
 
 /// @test Verify that non-retryable errors cause an immediate failure.
@@ -139,11 +139,11 @@ TEST(GenericPollingPolicy, WaitPeriod) {
   ExponentialBackoffPolicy backoff(10_ms, 50_ms);
   GenericPollingPolicy<> tested(retry, backoff);
   EXPECT_GE(10_ms, tested.WaitPeriod());
-  EXPECT_GE(20_ms, tested.WaitPeriod());
+  EXPECT_LE(10_ms, tested.WaitPeriod());
 
   auto common = bigtable_internal::MakeCommonPollingPolicy(tested.clone());
   EXPECT_GE(10_ms, common->WaitPeriod());
-  EXPECT_GE(20_ms, common->WaitPeriod());
+  EXPECT_LE(10_ms, common->WaitPeriod());
 }
 
 }  // anonymous namespace

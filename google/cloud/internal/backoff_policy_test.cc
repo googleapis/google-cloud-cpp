@@ -32,16 +32,23 @@ TEST(ExponentialBackoffPolicy, Simple) {
   EXPECT_LE(ms(10), delay);
   EXPECT_GE(ms(20), delay);
   delay = tested.OnCompletion();
-  EXPECT_LE(ms(10), delay);
+  EXPECT_LE(ms(20), delay);
   EXPECT_GE(ms(40), delay);
   delay = tested.OnCompletion();
-  EXPECT_LE(ms(10), delay);
+  EXPECT_LE(ms(40), delay);
+  EXPECT_GE(ms(80), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(50), delay);
+  EXPECT_GE(ms(100), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(50), delay);
   EXPECT_GE(ms(100), delay);
 }
 
-/// @test Verify a full jitter policy, where the minimum delay is set to 0.
+/// @test Verify a full jitter policy, where the delay's lower bound is 0
+/// and does not grow.
 TEST(ExponentialBackoffPolicy, VerifyFullJitterPolicy) {
-  ExponentialBackoffPolicy tested(ms(0), ms(10), ms(50), 2.0);
+  ExponentialBackoffPolicy tested(ms(0), ms(10), ms(50), 1.0, 2.0);
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(0), delay);
@@ -54,6 +61,31 @@ TEST(ExponentialBackoffPolicy, VerifyFullJitterPolicy) {
   EXPECT_GE(ms(40), delay);
   delay = tested.OnCompletion();
   EXPECT_LE(ms(0), delay);
+  EXPECT_GE(ms(50), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(0), delay);
+  EXPECT_GE(ms(50), delay);
+}
+
+/// @test Verify a minimum jitter policy, where the delay's lower bound is
+/// nonzero and does not grow.
+TEST(ExponentialBackoffPolicy, VerifyMinJitterPolicy) {
+  ExponentialBackoffPolicy tested(ms(5), ms(10), ms(50), 1.0, 2.0);
+
+  auto delay = tested.OnCompletion();
+  EXPECT_LE(ms(5), delay);
+  EXPECT_GE(ms(10), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(5), delay);
+  EXPECT_GE(ms(20), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(5), delay);
+  EXPECT_GE(ms(40), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(5), delay);
+  EXPECT_GE(ms(50), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(5), delay);
   EXPECT_GE(ms(50), delay);
 }
 
@@ -78,8 +110,32 @@ TEST(ExponentialBackoffPolicy, DetermineRangeUsingScalingFactor) {
   EXPECT_GE(ms(1001), delay);
 }
 
-/// @test Verify that the scaling factor is validated.
-TEST(ExponentialBackoffPolicy, ValidateScaling) {
+/// @test Verify the initial delay upper bound is validated.
+TEST(ExponentialBackoffPolicy, ValidateInitialDelayUpperBound) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(ExponentialBackoffPolicy(ms(10), ms(9), ms(50), 2.0, 2.0),
+               std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      ExponentialBackoffPolicy(ms(10), ms(9), ms(50), 2.0, 2.0),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/// @test Verify that the scaling lower bound factor is validated.
+TEST(ExponentialBackoffPolicy, ValidateScalingLowerBound) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(ExponentialBackoffPolicy(ms(10), ms(10), ms(50), 0.99, 2.0),
+               std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      ExponentialBackoffPolicy(ms(10), ms(10), ms(50), 0.99, 2.0),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+/// @test Verify that the scaling upper bound factor is validated.
+TEST(ExponentialBackoffPolicy, ValidateScalingUpperBound) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(ExponentialBackoffPolicy(ms(10), ms(50), 0.0),
                std::invalid_argument);
@@ -93,14 +149,15 @@ TEST(ExponentialBackoffPolicy, ValidateScaling) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-/// @test Verify the initial delay upper bound is validated.
-TEST(ExponentialBackoffPolicy, ValidateInitialDelayUpperBound) {
+/// @test Verify that the scaling lower bound is less than the scaling upper
+/// bound factor.
+TEST(ExponentialBackoffPolicy, ValidateScalingFactors) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ExponentialBackoffPolicy(ms(10), ms(9), ms(50), 2.0),
+  EXPECT_THROW(ExponentialBackoffPolicy(ms(10), ms(10), ms(50), 1.01, 1.0),
                std::invalid_argument);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
-      ExponentialBackoffPolicy(ms(10), ms(9), ms(50), 2.0),
+      ExponentialBackoffPolicy(ms(10), ms(10), ms(50), 1.01, 1.0),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
@@ -113,10 +170,10 @@ TEST(ExponentialBackoffPolicy, DifferentParameters) {
   EXPECT_LE(ms(100), delay) << "delay=" << delay.count() << "ms";
   EXPECT_GE(ms(150), delay) << "delay=" << delay.count() << "ms";
   delay = tested.OnCompletion();
-  EXPECT_LE(ms(100), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_LE(ms(150), delay) << "delay=" << delay.count() << "ms";
   EXPECT_GE(ms(225), delay) << "delay=" << delay.count() << "ms";
   delay = tested.OnCompletion();
-  EXPECT_LE(ms(100), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_LE(ms(225), delay) << "delay=" << delay.count() << "ms";
   EXPECT_GE(ms(338), delay) << "delay=" << delay.count() << "ms";
 }
 
@@ -129,13 +186,13 @@ TEST(ExponentialBackoffPolicy, Clone) {
   EXPECT_LE(ms(10), delay);
   EXPECT_GE(ms(20), delay);
   delay = tested->OnCompletion();
-  EXPECT_LE(ms(10), delay);
+  EXPECT_LE(ms(20), delay);
   EXPECT_GE(ms(40), delay);
   delay = tested->OnCompletion();
-  EXPECT_LE(ms(10), delay);
+  EXPECT_LE(ms(25), delay);
   EXPECT_GE(ms(50), delay);
   delay = tested->OnCompletion();
-  EXPECT_LE(ms(10), delay);
+  EXPECT_LE(ms(25), delay);
   EXPECT_GE(ms(50), delay);
 
   // Ensure the initial state of the policy is cloned, not the current state.
