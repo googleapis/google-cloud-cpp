@@ -32,7 +32,6 @@ using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::testing::HasSubstr;
-using ::testing::Return;
 
 char const* const kSuccessServiceProto =
     "syntax = \"proto3\";\n"
