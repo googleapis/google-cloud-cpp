@@ -39,9 +39,9 @@ char const* const kSuccessServiceProto =
     "service SuccessService {\n"
     "}\n";
 
-class GeneratorTest : public ::testing::Test {
+class MakeGeneratorsTest : public ::testing::Test {
  public:
-  GeneratorTest()
+  MakeGeneratorsTest()
       : source_tree_(std::map<std::string, std::string>{
             {std::string("google/foo/v1/service.proto"),
              kSuccessServiceProto}}),
@@ -71,7 +71,7 @@ class GeneratorTest : public ::testing::Test {
   std::unique_ptr<generator_testing::MockGeneratorContext> context_;
 };
 
-TEST_F(GeneratorTest, GenerateServicesSuccess) {
+TEST_F(MakeGeneratorsTest, GenerateServicesSuccess) {
   int constexpr kNumMockOutputStreams = 27;
   std::vector<std::unique_ptr<generator_testing::MockZeroCopyOutputStream>>
       mock_outputs(kNumMockOutputStreams);
