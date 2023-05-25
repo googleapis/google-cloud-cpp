@@ -226,10 +226,8 @@ ci/cloudbuild/build.sh -t checkers-pr
 For new GA libraries you need to create the API baseline.
 
 ```
-ci/cloudbuild/build.sh -t check-api-pr
-git add ci/abi-dumps/google_cloud_cpp_${library}.expected.abi.dump.gz
-git commit -m"Add API baseline" ci/abi-dumps/google_cloud_cpp_${library}.expected.abi.dump.gz
-git restore ci/abi-dumps/
+env GOOGLE_CLOUD_CPP_CHECK_API=${library} ci/cloudbuild/build.sh -t check-api-pr
+git commit -m"Add API baseline" ci/abi-dumps/
 ```
 
 ## Verify everything compiles
