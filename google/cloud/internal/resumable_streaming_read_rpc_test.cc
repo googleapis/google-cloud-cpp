@@ -91,7 +91,7 @@ std::unique_ptr<RetryPolicyForTest> DefaultRetryPolicy() {
 
 std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
   using us = std::chrono::microseconds;
-  return ExponentialBackoffPolicy(/*minimum_delay=*/us(10),
+  return ExponentialBackoffPolicy(/*initial_delay=*/us(10),
                                   /*maximum_delay=*/us(40), /*scaling=*/2.0)
       .clone();
 }

@@ -49,7 +49,7 @@ std::shared_ptr<InstanceAdminConnection> MakeLimitedRetryConnection(
     std::shared_ptr<spanner_testing::MockInstanceAdminStub> mock) {
   LimitedErrorCountRetryPolicy retry(/*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
-      /*minimum_delay=*/std::chrono::microseconds(1),
+      /*initial_delay=*/std::chrono::microseconds(1),
       /*maximum_delay=*/std::chrono::microseconds(1),
       /*scaling=*/2.0);
   GenericPollingPolicy<LimitedErrorCountRetryPolicy> polling(retry, backoff);

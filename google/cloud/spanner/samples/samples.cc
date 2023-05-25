@@ -3513,7 +3513,7 @@ void CustomInstanceAdminPolicies(std::vector<std::string> argv) {
     //   https://en.wikipedia.org/wiki/Exponential_backoff
     //   https://cloud.google.com/storage/docs/exponential-backoff
     auto backoff_policy = spanner::ExponentialBackoffPolicy(
-                              /*minimum_delay=*/std::chrono::seconds(2),
+                              /*initial_delay=*/std::chrono::seconds(2),
                               /*maximum_delay=*/std::chrono::minutes(10),
                               /*scaling=*/2.0)
                               .clone();
@@ -3528,7 +3528,7 @@ void CustomInstanceAdminPolicies(std::vector<std::string> argv) {
             spanner::LimitedTimeRetryPolicy(
                 /*maximum_duration=*/std::chrono::minutes(45)),
             spanner::ExponentialBackoffPolicy(
-                /*minimum_delay=*/std::chrono::seconds(10),
+                /*initial_delay=*/std::chrono::seconds(10),
                 /*maximum_delay=*/std::chrono::minutes(2),
                 /*scaling=*/4.0))
             .clone();
@@ -3577,7 +3577,7 @@ void CustomDatabaseAdminPolicies(std::vector<std::string> argv) {
     //   https://en.wikipedia.org/wiki/Exponential_backoff
     //   https://cloud.google.com/storage/docs/exponential-backoff
     auto backoff_policy = spanner::ExponentialBackoffPolicy(
-                              /*minimum_delay=*/std::chrono::seconds(2),
+                              /*initial_delay=*/std::chrono::seconds(2),
                               /*maximum_delay=*/std::chrono::minutes(10),
                               /*scaling=*/2.0)
                               .clone();
@@ -3592,7 +3592,7 @@ void CustomDatabaseAdminPolicies(std::vector<std::string> argv) {
             spanner::LimitedTimeRetryPolicy(
                 /*maximum_duration=*/std::chrono::minutes(45)),
             spanner::ExponentialBackoffPolicy(
-                /*minimum_delay=*/std::chrono::seconds(10),
+                /*initial_delay=*/std::chrono::seconds(10),
                 /*maximum_delay=*/std::chrono::minutes(2),
                 /*scaling=*/4.0))
             .clone();
