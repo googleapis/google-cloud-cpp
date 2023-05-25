@@ -21,7 +21,7 @@ set(DOXYGEN_PROJECT_BRIEF
     "Provides exporters for sending telemetry to Google Cloud services in C++.")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "otel_internal")
-set(DOXYGEN_EXAMPLE_PATH "")
+set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 
 include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("opentelemetry" DEPENDS cloud-docs

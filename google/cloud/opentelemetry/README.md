@@ -1,4 +1,14 @@
-# C++ OpenTelemetry Exporters for Google Cloud Platform services.
+# Google Cloud C++ OpenTelemetry Exporters
+
+This directory contains components to export [traces] captured with
+[OpenTelemetry] to [Cloud Trace]. Traces are a form of telemetry where
+calls across multiple distributed systems can be collected in a centralized
+view, showing the sequence of calls and their latency. Cloud Trace can provide
+such views of your system calls.
+
+The C++ client libraries are already instrumented to collect traces. You can
+enable the collection and export of traces with minimal changes to your
+application. It is not necessary to instrument your application too.
 
 :construction:
 
@@ -7,9 +17,8 @@ This library is **experimental**. Its APIs are subject to change without notice.
 ## Quickstart
 
 The [quickstart/](quickstart/README.md) directory contains a minimal environment
-to get started using this client library in a larger project. The following
-"Hello World" program is used in this quickstart, and should give you a taste of
-this library.
+to get started exporting traces from the C++ client libraries. The following
+program is used in this quickstart.
 
 <!-- inject-quickstart-start -->
 
@@ -69,31 +78,19 @@ int main(int argc, char* argv[]) {
 
 <!-- inject-quickstart-end -->
 
-## Build and Install
-
-- Packaging maintainers or developers who prefer to install the library in a
-  fixed directory (such as `/usr/local` or `/opt`) should consult the
-  [packaging guide](/doc/packaging.md).
-- Developers who prefer using a package manager such as
-  [vcpkg](https://vcpkg.io), or [Conda](https://conda.io), should follow the
-  instructions for their package manager.
-- Developers wanting to use the libraries as part of a larger CMake or Bazel
-  project should consult the [quickstart guides](#quickstart) for the library
-  or libraries they want to use.
-- Developers wanting to compile the library just to run some examples or
-  tests should read the project's top-level
-  [README](/README.md#building-and-installing).
-- Contributors and developers to `google-cloud-cpp` should consult the guide to
-  [set up a development workstation][howto-setup-dev-workstation].
-
 ## More Information
 
 - If you want to learn more about the [OpenTelemetry] for C++ SDKs, consult
   their [online documentation](https://opentelemetry-cpp.readthedocs.io/).
-- [Reference doxygen documentation][doxygen-link] for each release of this client library
+- [Reference doxygen documentation][doxygen-link] for each release of this library
 - Detailed header comments in our [public `.h`][source-link] files
+- The [Setting up your development environment] guide describes how to set up
+  a C++ development environment in various platforms, including the Google Cloud
+  C++ client libraries.
 
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/
-[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
+[cloud trace]: https://cloud.google.com/trace
+[doxygen-link]: https://googleapis.dev/cpp/google-cloud-opentelemetry/latest/
 [opentelemetry]: https://opentelemetry.io/
-[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storage
+[setting up your development environment]: https://cloud.google.com/cpp/docs/setup
+[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/opentelemetry
+[traces]: https://opentelemetry.io/docs/concepts/observability-primer/#distributed-traces
