@@ -3490,7 +3490,7 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
     if (!commit_result) throw std::move(commit_result).status();
     std::cout << "Rows inserted: " << rows_inserted;
   }
-  //! [custom-retry-policy] [START spanner_set_custom_timeout_and_retry]
+  //! [custom-retry-policy] [END spanner_set_custom_timeout_and_retry]
   (argv[0], argv[1], argv[2]);
 }
 
