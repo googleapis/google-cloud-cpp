@@ -79,6 +79,8 @@ add_library(
     internal/logging_decorator_rest_generator.h
     internal/longrunning.cc
     internal/longrunning.h
+    internal/make_generators.cc
+    internal/make_generators.h
     internal/metadata_decorator_generator.cc
     internal/metadata_decorator_generator.h
     internal/metadata_decorator_rest_generator.cc

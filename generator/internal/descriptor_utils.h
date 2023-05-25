@@ -53,15 +53,6 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     VarsDictionary const& service_vars);
 
 /**
- * Creates and initializes the collection of ClassGenerators necessary to
- * generate all code for the given service.
- */
-std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
-    google::protobuf::ServiceDescriptor const* service,
-    google::protobuf::compiler::GeneratorContext* context,
-    std::vector<std::pair<std::string, std::string>> const& vars);
-
-/**
  * Determines which `MethodPattern` to use from patterns for the given method
  * and invokes the provided printer with the `PredicatedFragment`s in patterns
  * with the substitution data in vars.
