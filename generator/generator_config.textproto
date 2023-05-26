@@ -432,6 +432,31 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Compute
+discovery_products {
+  discovery_document_url: "file:///workspace/generator/discovery-compute_public_google_rest_v1.json"
+  operation_services: ["GlobalOperations", "GlobalOrganizationOperations", "RegionOperations", "ZoneOperations"]
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/disks/v1/disks.proto"
+    product_path: "google/cloud/compute/disks/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/zone_operations/v1/zone_operations.proto"
+    product_path: "google/cloud/compute/zone_operations/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+}
 # Confidential Computing
 service {
   service_proto_path: "google/cloud/confidentialcomputing/v1/service.proto"
