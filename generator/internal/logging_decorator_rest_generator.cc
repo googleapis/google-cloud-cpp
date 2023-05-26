@@ -51,10 +51,11 @@ Status LoggingDecoratorRestGenerator::GenerateHeader() {
       {vars("stub_rest_header_path"), "google/cloud/internal/rest_context.h",
        "google/cloud/future.h", "google/cloud/tracing_options.h",
        "google/cloud/version.h"});
-  HeaderSystemIncludes(
-      {vars("proto_header_path"),
-       HasLongrunningMethod() ? "google/longrunning/operations.pb.h" : "",
-       "memory", "set", "string"});
+  HeaderSystemIncludes({vars("proto_header_path"),
+                        HasLongrunningMethod()
+                            ? vars("longrunning_operation_include_header")
+                            : "",
+                        "memory", "set", "string"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -74,7 +75,7 @@ class $logging_rest_class_name$ : public $stub_rest_class_name$ {
     if (!HasHttpAnnotation(method)) continue;
     if (IsLongrunningOperation(method)) {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  future<StatusOr<google::longrunning::Operation>> Async$method_name$(
+  future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       $request_type$ const& request) override;
@@ -117,18 +118,17 @@ class $logging_rest_class_name$ : public $stub_rest_class_name$ {
   }
 
   if (HasLongrunningMethod()) {
-    // long running operation support methods
     HeaderPrint(
         R"""(
-  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+  future<StatusOr<$longrunning_response_type$>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::longrunning::GetOperationRequest const& request) override;
+      $longrunning_get_operation_request_type$ const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::longrunning::CancelOperationRequest const& request) override;
+      $longrunning_cancel_operation_request_type$ const& request) override;
 )""");
   }
 
@@ -179,7 +179,7 @@ $logging_rest_class_name$::$logging_rest_class_name$(
     if (!HasHttpAnnotation(method)) continue;
     if (IsLongrunningOperation(method)) {
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-future<StatusOr<google::longrunning::Operation>>
+future<StatusOr<$response_type$>>
 $logging_rest_class_name$::Async$method_name$(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -265,17 +265,17 @@ $logging_rest_class_name$::Async$method_name$(
   }
 
   if (HasLongrunningMethod()) {
-    // long running operation support methods
-    CcPrint(R"""(
-future<StatusOr<google::longrunning::Operation>>
+    CcPrint(
+        R"""(
+future<StatusOr<$longrunning_response_type$>>
 $logging_rest_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::longrunning::GetOperationRequest const& request) {
+    $longrunning_get_operation_request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::longrunning::GetOperationRequest const& request) {
+             $longrunning_get_operation_request_type$ const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -285,11 +285,11 @@ future<Status>
 $logging_rest_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::longrunning::CancelOperationRequest const& request) {
+    $longrunning_cancel_operation_request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::longrunning::CancelOperationRequest const& request) {
+             $longrunning_cancel_operation_request_type$ const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);

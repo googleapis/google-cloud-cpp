@@ -160,6 +160,10 @@ void SetLongrunningOperationServiceVars(
           "google::longrunning::GetOperationRequest";
       service_vars["longrunning_cancel_operation_request_type"] =
           "google::longrunning::CancelOperationRequest";
+      service_vars["longrunning_get_operation_path"] =
+          R"""(absl::StrCat("/v1/", request.name()))""";
+      service_vars["longrunning_cancel_operation_path"] =
+          R"""(absl::StrCat("/v1/", request.name(), ":cancel"))""";
       return;
     }
     if (!method->options()

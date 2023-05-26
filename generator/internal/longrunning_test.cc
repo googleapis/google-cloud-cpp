@@ -597,6 +597,13 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsGRPC) {
   EXPECT_THAT(vars,
               Contains(Pair("longrunning_cancel_operation_request_type",
                             "google::longrunning::CancelOperationRequest")));
+  EXPECT_THAT(vars,
+              Contains(Pair("longrunning_get_operation_path",
+                            R"""(absl::StrCat("/v1/", request.name()))""")));
+  EXPECT_THAT(
+      vars,
+      Contains(Pair("longrunning_cancel_operation_path",
+                    R"""(absl::StrCat("/v1/", request.name(), ":cancel"))""")));
 }
 
 TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCGlobal) {
