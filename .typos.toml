@@ -1,5 +1,18 @@
+[default.extend-words]
+# TODO(11736): These typos appear in the compute discovery json. It would be
+# best to get them fixed at the source.
+"chosing"="chosing"
+"inferrence"="inferrence"
+"overriden"="overriden"
+"prority"="prority"
+"reffering"="reffering"
+"splitted"="splitted"
+"speficied"="speficied"
+"wieghted"="wieghted"
 [files]
 extend-exclude = [
+    # discovery json
+    "generator/discovery-compute_public_google_rest_v1.json",
     # Testing input file
     "google/cloud/testing_util/rest_testing_large_json.json",
     # Test files
