@@ -40,14 +40,11 @@ std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
     generator_ = google::cloud::internal::MakeDefaultPRNG();
   }
 
-  if (current_delay_end_ >= maximum_delay_) {
-    // If the scaling lower bound does not grow, do not increase it.
-    if (scaling_lower_bound_ != 1) {
-      current_delay_start_ =
-          (std::max)(minimum_delay_, current_delay_end_ / scaling_upper_bound_);
-    }
-    current_delay_end_ = (std::min)(current_delay_end_, maximum_delay_);
+  if (current_delay_start_ >= (maximum_delay_ / scaling_upper_bound_)) {
+    current_delay_start_ =
+        (std::max)(minimum_delay_, maximum_delay_ / scaling_upper_bound_);
   }
+  current_delay_end_ = (std::min)(current_delay_end_, maximum_delay_);
 
   std::uniform_real_distribution<DoubleMicroseconds::rep> rng_distribution(
       current_delay_start_.count(), current_delay_end_.count());
