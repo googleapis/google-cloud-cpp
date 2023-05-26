@@ -4,9 +4,6 @@ This directory contains an idiomatic C++ client library for the
 [Compute Engine API][cloud-service-docs], a service to create challenges
 and verify attestation responses.
 
-While this library is **GA**, please note that the Google Cloud C++ client
-libraries do **not** follow [Semantic Versioning](https://semver.org/).
-
 ## Quickstart
 
 The [quickstart/](quickstart/README.md) directory contains a minimal environment
