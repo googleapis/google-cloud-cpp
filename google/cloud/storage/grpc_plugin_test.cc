@@ -82,7 +82,7 @@ TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
-  auto client = DefaultGrpcClient(Options{});
+  auto client = DefaultGrpcClient(TestOptions());
   auto const* const retry =
       dynamic_cast<RetryClient*>(ClientImplDetails::GetRawClient(client).get());
   ASSERT_THAT(retry, NotNull());
