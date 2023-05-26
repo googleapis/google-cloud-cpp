@@ -3453,8 +3453,9 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
     throw std::runtime_error(
         "custom-retry-policy <project-id> <instance-id> <database-id>");
   }
-  //! [custom-retry-policy]
+  //! [custom-retry-policy] [START spanner_set_custom_timeout_and_retry]
   namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::StatusOr;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& database_id) {
     // Use a truncated exponential backoff with jitter to wait between
@@ -3466,22 +3467,30 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
         google::cloud::Options{}
             .set<spanner::SpannerRetryPolicyOption>(
                 std::make_shared<spanner::LimitedTimeRetryPolicy>(
-                    /*maximum_duration=*/std::chrono::minutes(25)))
+                    /*maximum_duration=*/std::chrono::seconds(60)))
             .set<spanner::SpannerBackoffPolicyOption>(
                 std::make_shared<spanner::ExponentialBackoffPolicy>(
-                    /*initial_delay=*/std::chrono::seconds(2),
-                    /*maximum_delay=*/std::chrono::minutes(10),
+                    /*initial_delay=*/std::chrono::milliseconds(500),
+                    /*maximum_delay=*/std::chrono::seconds(64),
                     /*scaling=*/1.5))));
 
-    auto rows =
-        client.ExecuteQuery(spanner::SqlStatement("SELECT 'Hello World'"));
-
-    for (auto& row : spanner::StreamOf<std::tuple<std::string>>(rows)) {
-      if (!row) throw std::move(row).status();
-      std::cout << std::get<0>(*row) << "\n";
-    }
+    std::int64_t rows_inserted;
+    auto commit_result = client.Commit(
+        [&client, &rows_inserted](
+            spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
+          auto insert = client.ExecuteDml(
+              std::move(txn),
+              spanner::SqlStatement(
+                  "INSERT INTO Singers (SingerId, FirstName, LastName)"
+                  "  VALUES (20, 'George', 'Washington')"));
+          if (!insert) return std::move(insert).status();
+          rows_inserted = insert->RowsModified();
+          return spanner::Mutations{};
+        });
+    if (!commit_result) throw std::move(commit_result).status();
+    std::cout << "Rows inserted: " << rows_inserted;
   }
-  //! [custom-retry-policy]
+  //! [custom-retry-policy] [END spanner_set_custom_timeout_and_retry]
   (argv[0], argv[1], argv[2]);
 }
 
