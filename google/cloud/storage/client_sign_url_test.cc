@@ -29,6 +29,7 @@ namespace {
 
 using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
@@ -101,6 +102,7 @@ TEST_F(CreateSignedUrlTest, V2SignRemote) {
   auto client = ClientForMock();
   StatusOr<std::string> actual =
       client.CreateV2SignedUrl("GET", "test-bucket", "test-object",
+                               SigningAccount("test-only-invalid@example.com"),
                                Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_safe));
@@ -111,7 +113,9 @@ TEST_F(CreateSignedUrlTest, V2SignTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
       mock_, EXPECT_CALL(*mock_, SignBlob),
       [](Client& client) {
-        return client.CreateV2SignedUrl("GET", "test-bucket", "test-object")
+        return client
+            .CreateV2SignedUrl("GET", "test-bucket", "test-object",
+                               SigningAccount("test-only-invalid@example.com"))
             .status();
       },
       "SignBlob");
@@ -123,7 +127,9 @@ TEST_F(CreateSignedUrlTest, V2SignPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
       client, EXPECT_CALL(*mock_, SignBlob),
       [](Client& client) {
-        return client.CreateV2SignedUrl("GET", "test-bucket", "test-object")
+        return client
+            .CreateV2SignedUrl("GET", "test-bucket", "test-object",
+                               SigningAccount("test-only-invalid@example.com"))
             .status();
       },
       "SignBlob");
@@ -247,9 +253,19 @@ TEST_F(CreateSignedUrlTest, V4SignRemote) {
   auto client = ClientForMock();
   StatusOr<std::string> actual =
       client.CreateV4SignedUrl("GET", "test-bucket", "test-object",
+                               SigningAccount("test-only-invalid@example.com"),
                                Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_hex));
+}
+
+TEST_F(CreateSignedUrlTest, V4SignRemoteNoSigningEmail) {
+  EXPECT_CALL(*mock_, SignBlob).Times(0);
+  auto client = ClientForMock();
+  auto const actual = client.CreateV4SignedUrl(
+      "GET", "test-bucket", "test-object", SigningAccount(""));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("signing account cannot be empty")));
 }
 
 /// @test Verify that CreateV4SignedUrl() + SignBlob() respects retry policies.
@@ -257,7 +273,9 @@ TEST_F(CreateSignedUrlTest, V4SignTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
       mock_, EXPECT_CALL(*mock_, SignBlob),
       [](Client& client) {
-        return client.CreateV4SignedUrl("GET", "test-bucket", "test-object")
+        return client
+            .CreateV4SignedUrl("GET", "test-bucket", "test-object",
+                               SigningAccount("test-only-invalid@example.com"))
             .status();
       },
       "SignBlob");
@@ -269,7 +287,9 @@ TEST_F(CreateSignedUrlTest, V4SignPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
       client, EXPECT_CALL(*mock_, SignBlob),
       [](Client& client) {
-        return client.CreateV4SignedUrl("GET", "test-bucket", "test-object")
+        return client
+            .CreateV4SignedUrl("GET", "test-bucket", "test-object",
+                               SigningAccount("test-only-invalid@example.com"))
             .status();
       },
       "SignBlob");
