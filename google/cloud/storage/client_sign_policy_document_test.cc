@@ -137,6 +137,7 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignRemote) {
   auto client = ClientForMock();
   auto actual = client.CreateSignedPolicyDocument(
       CreatePolicyDocumentForTest(),
+      SigningAccount("test-only-invalid@example.com"),
       Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(actual->signature, expected_signed_blob);
@@ -148,7 +149,10 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
       mock_, EXPECT_CALL(*mock_, SignBlob),
       [](Client& client) {
-        return client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest())
+        return client
+            .CreateSignedPolicyDocument(
+                CreatePolicyDocumentForTest(),
+                SigningAccount("test-only-invalid@example.com"))
             .status();
       },
       "SignBlob");
@@ -161,7 +165,10 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
       client, EXPECT_CALL(*mock_, SignBlob),
       [](Client& client) {
-        return client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest())
+        return client
+            .CreateSignedPolicyDocument(
+                CreatePolicyDocumentForTest(),
+                SigningAccount("test-only-invalid@example.com"))
             .status();
       },
       "SignBlob");
