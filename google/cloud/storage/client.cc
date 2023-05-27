@@ -358,7 +358,6 @@ StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
     SigningAccount const& signing_account, std::string const& string_to_sign) {
   auto credentials = raw_client_->client_options().credentials();
 
-  std::string signing_account_email = SigningEmail(signing_account);
   // First try to sign locally.
   auto signed_blob = credentials->SignBlob(signing_account, string_to_sign);
   if (signed_blob) {
@@ -370,7 +369,8 @@ StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
   // credentials account. In either case, try to sign using the API.
   // In this case, however, we want to validate the signing account, because
   // otherwise the errors are almost impossible to troubleshoot.
-  if (signing_account_email.empty()) {
+  auto signing_email = SigningEmail(signing_account);
+  if (signing_email.empty()) {
     return google::cloud::internal::InvalidArgumentError(
         "signing account cannot be empty."
         " The client library was unable to fetch a valid signing email from"
@@ -379,7 +379,7 @@ StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
         GCP_ERROR_INFO());
   }
   internal::SignBlobRequest sign_request(
-      signing_account_email, internal::Base64Encode(string_to_sign), {});
+      std::move(signing_email), internal::Base64Encode(string_to_sign), {});
   auto response = raw_client_->SignBlob(sign_request);
   if (!response) return response.status();
   auto decoded = internal::Base64Decode(response->signed_blob);
