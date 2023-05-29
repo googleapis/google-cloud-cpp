@@ -32,51 +32,14 @@ namespace internal {
 
 template <typename Derived, typename... Options>
 class GenericHmacKeyRequest
-    : public GenericRequest<Derived, UserProject, Options...> {
+    : public GenericRequest<Derived, UserProject, OverrideDefaultProject,
+                            Options...> {
  public:
   GenericHmacKeyRequest() = default;
   explicit GenericHmacKeyRequest(std::string project_id)
       : project_id_(std::move(project_id)) {}
 
   std::string const& project_id() const { return project_id_; }
-
-  ///@{
-  /**
-   * @name Handle request options.
-   *
-   * Modify the default implementation from GenericRequest. We want to set the
-   * `project_id_` member variable when the option is `OverrideDefaultProject`.
-   */
-  template <typename H, typename... T>
-  Derived& set_multiple_options(H&& h, T&&... tail) {
-    set_option(std::forward<H>(h));
-    return set_multiple_options(std::forward<T>(tail)...);
-  }
-
-  Derived& set_multiple_options() { return *static_cast<Derived*>(this); }
-  template <typename... T>
-  Derived& set_multiple_options(google::cloud::Options const&&, T&&... tail) {
-    return set_multiple_options(std::forward<T>(tail)...);
-  }
-  template <typename... T>
-  Derived& set_multiple_options(google::cloud::Options const&, T&&... tail) {
-    return set_multiple_options(std::forward<T>(tail)...);
-  }
-  template <typename... T>
-  Derived& set_multiple_options(google::cloud::Options&&, T&&... tail) {
-    return set_multiple_options(std::forward<T>(tail)...);
-  }
-  template <typename... T>
-  Derived& set_multiple_options(google::cloud::Options&, T&&... tail) {
-    return set_multiple_options(std::forward<T>(tail)...);
-  }
-
-  using GenericRequest<Derived, UserProject, Options...>::set_option;
-  void set_option(OverrideDefaultProject const& o) {
-    if (o.has_value()) {
-      project_id_ = o.value();
-    }
-  }
 
  private:
   std::string project_id_;

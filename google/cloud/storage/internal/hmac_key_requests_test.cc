@@ -40,10 +40,10 @@ TEST(HmacKeyRequestsTest, ParseEmpty) {
 }
 
 TEST(HmacKeyRequestsTest, Create) {
-  CreateHmacKeyRequest request("", "test-service-account");
-  EXPECT_EQ("", request.project_id());
+  CreateHmacKeyRequest request("test-project-id", "test-service-account");
+  EXPECT_EQ("test-project-id", request.project_id());
   EXPECT_EQ("test-service-account", request.service_account());
-  request.set_multiple_options(OverrideDefaultProject("test-project-id"),
+  request.set_multiple_options(OverrideDefaultProject("override-project-id"),
                                UserIp("test-user-ip"));
   EXPECT_EQ("test-project-id", request.project_id());
 
@@ -123,12 +123,12 @@ TEST(HmacKeysRequestsTest, List) {
   request.set_multiple_options(ServiceAccountFilter("test-service-account"),
                                Deleted(true),
                                OverrideDefaultProject("override-project-id"));
-  EXPECT_EQ("override-project-id", request.project_id());
+  EXPECT_EQ("test-project-id", request.project_id());
 
   std::ostringstream os;
   os << request;
   std::string actual = os.str();
-  EXPECT_THAT(actual, HasSubstr("override-project-id"));
+  EXPECT_THAT(actual, HasSubstr("test-project-id"));
   EXPECT_THAT(actual, HasSubstr("serviceAccountEmail=test-service-account"));
   EXPECT_THAT(actual, HasSubstr("deleted=true"));
 }
@@ -208,12 +208,12 @@ TEST(HmacKeysRequestsTest, Delete) {
   EXPECT_EQ("test-access-id", request.access_id());
   request.set_multiple_options(UserIp("test-user-ip"),
                                OverrideDefaultProject("override-project-id"));
-  EXPECT_EQ("override-project-id", request.project_id());
+  EXPECT_EQ("test-project-id", request.project_id());
 
   std::ostringstream os;
   os << request;
   std::string actual = os.str();
-  EXPECT_THAT(actual, HasSubstr("override-project-id"));
+  EXPECT_THAT(actual, HasSubstr("test-project-id"));
   EXPECT_THAT(actual, HasSubstr("test-access-id"));
   EXPECT_THAT(actual, HasSubstr("test-user-ip"));
 }
@@ -224,12 +224,12 @@ TEST(HmacKeysRequestsTest, Get) {
   EXPECT_EQ("test-access-id", request.access_id());
   request.set_multiple_options(UserIp("test-user-ip"),
                                OverrideDefaultProject("override-project-id"));
-  EXPECT_EQ("override-project-id", request.project_id());
+  EXPECT_EQ("test-project-id", request.project_id());
 
   std::ostringstream os;
   os << request;
   std::string actual = os.str();
-  EXPECT_THAT(actual, HasSubstr("override-project-id"));
+  EXPECT_THAT(actual, HasSubstr("test-project-id"));
   EXPECT_THAT(actual, HasSubstr("test-access-id"));
   EXPECT_THAT(actual, HasSubstr("test-user-ip"));
 }
@@ -244,12 +244,12 @@ TEST(HmacKeysRequestsTest, Update) {
   EXPECT_EQ("XYZ=", request.resource().etag());
   request.set_multiple_options(UserIp("test-user-ip"),
                                OverrideDefaultProject("override-project-id"));
-  EXPECT_EQ("override-project-id", request.project_id());
+  EXPECT_EQ("test-project-id", request.project_id());
 
   std::ostringstream os;
   os << request;
   std::string actual = os.str();
-  EXPECT_THAT(actual, HasSubstr("override-project-id"));
+  EXPECT_THAT(actual, HasSubstr("test-project-id"));
   EXPECT_THAT(actual, HasSubstr("test-access-id"));
   EXPECT_THAT(actual, HasSubstr("test-user-ip"));
   EXPECT_THAT(actual, HasSubstr("INACTIVE"));

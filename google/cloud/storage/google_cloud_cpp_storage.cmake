@@ -166,6 +166,8 @@ add_library(
     internal/raw_client.cc
     internal/raw_client.h
     internal/raw_client_wrapper_utils.h
+    internal/request_project_id.cc
+    internal/request_project_id.h
     internal/rest_client.cc
     internal/rest_client.h
     internal/rest_object_read_source.cc
@@ -502,6 +504,7 @@ if (BUILD_TESTING)
         internal/parameter_pack_validation_test.cc
         internal/patch_builder_test.cc
         internal/policy_document_request_test.cc
+        internal/request_project_id_test.cc
         internal/rest_client_test.cc
         internal/rest_object_read_source_test.cc
         internal/rest_request_builder_test.cc
