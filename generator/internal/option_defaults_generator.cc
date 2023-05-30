@@ -153,8 +153,8 @@ Status OptionDefaultsGenerator::GenerateCc() {
     "  }\n"
     "  if (!options.has<$product_namespace$::$service_name$BackoffPolicyOption>()) {\n"
     "    options.set<$product_namespace$::$service_name$BackoffPolicyOption>(\n"
-    "        ExponentialBackoffPolicy(std::chrono::seconds(1),\n"
-    "            std::chrono::minutes(5), kBackoffScaling).clone());\n"
+    "        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),\n"
+    "            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());\n"
     "  }\n"},
    {[this]{return HasLongrunningMethod();},
     "  if (!options.has<$product_namespace$::$service_name$PollingPolicyOption>()) {\n"
