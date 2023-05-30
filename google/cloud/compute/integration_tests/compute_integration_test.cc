@@ -35,13 +35,6 @@ using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
-std::string CreateRandomName(std::string const& prefix) {
-  static internal::DefaultPRNG generator = internal::MakeDefaultPRNG();
-  return absl::StrCat(
-      prefix,
-      internal::Sample(generator, 8, "abcdefghijklmnopqrstuvwxyz0123456789"));
-}
-
 class ComputeIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  protected:
@@ -52,8 +45,16 @@ class ComputeIntegrationTest
     zone_ = google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TEST_ZONE")
                 .value_or("");
     ASSERT_FALSE(zone_.empty());
+    generator_ = internal::MakeDefaultPRNG();
   }
 
+  std::string CreateRandomName(std::string const& prefix) {
+    return absl::StrCat(
+        prefix, internal::Sample(generator_, 8,
+                                 "abcdefghijklmnopqrstuvwxyz0123456789"));
+  }
+
+  internal::DefaultPRNG generator_;
   std::string project_id_;
   std::string zone_;
 };
@@ -104,8 +105,6 @@ TEST_F(ComputeIntegrationTest, CreateDisks) {
     ASSERT_STATUS_OK(d);
     // Delete the disk we just created, we expect this to succeed.
     if (d->name() == disk.name()) {
-      // Can you create a client that retries delete operations? Otherwise this
-      // can flake...
       auto delete_disk =
           client.DeleteDisks(project_id_, zone_, d->name()).get();
       EXPECT_THAT(delete_disk, IsOk());
