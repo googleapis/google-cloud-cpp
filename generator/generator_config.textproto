@@ -923,6 +923,42 @@ service {
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
+# Discovery Engine
+service {
+  service_proto_path: "google/cloud/discoveryengine/v1/completion_service.proto"
+  product_path: "google/cloud/discoveryengine/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/discoveryengine/v1/document_service.proto"
+  product_path: "google/cloud/discoveryengine/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/discoveryengine/v1/schema_service.proto"
+  product_path: "google/cloud/discoveryengine/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/discoveryengine/v1/search_service.proto"
+  product_path: "google/cloud/discoveryengine/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/discoveryengine/v1/user_event_service.proto"
+  product_path: "google/cloud/discoveryengine/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Document AI
 service {
   service_proto_path: "google/cloud/documentai/v1/document_processor_service.proto"
