@@ -2,7 +2,7 @@
 
 @mainpage Compute Engine API C++ Client Library
 
-An idiomatic C++ client library for the [Compute API][cloud-service-docs], a service to create 
+An idiomatic C++ client library for the [Compute Engine API][cloud-service-docs], a service to create
 and manage cloud computing resources.
 
 This library requires a C++14 compiler. It is supported (and tested) on multiple
@@ -16,7 +16,7 @@ dependencies, as well as how to compile the client library.
 
 The following shows the code that you'll run in the
 `google/cloud/compute/quickstart/` directory,
-which should give you a taste of the Cloud Compute API C++ client library.
+which should give you a taste of the Cloud Compute Engine API C++ client library.
 
 @snippet quickstart.cc all
 

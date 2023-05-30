@@ -457,6 +457,7 @@ discovery_products {
     generate_grpc_transport: false
   }
 }
+
 # Confidential Computing
 service {
   service_proto_path: "google/cloud/confidentialcomputing/v1/service.proto"

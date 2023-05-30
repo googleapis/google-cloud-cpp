@@ -1,8 +1,8 @@
 # Compute Engine API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Compute Engine API][cloud-service-docs], a service to create challenges
-and verify attestation responses.
+[Compute Engine API][cloud-service-docs], a service that lets you create and run
+virtual machines on Google’s infrastructure.
 
 ## Quickstart
 

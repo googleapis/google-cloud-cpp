@@ -14,6 +14,8 @@
 
 #include "google/cloud/compute/disks/v1/disks_client.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/parse_rfc3339.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -28,9 +30,17 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
+
+std::string CreateRandomName(std::string const& prefix) {
+  static internal::DefaultPRNG generator = internal::MakeDefaultPRNG();
+  return absl::StrCat(
+      prefix,
+      internal::Sample(generator, 8, "abcdefghijklmnopqrstuvwxyz0123456789"));
+}
 
 class ComputeIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -70,31 +80,45 @@ TEST_F(ComputeIntegrationTest, CreateDisks) {
       google::cloud::ExperimentalTag{},
       disks::MakeDisksConnectionRest(google::cloud::ExperimentalTag{}));
 
-  for (auto const& d : client.ListDisks(project_id_, zone_)) {
-    ASSERT_STATUS_OK(d);
-    if (d->labels().contains("test")) {
-      auto delete_disk =
-          client.DeleteDisks(project_id_, zone_, d->name()).get();
-      EXPECT_THAT(delete_disk, IsOk());
-    }
-  }
-
   google::cloud::cpp::compute::v1::Disk disk;
-  disk.set_name("int-test-disk");
+  disk.set_name(CreateRandomName("int-test-disk-"));
   disk.set_size_gb("10");
   (*disk.mutable_labels())["test"] = "test";
   auto result = client.InsertDisks(project_id_, zone_, disk).get();
   ASSERT_THAT(result, testing_util::IsOk());
 
-  auto get_disk = client.GetDisks(project_id_, zone_, "int-test-disk");
+  auto get_disk = client.GetDisks(project_id_, zone_, disk.name());
   ASSERT_THAT(get_disk, IsOk());
+  EXPECT_THAT(get_disk->name(), Eq(disk.name()));
 
   google::cloud::cpp::compute::v1::ZoneSetLabelsRequest request;
   request.set_label_fingerprint(get_disk->label_fingerprint());
   (*request.mutable_labels())["test"] = "test";
   auto set_label =
-      client.SetLabels(project_id_, zone_, "int-test-disk", request).get();
+      client.SetLabels(project_id_, zone_, disk.name(), request).get();
   EXPECT_THAT(set_label, IsOk());
+
+  auto const create_threshold =
+      std::chrono::system_clock::now() - std::chrono::hours(48);
+  for (auto const& d : client.ListDisks(project_id_, zone_)) {
+    ASSERT_STATUS_OK(d);
+    // Delete the disk we just created, we expect this to succeed.
+    if (d->name() == disk.name()) {
+      // Can you create a client that retries delete operations? Otherwise this
+      // can flake...
+      auto delete_disk =
+          client.DeleteDisks(project_id_, zone_, d->name()).get();
+      EXPECT_THAT(delete_disk, IsOk());
+    }
+    // Garbage collect old disks, ignore errors.
+    auto creation_timestamp = internal::ParseRfc3339(d->creation_timestamp());
+    if (creation_timestamp) {
+      if (d->labels().contains("test") &&
+          *creation_timestamp < create_threshold) {
+        (void)client.DeleteDisks(project_id_, zone_, d->name()).get();
+      }
+    }
+  }
 }
 
 }  // namespace

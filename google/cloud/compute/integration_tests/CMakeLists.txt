@@ -42,8 +42,7 @@ foreach (fname ${compute_client_integration_tests})
         target_compile_options(${target} PRIVATE "/bigobj")
     endif ()
     add_test(NAME ${target} COMMAND ${target})
-    set_tests_properties(
-        ${target} PROPERTIES LABELS
-                             "integration-test;integration-test-emulator")
+    set_tests_properties(${target}
+                         PROPERTIES LABELS "integration-test;integration-test")
     add_dependencies(compute-client-integration-tests ${target})
 endforeach ()
