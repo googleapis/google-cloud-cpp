@@ -1,0 +1,57 @@
+/*!
+@page discoveryengine-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `discoveryengine_v1::CompletionServiceClient`:
+
+@snippet completion_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c discoveryengine_v1::CompletionServiceClient](@ref discoveryengine_v1::CompletionServiceClient-endpoint-snippet)
+- [\c discoveryengine_v1::DocumentServiceClient](@ref discoveryengine_v1::DocumentServiceClient-endpoint-snippet)
+- [\c discoveryengine_v1::SchemaServiceClient](@ref discoveryengine_v1::SchemaServiceClient-endpoint-snippet)
+- [\c discoveryengine_v1::SearchServiceClient](@ref discoveryengine_v1::SearchServiceClient-endpoint-snippet)
+- [\c discoveryengine_v1::UserEventServiceClient](@ref discoveryengine_v1::UserEventServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page discoveryengine_v1::CompletionServiceClient-endpoint-snippet Override discoveryengine_v1::CompletionServiceClient Endpoint Configuration
+
+@snippet google/cloud/discoveryengine/v1/samples/completion_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page discoveryengine_v1::DocumentServiceClient-endpoint-snippet Override discoveryengine_v1::DocumentServiceClient Endpoint Configuration
+
+@snippet google/cloud/discoveryengine/v1/samples/document_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page discoveryengine_v1::SchemaServiceClient-endpoint-snippet Override discoveryengine_v1::SchemaServiceClient Endpoint Configuration
+
+@snippet google/cloud/discoveryengine/v1/samples/schema_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page discoveryengine_v1::SearchServiceClient-endpoint-snippet Override discoveryengine_v1::SearchServiceClient Endpoint Configuration
+
+@snippet google/cloud/discoveryengine/v1/samples/search_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page discoveryengine_v1::UserEventServiceClient-endpoint-snippet Override discoveryengine_v1::UserEventServiceClient Endpoint Configuration
+
+@snippet google/cloud/discoveryengine/v1/samples/user_event_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

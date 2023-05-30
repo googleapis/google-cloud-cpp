@@ -35,6 +35,7 @@ debugger
 deploy
 dialogflow_cx
 dialogflow_es
+discoveryengine
 dlp
 documentai
 edgecontainer

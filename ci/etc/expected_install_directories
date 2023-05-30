@@ -255,6 +255,10 @@
 ./include/google/cloud/dialogflow_es
 ./include/google/cloud/dialogflow_es/internal
 ./include/google/cloud/dialogflow_es/mocks
+./include/google/cloud/discoveryengine
+./include/google/cloud/discoveryengine/v1
+./include/google/cloud/discoveryengine/v1/internal
+./include/google/cloud/discoveryengine/v1/mocks
 ./include/google/cloud/dlp
 ./include/google/cloud/dlp/mocks
 ./include/google/cloud/dlp/v2
@@ -736,6 +740,7 @@
 ./lib64/cmake/google_cloud_cpp_deploy
 ./lib64/cmake/google_cloud_cpp_dialogflow_cx
 ./lib64/cmake/google_cloud_cpp_dialogflow_es
+./lib64/cmake/google_cloud_cpp_discoveryengine
 ./lib64/cmake/google_cloud_cpp_dlp
 ./lib64/cmake/google_cloud_cpp_documentai
 ./lib64/cmake/google_cloud_cpp_edgecontainer

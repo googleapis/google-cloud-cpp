@@ -1,0 +1,60 @@
+/*!
+
+@mainpage Discovery Engine API C++ Client Library
+
+An idiomatic C++ client library for the [Discovery Engine API][cloud-service-docs], a service
+to Discovery Engine API.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/discoveryengine/quickstart/` directory,
+which should give you a taste of the Discovery Engine API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
+
+- [\c discoveryengine_v1::CompletionServiceClient](@ref google::cloud::discoveryengine_v1::CompletionServiceClient)
+- [\c discoveryengine_v1::DocumentServiceClient](@ref google::cloud::discoveryengine_v1::DocumentServiceClient)
+- [\c discoveryengine_v1::SchemaServiceClient](@ref google::cloud::discoveryengine_v1::SchemaServiceClient)
+- [\c discoveryengine_v1::SearchServiceClient](@ref google::cloud::discoveryengine_v1::SearchServiceClient)
+- [\c discoveryengine_v1::UserEventServiceClient](@ref google::cloud::discoveryengine_v1::UserEventServiceClient)
+<!-- inject-client-list-end -->
+
+## Retry, Backoff, and Idempotency Policies.
+
+The library automatically retries requests that fail with transient errors, and
+uses [exponential backoff] to backoff between retries. Application developers
+can override the default policies.
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref discoveryengine-override-endpoint - describes how to override the default
+  endpoint.
+- @ref discoveryengine-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref discoveryengine-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/discoveryengine
+[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+
+*/
