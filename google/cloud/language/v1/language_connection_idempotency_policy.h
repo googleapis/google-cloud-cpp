@@ -54,6 +54,9 @@ class LanguageServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ClassifyText(
       google::cloud::language::v1::ClassifyTextRequest const& request);
 
+  virtual google::cloud::Idempotency ModerateText(
+      google::cloud::language::v1::ModerateTextRequest const& request);
+
   virtual google::cloud::Idempotency AnnotateText(
       google::cloud::language::v1::AnnotateTextRequest const& request);
 };

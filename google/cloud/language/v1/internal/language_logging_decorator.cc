@@ -97,6 +97,18 @@ LanguageServiceLogging::ClassifyText(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::language::v1::ModerateTextResponse>
+LanguageServiceLogging::ModerateText(
+    grpc::ClientContext& context,
+    google::cloud::language::v1::ModerateTextRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::language::v1::ModerateTextRequest const& request) {
+        return child_->ModerateText(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceLogging::AnnotateText(
     grpc::ClientContext& context,

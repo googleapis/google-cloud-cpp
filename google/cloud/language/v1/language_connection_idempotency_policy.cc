@@ -59,6 +59,11 @@ Idempotency LanguageServiceConnectionIdempotencyPolicy::ClassifyText(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency LanguageServiceConnectionIdempotencyPolicy::ModerateText(
+    google::cloud::language::v1::ModerateTextRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency LanguageServiceConnectionIdempotencyPolicy::AnnotateText(
     google::cloud::language::v1::AnnotateTextRequest const&) {
   return Idempotency::kNonIdempotent;

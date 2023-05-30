@@ -106,6 +106,19 @@ LanguageServiceConnectionImpl::ClassifyText(
       request, __func__);
 }
 
+StatusOr<google::cloud::language::v1::ModerateTextResponse>
+LanguageServiceConnectionImpl::ModerateText(
+    google::cloud::language::v1::ModerateTextRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ModerateText(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::language::v1::ModerateTextRequest const& request) {
+        return stub_->ModerateText(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceConnectionImpl::AnnotateText(
     google::cloud::language::v1::AnnotateTextRequest const& request) {

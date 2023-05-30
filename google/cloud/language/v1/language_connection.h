@@ -83,6 +83,9 @@ class LanguageServiceConnection {
   virtual StatusOr<google::cloud::language::v1::ClassifyTextResponse>
   ClassifyText(google::cloud::language::v1::ClassifyTextRequest const& request);
 
+  virtual StatusOr<google::cloud::language::v1::ModerateTextResponse>
+  ModerateText(google::cloud::language::v1::ModerateTextRequest const& request);
+
   virtual StatusOr<google::cloud::language::v1::AnnotateTextResponse>
   AnnotateText(google::cloud::language::v1::AnnotateTextRequest const& request);
 };
