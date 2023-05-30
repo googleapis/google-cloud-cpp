@@ -56,15 +56,9 @@ Options ConversationProfilesDefaultOptions(std::string const& location,
             .clone());
   }
   if (!options.has<dialogflow_es::ConversationProfilesPollingPolicyOption>()) {
-    options.set<dialogflow_es::ConversationProfilesPollingPolicyOption>(
-        GenericPollingPolicy<
-            dialogflow_es::ConversationProfilesRetryPolicyOption::Type,
-            dialogflow_es::ConversationProfilesBackoffPolicyOption::Type>(
-            options.get<dialogflow_es::ConversationProfilesRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<dialogflow_es::ConversationProfilesBackoffPolicyOption>()
-                ->clone())
+    options.set<dialogflow_es::ConversationProfilesBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options

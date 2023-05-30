@@ -50,13 +50,9 @@ Options GoldenThingAdminDefaultOptions(Options options) {
             std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<golden_v1::GoldenThingAdminPollingPolicyOption>()) {
-    options.set<golden_v1::GoldenThingAdminPollingPolicyOption>(
-        GenericPollingPolicy<
-            golden_v1::GoldenThingAdminRetryPolicyOption::Type,
-            golden_v1::GoldenThingAdminBackoffPolicyOption::Type>(
-            options.get<golden_v1::GoldenThingAdminRetryPolicyOption>()->clone(),
-            options.get<golden_v1::GoldenThingAdminBackoffPolicyOption>()->clone())
-            .clone());
+    options.set<golden_v1::GoldenThingAdminBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption>()) {
     options.set<golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption>(

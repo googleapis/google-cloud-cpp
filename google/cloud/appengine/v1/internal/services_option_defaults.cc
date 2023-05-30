@@ -51,11 +51,9 @@ Options ServicesDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<appengine_v1::ServicesPollingPolicyOption>()) {
-    options.set<appengine_v1::ServicesPollingPolicyOption>(
-        GenericPollingPolicy<appengine_v1::ServicesRetryPolicyOption::Type,
-                             appengine_v1::ServicesBackoffPolicyOption::Type>(
-            options.get<appengine_v1::ServicesRetryPolicyOption>()->clone(),
-            options.get<appengine_v1::ServicesBackoffPolicyOption>()->clone())
+    options.set<appengine_v1::ServicesBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<appengine_v1::ServicesConnectionIdempotencyPolicyOption>()) {

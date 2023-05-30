@@ -50,11 +50,9 @@ Options TpuDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<tpu_v2::TpuPollingPolicyOption>()) {
-    options.set<tpu_v2::TpuPollingPolicyOption>(
-        GenericPollingPolicy<tpu_v2::TpuRetryPolicyOption::Type,
-                             tpu_v2::TpuBackoffPolicyOption::Type>(
-            options.get<tpu_v2::TpuRetryPolicyOption>()->clone(),
-            options.get<tpu_v2::TpuBackoffPolicyOption>()->clone())
+    options.set<tpu_v2::TpuBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<tpu_v2::TpuConnectionIdempotencyPolicyOption>()) {

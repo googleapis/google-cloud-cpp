@@ -51,11 +51,9 @@ Options BatchServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<batch_v1::BatchServicePollingPolicyOption>()) {
-    options.set<batch_v1::BatchServicePollingPolicyOption>(
-        GenericPollingPolicy<batch_v1::BatchServiceRetryPolicyOption::Type,
-                             batch_v1::BatchServiceBackoffPolicyOption::Type>(
-            options.get<batch_v1::BatchServiceRetryPolicyOption>()->clone(),
-            options.get<batch_v1::BatchServiceBackoffPolicyOption>()->clone())
+    options.set<batch_v1::BatchServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<batch_v1::BatchServiceConnectionIdempotencyPolicyOption>()) {

@@ -54,15 +54,9 @@ Options BigtableTableAdminDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<bigtable_admin::BigtableTableAdminPollingPolicyOption>()) {
-    options.set<bigtable_admin::BigtableTableAdminPollingPolicyOption>(
-        GenericPollingPolicy<
-            bigtable_admin::BigtableTableAdminRetryPolicyOption::Type,
-            bigtable_admin::BigtableTableAdminBackoffPolicyOption::Type>(
-            options.get<bigtable_admin::BigtableTableAdminRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<bigtable_admin::BigtableTableAdminBackoffPolicyOption>()
-                ->clone())
+    options.set<bigtable_admin::BigtableTableAdminBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<bigtable_admin::

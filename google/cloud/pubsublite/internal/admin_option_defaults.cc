@@ -51,11 +51,9 @@ Options AdminServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<pubsublite::AdminServicePollingPolicyOption>()) {
-    options.set<pubsublite::AdminServicePollingPolicyOption>(
-        GenericPollingPolicy<pubsublite::AdminServiceRetryPolicyOption::Type,
-                             pubsublite::AdminServiceBackoffPolicyOption::Type>(
-            options.get<pubsublite::AdminServiceRetryPolicyOption>()->clone(),
-            options.get<pubsublite::AdminServiceBackoffPolicyOption>()->clone())
+    options.set<pubsublite::AdminServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options

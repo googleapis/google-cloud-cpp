@@ -56,15 +56,9 @@ Options ConversationDatasetsDefaultOptions(std::string const& location,
             .clone());
   }
   if (!options.has<dialogflow_es::ConversationDatasetsPollingPolicyOption>()) {
-    options.set<dialogflow_es::ConversationDatasetsPollingPolicyOption>(
-        GenericPollingPolicy<
-            dialogflow_es::ConversationDatasetsRetryPolicyOption::Type,
-            dialogflow_es::ConversationDatasetsBackoffPolicyOption::Type>(
-            options.get<dialogflow_es::ConversationDatasetsRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<dialogflow_es::ConversationDatasetsBackoffPolicyOption>()
-                ->clone())
+    options.set<dialogflow_es::ConversationDatasetsBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options

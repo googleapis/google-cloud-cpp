@@ -51,11 +51,9 @@ Options JobServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<talent_v4::JobServicePollingPolicyOption>()) {
-    options.set<talent_v4::JobServicePollingPolicyOption>(
-        GenericPollingPolicy<talent_v4::JobServiceRetryPolicyOption::Type,
-                             talent_v4::JobServiceBackoffPolicyOption::Type>(
-            options.get<talent_v4::JobServiceRetryPolicyOption>()->clone(),
-            options.get<talent_v4::JobServiceBackoffPolicyOption>()->clone())
+    options.set<talent_v4::JobServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<talent_v4::JobServiceConnectionIdempotencyPolicyOption>()) {

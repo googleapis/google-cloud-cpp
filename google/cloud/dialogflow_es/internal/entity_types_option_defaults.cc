@@ -56,13 +56,9 @@ Options EntityTypesDefaultOptions(std::string const& location,
             .clone());
   }
   if (!options.has<dialogflow_es::EntityTypesPollingPolicyOption>()) {
-    options.set<dialogflow_es::EntityTypesPollingPolicyOption>(
-        GenericPollingPolicy<
-            dialogflow_es::EntityTypesRetryPolicyOption::Type,
-            dialogflow_es::EntityTypesBackoffPolicyOption::Type>(
-            options.get<dialogflow_es::EntityTypesRetryPolicyOption>()->clone(),
-            options.get<dialogflow_es::EntityTypesBackoffPolicyOption>()
-                ->clone())
+    options.set<dialogflow_es::EntityTypesBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<

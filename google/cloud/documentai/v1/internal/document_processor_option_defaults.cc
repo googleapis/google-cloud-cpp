@@ -60,17 +60,9 @@ Options DocumentProcessorServiceDefaultOptions(std::string const& location,
   }
   if (!options
            .has<documentai_v1::DocumentProcessorServicePollingPolicyOption>()) {
-    options.set<documentai_v1::DocumentProcessorServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            documentai_v1::DocumentProcessorServiceRetryPolicyOption::Type,
-            documentai_v1::DocumentProcessorServiceBackoffPolicyOption::Type>(
-            options
-                .get<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<documentai_v1::
-                         DocumentProcessorServiceBackoffPolicyOption>()
-                ->clone())
+    options.set<documentai_v1::DocumentProcessorServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<

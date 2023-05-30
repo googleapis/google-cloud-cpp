@@ -53,14 +53,9 @@ Options TranslationServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<translate_v3::TranslationServicePollingPolicyOption>()) {
-    options.set<translate_v3::TranslationServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            translate_v3::TranslationServiceRetryPolicyOption::Type,
-            translate_v3::TranslationServiceBackoffPolicyOption::Type>(
-            options.get<translate_v3::TranslationServiceRetryPolicyOption>()
-                ->clone(),
-            options.get<translate_v3::TranslationServiceBackoffPolicyOption>()
-                ->clone())
+    options.set<translate_v3::TranslationServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<translate_v3::

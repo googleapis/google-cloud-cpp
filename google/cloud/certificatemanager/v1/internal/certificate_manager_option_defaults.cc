@@ -56,18 +56,9 @@ Options CertificateManagerDefaultOptions(Options options) {
   }
   if (!options.has<
           certificatemanager_v1::CertificateManagerPollingPolicyOption>()) {
-    options.set<certificatemanager_v1::CertificateManagerPollingPolicyOption>(
-        GenericPollingPolicy<
-            certificatemanager_v1::CertificateManagerRetryPolicyOption::Type,
-            certificatemanager_v1::CertificateManagerBackoffPolicyOption::Type>(
-            options
-                .get<certificatemanager_v1::
-                         CertificateManagerRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<certificatemanager_v1::
-                         CertificateManagerBackoffPolicyOption>()
-                ->clone())
+    options.set<certificatemanager_v1::CertificateManagerBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<certificatemanager_v1::

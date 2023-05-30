@@ -50,11 +50,9 @@ Options IDSDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<ids_v1::IDSPollingPolicyOption>()) {
-    options.set<ids_v1::IDSPollingPolicyOption>(
-        GenericPollingPolicy<ids_v1::IDSRetryPolicyOption::Type,
-                             ids_v1::IDSBackoffPolicyOption::Type>(
-            options.get<ids_v1::IDSRetryPolicyOption>()->clone(),
-            options.get<ids_v1::IDSBackoffPolicyOption>()->clone())
+    options.set<ids_v1::IDSBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<ids_v1::IDSConnectionIdempotencyPolicyOption>()) {

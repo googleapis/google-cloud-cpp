@@ -55,14 +55,9 @@ Options AzureClustersDefaultOptions(std::string const& location,
             .clone());
   }
   if (!options.has<gkemulticloud_v1::AzureClustersPollingPolicyOption>()) {
-    options.set<gkemulticloud_v1::AzureClustersPollingPolicyOption>(
-        GenericPollingPolicy<
-            gkemulticloud_v1::AzureClustersRetryPolicyOption::Type,
-            gkemulticloud_v1::AzureClustersBackoffPolicyOption::Type>(
-            options.get<gkemulticloud_v1::AzureClustersRetryPolicyOption>()
-                ->clone(),
-            options.get<gkemulticloud_v1::AzureClustersBackoffPolicyOption>()
-                ->clone())
+    options.set<gkemulticloud_v1::AzureClustersBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<

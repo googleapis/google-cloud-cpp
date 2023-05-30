@@ -52,14 +52,9 @@ Options DataCatalogDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<datacatalog_v1::DataCatalogPollingPolicyOption>()) {
-    options.set<datacatalog_v1::DataCatalogPollingPolicyOption>(
-        GenericPollingPolicy<
-            datacatalog_v1::DataCatalogRetryPolicyOption::Type,
-            datacatalog_v1::DataCatalogBackoffPolicyOption::Type>(
-            options.get<datacatalog_v1::DataCatalogRetryPolicyOption>()
-                ->clone(),
-            options.get<datacatalog_v1::DataCatalogBackoffPolicyOption>()
-                ->clone())
+    options.set<datacatalog_v1::DataCatalogBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<

@@ -51,11 +51,9 @@ Options GkeHubDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<gkehub_v1::GkeHubPollingPolicyOption>()) {
-    options.set<gkehub_v1::GkeHubPollingPolicyOption>(
-        GenericPollingPolicy<gkehub_v1::GkeHubRetryPolicyOption::Type,
-                             gkehub_v1::GkeHubBackoffPolicyOption::Type>(
-            options.get<gkehub_v1::GkeHubRetryPolicyOption>()->clone(),
-            options.get<gkehub_v1::GkeHubBackoffPolicyOption>()->clone())
+    options.set<gkehub_v1::GkeHubBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<gkehub_v1::GkeHubConnectionIdempotencyPolicyOption>()) {

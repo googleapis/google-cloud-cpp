@@ -53,14 +53,9 @@ Options EdgeContainerDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<edgecontainer_v1::EdgeContainerPollingPolicyOption>()) {
-    options.set<edgecontainer_v1::EdgeContainerPollingPolicyOption>(
-        GenericPollingPolicy<
-            edgecontainer_v1::EdgeContainerRetryPolicyOption::Type,
-            edgecontainer_v1::EdgeContainerBackoffPolicyOption::Type>(
-            options.get<edgecontainer_v1::EdgeContainerRetryPolicyOption>()
-                ->clone(),
-            options.get<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()
-                ->clone())
+    options.set<edgecontainer_v1::EdgeContainerBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<

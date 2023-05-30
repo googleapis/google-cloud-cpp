@@ -52,14 +52,9 @@ Options DomainMappingsDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<appengine_v1::DomainMappingsPollingPolicyOption>()) {
-    options.set<appengine_v1::DomainMappingsPollingPolicyOption>(
-        GenericPollingPolicy<
-            appengine_v1::DomainMappingsRetryPolicyOption::Type,
-            appengine_v1::DomainMappingsBackoffPolicyOption::Type>(
-            options.get<appengine_v1::DomainMappingsRetryPolicyOption>()
-                ->clone(),
-            options.get<appengine_v1::DomainMappingsBackoffPolicyOption>()
-                ->clone())
+    options.set<appengine_v1::DomainMappingsBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<

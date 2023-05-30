@@ -51,11 +51,9 @@ Options AlloyDBAdminDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<alloydb_v1::AlloyDBAdminPollingPolicyOption>()) {
-    options.set<alloydb_v1::AlloyDBAdminPollingPolicyOption>(
-        GenericPollingPolicy<alloydb_v1::AlloyDBAdminRetryPolicyOption::Type,
-                             alloydb_v1::AlloyDBAdminBackoffPolicyOption::Type>(
-            options.get<alloydb_v1::AlloyDBAdminRetryPolicyOption>()->clone(),
-            options.get<alloydb_v1::AlloyDBAdminBackoffPolicyOption>()->clone())
+    options.set<alloydb_v1::AlloyDBAdminBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options

@@ -51,11 +51,9 @@ Options CloudDeployDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<deploy_v1::CloudDeployPollingPolicyOption>()) {
-    options.set<deploy_v1::CloudDeployPollingPolicyOption>(
-        GenericPollingPolicy<deploy_v1::CloudDeployRetryPolicyOption::Type,
-                             deploy_v1::CloudDeployBackoffPolicyOption::Type>(
-            options.get<deploy_v1::CloudDeployRetryPolicyOption>()->clone(),
-            options.get<deploy_v1::CloudDeployBackoffPolicyOption>()->clone())
+    options.set<deploy_v1::CloudDeployBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<deploy_v1::CloudDeployConnectionIdempotencyPolicyOption>()) {

@@ -52,14 +52,9 @@ Options VmMigrationDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<vmmigration_v1::VmMigrationPollingPolicyOption>()) {
-    options.set<vmmigration_v1::VmMigrationPollingPolicyOption>(
-        GenericPollingPolicy<
-            vmmigration_v1::VmMigrationRetryPolicyOption::Type,
-            vmmigration_v1::VmMigrationBackoffPolicyOption::Type>(
-            options.get<vmmigration_v1::VmMigrationRetryPolicyOption>()
-                ->clone(),
-            options.get<vmmigration_v1::VmMigrationBackoffPolicyOption>()
-                ->clone())
+    options.set<vmmigration_v1::VmMigrationBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<

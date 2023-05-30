@@ -55,16 +55,9 @@ Options ArtifactRegistryDefaultOptions(Options options) {
   }
   if (!options
            .has<artifactregistry_v1::ArtifactRegistryPollingPolicyOption>()) {
-    options.set<artifactregistry_v1::ArtifactRegistryPollingPolicyOption>(
-        GenericPollingPolicy<
-            artifactregistry_v1::ArtifactRegistryRetryPolicyOption::Type,
-            artifactregistry_v1::ArtifactRegistryBackoffPolicyOption::Type>(
-            options
-                .get<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>()
-                ->clone())
+    options.set<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<artifactregistry_v1::

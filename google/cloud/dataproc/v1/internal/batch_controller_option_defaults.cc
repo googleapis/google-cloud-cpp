@@ -56,14 +56,9 @@ Options BatchControllerDefaultOptions(std::string const& location,
             .clone());
   }
   if (!options.has<dataproc_v1::BatchControllerPollingPolicyOption>()) {
-    options.set<dataproc_v1::BatchControllerPollingPolicyOption>(
-        GenericPollingPolicy<
-            dataproc_v1::BatchControllerRetryPolicyOption::Type,
-            dataproc_v1::BatchControllerBackoffPolicyOption::Type>(
-            options.get<dataproc_v1::BatchControllerRetryPolicyOption>()
-                ->clone(),
-            options.get<dataproc_v1::BatchControllerBackoffPolicyOption>()
-                ->clone())
+    options.set<dataproc_v1::BatchControllerBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<

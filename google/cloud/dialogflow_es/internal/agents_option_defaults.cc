@@ -54,11 +54,9 @@ Options AgentsDefaultOptions(std::string const& location, Options options) {
             .clone());
   }
   if (!options.has<dialogflow_es::AgentsPollingPolicyOption>()) {
-    options.set<dialogflow_es::AgentsPollingPolicyOption>(
-        GenericPollingPolicy<dialogflow_es::AgentsRetryPolicyOption::Type,
-                             dialogflow_es::AgentsBackoffPolicyOption::Type>(
-            options.get<dialogflow_es::AgentsRetryPolicyOption>()->clone(),
-            options.get<dialogflow_es::AgentsBackoffPolicyOption>()->clone())
+    options.set<dialogflow_es::AgentsBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<dialogflow_es::AgentsConnectionIdempotencyPolicyOption>()) {

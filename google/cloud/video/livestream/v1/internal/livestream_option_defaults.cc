@@ -55,17 +55,9 @@ Options LivestreamServiceDefaultOptions(Options options) {
   }
   if (!options
            .has<video_livestream_v1::LivestreamServicePollingPolicyOption>()) {
-    options.set<video_livestream_v1::LivestreamServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            video_livestream_v1::LivestreamServiceRetryPolicyOption::Type,
-            video_livestream_v1::LivestreamServiceBackoffPolicyOption::Type>(
-            options
-                .get<video_livestream_v1::LivestreamServiceRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<
-                    video_livestream_v1::LivestreamServiceBackoffPolicyOption>()
-                ->clone())
+    options.set<video_livestream_v1::LivestreamServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<video_livestream_v1::

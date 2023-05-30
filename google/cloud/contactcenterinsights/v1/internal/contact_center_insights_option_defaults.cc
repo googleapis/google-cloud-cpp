@@ -59,19 +59,9 @@ Options ContactCenterInsightsDefaultOptions(Options options) {
   if (!options.has<contactcenterinsights_v1::
                        ContactCenterInsightsPollingPolicyOption>()) {
     options.set<
-        contactcenterinsights_v1::ContactCenterInsightsPollingPolicyOption>(
-        GenericPollingPolicy<
-            contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption::
-                Type,
-            contactcenterinsights_v1::ContactCenterInsightsBackoffPolicyOption::
-                Type>(options
-                          .get<contactcenterinsights_v1::
-                                   ContactCenterInsightsRetryPolicyOption>()
-                          ->clone(),
-                      options
-                          .get<contactcenterinsights_v1::
-                                   ContactCenterInsightsBackoffPolicyOption>()
-                          ->clone())
+        contactcenterinsights_v1::ContactCenterInsightsBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options

@@ -51,11 +51,9 @@ Options RevisionsDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<run_v2::RevisionsPollingPolicyOption>()) {
-    options.set<run_v2::RevisionsPollingPolicyOption>(
-        GenericPollingPolicy<run_v2::RevisionsRetryPolicyOption::Type,
-                             run_v2::RevisionsBackoffPolicyOption::Type>(
-            options.get<run_v2::RevisionsRetryPolicyOption>()->clone(),
-            options.get<run_v2::RevisionsBackoffPolicyOption>()->clone())
+    options.set<run_v2::RevisionsBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<run_v2::RevisionsConnectionIdempotencyPolicyOption>()) {

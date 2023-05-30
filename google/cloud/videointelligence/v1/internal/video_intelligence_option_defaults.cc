@@ -60,20 +60,9 @@ Options VideoIntelligenceServiceDefaultOptions(Options options) {
   if (!options.has<videointelligence_v1::
                        VideoIntelligenceServicePollingPolicyOption>()) {
     options
-        .set<videointelligence_v1::VideoIntelligenceServicePollingPolicyOption>(
-            GenericPollingPolicy<
-                videointelligence_v1::
-                    VideoIntelligenceServiceRetryPolicyOption::Type,
-                videointelligence_v1::
-                    VideoIntelligenceServiceBackoffPolicyOption::Type>(
-                options
-                    .get<videointelligence_v1::
-                             VideoIntelligenceServiceRetryPolicyOption>()
-                    ->clone(),
-                options
-                    .get<videointelligence_v1::
-                             VideoIntelligenceServiceBackoffPolicyOption>()
-                    ->clone())
+        .set<videointelligence_v1::VideoIntelligenceServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
                 .clone());
   }
   if (!options.has<

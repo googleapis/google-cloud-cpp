@@ -51,11 +51,9 @@ Options ProductSearchDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<vision_v1::ProductSearchPollingPolicyOption>()) {
-    options.set<vision_v1::ProductSearchPollingPolicyOption>(
-        GenericPollingPolicy<vision_v1::ProductSearchRetryPolicyOption::Type,
-                             vision_v1::ProductSearchBackoffPolicyOption::Type>(
-            options.get<vision_v1::ProductSearchRetryPolicyOption>()->clone(),
-            options.get<vision_v1::ProductSearchBackoffPolicyOption>()->clone())
+    options.set<vision_v1::ProductSearchBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options

@@ -61,20 +61,9 @@ Options AppConnectionsServiceDefaultOptions(Options options) {
   if (!options.has<beyondcorp_appconnections_v1::
                        AppConnectionsServicePollingPolicyOption>()) {
     options.set<
-        beyondcorp_appconnections_v1::AppConnectionsServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            beyondcorp_appconnections_v1::
-                AppConnectionsServiceRetryPolicyOption::Type,
-            beyondcorp_appconnections_v1::
-                AppConnectionsServiceBackoffPolicyOption::Type>(
-            options
-                .get<beyondcorp_appconnections_v1::
-                         AppConnectionsServiceRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<beyondcorp_appconnections_v1::
-                         AppConnectionsServiceBackoffPolicyOption>()
-                ->clone())
+        beyondcorp_appconnections_v1::AppConnectionsServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options

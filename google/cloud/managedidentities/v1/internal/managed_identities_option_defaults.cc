@@ -60,20 +60,9 @@ Options ManagedIdentitiesServiceDefaultOptions(Options options) {
   if (!options.has<managedidentities_v1::
                        ManagedIdentitiesServicePollingPolicyOption>()) {
     options
-        .set<managedidentities_v1::ManagedIdentitiesServicePollingPolicyOption>(
-            GenericPollingPolicy<
-                managedidentities_v1::
-                    ManagedIdentitiesServiceRetryPolicyOption::Type,
-                managedidentities_v1::
-                    ManagedIdentitiesServiceBackoffPolicyOption::Type>(
-                options
-                    .get<managedidentities_v1::
-                             ManagedIdentitiesServiceRetryPolicyOption>()
-                    ->clone(),
-                options
-                    .get<managedidentities_v1::
-                             ManagedIdentitiesServiceBackoffPolicyOption>()
-                    ->clone())
+        .set<managedidentities_v1::ManagedIdentitiesServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
                 .clone());
   }
   if (!options.has<

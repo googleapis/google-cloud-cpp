@@ -53,14 +53,9 @@ Options NotebookServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<notebooks_v1::NotebookServicePollingPolicyOption>()) {
-    options.set<notebooks_v1::NotebookServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            notebooks_v1::NotebookServiceRetryPolicyOption::Type,
-            notebooks_v1::NotebookServiceBackoffPolicyOption::Type>(
-            options.get<notebooks_v1::NotebookServiceRetryPolicyOption>()
-                ->clone(),
-            options.get<notebooks_v1::NotebookServiceBackoffPolicyOption>()
-                ->clone())
+    options.set<notebooks_v1::NotebookServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<

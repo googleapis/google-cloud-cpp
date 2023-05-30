@@ -52,14 +52,9 @@ Options UserEventServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<retail_v2::UserEventServicePollingPolicyOption>()) {
-    options.set<retail_v2::UserEventServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            retail_v2::UserEventServiceRetryPolicyOption::Type,
-            retail_v2::UserEventServiceBackoffPolicyOption::Type>(
-            options.get<retail_v2::UserEventServiceRetryPolicyOption>()
-                ->clone(),
-            options.get<retail_v2::UserEventServiceBackoffPolicyOption>()
-                ->clone())
+    options.set<retail_v2::UserEventServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<

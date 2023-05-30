@@ -53,14 +53,9 @@ Options RepositoryManagerDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<cloudbuild_v2::RepositoryManagerPollingPolicyOption>()) {
-    options.set<cloudbuild_v2::RepositoryManagerPollingPolicyOption>(
-        GenericPollingPolicy<
-            cloudbuild_v2::RepositoryManagerRetryPolicyOption::Type,
-            cloudbuild_v2::RepositoryManagerBackoffPolicyOption::Type>(
-            options.get<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()
-                ->clone(),
-            options.get<cloudbuild_v2::RepositoryManagerBackoffPolicyOption>()
-                ->clone())
+    options.set<cloudbuild_v2::RepositoryManagerBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<cloudbuild_v2::

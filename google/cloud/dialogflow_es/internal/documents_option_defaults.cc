@@ -54,11 +54,9 @@ Options DocumentsDefaultOptions(std::string const& location, Options options) {
             .clone());
   }
   if (!options.has<dialogflow_es::DocumentsPollingPolicyOption>()) {
-    options.set<dialogflow_es::DocumentsPollingPolicyOption>(
-        GenericPollingPolicy<dialogflow_es::DocumentsRetryPolicyOption::Type,
-                             dialogflow_es::DocumentsBackoffPolicyOption::Type>(
-            options.get<dialogflow_es::DocumentsRetryPolicyOption>()->clone(),
-            options.get<dialogflow_es::DocumentsBackoffPolicyOption>()->clone())
+    options.set<dialogflow_es::DocumentsBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options
