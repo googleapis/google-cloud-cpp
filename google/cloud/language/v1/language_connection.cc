@@ -65,6 +65,12 @@ LanguageServiceConnection::ClassifyText(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::language::v1::ModerateTextResponse>
+LanguageServiceConnection::ModerateText(
+    google::cloud::language::v1::ModerateTextRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceConnection::AnnotateText(
     google::cloud::language::v1::AnnotateTextRequest const&) {

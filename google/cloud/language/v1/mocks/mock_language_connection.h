@@ -77,6 +77,11 @@ class MockLanguageServiceConnection
               (google::cloud::language::v1::ClassifyTextRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::language::v1::ModerateTextResponse>,
+              ModerateText,
+              (google::cloud::language::v1::ModerateTextRequest const& request),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::language::v1::AnnotateTextResponse>,
               AnnotateText,
               (google::cloud::language::v1::AnnotateTextRequest const& request),

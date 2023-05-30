@@ -74,6 +74,14 @@ LanguageServiceMetadata::ClassifyText(
   return child_->ClassifyText(context, request);
 }
 
+StatusOr<google::cloud::language::v1::ModerateTextResponse>
+LanguageServiceMetadata::ModerateText(
+    grpc::ClientContext& context,
+    google::cloud::language::v1::ModerateTextRequest const& request) {
+  SetMetadata(context);
+  return child_->ModerateText(context, request);
+}
+
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceMetadata::AnnotateText(
     grpc::ClientContext& context,

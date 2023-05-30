@@ -75,6 +75,15 @@ LanguageServiceAuth::ClassifyText(
   return child_->ClassifyText(context, request);
 }
 
+StatusOr<google::cloud::language::v1::ModerateTextResponse>
+LanguageServiceAuth::ModerateText(
+    grpc::ClientContext& context,
+    google::cloud::language::v1::ModerateTextRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ModerateText(context, request);
+}
+
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceAuth::AnnotateText(
     grpc::ClientContext& context,

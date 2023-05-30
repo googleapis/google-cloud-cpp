@@ -90,6 +90,18 @@ LanguageServiceTracingStub::ClassifyText(
                            child_->ClassifyText(context, request));
 }
 
+StatusOr<google::cloud::language::v1::ModerateTextResponse>
+LanguageServiceTracingStub::ModerateText(
+    grpc::ClientContext& context,
+    google::cloud::language::v1::ModerateTextRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.language.v1.LanguageService",
+                                     "ModerateText");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ModerateText(context, request));
+}
+
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceTracingStub::AnnotateText(
     grpc::ClientContext& context,

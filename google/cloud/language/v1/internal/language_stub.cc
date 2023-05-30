@@ -92,6 +92,18 @@ DefaultLanguageServiceStub::ClassifyText(
   return response;
 }
 
+StatusOr<google::cloud::language::v1::ModerateTextResponse>
+DefaultLanguageServiceStub::ModerateText(
+    grpc::ClientContext& client_context,
+    google::cloud::language::v1::ModerateTextRequest const& request) {
+  google::cloud::language::v1::ModerateTextResponse response;
+  auto status = grpc_stub_->ModerateText(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 DefaultLanguageServiceStub::AnnotateText(
     grpc::ClientContext& client_context,

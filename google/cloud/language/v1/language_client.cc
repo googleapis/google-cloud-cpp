@@ -160,6 +160,23 @@ LanguageServiceClient::ClassifyText(
   return connection_->ClassifyText(request);
 }
 
+StatusOr<google::cloud::language::v1::ModerateTextResponse>
+LanguageServiceClient::ModerateText(
+    google::cloud::language::v1::Document const& document, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::language::v1::ModerateTextRequest request;
+  *request.mutable_document() = document;
+  return connection_->ModerateText(request);
+}
+
+StatusOr<google::cloud::language::v1::ModerateTextResponse>
+LanguageServiceClient::ModerateText(
+    google::cloud::language::v1::ModerateTextRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ModerateText(request);
+}
+
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceClient::AnnotateText(
     google::cloud::language::v1::Document const& document,
