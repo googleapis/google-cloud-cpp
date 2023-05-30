@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -279,12 +280,21 @@ TYPED_TEST(PaginationRangeTest, IteratorCoverage) {
   EXPECT_TRUE(i1 == range.end());
 }
 
-TEST(RangeFromPagination, Unimplemented) {
+TEST(RangeFromPagination, MakeUnimplemented) {
   using NonProtoRange = PaginationRange<std::string>;
   auto range = MakeUnimplementedPaginationRange<NonProtoRange>();
   auto i = range.begin();
   EXPECT_NE(i, range.end());
   EXPECT_THAT(*i, StatusIs(StatusCode::kUnimplemented));
+}
+
+TEST(RangeFromPagination, MakeStatus) {
+  using NonProtoRange = PaginationRange<std::string>;
+  auto const expected = InvalidArgumentError("bad", GCP_ERROR_INFO());
+  auto range = MakeErrorPaginationRange<NonProtoRange>(expected);
+  auto i = range.begin();
+  EXPECT_NE(i, range.end());
+  EXPECT_EQ(i->status(), expected);
 }
 
 }  // namespace
