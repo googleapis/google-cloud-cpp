@@ -66,6 +66,7 @@ privateca
 profiler
 pubsub
 pubsublite
+rapidmigrationassessment
 recommender
 redis
 resourcemanager
