@@ -47,8 +47,9 @@ Options ServiceUsageDefaultOptions(Options options) {
   }
   if (!options.has<serviceusage_v1::ServiceUsageBackoffPolicyOption>()) {
     options.set<serviceusage_v1::ServiceUsageBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<serviceusage_v1::ServiceUsagePollingPolicyOption>()) {

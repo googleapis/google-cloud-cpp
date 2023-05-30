@@ -47,8 +47,9 @@ Options CloudFunctionsServiceDefaultOptions(Options options) {
   }
   if (!options.has<functions_v1::CloudFunctionsServiceBackoffPolicyOption>()) {
     options.set<functions_v1::CloudFunctionsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<functions_v1::CloudFunctionsServicePollingPolicyOption>()) {

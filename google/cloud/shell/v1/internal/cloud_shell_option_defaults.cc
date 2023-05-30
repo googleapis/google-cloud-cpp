@@ -47,8 +47,9 @@ Options CloudShellServiceDefaultOptions(Options options) {
   }
   if (!options.has<shell_v1::CloudShellServiceBackoffPolicyOption>()) {
     options.set<shell_v1::CloudShellServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<shell_v1::CloudShellServicePollingPolicyOption>()) {

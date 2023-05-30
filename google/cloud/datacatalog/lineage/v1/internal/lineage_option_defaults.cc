@@ -46,8 +46,9 @@ Options LineageDefaultOptions(Options options) {
   }
   if (!options.has<datacatalog_lineage_v1::LineageBackoffPolicyOption>()) {
     options.set<datacatalog_lineage_v1::LineageBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<datacatalog_lineage_v1::LineagePollingPolicyOption>()) {

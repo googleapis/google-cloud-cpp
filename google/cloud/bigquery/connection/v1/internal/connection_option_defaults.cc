@@ -50,8 +50,9 @@ Options ConnectionServiceDefaultOptions(Options options) {
   if (!options.has<
           bigquery_connection_v1::ConnectionServiceBackoffPolicyOption>()) {
     options.set<bigquery_connection_v1::ConnectionServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<bigquery_connection_v1::

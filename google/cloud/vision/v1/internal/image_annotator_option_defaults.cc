@@ -46,8 +46,9 @@ Options ImageAnnotatorDefaultOptions(Options options) {
   }
   if (!options.has<vision_v1::ImageAnnotatorBackoffPolicyOption>()) {
     options.set<vision_v1::ImageAnnotatorBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<vision_v1::ImageAnnotatorPollingPolicyOption>()) {

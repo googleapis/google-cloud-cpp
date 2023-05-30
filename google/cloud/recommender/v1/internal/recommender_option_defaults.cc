@@ -46,8 +46,9 @@ Options RecommenderDefaultOptions(Options options) {
   }
   if (!options.has<recommender_v1::RecommenderBackoffPolicyOption>()) {
     options.set<recommender_v1::RecommenderBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<

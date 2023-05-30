@@ -47,8 +47,9 @@ Options SecurityCenterDefaultOptions(Options options) {
   }
   if (!options.has<securitycenter_v1::SecurityCenterBackoffPolicyOption>()) {
     options.set<securitycenter_v1::SecurityCenterBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<securitycenter_v1::SecurityCenterPollingPolicyOption>()) {

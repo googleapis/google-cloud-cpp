@@ -45,8 +45,9 @@ Options Controller2DefaultOptions(Options options) {
   }
   if (!options.has<debugger_v2::Controller2BackoffPolicyOption>()) {
     options.set<debugger_v2::Controller2BackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options

@@ -47,8 +47,9 @@ Options RepositoryManagerDefaultOptions(Options options) {
   }
   if (!options.has<cloudbuild_v2::RepositoryManagerBackoffPolicyOption>()) {
     options.set<cloudbuild_v2::RepositoryManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<cloudbuild_v2::RepositoryManagerPollingPolicyOption>()) {

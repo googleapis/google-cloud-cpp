@@ -45,8 +45,9 @@ Options CloudRedisDefaultOptions(Options options) {
   }
   if (!options.has<redis_v1::CloudRedisBackoffPolicyOption>()) {
     options.set<redis_v1::CloudRedisBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<redis_v1::CloudRedisPollingPolicyOption>()) {

@@ -46,8 +46,9 @@ Options CloudMemcacheDefaultOptions(Options options) {
   }
   if (!options.has<memcache_v1::CloudMemcacheBackoffPolicyOption>()) {
     options.set<memcache_v1::CloudMemcacheBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<memcache_v1::CloudMemcachePollingPolicyOption>()) {

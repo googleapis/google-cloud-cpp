@@ -51,8 +51,9 @@ Options ConfidentialComputingDefaultOptions(Options options) {
                        ConfidentialComputingBackoffPolicyOption>()) {
     options.set<
         confidentialcomputing_v1::ConfidentialComputingBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options

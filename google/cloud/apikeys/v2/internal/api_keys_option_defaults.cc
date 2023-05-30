@@ -45,8 +45,9 @@ Options ApiKeysDefaultOptions(Options options) {
   }
   if (!options.has<apikeys_v2::ApiKeysBackoffPolicyOption>()) {
     options.set<apikeys_v2::ApiKeysBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<apikeys_v2::ApiKeysPollingPolicyOption>()) {

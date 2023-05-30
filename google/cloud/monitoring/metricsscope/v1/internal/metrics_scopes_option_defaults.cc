@@ -48,8 +48,9 @@ Options MetricsScopesDefaultOptions(Options options) {
   if (!options.has<
           monitoring_metricsscope_v1::MetricsScopesBackoffPolicyOption>()) {
     options.set<monitoring_metricsscope_v1::MetricsScopesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<

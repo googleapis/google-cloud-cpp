@@ -46,8 +46,9 @@ Options VmMigrationDefaultOptions(Options options) {
   }
   if (!options.has<vmmigration_v1::VmMigrationBackoffPolicyOption>()) {
     options.set<vmmigration_v1::VmMigrationBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<vmmigration_v1::VmMigrationPollingPolicyOption>()) {

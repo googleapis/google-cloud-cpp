@@ -47,8 +47,9 @@ Options RealmsServiceDefaultOptions(Options options) {
   }
   if (!options.has<gameservices_v1::RealmsServiceBackoffPolicyOption>()) {
     options.set<gameservices_v1::RealmsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<gameservices_v1::RealmsServicePollingPolicyOption>()) {

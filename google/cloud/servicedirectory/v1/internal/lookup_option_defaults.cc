@@ -47,8 +47,9 @@ Options LookupServiceDefaultOptions(Options options) {
   }
   if (!options.has<servicedirectory_v1::LookupServiceBackoffPolicyOption>()) {
     options.set<servicedirectory_v1::LookupServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<servicedirectory_v1::

@@ -48,8 +48,9 @@ Options SystemPolicyV1DefaultOptions(Options options) {
   if (!options
            .has<binaryauthorization_v1::SystemPolicyV1BackoffPolicyOption>()) {
     options.set<binaryauthorization_v1::SystemPolicyV1BackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<binaryauthorization_v1::

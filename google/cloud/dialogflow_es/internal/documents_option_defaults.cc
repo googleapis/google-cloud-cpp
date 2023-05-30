@@ -48,8 +48,9 @@ Options DocumentsDefaultOptions(std::string const& location, Options options) {
   }
   if (!options.has<dialogflow_es::DocumentsBackoffPolicyOption>()) {
     options.set<dialogflow_es::DocumentsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<dialogflow_es::DocumentsPollingPolicyOption>()) {

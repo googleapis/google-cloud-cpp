@@ -46,8 +46,9 @@ Options WorkstationsDefaultOptions(Options options) {
   }
   if (!options.has<workstations_v1::WorkstationsBackoffPolicyOption>()) {
     options.set<workstations_v1::WorkstationsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<workstations_v1::WorkstationsPollingPolicyOption>()) {

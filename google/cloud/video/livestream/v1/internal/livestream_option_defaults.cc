@@ -48,8 +48,9 @@ Options LivestreamServiceDefaultOptions(Options options) {
   if (!options
            .has<video_livestream_v1::LivestreamServiceBackoffPolicyOption>()) {
     options.set<video_livestream_v1::LivestreamServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options

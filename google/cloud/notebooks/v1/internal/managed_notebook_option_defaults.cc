@@ -47,8 +47,9 @@ Options ManagedNotebookServiceDefaultOptions(Options options) {
   }
   if (!options.has<notebooks_v1::ManagedNotebookServiceBackoffPolicyOption>()) {
     options.set<notebooks_v1::ManagedNotebookServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<notebooks_v1::ManagedNotebookServicePollingPolicyOption>()) {

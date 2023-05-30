@@ -47,8 +47,9 @@ Options EdgeContainerDefaultOptions(Options options) {
   }
   if (!options.has<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()) {
     options.set<edgecontainer_v1::EdgeContainerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<edgecontainer_v1::EdgeContainerPollingPolicyOption>()) {

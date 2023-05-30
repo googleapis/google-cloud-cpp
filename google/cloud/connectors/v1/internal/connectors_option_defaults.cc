@@ -46,8 +46,9 @@ Options ConnectorsDefaultOptions(Options options) {
   }
   if (!options.has<connectors_v1::ConnectorsBackoffPolicyOption>()) {
     options.set<connectors_v1::ConnectorsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<connectors_v1::ConnectorsPollingPolicyOption>()) {

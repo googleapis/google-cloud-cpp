@@ -45,8 +45,9 @@ Options CloudDeployDefaultOptions(Options options) {
   }
   if (!options.has<deploy_v1::CloudDeployBackoffPolicyOption>()) {
     options.set<deploy_v1::CloudDeployBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<deploy_v1::CloudDeployPollingPolicyOption>()) {

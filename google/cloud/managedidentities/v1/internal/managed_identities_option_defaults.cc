@@ -52,8 +52,9 @@ Options ManagedIdentitiesServiceDefaultOptions(Options options) {
                        ManagedIdentitiesServiceBackoffPolicyOption>()) {
     options
         .set<managedidentities_v1::ManagedIdentitiesServiceBackoffPolicyOption>(
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
                 .clone());
   }
   if (!options.has<managedidentities_v1::

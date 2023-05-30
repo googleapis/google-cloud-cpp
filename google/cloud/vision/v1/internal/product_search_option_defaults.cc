@@ -45,8 +45,9 @@ Options ProductSearchDefaultOptions(Options options) {
   }
   if (!options.has<vision_v1::ProductSearchBackoffPolicyOption>()) {
     options.set<vision_v1::ProductSearchBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<vision_v1::ProductSearchPollingPolicyOption>()) {

@@ -47,8 +47,9 @@ Options CaseAttachmentServiceDefaultOptions(Options options) {
   }
   if (!options.has<support_v2::CaseAttachmentServiceBackoffPolicyOption>()) {
     options.set<support_v2::CaseAttachmentServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options

@@ -50,8 +50,9 @@ Options ClusterControllerDefaultOptions(std::string const& location,
   }
   if (!options.has<dataproc_v1::ClusterControllerBackoffPolicyOption>()) {
     options.set<dataproc_v1::ClusterControllerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<dataproc_v1::ClusterControllerPollingPolicyOption>()) {

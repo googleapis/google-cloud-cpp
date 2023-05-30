@@ -45,8 +45,9 @@ Options VersionsDefaultOptions(Options options) {
   }
   if (!options.has<appengine_v1::VersionsBackoffPolicyOption>()) {
     options.set<appengine_v1::VersionsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<appengine_v1::VersionsPollingPolicyOption>()) {

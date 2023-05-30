@@ -53,8 +53,9 @@ Options DocumentProcessorServiceDefaultOptions(std::string const& location,
   if (!options
            .has<documentai_v1::DocumentProcessorServiceBackoffPolicyOption>()) {
     options.set<documentai_v1::DocumentProcessorServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options

@@ -50,8 +50,9 @@ Options AssuredWorkloadsServiceDefaultOptions(Options options) {
           assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>()) {
     options
         .set<assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>(
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
                 .clone());
   }
   if (!options.has<

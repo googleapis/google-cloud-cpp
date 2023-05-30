@@ -47,8 +47,9 @@ Options LoggingServiceV2DefaultOptions(Options options) {
   }
   if (!options.has<logging_v2::LoggingServiceV2BackoffPolicyOption>()) {
     options.set<logging_v2::LoggingServiceV2BackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<

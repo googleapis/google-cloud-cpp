@@ -45,8 +45,9 @@ Options PoliciesDefaultOptions(Options options) {
   }
   if (!options.has<iam_v2::PoliciesBackoffPolicyOption>()) {
     options.set<iam_v2::PoliciesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<iam_v2::PoliciesPollingPolicyOption>()) {

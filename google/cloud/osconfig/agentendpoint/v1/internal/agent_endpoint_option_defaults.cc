@@ -51,8 +51,9 @@ Options AgentEndpointServiceDefaultOptions(Options options) {
                        AgentEndpointServiceBackoffPolicyOption>()) {
     options.set<
         osconfig_agentendpoint_v1::AgentEndpointServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options

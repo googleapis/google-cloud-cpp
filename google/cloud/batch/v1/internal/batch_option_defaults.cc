@@ -45,8 +45,9 @@ Options BatchServiceDefaultOptions(Options options) {
   }
   if (!options.has<batch_v1::BatchServiceBackoffPolicyOption>()) {
     options.set<batch_v1::BatchServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<batch_v1::BatchServicePollingPolicyOption>()) {
