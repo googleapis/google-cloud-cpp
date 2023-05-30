@@ -127,6 +127,7 @@ We are happy to announce the following GA libraries.  Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Cloud Support API](/google/cloud/support/README.md)
+- [Discovery Engine API](/google/cloud/discoveryengine/README.md)
 
 ### [Storage Transfer Service](/google/cloud/storagetransfer/README.md)
 

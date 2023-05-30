@@ -1,7 +1,8 @@
 # Discovery Engine API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Discovery Engine API][cloud-service-docs], a service to Discovery Engine API.
+[Discovery Engine API][cloud-service-docs], a service that powers
+high-quality content recommendations on your digital properties.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,8 +17,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/discoveryengine/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/discoveryengine/v1/document_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -26,13 +26,15 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace discoveryengine = ::google::cloud::discoveryengine;
-  auto client = discoveryengine::Client(discoveryengine::MakeConnection());
+  namespace discoveryengine = ::google::cloud::discoveryengine_v1;
+  auto client = discoveryengine::DocumentServiceClient(
+      discoveryengine::MakeDocumentServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global" +
+                      "/dataStores/default_data_store/branches/default_branch";
+  for (auto d : client.ListDocuments(parent)) {
+    if (!d) throw std::move(d).status();
+    std::cout << d->DebugString() << "\n";
   }
 
   return 0;
@@ -51,6 +53,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/discoveryengine
+[cloud-service-docs]: https://cloud.google.com/discovery-engine
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-discoveryengine/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/discoveryengine

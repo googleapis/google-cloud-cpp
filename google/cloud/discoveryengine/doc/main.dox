@@ -2,8 +2,9 @@
 
 @mainpage Discovery Engine API C++ Client Library
 
-An idiomatic C++ client library for the [Discovery Engine API][cloud-service-docs], a service
-to Discovery Engine API.
+An idiomatic C++ client library for the
+[Discovery Engine API][cloud-service-docs], a service that powers
+high-quality content recommendations on your digital properties.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -54,7 +55,7 @@ can override the default policies.
 - @ref discoveryengine-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/discoveryengine
+[cloud-service-docs]: https://cloud.google.com/discovery-engine
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */
