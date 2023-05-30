@@ -1437,6 +1437,14 @@ service {
   omit_repo_metadata: true
 }
 
+# Rapid Migration Assessment
+service {
+  service_proto_path: "google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto"
+  product_path: "google/cloud/rapidmigrationassessment/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Recommender
 service {
   service_proto_path: "google/cloud/recommender/v1/recommender_service.proto"

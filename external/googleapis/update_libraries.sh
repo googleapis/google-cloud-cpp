@@ -178,6 +178,7 @@ declare -A -r LIBRARIES=(
   ["profiler"]="@com_google_googleapis//google/devtools/cloudprofiler/v2:cloudprofiler_cc_grpc"
   ["pubsub"]="@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc"
   ["pubsublite"]="@com_google_googleapis//google/cloud/pubsublite/v1:pubsublite_cc_grpc"
+  ["rapidmigrationassessment"]="@com_google_googleapis//google/cloud/rapidmigrationassessment/v1:rapidmigrationassessment_cc_grpc"
   ["recommender"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/recommender/v1:recommender_cc_grpc" \
