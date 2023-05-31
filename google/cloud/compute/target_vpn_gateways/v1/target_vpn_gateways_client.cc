@@ -24,31 +24,40 @@ namespace cloud {
 namespace compute_target_vpn_gateways_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TargetVpnGatewaysClient::TargetVpnGatewaysClient(ExperimentalTag,
-    std::shared_ptr<TargetVpnGatewaysConnection> connection, Options opts)
+TargetVpnGatewaysClient::TargetVpnGatewaysClient(
+    ExperimentalTag, std::shared_ptr<TargetVpnGatewaysConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TargetVpnGatewaysClient::~TargetVpnGatewaysClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
-TargetVpnGatewaysClient::AggregatedListTargetVpnGateways(std::string const& project, Options opts) {
+TargetVpnGatewaysClient::AggregatedListTargetVpnGateways(
+    std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_vpn_gateways::v1::AggregatedListTargetVpnGatewaysRequest request;
+  google::cloud::cpp::compute::target_vpn_gateways::v1::
+      AggregatedListTargetVpnGatewaysRequest request;
   request.set_project(project);
   return connection_->AggregatedListTargetVpnGateways(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
-TargetVpnGatewaysClient::AggregatedListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::AggregatedListTargetVpnGatewaysRequest const& request, Options opts) {
+TargetVpnGatewaysClient::AggregatedListTargetVpnGateways(
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        AggregatedListTargetVpnGatewaysRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListTargetVpnGateways(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysClient::DeleteTargetVpnGateways(std::string const& project, std::string const& region, std::string const& target_vpn_gateway, Options opts) {
+TargetVpnGatewaysClient::DeleteTargetVpnGateways(
+    std::string const& project, std::string const& region,
+    std::string const& target_vpn_gateway, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewaysRequest request;
+  google::cloud::cpp::compute::target_vpn_gateways::v1::
+      DeleteTargetVpnGatewaysRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_target_vpn_gateway(target_vpn_gateway);
@@ -56,15 +65,21 @@ TargetVpnGatewaysClient::DeleteTargetVpnGateways(std::string const& project, std
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysClient::DeleteTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewaysRequest const& request, Options opts) {
+TargetVpnGatewaysClient::DeleteTargetVpnGateways(
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        DeleteTargetVpnGatewaysRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTargetVpnGateways(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-TargetVpnGatewaysClient::GetTargetVpnGateways(std::string const& project, std::string const& region, std::string const& target_vpn_gateway, Options opts) {
+TargetVpnGatewaysClient::GetTargetVpnGateways(
+    std::string const& project, std::string const& region,
+    std::string const& target_vpn_gateway, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_vpn_gateways::v1::GetTargetVpnGatewaysRequest request;
+  google::cloud::cpp::compute::target_vpn_gateways::v1::
+      GetTargetVpnGatewaysRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_target_vpn_gateway(target_vpn_gateway);
@@ -72,15 +87,23 @@ TargetVpnGatewaysClient::GetTargetVpnGateways(std::string const& project, std::s
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-TargetVpnGatewaysClient::GetTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::GetTargetVpnGatewaysRequest const& request, Options opts) {
+TargetVpnGatewaysClient::GetTargetVpnGateways(
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        GetTargetVpnGatewaysRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTargetVpnGateways(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysClient::InsertTargetVpnGateways(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::TargetVpnGateway const& target_vpn_gateway_resource, Options opts) {
+TargetVpnGatewaysClient::InsertTargetVpnGateways(
+    std::string const& project, std::string const& region,
+    google::cloud::cpp::compute::v1::TargetVpnGateway const&
+        target_vpn_gateway_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewaysRequest request;
+  google::cloud::cpp::compute::target_vpn_gateways::v1::
+      InsertTargetVpnGatewaysRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_target_vpn_gateway_resource() = target_vpn_gateway_resource;
@@ -88,39 +111,58 @@ TargetVpnGatewaysClient::InsertTargetVpnGateways(std::string const& project, std
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysClient::InsertTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewaysRequest const& request, Options opts) {
+TargetVpnGatewaysClient::InsertTargetVpnGateways(
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        InsertTargetVpnGatewaysRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertTargetVpnGateways(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
-TargetVpnGatewaysClient::ListTargetVpnGateways(std::string const& project, std::string const& region, Options opts) {
+TargetVpnGatewaysClient::ListTargetVpnGateways(std::string const& project,
+                                               std::string const& region,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_vpn_gateways::v1::ListTargetVpnGatewaysRequest request;
+  google::cloud::cpp::compute::target_vpn_gateways::v1::
+      ListTargetVpnGatewaysRequest request;
   request.set_project(project);
   request.set_region(region);
   return connection_->ListTargetVpnGateways(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
-TargetVpnGatewaysClient::ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::ListTargetVpnGatewaysRequest request, Options opts) {
+TargetVpnGatewaysClient::ListTargetVpnGateways(
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        ListTargetVpnGatewaysRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTargetVpnGateways(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysClient::SetLabels(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetLabelsRequest const& region_set_labels_request_resource, Options opts) {
+TargetVpnGatewaysClient::SetLabels(
+    std::string const& project, std::string const& region,
+    std::string const& resource,
+    google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
+        region_set_labels_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest request;
+  google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest
+      request;
   request.set_project(project);
   request.set_region(region);
   request.set_resource(resource);
-  *request.mutable_region_set_labels_request_resource() = region_set_labels_request_resource;
+  *request.mutable_region_set_labels_request_resource() =
+      region_set_labels_request_resource;
   return connection_->SetLabels(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysClient::SetLabels(google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const& request, Options opts) {
+TargetVpnGatewaysClient::SetLabels(
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        SetLabelsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(request);
 }

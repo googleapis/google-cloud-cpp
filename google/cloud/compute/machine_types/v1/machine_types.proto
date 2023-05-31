@@ -26,12 +26,13 @@ import "google/cloud/compute/v1/internal/common.proto";
 service MachineTypes {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of machine types.
-  rpc AggregatedListMachineTypes(AggregatedListMachineTypesRequest) returns (google.cloud.cpp.compute.v1.MachineTypeAggregatedList) {
+  rpc AggregatedListMachineTypes(AggregatedListMachineTypesRequest)
+      returns (google.cloud.cpp.compute.v1.MachineTypeAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/machineTypes"
     };
@@ -39,7 +40,8 @@ service MachineTypes {
   }
 
   // Returns the specified machine type.
-  rpc GetMachineTypes(GetMachineTypesRequest) returns (google.cloud.cpp.compute.v1.MachineType) {
+  rpc GetMachineTypes(GetMachineTypesRequest)
+      returns (google.cloud.cpp.compute.v1.MachineType) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/machineTypes/{machine_type=machine_type}"
     };
@@ -47,7 +49,8 @@ service MachineTypes {
   }
 
   // Retrieves a list of machine types available to the specified project.
-  rpc ListMachineTypes(ListMachineTypesRequest) returns (google.cloud.cpp.compute.v1.MachineTypeList) {
+  rpc ListMachineTypes(ListMachineTypesRequest)
+      returns (google.cloud.cpp.compute.v1.MachineTypeList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/machineTypes"
     };

@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service TargetSslProxies {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified TargetSslProxy resource.
-  rpc DeleteTargetSslProxies(DeleteTargetSslProxiesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteTargetSslProxies(DeleteTargetSslProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}"
     };
@@ -41,7 +42,8 @@ service TargetSslProxies {
   }
 
   // Returns the specified TargetSslProxy resource.
-  rpc GetTargetSslProxies(GetTargetSslProxiesRequest) returns (google.cloud.cpp.compute.v1.TargetSslProxy) {
+  rpc GetTargetSslProxies(GetTargetSslProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.TargetSslProxy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}"
     };
@@ -50,7 +52,8 @@ service TargetSslProxies {
 
   // Creates a TargetSslProxy resource in the specified project using the data
   // included in the request.
-  rpc InsertTargetSslProxies(InsertTargetSslProxiesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertTargetSslProxies(InsertTargetSslProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/targetSslProxies"
       body: "target_ssl_proxy_resource"
@@ -61,7 +64,8 @@ service TargetSslProxies {
 
   // Retrieves the list of TargetSslProxy resources available to the specified
   // project.
-  rpc ListTargetSslProxies(ListTargetSslProxiesRequest) returns (google.cloud.cpp.compute.v1.TargetSslProxyList) {
+  rpc ListTargetSslProxies(ListTargetSslProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.TargetSslProxyList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/targetSslProxies"
     };
@@ -69,42 +73,50 @@ service TargetSslProxies {
   }
 
   // Changes the BackendService for TargetSslProxy.
-  rpc SetBackendService(SetBackendServiceRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetBackendService(SetBackendServiceRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setBackendService"
       body: "target_ssl_proxies_set_backend_service_request_resource"
     };
-    option (google.api.method_signature) = "project,target_ssl_proxy,target_ssl_proxies_set_backend_service_request_resource";
+    option (google.api.method_signature) =
+        "project,target_ssl_proxy,target_ssl_proxies_set_backend_service_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Changes the Certificate Map for TargetSslProxy.
-  rpc SetCertificateMap(SetCertificateMapRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetCertificateMap(SetCertificateMapRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setCertificateMap"
       body: "target_ssl_proxies_set_certificate_map_request_resource"
     };
-    option (google.api.method_signature) = "project,target_ssl_proxy,target_ssl_proxies_set_certificate_map_request_resource";
+    option (google.api.method_signature) =
+        "project,target_ssl_proxy,target_ssl_proxies_set_certificate_map_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Changes the ProxyHeaderType for TargetSslProxy.
-  rpc SetProxyHeader(SetProxyHeaderRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetProxyHeader(SetProxyHeaderRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setProxyHeader"
       body: "target_ssl_proxies_set_proxy_header_request_resource"
     };
-    option (google.api.method_signature) = "project,target_ssl_proxy,target_ssl_proxies_set_proxy_header_request_resource";
+    option (google.api.method_signature) =
+        "project,target_ssl_proxy,target_ssl_proxies_set_proxy_header_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Changes SslCertificates for TargetSslProxy.
-  rpc SetSslCertificates(SetSslCertificatesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetSslCertificates(SetSslCertificatesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setSslCertificates"
       body: "target_ssl_proxies_set_ssl_certificates_request_resource"
     };
-    option (google.api.method_signature) = "project,target_ssl_proxy,target_ssl_proxies_set_ssl_certificates_request_resource";
+    option (google.api.method_signature) =
+        "project,target_ssl_proxy,target_ssl_proxies_set_ssl_certificates_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
@@ -112,12 +124,14 @@ service TargetSslProxies {
   // server-side support for SSL features. This affects connections between
   // clients and the SSL proxy load balancer. They do not affect the connection
   // between the load balancer and the backends.
-  rpc SetSslPolicy(SetSslPolicyRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetSslPolicy(SetSslPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setSslPolicy"
       body: "ssl_policy_reference_resource"
     };
-    option (google.api.method_signature) = "project,target_ssl_proxy,ssl_policy_reference_resource";
+    option (google.api.method_signature) =
+        "project,target_ssl_proxy,ssl_policy_reference_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -125,7 +139,10 @@ service TargetSslProxies {
 // Request message for DeleteTargetSslProxies.
 message DeleteTargetSslProxiesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -155,7 +172,10 @@ message GetTargetSslProxiesRequest {
 // Request message for InsertTargetSslProxies.
 message InsertTargetSslProxiesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -170,7 +190,8 @@ message InsertTargetSslProxiesRequest {
   optional string request_id = 2;
 
   // The TargetSslProxy for this request.
-  optional google.cloud.cpp.compute.v1.TargetSslProxy target_ssl_proxy_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetSslProxy
+      target_ssl_proxy_resource = 3 [json_name = "__json_request_body"];
 }
 
 // Request message for ListTargetSslProxies.
@@ -241,7 +262,10 @@ message ListTargetSslProxiesRequest {
 // Request message for SetBackendService.
 message SetBackendServiceRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -260,13 +284,18 @@ message SetBackendServiceRequest {
   string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TargetSslProxiesSetBackendServiceRequest for this request.
-  optional google.cloud.cpp.compute.v1.TargetSslProxiesSetBackendServiceRequest target_ssl_proxies_set_backend_service_request_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetSslProxiesSetBackendServiceRequest
+      target_ssl_proxies_set_backend_service_request_resource = 4
+      [json_name = "__json_request_body"];
 }
 
 // Request message for SetCertificateMap.
 message SetCertificateMapRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -285,13 +314,18 @@ message SetCertificateMapRequest {
   string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TargetSslProxiesSetCertificateMapRequest for this request.
-  optional google.cloud.cpp.compute.v1.TargetSslProxiesSetCertificateMapRequest target_ssl_proxies_set_certificate_map_request_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetSslProxiesSetCertificateMapRequest
+      target_ssl_proxies_set_certificate_map_request_resource = 4
+      [json_name = "__json_request_body"];
 }
 
 // Request message for SetProxyHeader.
 message SetProxyHeaderRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -309,13 +343,18 @@ message SetProxyHeaderRequest {
   string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TargetSslProxiesSetProxyHeaderRequest for this request.
-  optional google.cloud.cpp.compute.v1.TargetSslProxiesSetProxyHeaderRequest target_ssl_proxies_set_proxy_header_request_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetSslProxiesSetProxyHeaderRequest
+      target_ssl_proxies_set_proxy_header_request_resource = 4
+      [json_name = "__json_request_body"];
 }
 
 // Request message for SetSslCertificates.
 message SetSslCertificatesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -334,13 +373,18 @@ message SetSslCertificatesRequest {
   string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TargetSslProxiesSetSslCertificatesRequest for this request.
-  optional google.cloud.cpp.compute.v1.TargetSslProxiesSetSslCertificatesRequest target_ssl_proxies_set_ssl_certificates_request_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetSslProxiesSetSslCertificatesRequest
+      target_ssl_proxies_set_ssl_certificates_request_resource = 4
+      [json_name = "__json_request_body"];
 }
 
 // Request message for SetSslPolicy.
 message SetSslPolicyRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -355,7 +399,8 @@ message SetSslPolicyRequest {
   optional string request_id = 2;
 
   // The SslPolicyReference for this request.
-  optional google.cloud.cpp.compute.v1.SslPolicyReference ssl_policy_reference_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.SslPolicyReference
+      ssl_policy_reference_resource = 3 [json_name = "__json_request_body"];
 
   // Name of the TargetSslProxy resource whose SSL policy is to be set. The name
   // must be 1-63 characters long, and comply with RFC1035.

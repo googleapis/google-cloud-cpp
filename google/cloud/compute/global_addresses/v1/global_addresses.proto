@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service GlobalAddresses {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified address resource.
-  rpc DeleteGlobalAddresses(DeleteGlobalAddressesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteGlobalAddresses(DeleteGlobalAddressesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/global/addresses/{address=address}"
     };
@@ -41,7 +42,8 @@ service GlobalAddresses {
   }
 
   // Returns the specified address resource.
-  rpc GetGlobalAddresses(GetGlobalAddressesRequest) returns (google.cloud.cpp.compute.v1.Address) {
+  rpc GetGlobalAddresses(GetGlobalAddressesRequest)
+      returns (google.cloud.cpp.compute.v1.Address) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/addresses/{address=address}"
     };
@@ -50,7 +52,8 @@ service GlobalAddresses {
 
   // Creates an address resource in the specified project by using the data
   // included in the request.
-  rpc InsertGlobalAddresses(InsertGlobalAddressesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertGlobalAddresses(InsertGlobalAddressesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/addresses"
       body: "address_resource"
@@ -60,7 +63,8 @@ service GlobalAddresses {
   }
 
   // Retrieves a list of global addresses.
-  rpc ListGlobalAddresses(ListGlobalAddressesRequest) returns (google.cloud.cpp.compute.v1.AddressList) {
+  rpc ListGlobalAddresses(ListGlobalAddressesRequest)
+      returns (google.cloud.cpp.compute.v1.AddressList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/addresses"
     };
@@ -69,12 +73,14 @@ service GlobalAddresses {
 
   // Sets the labels on a GlobalAddress. To learn more about labels, read the
   // Labeling Resources documentation.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/addresses/{resource=resource}/setLabels"
       body: "global_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,global_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,global_set_labels_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -85,7 +91,10 @@ message DeleteGlobalAddressesRequest {
   string address = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -112,10 +121,14 @@ message GetGlobalAddressesRequest {
 // Request message for InsertGlobalAddresses.
 message InsertGlobalAddressesRequest {
   // The Address for this request.
-  optional google.cloud.cpp.compute.v1.Address address_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Address address_resource = 1
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -198,10 +211,15 @@ message ListGlobalAddressesRequest {
 // Request message for SetLabels.
 message SetLabelsRequest {
   // The GlobalSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.GlobalSetLabelsRequest global_set_labels_request_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.GlobalSetLabelsRequest
+      global_set_labels_request_resource = 1
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name or id of the resource for this request.
   string resource = 3 [(google.api.field_behavior) = REQUIRED];

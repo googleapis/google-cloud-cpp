@@ -26,12 +26,13 @@ import "google/cloud/compute/v1/internal/common.proto";
 service DiskTypes {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of disk types.
-  rpc AggregatedListDiskTypes(AggregatedListDiskTypesRequest) returns (google.cloud.cpp.compute.v1.DiskTypeAggregatedList) {
+  rpc AggregatedListDiskTypes(AggregatedListDiskTypesRequest)
+      returns (google.cloud.cpp.compute.v1.DiskTypeAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/diskTypes"
     };
@@ -39,7 +40,8 @@ service DiskTypes {
   }
 
   // Returns the specified disk type.
-  rpc GetDiskTypes(GetDiskTypesRequest) returns (google.cloud.cpp.compute.v1.DiskType) {
+  rpc GetDiskTypes(GetDiskTypesRequest)
+      returns (google.cloud.cpp.compute.v1.DiskType) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/diskTypes/{disk_type=disk_type}"
     };
@@ -47,7 +49,8 @@ service DiskTypes {
   }
 
   // Retrieves a list of disk types available to the specified project.
-  rpc ListDiskTypes(ListDiskTypesRequest) returns (google.cloud.cpp.compute.v1.DiskTypeList) {
+  rpc ListDiskTypes(ListDiskTypesRequest)
+      returns (google.cloud.cpp.compute.v1.DiskTypeList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/diskTypes"
     };

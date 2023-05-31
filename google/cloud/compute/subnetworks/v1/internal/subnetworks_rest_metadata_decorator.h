@@ -38,68 +38,90 @@ class SubnetworksRestMetadata : public SubnetworksRestStub {
   ~SubnetworksRestMetadata() override = default;
   explicit SubnetworksRestMetadata(std::shared_ptr<SubnetworksRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList> AggregatedListSubnetworks(
+  StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
+  AggregatedListSubnetworks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest const& request) override;
+      google::cloud::cpp::compute::subnetworks::v1::
+          AggregatedListSubnetworksRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteSubnetworks(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteSubnetworks(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest const& request) override;
+      google::cloud::cpp::compute::subnetworks::v1::
+          DeleteSubnetworksRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncExpandIpCidrRange(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncExpandIpCidrRange(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request) override;
+      google::cloud::cpp::compute::subnetworks::v1::
+          ExpandIpCidrRangeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetworks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const& request) override;
+      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertSubnetworks(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertSubnetworks(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest const& request) override;
+      google::cloud::cpp::compute::subnetworks::v1::
+          InsertSubnetworksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SubnetworkList> ListSubnetworks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const& request) override;
+      google::cloud::cpp::compute::subnetworks::v1::
+          ListSubnetworksRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::UsableSubnetworksAggregatedList> ListUsable(
+  StatusOr<google::cloud::cpp::compute::v1::UsableSubnetworksAggregatedList>
+  ListUsable(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const& request) override;
+      google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchSubnetworks(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchSubnetworks(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const& request) override;
+      google::cloud::cpp::compute::subnetworks::v1::
+          PatchSubnetworksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetPrivateIpGoogleAccess(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetPrivateIpGoogleAccess(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request) override;
+      google::cloud::cpp::compute::subnetworks::v1::
+          SetPrivateIpGoogleAccessRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::subnetworks::v1::
+                         TestIamPermissionsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

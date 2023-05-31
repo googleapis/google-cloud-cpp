@@ -35,25 +35,23 @@ DefaultZonesRestStub::DefaultZonesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultZonesRestStub::DefaultZonesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::Zone>
-DefaultZonesRestStub::GetZones(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) {
+StatusOr<google::cloud::cpp::compute::v1::Zone> DefaultZonesRestStub::GetZones(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Zone>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
+                   request.zone(), ""),
       {std::make_pair("project", request.project())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ZoneList>
 DefaultZonesRestStub::ListZones(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ZoneList>(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(), "/zones"),
@@ -61,7 +59,8 @@ DefaultZonesRestStub::ListZones(
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

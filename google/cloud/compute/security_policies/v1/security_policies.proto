@@ -27,9 +27,9 @@ import "google/cloud/extended_operations.proto";
 service SecurityPolicies {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Inserts a rule into a security policy.
   rpc AddRule(AddRuleRequest) returns (google.cloud.cpp.compute.v1.Operation) {
@@ -37,13 +37,15 @@ service SecurityPolicies {
       post: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}/addRule"
       body: "security_policy_rule_resource"
     };
-    option (google.api.method_signature) = "project,security_policy,security_policy_rule_resource";
+    option (google.api.method_signature) =
+        "project,security_policy,security_policy_rule_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Retrieves the list of all SecurityPolicy resources, regional and global,
   // available to the specified project.
-  rpc AggregatedListSecurityPolicies(AggregatedListSecurityPoliciesRequest) returns (google.cloud.cpp.compute.v1.SecurityPoliciesAggregatedList) {
+  rpc AggregatedListSecurityPolicies(AggregatedListSecurityPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.SecurityPoliciesAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/securityPolicies"
     };
@@ -51,7 +53,8 @@ service SecurityPolicies {
   }
 
   // Deletes the specified policy.
-  rpc DeleteSecurityPolicies(DeleteSecurityPoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteSecurityPolicies(DeleteSecurityPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}"
     };
@@ -60,7 +63,8 @@ service SecurityPolicies {
   }
 
   // List all of the ordered rules present in a single specified policy.
-  rpc GetSecurityPolicies(GetSecurityPoliciesRequest) returns (google.cloud.cpp.compute.v1.SecurityPolicy) {
+  rpc GetSecurityPolicies(GetSecurityPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.SecurityPolicy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}"
     };
@@ -68,7 +72,8 @@ service SecurityPolicies {
   }
 
   // Gets a rule at the specified priority.
-  rpc GetRule(GetRuleRequest) returns (google.cloud.cpp.compute.v1.SecurityPolicyRule) {
+  rpc GetRule(GetRuleRequest)
+      returns (google.cloud.cpp.compute.v1.SecurityPolicyRule) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}/getRule"
     };
@@ -77,7 +82,8 @@ service SecurityPolicies {
 
   // Creates a new policy in the specified project using the data included in
   // the request.
-  rpc InsertSecurityPolicies(InsertSecurityPoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertSecurityPolicies(InsertSecurityPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/securityPolicies"
       body: "security_policy_resource"
@@ -87,7 +93,8 @@ service SecurityPolicies {
   }
 
   // List all the policies that have been configured for the specified project.
-  rpc ListSecurityPolicies(ListSecurityPoliciesRequest) returns (google.cloud.cpp.compute.v1.SecurityPolicyList) {
+  rpc ListSecurityPolicies(ListSecurityPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.SecurityPolicyList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/securityPolicies"
     };
@@ -96,7 +103,9 @@ service SecurityPolicies {
 
   // Gets the current list of preconfigured Web Application Firewall (WAF)
   // expressions.
-  rpc ListPreconfiguredExpressionSets(ListPreconfiguredExpressionSetsRequest) returns (google.cloud.cpp.compute.v1.SecurityPoliciesListPreconfiguredExpressionSetsResponse) {
+  rpc ListPreconfiguredExpressionSets(ListPreconfiguredExpressionSetsRequest)
+      returns (google.cloud.cpp.compute.v1
+                   .SecurityPoliciesListPreconfiguredExpressionSetsResponse) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/securityPolicies/listPreconfiguredExpressionSets"
     };
@@ -108,27 +117,32 @@ service SecurityPolicies {
   // updateMask. This cannot be used to be update the rules in the policy.
   // Please use the per rule methods like addRule, patchRule, and removeRule
   // instead.
-  rpc PatchSecurityPolicies(PatchSecurityPoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchSecurityPolicies(PatchSecurityPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}"
       body: "security_policy_resource"
     };
-    option (google.api.method_signature) = "project,security_policy,security_policy_resource";
+    option (google.api.method_signature) =
+        "project,security_policy,security_policy_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Patches a rule at the specified priority.
-  rpc PatchRule(PatchRuleRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchRule(PatchRuleRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}/patchRule"
       body: "security_policy_rule_resource"
     };
-    option (google.api.method_signature) = "project,security_policy,security_policy_rule_resource";
+    option (google.api.method_signature) =
+        "project,security_policy,security_policy_rule_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Deletes a rule at the specified priority.
-  rpc RemoveRule(RemoveRuleRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc RemoveRule(RemoveRuleRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}/removeRule"
       body: "*"
@@ -139,12 +153,14 @@ service SecurityPolicies {
 
   // Sets the labels on a security policy. To learn more about labels, read the
   // Labeling Resources documentation.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/securityPolicies/{resource=resource}/setLabels"
       body: "global_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,global_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,global_set_labels_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -152,13 +168,17 @@ service SecurityPolicies {
 // Request message for AddRule.
 message AddRuleRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the security policy to update.
   string security_policy = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The SecurityPolicyRule for this request.
-  optional google.cloud.cpp.compute.v1.SecurityPolicyRule security_policy_rule_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.SecurityPolicyRule
+      security_policy_rule_resource = 3 [json_name = "__json_request_body"];
 
   // If true, the request will not be committed.
   optional bool validate_only = 4;
@@ -241,7 +261,10 @@ message AggregatedListSecurityPoliciesRequest {
 // Request message for DeleteSecurityPolicies.
 message DeleteSecurityPoliciesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -283,7 +306,10 @@ message GetSecurityPoliciesRequest {
 // Request message for InsertSecurityPolicies.
 message InsertSecurityPoliciesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -298,7 +324,8 @@ message InsertSecurityPoliciesRequest {
   optional string request_id = 2;
 
   // The SecurityPolicy for this request.
-  optional google.cloud.cpp.compute.v1.SecurityPolicy security_policy_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.SecurityPolicy security_policy_resource =
+      3 [json_name = "__json_request_body"];
 
   // If true, the request will not be committed.
   optional bool validate_only = 4;
@@ -440,13 +467,17 @@ message PatchRuleRequest {
   optional int32 priority = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the security policy to update.
   string security_policy = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The SecurityPolicyRule for this request.
-  optional google.cloud.cpp.compute.v1.SecurityPolicyRule security_policy_rule_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.SecurityPolicyRule
+      security_policy_rule_resource = 4 [json_name = "__json_request_body"];
 
   // If true, the request will not be committed.
   optional bool validate_only = 5;
@@ -455,7 +486,10 @@ message PatchRuleRequest {
 // Request message for PatchSecurityPolicies.
 message PatchSecurityPoliciesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -473,7 +507,8 @@ message PatchSecurityPoliciesRequest {
   string security_policy = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The SecurityPolicy for this request.
-  optional google.cloud.cpp.compute.v1.SecurityPolicy security_policy_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.SecurityPolicy security_policy_resource =
+      4 [json_name = "__json_request_body"];
 }
 
 // Request message for RemoveRule.
@@ -482,7 +517,10 @@ message RemoveRuleRequest {
   optional int32 priority = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the security policy to update.
   string security_policy = 3 [(google.api.field_behavior) = REQUIRED];
@@ -491,10 +529,15 @@ message RemoveRuleRequest {
 // Request message for SetLabels.
 message SetLabelsRequest {
   // The GlobalSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.GlobalSetLabelsRequest global_set_labels_request_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.GlobalSetLabelsRequest
+      global_set_labels_request_resource = 1
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name or id of the resource for this request.
   string resource = 3 [(google.api.field_behavior) = REQUIRED];

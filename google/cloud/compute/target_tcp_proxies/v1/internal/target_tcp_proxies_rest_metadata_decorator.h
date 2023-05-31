@@ -36,49 +36,65 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TargetTcpProxiesRestMetadata : public TargetTcpProxiesRestStub {
  public:
   ~TargetTcpProxiesRestMetadata() override = default;
-  explicit TargetTcpProxiesRestMetadata(std::shared_ptr<TargetTcpProxiesRestStub> child);
+  explicit TargetTcpProxiesRestMetadata(
+      std::shared_ptr<TargetTcpProxiesRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList> AggregatedListTargetTcpProxies(
+  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
+  AggregatedListTargetTcpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::target_tcp_proxies::v1::AggregatedListTargetTcpProxiesRequest const& request) override;
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          AggregatedListTargetTcpProxiesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteTargetTcpProxies(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteTargetTcpProxies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxiesRequest const& request) override;
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          DeleteTargetTcpProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::target_tcp_proxies::v1::GetTargetTcpProxiesRequest const& request) override;
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          GetTargetTcpProxiesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertTargetTcpProxies(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertTargetTcpProxies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxiesRequest const& request) override;
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          InsertTargetTcpProxiesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList> ListTargetTcpProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::target_tcp_proxies::v1::ListTargetTcpProxiesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList>
+  ListTargetTcpProxies(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::target_tcp_proxies::v1::
+                           ListTargetTcpProxiesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetBackendService(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const& request) override;
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          SetBackendServiceRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetProxyHeader(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetProxyHeader(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const& request) override;
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          SetProxyHeaderRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

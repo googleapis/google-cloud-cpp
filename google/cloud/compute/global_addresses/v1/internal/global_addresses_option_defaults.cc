@@ -34,33 +34,48 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options GlobalAddressesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_GLOBAL_ADDRESSES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_GLOBAL_ADDRESSES_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()) {
+      std::move(options), "GOOGLE_CLOUD_CPP_GLOBAL_ADDRESSES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_GLOBAL_ADDRESSES_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<
+          compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()) {
     options.set<compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>(
         compute_global_addresses_v1::GlobalAddressesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
-  }
-  if (!options.has<compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>()) {
-    options.set<compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
-  }
-  if (!options.has<compute_global_addresses_v1::GlobalAddressesPollingPolicyOption>()) {
-    options.set<compute_global_addresses_v1::GlobalAddressesPollingPolicyOption>(
-        GenericPollingPolicy<
-            compute_global_addresses_v1::GlobalAddressesRetryPolicyOption::Type,
-            compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption::Type>(
-            options.get<compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()->clone(),
-            options.get<compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>()->clone())
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<compute_global_addresses_v1::GlobalAddressesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_global_addresses_v1::GlobalAddressesConnectionIdempotencyPolicyOption>(
-        compute_global_addresses_v1::MakeDefaultGlobalAddressesConnectionIdempotencyPolicy());
+  if (!options.has<
+          compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>()) {
+    options
+        .set<compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
+  }
+  if (!options.has<
+          compute_global_addresses_v1::GlobalAddressesPollingPolicyOption>()) {
+    options.set<
+        compute_global_addresses_v1::GlobalAddressesPollingPolicyOption>(
+        GenericPollingPolicy<
+            compute_global_addresses_v1::GlobalAddressesRetryPolicyOption::Type,
+            compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption::
+                Type>(options
+                          .get<compute_global_addresses_v1::
+                                   GlobalAddressesRetryPolicyOption>()
+                          ->clone(),
+                      options
+                          .get<compute_global_addresses_v1::
+                                   GlobalAddressesBackoffPolicyOption>()
+                          ->clone())
+            .clone());
+  }
+  if (!options.has<compute_global_addresses_v1::
+                       GlobalAddressesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_global_addresses_v1::
+                    GlobalAddressesConnectionIdempotencyPolicyOption>(
+        compute_global_addresses_v1::
+            MakeDefaultGlobalAddressesConnectionIdempotencyPolicy());
   }
 
   return options;

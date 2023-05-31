@@ -17,8 +17,8 @@
 // source: google/cloud/compute/region_commitments/v1/region_commitments.proto
 
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation.h"
 #include "google/cloud/internal/extract_long_running_result.h"
@@ -34,108 +34,131 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionCommitmentsRestConnectionImpl::RegionCommitmentsRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_region_commitments_v1_internal::RegionCommitmentsRestStub> stub,
+    std::shared_ptr<
+        compute_region_commitments_v1_internal::RegionCommitmentsRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        RegionCommitmentsConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), RegionCommitmentsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
-RegionCommitmentsRestConnectionImpl::AggregatedListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest const& request) {
+RegionCommitmentsRestConnectionImpl::AggregatedListRegionCommitments(
+    google::cloud::cpp::compute::region_commitments::v1::
+        AggregatedListRegionCommitmentsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListRegionCommitments(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest const& request) {
+             google::cloud::cpp::compute::region_commitments::v1::
+                 AggregatedListRegionCommitmentsRequest const& request) {
         return stub_->AggregatedListRegionCommitments(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
-RegionCommitmentsRestConnectionImpl::GetRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::GetRegionCommitmentsRequest const& request) {
+RegionCommitmentsRestConnectionImpl::GetRegionCommitments(
+    google::cloud::cpp::compute::region_commitments::v1::
+        GetRegionCommitmentsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetRegionCommitments(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::region_commitments::v1::GetRegionCommitmentsRequest const& request) {
+             google::cloud::cpp::compute::region_commitments::v1::
+                 GetRegionCommitmentsRequest const& request) {
         return stub_->GetRegionCommitments(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionCommitmentsRestConnectionImpl::InsertRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::InsertRegionCommitmentsRequest const& request) {
+RegionCommitmentsRestConnectionImpl::InsertRegionCommitments(
+    google::cloud::cpp::compute::region_commitments::v1::
+        InsertRegionCommitmentsRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest,
-    google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_commitments::v1::InsertRegionCommitmentsRequest const& request) {
-     return stub->AsyncInsertRegionCommitments(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->InsertRegionCommitments(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest,
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_commitments::v1::
+                 InsertRegionCommitmentsRequest const& request) {
+        return stub->AsyncInsertRegionCommitments(cq, std::move(context),
+                                                  request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_operations::v1::
+                 GetRegionOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_operations::v1::
+                 DeleteRegionOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->InsertRegionCommitments(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_region(request.region());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_region(request.region());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    GetRegionOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    DeleteRegionOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      });
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Commitment>
-RegionCommitmentsRestConnectionImpl::ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest request) {
+RegionCommitmentsRestConnectionImpl::ListRegionCommitments(
+    google::cloud::cpp::compute::region_commitments::v1::
+        ListRegionCommitmentsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_region_commitments_v1::RegionCommitmentsRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_region_commitments_v1::RegionCommitmentsRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRegionCommitments(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Commitment>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Commitment>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::region_commitments::v1::
+                          ListRegionCommitmentsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::region_commitments::v1::
+                       ListRegionCommitmentsRequest const& request) {
               return stub->ListRegionCommitments(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::CommitmentList r) {
-        std::vector<google::cloud::cpp::compute::v1::Commitment> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Commitment> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -143,53 +166,59 @@ RegionCommitmentsRestConnectionImpl::ListRegionCommitments(google::cloud::cpp::c
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionCommitmentsRestConnectionImpl::UpdateRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::UpdateRegionCommitmentsRequest const& request) {
+RegionCommitmentsRestConnectionImpl::UpdateRegionCommitments(
+    google::cloud::cpp::compute::region_commitments::v1::
+        UpdateRegionCommitmentsRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest,
-    google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_commitments::v1::UpdateRegionCommitmentsRequest const& request) {
-     return stub->AsyncUpdateRegionCommitments(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->UpdateRegionCommitments(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest,
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_commitments::v1::
+                 UpdateRegionCommitmentsRequest const& request) {
+        return stub->AsyncUpdateRegionCommitments(cq, std::move(context),
+                                                  request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_operations::v1::
+                 GetRegionOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_operations::v1::
+                 DeleteRegionOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateRegionCommitments(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_region(request.region());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_region(request.region());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    GetRegionOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    DeleteRegionOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

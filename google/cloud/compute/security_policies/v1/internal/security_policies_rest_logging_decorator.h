@@ -39,73 +39,94 @@ class SecurityPoliciesRestLogging : public SecurityPoliciesRestStub {
  public:
   ~SecurityPoliciesRestLogging() override = default;
   SecurityPoliciesRestLogging(std::shared_ptr<SecurityPoliciesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                              TracingOptions tracing_options,
+                              std::set<std::string> components);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const& request) override;
+      google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList> AggregatedListSecurityPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
+  AggregatedListSecurityPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::security_policies::v1::AggregatedListSecurityPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::security_policies::v1::
+          AggregatedListSecurityPoliciesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteSecurityPolicies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteSecurityPolicies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::security_policies::v1::
+          DeleteSecurityPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::security_policies::v1::GetSecurityPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::security_policies::v1::
+          GetSecurityPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const& request) override;
+      google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertSecurityPolicies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertSecurityPolicies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::security_policies::v1::InsertSecurityPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::security_policies::v1::
+          InsertSecurityPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList> ListSecurityPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
+  ListSecurityPolicies(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::security_policies::v1::
+                           ListSecurityPoliciesRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::
+               SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+  ListPreconfiguredExpressionSets(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::security_policies::v1::ListSecurityPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::security_policies::v1::
+          ListPreconfiguredExpressionSetsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse> ListPreconfiguredExpressionSets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::security_policies::v1::ListPreconfiguredExpressionSetsRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchSecurityPolicies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchSecurityPolicies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::security_policies::v1::PatchSecurityPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::security_policies::v1::
+          PatchSecurityPoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const& request) override;
+      google::cloud::cpp::compute::security_policies::v1::
+          PatchRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncRemoveRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const& request) override;
+      google::cloud::cpp::compute::security_policies::v1::
+          RemoveRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::security_policies::v1::
+          SetLabelsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
  private:
   std::shared_ptr<SecurityPoliciesRestStub> child_;

@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `RegionSslPoliciesClient`. To do so,
- * construct an object of type `RegionSslPoliciesClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `RegionSslPoliciesClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,33 +42,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockRegionSslPoliciesConnection : public compute_region_ssl_policies_v1::RegionSslPoliciesConnection {
+class MockRegionSslPoliciesConnection
+    : public compute_region_ssl_policies_v1::RegionSslPoliciesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteRegionSslPolicies,
-  (google::cloud::cpp::compute::region_ssl_policies::v1::DeleteRegionSslPoliciesRequest const& request), (override));
+              DeleteRegionSslPolicies,
+              (google::cloud::cpp::compute::region_ssl_policies::v1::
+                   DeleteRegionSslPoliciesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SslPolicy>,
-  GetRegionSslPolicies,
-  (google::cloud::cpp::compute::region_ssl_policies::v1::GetRegionSslPoliciesRequest const& request), (override));
+              GetRegionSslPolicies,
+              (google::cloud::cpp::compute::region_ssl_policies::v1::
+                   GetRegionSslPoliciesRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertRegionSslPolicies,
-  (google::cloud::cpp::compute::region_ssl_policies::v1::InsertRegionSslPoliciesRequest const& request), (override));
+              InsertRegionSslPolicies,
+              (google::cloud::cpp::compute::region_ssl_policies::v1::
+                   InsertRegionSslPoliciesRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::SslPolicy>,
-  ListRegionSslPolicies,
-  (google::cloud::cpp::compute::region_ssl_policies::v1::ListRegionSslPoliciesRequest request), (override));
+              ListRegionSslPolicies,
+              (google::cloud::cpp::compute::region_ssl_policies::v1::
+                   ListRegionSslPoliciesRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>,
-  ListAvailableFeatures,
-  (google::cloud::cpp::compute::region_ssl_policies::v1::ListAvailableFeaturesRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::
+                           SslPoliciesListAvailableFeaturesResponse>,
+              ListAvailableFeatures,
+              (google::cloud::cpp::compute::region_ssl_policies::v1::
+                   ListAvailableFeaturesRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchRegionSslPolicies,
-  (google::cloud::cpp::compute::region_ssl_policies::v1::PatchRegionSslPoliciesRequest const& request), (override));
+              PatchRegionSslPolicies,
+              (google::cloud::cpp::compute::region_ssl_policies::v1::
+                   PatchRegionSslPoliciesRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

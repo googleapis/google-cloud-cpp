@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_POOLS_V1_INTERNAL_TARGET_POOLS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_POOLS_V1_INTERNAL_TARGET_POOLS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_rest_stub.h"
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_retry_traits.h"
 #include "google/cloud/compute/target_pools/v1/target_pools_connection.h"
 #include "google/cloud/compute/target_pools/v1/target_pools_connection_idempotency_policy.h"
 #include "google/cloud/compute/target_pools/v1/target_pools_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,77 +44,113 @@ class TargetPoolsRestConnectionImpl
   ~TargetPoolsRestConnectionImpl() override = default;
 
   TargetPoolsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_target_pools_v1_internal::TargetPoolsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_target_pools_v1_internal::TargetPoolsRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddHealthCheck(google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddHealthCheck(
+      google::cloud::cpp::compute::target_pools::v1::
+          AddHealthCheckRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddInstance(google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstance(
+      google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
-  AggregatedListTargetPools(google::cloud::cpp::compute::target_pools::v1::AggregatedListTargetPoolsRequest const& request) override;
+  AggregatedListTargetPools(
+      google::cloud::cpp::compute::target_pools::v1::
+          AggregatedListTargetPoolsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetPools(google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolsRequest const& request) override;
+  DeleteTargetPools(google::cloud::cpp::compute::target_pools::v1::
+                        DeleteTargetPoolsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetPool>
-  GetTargetPools(google::cloud::cpp::compute::target_pools::v1::GetTargetPoolsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPools(
+      google::cloud::cpp::compute::target_pools::v1::
+          GetTargetPoolsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
-  GetHealth(google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetPools(google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolsRequest const& request) override;
-
-  StreamRange<google::cloud::cpp::compute::v1::TargetPool>
-  ListTargetPools(google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth> GetHealth(
+      google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveHealthCheck(google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request) override;
+  InsertTargetPools(google::cloud::cpp::compute::target_pools::v1::
+                        InsertTargetPoolsRequest const& request) override;
+
+  StreamRange<google::cloud::cpp::compute::v1::TargetPool> ListTargetPools(
+      google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveInstance(google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request) override;
+  RemoveHealthCheck(google::cloud::cpp::compute::target_pools::v1::
+                        RemoveHealthCheckRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetBackup(google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstance(
+      google::cloud::cpp::compute::target_pools::v1::
+          RemoveInstanceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetBackup(
+      google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<compute_target_pools_v1::TargetPoolsRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_target_pools_v1::TargetPoolsRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_target_pools_v1::TargetPoolsRetryPolicyOption>()) {
-      return options.get<compute_target_pools_v1::TargetPoolsRetryPolicyOption>()->clone();
+      return options
+          .get<compute_target_pools_v1::TargetPoolsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_target_pools_v1::TargetPoolsRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_target_pools_v1::TargetPoolsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_pools_v1::TargetPoolsBackoffPolicyOption>()) {
-      return options.get<compute_target_pools_v1::TargetPoolsBackoffPolicyOption>()->clone();
+    if (options
+            .has<compute_target_pools_v1::TargetPoolsBackoffPolicyOption>()) {
+      return options
+          .get<compute_target_pools_v1::TargetPoolsBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_target_pools_v1::TargetPoolsBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_target_pools_v1::TargetPoolsBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_target_pools_v1::TargetPoolsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_target_pools_v1::TargetPoolsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_pools_v1::TargetPoolsConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_target_pools_v1::TargetPoolsConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_target_pools_v1::
+                        TargetPoolsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_target_pools_v1::
+                   TargetPoolsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_target_pools_v1::TargetPoolsConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_target_pools_v1::
+                 TargetPoolsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_pools_v1::TargetPoolsPollingPolicyOption>()) {
-      return options.get<compute_target_pools_v1::TargetPoolsPollingPolicyOption>()->clone();
+    if (options
+            .has<compute_target_pools_v1::TargetPoolsPollingPolicyOption>()) {
+      return options
+          .get<compute_target_pools_v1::TargetPoolsPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_target_pools_v1::TargetPoolsPollingPolicyOption>()->clone();
+    return options_
+        .get<compute_target_pools_v1::TargetPoolsPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

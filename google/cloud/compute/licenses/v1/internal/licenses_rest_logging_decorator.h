@@ -39,48 +39,60 @@ class LicensesRestLogging : public LicensesRestStub {
  public:
   ~LicensesRestLogging() override = default;
   LicensesRestLogging(std::shared_ptr<LicensesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                      TracingOptions tracing_options,
+                      std::set<std::string> components);
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteLicenses(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteLicenses(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertLicenses(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertLicenses(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse> ListLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::licenses::v1::
+                         TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
  private:
   std::shared_ptr<LicensesRestStub> child_;

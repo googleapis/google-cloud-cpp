@@ -36,22 +36,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionInstancesRestMetadata : public RegionInstancesRestStub {
  public:
   ~RegionInstancesRestMetadata() override = default;
-  explicit RegionInstancesRestMetadata(std::shared_ptr<RegionInstancesRestStub> child);
+  explicit RegionInstancesRestMetadata(
+      std::shared_ptr<RegionInstancesRestStub> child);
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncBulkInsert(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncBulkInsert(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const& request) override;
+      google::cloud::cpp::compute::region_instances::v1::
+          BulkInsertRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

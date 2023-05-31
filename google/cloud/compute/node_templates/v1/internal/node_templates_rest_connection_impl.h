@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TEMPLATES_V1_INTERNAL_NODE_TEMPLATES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TEMPLATES_V1_INTERNAL_NODE_TEMPLATES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/node_templates/v1/internal/node_templates_rest_stub.h"
 #include "google/cloud/compute/node_templates/v1/internal/node_templates_retry_traits.h"
 #include "google/cloud/compute/node_templates/v1/node_templates_connection.h"
 #include "google/cloud/compute/node_templates/v1/node_templates_connection_idempotency_policy.h"
 #include "google/cloud/compute/node_templates/v1/node_templates_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,72 +44,107 @@ class NodeTemplatesRestConnectionImpl
   ~NodeTemplatesRestConnectionImpl() override = default;
 
   NodeTemplatesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_node_templates_v1_internal::NodeTemplatesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_node_templates_v1_internal::NodeTemplatesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
-  AggregatedListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::AggregatedListNodeTemplatesRequest const& request) override;
+  AggregatedListNodeTemplates(
+      google::cloud::cpp::compute::node_templates::v1::
+          AggregatedListNodeTemplatesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeTemplates(google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplatesRequest const& request) override;
+  DeleteNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
+                          DeleteNodeTemplatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-  GetNodeTemplates(google::cloud::cpp::compute::node_templates::v1::GetNodeTemplatesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplates(
+      google::cloud::cpp::compute::node_templates::v1::
+          GetNodeTemplatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::node_templates::v1::
+          GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeTemplates(google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplatesRequest const& request) override;
+  InsertNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
+                          InsertNodeTemplatesRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>
-  ListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::NodeTemplate> ListNodeTemplates(
+      google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::node_templates::v1::
+          SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::node_templates::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::node_templates::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_node_templates_v1::NodeTemplatesRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_node_templates_v1::NodeTemplatesRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_node_templates_v1::NodeTemplatesRetryPolicyOption>()) {
-      return options.get<compute_node_templates_v1::NodeTemplatesRetryPolicyOption>()->clone();
+    if (options
+            .has<compute_node_templates_v1::NodeTemplatesRetryPolicyOption>()) {
+      return options
+          .get<compute_node_templates_v1::NodeTemplatesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_node_templates_v1::NodeTemplatesRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_node_templates_v1::NodeTemplatesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_node_templates_v1::NodeTemplatesBackoffPolicyOption>()) {
-      return options.get<compute_node_templates_v1::NodeTemplatesBackoffPolicyOption>()->clone();
+    if (options.has<
+            compute_node_templates_v1::NodeTemplatesBackoffPolicyOption>()) {
+      return options
+          .get<compute_node_templates_v1::NodeTemplatesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_node_templates_v1::NodeTemplatesBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_node_templates_v1::NodeTemplatesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_node_templates_v1::NodeTemplatesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_node_templates_v1::NodeTemplatesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_node_templates_v1::NodeTemplatesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_node_templates_v1::NodeTemplatesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_node_templates_v1::
+                        NodeTemplatesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_node_templates_v1::
+                   NodeTemplatesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_node_templates_v1::NodeTemplatesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_node_templates_v1::
+                 NodeTemplatesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_node_templates_v1::NodeTemplatesPollingPolicyOption>()) {
-      return options.get<compute_node_templates_v1::NodeTemplatesPollingPolicyOption>()->clone();
+    if (options.has<
+            compute_node_templates_v1::NodeTemplatesPollingPolicyOption>()) {
+      return options
+          .get<compute_node_templates_v1::NodeTemplatesPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_node_templates_v1::NodeTemplatesPollingPolicyOption>()->clone();
+    return options_
+        .get<compute_node_templates_v1::NodeTemplatesPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_node_templates_v1_internal::NodeTemplatesRestStub> stub_;
+  std::shared_ptr<compute_node_templates_v1_internal::NodeTemplatesRestStub>
+      stub_;
   Options options_;
 };
 

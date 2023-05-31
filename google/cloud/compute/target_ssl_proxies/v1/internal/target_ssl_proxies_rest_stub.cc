@@ -30,7 +30,8 @@ namespace cloud {
 namespace compute_target_ssl_proxies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultTargetSslProxiesRestStub::DefaultTargetSslProxiesRestStub(Options options)
+DefaultTargetSslProxiesRestStub::DefaultTargetSslProxiesRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       operations_(rest_internal::MakePooledRestClient(
@@ -39,172 +40,222 @@ DefaultTargetSslProxiesRestStub::DefaultTargetSslProxiesRestStub(Options options
 
 DefaultTargetSslProxiesRestStub::DefaultTargetSslProxiesRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations,
-    Options options)
+    std::shared_ptr<rest_internal::RestClient> operations, Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetSslProxiesRestStub::AsyncDeleteTargetSslProxies(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxiesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        DeleteTargetSslProxiesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/targetSslProxies/", request.target_ssl_proxy(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/targetSslProxies/",
+                             request.target_ssl_proxy(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
 DefaultTargetSslProxiesRestStub::GetTargetSslProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::target_ssl_proxies::v1::GetTargetSslProxiesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        GetTargetSslProxiesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetSslProxy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/targetSslProxies/", request.target_ssl_proxy(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/targetSslProxies/", request.target_ssl_proxy(), ""),
       {std::make_pair("project", request.project())});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetSslProxiesRestStub::AsyncInsertTargetSslProxies(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxiesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        InsertTargetSslProxiesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.target_ssl_proxy_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/targetSslProxies")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.target_ssl_proxy_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/targetSslProxies")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxyList>
 DefaultTargetSslProxiesRestStub::ListTargetSslProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::target_ssl_proxies::v1::ListTargetSslProxiesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::TargetSslProxyList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        ListTargetSslProxiesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::TargetSslProxyList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/targetSslProxies"),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/targetSslProxies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetSslProxiesRestStub::AsyncSetBackendService(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetBackendServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.target_ssl_proxies_set_backend_service_request_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/targetSslProxies/", request.target_ssl_proxy(), "/setBackendService")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request
+                    .target_ssl_proxies_set_backend_service_request_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/targetSslProxies/",
+                             request.target_ssl_proxy(),
+                             "/setBackendService")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetSslProxiesRestStub::AsyncSetCertificateMap(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetCertificateMapRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.target_ssl_proxies_set_certificate_map_request_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/targetSslProxies/", request.target_ssl_proxy(), "/setCertificateMap")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request
+                    .target_ssl_proxies_set_certificate_map_request_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/targetSslProxies/",
+                             request.target_ssl_proxy(),
+                             "/setCertificateMap")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetSslProxiesRestStub::AsyncSetProxyHeader(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetProxyHeaderRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.target_ssl_proxies_set_proxy_header_request_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/targetSslProxies/", request.target_ssl_proxy(), "/setProxyHeader")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.target_ssl_proxies_set_proxy_header_request_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/targetSslProxies/",
+                             request.target_ssl_proxy(), "/setProxyHeader")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetSslProxiesRestStub::AsyncSetSslCertificates(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetSslCertificatesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.target_ssl_proxies_set_ssl_certificates_request_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/targetSslProxies/", request.target_ssl_proxy(), "/setSslCertificates")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request
+                    .target_ssl_proxies_set_ssl_certificates_request_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/targetSslProxies/",
+                             request.target_ssl_proxy(),
+                             "/setSslCertificates")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetSslProxiesRestStub::AsyncSetSslPolicy(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetSslPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.ssl_policy_reference_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/targetSslProxies/", request.target_ssl_proxy(), "/setSslPolicy")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.ssl_policy_reference_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/targetSslProxies/",
+                             request.target_ssl_proxy(), "/setSslPolicy")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
@@ -213,42 +264,43 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetSslProxiesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+                *operations, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/operations/", request.operation())));
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
-future<Status>
-DefaultTargetSslProxiesRestStub::AsyncCancelOperation(
+future<Status> DefaultTargetSslProxiesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations, *rest_context, request,
+            absl::StrCat("/compute/v1/projects/", request.project(),
+                         "/global/operations/", request.operation())));
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
   });
 }

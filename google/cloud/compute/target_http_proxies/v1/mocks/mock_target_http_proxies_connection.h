@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `TargetHttpProxiesClient`. To do so,
- * construct an object of type `TargetHttpProxiesClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `TargetHttpProxiesClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,37 +42,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockTargetHttpProxiesConnection : public compute_target_http_proxies_v1::TargetHttpProxiesConnection {
+class MockTargetHttpProxiesConnection
+    : public compute_target_http_proxies_v1::TargetHttpProxiesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList>,
-  AggregatedListTargetHttpProxies,
-  (google::cloud::cpp::compute::target_http_proxies::v1::AggregatedListTargetHttpProxiesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList>,
+      AggregatedListTargetHttpProxies,
+      (google::cloud::cpp::compute::target_http_proxies::v1::
+           AggregatedListTargetHttpProxiesRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteTargetHttpProxies,
-  (google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxiesRequest const& request), (override));
+              DeleteTargetHttpProxies,
+              (google::cloud::cpp::compute::target_http_proxies::v1::
+                   DeleteTargetHttpProxiesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>,
-  GetTargetHttpProxies,
-  (google::cloud::cpp::compute::target_http_proxies::v1::GetTargetHttpProxiesRequest const& request), (override));
+              GetTargetHttpProxies,
+              (google::cloud::cpp::compute::target_http_proxies::v1::
+                   GetTargetHttpProxiesRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertTargetHttpProxies,
-  (google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxiesRequest const& request), (override));
+              InsertTargetHttpProxies,
+              (google::cloud::cpp::compute::target_http_proxies::v1::
+                   InsertTargetHttpProxiesRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>,
-  ListTargetHttpProxies,
-  (google::cloud::cpp::compute::target_http_proxies::v1::ListTargetHttpProxiesRequest request), (override));
+              ListTargetHttpProxies,
+              (google::cloud::cpp::compute::target_http_proxies::v1::
+                   ListTargetHttpProxiesRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchTargetHttpProxies,
-  (google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxiesRequest const& request), (override));
+              PatchTargetHttpProxies,
+              (google::cloud::cpp::compute::target_http_proxies::v1::
+                   PatchTargetHttpProxiesRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetUrlMap,
-  (google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest const& request), (override));
+              SetUrlMap,
+              (google::cloud::cpp::compute::target_http_proxies::v1::
+                   SetUrlMapRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

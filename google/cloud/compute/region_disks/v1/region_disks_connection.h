@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISKS_V1_REGION_DISKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISKS_V1_REGION_DISKS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_disks/v1/internal/region_disks_retry_traits.h"
 #include "google/cloud/compute/region_disks/v1/region_disks_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -41,8 +41,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using RegionDisksRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_region_disks_v1_internal::RegionDisksRetryTraits>;
 
-using RegionDisksLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_region_disks_v1_internal::RegionDisksRetryTraits>;
+using RegionDisksLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_region_disks_v1_internal::RegionDisksRetryTraits>;
 
 using RegionDisksLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -67,43 +68,57 @@ class RegionDisksConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddResourcePolicies(google::cloud::cpp::compute::region_disks::v1::AddResourcePoliciesRequest const& request);
+  AddResourcePolicies(google::cloud::cpp::compute::region_disks::v1::
+                          AddResourcePoliciesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  CreateSnapshot(google::cloud::cpp::compute::region_disks::v1::CreateSnapshotRequest const& request);
+  CreateSnapshot(google::cloud::cpp::compute::region_disks::v1::
+                     CreateSnapshotRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionDisks(google::cloud::cpp::compute::region_disks::v1::DeleteRegionDisksRequest const& request);
+  DeleteRegionDisks(google::cloud::cpp::compute::region_disks::v1::
+                        DeleteRegionDisksRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Disk>
-  GetRegionDisks(google::cloud::cpp::compute::region_disks::v1::GetRegionDisksRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisks(
+      google::cloud::cpp::compute::region_disks::v1::
+          GetRegionDisksRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionDisks(google::cloud::cpp::compute::region_disks::v1::InsertRegionDisksRequest const& request);
-
-  virtual StreamRange<google::cloud::cpp::compute::v1::Disk>
-  ListRegionDisks(google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveResourcePolicies(google::cloud::cpp::compute::region_disks::v1::RemoveResourcePoliciesRequest const& request);
+  InsertRegionDisks(google::cloud::cpp::compute::region_disks::v1::
+                        InsertRegionDisksRequest const& request);
+
+  virtual StreamRange<google::cloud::cpp::compute::v1::Disk> ListRegionDisks(
+      google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Resize(google::cloud::cpp::compute::region_disks::v1::ResizeRequest const& request);
+  RemoveResourcePolicies(google::cloud::cpp::compute::region_disks::v1::
+                             RemoveResourcePoliciesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::region_disks::v1::SetIamPolicyRequest const& request);
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
+      google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::region_disks::v1::SetIamPolicyRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const& request);
+  SetLabels(
+      google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::region_disks::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::region_disks::v1::
+                         TestIamPermissionsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionDisks(google::cloud::cpp::compute::region_disks::v1::UpdateRegionDisksRequest const& request);
+  UpdateRegionDisks(google::cloud::cpp::compute::region_disks::v1::
+                        UpdateRegionDisksRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

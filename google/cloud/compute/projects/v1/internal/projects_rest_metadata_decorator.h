@@ -38,76 +38,102 @@ class ProjectsRestMetadata : public ProjectsRestStub {
   ~ProjectsRestMetadata() override = default;
   explicit ProjectsRestMetadata(std::shared_ptr<ProjectsRestStub> child);
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDisableXpnHost(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDisableXpnHost(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDisableXpnResource(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDisableXpnResource(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::
+          DisableXpnResourceRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncEnableXpnHost(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncEnableXpnHost(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncEnableXpnResource(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncEnableXpnResource(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::GetProjectsRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources> GetXpnResources(
+  StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
+  GetXpnResources(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::XpnHostList> ListXpnHosts(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncMoveDisk(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncMoveDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request)
+      override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncMoveInstance(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncMoveInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetCommonInstanceMetadata(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetCommonInstanceMetadata(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::
+          SetCommonInstanceMetadataRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetDefaultNetworkTier(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetDefaultNetworkTier(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::
+          SetDefaultNetworkTierRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetUsageExportBucket(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetUsageExportBucket(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) override;
+      google::cloud::cpp::compute::projects::v1::
+          SetUsageExportBucketRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

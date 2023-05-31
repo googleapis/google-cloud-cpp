@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_OPERATIONS_V1_GLOBAL_OPERATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_OPERATIONS_V1_GLOBAL_OPERATIONS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/global_operations/v1/global_operations_connection_idempotency_policy.h"
 #include "google/cloud/compute/global_operations/v1/internal/global_operations_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_global_operations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using GlobalOperationsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_global_operations_v1_internal::GlobalOperationsRetryTraits>;
+using GlobalOperationsRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_global_operations_v1_internal::GlobalOperationsRetryTraits>;
 
-using GlobalOperationsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_global_operations_v1_internal::GlobalOperationsRetryTraits>;
+using GlobalOperationsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_global_operations_v1_internal::GlobalOperationsRetryTraits>;
 
 using GlobalOperationsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -55,7 +57,8 @@ using GlobalOperationsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeGlobalOperationsConnection()`.
  *
- * For mocking, see `compute_global_operations_v1_mocks::MockGlobalOperationsConnection`.
+ * For mocking, see
+ * `compute_global_operations_v1_mocks::MockGlobalOperationsConnection`.
  */
 class GlobalOperationsConnection {
  public:
@@ -64,19 +67,25 @@ class GlobalOperationsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
-  AggregatedListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::AggregatedListGlobalOperationsRequest const& request);
+  AggregatedListGlobalOperations(
+      google::cloud::cpp::compute::global_operations::v1::
+          AggregatedListGlobalOperationsRequest const& request);
 
-  virtual Status
-  DeleteGlobalOperations(google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request);
+  virtual Status DeleteGlobalOperations(
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetGlobalOperations(google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request);
+  GetGlobalOperations(google::cloud::cpp::compute::global_operations::v1::
+                          GetGlobalOperationsRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::ListGlobalOperationsRequest request);
+  ListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::
+                           ListGlobalOperationsRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Wait(google::cloud::cpp::compute::global_operations::v1::WaitRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
+      google::cloud::cpp::compute::global_operations::v1::WaitRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

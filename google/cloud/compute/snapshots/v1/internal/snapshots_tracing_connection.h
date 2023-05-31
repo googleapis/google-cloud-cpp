@@ -36,33 +36,41 @@ class SnapshotsTracingConnection
   ~SnapshotsTracingConnection() override = default;
 
   explicit SnapshotsTracingConnection(
-    std::shared_ptr<compute_snapshots_v1::SnapshotsConnection> child);
+      std::shared_ptr<compute_snapshots_v1::SnapshotsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSnapshots(google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-  GetSnapshots(google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSnapshots(google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Snapshot>
-  ListSnapshots(google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_snapshots_v1::SnapshotsConnection> child_;

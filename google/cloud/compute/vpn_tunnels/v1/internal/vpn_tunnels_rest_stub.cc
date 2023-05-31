@@ -39,109 +39,133 @@ DefaultVpnTunnelsRestStub::DefaultVpnTunnelsRestStub(Options options)
 
 DefaultVpnTunnelsRestStub::DefaultVpnTunnelsRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations,
-    Options options)
+    std::shared_ptr<rest_internal::RestClient> operations, Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
 DefaultVpnTunnelsRestStub::AggregatedListVpnTunnels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpn_tunnels::v1::AggregatedListVpnTunnelsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpn_tunnels::v1::
+        AggregatedListVpnTunnelsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/aggregated/vpnTunnels"),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/aggregated/vpnTunnels"),
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultVpnTunnelsRestStub::AsyncDeleteVpnTunnels(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelsRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/vpnTunnels/", request.vpn_tunnel(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/vpnTunnels/",
+                             request.vpn_tunnel(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
 DefaultVpnTunnelsRestStub::GetVpnTunnels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnTunnel>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/vpnTunnels/", request.vpn_tunnel(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/vpnTunnels/", request.vpn_tunnel(), ""),
       {std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultVpnTunnelsRestStub::AsyncInsertVpnTunnels(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelsRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.vpn_tunnel_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/vpnTunnels")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.vpn_tunnel_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/vpnTunnels")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnelList>
 DefaultVpnTunnelsRestStub::ListVpnTunnels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnTunnelList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/vpnTunnels"),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/vpnTunnels"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultVpnTunnelsRestStub::AsyncSetLabels(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.region_set_labels_request_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/vpnTunnels/", request.resource(), "/setLabels")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.region_set_labels_request_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/vpnTunnels/",
+                             request.resource(), "/setLabels")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
@@ -150,42 +174,44 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultVpnTunnelsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        GetRegionOperationsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+                *operations, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
-future<Status>
-DefaultVpnTunnelsRestStub::AsyncCancelOperation(
+future<Status> DefaultVpnTunnelsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteRegionOperationsRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+                  p.set_value(rest_internal::Post<google::protobuf::Empty>(
+                      *operations, *rest_context, request,
+                      absl::StrCat("/compute/v1/projects/", request.project(),
+                                   "/regions/", request.region(),
+                                   "/operations/", request.operation())));
+                },
+                std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
   });
 }

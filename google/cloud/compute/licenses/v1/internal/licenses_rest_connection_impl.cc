@@ -17,8 +17,8 @@
 // source: google/cloud/compute/licenses/v1/licenses.proto
 
 #include "google/cloud/compute/licenses/v1/internal/licenses_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/licenses/v1/internal/licenses_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation.h"
 #include "google/cloud/internal/extract_long_running_result.h"
@@ -36,152 +36,171 @@ LicensesRestConnectionImpl::LicensesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_licenses_v1_internal::LicensesRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        LicensesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      LicensesConnection::options())) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesRestConnectionImpl::DeleteLicenses(google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request) {
+LicensesRestConnectionImpl::DeleteLicenses(
+    google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+        request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request) {
-     return stub->AsyncDeleteLicenses(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->DeleteLicenses(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::licenses::v1::
+                 DeleteLicensesRequest const& request) {
+        return stub->AsyncDeleteLicenses(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteLicenses(request), polling_policy(), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::License>
-LicensesRestConnectionImpl::GetLicenses(google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request) {
+LicensesRestConnectionImpl::GetLicenses(
+    google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetLicenses(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request) {
-        return stub_->GetLicenses(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+              request) { return stub_->GetLicenses(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-LicensesRestConnectionImpl::GetIamPolicy(google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) {
+LicensesRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+              request) { return stub_->GetIamPolicy(rest_context, request); },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesRestConnectionImpl::InsertLicenses(google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request) {
+LicensesRestConnectionImpl::InsertLicenses(
+    google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+        request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request) {
-     return stub->AsyncInsertLicenses(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->InsertLicenses(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::licenses::v1::
+                 InsertLicensesRequest const& request) {
+        return stub->AsyncInsertLicenses(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->InsertLicenses(request), polling_policy(), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StreamRange<google::cloud::cpp::compute::v1::License>
-LicensesRestConnectionImpl::ListLicenses(google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request) {
+LicensesRestConnectionImpl::ListLicenses(
+    google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_licenses_v1::LicensesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<compute_licenses_v1::LicensesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListLicenses(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::License>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::License>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&
+              r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::licenses::v1::
+                       ListLicensesRequest const& request) {
               return stub->ListLicenses(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::LicensesListResponse r) {
-        std::vector<google::cloud::cpp::compute::v1::License> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::License> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -189,24 +208,29 @@ LicensesRestConnectionImpl::ListLicenses(google::cloud::cpp::compute::licenses::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-LicensesRestConnectionImpl::SetIamPolicy(google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) {
+LicensesRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+              request) { return stub_->SetIamPolicy(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-LicensesRestConnectionImpl::TestIamPermissions(google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) {
+LicensesRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::licenses::v1::
+                 TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, request);
       },
       request, __func__);

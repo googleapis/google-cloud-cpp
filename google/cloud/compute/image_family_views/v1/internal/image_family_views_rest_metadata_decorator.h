@@ -35,11 +35,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ImageFamilyViewsRestMetadata : public ImageFamilyViewsRestStub {
  public:
   ~ImageFamilyViewsRestMetadata() override = default;
-  explicit ImageFamilyViewsRestMetadata(std::shared_ptr<ImageFamilyViewsRestStub> child);
+  explicit ImageFamilyViewsRestMetadata(
+      std::shared_ptr<ImageFamilyViewsRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyViews(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
+  GetImageFamilyViews(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::image_family_views::v1::
+                          GetImageFamilyViewsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

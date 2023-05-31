@@ -33,56 +33,81 @@ RegionUrlMapsTracingConnection::RegionUrlMapsTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsTracingConnection::DeleteRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::DeleteRegionUrlMapsRequest const& request) {
+RegionUrlMapsTracingConnection::DeleteRegionUrlMaps(
+    google::cloud::cpp::compute::region_url_maps::v1::
+        DeleteRegionUrlMapsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_url_maps_v1::RegionUrlMapsConnection::DeleteRegionUrlMaps");
+      "compute_region_url_maps_v1::RegionUrlMapsConnection::"
+      "DeleteRegionUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteRegionUrlMaps(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteRegionUrlMaps(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-RegionUrlMapsTracingConnection::GetRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::GetRegionUrlMapsRequest const& request) {
-  auto span = internal::MakeSpan("compute_region_url_maps_v1::RegionUrlMapsConnection::GetRegionUrlMaps");
+RegionUrlMapsTracingConnection::GetRegionUrlMaps(
+    google::cloud::cpp::compute::region_url_maps::v1::
+        GetRegionUrlMapsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_url_maps_v1::RegionUrlMapsConnection::GetRegionUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRegionUrlMaps(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsTracingConnection::InsertRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::InsertRegionUrlMapsRequest const& request) {
+RegionUrlMapsTracingConnection::InsertRegionUrlMaps(
+    google::cloud::cpp::compute::region_url_maps::v1::
+        InsertRegionUrlMapsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_url_maps_v1::RegionUrlMapsConnection::InsertRegionUrlMaps");
+      "compute_region_url_maps_v1::RegionUrlMapsConnection::"
+      "InsertRegionUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertRegionUrlMaps(request));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertRegionUrlMaps(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::UrlMap>
-RegionUrlMapsTracingConnection::ListRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest request) {
-  auto span = internal::MakeSpan("compute_region_url_maps_v1::RegionUrlMapsConnection::ListRegionUrlMaps");
+RegionUrlMapsTracingConnection::ListRegionUrlMaps(
+    google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_region_url_maps_v1::RegionUrlMapsConnection::ListRegionUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListRegionUrlMaps(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::UrlMap>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::UrlMap>(std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsTracingConnection::PatchRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::PatchRegionUrlMapsRequest const& request) {
+RegionUrlMapsTracingConnection::PatchRegionUrlMaps(
+    google::cloud::cpp::compute::region_url_maps::v1::
+        PatchRegionUrlMapsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_url_maps_v1::RegionUrlMapsConnection::PatchRegionUrlMaps");
+      "compute_region_url_maps_v1::RegionUrlMapsConnection::"
+      "PatchRegionUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchRegionUrlMaps(request));
+  return internal::EndSpan(std::move(span),
+                           child_->PatchRegionUrlMaps(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsTracingConnection::UpdateRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::UpdateRegionUrlMapsRequest const& request) {
+RegionUrlMapsTracingConnection::UpdateRegionUrlMaps(
+    google::cloud::cpp::compute::region_url_maps::v1::
+        UpdateRegionUrlMapsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_url_maps_v1::RegionUrlMapsConnection::UpdateRegionUrlMaps");
+      "compute_region_url_maps_v1::RegionUrlMapsConnection::"
+      "UpdateRegionUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateRegionUrlMaps(request));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateRegionUrlMaps(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
-RegionUrlMapsTracingConnection::Validate(google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const& request) {
-  auto span = internal::MakeSpan("compute_region_url_maps_v1::RegionUrlMapsConnection::Validate");
+RegionUrlMapsTracingConnection::Validate(
+    google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_region_url_maps_v1::RegionUrlMapsConnection::Validate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Validate(request));
 }

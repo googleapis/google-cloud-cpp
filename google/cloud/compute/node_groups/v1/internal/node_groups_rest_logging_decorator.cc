@@ -27,21 +27,24 @@ namespace compute_node_groups_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NodeGroupsRestLogging::NodeGroupsRestLogging(
-    std::shared_ptr<NodeGroupsRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<NodeGroupsRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestLogging::AsyncAddNodes(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const& request) {
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
+              request) {
         return child_->AsyncAddNodes(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -50,10 +53,12 @@ NodeGroupsRestLogging::AsyncAddNodes(
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
 NodeGroupsRestLogging::AggregatedListNodeGroups(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_groups::v1::AggregatedListNodeGroupsRequest const& request) {
+    google::cloud::cpp::compute::node_groups::v1::
+        AggregatedListNodeGroupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::node_groups::v1::AggregatedListNodeGroupsRequest const& request) {
+             google::cloud::cpp::compute::node_groups::v1::
+                 AggregatedListNodeGroupsRequest const& request) {
         return child_->AggregatedListNodeGroups(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -61,27 +66,32 @@ NodeGroupsRestLogging::AggregatedListNodeGroups(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestLogging::AsyncDeleteNodeGroups(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupsRequest const& request) {
-        return child_->AsyncDeleteNodeGroups(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::node_groups::v1::
+                 DeleteNodeGroupsRequest const& request) {
+        return child_->AsyncDeleteNodeGroups(cq, std::move(rest_context),
+                                             request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestLogging::AsyncDeleteNodes(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const& request) {
+             google::cloud::cpp::compute::node_groups::v1::
+                 DeleteNodesRequest const& request) {
         return child_->AsyncDeleteNodes(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -90,10 +100,12 @@ NodeGroupsRestLogging::AsyncDeleteNodes(
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
 NodeGroupsRestLogging::GetNodeGroups(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const& request) {
+    google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const& request) {
+             google::cloud::cpp::compute::node_groups::v1::
+                 GetNodeGroupsRequest const& request) {
         return child_->GetNodeGroups(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -102,10 +114,12 @@ NodeGroupsRestLogging::GetNodeGroups(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeGroupsRestLogging::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::node_groups::v1::
+                 GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -113,14 +127,17 @@ NodeGroupsRestLogging::GetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestLogging::AsyncInsertNodeGroups(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupsRequest const& request) {
-        return child_->AsyncInsertNodeGroups(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::node_groups::v1::
+                 InsertNodeGroupsRequest const& request) {
+        return child_->AsyncInsertNodeGroups(cq, std::move(rest_context),
+                                             request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -128,10 +145,12 @@ NodeGroupsRestLogging::AsyncInsertNodeGroups(
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupList>
 NodeGroupsRestLogging::ListNodeGroups(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest const& request) {
+    google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest const& request) {
+             google::cloud::cpp::compute::node_groups::v1::
+                 ListNodeGroupsRequest const& request) {
         return child_->ListNodeGroups(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -140,25 +159,29 @@ NodeGroupsRestLogging::ListNodeGroups(
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupsListNodes>
 NodeGroupsRestLogging::ListNodes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const& request) {
+    google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const& request) {
-        return child_->ListNodes(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const&
+              request) { return child_->ListNodes(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestLogging::AsyncPatchNodeGroups(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupsRequest const& request) {
-        return child_->AsyncPatchNodeGroups(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::node_groups::v1::
+                 PatchNodeGroupsRequest const& request) {
+        return child_->AsyncPatchNodeGroups(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -166,10 +189,12 @@ NodeGroupsRestLogging::AsyncPatchNodeGroups(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeGroupsRestLogging::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::node_groups::v1::
+                 SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -177,14 +202,17 @@ NodeGroupsRestLogging::SetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestLogging::AsyncSetNodeTemplate(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const& request) {
-        return child_->AsyncSetNodeTemplate(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::node_groups::v1::
+                 SetNodeTemplateRequest const& request) {
+        return child_->AsyncSetNodeTemplate(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -192,10 +220,12 @@ NodeGroupsRestLogging::AsyncSetNodeTemplate(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NodeGroupsRestLogging::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_groups::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::node_groups::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::node_groups::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::node_groups::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -205,26 +235,30 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::
+        GetZoneOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest const& request) {
+             google::cloud::cpp::compute::zone_operations::v1::
+                 GetZoneOperationsRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
-future<Status>
-NodeGroupsRestLogging::AsyncCancelOperation(
+future<Status> NodeGroupsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::
+        DeleteZoneOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::zone_operations::v1::
+                 DeleteZoneOperationsRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }

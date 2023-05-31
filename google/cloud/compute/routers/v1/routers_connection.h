@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTERS_V1_ROUTERS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTERS_V1_ROUTERS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/routers/v1/internal/routers_retry_traits.h"
 #include "google/cloud/compute/routers/v1/routers_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -41,8 +41,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using RoutersRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_routers_v1_internal::RoutersRetryTraits>;
 
-using RoutersLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_routers_v1_internal::RoutersRetryTraits>;
+using RoutersLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_routers_v1_internal::RoutersRetryTraits>;
 
 using RoutersLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -67,34 +68,49 @@ class RoutersConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
-  AggregatedListRouters(google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request);
+  AggregatedListRouters(google::cloud::cpp::compute::routers::v1::
+                            AggregatedListRoutersRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRouters(google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request);
+  DeleteRouters(
+      google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Router>
-  GetRouters(google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Router> GetRouters(
+      google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
-  GetNatMappingInfo(google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request);
+  GetNatMappingInfo(
+      google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
-  GetRouterStatus(google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request);
+  GetRouterStatus(
+      google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRouters(google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request);
+  InsertRouters(
+      google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::Router>
-  ListRouters(google::cloud::cpp::compute::routers::v1::ListRoutersRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
+      google::cloud::cpp::compute::routers::v1::ListRoutersRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRouters(google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request);
+  PatchRouters(
+      google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
-  Preview(google::cloud::cpp::compute::routers::v1::PreviewRequest const& request);
+  Preview(
+      google::cloud::cpp::compute::routers::v1::PreviewRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRouters(google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request);
+  UpdateRouters(
+      google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

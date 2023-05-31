@@ -17,11 +17,11 @@
 // source: google/cloud/compute/target_instances/v1/target_instances.proto
 
 #include "google/cloud/compute/target_instances/v1/target_instances_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_option_defaults.h"
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_tracing_connection.h"
 #include "google/cloud/compute/target_instances/v1/target_instances_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,34 +36,40 @@ TargetInstancesConnection::~TargetInstancesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
 TargetInstancesConnection::AggregatedListTargetInstances(
-    google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest const&) {
+    google::cloud::cpp::compute::target_instances::v1::
+        AggregatedListTargetInstancesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesConnection::DeleteTargetInstances(
-    google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstancesRequest const&) {
+    google::cloud::cpp::compute::target_instances::v1::
+        DeleteTargetInstancesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
 TargetInstancesConnection::GetTargetInstances(
-    google::cloud::cpp::compute::target_instances::v1::GetTargetInstancesRequest const&) {
+    google::cloud::cpp::compute::target_instances::v1::
+        GetTargetInstancesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesConnection::InsertTargetInstances(
-    google::cloud::cpp::compute::target_instances::v1::InsertTargetInstancesRequest const&) {
+    google::cloud::cpp::compute::target_instances::v1::
+        InsertTargetInstancesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::TargetInstance> TargetInstancesConnection::ListTargetInstances(
-    google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
+TargetInstancesConnection::ListTargetInstances(
+    google::cloud::cpp::compute::target_instances::v1::
+        ListTargetInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::TargetInstance>>();
 }

@@ -30,7 +30,8 @@ namespace cloud {
 namespace compute_resource_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultResourcePoliciesRestStub::DefaultResourcePoliciesRestStub(Options options)
+DefaultResourcePoliciesRestStub::DefaultResourcePoliciesRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       operations_(rest_internal::MakePooledRestClient(
@@ -39,163 +40,199 @@ DefaultResourcePoliciesRestStub::DefaultResourcePoliciesRestStub(Options options
 
 DefaultResourcePoliciesRestStub::DefaultResourcePoliciesRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations,
-    Options options)
+    std::shared_ptr<rest_internal::RestClient> operations, Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
 DefaultResourcePoliciesRestStub::AggregatedListResourcePolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::resource_policies::v1::
+        AggregatedListResourcePoliciesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/aggregated/resourcePolicies"),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/aggregated/resourcePolicies"),
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultResourcePoliciesRestStub::AsyncDeleteResourcePolicies(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePoliciesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::resource_policies::v1::
+        DeleteResourcePoliciesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/resourcePolicies/", request.resource_policy(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(),
+                             "/resourcePolicies/", request.resource_policy(),
+                             "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
 DefaultResourcePoliciesRestStub::GetResourcePolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resource_policies::v1::GetResourcePoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::resource_policies::v1::
+        GetResourcePoliciesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ResourcePolicy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/resourcePolicies/", request.resource_policy(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/resourcePolicies/",
+                   request.resource_policy(), ""),
       {std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultResourcePoliciesRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::resource_policies::v1::
+        GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/resourcePolicies/", request.resource(), "/getIamPolicy"),
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/resourcePolicies/", request.resource(),
+                   "/getIamPolicy"),
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultResourcePoliciesRestStub::AsyncInsertResourcePolicies(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::resource_policies::v1::InsertResourcePoliciesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::resource_policies::v1::
+        InsertResourcePoliciesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.resource_policy_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/resourcePolicies")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.resource_policy_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(),
+                             "/resourcePolicies")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyList>
 DefaultResourcePoliciesRestStub::ListResourcePolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::ResourcePolicyList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::resource_policies::v1::
+        ListResourcePoliciesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::ResourcePolicyList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/resourcePolicies"),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/resourcePolicies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultResourcePoliciesRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::resource_policies::v1::
+        SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/resourcePolicies/", request.resource(), "/setIamPolicy"));
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/resourcePolicies/", request.resource(),
+                   "/setIamPolicy"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultResourcePoliciesRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::resource_policies::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/resourcePolicies/", request.resource(), "/testIamPermissions"));
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/resourcePolicies/", request.resource(),
+                   "/testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultResourcePoliciesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        GetRegionOperationsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+                *operations, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
-future<Status>
-DefaultResourcePoliciesRestStub::AsyncCancelOperation(
+future<Status> DefaultResourcePoliciesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteRegionOperationsRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+                  p.set_value(rest_internal::Post<google::protobuf::Empty>(
+                      *operations, *rest_context, request,
+                      absl::StrCat("/compute/v1/projects/", request.project(),
+                                   "/regions/", request.region(),
+                                   "/operations/", request.operation())));
+                },
+                std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
   });
 }

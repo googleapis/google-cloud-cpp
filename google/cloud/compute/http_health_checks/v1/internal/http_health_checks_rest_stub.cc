@@ -30,7 +30,8 @@ namespace cloud {
 namespace compute_http_health_checks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultHttpHealthChecksRestStub::DefaultHttpHealthChecksRestStub(Options options)
+DefaultHttpHealthChecksRestStub::DefaultHttpHealthChecksRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       operations_(rest_internal::MakePooledRestClient(
@@ -39,112 +40,137 @@ DefaultHttpHealthChecksRestStub::DefaultHttpHealthChecksRestStub(Options options
 
 DefaultHttpHealthChecksRestStub::DefaultHttpHealthChecksRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations,
-    Options options)
+    std::shared_ptr<rest_internal::RestClient> operations, Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultHttpHealthChecksRestStub::AsyncDeleteHttpHealthChecks(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::http_health_checks::v1::DeleteHttpHealthChecksRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::http_health_checks::v1::
+        DeleteHttpHealthChecksRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/httpHealthChecks/", request.http_health_check(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/httpHealthChecks/",
+                             request.http_health_check(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
 DefaultHttpHealthChecksRestStub::GetHttpHealthChecks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::http_health_checks::v1::GetHttpHealthChecksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::http_health_checks::v1::
+        GetHttpHealthChecksRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::HttpHealthCheck>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/httpHealthChecks/", request.http_health_check(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/httpHealthChecks/", request.http_health_check(),
+                   ""),
       {std::make_pair("project", request.project())});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultHttpHealthChecksRestStub::AsyncInsertHttpHealthChecks(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::http_health_checks::v1::InsertHttpHealthChecksRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::http_health_checks::v1::
+        InsertHttpHealthChecksRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.http_health_check_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/httpHealthChecks")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.http_health_check_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/httpHealthChecks")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheckList>
 DefaultHttpHealthChecksRestStub::ListHttpHealthChecks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::http_health_checks::v1::ListHttpHealthChecksRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::HttpHealthCheckList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::http_health_checks::v1::
+        ListHttpHealthChecksRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::HttpHealthCheckList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/httpHealthChecks"),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/httpHealthChecks"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultHttpHealthChecksRestStub::AsyncPatchHttpHealthChecks(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::http_health_checks::v1::PatchHttpHealthChecksRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::http_health_checks::v1::
+        PatchHttpHealthChecksRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.http_health_check_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/httpHealthChecks/", request.http_health_check(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.http_health_check_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/httpHealthChecks/",
+                             request.http_health_check(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultHttpHealthChecksRestStub::AsyncUpdateHttpHealthChecks(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::http_health_checks::v1::UpdateHttpHealthChecksRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::http_health_checks::v1::
+        UpdateHttpHealthChecksRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.http_health_check_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/httpHealthChecks/", request.http_health_check(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.http_health_check_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/httpHealthChecks/",
+                             request.http_health_check(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
@@ -153,42 +179,43 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultHttpHealthChecksRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+                *operations, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/operations/", request.operation())));
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
-future<Status>
-DefaultHttpHealthChecksRestStub::AsyncCancelOperation(
+future<Status> DefaultHttpHealthChecksRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations, *rest_context, request,
+            absl::StrCat("/compute/v1/projects/", request.project(),
+                         "/global/operations/", request.operation())));
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
   });
 }

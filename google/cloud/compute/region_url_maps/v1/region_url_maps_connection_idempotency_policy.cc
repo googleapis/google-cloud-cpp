@@ -26,43 +26,57 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RegionUrlMapsConnectionIdempotencyPolicy::~RegionUrlMapsConnectionIdempotencyPolicy() = default;
+RegionUrlMapsConnectionIdempotencyPolicy::
+    ~RegionUrlMapsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RegionUrlMapsConnectionIdempotencyPolicy>
 RegionUrlMapsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RegionUrlMapsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RegionUrlMapsConnectionIdempotencyPolicy::DeleteRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::DeleteRegionUrlMapsRequest const&) {
+Idempotency RegionUrlMapsConnectionIdempotencyPolicy::DeleteRegionUrlMaps(
+    google::cloud::cpp::compute::region_url_maps::v1::
+        DeleteRegionUrlMapsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionUrlMapsConnectionIdempotencyPolicy::GetRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::GetRegionUrlMapsRequest const&) {
+Idempotency RegionUrlMapsConnectionIdempotencyPolicy::GetRegionUrlMaps(
+    google::cloud::cpp::compute::region_url_maps::v1::
+        GetRegionUrlMapsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionUrlMapsConnectionIdempotencyPolicy::InsertRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::InsertRegionUrlMapsRequest const&) {
+Idempotency RegionUrlMapsConnectionIdempotencyPolicy::InsertRegionUrlMaps(
+    google::cloud::cpp::compute::region_url_maps::v1::
+        InsertRegionUrlMapsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionUrlMapsConnectionIdempotencyPolicy::ListRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest) {  // NOLINT
+Idempotency RegionUrlMapsConnectionIdempotencyPolicy::ListRegionUrlMaps(
+    google::cloud::cpp::compute::region_url_maps::v1::
+        ListRegionUrlMapsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionUrlMapsConnectionIdempotencyPolicy::PatchRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::PatchRegionUrlMapsRequest const&) {
+Idempotency RegionUrlMapsConnectionIdempotencyPolicy::PatchRegionUrlMaps(
+    google::cloud::cpp::compute::region_url_maps::v1::
+        PatchRegionUrlMapsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionUrlMapsConnectionIdempotencyPolicy::UpdateRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::UpdateRegionUrlMapsRequest const&) {
+Idempotency RegionUrlMapsConnectionIdempotencyPolicy::UpdateRegionUrlMaps(
+    google::cloud::cpp::compute::region_url_maps::v1::
+        UpdateRegionUrlMapsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionUrlMapsConnectionIdempotencyPolicy::Validate(google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&) {
+Idempotency RegionUrlMapsConnectionIdempotencyPolicy::Validate(
+    google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<RegionUrlMapsConnectionIdempotencyPolicy>
-    MakeDefaultRegionUrlMapsConnectionIdempotencyPolicy() {
+MakeDefaultRegionUrlMapsConnectionIdempotencyPolicy() {
   return std::make_unique<RegionUrlMapsConnectionIdempotencyPolicy>();
 }
 

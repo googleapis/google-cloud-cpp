@@ -39,172 +39,212 @@ DefaultBackendBucketsRestStub::DefaultBackendBucketsRestStub(Options options)
 
 DefaultBackendBucketsRestStub::DefaultBackendBucketsRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations,
-    Options options)
+    std::shared_ptr<rest_internal::RestClient> operations, Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultBackendBucketsRestStub::AsyncAddSignedUrlKey(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::AddSignedUrlKeyRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        AddSignedUrlKeyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.signed_url_key_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/backendBuckets/", request.backend_bucket(), "/addSignedUrlKey")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.signed_url_key_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/backendBuckets/",
+                             request.backend_bucket(), "/addSignedUrlKey")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultBackendBucketsRestStub::AsyncDeleteBackendBuckets(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::DeleteBackendBucketsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        DeleteBackendBucketsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/backendBuckets/", request.backend_bucket(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/backendBuckets/",
+                             request.backend_bucket(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultBackendBucketsRestStub::AsyncDeleteSignedUrlKey(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::DeleteSignedUrlKeyRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        DeleteSignedUrlKeyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/backendBuckets/", request.backend_bucket(), "/deleteSignedUrlKey")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/backendBuckets/",
+                             request.backend_bucket(), "/deleteSignedUrlKey")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
 DefaultBackendBucketsRestStub::GetBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::GetBackendBucketsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        GetBackendBucketsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendBucket>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/backendBuckets/", request.backend_bucket(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/backendBuckets/", request.backend_bucket(), ""),
       {std::make_pair("project", request.project())});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultBackendBucketsRestStub::AsyncInsertBackendBuckets(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::InsertBackendBucketsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        InsertBackendBucketsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.backend_bucket_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/backendBuckets")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.backend_bucket_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/backendBuckets")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucketList>
 DefaultBackendBucketsRestStub::ListBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::ListBackendBucketsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        ListBackendBucketsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendBucketList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/backendBuckets"),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/backendBuckets"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultBackendBucketsRestStub::AsyncPatchBackendBuckets(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::PatchBackendBucketsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        PatchBackendBucketsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.backend_bucket_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/backendBuckets/", request.backend_bucket(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.backend_bucket_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/backendBuckets/",
+                             request.backend_bucket(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultBackendBucketsRestStub::AsyncSetEdgeSecurityPolicy(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::SetEdgeSecurityPolicyRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        SetEdgeSecurityPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.security_policy_reference_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/backendBuckets/", request.backend_bucket(), "/setEdgeSecurityPolicy")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.security_policy_reference_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/backendBuckets/",
+                             request.backend_bucket(),
+                             "/setEdgeSecurityPolicy")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultBackendBucketsRestStub::AsyncUpdateBackendBuckets(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::UpdateBackendBucketsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        UpdateBackendBucketsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.backend_bucket_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/backendBuckets/", request.backend_bucket(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.backend_bucket_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/backendBuckets/",
+                             request.backend_bucket(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
@@ -213,42 +253,43 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultBackendBucketsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+                *operations, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/operations/", request.operation())));
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
-future<Status>
-DefaultBackendBucketsRestStub::AsyncCancelOperation(
+future<Status> DefaultBackendBucketsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations, *rest_context, request,
+            absl::StrCat("/compute/v1/projects/", request.project(),
+                         "/global/operations/", request.operation())));
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
   });
 }

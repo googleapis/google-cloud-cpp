@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_GROUPS_V1_NODE_GROUPS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_GROUPS_V1_NODE_GROUPS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_retry_traits.h"
 #include "google/cloud/compute/node_groups/v1/node_groups_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -41,8 +41,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using NodeGroupsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_node_groups_v1_internal::NodeGroupsRetryTraits>;
 
-using NodeGroupsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_node_groups_v1_internal::NodeGroupsRetryTraits>;
+using NodeGroupsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_node_groups_v1_internal::NodeGroupsRetryTraits>;
 
 using NodeGroupsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -66,44 +67,58 @@ class NodeGroupsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddNodes(google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const& request);
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddNodes(
+      google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
-  AggregatedListNodeGroups(google::cloud::cpp::compute::node_groups::v1::AggregatedListNodeGroupsRequest const& request);
+  AggregatedListNodeGroups(google::cloud::cpp::compute::node_groups::v1::
+                               AggregatedListNodeGroupsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeGroups(google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupsRequest const& request);
+  DeleteNodeGroups(google::cloud::cpp::compute::node_groups::v1::
+                       DeleteNodeGroupsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodes(google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const& request);
+  DeleteNodes(
+      google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
-  GetNodeGroups(google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
+      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeGroups(google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupsRequest const& request);
+  InsertNodeGroups(google::cloud::cpp::compute::node_groups::v1::
+                       InsertNodeGroupsRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
-  ListNodeGroups(google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest request);
+  ListNodeGroups(
+      google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest
+          request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>
-  ListNodes(google::cloud::cpp::compute::node_groups::v1::ListNodesRequest request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNodeGroups(google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupsRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const& request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode> ListNodes(
+      google::cloud::cpp::compute::node_groups::v1::ListNodesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetNodeTemplate(google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const& request);
+  PatchNodeGroups(google::cloud::cpp::compute::node_groups::v1::
+                      PatchNodeGroupsRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetNodeTemplate(google::cloud::cpp::compute::node_groups::v1::
+                      SetNodeTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::node_groups::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::node_groups::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

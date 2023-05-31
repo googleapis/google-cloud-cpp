@@ -17,11 +17,11 @@
 // source: google/cloud/compute/license_codes/v1/license_codes.proto
 
 #include "google/cloud/compute/license_codes/v1/license_codes_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_option_defaults.h"
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_tracing_connection.h"
 #include "google/cloud/compute/license_codes/v1/license_codes_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
@@ -35,13 +35,15 @@ LicenseCodesConnection::~LicenseCodesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
 LicenseCodesConnection::GetLicenseCodes(
-    google::cloud::cpp::compute::license_codes::v1::GetLicenseCodesRequest const&) {
+    google::cloud::cpp::compute::license_codes::v1::
+        GetLicenseCodesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicenseCodesConnection::TestIamPermissions(
-    google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::license_codes::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HTTPS_HEALTH_CHECKS_V1_INTERNAL_HTTPS_HEALTH_CHECKS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HTTPS_HEALTH_CHECKS_V1_INTERNAL_HTTPS_HEALTH_CHECKS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/https_health_checks/v1/https_health_checks_connection.h"
 #include "google/cloud/compute/https_health_checks/v1/https_health_checks_connection_idempotency_policy.h"
 #include "google/cloud/compute/https_health_checks/v1/https_health_checks_options.h"
 #include "google/cloud/compute/https_health_checks/v1/internal/https_health_checks_rest_stub.h"
 #include "google/cloud/compute/https_health_checks/v1/internal/https_health_checks_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,66 +44,110 @@ class HttpsHealthChecksRestConnectionImpl
   ~HttpsHealthChecksRestConnectionImpl() override = default;
 
   HttpsHealthChecksRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_https_health_checks_v1_internal::HttpsHealthChecksRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_https_health_checks_v1_internal::HttpsHealthChecksRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::DeleteHttpsHealthChecksRequest const& request) override;
+  DeleteHttpsHealthChecks(
+      google::cloud::cpp::compute::https_health_checks::v1::
+          DeleteHttpsHealthChecksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-  GetHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::GetHttpsHealthChecksRequest const& request) override;
+  GetHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::
+                           GetHttpsHealthChecksRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::InsertHttpsHealthChecksRequest const& request) override;
+  InsertHttpsHealthChecks(
+      google::cloud::cpp::compute::https_health_checks::v1::
+          InsertHttpsHealthChecksRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-  ListHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::ListHttpsHealthChecksRequest request) override;
+  ListHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::
+                            ListHttpsHealthChecksRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::PatchHttpsHealthChecksRequest const& request) override;
+  PatchHttpsHealthChecks(
+      google::cloud::cpp::compute::https_health_checks::v1::
+          PatchHttpsHealthChecksRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::UpdateHttpsHealthChecksRequest const& request) override;
+  UpdateHttpsHealthChecks(
+      google::cloud::cpp::compute::https_health_checks::v1::
+          UpdateHttpsHealthChecksRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_https_health_checks_v1::HttpsHealthChecksRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_https_health_checks_v1::HttpsHealthChecksRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_https_health_checks_v1::HttpsHealthChecksRetryPolicyOption>()) {
-      return options.get<compute_https_health_checks_v1::HttpsHealthChecksRetryPolicyOption>()->clone();
+    if (options.has<compute_https_health_checks_v1::
+                        HttpsHealthChecksRetryPolicyOption>()) {
+      return options
+          .get<compute_https_health_checks_v1::
+                   HttpsHealthChecksRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_https_health_checks_v1::HttpsHealthChecksRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_https_health_checks_v1::
+                 HttpsHealthChecksRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_https_health_checks_v1::HttpsHealthChecksBackoffPolicyOption>()) {
-      return options.get<compute_https_health_checks_v1::HttpsHealthChecksBackoffPolicyOption>()->clone();
+    if (options.has<compute_https_health_checks_v1::
+                        HttpsHealthChecksBackoffPolicyOption>()) {
+      return options
+          .get<compute_https_health_checks_v1::
+                   HttpsHealthChecksBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_https_health_checks_v1::HttpsHealthChecksBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_https_health_checks_v1::
+                 HttpsHealthChecksBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_https_health_checks_v1::HttpsHealthChecksConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<compute_https_health_checks_v1::
+                      HttpsHealthChecksConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_https_health_checks_v1::HttpsHealthChecksConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_https_health_checks_v1::HttpsHealthChecksConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_https_health_checks_v1::
+                        HttpsHealthChecksConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_https_health_checks_v1::
+                   HttpsHealthChecksConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_https_health_checks_v1::HttpsHealthChecksConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_https_health_checks_v1::
+                 HttpsHealthChecksConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_https_health_checks_v1::HttpsHealthChecksPollingPolicyOption>()) {
-      return options.get<compute_https_health_checks_v1::HttpsHealthChecksPollingPolicyOption>()->clone();
+    if (options.has<compute_https_health_checks_v1::
+                        HttpsHealthChecksPollingPolicyOption>()) {
+      return options
+          .get<compute_https_health_checks_v1::
+                   HttpsHealthChecksPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_https_health_checks_v1::HttpsHealthChecksPollingPolicyOption>()->clone();
+    return options_
+        .get<compute_https_health_checks_v1::
+                 HttpsHealthChecksPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_https_health_checks_v1_internal::HttpsHealthChecksRestStub> stub_;
+  std::shared_ptr<
+      compute_https_health_checks_v1_internal::HttpsHealthChecksRestStub>
+      stub_;
   Options options_;
 };
 

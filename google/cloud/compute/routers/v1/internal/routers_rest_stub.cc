@@ -39,165 +39,205 @@ DefaultRoutersRestStub::DefaultRoutersRestStub(Options options)
 
 DefaultRoutersRestStub::DefaultRoutersRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations,
-    Options options)
+    std::shared_ptr<rest_internal::RestClient> operations, Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
 DefaultRoutersRestStub::AggregatedListRouters(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::RouterAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::
+        AggregatedListRoutersRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::RouterAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/aggregated/routers"),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/aggregated/routers"),
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRoutersRestStub::AsyncDeleteRouters(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/routers/", request.router(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/routers/",
+                             request.router(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Router>
 DefaultRoutersRestStub::GetRouters(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Router>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/routers/", request.router(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/routers/", request.router(), ""),
       {std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
 DefaultRoutersRestStub::GetNatMappingInfo(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/routers/", request.router(), "/getNatMappingInfo"),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/routers/", request.router(),
+                   "/getNatMappingInfo"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
 DefaultRoutersRestStub::GetRouterStatus(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::RouterStatusResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::RouterStatusResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/routers/", request.router(), "/getRouterStatus"),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/routers/", request.router(),
+                   "/getRouterStatus"),
       {std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRoutersRestStub::AsyncInsertRouters(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.router_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/routers")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.router_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/routers")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterList>
 DefaultRoutersRestStub::ListRouters(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::ListRoutersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::RouterList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/routers"),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/routers"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRoutersRestStub::AsyncPatchRouters(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.router_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/routers/", request.router(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.router_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/routers/",
+                             request.router(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
 DefaultRoutersRestStub::Preview(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::RoutersPreviewResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::RoutersPreviewResponse>(
       *service_, rest_context, request.router_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/routers/", request.router(), "/preview"));
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/routers/", request.router(),
+                   "/preview"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRoutersRestStub::AsyncUpdateRouters(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.router_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/routers/", request.router(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.router_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/routers/",
+                             request.router(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
@@ -206,42 +246,44 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRoutersRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        GetRegionOperationsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+                *operations, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
-future<Status>
-DefaultRoutersRestStub::AsyncCancelOperation(
+future<Status> DefaultRoutersRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteRegionOperationsRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+                  p.set_value(rest_internal::Post<google::protobuf::Empty>(
+                      *operations, *rest_context, request,
+                      absl::StrCat("/compute/v1/projects/", request.project(),
+                                   "/regions/", request.region(),
+                                   "/operations/", request.operation())));
+                },
+                std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
   });
 }

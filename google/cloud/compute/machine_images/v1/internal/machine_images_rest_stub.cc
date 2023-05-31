@@ -39,145 +39,171 @@ DefaultMachineImagesRestStub::DefaultMachineImagesRestStub(Options options)
 
 DefaultMachineImagesRestStub::DefaultMachineImagesRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations,
-    Options options)
+    std::shared_ptr<rest_internal::RestClient> operations, Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultMachineImagesRestStub::AsyncDeleteMachineImages(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::machine_images::v1::DeleteMachineImagesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::machine_images::v1::
+        DeleteMachineImagesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/machineImages/", request.machine_image(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/machineImages/", request.machine_image(),
+                             "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
 DefaultMachineImagesRestStub::GetMachineImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machine_images::v1::GetMachineImagesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machine_images::v1::
+        GetMachineImagesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineImage>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/machineImages/", request.machine_image(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/machineImages/", request.machine_image(), ""),
       {std::make_pair("project", request.project())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultMachineImagesRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/machineImages/", request.resource(), "/getIamPolicy"),
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/machineImages/", request.resource(),
+                   "/getIamPolicy"),
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project())});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultMachineImagesRestStub::AsyncInsertMachineImages(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::machine_images::v1::InsertMachineImagesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::machine_images::v1::
+        InsertMachineImagesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.machine_image_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/global/machineImages")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.machine_image_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/machineImages")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImageList>
 DefaultMachineImagesRestStub::ListMachineImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machine_images::v1::
+        ListMachineImagesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineImageList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/machineImages"),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/machineImages"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultMachineImagesRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/machineImages/", request.resource(), "/setIamPolicy"));
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/machineImages/", request.resource(),
+                   "/setIamPolicy"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultMachineImagesRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machine_images::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/machineImages/", request.resource(), "/testIamPermissions"));
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/machineImages/", request.resource(),
+                   "/testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultMachineImagesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+                *operations, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/global/operations/", request.operation())));
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
-future<Status>
-DefaultMachineImagesRestStub::AsyncCancelOperation(
+future<Status> DefaultMachineImagesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations, *rest_context, request,
+            absl::StrCat("/compute/v1/projects/", request.project(),
+                         "/global/operations/", request.operation())));
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
   });
 }

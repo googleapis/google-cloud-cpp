@@ -26,39 +26,50 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-VpnTunnelsConnectionIdempotencyPolicy::~VpnTunnelsConnectionIdempotencyPolicy() = default;
+VpnTunnelsConnectionIdempotencyPolicy::
+    ~VpnTunnelsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<VpnTunnelsConnectionIdempotencyPolicy>
 VpnTunnelsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<VpnTunnelsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency VpnTunnelsConnectionIdempotencyPolicy::AggregatedListVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::AggregatedListVpnTunnelsRequest const&) {
+Idempotency VpnTunnelsConnectionIdempotencyPolicy::AggregatedListVpnTunnels(
+    google::cloud::cpp::compute::vpn_tunnels::v1::
+        AggregatedListVpnTunnelsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VpnTunnelsConnectionIdempotencyPolicy::DeleteVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelsRequest const&) {
+Idempotency VpnTunnelsConnectionIdempotencyPolicy::DeleteVpnTunnels(
+    google::cloud::cpp::compute::vpn_tunnels::v1::
+        DeleteVpnTunnelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VpnTunnelsConnectionIdempotencyPolicy::GetVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&) {
+Idempotency VpnTunnelsConnectionIdempotencyPolicy::GetVpnTunnels(
+    google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VpnTunnelsConnectionIdempotencyPolicy::InsertVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelsRequest const&) {
+Idempotency VpnTunnelsConnectionIdempotencyPolicy::InsertVpnTunnels(
+    google::cloud::cpp::compute::vpn_tunnels::v1::
+        InsertVpnTunnelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VpnTunnelsConnectionIdempotencyPolicy::ListVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest) {  // NOLINT
+Idempotency VpnTunnelsConnectionIdempotencyPolicy::ListVpnTunnels(
+    google::cloud::cpp::compute::vpn_tunnels::v1::
+        ListVpnTunnelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VpnTunnelsConnectionIdempotencyPolicy::SetLabels(google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&) {
+Idempotency VpnTunnelsConnectionIdempotencyPolicy::SetLabels(
+    google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<VpnTunnelsConnectionIdempotencyPolicy>
-    MakeDefaultVpnTunnelsConnectionIdempotencyPolicy() {
+MakeDefaultVpnTunnelsConnectionIdempotencyPolicy() {
   return std::make_unique<VpnTunnelsConnectionIdempotencyPolicy>();
 }
 

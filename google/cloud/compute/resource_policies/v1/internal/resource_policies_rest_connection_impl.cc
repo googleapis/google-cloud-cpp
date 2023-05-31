@@ -17,8 +17,8 @@
 // source: google/cloud/compute/resource_policies/v1/resource_policies.proto
 
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation.h"
 #include "google/cloud/internal/extract_long_running_result.h"
@@ -34,170 +34,202 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ResourcePoliciesRestConnectionImpl::ResourcePoliciesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_resource_policies_v1_internal::ResourcePoliciesRestStub> stub,
+    std::shared_ptr<
+        compute_resource_policies_v1_internal::ResourcePoliciesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        ResourcePoliciesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      ResourcePoliciesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
-ResourcePoliciesRestConnectionImpl::AggregatedListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest const& request) {
+ResourcePoliciesRestConnectionImpl::AggregatedListResourcePolicies(
+    google::cloud::cpp::compute::resource_policies::v1::
+        AggregatedListResourcePoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListResourcePolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest const& request) {
+             google::cloud::cpp::compute::resource_policies::v1::
+                 AggregatedListResourcePoliciesRequest const& request) {
         return stub_->AggregatedListResourcePolicies(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesRestConnectionImpl::DeleteResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePoliciesRequest const& request) {
+ResourcePoliciesRestConnectionImpl::DeleteResourcePolicies(
+    google::cloud::cpp::compute::resource_policies::v1::
+        DeleteResourcePoliciesRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest,
-    google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePoliciesRequest const& request) {
-     return stub->AsyncDeleteResourcePolicies(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->DeleteResourcePolicies(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest,
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::resource_policies::v1::
+                 DeleteResourcePoliciesRequest const& request) {
+        return stub->AsyncDeleteResourcePolicies(cq, std::move(context),
+                                                 request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_operations::v1::
+                 GetRegionOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_operations::v1::
+                 DeleteRegionOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteResourcePolicies(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_region(request.region());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_region(request.region());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    GetRegionOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    DeleteRegionOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-ResourcePoliciesRestConnectionImpl::GetResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::GetResourcePoliciesRequest const& request) {
+ResourcePoliciesRestConnectionImpl::GetResourcePolicies(
+    google::cloud::cpp::compute::resource_policies::v1::
+        GetResourcePoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetResourcePolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::resource_policies::v1::GetResourcePoliciesRequest const& request) {
+             google::cloud::cpp::compute::resource_policies::v1::
+                 GetResourcePoliciesRequest const& request) {
         return stub_->GetResourcePolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ResourcePoliciesRestConnectionImpl::GetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const& request) {
+ResourcePoliciesRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::resource_policies::v1::
+        GetIamPolicyRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::resource_policies::v1::
+                 GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesRestConnectionImpl::InsertResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::InsertResourcePoliciesRequest const& request) {
+ResourcePoliciesRestConnectionImpl::InsertResourcePolicies(
+    google::cloud::cpp::compute::resource_policies::v1::
+        InsertResourcePoliciesRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest,
-    google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::resource_policies::v1::InsertResourcePoliciesRequest const& request) {
-     return stub->AsyncInsertResourcePolicies(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->InsertResourcePolicies(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest,
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::resource_policies::v1::
+                 InsertResourcePoliciesRequest const& request) {
+        return stub->AsyncInsertResourcePolicies(cq, std::move(context),
+                                                 request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_operations::v1::
+                 GetRegionOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_operations::v1::
+                 DeleteRegionOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->InsertResourcePolicies(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_region(request.region());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_region(request.region());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    GetRegionOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    DeleteRegionOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      });
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
-ResourcePoliciesRestConnectionImpl::ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest request) {
+ResourcePoliciesRestConnectionImpl::ListResourcePolicies(
+    google::cloud::cpp::compute::resource_policies::v1::
+        ListResourcePoliciesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_resource_policies_v1::ResourcePoliciesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListResourcePolicies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::resource_policies::v1::
+                          ListResourcePoliciesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::resource_policies::v1::
+                       ListResourcePoliciesRequest const& request) {
               return stub->ListResourcePolicies(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::ResourcePolicyList r) {
-        std::vector<google::cloud::cpp::compute::v1::ResourcePolicy> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::ResourcePolicy> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -205,24 +237,30 @@ ResourcePoliciesRestConnectionImpl::ListResourcePolicies(google::cloud::cpp::com
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ResourcePoliciesRestConnectionImpl::SetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const& request) {
+ResourcePoliciesRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::resource_policies::v1::
+        SetIamPolicyRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::resource_policies::v1::
+                 SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-ResourcePoliciesRestConnectionImpl::TestIamPermissions(google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const& request) {
+ResourcePoliciesRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::resource_policies::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::resource_policies::v1::
+                 TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, request);
       },
       request, __func__);

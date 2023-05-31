@@ -42,37 +42,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockTargetTcpProxiesConnection : public compute_target_tcp_proxies_v1::TargetTcpProxiesConnection {
+class MockTargetTcpProxiesConnection
+    : public compute_target_tcp_proxies_v1::TargetTcpProxiesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>,
-  AggregatedListTargetTcpProxies,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::AggregatedListTargetTcpProxiesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>,
+      AggregatedListTargetTcpProxies,
+      (google::cloud::cpp::compute::target_tcp_proxies::v1::
+           AggregatedListTargetTcpProxiesRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteTargetTcpProxies,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxiesRequest const& request), (override));
+              DeleteTargetTcpProxies,
+              (google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   DeleteTargetTcpProxiesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>,
-  GetTargetTcpProxies,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::GetTargetTcpProxiesRequest const& request), (override));
+              GetTargetTcpProxies,
+              (google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   GetTargetTcpProxiesRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertTargetTcpProxies,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxiesRequest const& request), (override));
+              InsertTargetTcpProxies,
+              (google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   InsertTargetTcpProxiesRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>,
-  ListTargetTcpProxies,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::ListTargetTcpProxiesRequest request), (override));
+              ListTargetTcpProxies,
+              (google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   ListTargetTcpProxiesRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetBackendService,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const& request), (override));
+              SetBackendService,
+              (google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   SetBackendServiceRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetProxyHeader,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const& request), (override));
+              SetProxyHeader,
+              (google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   SetProxyHeaderRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

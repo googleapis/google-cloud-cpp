@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionsClient {
  public:
-  explicit RegionsClient(ExperimentalTag, std::shared_ptr<RegionsConnection> connection, Options opts = {});
+  explicit RegionsClient(ExperimentalTag,
+                         std::shared_ptr<RegionsConnection> connection,
+                         Options opts = {});
   ~RegionsClient();
 
   ///@{
@@ -109,12 +111,12 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L64}
+  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L66}
   /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19672}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Region>
-  GetRegions(std::string const& project, std::string const& region, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
+      std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -146,12 +148,14 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L64}
+  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L66}
   /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19672}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Region>
-  GetRegions(google::cloud::cpp::compute::regions::v1::GetRegionsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
+      google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -188,12 +192,12 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L73}
+  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L75}
   /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19672}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Region>
-  ListRegions(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -235,12 +239,13 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L73}
+  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L75}
   /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19672}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Region>
-  ListRegions(google::cloud::cpp::compute::regions::v1::ListRegionsRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(
+      google::cloud::cpp::compute::regions::v1::ListRegionsRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionsConnection> connection_;

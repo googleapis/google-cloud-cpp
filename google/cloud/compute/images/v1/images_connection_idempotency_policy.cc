@@ -26,59 +26,71 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ImagesConnectionIdempotencyPolicy::~ImagesConnectionIdempotencyPolicy() = default;
+ImagesConnectionIdempotencyPolicy::~ImagesConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<ImagesConnectionIdempotencyPolicy>
 ImagesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ImagesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::DeleteImages(google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::DeleteImages(
+    google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::Deprecate(google::cloud::cpp::compute::images::v1::DeprecateRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::Deprecate(
+    google::cloud::cpp::compute::images::v1::DeprecateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::GetImages(google::cloud::cpp::compute::images::v1::GetImagesRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::GetImages(
+    google::cloud::cpp::compute::images::v1::GetImagesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::GetFromFamily(google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::GetFromFamily(
+    google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::InsertImages(google::cloud::cpp::compute::images::v1::InsertImagesRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::InsertImages(
+    google::cloud::cpp::compute::images::v1::InsertImagesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::ListImages(google::cloud::cpp::compute::images::v1::ListImagesRequest) {  // NOLINT
+Idempotency ImagesConnectionIdempotencyPolicy::ListImages(
+    google::cloud::cpp::compute::images::v1::ListImagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::PatchImages(google::cloud::cpp::compute::images::v1::PatchImagesRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::PatchImages(
+    google::cloud::cpp::compute::images::v1::PatchImagesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::SetLabels(google::cloud::cpp::compute::images::v1::SetLabelsRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::SetLabels(
+    google::cloud::cpp::compute::images::v1::SetLabelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImagesConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&) {
+Idempotency ImagesConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ImagesConnectionIdempotencyPolicy>
-    MakeDefaultImagesConnectionIdempotencyPolicy() {
+MakeDefaultImagesConnectionIdempotencyPolicy() {
   return std::make_unique<ImagesConnectionIdempotencyPolicy>();
 }
 

@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/firewalls/v1/firewalls.proto
 
-
 #include "google/cloud/compute/firewalls/v1/internal/firewalls_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,13 +33,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FirewallsRestMetadata::FirewallsRestMetadata(
     std::shared_ptr<FirewallsRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestMetadata::AsyncDeleteFirewalls(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+        request) {
   SetMetadata(*rest_context);
   return child_->AsyncDeleteFirewalls(cq, std::move(rest_context), request);
 }
@@ -48,16 +49,18 @@ FirewallsRestMetadata::AsyncDeleteFirewalls(
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
 FirewallsRestMetadata::GetFirewalls(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request) {
+    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetFirewalls(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestMetadata::AsyncInsertFirewalls(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+        request) {
   SetMetadata(*rest_context);
   return child_->AsyncInsertFirewalls(cq, std::move(rest_context), request);
 }
@@ -65,25 +68,28 @@ FirewallsRestMetadata::AsyncInsertFirewalls(
 StatusOr<google::cloud::cpp::compute::v1::FirewallList>
 FirewallsRestMetadata::ListFirewalls(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const& request) {
+    google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->ListFirewalls(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestMetadata::AsyncPatchFirewalls(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+        request) {
   SetMetadata(*rest_context);
   return child_->AsyncPatchFirewalls(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestMetadata::AsyncUpdateFirewalls(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+        request) {
   SetMetadata(*rest_context);
   return child_->AsyncUpdateFirewalls(cq, std::move(rest_context), request);
 }
@@ -92,42 +98,43 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
 
-future<Status>
-FirewallsRestMetadata::AsyncCancelOperation(
+future<Status> FirewallsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }
 
 void FirewallsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

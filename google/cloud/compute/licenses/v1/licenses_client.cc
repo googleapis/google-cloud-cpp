@@ -25,14 +25,16 @@ namespace compute_licenses_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LicensesClient::LicensesClient(ExperimentalTag,
-    std::shared_ptr<LicensesConnection> connection, Options opts)
+                               std::shared_ptr<LicensesConnection> connection,
+                               Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 LicensesClient::~LicensesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesClient::DeleteLicenses(std::string const& project, std::string const& license, Options opts) {
+LicensesClient::DeleteLicenses(std::string const& project,
+                               std::string const& license, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest request;
   request.set_project(project);
@@ -41,13 +43,16 @@ LicensesClient::DeleteLicenses(std::string const& project, std::string const& li
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesClient::DeleteLicenses(google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request, Options opts) {
+LicensesClient::DeleteLicenses(
+    google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLicenses(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::License>
-LicensesClient::GetLicenses(std::string const& project, std::string const& license, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::License> LicensesClient::GetLicenses(
+    std::string const& project, std::string const& license, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::licenses::v1::GetLicensesRequest request;
   request.set_project(project);
@@ -55,14 +60,16 @@ LicensesClient::GetLicenses(std::string const& project, std::string const& licen
   return connection_->GetLicenses(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::License>
-LicensesClient::GetLicenses(google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::License> LicensesClient::GetLicenses(
+    google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLicenses(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Policy>
-LicensesClient::GetIamPolicy(std::string const& project, std::string const& resource, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Policy> LicensesClient::GetIamPolicy(
+    std::string const& project, std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest request;
   request.set_project(project);
@@ -70,14 +77,19 @@ LicensesClient::GetIamPolicy(std::string const& project, std::string const& reso
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Policy>
-LicensesClient::GetIamPolicy(google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Policy> LicensesClient::GetIamPolicy(
+    google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesClient::InsertLicenses(std::string const& project, google::cloud::cpp::compute::v1::License const& license_resource, Options opts) {
+LicensesClient::InsertLicenses(
+    std::string const& project,
+    google::cloud::cpp::compute::v1::License const& license_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest request;
   request.set_project(project);
@@ -86,7 +98,10 @@ LicensesClient::InsertLicenses(std::string const& project, google::cloud::cpp::c
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesClient::InsertLicenses(google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request, Options opts) {
+LicensesClient::InsertLicenses(
+    google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertLicenses(request);
 }
@@ -100,39 +115,55 @@ LicensesClient::ListLicenses(std::string const& project, Options opts) {
 }
 
 StreamRange<google::cloud::cpp::compute::v1::License>
-LicensesClient::ListLicenses(google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request, Options opts) {
+LicensesClient::ListLicenses(
+    google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLicenses(std::move(request));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Policy>
-LicensesClient::SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Policy> LicensesClient::SetIamPolicy(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+        global_set_policy_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_global_set_policy_request_resource() = global_set_policy_request_resource;
+  *request.mutable_global_set_policy_request_resource() =
+      global_set_policy_request_resource;
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Policy>
-LicensesClient::SetIamPolicy(google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Policy> LicensesClient::SetIamPolicy(
+    google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-LicensesClient::TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts) {
+LicensesClient::TestIamPermissions(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_test_permissions_request_resource() = test_permissions_request_resource;
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-LicensesClient::TestIamPermissions(google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request, Options opts) {
+LicensesClient::TestIamPermissions(
+    google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

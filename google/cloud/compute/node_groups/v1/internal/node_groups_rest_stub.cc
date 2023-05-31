@@ -39,252 +39,311 @@ DefaultNodeGroupsRestStub::DefaultNodeGroupsRestStub(Options options)
 
 DefaultNodeGroupsRestStub::DefaultNodeGroupsRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations,
-    Options options)
+    std::shared_ptr<rest_internal::RestClient> operations, Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncAddNodes(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.node_groups_add_nodes_request_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/nodeGroups/", request.node_group(), "/addNodes")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.node_groups_add_nodes_request_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/zones/", request.zone(), "/nodeGroups/",
+                             request.node_group(), "/addNodes")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
 DefaultNodeGroupsRestStub::AggregatedListNodeGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::node_groups::v1::AggregatedListNodeGroupsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::node_groups::v1::
+        AggregatedListNodeGroupsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::NodeGroupAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/aggregated/nodeGroups"),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/aggregated/nodeGroups"),
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncDeleteNodeGroups(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupsRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/nodeGroups/", request.node_group(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/zones/", request.zone(), "/nodeGroups/",
+                             request.node_group(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncDeleteNodes(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.node_groups_delete_nodes_request_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/nodeGroups/", request.node_group(), "/deleteNodes")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.node_groups_delete_nodes_request_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/zones/", request.zone(), "/nodeGroups/",
+                             request.node_group(), "/deleteNodes")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
 DefaultNodeGroupsRestStub::GetNodeGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroup>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/nodeGroups/", request.node_group(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
+                   request.zone(), "/nodeGroups/", request.node_group(), ""),
       {std::make_pair("project", request.project()),
        std::make_pair("zone", request.zone())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultNodeGroupsRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/nodeGroups/", request.resource(), "/getIamPolicy"),
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
+                   request.zone(), "/nodeGroups/", request.resource(),
+                   "/getIamPolicy"),
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("zone", request.zone())});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncInsertNodeGroups(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupsRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.node_group_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/nodeGroups")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.node_group_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/zones/", request.zone(), "/nodeGroups")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupList>
 DefaultNodeGroupsRestStub::ListNodeGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroupList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/nodeGroups"),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
+                   request.zone(), "/nodeGroups"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupsListNodes>
 DefaultNodeGroupsRestStub::ListNodes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::NodeGroupsListNodes>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::NodeGroupsListNodes>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/nodeGroups/", request.node_group(), "/listNodes"));
+      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
+                   request.zone(), "/nodeGroups/", request.node_group(),
+                   "/listNodes"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncPatchNodeGroups(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupsRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.node_group_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/nodeGroups/", request.node_group(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.node_group_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/zones/", request.zone(), "/nodeGroups/",
+                             request.node_group(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultNodeGroupsRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/nodeGroups/", request.resource(), "/setIamPolicy"));
+      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
+                   request.zone(), "/nodeGroups/", request.resource(),
+                   "/setIamPolicy"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncSetNodeTemplate(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.node_groups_set_node_template_request_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/nodeGroups/", request.node_group(), "/setNodeTemplate")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.node_groups_set_node_template_request_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/zones/", request.zone(), "/nodeGroups/",
+                             request.node_group(), "/setNodeTemplate")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultNodeGroupsRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::node_groups::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::node_groups::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/nodeGroups/", request.resource(), "/testIamPermissions"));
+      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
+                   request.zone(), "/nodeGroups/", request.resource(),
+                   "/testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::
+        GetZoneOperationsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+                *operations, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
                              "/zones/", request.zone(), "/operations/",
                              request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
-future<Status>
-DefaultNodeGroupsRestStub::AsyncCancelOperation(
+future<Status> DefaultNodeGroupsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::
+        DeleteZoneOperationsRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations, *rest_context, request,
+            absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
+                         request.zone(), "/operations/", request.operation())));
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
   });
 }

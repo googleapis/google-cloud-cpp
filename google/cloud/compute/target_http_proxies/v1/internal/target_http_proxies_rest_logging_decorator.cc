@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetHttpProxiesRestLogging::TargetHttpProxiesRestLogging(
     std::shared_ptr<TargetHttpProxiesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList>
 TargetHttpProxiesRestLogging::AggregatedListTargetHttpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::target_http_proxies::v1::AggregatedListTargetHttpProxiesRequest const& request) {
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        AggregatedListTargetHttpProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::target_http_proxies::v1::AggregatedListTargetHttpProxiesRequest const& request) {
+             google::cloud::cpp::compute::target_http_proxies::v1::
+                 AggregatedListTargetHttpProxiesRequest const& request) {
         return child_->AggregatedListTargetHttpProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -47,14 +49,17 @@ TargetHttpProxiesRestLogging::AggregatedListTargetHttpProxies(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestLogging::AsyncDeleteTargetHttpProxies(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxiesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        DeleteTargetHttpProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxiesRequest const& request) {
-        return child_->AsyncDeleteTargetHttpProxies(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::target_http_proxies::v1::
+                 DeleteTargetHttpProxiesRequest const& request) {
+        return child_->AsyncDeleteTargetHttpProxies(cq, std::move(rest_context),
+                                                    request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -62,10 +67,12 @@ TargetHttpProxiesRestLogging::AsyncDeleteTargetHttpProxies(
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
 TargetHttpProxiesRestLogging::GetTargetHttpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::target_http_proxies::v1::GetTargetHttpProxiesRequest const& request) {
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        GetTargetHttpProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::target_http_proxies::v1::GetTargetHttpProxiesRequest const& request) {
+             google::cloud::cpp::compute::target_http_proxies::v1::
+                 GetTargetHttpProxiesRequest const& request) {
         return child_->GetTargetHttpProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -73,14 +80,17 @@ TargetHttpProxiesRestLogging::GetTargetHttpProxies(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestLogging::AsyncInsertTargetHttpProxies(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxiesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        InsertTargetHttpProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxiesRequest const& request) {
-        return child_->AsyncInsertTargetHttpProxies(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::target_http_proxies::v1::
+                 InsertTargetHttpProxiesRequest const& request) {
+        return child_->AsyncInsertTargetHttpProxies(cq, std::move(rest_context),
+                                                    request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -88,10 +98,12 @@ TargetHttpProxiesRestLogging::AsyncInsertTargetHttpProxies(
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
 TargetHttpProxiesRestLogging::ListTargetHttpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::target_http_proxies::v1::ListTargetHttpProxiesRequest const& request) {
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        ListTargetHttpProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::target_http_proxies::v1::ListTargetHttpProxiesRequest const& request) {
+             google::cloud::cpp::compute::target_http_proxies::v1::
+                 ListTargetHttpProxiesRequest const& request) {
         return child_->ListTargetHttpProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -99,27 +111,32 @@ TargetHttpProxiesRestLogging::ListTargetHttpProxies(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestLogging::AsyncPatchTargetHttpProxies(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxiesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        PatchTargetHttpProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxiesRequest const& request) {
-        return child_->AsyncPatchTargetHttpProxies(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::target_http_proxies::v1::
+                 PatchTargetHttpProxiesRequest const& request) {
+        return child_->AsyncPatchTargetHttpProxies(cq, std::move(rest_context),
+                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestLogging::AsyncSetUrlMap(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        SetUrlMapRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest const& request) {
+             google::cloud::cpp::compute::target_http_proxies::v1::
+                 SetUrlMapRequest const& request) {
         return child_->AsyncSetUrlMap(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -129,26 +146,30 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
-future<Status>
-TargetHttpProxiesRestLogging::AsyncCancelOperation(
+future<Status> TargetHttpProxiesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }

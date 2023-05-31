@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCES_V1_INTERNAL_INSTANCES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCES_V1_INTERNAL_INSTANCES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/instances/v1/instances_connection.h"
 #include "google/cloud/compute/instances/v1/instances_connection_idempotency_policy.h"
 #include "google/cloud/compute/instances/v1/instances_options.h"
 #include "google/cloud/compute/instances/v1/internal/instances_rest_stub.h"
 #include "google/cloud/compute/instances/v1/internal/instances_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,182 +44,251 @@ class InstancesRestConnectionImpl
   ~InstancesRestConnectionImpl() override = default;
 
   InstancesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_instances_v1_internal::InstancesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_instances_v1_internal::InstancesRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddAccessConfig(google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAccessConfig(
+      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddResourcePolicies(google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest const& request) override;
+  AddResourcePolicies(google::cloud::cpp::compute::instances::v1::
+                          AddResourcePoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
-  AggregatedListInstances(google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest const& request) override;
+  AggregatedListInstances(
+      google::cloud::cpp::compute::instances::v1::
+          AggregatedListInstancesRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AttachDisk(
+      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
+      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AttachDisk(google::cloud::cpp::compute::instances::v1::AttachDiskRequest const& request) override;
+  DeleteAccessConfig(google::cloud::cpp::compute::instances::v1::
+                         DeleteAccessConfigRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  BulkInsert(google::cloud::cpp::compute::instances::v1::BulkInsertRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
+      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstances(google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstances(
+      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAccessConfig(google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const& request) override;
+  StatusOr<
+      google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
+  GetEffectiveFirewalls(
+      google::cloud::cpp::compute::instances::v1::
+          GetEffectiveFirewallsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DetachDisk(google::cloud::cpp::compute::instances::v1::DetachDiskRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::GuestAttributes> GetGuestAttributes(
+      google::cloud::cpp::compute::instances::v1::
+          GetGuestAttributesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Instance>
-  GetInstances(google::cloud::cpp::compute::instances::v1::GetInstancesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
-  GetEffectiveFirewalls(google::cloud::cpp::compute::instances::v1::GetEffectiveFirewallsRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>
-  GetGuestAttributes(google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Screenshot>
-  GetScreenshot(google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Screenshot> GetScreenshot(
+      google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
-  GetSerialPortOutput(google::cloud::cpp::compute::instances::v1::GetSerialPortOutputRequest const& request) override;
+  GetSerialPortOutput(google::cloud::cpp::compute::instances::v1::
+                          GetSerialPortOutputRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
-  GetShieldedInstanceIdentity(google::cloud::cpp::compute::instances::v1::GetShieldedInstanceIdentityRequest const& request) override;
+  GetShieldedInstanceIdentity(
+      google::cloud::cpp::compute::instances::v1::
+          GetShieldedInstanceIdentityRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstances(
+      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
+          request) override;
+
+  StreamRange<google::cloud::cpp::compute::v1::Instance> ListInstances(
+      google::cloud::cpp::compute::instances::v1::ListInstancesRequest request)
+      override;
+
+  StreamRange<google::cloud::cpp::compute::v1::Reference> ListReferrers(
+      google::cloud::cpp::compute::instances::v1::ListReferrersRequest request)
+      override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstances(google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const& request) override;
+  RemoveResourcePolicies(
+      google::cloud::cpp::compute::instances::v1::
+          RemoveResourcePoliciesRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Instance>
-  ListInstances(google::cloud::cpp::compute::instances::v1::ListInstancesRequest request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
+      google::cloud::cpp::compute::instances::v1::ResetRequest const& request)
+      override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Reference>
-  ListReferrers(google::cloud::cpp::compute::instances::v1::ListReferrersRequest request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
+      google::cloud::cpp::compute::instances::v1::ResumeRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveResourcePolicies(google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Reset(google::cloud::cpp::compute::instances::v1::ResetRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Resume(google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) override;
-
-  Status
-  SendDiagnosticInterrupt(google::cloud::cpp::compute::instances::v1::SendDiagnosticInterruptRequest const& request) override;
+  Status SendDiagnosticInterrupt(
+      google::cloud::cpp::compute::instances::v1::
+          SendDiagnosticInterruptRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDeletionProtection(google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest const& request) override;
+  SetDeletionProtection(
+      google::cloud::cpp::compute::instances::v1::
+          SetDeletionProtectionRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDiskAutoDelete(google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const& request) override;
+  SetDiskAutoDelete(google::cloud::cpp::compute::instances::v1::
+                        SetDiskAutoDeleteRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::instances::v1::SetLabelsRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMachineResources(google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMachineType(google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMetadata(google::cloud::cpp::compute::instances::v1::SetMetadataRequest const& request) override;
+  SetMachineResources(google::cloud::cpp::compute::instances::v1::
+                          SetMachineResourcesRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMachineType(
+      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMetadata(
+      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMinCpuPlatform(google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const& request) override;
+  SetMinCpuPlatform(google::cloud::cpp::compute::instances::v1::
+                        SetMinCpuPlatformRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
+      google::cloud::cpp::compute::instances::v1::SetNameRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetScheduling(
+      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetName(google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) override;
+  SetServiceAccount(google::cloud::cpp::compute::instances::v1::
+                        SetServiceAccountRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetScheduling(google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const& request) override;
+  SetShieldedInstanceIntegrityPolicy(
+      google::cloud::cpp::compute::instances::v1::
+          SetShieldedInstanceIntegrityPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
+      google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetServiceAccount(google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const& request) override;
+  SimulateMaintenanceEvent(
+      google::cloud::cpp::compute::instances::v1::
+          SimulateMaintenanceEventRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
+      google::cloud::cpp::compute::instances::v1::StartRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetShieldedInstanceIntegrityPolicy(google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest const& request) override;
+  StartWithEncryptionKey(
+      google::cloud::cpp::compute::instances::v1::
+          StartWithEncryptionKeyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetTags(google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
+      google::cloud::cpp::compute::instances::v1::StopRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SimulateMaintenanceEvent(google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Start(google::cloud::cpp::compute::instances::v1::StartRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  StartWithEncryptionKey(google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Stop(google::cloud::cpp::compute::instances::v1::StopRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Suspend(google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
+      google::cloud::cpp::compute::instances::v1::SuspendRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::instances::v1::
+                         TestIamPermissionsRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstances(
+      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateInstances(google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const& request) override;
+  UpdateAccessConfig(google::cloud::cpp::compute::instances::v1::
+                         UpdateAccessConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateAccessConfig(google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const& request) override;
+  UpdateDisplayDevice(google::cloud::cpp::compute::instances::v1::
+                          UpdateDisplayDeviceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateDisplayDevice(google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest const& request) override;
+  UpdateNetworkInterface(
+      google::cloud::cpp::compute::instances::v1::
+          UpdateNetworkInterfaceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateNetworkInterface(google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateShieldedInstanceConfig(google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest const& request) override;
+  UpdateShieldedInstanceConfig(
+      google::cloud::cpp::compute::instances::v1::
+          UpdateShieldedInstanceConfigRequest const& request) override;
 
  private:
   std::unique_ptr<compute_instances_v1::InstancesRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_instances_v1::InstancesRetryPolicyOption>()) {
-      return options.get<compute_instances_v1::InstancesRetryPolicyOption>()->clone();
+      return options.get<compute_instances_v1::InstancesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_instances_v1::InstancesRetryPolicyOption>()->clone();
+    return options_.get<compute_instances_v1::InstancesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_instances_v1::InstancesBackoffPolicyOption>()) {
-      return options.get<compute_instances_v1::InstancesBackoffPolicyOption>()->clone();
+      return options.get<compute_instances_v1::InstancesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_instances_v1::InstancesBackoffPolicyOption>()->clone();
+    return options_.get<compute_instances_v1::InstancesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_instances_v1::InstancesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<compute_instances_v1::InstancesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_instances_v1::InstancesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_instances_v1::InstancesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_instances_v1::
+                        InstancesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_instances_v1::
+                   InstancesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_instances_v1::InstancesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_instances_v1::InstancesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_instances_v1::InstancesPollingPolicyOption>()) {
-      return options.get<compute_instances_v1::InstancesPollingPolicyOption>()->clone();
+      return options.get<compute_instances_v1::InstancesPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_instances_v1::InstancesPollingPolicyOption>()->clone();
+    return options_.get<compute_instances_v1::InstancesPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

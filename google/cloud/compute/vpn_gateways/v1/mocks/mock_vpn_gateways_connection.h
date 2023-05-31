@@ -42,41 +42,61 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockVpnGatewaysConnection : public compute_vpn_gateways_v1::VpnGatewaysConnection {
+class MockVpnGatewaysConnection
+    : public compute_vpn_gateways_v1::VpnGatewaysConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>,
-  AggregatedListVpnGateways,
-  (google::cloud::cpp::compute::vpn_gateways::v1::AggregatedListVpnGatewaysRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>,
+      AggregatedListVpnGateways,
+      (google::cloud::cpp::compute::vpn_gateways::v1::
+           AggregatedListVpnGatewaysRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteVpnGateways,
-  (google::cloud::cpp::compute::vpn_gateways::v1::DeleteVpnGatewaysRequest const& request), (override));
+              DeleteVpnGateways,
+              (google::cloud::cpp::compute::vpn_gateways::v1::
+                   DeleteVpnGatewaysRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::VpnGateway>,
-  GetVpnGateways,
-  (google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewaysRequest const& request), (override));
+              GetVpnGateways,
+              (google::cloud::cpp::compute::vpn_gateways::v1::
+                   GetVpnGatewaysRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>,
-  GetStatus,
-  (google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const& request), (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertVpnGateways,
-  (google::cloud::cpp::compute::vpn_gateways::v1::InsertVpnGatewaysRequest const& request), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::VpnGateway>,
-  ListVpnGateways,
-  (google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>,
+      GetStatus,
+      (google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetLabels,
-  (google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const& request), (override));
+              InsertVpnGateways,
+              (google::cloud::cpp::compute::vpn_gateways::v1::
+                   InsertVpnGatewaysRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::vpn_gateways::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::VpnGateway>, ListVpnGateways,
+      (google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
+      (google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::vpn_gateways::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

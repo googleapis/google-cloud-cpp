@@ -17,8 +17,8 @@
 // source: google/cloud/compute/https_health_checks/v1/https_health_checks.proto
 
 #include "google/cloud/compute/https_health_checks/v1/internal/https_health_checks_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/https_health_checks/v1/internal/https_health_checks_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation.h"
 #include "google/cloud/internal/extract_long_running_result.h"
@@ -34,142 +34,168 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 HttpsHealthChecksRestConnectionImpl::HttpsHealthChecksRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_https_health_checks_v1_internal::HttpsHealthChecksRestStub> stub,
+    std::shared_ptr<
+        compute_https_health_checks_v1_internal::HttpsHealthChecksRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        HttpsHealthChecksConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), HttpsHealthChecksConnection::options())) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksRestConnectionImpl::DeleteHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::DeleteHttpsHealthChecksRequest const& request) {
+HttpsHealthChecksRestConnectionImpl::DeleteHttpsHealthChecks(
+    google::cloud::cpp::compute::https_health_checks::v1::
+        DeleteHttpsHealthChecksRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::https_health_checks::v1::DeleteHttpsHealthChecksRequest const& request) {
-     return stub->AsyncDeleteHttpsHealthChecks(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->DeleteHttpsHealthChecks(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::https_health_checks::v1::
+                 DeleteHttpsHealthChecksRequest const& request) {
+        return stub->AsyncDeleteHttpsHealthChecks(cq, std::move(context),
+                                                  request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteHttpsHealthChecks(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-HttpsHealthChecksRestConnectionImpl::GetHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::GetHttpsHealthChecksRequest const& request) {
+HttpsHealthChecksRestConnectionImpl::GetHttpsHealthChecks(
+    google::cloud::cpp::compute::https_health_checks::v1::
+        GetHttpsHealthChecksRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetHttpsHealthChecks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::https_health_checks::v1::GetHttpsHealthChecksRequest const& request) {
+             google::cloud::cpp::compute::https_health_checks::v1::
+                 GetHttpsHealthChecksRequest const& request) {
         return stub_->GetHttpsHealthChecks(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksRestConnectionImpl::InsertHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::InsertHttpsHealthChecksRequest const& request) {
+HttpsHealthChecksRestConnectionImpl::InsertHttpsHealthChecks(
+    google::cloud::cpp::compute::https_health_checks::v1::
+        InsertHttpsHealthChecksRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::https_health_checks::v1::InsertHttpsHealthChecksRequest const& request) {
-     return stub->AsyncInsertHttpsHealthChecks(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->InsertHttpsHealthChecks(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::https_health_checks::v1::
+                 InsertHttpsHealthChecksRequest const& request) {
+        return stub->AsyncInsertHttpsHealthChecks(cq, std::move(context),
+                                                  request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->InsertHttpsHealthChecks(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StreamRange<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-HttpsHealthChecksRestConnectionImpl::ListHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::ListHttpsHealthChecksRequest request) {
+HttpsHealthChecksRestConnectionImpl::ListHttpsHealthChecks(
+    google::cloud::cpp::compute::https_health_checks::v1::
+        ListHttpsHealthChecksRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_https_health_checks_v1::HttpsHealthChecksRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_https_health_checks_v1::HttpsHealthChecksRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListHttpsHealthChecks(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::HttpsHealthCheck>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::HttpsHealthCheck>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::https_health_checks::v1::ListHttpsHealthChecksRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::https_health_checks::v1::
+                          ListHttpsHealthChecksRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::https_health_checks::v1::ListHttpsHealthChecksRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::https_health_checks::v1::
+                       ListHttpsHealthChecksRequest const& request) {
               return stub->ListHttpsHealthChecks(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::HttpsHealthCheckList r) {
-        std::vector<google::cloud::cpp::compute::v1::HttpsHealthCheck> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::HttpsHealthCheck> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -177,99 +203,111 @@ HttpsHealthChecksRestConnectionImpl::ListHttpsHealthChecks(google::cloud::cpp::c
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksRestConnectionImpl::PatchHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::PatchHttpsHealthChecksRequest const& request) {
+HttpsHealthChecksRestConnectionImpl::PatchHttpsHealthChecks(
+    google::cloud::cpp::compute::https_health_checks::v1::
+        PatchHttpsHealthChecksRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::https_health_checks::v1::PatchHttpsHealthChecksRequest const& request) {
-     return stub->AsyncPatchHttpsHealthChecks(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->PatchHttpsHealthChecks(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::https_health_checks::v1::
+                 PatchHttpsHealthChecksRequest const& request) {
+        return stub->AsyncPatchHttpsHealthChecks(cq, std::move(context),
+                                                 request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->PatchHttpsHealthChecks(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksRestConnectionImpl::UpdateHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::UpdateHttpsHealthChecksRequest const& request) {
+HttpsHealthChecksRestConnectionImpl::UpdateHttpsHealthChecks(
+    google::cloud::cpp::compute::https_health_checks::v1::
+        UpdateHttpsHealthChecksRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::https_health_checks::v1::UpdateHttpsHealthChecksRequest const& request) {
-     return stub->AsyncUpdateHttpsHealthChecks(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->UpdateHttpsHealthChecks(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::https_health_checks::v1::
+                 UpdateHttpsHealthChecksRequest const& request) {
+        return stub->AsyncUpdateHttpsHealthChecks(cq, std::move(context),
+                                                  request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateHttpsHealthChecks(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

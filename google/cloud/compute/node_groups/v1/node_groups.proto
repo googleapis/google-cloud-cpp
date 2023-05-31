@@ -27,23 +27,26 @@ import "google/cloud/extended_operations.proto";
 service NodeGroups {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Adds specified number of nodes to the node group.
-  rpc AddNodes(AddNodesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AddNodes(AddNodesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}/addNodes"
       body: "node_groups_add_nodes_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,node_group,node_groups_add_nodes_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,node_group,node_groups_add_nodes_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Retrieves an aggregated list of node groups. Note: use nodeGroups.listNodes
   // for more details about each group.
-  rpc AggregatedListNodeGroups(AggregatedListNodeGroupsRequest) returns (google.cloud.cpp.compute.v1.NodeGroupAggregatedList) {
+  rpc AggregatedListNodeGroups(AggregatedListNodeGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.NodeGroupAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/nodeGroups"
     };
@@ -51,7 +54,8 @@ service NodeGroups {
   }
 
   // Deletes the specified NodeGroup resource.
-  rpc DeleteNodeGroups(DeleteNodeGroupsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteNodeGroups(DeleteNodeGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}"
     };
@@ -60,19 +64,22 @@ service NodeGroups {
   }
 
   // Deletes specified nodes from the node group.
-  rpc DeleteNodes(DeleteNodesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteNodes(DeleteNodesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}/deleteNodes"
       body: "node_groups_delete_nodes_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,node_group,node_groups_delete_nodes_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,node_group,node_groups_delete_nodes_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Returns the specified NodeGroup. Get a list of available NodeGroups by
   // making a list() request. Note: the "nodes" field should not be used. Use
   // nodeGroups.listNodes instead.
-  rpc GetNodeGroups(GetNodeGroupsRequest) returns (google.cloud.cpp.compute.v1.NodeGroup) {
+  rpc GetNodeGroups(GetNodeGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.NodeGroup) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}"
     };
@@ -81,7 +88,8 @@ service NodeGroups {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{resource=resource}/getIamPolicy"
     };
@@ -90,18 +98,21 @@ service NodeGroups {
 
   // Creates a NodeGroup resource in the specified project using the data
   // included in the request.
-  rpc InsertNodeGroups(InsertNodeGroupsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertNodeGroups(InsertNodeGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups"
       body: "node_group_resource"
     };
-    option (google.api.method_signature) = "project,zone,initial_node_count,node_group_resource";
+    option (google.api.method_signature) =
+        "project,zone,initial_node_count,node_group_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Retrieves a list of node groups available to the specified project. Note:
   // use nodeGroups.listNodes for more details about each group.
-  rpc ListNodeGroups(ListNodeGroupsRequest) returns (google.cloud.cpp.compute.v1.NodeGroupList) {
+  rpc ListNodeGroups(ListNodeGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.NodeGroupList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups"
     };
@@ -109,7 +120,8 @@ service NodeGroups {
   }
 
   // Lists nodes in the node group.
-  rpc ListNodes(ListNodesRequest) returns (google.cloud.cpp.compute.v1.NodeGroupsListNodes) {
+  rpc ListNodes(ListNodesRequest)
+      returns (google.cloud.cpp.compute.v1.NodeGroupsListNodes) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}/listNodes"
       body: "*"
@@ -118,42 +130,50 @@ service NodeGroups {
   }
 
   // Updates the specified node group.
-  rpc PatchNodeGroups(PatchNodeGroupsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchNodeGroups(PatchNodeGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}"
       body: "node_group_resource"
     };
-    option (google.api.method_signature) = "project,zone,node_group,node_group_resource";
+    option (google.api.method_signature) =
+        "project,zone,node_group,node_group_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
-  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{resource=resource}/setIamPolicy"
       body: "zone_set_policy_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,resource,zone_set_policy_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,resource,zone_set_policy_request_resource";
   }
 
   // Updates the node template of the node group.
-  rpc SetNodeTemplate(SetNodeTemplateRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetNodeTemplate(SetNodeTemplateRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}/setNodeTemplate"
       body: "node_groups_set_node_template_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,node_group,node_groups_set_node_template_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,node_group,node_groups_set_node_template_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{resource=resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,resource,test_permissions_request_resource";
   }
 }
 
@@ -163,10 +183,15 @@ message AddNodesRequest {
   string node_group = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The NodeGroupsAddNodesRequest for this request.
-  optional google.cloud.cpp.compute.v1.NodeGroupsAddNodesRequest node_groups_add_nodes_request_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.NodeGroupsAddNodesRequest
+      node_groups_add_nodes_request_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -181,7 +206,10 @@ message AddNodesRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for AggregatedListNodeGroups.
@@ -264,7 +292,10 @@ message DeleteNodeGroupsRequest {
   string node_group = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -279,7 +310,10 @@ message DeleteNodeGroupsRequest {
   optional string request_id = 3;
 
   // The name of the zone for this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for DeleteNodes.
@@ -288,10 +322,15 @@ message DeleteNodesRequest {
   string node_group = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The NodeGroupsDeleteNodesRequest for this request.
-  optional google.cloud.cpp.compute.v1.NodeGroupsDeleteNodesRequest node_groups_delete_nodes_request_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.NodeGroupsDeleteNodesRequest
+      node_groups_delete_nodes_request_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -306,7 +345,10 @@ message DeleteNodesRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for GetIamPolicy.
@@ -342,10 +384,14 @@ message InsertNodeGroupsRequest {
   int32 initial_node_count = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The NodeGroup for this request.
-  optional google.cloud.cpp.compute.v1.NodeGroup node_group_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.NodeGroup node_group_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -360,7 +406,10 @@ message InsertNodeGroupsRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for ListNodeGroups.
@@ -508,10 +557,14 @@ message PatchNodeGroupsRequest {
   string node_group = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The NodeGroup for this request.
-  optional google.cloud.cpp.compute.v1.NodeGroup node_group_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.NodeGroup node_group_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -526,7 +579,10 @@ message PatchNodeGroupsRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetIamPolicy.
@@ -541,7 +597,8 @@ message SetIamPolicyRequest {
   string zone = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The ZoneSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.ZoneSetPolicyRequest zone_set_policy_request_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.ZoneSetPolicyRequest
+      zone_set_policy_request_resource = 4 [json_name = "__json_request_body"];
 }
 
 // Request message for SetNodeTemplate.
@@ -550,10 +607,15 @@ message SetNodeTemplateRequest {
   string node_group = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The NodeGroupsSetNodeTemplateRequest for this request.
-  optional google.cloud.cpp.compute.v1.NodeGroupsSetNodeTemplateRequest node_groups_set_node_template_request_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.NodeGroupsSetNodeTemplateRequest
+      node_groups_set_node_template_request_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -568,7 +630,10 @@ message SetNodeTemplateRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for TestIamPermissions.
@@ -580,7 +645,8 @@ message TestIamPermissionsRequest {
   string resource = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 3 [json_name = "__json_request_body"];
 
   // The name of the zone for this request.
   string zone = 4 [(google.api.field_behavior) = REQUIRED];

@@ -36,30 +36,40 @@ class SslPoliciesTracingConnection
   ~SslPoliciesTracingConnection() override = default;
 
   explicit SslPoliciesTracingConnection(
-    std::shared_ptr<compute_ssl_policies_v1::SslPoliciesConnection> child);
+      std::shared_ptr<compute_ssl_policies_v1::SslPoliciesConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
-  AggregatedListSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::AggregatedListSslPoliciesRequest const& request) override;
+  AggregatedListSslPolicies(
+      google::cloud::cpp::compute::ssl_policies::v1::
+          AggregatedListSslPoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPoliciesRequest const& request) override;
+  DeleteSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::
+                        DeleteSslPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-  GetSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::GetSslPoliciesRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::InsertSslPoliciesRequest const& request) override;
-
-  StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-  ListSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-  ListAvailableFeatures(google::cloud::cpp::compute::ssl_policies::v1::ListAvailableFeaturesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicies(
+      google::cloud::cpp::compute::ssl_policies::v1::
+          GetSslPoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::PatchSslPoliciesRequest const& request) override;
+  InsertSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::
+                        InsertSslPoliciesRequest const& request) override;
+
+  StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListSslPolicies(
+      google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest
+          request) override;
+
+  StatusOr<
+      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  ListAvailableFeatures(
+      google::cloud::cpp::compute::ssl_policies::v1::
+          ListAvailableFeaturesRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicies(
+      google::cloud::cpp::compute::ssl_policies::v1::
+          PatchSslPoliciesRequest const& request) override;
 
  private:
   std::shared_ptr<compute_ssl_policies_v1::SslPoliciesConnection> child_;

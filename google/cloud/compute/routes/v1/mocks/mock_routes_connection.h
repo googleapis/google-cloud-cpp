@@ -46,21 +46,29 @@ class MockRoutesConnection : public compute_routes_v1::RoutesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteRoutes,
-  (google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      DeleteRoutes,
+      (google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Route>,
-  GetRoutes,
-  (google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Route>, GetRoutes,
+              (google::cloud::cpp::compute::routes::v1::GetRoutesRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertRoutes,
-  (google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      InsertRoutes,
+      (google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Route>,
-  ListRoutes,
-  (google::cloud::cpp::compute::routes::v1::ListRoutesRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::Route>, ListRoutes,
+      (google::cloud::cpp::compute::routes::v1::ListRoutesRequest request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

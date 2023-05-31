@@ -38,19 +38,23 @@ class RegionOperationsRestStub {
 
   virtual Status DeleteRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) = 0;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  GetRegionOperations(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::region_operations::v1::
+                          GetRegionOperationsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::OperationList> ListRegionOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_operations::v1::ListRegionOperationsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::OperationList>
+  ListRegionOperations(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::region_operations::v1::
+                           ListRegionOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_operations::v1::WaitRequest const& request) = 0;
+      google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
+          request) = 0;
 };
 
 class DefaultRegionOperationsRestStub : public RegionOperationsRestStub {
@@ -59,24 +63,27 @@ class DefaultRegionOperationsRestStub : public RegionOperationsRestStub {
 
   explicit DefaultRegionOperationsRestStub(Options options);
   DefaultRegionOperationsRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
   Status DeleteRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_operations::v1::ListRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          ListRegionOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_operations::v1::WaitRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

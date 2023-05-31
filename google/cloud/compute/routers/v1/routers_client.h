@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RoutersClient {
  public:
-  explicit RoutersClient(ExperimentalTag, std::shared_ptr<RoutersConnection> connection, Options opts = {});
+  explicit RoutersClient(ExperimentalTag,
+                         std::shared_ptr<RoutersConnection> connection,
+                         Options opts = {});
   ~RoutersClient();
 
   ///@{
@@ -104,7 +106,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L131}
+  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L144}
   /// [google.cloud.cpp.compute.v1.RouterAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22035}
   ///
   // clang-format on
@@ -135,12 +137,14 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L131}
+  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L144}
   /// [google.cloud.cpp.compute.v1.RouterAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22035}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
-  AggregatedListRouters(google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request, Options opts = {});
+  AggregatedListRouters(google::cloud::cpp::compute::routers::v1::
+                            AggregatedListRoutersRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -169,11 +173,12 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L205}
+  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L218}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRouters(std::string const& project, std::string const& region, std::string const& router, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouters(
+      std::string const& project, std::string const& region,
+      std::string const& router, Options opts = {});
 
   // clang-format off
   ///
@@ -205,11 +210,13 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L205}
+  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L218}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRouters(google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouters(
+      google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -232,12 +239,13 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L313}
+  /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L332}
   /// [google.cloud.cpp.compute.v1.Router]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21966}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Router>
-  GetRouters(std::string const& project, std::string const& region, std::string const& router, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Router> GetRouters(
+      std::string const& project, std::string const& region,
+      std::string const& router, Options opts = {});
 
   // clang-format off
   ///
@@ -263,12 +271,14 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L313}
+  /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L332}
   /// [google.cloud.cpp.compute.v1.Router]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21966}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Router>
-  GetRouters(google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Router> GetRouters(
+      google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -292,12 +302,13 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L229}
+  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L248}
   /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29736}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
-  GetNatMappingInfo(std::string const& project, std::string const& region, std::string const& router, Options opts = {});
+  GetNatMappingInfo(std::string const& project, std::string const& region,
+                    std::string const& router, Options opts = {});
 
   // clang-format off
   ///
@@ -323,12 +334,15 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L229}
+  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L248}
   /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29736}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
-  GetNatMappingInfo(google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request, Options opts = {});
+  GetNatMappingInfo(
+      google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -351,12 +365,13 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L301}
+  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L320}
   /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22803}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
-  GetRouterStatus(std::string const& project, std::string const& region, std::string const& router, Options opts = {});
+  GetRouterStatus(std::string const& project, std::string const& region,
+                  std::string const& router, Options opts = {});
 
   // clang-format off
   ///
@@ -382,12 +397,15 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L301}
+  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L320}
   /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22803}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
-  GetRouterStatus(google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request, Options opts = {});
+  GetRouterStatus(
+      google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -417,11 +435,13 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L325}
+  /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L344}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRouters(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouters(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::Router const& router_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -454,11 +474,13 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L325}
+  /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L344}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRouters(google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouters(
+      google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -489,12 +511,12 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L349}
+  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L375}
   /// [google.cloud.cpp.compute.v1.Router]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21966}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Router>
-  ListRouters(std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
+      std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -529,12 +551,13 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L349}
+  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L375}
   /// [google.cloud.cpp.compute.v1.Router]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21966}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Router>
-  ListRouters(google::cloud::cpp::compute::routers::v1::ListRoutersRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
+      google::cloud::cpp::compute::routers::v1::ListRoutersRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -566,11 +589,14 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L417}
+  /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L443}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRouters(std::string const& project, std::string const& region, std::string const& router, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouters(
+      std::string const& project, std::string const& region,
+      std::string const& router,
+      google::cloud::cpp::compute::v1::Router const& router_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -604,11 +630,13 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L417}
+  /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L443}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRouters(google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouters(
+      google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -633,12 +661,15 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L444}
+  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L477}
   /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22810}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
-  Preview(std::string const& project, std::string const& region, std::string const& router, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
+      std::string const& project, std::string const& region,
+      std::string const& router,
+      google::cloud::cpp::compute::v1::Router const& router_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -665,12 +696,13 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L444}
+  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L477}
   /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22810}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
-  Preview(google::cloud::cpp::compute::routers::v1::PreviewRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
+      google::cloud::cpp::compute::routers::v1::PreviewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -703,11 +735,14 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L459}
+  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L493}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRouters(std::string const& project, std::string const& region, std::string const& router, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouters(
+      std::string const& project, std::string const& region,
+      std::string const& router,
+      google::cloud::cpp::compute::v1::Router const& router_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -742,11 +777,13 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L459}
+  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L493}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRouters(google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouters(
+      google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RoutersConnection> connection_;

@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service Routers {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of routers.
-  rpc AggregatedListRouters(AggregatedListRoutersRequest) returns (google.cloud.cpp.compute.v1.RouterAggregatedList) {
+  rpc AggregatedListRouters(AggregatedListRoutersRequest)
+      returns (google.cloud.cpp.compute.v1.RouterAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/routers"
     };
@@ -40,7 +41,8 @@ service Routers {
   }
 
   // Deletes the specified Router resource.
-  rpc DeleteRouters(DeleteRoutersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteRouters(DeleteRoutersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}"
     };
@@ -49,7 +51,8 @@ service Routers {
   }
 
   // Returns the specified Router resource.
-  rpc GetRouters(GetRoutersRequest) returns (google.cloud.cpp.compute.v1.Router) {
+  rpc GetRouters(GetRoutersRequest)
+      returns (google.cloud.cpp.compute.v1.Router) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}"
     };
@@ -57,7 +60,8 @@ service Routers {
   }
 
   // Retrieves runtime Nat mapping information of VM endpoints.
-  rpc GetNatMappingInfo(GetNatMappingInfoRequest) returns (google.cloud.cpp.compute.v1.VmEndpointNatMappingsList) {
+  rpc GetNatMappingInfo(GetNatMappingInfoRequest)
+      returns (google.cloud.cpp.compute.v1.VmEndpointNatMappingsList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}/getNatMappingInfo"
     };
@@ -65,7 +69,8 @@ service Routers {
   }
 
   // Retrieves runtime information of the specified router.
-  rpc GetRouterStatus(GetRouterStatusRequest) returns (google.cloud.cpp.compute.v1.RouterStatusResponse) {
+  rpc GetRouterStatus(GetRouterStatusRequest)
+      returns (google.cloud.cpp.compute.v1.RouterStatusResponse) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}/getRouterStatus"
     };
@@ -74,7 +79,8 @@ service Routers {
 
   // Creates a Router resource in the specified project and region using the
   // data included in the request.
-  rpc InsertRouters(InsertRoutersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertRouters(InsertRoutersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/routers"
       body: "router_resource"
@@ -84,7 +90,8 @@ service Routers {
   }
 
   // Retrieves a list of Router resources available to the specified project.
-  rpc ListRouters(ListRoutersRequest) returns (google.cloud.cpp.compute.v1.RouterList) {
+  rpc ListRouters(ListRoutersRequest)
+      returns (google.cloud.cpp.compute.v1.RouterList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/routers"
     };
@@ -94,35 +101,41 @@ service Routers {
   // Patches the specified Router resource with the data included in the
   // request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
-  rpc PatchRouters(PatchRoutersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchRouters(PatchRoutersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}"
       body: "router_resource"
     };
-    option (google.api.method_signature) = "project,region,router,router_resource";
+    option (google.api.method_signature) =
+        "project,region,router,router_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Preview fields auto-generated during router create and update operations.
   // Calling this method does NOT create or update the router.
-  rpc Preview(PreviewRequest) returns (google.cloud.cpp.compute.v1.RoutersPreviewResponse) {
+  rpc Preview(PreviewRequest)
+      returns (google.cloud.cpp.compute.v1.RoutersPreviewResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}/preview"
       body: "router_resource"
     };
-    option (google.api.method_signature) = "project,region,router,router_resource";
+    option (google.api.method_signature) =
+        "project,region,router,router_resource";
   }
 
   // Updates the specified Router resource with the data included in the
   // request. This method conforms to PUT semantics, which requests that the
   // state of the target resource be created or replaced with the state defined
   // by the representation enclosed in the request message payload.
-  rpc UpdateRouters(UpdateRoutersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateRouters(UpdateRoutersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}"
       body: "router_resource"
     };
-    option (google.api.method_signature) = "project,region,router,router_resource";
+    option (google.api.method_signature) =
+        "project,region,router,router_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -204,10 +217,16 @@ message AggregatedListRoutersRequest {
 // Request message for DeleteRouters.
 message DeleteRoutersRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -324,10 +343,16 @@ message GetRoutersRequest {
 // Request message for InsertRouters.
 message InsertRoutersRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -342,7 +367,8 @@ message InsertRoutersRequest {
   optional string request_id = 3;
 
   // The Router for this request.
-  optional google.cloud.cpp.compute.v1.Router router_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Router router_resource = 4
+      [json_name = "__json_request_body"];
 }
 
 // Request message for ListRouters.
@@ -416,10 +442,16 @@ message ListRoutersRequest {
 // Request message for PatchRouters.
 message PatchRoutersRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -437,7 +469,8 @@ message PatchRoutersRequest {
   string router = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The Router for this request.
-  optional google.cloud.cpp.compute.v1.Router router_resource = 5 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Router router_resource = 5
+      [json_name = "__json_request_body"];
 }
 
 // Request message for Preview.
@@ -452,16 +485,23 @@ message PreviewRequest {
   string router = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The Router for this request.
-  optional google.cloud.cpp.compute.v1.Router router_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Router router_resource = 4
+      [json_name = "__json_request_body"];
 }
 
 // Request message for UpdateRouters.
 message UpdateRoutersRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -479,5 +519,6 @@ message UpdateRoutersRequest {
   string router = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The Router for this request.
-  optional google.cloud.cpp.compute.v1.Router router_resource = 5 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Router router_resource = 5
+      [json_name = "__json_request_body"];
 }

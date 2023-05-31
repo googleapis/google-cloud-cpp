@@ -17,8 +17,8 @@
 // source: google/cloud/compute/node_templates/v1/node_templates.proto
 
 #include "google/cloud/compute/node_templates/v1/internal/node_templates_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/node_templates/v1/internal/node_templates_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation.h"
 #include "google/cloud/internal/extract_long_running_result.h"
@@ -34,170 +34,199 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NodeTemplatesRestConnectionImpl::NodeTemplatesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_node_templates_v1_internal::NodeTemplatesRestStub> stub,
+    std::shared_ptr<compute_node_templates_v1_internal::NodeTemplatesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        NodeTemplatesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      NodeTemplatesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
-NodeTemplatesRestConnectionImpl::AggregatedListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::AggregatedListNodeTemplatesRequest const& request) {
+NodeTemplatesRestConnectionImpl::AggregatedListNodeTemplates(
+    google::cloud::cpp::compute::node_templates::v1::
+        AggregatedListNodeTemplatesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListNodeTemplates(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::node_templates::v1::AggregatedListNodeTemplatesRequest const& request) {
+             google::cloud::cpp::compute::node_templates::v1::
+                 AggregatedListNodeTemplatesRequest const& request) {
         return stub_->AggregatedListNodeTemplates(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesRestConnectionImpl::DeleteNodeTemplates(google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplatesRequest const& request) {
+NodeTemplatesRestConnectionImpl::DeleteNodeTemplates(
+    google::cloud::cpp::compute::node_templates::v1::
+        DeleteNodeTemplatesRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest,
-    google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplatesRequest const& request) {
-     return stub->AsyncDeleteNodeTemplates(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->DeleteNodeTemplates(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest,
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::node_templates::v1::
+                 DeleteNodeTemplatesRequest const& request) {
+        return stub->AsyncDeleteNodeTemplates(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_operations::v1::
+                 GetRegionOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_operations::v1::
+                 DeleteRegionOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteNodeTemplates(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_region(request.region());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_region(request.region());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    GetRegionOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    DeleteRegionOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-NodeTemplatesRestConnectionImpl::GetNodeTemplates(google::cloud::cpp::compute::node_templates::v1::GetNodeTemplatesRequest const& request) {
+NodeTemplatesRestConnectionImpl::GetNodeTemplates(
+    google::cloud::cpp::compute::node_templates::v1::
+        GetNodeTemplatesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetNodeTemplates(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::node_templates::v1::GetNodeTemplatesRequest const& request) {
+             google::cloud::cpp::compute::node_templates::v1::
+                 GetNodeTemplatesRequest const& request) {
         return stub_->GetNodeTemplates(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NodeTemplatesRestConnectionImpl::GetIamPolicy(google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const& request) {
+NodeTemplatesRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::node_templates::v1::
+                 GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesRestConnectionImpl::InsertNodeTemplates(google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplatesRequest const& request) {
+NodeTemplatesRestConnectionImpl::InsertNodeTemplates(
+    google::cloud::cpp::compute::node_templates::v1::
+        InsertNodeTemplatesRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest,
-    google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplatesRequest const& request) {
-     return stub->AsyncInsertNodeTemplates(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->InsertNodeTemplates(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest,
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::node_templates::v1::
+                 InsertNodeTemplatesRequest const& request) {
+        return stub->AsyncInsertNodeTemplates(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_operations::v1::
+                 GetRegionOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::region_operations::v1::
+                 DeleteRegionOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->InsertNodeTemplates(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_region(request.region());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_region(request.region());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    GetRegionOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::region_operations::v1::
+                    DeleteRegionOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_region(request.region());
+        r.set_operation(op);
+      });
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>
-NodeTemplatesRestConnectionImpl::ListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest request) {
+NodeTemplatesRestConnectionImpl::ListNodeTemplates(
+    google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest
+        request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_node_templates_v1::NodeTemplatesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_node_templates_v1::NodeTemplatesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNodeTemplates(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::node_templates::v1::
+                          ListNodeTemplatesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::node_templates::v1::
+                       ListNodeTemplatesRequest const& request) {
               return stub->ListNodeTemplates(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::NodeTemplateList r) {
-        std::vector<google::cloud::cpp::compute::v1::NodeTemplate> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::NodeTemplate> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -205,24 +234,30 @@ NodeTemplatesRestConnectionImpl::ListNodeTemplates(google::cloud::cpp::compute::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NodeTemplatesRestConnectionImpl::SetIamPolicy(google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const& request) {
+NodeTemplatesRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::node_templates::v1::
+                 SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-NodeTemplatesRestConnectionImpl::TestIamPermissions(google::cloud::cpp::compute::node_templates::v1::TestIamPermissionsRequest const& request) {
+NodeTemplatesRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::node_templates::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::node_templates::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::node_templates::v1::
+                 TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, request);
       },
       request, __func__);

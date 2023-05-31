@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionDisksClient {
  public:
-  explicit RegionDisksClient(ExperimentalTag, std::shared_ptr<RegionDisksConnection> connection, Options opts = {});
+  explicit RegionDisksClient(ExperimentalTag,
+                             std::shared_ptr<RegionDisksConnection> connection,
+                             Options opts = {});
   ~RegionDisksClient();
 
   ///@{
@@ -77,10 +79,12 @@ class RegionDisksClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RegionDisksClient const& a, RegionDisksClient const& b) {
+  friend bool operator==(RegionDisksClient const& a,
+                         RegionDisksClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RegionDisksClient const& a, RegionDisksClient const& b) {
+  friend bool operator!=(RegionDisksClient const& a,
+                         RegionDisksClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -114,11 +118,17 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L170}
+  /// [google.cloud.cpp.compute.region_disks.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L189}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddResourcePolicies(std::string const& project, std::string const& region, std::string const& disk, google::cloud::cpp::compute::v1::RegionDisksAddResourcePoliciesRequest const& region_disks_add_resource_policies_request_resource, Options opts = {});
+  AddResourcePolicies(
+      std::string const& project, std::string const& region,
+      std::string const& disk,
+      google::cloud::cpp::compute::v1::
+          RegionDisksAddResourcePoliciesRequest const&
+              region_disks_add_resource_policies_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -151,11 +161,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L170}
+  /// [google.cloud.cpp.compute.region_disks.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L189}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddResourcePolicies(google::cloud::cpp::compute::region_disks::v1::AddResourcePoliciesRequest const& request, Options opts = {});
+  AddResourcePolicies(google::cloud::cpp::compute::region_disks::v1::
+                          AddResourcePoliciesRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -188,11 +200,14 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L197}
+  /// [google.cloud.cpp.compute.region_disks.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L224}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  CreateSnapshot(std::string const& project, std::string const& region, std::string const& disk, google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
+      std::string const& project, std::string const& region,
+      std::string const& disk,
+      google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -227,11 +242,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L197}
+  /// [google.cloud.cpp.compute.region_disks.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L224}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  CreateSnapshot(google::cloud::cpp::compute::region_disks::v1::CreateSnapshotRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
+      google::cloud::cpp::compute::region_disks::v1::
+          CreateSnapshotRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -263,11 +280,12 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L224}
+  /// [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L258}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionDisks(std::string const& project, std::string const& region, std::string const& disk, Options opts = {});
+  DeleteRegionDisks(std::string const& project, std::string const& region,
+                    std::string const& disk, Options opts = {});
 
   // clang-format off
   ///
@@ -302,11 +320,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L224}
+  /// [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L258}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionDisks(google::cloud::cpp::compute::region_disks::v1::DeleteRegionDisksRequest const& request, Options opts = {});
+  DeleteRegionDisks(google::cloud::cpp::compute::region_disks::v1::
+                        DeleteRegionDisksRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -329,12 +349,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.GetRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L263}
+  /// [google.cloud.cpp.compute.region_disks.v1.GetRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L303}
   /// [google.cloud.cpp.compute.v1.Disk]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4301}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Disk>
-  GetRegionDisks(std::string const& project, std::string const& region, std::string const& disk, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisks(
+      std::string const& project, std::string const& region,
+      std::string const& disk, Options opts = {});
 
   // clang-format off
   ///
@@ -360,12 +381,14 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.GetRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L263}
+  /// [google.cloud.cpp.compute.region_disks.v1.GetRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L303}
   /// [google.cloud.cpp.compute.v1.Disk]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4301}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Disk>
-  GetRegionDisks(google::cloud::cpp::compute::region_disks::v1::GetRegionDisksRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisks(
+      google::cloud::cpp::compute::region_disks::v1::
+          GetRegionDisksRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -389,12 +412,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L248}
+  /// [google.cloud.cpp.compute.region_disks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L288}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -421,12 +445,14 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L248}
+  /// [google.cloud.cpp.compute.region_disks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L288}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -456,11 +482,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.InsertRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L275}
+  /// [google.cloud.cpp.compute.region_disks.v1.InsertRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L315}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionDisks(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Disk const& disk_resource, Options opts = {});
+  InsertRegionDisks(std::string const& project, std::string const& region,
+                    google::cloud::cpp::compute::v1::Disk const& disk_resource,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -493,11 +521,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.InsertRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L275}
+  /// [google.cloud.cpp.compute.region_disks.v1.InsertRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L315}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionDisks(google::cloud::cpp::compute::region_disks::v1::InsertRegionDisksRequest const& request, Options opts = {});
+  InsertRegionDisks(google::cloud::cpp::compute::region_disks::v1::
+                        InsertRegionDisksRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -529,12 +559,12 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.ListRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L302}
+  /// [google.cloud.cpp.compute.region_disks.v1.ListRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L349}
   /// [google.cloud.cpp.compute.v1.Disk]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4301}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Disk>
-  ListRegionDisks(std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Disk> ListRegionDisks(
+      std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -570,12 +600,14 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.ListRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L302}
+  /// [google.cloud.cpp.compute.region_disks.v1.ListRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L349}
   /// [google.cloud.cpp.compute.v1.Disk]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4301}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Disk>
-  ListRegionDisks(google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Disk> ListRegionDisks(
+      google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -605,11 +637,17 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L370}
+  /// [google.cloud.cpp.compute.region_disks.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L417}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveResourcePolicies(std::string const& project, std::string const& region, std::string const& disk, google::cloud::cpp::compute::v1::RegionDisksRemoveResourcePoliciesRequest const& region_disks_remove_resource_policies_request_resource, Options opts = {});
+  RemoveResourcePolicies(
+      std::string const& project, std::string const& region,
+      std::string const& disk,
+      google::cloud::cpp::compute::v1::
+          RegionDisksRemoveResourcePoliciesRequest const&
+              region_disks_remove_resource_policies_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -641,11 +679,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L370}
+  /// [google.cloud.cpp.compute.region_disks.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L417}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveResourcePolicies(google::cloud::cpp::compute::region_disks::v1::RemoveResourcePoliciesRequest const& request, Options opts = {});
+  RemoveResourcePolicies(google::cloud::cpp::compute::region_disks::v1::
+                             RemoveResourcePoliciesRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -675,11 +715,15 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L397}
+  /// [google.cloud.cpp.compute.region_disks.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L452}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Resize(std::string const& project, std::string const& region, std::string const& disk, google::cloud::cpp::compute::v1::RegionDisksResizeRequest const& region_disks_resize_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
+      std::string const& project, std::string const& region,
+      std::string const& disk,
+      google::cloud::cpp::compute::v1::RegionDisksResizeRequest const&
+          region_disks_resize_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -711,11 +755,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L397}
+  /// [google.cloud.cpp.compute.region_disks.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L452}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Resize(google::cloud::cpp::compute::region_disks::v1::ResizeRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
+      google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -740,12 +786,16 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L424}
+  /// [google.cloud.cpp.compute.region_disks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L487}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetPolicyRequest const& region_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetPolicyRequest const&
+          region_set_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -772,12 +822,14 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L424}
+  /// [google.cloud.cpp.compute.region_disks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L487}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::region_disks::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::region_disks::v1::SetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -807,11 +859,15 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L439}
+  /// [google.cloud.cpp.compute.region_disks.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L504}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetLabelsRequest const& region_set_labels_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
+          region_set_labels_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -843,11 +899,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L439}
+  /// [google.cloud.cpp.compute.region_disks.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L504}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -871,12 +929,17 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L466}
+  /// [google.cloud.cpp.compute.region_disks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L539}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -902,12 +965,14 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L466}
+  /// [google.cloud.cpp.compute.region_disks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L539}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::region_disks::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::region_disks::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -939,11 +1004,14 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L481}
+  /// [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L555}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionDisks(std::string const& project, std::string const& region, std::string const& disk, google::cloud::cpp::compute::v1::Disk const& disk_resource, Options opts = {});
+  UpdateRegionDisks(std::string const& project, std::string const& region,
+                    std::string const& disk,
+                    google::cloud::cpp::compute::v1::Disk const& disk_resource,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -977,11 +1045,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L481}
+  /// [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L555}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionDisks(google::cloud::cpp::compute::region_disks::v1::UpdateRegionDisksRequest const& request, Options opts = {});
+  UpdateRegionDisks(google::cloud::cpp::compute::region_disks::v1::
+                        UpdateRegionDisksRequest const& request,
+                    Options opts = {});
 
  private:
   std::shared_ptr<RegionDisksConnection> connection_;

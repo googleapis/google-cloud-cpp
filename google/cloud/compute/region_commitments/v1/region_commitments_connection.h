@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_COMMITMENTS_V1_REGION_COMMITMENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_COMMITMENTS_V1_REGION_COMMITMENTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_retry_traits.h"
 #include "google/cloud/compute/region_commitments/v1/region_commitments_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -38,11 +38,13 @@ namespace cloud {
 namespace compute_region_commitments_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using RegionCommitmentsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_region_commitments_v1_internal::RegionCommitmentsRetryTraits>;
+using RegionCommitmentsRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_region_commitments_v1_internal::RegionCommitmentsRetryTraits>;
 
-using RegionCommitmentsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_region_commitments_v1_internal::RegionCommitmentsRetryTraits>;
+using RegionCommitmentsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_region_commitments_v1_internal::RegionCommitmentsRetryTraits>;
 
 using RegionCommitmentsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -52,13 +54,14 @@ using RegionCommitmentsLimitedErrorCountRetryPolicy =
  * The `RegionCommitmentsConnection` object for `RegionCommitmentsClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `RegionCommitmentsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `RegionCommitmentsClient`.
+ * sets in `RegionCommitmentsClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `RegionCommitmentsClient`.
  *
  * To create a concrete instance, see `MakeRegionCommitmentsConnection()`.
  *
- * For mocking, see `compute_region_commitments_v1_mocks::MockRegionCommitmentsConnection`.
+ * For mocking, see
+ * `compute_region_commitments_v1_mocks::MockRegionCommitmentsConnection`.
  */
 class RegionCommitmentsConnection {
  public:
@@ -67,19 +70,25 @@ class RegionCommitmentsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
-  AggregatedListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest const& request);
+  AggregatedListRegionCommitments(
+      google::cloud::cpp::compute::region_commitments::v1::
+          AggregatedListRegionCommitmentsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Commitment>
-  GetRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::GetRegionCommitmentsRequest const& request);
+  GetRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
+                           GetRegionCommitmentsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::InsertRegionCommitmentsRequest const& request);
+  InsertRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
+                              InsertRegionCommitmentsRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Commitment>
-  ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest request);
+  ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
+                            ListRegionCommitmentsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::UpdateRegionCommitmentsRequest const& request);
+  UpdateRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
+                              UpdateRegionCommitmentsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

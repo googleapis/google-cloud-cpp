@@ -35,53 +35,68 @@ class BackendServicesConnectionIdempotencyPolicy {
   virtual ~BackendServicesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<BackendServicesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<BackendServicesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AddSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request);
+  virtual google::cloud::Idempotency AddSignedUrlKey(
+      google::cloud::cpp::compute::backend_services::v1::
+          AddSignedUrlKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AggregatedListBackendServices(google::cloud::cpp::compute::backend_services::v1::AggregatedListBackendServicesRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListBackendServices(
+      google::cloud::cpp::compute::backend_services::v1::
+          AggregatedListBackendServicesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteBackendServices(google::cloud::cpp::compute::backend_services::v1::DeleteBackendServicesRequest const& request);
+  virtual google::cloud::Idempotency DeleteBackendServices(
+      google::cloud::cpp::compute::backend_services::v1::
+          DeleteBackendServicesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request);
+  virtual google::cloud::Idempotency DeleteSignedUrlKey(
+      google::cloud::cpp::compute::backend_services::v1::
+          DeleteSignedUrlKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetBackendServices(google::cloud::cpp::compute::backend_services::v1::GetBackendServicesRequest const& request);
+  virtual google::cloud::Idempotency GetBackendServices(
+      google::cloud::cpp::compute::backend_services::v1::
+          GetBackendServicesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetHealth(google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const& request);
+  virtual google::cloud::Idempotency GetHealth(
+      google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::cloud::cpp::compute::backend_services::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::backend_services::v1::
+          GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertBackendServices(google::cloud::cpp::compute::backend_services::v1::InsertBackendServicesRequest const& request);
+  virtual google::cloud::Idempotency InsertBackendServices(
+      google::cloud::cpp::compute::backend_services::v1::
+          InsertBackendServicesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListBackendServices(google::cloud::cpp::compute::backend_services::v1::ListBackendServicesRequest request);
+  virtual google::cloud::Idempotency ListBackendServices(
+      google::cloud::cpp::compute::backend_services::v1::
+          ListBackendServicesRequest request);
 
-  virtual google::cloud::Idempotency
-  PatchBackendServices(google::cloud::cpp::compute::backend_services::v1::PatchBackendServicesRequest const& request);
+  virtual google::cloud::Idempotency PatchBackendServices(
+      google::cloud::cpp::compute::backend_services::v1::
+          PatchBackendServicesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetEdgeSecurityPolicy(
+      google::cloud::cpp::compute::backend_services::v1::
+          SetEdgeSecurityPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::cloud::cpp::compute::backend_services::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::backend_services::v1::
+          SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetSecurityPolicy(
+      google::cloud::cpp::compute::backend_services::v1::
+          SetSecurityPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateBackendServices(google::cloud::cpp::compute::backend_services::v1::UpdateBackendServicesRequest const& request);
+  virtual google::cloud::Idempotency UpdateBackendServices(
+      google::cloud::cpp::compute::backend_services::v1::
+          UpdateBackendServicesRequest const& request);
 };
 
 std::unique_ptr<BackendServicesConnectionIdempotencyPolicy>
-    MakeDefaultBackendServicesConnectionIdempotencyPolicy();
+MakeDefaultBackendServicesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_backend_services_v1

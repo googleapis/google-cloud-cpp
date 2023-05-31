@@ -17,8 +17,8 @@
 // source: google/cloud/compute/node_types/v1/node_types.proto
 
 #include "google/cloud/compute/node_types/v1/internal/node_types_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/node_types/v1/internal/node_types_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -34,56 +34,70 @@ NodeTypesRestConnectionImpl::NodeTypesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_node_types_v1_internal::NodeTypesRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        NodeTypesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      NodeTypesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
-NodeTypesRestConnectionImpl::AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest const& request) {
+NodeTypesRestConnectionImpl::AggregatedListNodeTypes(
+    google::cloud::cpp::compute::node_types::v1::
+        AggregatedListNodeTypesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListNodeTypes(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest const& request) {
+             google::cloud::cpp::compute::node_types::v1::
+                 AggregatedListNodeTypesRequest const& request) {
         return stub_->AggregatedListNodeTypes(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesRestConnectionImpl::GetNodeTypes(google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const& request) {
+NodeTypesRestConnectionImpl::GetNodeTypes(
+    google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetNodeTypes(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const& request) {
+             google::cloud::cpp::compute::node_types::v1::
+                 GetNodeTypesRequest const& request) {
         return stub_->GetNodeTypes(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesRestConnectionImpl::ListNodeTypes(google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request) {
+NodeTypesRestConnectionImpl::ListNodeTypes(
+    google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_node_types_v1::NodeTypesRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<compute_node_types_v1::NodeTypesRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNodeTypes(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::NodeType>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::NodeType>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::node_types::v1::
+                          ListNodeTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::node_types::v1::
+                       ListNodeTypesRequest const& request) {
               return stub->ListNodeTypes(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::NodeTypeList r) {
-        std::vector<google::cloud::cpp::compute::v1::NodeType> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::NodeType> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

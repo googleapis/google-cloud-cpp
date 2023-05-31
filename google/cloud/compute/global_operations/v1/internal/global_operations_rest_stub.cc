@@ -29,71 +29,84 @@ namespace cloud {
 namespace compute_global_operations_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultGlobalOperationsRestStub::DefaultGlobalOperationsRestStub(Options options)
+DefaultGlobalOperationsRestStub::DefaultGlobalOperationsRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultGlobalOperationsRestStub::DefaultGlobalOperationsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
 DefaultGlobalOperationsRestStub::AggregatedListGlobalOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::global_operations::v1::AggregatedListGlobalOperationsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::OperationAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::global_operations::v1::
+        AggregatedListGlobalOperationsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::OperationAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/aggregated/operations"),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/aggregated/operations"),
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 Status DefaultGlobalOperationsRestStub::DeleteGlobalOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const& request) {
   return rest_internal::Delete(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/operations/", request.operation(), ""));
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/operations/", request.operation(), ""));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultGlobalOperationsRestStub::GetGlobalOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/operations/", request.operation(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/operations/", request.operation(), ""),
       {std::make_pair("project", request.project())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
 DefaultGlobalOperationsRestStub::ListGlobalOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::global_operations::v1::ListGlobalOperationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::global_operations::v1::
+        ListGlobalOperationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/operations"),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/operations"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultGlobalOperationsRestStub::Wait(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::global_operations::v1::WaitRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::global_operations::v1::WaitRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/global/operations/", request.operation(), "/wait"));
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/global/operations/", request.operation(), "/wait"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

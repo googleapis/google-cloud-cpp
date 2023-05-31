@@ -37,232 +37,318 @@ class InstancesRestStub {
  public:
   virtual ~InstancesRestStub() = default;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddAccessConfig(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAddAccessConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddResourcePolicies(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAddResourcePolicies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          AddResourcePoliciesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList> AggregatedListInstances(
+  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
+  AggregatedListInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          AggregatedListInstancesRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAttachDisk(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAttachDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncBulkInsert(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncBulkInsert(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteInstances(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteAccessConfig(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteAccessConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          DeleteAccessConfigRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDetachDisk(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDetachDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse> GetEffectiveFirewalls(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetEffectiveFirewallsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
+  GetEffectiveFirewalls(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::instances::v1::
+                            GetEffectiveFirewallsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::GuestAttributes> GetGuestAttributes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>
+  GetGuestAttributes(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::instances::v1::
+                         GetGuestAttributesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Screenshot> GetScreenshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput> GetSerialPortOutput(
+  virtual StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
+  GetSerialPortOutput(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::instances::v1::
+                          GetSerialPortOutputRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
+  GetShieldedInstanceIdentity(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetSerialPortOutputRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          GetShieldedInstanceIdentityRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity> GetShieldedInstanceIdentity(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetShieldedInstanceIdentityRequest const& request) = 0;
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertInstances(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceList> ListInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ListInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::ListInstancesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers> ListReferrers(
+  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers>
+  ListReferrers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ListReferrersRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::ListReferrersRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncRemoveResourcePolicies(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncRemoveResourcePolicies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          RemoveResourcePoliciesRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncReset(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncReset(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::ResetRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::ResetRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncResume(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncResume(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::ResumeRequest const&
+          request) = 0;
 
   virtual Status SendDiagnosticInterrupt(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SendDiagnosticInterruptRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          SendDiagnosticInterruptRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetDeletionProtection(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetDeletionProtection(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          SetDeletionProtectionRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetDiskAutoDelete(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetDiskAutoDelete(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          SetDiskAutoDeleteRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetMachineResources(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetMachineResources(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          SetMachineResourcesRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetMachineType(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetMachineType(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetMetadata(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetMetadata(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetMinCpuPlatform(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetMinCpuPlatform(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          SetMinCpuPlatformRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetName(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetName(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetNameRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetScheduling(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetScheduling(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetServiceAccount(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetServiceAccount(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          SetServiceAccountRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetShieldedInstanceIntegrityPolicy(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetShieldedInstanceIntegrityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          SetShieldedInstanceIntegrityPolicyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetTags(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetTags(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetTagsRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSimulateMaintenanceEvent(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSimulateMaintenanceEvent(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          SimulateMaintenanceEventRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncStart(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncStart(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::StartRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::StartRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncStartWithEncryptionKey(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncStartWithEncryptionKey(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          StartWithEncryptionKeyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncStop(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncStop(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::StopRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::StopRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSuspend(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSuspend(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SuspendRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::instances::v1::
+                         TestIamPermissionsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateInstances(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateAccessConfig(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateAccessConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateAccessConfigRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateDisplayDevice(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateDisplayDevice(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateDisplayDeviceRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateNetworkInterface(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateNetworkInterface(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateNetworkInterfaceRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateShieldedInstanceConfig(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateShieldedInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateShieldedInstanceConfigRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest const& request) = 0;
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetZoneOperationsRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest const& request) = 0;
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteZoneOperationsRequest const& request) = 0;
 };
 
 class DefaultInstancesRestStub : public InstancesRestStub {
@@ -272,235 +358,309 @@ class DefaultInstancesRestStub : public InstancesRestStub {
   explicit DefaultInstancesRestStub(Options options);
   DefaultInstancesRestStub(
       std::shared_ptr<rest_internal::RestClient> service,
-      std::shared_ptr<rest_internal::RestClient> operations,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> operations, Options options);
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddAccessConfig(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAddAccessConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddResourcePolicies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAddResourcePolicies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          AddResourcePoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList> AggregatedListInstances(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
+  AggregatedListInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          AggregatedListInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAttachDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncBulkInsert(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteInstances(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteAccessConfig(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteAccessConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          DeleteAccessConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDetachDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse> GetEffectiveFirewalls(
+  StatusOr<
+      google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
+  GetEffectiveFirewalls(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetEffectiveFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          GetEffectiveFirewallsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::GuestAttributes> GetGuestAttributes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          GetGuestAttributesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Screenshot> GetScreenshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput> GetSerialPortOutput(
+  StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
+  GetSerialPortOutput(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::instances::v1::
+                          GetSerialPortOutputRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
+  GetShieldedInstanceIdentity(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetSerialPortOutputRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          GetShieldedInstanceIdentityRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity> GetShieldedInstanceIdentity(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetShieldedInstanceIdentityRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertInstances(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceList> ListInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ListInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::ListInstancesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers> ListReferrers(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers>
+  ListReferrers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ListReferrersRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::ListReferrersRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncRemoveResourcePolicies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncRemoveResourcePolicies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          RemoveResourcePoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncReset(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::ResetRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::ResetRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncResume(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::ResumeRequest const& request)
+      override;
 
   Status SendDiagnosticInterrupt(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SendDiagnosticInterruptRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SendDiagnosticInterruptRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetDeletionProtection(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetDeletionProtection(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SetDeletionProtectionRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetDiskAutoDelete(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetDiskAutoDelete(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SetDiskAutoDeleteRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetMachineResources(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetMachineResources(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SetMachineResourcesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetMachineType(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetMachineType(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetMetadata(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetMinCpuPlatform(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetMinCpuPlatform(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SetMinCpuPlatformRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetName(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetNameRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetScheduling(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetScheduling(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetServiceAccount(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetServiceAccount(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SetServiceAccountRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetShieldedInstanceIntegrityPolicy(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetShieldedInstanceIntegrityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SetShieldedInstanceIntegrityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetTags(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSimulateMaintenanceEvent(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSimulateMaintenanceEvent(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SimulateMaintenanceEventRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncStart(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::StartRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::StartRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncStartWithEncryptionKey(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncStartWithEncryptionKey(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          StartWithEncryptionKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncStop(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::StopRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::StopRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSuspend(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SuspendRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::instances::v1::
+                         TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateInstances(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateAccessConfig(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateAccessConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateAccessConfigRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateDisplayDevice(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateDisplayDevice(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateDisplayDeviceRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateNetworkInterface(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateNetworkInterface(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateNetworkInterfaceRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateShieldedInstanceConfig(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateShieldedInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateShieldedInstanceConfigRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetZoneOperationsRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteZoneOperationsRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

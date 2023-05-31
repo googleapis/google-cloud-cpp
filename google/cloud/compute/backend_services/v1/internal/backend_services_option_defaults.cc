@@ -34,33 +34,48 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options BackendServicesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_BACKEND_SERVICES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_BACKEND_SERVICES_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_backend_services_v1::BackendServicesRetryPolicyOption>()) {
+      std::move(options), "GOOGLE_CLOUD_CPP_BACKEND_SERVICES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_BACKEND_SERVICES_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<
+          compute_backend_services_v1::BackendServicesRetryPolicyOption>()) {
     options.set<compute_backend_services_v1::BackendServicesRetryPolicyOption>(
         compute_backend_services_v1::BackendServicesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
-  }
-  if (!options.has<compute_backend_services_v1::BackendServicesBackoffPolicyOption>()) {
-    options.set<compute_backend_services_v1::BackendServicesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
-  }
-  if (!options.has<compute_backend_services_v1::BackendServicesPollingPolicyOption>()) {
-    options.set<compute_backend_services_v1::BackendServicesPollingPolicyOption>(
-        GenericPollingPolicy<
-            compute_backend_services_v1::BackendServicesRetryPolicyOption::Type,
-            compute_backend_services_v1::BackendServicesBackoffPolicyOption::Type>(
-            options.get<compute_backend_services_v1::BackendServicesRetryPolicyOption>()->clone(),
-            options.get<compute_backend_services_v1::BackendServicesBackoffPolicyOption>()->clone())
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<compute_backend_services_v1::BackendServicesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_backend_services_v1::BackendServicesConnectionIdempotencyPolicyOption>(
-        compute_backend_services_v1::MakeDefaultBackendServicesConnectionIdempotencyPolicy());
+  if (!options.has<
+          compute_backend_services_v1::BackendServicesBackoffPolicyOption>()) {
+    options
+        .set<compute_backend_services_v1::BackendServicesBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
+  }
+  if (!options.has<
+          compute_backend_services_v1::BackendServicesPollingPolicyOption>()) {
+    options.set<
+        compute_backend_services_v1::BackendServicesPollingPolicyOption>(
+        GenericPollingPolicy<
+            compute_backend_services_v1::BackendServicesRetryPolicyOption::Type,
+            compute_backend_services_v1::BackendServicesBackoffPolicyOption::
+                Type>(options
+                          .get<compute_backend_services_v1::
+                                   BackendServicesRetryPolicyOption>()
+                          ->clone(),
+                      options
+                          .get<compute_backend_services_v1::
+                                   BackendServicesBackoffPolicyOption>()
+                          ->clone())
+            .clone());
+  }
+  if (!options.has<compute_backend_services_v1::
+                       BackendServicesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_backend_services_v1::
+                    BackendServicesConnectionIdempotencyPolicyOption>(
+        compute_backend_services_v1::
+            MakeDefaultBackendServicesConnectionIdempotencyPolicy());
   }
 
   return options;

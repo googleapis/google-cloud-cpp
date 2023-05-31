@@ -30,7 +30,8 @@ namespace cloud {
 namespace compute_firewall_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultFirewallPoliciesRestStub::DefaultFirewallPoliciesRestStub(Options options)
+DefaultFirewallPoliciesRestStub::DefaultFirewallPoliciesRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       operations_(rest_internal::MakePooledRestClient(
@@ -39,156 +40,191 @@ DefaultFirewallPoliciesRestStub::DefaultFirewallPoliciesRestStub(Options options
 
 DefaultFirewallPoliciesRestStub::DefaultFirewallPoliciesRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations,
-    Options options)
+    std::shared_ptr<rest_internal::RestClient> operations, Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultFirewallPoliciesRestStub::AsyncAddAssociation(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::AddAssociationRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        AddAssociationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.firewall_policy_association_resource(),
-          absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.firewall_policy(), "/addAssociation")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.firewall_policy_association_resource(),
+                absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                             request.firewall_policy(), "/addAssociation")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultFirewallPoliciesRestStub::AsyncAddRule(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.firewall_policy_rule_resource(),
-          absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.firewall_policy(), "/addRule")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.firewall_policy_rule_resource(),
+                absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                             request.firewall_policy(), "/addRule")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultFirewallPoliciesRestStub::AsyncCloneRules(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::CloneRulesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::CloneRulesRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.firewall_policy(), "/cloneRules")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                             request.firewall_policy(), "/cloneRules")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultFirewallPoliciesRestStub::AsyncDeleteFirewallPolicies(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::DeleteFirewallPoliciesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        DeleteFirewallPoliciesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.firewall_policy(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                             request.firewall_policy(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
 DefaultFirewallPoliciesRestStub::GetFirewallPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::GetFirewallPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        GetFirewallPoliciesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.firewall_policy(), ""), {});
+      absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                   request.firewall_policy(), ""),
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
 DefaultFirewallPoliciesRestStub::GetAssociation(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::GetAssociationRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        GetAssociationRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::FirewallPolicyAssociation>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.firewall_policy(), "/getAssociation"),
+      absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                   request.firewall_policy(), "/getAssociation"),
       {std::make_pair("name", request.name())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultFirewallPoliciesRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.resource(), "/getIamPolicy"),
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version()))});
+      absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                   request.resource(), "/getIamPolicy"),
+      {std::make_pair(
+          "options_requested_policy_version",
+          std::to_string(request.options_requested_policy_version()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
 DefaultFirewallPoliciesRestStub::GetRule(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::GetRuleRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicyRule>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::GetRuleRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::FirewallPolicyRule>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.firewall_policy(), "/getRule"),
+      absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                   request.firewall_policy(), "/getRule"),
       {std::make_pair("priority", std::to_string(request.priority()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultFirewallPoliciesRestStub::AsyncInsertFirewallPolicies(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::InsertFirewallPoliciesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        InsertFirewallPoliciesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.firewall_policy_resource(),
-          "/compute/v1/locations/global/firewallPolicies"));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.firewall_policy_resource(),
+                "/compute/v1/locations/global/firewallPolicies"));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyList>
 DefaultFirewallPoliciesRestStub::ListFirewallPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::ListFirewallPoliciesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicyList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        ListFirewallPoliciesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::FirewallPolicyList>(
       *service_, rest_context, request,
       "/compute/v1/locations/global/firewallPolicies",
       {std::make_pair("filter", request.filter()),
@@ -196,14 +232,18 @@ DefaultFirewallPoliciesRestStub::ListFirewallPolicies(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("parent_id", request.parent_id()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
-StatusOr<google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
+StatusOr<
+    google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
 DefaultFirewallPoliciesRestStub::ListAssociations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::ListAssociationsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        ListAssociationsRequest const& request) {
+  return rest_internal::Get<google::cloud::cpp::compute::v1::
+                                FirewallPoliciesListAssociationsResponse>(
       *service_, rest_context, request,
       "/compute/v1/locations/global/firewallPolicies/listAssociations",
       {std::make_pair("target_resource", request.target_resource())});
@@ -211,160 +251,189 @@ DefaultFirewallPoliciesRestStub::ListAssociations(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultFirewallPoliciesRestStub::AsyncMove(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.firewall_policy(), "/move")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                             request.firewall_policy(), "/move")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultFirewallPoliciesRestStub::AsyncPatchFirewallPolicies(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::PatchFirewallPoliciesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        PatchFirewallPoliciesRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.firewall_policy_resource(),
-          absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.firewall_policy(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.firewall_policy_resource(),
+                absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                             request.firewall_policy(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultFirewallPoliciesRestStub::AsyncPatchRule(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::PatchRuleRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::PatchRuleRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.firewall_policy_rule_resource(),
-          absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.firewall_policy(), "/patchRule")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.firewall_policy_rule_resource(),
+                absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                             request.firewall_policy(), "/patchRule")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultFirewallPoliciesRestStub::AsyncRemoveAssociation(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::RemoveAssociationRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        RemoveAssociationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.firewall_policy(), "/removeAssociation")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                             request.firewall_policy(), "/removeAssociation")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultFirewallPoliciesRestStub::AsyncRemoveRule(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::RemoveRuleRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::RemoveRuleRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.firewall_policy(), "/removeRule")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                             request.firewall_policy(), "/removeRule")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultFirewallPoliciesRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request.global_organization_set_policy_request_resource(),
-      absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.resource(), "/setIamPolicy"));
+      *service_, rest_context,
+      request.global_organization_set_policy_request_resource(),
+      absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                   request.resource(), "/setIamPolicy"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultFirewallPoliciesRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewall_policies::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      absl::StrCat("/compute/v1/locations/global/firewallPolicies/", request.resource(), "/testIamPermissions"));
+      absl::StrCat("/compute/v1/locations/global/firewallPolicies/",
+                   request.resource(), "/testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultFirewallPoliciesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_organization_operations::v1::GetGlobalOrganizationOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_organization_operations::v1::
+        GetGlobalOrganizationOperationsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/locations/global/operations/",
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+                *operations, *rest_context, request,
+                absl::StrCat("/compute/v1/locations/global/operations/",
                              request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
-future<Status>
-DefaultFirewallPoliciesRestStub::AsyncCancelOperation(
+future<Status> DefaultFirewallPoliciesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_organization_operations::v1::DeleteGlobalOrganizationOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_organization_operations::v1::
+        DeleteGlobalOrganizationOperationsRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/locations/global/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+                  p.set_value(rest_internal::Post<google::protobuf::Empty>(
+                      *operations, *rest_context, request,
+                      absl::StrCat("/compute/v1/locations/global/operations/",
+                                   request.operation())));
+                },
+                std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
   });
 }

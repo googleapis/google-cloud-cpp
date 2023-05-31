@@ -26,19 +26,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ImageFamilyViewsConnectionIdempotencyPolicy::~ImageFamilyViewsConnectionIdempotencyPolicy() = default;
+ImageFamilyViewsConnectionIdempotencyPolicy::
+    ~ImageFamilyViewsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ImageFamilyViewsConnectionIdempotencyPolicy>
 ImageFamilyViewsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ImageFamilyViewsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ImageFamilyViewsConnectionIdempotencyPolicy::GetImageFamilyViews(google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewsRequest const&) {
+Idempotency ImageFamilyViewsConnectionIdempotencyPolicy::GetImageFamilyViews(
+    google::cloud::cpp::compute::image_family_views::v1::
+        GetImageFamilyViewsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ImageFamilyViewsConnectionIdempotencyPolicy>
-    MakeDefaultImageFamilyViewsConnectionIdempotencyPolicy() {
+MakeDefaultImageFamilyViewsConnectionIdempotencyPolicy() {
   return std::make_unique<ImageFamilyViewsConnectionIdempotencyPolicy>();
 }
 

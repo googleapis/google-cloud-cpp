@@ -17,11 +17,11 @@
 // source: google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto
 
 #include "google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_ssl_proxies/v1/internal/target_ssl_proxies_option_defaults.h"
 #include "google/cloud/compute/target_ssl_proxies/v1/internal/target_ssl_proxies_rest_connection_impl.h"
 #include "google/cloud/compute/target_ssl_proxies/v1/internal/target_ssl_proxies_rest_stub_factory.h"
 #include "google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -34,15 +34,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<TargetSslProxiesConnection> MakeTargetSslProxiesConnectionRest(
     ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      TargetSslProxiesPolicyOptionList>(options, __func__);
-  options = compute_target_ssl_proxies_v1_internal::TargetSslProxiesDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 TargetSslProxiesPolicyOptionList>(options,
+                                                                   __func__);
+  options =
+      compute_target_ssl_proxies_v1_internal::TargetSslProxiesDefaultOptions(
+          std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_target_ssl_proxies_v1_internal::CreateDefaultTargetSslProxiesRestStub(
-    options);
-  return std::make_shared<compute_target_ssl_proxies_v1_internal::TargetSslProxiesRestConnectionImpl>(
+  auto stub = compute_target_ssl_proxies_v1_internal::
+      CreateDefaultTargetSslProxiesRestStub(options);
+  return std::make_shared<compute_target_ssl_proxies_v1_internal::
+                              TargetSslProxiesRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 

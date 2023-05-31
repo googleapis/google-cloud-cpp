@@ -27,24 +27,27 @@ import "google/cloud/extended_operations.proto";
 service BackendServices {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Adds a key for validating requests with signed URLs for this backend
   // service.
-  rpc AddSignedUrlKey(AddSignedUrlKeyRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AddSignedUrlKey(AddSignedUrlKeyRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}/addSignedUrlKey"
       body: "signed_url_key_resource"
     };
-    option (google.api.method_signature) = "project,backend_service,signed_url_key_resource";
+    option (google.api.method_signature) =
+        "project,backend_service,signed_url_key_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Retrieves the list of all BackendService resources, regional and global,
   // available to the specified project.
-  rpc AggregatedListBackendServices(AggregatedListBackendServicesRequest) returns (google.cloud.cpp.compute.v1.BackendServiceAggregatedList) {
+  rpc AggregatedListBackendServices(AggregatedListBackendServicesRequest)
+      returns (google.cloud.cpp.compute.v1.BackendServiceAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/backendServices"
     };
@@ -52,7 +55,8 @@ service BackendServices {
   }
 
   // Deletes the specified BackendService resource.
-  rpc DeleteBackendServices(DeleteBackendServicesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteBackendServices(DeleteBackendServicesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}"
     };
@@ -62,7 +66,8 @@ service BackendServices {
 
   // Deletes a key for validating requests with signed URLs for this backend
   // service.
-  rpc DeleteSignedUrlKey(DeleteSignedUrlKeyRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteSignedUrlKey(DeleteSignedUrlKeyRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}/deleteSignedUrlKey"
       body: "*"
@@ -72,7 +77,8 @@ service BackendServices {
   }
 
   // Returns the specified BackendService resource.
-  rpc GetBackendServices(GetBackendServicesRequest) returns (google.cloud.cpp.compute.v1.BackendService) {
+  rpc GetBackendServices(GetBackendServicesRequest)
+      returns (google.cloud.cpp.compute.v1.BackendService) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}"
     };
@@ -82,17 +88,20 @@ service BackendServices {
   // Gets the most recent health check results for this BackendService. Example
   // request body: { "group":
   // "/zones/us-east1-b/instanceGroups/lb-backend-example" }
-  rpc GetHealth(GetHealthRequest) returns (google.cloud.cpp.compute.v1.BackendServiceGroupHealth) {
+  rpc GetHealth(GetHealthRequest)
+      returns (google.cloud.cpp.compute.v1.BackendServiceGroupHealth) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}/getHealth"
       body: "resource_group_reference_resource"
     };
-    option (google.api.method_signature) = "project,backend_service,resource_group_reference_resource";
+    option (google.api.method_signature) =
+        "project,backend_service,resource_group_reference_resource";
   }
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/backendServices/{resource=resource}/getIamPolicy"
     };
@@ -102,7 +111,8 @@ service BackendServices {
   // Creates a BackendService resource in the specified project using the data
   // included in the request. For more information, see Backend services
   // overview .
-  rpc InsertBackendServices(InsertBackendServicesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertBackendServices(InsertBackendServicesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/backendServices"
       body: "backend_service_resource"
@@ -113,7 +123,8 @@ service BackendServices {
 
   // Retrieves the list of BackendService resources available to the specified
   // project.
-  rpc ListBackendServices(ListBackendServicesRequest) returns (google.cloud.cpp.compute.v1.BackendServiceList) {
+  rpc ListBackendServices(ListBackendServicesRequest)
+      returns (google.cloud.cpp.compute.v1.BackendServiceList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/backendServices"
     };
@@ -124,54 +135,64 @@ service BackendServices {
   // request. For more information, see Backend services overview. This method
   // supports PATCH semantics and uses the JSON merge patch format and
   // processing rules.
-  rpc PatchBackendServices(PatchBackendServicesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchBackendServices(PatchBackendServicesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}"
       body: "backend_service_resource"
     };
-    option (google.api.method_signature) = "project,backend_service,backend_service_resource";
+    option (google.api.method_signature) =
+        "project,backend_service,backend_service_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Sets the edge security policy for the specified backend service.
-  rpc SetEdgeSecurityPolicy(SetEdgeSecurityPolicyRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetEdgeSecurityPolicy(SetEdgeSecurityPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}/setEdgeSecurityPolicy"
       body: "security_policy_reference_resource"
     };
-    option (google.api.method_signature) = "project,backend_service,security_policy_reference_resource";
+    option (google.api.method_signature) =
+        "project,backend_service,security_policy_reference_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
-  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/backendServices/{resource=resource}/setIamPolicy"
       body: "global_set_policy_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,global_set_policy_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,global_set_policy_request_resource";
   }
 
   // Sets the Google Cloud Armor security policy for the specified backend
   // service. For more information, see Google Cloud Armor Overview
-  rpc SetSecurityPolicy(SetSecurityPolicyRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetSecurityPolicy(SetSecurityPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}/setSecurityPolicy"
       body: "security_policy_reference_resource"
     };
-    option (google.api.method_signature) = "project,backend_service,security_policy_reference_resource";
+    option (google.api.method_signature) =
+        "project,backend_service,security_policy_reference_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Updates the specified BackendService resource with the data included in the
   // request. For more information, see Backend services overview.
-  rpc UpdateBackendServices(UpdateBackendServicesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateBackendServices(UpdateBackendServicesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}"
       body: "backend_service_resource"
     };
-    option (google.api.method_signature) = "project,backend_service,backend_service_resource";
+    option (google.api.method_signature) =
+        "project,backend_service,backend_service_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -183,7 +204,10 @@ message AddSignedUrlKeyRequest {
   string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -198,7 +222,8 @@ message AddSignedUrlKeyRequest {
   optional string request_id = 3;
 
   // The SignedUrlKey for this request.
-  optional google.cloud.cpp.compute.v1.SignedUrlKey signed_url_key_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.SignedUrlKey signed_url_key_resource = 4
+      [json_name = "__json_request_body"];
 }
 
 // Request message for AggregatedListBackendServices.
@@ -281,7 +306,10 @@ message DeleteBackendServicesRequest {
   string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -306,7 +334,10 @@ message DeleteSignedUrlKeyRequest {
   string key_name = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -338,7 +369,8 @@ message GetHealthRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The ResourceGroupReference for this request.
-  optional google.cloud.cpp.compute.v1.ResourceGroupReference resource_group_reference_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.ResourceGroupReference
+      resource_group_reference_resource = 3 [json_name = "__json_request_body"];
 }
 
 // Request message for GetIamPolicy.
@@ -356,10 +388,14 @@ message GetIamPolicyRequest {
 // Request message for InsertBackendServices.
 message InsertBackendServicesRequest {
   // The BackendService for this request.
-  optional google.cloud.cpp.compute.v1.BackendService backend_service_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.BackendService backend_service_resource =
+      1 [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -445,10 +481,14 @@ message PatchBackendServicesRequest {
   string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The BackendService for this request.
-  optional google.cloud.cpp.compute.v1.BackendService backend_service_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.BackendService backend_service_resource =
+      2 [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -470,7 +510,10 @@ message SetEdgeSecurityPolicyRequest {
   string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -485,13 +528,17 @@ message SetEdgeSecurityPolicyRequest {
   optional string request_id = 3;
 
   // The SecurityPolicyReference for this request.
-  optional google.cloud.cpp.compute.v1.SecurityPolicyReference security_policy_reference_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.SecurityPolicyReference
+      security_policy_reference_resource = 4
+      [json_name = "__json_request_body"];
 }
 
 // Request message for SetIamPolicy.
 message SetIamPolicyRequest {
   // The GlobalSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.GlobalSetPolicyRequest global_set_policy_request_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.GlobalSetPolicyRequest
+      global_set_policy_request_resource = 1
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
   string project = 2 [(google.api.field_behavior) = REQUIRED];
@@ -507,7 +554,10 @@ message SetSecurityPolicyRequest {
   string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -522,7 +572,9 @@ message SetSecurityPolicyRequest {
   optional string request_id = 3;
 
   // The SecurityPolicyReference for this request.
-  optional google.cloud.cpp.compute.v1.SecurityPolicyReference security_policy_reference_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.SecurityPolicyReference
+      security_policy_reference_resource = 4
+      [json_name = "__json_request_body"];
 }
 
 // Request message for UpdateBackendServices.
@@ -531,10 +583,14 @@ message UpdateBackendServicesRequest {
   string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The BackendService for this request.
-  optional google.cloud.cpp.compute.v1.BackendService backend_service_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.BackendService backend_service_resource =
+      2 [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

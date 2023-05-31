@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_VPN_TUNNELS_V1_VPN_TUNNELS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_VPN_TUNNELS_V1_VPN_TUNNELS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels_connection.h"
 #include "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct VpnTunnelsPollingPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using VpnTunnelsPolicyOptionList =
-    OptionList<VpnTunnelsRetryPolicyOption,
-               VpnTunnelsBackoffPolicyOption,
+    OptionList<VpnTunnelsRetryPolicyOption, VpnTunnelsBackoffPolicyOption,
                VpnTunnelsPollingPolicyOption,
                VpnTunnelsConnectionIdempotencyPolicyOption>;
 

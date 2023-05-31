@@ -17,8 +17,8 @@
 // source: google/cloud/compute/zones/v1/zones.proto
 
 #include "google/cloud/compute/zones/v1/internal/zones_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/zones/v1/internal/zones_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -34,44 +34,48 @@ ZonesRestConnectionImpl::ZonesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_zones_v1_internal::ZonesRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        ZonesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      ZonesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Zone>
-ZonesRestConnectionImpl::GetZones(google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) {
+ZonesRestConnectionImpl::GetZones(
+    google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetZones(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->GetZones(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) {
-        return stub_->GetZones(rest_context, request);
-      },
+             google::cloud::cpp::compute::zones::v1::GetZonesRequest const&
+                 request) { return stub_->GetZones(rest_context, request); },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Zone>
-ZonesRestConnectionImpl::ListZones(google::cloud::cpp::compute::zones::v1::ListZonesRequest request) {
+ZonesRestConnectionImpl::ListZones(
+    google::cloud::cpp::compute::zones::v1::ListZonesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_zones_v1::ZonesRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<compute_zones_v1::ZonesRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListZones(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Zone>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Zone>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::zones::v1::ListZonesRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::cpp::compute::zones::v1::ListZonesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) {
-              return stub->ListZones(rest_context, request);
-            },
+            [stub](
+                rest_internal::RestContext& rest_context,
+                google::cloud::cpp::compute::zones::v1::ListZonesRequest const&
+                    request) { return stub->ListZones(rest_context, request); },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::ZoneList r) {
-        std::vector<google::cloud::cpp::compute::v1::Zone> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Zone> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

@@ -34,22 +34,24 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RegionsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_REGIONS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_REGIONS_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
+      std::move(options), "GOOGLE_CLOUD_CPP_REGIONS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_REGIONS_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<compute_regions_v1::RegionsRetryPolicyOption>()) {
     options.set<compute_regions_v1::RegionsRetryPolicyOption>(
         compute_regions_v1::RegionsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<compute_regions_v1::RegionsBackoffPolicyOption>()) {
     options.set<compute_regions_v1::RegionsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_regions_v1::RegionsConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          compute_regions_v1::RegionsConnectionIdempotencyPolicyOption>()) {
     options.set<compute_regions_v1::RegionsConnectionIdempotencyPolicyOption>(
         compute_regions_v1::MakeDefaultRegionsConnectionIdempotencyPolicy());
   }

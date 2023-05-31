@@ -36,36 +36,49 @@ class ResourcePoliciesTracingConnection
   ~ResourcePoliciesTracingConnection() override = default;
 
   explicit ResourcePoliciesTracingConnection(
-    std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection> child);
+      std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
-  AggregatedListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest const& request) override;
+  AggregatedListResourcePolicies(
+      google::cloud::cpp::compute::resource_policies::v1::
+          AggregatedListResourcePoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePoliciesRequest const& request) override;
+  DeleteResourcePolicies(
+      google::cloud::cpp::compute::resource_policies::v1::
+          DeleteResourcePoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-  GetResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::GetResourcePoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicies(
+      google::cloud::cpp::compute::resource_policies::v1::
+          GetResourcePoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::InsertResourcePoliciesRequest const& request) override;
+  InsertResourcePolicies(
+      google::cloud::cpp::compute::resource_policies::v1::
+          InsertResourcePoliciesRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
-  ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest request) override;
+  ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
+                           ListResourcePoliciesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::resource_policies::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection> child_;
+  std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -78,7 +91,8 @@ class ResourcePoliciesTracingConnection
  */
 std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection>
 MakeResourcePoliciesTracingConnection(
-    std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection> conn);
+    std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_resource_policies_v1_internal

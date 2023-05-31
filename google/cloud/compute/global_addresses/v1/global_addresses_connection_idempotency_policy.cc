@@ -26,35 +26,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-GlobalAddressesConnectionIdempotencyPolicy::~GlobalAddressesConnectionIdempotencyPolicy() = default;
+GlobalAddressesConnectionIdempotencyPolicy::
+    ~GlobalAddressesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<GlobalAddressesConnectionIdempotencyPolicy>
 GlobalAddressesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<GlobalAddressesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency GlobalAddressesConnectionIdempotencyPolicy::DeleteGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::DeleteGlobalAddressesRequest const&) {
+Idempotency GlobalAddressesConnectionIdempotencyPolicy::DeleteGlobalAddresses(
+    google::cloud::cpp::compute::global_addresses::v1::
+        DeleteGlobalAddressesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GlobalAddressesConnectionIdempotencyPolicy::GetGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::GetGlobalAddressesRequest const&) {
+Idempotency GlobalAddressesConnectionIdempotencyPolicy::GetGlobalAddresses(
+    google::cloud::cpp::compute::global_addresses::v1::
+        GetGlobalAddressesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GlobalAddressesConnectionIdempotencyPolicy::InsertGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::InsertGlobalAddressesRequest const&) {
+Idempotency GlobalAddressesConnectionIdempotencyPolicy::InsertGlobalAddresses(
+    google::cloud::cpp::compute::global_addresses::v1::
+        InsertGlobalAddressesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GlobalAddressesConnectionIdempotencyPolicy::ListGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::ListGlobalAddressesRequest) {  // NOLINT
+Idempotency GlobalAddressesConnectionIdempotencyPolicy::ListGlobalAddresses(
+    google::cloud::cpp::compute::global_addresses::v1::
+        ListGlobalAddressesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GlobalAddressesConnectionIdempotencyPolicy::SetLabels(google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&) {
+Idempotency GlobalAddressesConnectionIdempotencyPolicy::SetLabels(
+    google::cloud::cpp::compute::global_addresses::v1::
+        SetLabelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<GlobalAddressesConnectionIdempotencyPolicy>
-    MakeDefaultGlobalAddressesConnectionIdempotencyPolicy() {
+MakeDefaultGlobalAddressesConnectionIdempotencyPolicy() {
   return std::make_unique<GlobalAddressesConnectionIdempotencyPolicy>();
 }
 

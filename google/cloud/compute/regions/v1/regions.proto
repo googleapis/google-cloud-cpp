@@ -26,9 +26,9 @@ import "google/cloud/compute/v1/internal/common.proto";
 service Regions {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Returns the specified Region resource. To decrease latency for this method,
   // you can optionally omit any unneeded information from the response by using
@@ -37,7 +37,8 @@ service Regions {
   // request's `fields` query parameter to only include the fields you need. For
   // example, to only include the `id` and `selfLink` fields, add the query
   // parameter `?fields=id,selfLink` to your request.
-  rpc GetRegions(GetRegionsRequest) returns (google.cloud.cpp.compute.v1.Region) {
+  rpc GetRegions(GetRegionsRequest)
+      returns (google.cloud.cpp.compute.v1.Region) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}"
     };
@@ -52,7 +53,8 @@ service Regions {
   // parameter to only include the fields you need. For example, to only include
   // the `id` and `selfLink` fields, add the query parameter
   // `?fields=id,selfLink` to your request.
-  rpc ListRegions(ListRegionsRequest) returns (google.cloud.cpp.compute.v1.RegionList) {
+  rpc ListRegions(ListRegionsRequest)
+      returns (google.cloud.cpp.compute.v1.RegionList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions"
     };

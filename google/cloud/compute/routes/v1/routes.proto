@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service Routes {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified Route resource.
-  rpc DeleteRoutes(DeleteRoutesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteRoutes(DeleteRoutesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/global/routes/{route=route}"
     };
@@ -50,7 +51,8 @@ service Routes {
 
   // Creates a Route resource in the specified project using the data included
   // in the request.
-  rpc InsertRoutes(InsertRoutesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertRoutes(InsertRoutesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/routes"
       body: "route_resource"
@@ -60,7 +62,8 @@ service Routes {
   }
 
   // Retrieves the list of Route resources available to the specified project.
-  rpc ListRoutes(ListRoutesRequest) returns (google.cloud.cpp.compute.v1.RouteList) {
+  rpc ListRoutes(ListRoutesRequest)
+      returns (google.cloud.cpp.compute.v1.RouteList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/routes"
     };
@@ -71,7 +74,10 @@ service Routes {
 // Request message for DeleteRoutes.
 message DeleteRoutesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -101,7 +107,10 @@ message GetRoutesRequest {
 // Request message for InsertRoutes.
 message InsertRoutesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -116,7 +125,8 @@ message InsertRoutesRequest {
   optional string request_id = 2;
 
   // The Route for this request.
-  optional google.cloud.cpp.compute.v1.Route route_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Route route_resource = 3
+      [json_name = "__json_request_body"];
 }
 
 // Request message for ListRoutes.

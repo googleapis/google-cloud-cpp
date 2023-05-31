@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISKS_V1_REGION_DISKS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISKS_V1_REGION_DISKS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_disks/v1/region_disks_connection.h"
 #include "google/cloud/compute/region_disks/v1/region_disks_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct RegionDisksPollingPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using RegionDisksPolicyOptionList =
-    OptionList<RegionDisksRetryPolicyOption,
-               RegionDisksBackoffPolicyOption,
+    OptionList<RegionDisksRetryPolicyOption, RegionDisksBackoffPolicyOption,
                RegionDisksPollingPolicyOption,
                RegionDisksConnectionIdempotencyPolicyOption>;
 

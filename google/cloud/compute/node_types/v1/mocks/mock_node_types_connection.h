@@ -42,21 +42,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockNodeTypesConnection : public compute_node_types_v1::NodeTypesConnection {
+class MockNodeTypesConnection
+    : public compute_node_types_v1::NodeTypesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>,
-  AggregatedListNodeTypes,
-  (google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest const& request), (override));
+              AggregatedListNodeTypes,
+              (google::cloud::cpp::compute::node_types::v1::
+                   AggregatedListNodeTypesRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NodeType>,
-  GetNodeTypes,
-  (google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::NodeType>, GetNodeTypes,
+      (google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::NodeType>,
-  ListNodeTypes,
-  (google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request), (override));
+              ListNodeTypes,
+              (google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest
+                   request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

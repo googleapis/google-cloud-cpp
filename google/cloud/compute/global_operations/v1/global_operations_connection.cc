@@ -17,11 +17,11 @@
 // source: google/cloud/compute/global_operations/v1/global_operations.proto
 
 #include "google/cloud/compute/global_operations/v1/global_operations_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/global_operations/v1/global_operations_options.h"
 #include "google/cloud/compute/global_operations/v1/internal/global_operations_option_defaults.h"
 #include "google/cloud/compute/global_operations/v1/internal/global_operations_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,24 +36,28 @@ GlobalOperationsConnection::~GlobalOperationsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
 GlobalOperationsConnection::AggregatedListGlobalOperations(
-    google::cloud::cpp::compute::global_operations::v1::AggregatedListGlobalOperationsRequest const&) {
+    google::cloud::cpp::compute::global_operations::v1::
+        AggregatedListGlobalOperationsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-GlobalOperationsConnection::DeleteGlobalOperations(
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const&) {
+Status GlobalOperationsConnection::DeleteGlobalOperations(
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalOperationsConnection::GetGlobalOperations(
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const&) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Operation> GlobalOperationsConnection::ListGlobalOperations(
-    google::cloud::cpp::compute::global_operations::v1::ListGlobalOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Operation>
+GlobalOperationsConnection::ListGlobalOperations(
+    google::cloud::cpp::compute::global_operations::v1::
+        ListGlobalOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Operation>>();
 }

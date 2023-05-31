@@ -27,17 +27,19 @@ import "google/cloud/extended_operations.proto";
 service RegionNetworkFirewallPolicies {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Inserts an association for the specified network firewall policy.
-  rpc AddAssociation(AddAssociationRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AddAssociation(AddAssociationRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/addAssociation"
       body: "firewall_policy_association_resource"
     };
-    option (google.api.method_signature) = "project,region,firewall_policy,firewall_policy_association_resource";
+    option (google.api.method_signature) =
+        "project,region,firewall_policy,firewall_policy_association_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
@@ -47,12 +49,14 @@ service RegionNetworkFirewallPolicies {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/addRule"
       body: "firewall_policy_rule_resource"
     };
-    option (google.api.method_signature) = "project,region,firewall_policy,firewall_policy_rule_resource";
+    option (google.api.method_signature) =
+        "project,region,firewall_policy,firewall_policy_rule_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Copies rules to the specified network firewall policy.
-  rpc CloneRules(CloneRulesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc CloneRules(CloneRulesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/cloneRules"
       body: "*"
@@ -62,7 +66,9 @@ service RegionNetworkFirewallPolicies {
   }
 
   // Deletes the specified network firewall policy.
-  rpc DeleteRegionNetworkFirewallPolicies(DeleteRegionNetworkFirewallPoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteRegionNetworkFirewallPolicies(
+      DeleteRegionNetworkFirewallPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}"
     };
@@ -71,7 +77,8 @@ service RegionNetworkFirewallPolicies {
   }
 
   // Returns the specified network firewall policy.
-  rpc GetRegionNetworkFirewallPolicies(GetRegionNetworkFirewallPoliciesRequest) returns (google.cloud.cpp.compute.v1.FirewallPolicy) {
+  rpc GetRegionNetworkFirewallPolicies(GetRegionNetworkFirewallPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.FirewallPolicy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}"
     };
@@ -79,7 +86,8 @@ service RegionNetworkFirewallPolicies {
   }
 
   // Gets an association with the specified name.
-  rpc GetAssociation(GetAssociationRequest) returns (google.cloud.cpp.compute.v1.FirewallPolicyAssociation) {
+  rpc GetAssociation(GetAssociationRequest)
+      returns (google.cloud.cpp.compute.v1.FirewallPolicyAssociation) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/getAssociation"
     };
@@ -87,7 +95,9 @@ service RegionNetworkFirewallPolicies {
   }
 
   // Returns the effective firewalls on a given network.
-  rpc GetEffectiveFirewalls(GetEffectiveFirewallsRequest) returns (google.cloud.cpp.compute.v1.RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponse) {
+  rpc GetEffectiveFirewalls(GetEffectiveFirewallsRequest) returns (
+      google.cloud.cpp.compute.v1
+          .RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponse) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/getEffectiveFirewalls"
     };
@@ -96,7 +106,8 @@ service RegionNetworkFirewallPolicies {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{resource=resource}/getIamPolicy"
     };
@@ -104,7 +115,8 @@ service RegionNetworkFirewallPolicies {
   }
 
   // Gets a rule of the specified priority.
-  rpc GetRule(GetRuleRequest) returns (google.cloud.cpp.compute.v1.FirewallPolicyRule) {
+  rpc GetRule(GetRuleRequest)
+      returns (google.cloud.cpp.compute.v1.FirewallPolicyRule) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/getRule"
     };
@@ -112,18 +124,23 @@ service RegionNetworkFirewallPolicies {
   }
 
   // Creates a new network firewall policy in the specified project and region.
-  rpc InsertRegionNetworkFirewallPolicies(InsertRegionNetworkFirewallPoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertRegionNetworkFirewallPolicies(
+      InsertRegionNetworkFirewallPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies"
       body: "firewall_policy_resource"
     };
-    option (google.api.method_signature) = "project,region,firewall_policy_resource";
+    option (google.api.method_signature) =
+        "project,region,firewall_policy_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Lists all the network firewall policies that have been configured for the
   // specified project in the given region.
-  rpc ListRegionNetworkFirewallPolicies(ListRegionNetworkFirewallPoliciesRequest) returns (google.cloud.cpp.compute.v1.FirewallPolicyList) {
+  rpc ListRegionNetworkFirewallPolicies(
+      ListRegionNetworkFirewallPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.FirewallPolicyList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies"
     };
@@ -131,27 +148,33 @@ service RegionNetworkFirewallPolicies {
   }
 
   // Patches the specified network firewall policy.
-  rpc PatchRegionNetworkFirewallPolicies(PatchRegionNetworkFirewallPoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchRegionNetworkFirewallPolicies(
+      PatchRegionNetworkFirewallPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}"
       body: "firewall_policy_resource"
     };
-    option (google.api.method_signature) = "project,region,firewall_policy,firewall_policy_resource";
+    option (google.api.method_signature) =
+        "project,region,firewall_policy,firewall_policy_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Patches a rule of the specified priority.
-  rpc PatchRule(PatchRuleRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchRule(PatchRuleRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/patchRule"
       body: "firewall_policy_rule_resource"
     };
-    option (google.api.method_signature) = "project,region,firewall_policy,firewall_policy_rule_resource";
+    option (google.api.method_signature) =
+        "project,region,firewall_policy,firewall_policy_rule_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Removes an association for the specified network firewall policy.
-  rpc RemoveAssociation(RemoveAssociationRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc RemoveAssociation(RemoveAssociationRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/removeAssociation"
       body: "*"
@@ -161,7 +184,8 @@ service RegionNetworkFirewallPolicies {
   }
 
   // Deletes a rule of the specified priority.
-  rpc RemoveRule(RemoveRuleRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc RemoveRule(RemoveRuleRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/removeRule"
       body: "*"
@@ -172,21 +196,25 @@ service RegionNetworkFirewallPolicies {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
-  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{resource=resource}/setIamPolicy"
       body: "region_set_policy_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,region_set_policy_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,region_set_policy_request_resource";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{resource=resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,test_permissions_request_resource";
   }
 }
 
@@ -196,13 +224,21 @@ message AddAssociationRequest {
   string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The FirewallPolicyAssociation for this request.
-  optional google.cloud.cpp.compute.v1.FirewallPolicyAssociation firewall_policy_association_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.FirewallPolicyAssociation
+      firewall_policy_association_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // Indicates whether or not to replace it if an association already exists.
   // This is false by default, in which case an error will be returned if an
@@ -228,7 +264,8 @@ message AddRuleRequest {
   string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The FirewallPolicyRule for this request.
-  optional google.cloud.cpp.compute.v1.FirewallPolicyRule firewall_policy_rule_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.FirewallPolicyRule
+      firewall_policy_rule_resource = 2 [json_name = "__json_request_body"];
 
   // When rule.priority is not specified, auto choose a unused priority between
   // minPriority and maxPriority>. This field is exclusive with rule.priority.
@@ -239,10 +276,16 @@ message AddRuleRequest {
   optional int32 min_priority = 4;
 
   // Project ID for this request.
-  string project = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 6 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 6 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -263,10 +306,16 @@ message CloneRulesRequest {
   string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -290,10 +339,16 @@ message DeleteRegionNetworkFirewallPoliciesRequest {
   string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -380,13 +435,20 @@ message GetRuleRequest {
 // Request message for InsertRegionNetworkFirewallPolicies.
 message InsertRegionNetworkFirewallPoliciesRequest {
   // The FirewallPolicy for this request.
-  optional google.cloud.cpp.compute.v1.FirewallPolicy firewall_policy_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.FirewallPolicy firewall_policy_resource =
+      1 [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -475,13 +537,20 @@ message PatchRegionNetworkFirewallPoliciesRequest {
   string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The FirewallPolicy for this request.
-  optional google.cloud.cpp.compute.v1.FirewallPolicy firewall_policy_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.FirewallPolicy firewall_policy_resource =
+      2 [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -502,16 +571,23 @@ message PatchRuleRequest {
   string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The FirewallPolicyRule for this request.
-  optional google.cloud.cpp.compute.v1.FirewallPolicyRule firewall_policy_rule_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.FirewallPolicyRule
+      firewall_policy_rule_resource = 2 [json_name = "__json_request_body"];
 
   // The priority of the rule to patch.
   optional int32 priority = 3;
 
   // Project ID for this request.
-  string project = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -535,10 +611,16 @@ message RemoveAssociationRequest {
   optional string name = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -562,10 +644,16 @@ message RemoveRuleRequest {
   optional int32 priority = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -589,7 +677,9 @@ message SetIamPolicyRequest {
   string region = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The RegionSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest region_set_policy_request_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest
+      region_set_policy_request_resource = 3
+      [json_name = "__json_request_body"];
 
   // Name or id of the resource for this request.
   string resource = 4 [(google.api.field_behavior) = REQUIRED];
@@ -607,5 +697,6 @@ message TestIamPermissionsRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 4 [json_name = "__json_request_body"];
 }

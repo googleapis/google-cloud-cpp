@@ -27,19 +27,21 @@ namespace compute_node_types_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NodeTypesRestLogging::NodeTypesRestLogging(
-    std::shared_ptr<NodeTypesRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<NodeTypesRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
 NodeTypesRestLogging::AggregatedListNodeTypes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest const& request) {
+    google::cloud::cpp::compute::node_types::v1::
+        AggregatedListNodeTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest const& request) {
+             google::cloud::cpp::compute::node_types::v1::
+                 AggregatedListNodeTypesRequest const& request) {
         return child_->AggregatedListNodeTypes(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ NodeTypesRestLogging::AggregatedListNodeTypes(
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
 NodeTypesRestLogging::GetNodeTypes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const& request) {
+    google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const& request) {
+             google::cloud::cpp::compute::node_types::v1::
+                 GetNodeTypesRequest const& request) {
         return child_->GetNodeTypes(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ NodeTypesRestLogging::GetNodeTypes(
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeList>
 NodeTypesRestLogging::ListNodeTypes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const& request) {
+    google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const& request) {
+             google::cloud::cpp::compute::node_types::v1::
+                 ListNodeTypesRequest const& request) {
         return child_->ListNodeTypes(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

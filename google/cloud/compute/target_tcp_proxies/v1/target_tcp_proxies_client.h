@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TargetTcpProxiesClient {
  public:
-  explicit TargetTcpProxiesClient(ExperimentalTag, std::shared_ptr<TargetTcpProxiesConnection> connection, Options opts = {});
+  explicit TargetTcpProxiesClient(
+      ExperimentalTag, std::shared_ptr<TargetTcpProxiesConnection> connection,
+      Options opts = {});
   ~TargetTcpProxiesClient();
 
   ///@{
@@ -77,10 +79,12 @@ class TargetTcpProxiesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TargetTcpProxiesClient const& a, TargetTcpProxiesClient const& b) {
+  friend bool operator==(TargetTcpProxiesClient const& a,
+                         TargetTcpProxiesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TargetTcpProxiesClient const& a, TargetTcpProxiesClient const& b) {
+  friend bool operator!=(TargetTcpProxiesClient const& a,
+                         TargetTcpProxiesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -105,7 +109,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.AggregatedListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L102}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.AggregatedListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L111}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28334}
   ///
   // clang-format on
@@ -137,12 +141,15 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.AggregatedListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L102}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.AggregatedListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L111}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28334}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
-  AggregatedListTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::AggregatedListTargetTcpProxiesRequest const& request, Options opts = {});
+  AggregatedListTargetTcpProxies(
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          AggregatedListTargetTcpProxiesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -170,11 +177,13 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L176}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L185}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetTcpProxies(std::string const& project, std::string const& target_tcp_proxy, Options opts = {});
+  DeleteTargetTcpProxies(std::string const& project,
+                         std::string const& target_tcp_proxy,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -206,11 +215,13 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L176}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L185}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxiesRequest const& request, Options opts = {});
+  DeleteTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                             DeleteTargetTcpProxiesRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -232,12 +243,13 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L197}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L209}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28282}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-  GetTargetTcpProxies(std::string const& project, std::string const& target_tcp_proxy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxies(
+      std::string const& project, std::string const& target_tcp_proxy,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -263,12 +275,14 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L197}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L209}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28282}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-  GetTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::GetTargetTcpProxiesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxies(
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          GetTargetTcpProxiesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -297,11 +311,14 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L206}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L218}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetTcpProxies(std::string const& project, google::cloud::cpp::compute::v1::TargetTcpProxy const& target_tcp_proxy_resource, Options opts = {});
+  InsertTargetTcpProxies(std::string const& project,
+                         google::cloud::cpp::compute::v1::TargetTcpProxy const&
+                             target_tcp_proxy_resource,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -334,11 +351,13 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L206}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L218}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxiesRequest const& request, Options opts = {});
+  InsertTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                             InsertTargetTcpProxiesRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -369,7 +388,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.ListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L227}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.ListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L243}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28282}
   ///
   // clang-format on
@@ -410,12 +429,14 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.ListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L227}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.ListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L243}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28282}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>
-  ListTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::ListTargetTcpProxiesRequest request, Options opts = {});
+  ListTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                           ListTargetTcpProxiesRequest request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -445,11 +466,16 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L292}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L308}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetBackendService(std::string const& project, std::string const& target_tcp_proxy, google::cloud::cpp::compute::v1::TargetTcpProxiesSetBackendServiceRequest const& target_tcp_proxies_set_backend_service_request_resource, Options opts = {});
+  SetBackendService(
+      std::string const& project, std::string const& target_tcp_proxy,
+      google::cloud::cpp::compute::v1::
+          TargetTcpProxiesSetBackendServiceRequest const&
+              target_tcp_proxies_set_backend_service_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -481,11 +507,13 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L292}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L308}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetBackendService(google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const& request, Options opts = {});
+  SetBackendService(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                        SetBackendServiceRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -514,11 +542,15 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L317}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L338}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetProxyHeader(std::string const& project, std::string const& target_tcp_proxy, google::cloud::cpp::compute::v1::TargetTcpProxiesSetProxyHeaderRequest const& target_tcp_proxies_set_proxy_header_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
+      std::string const& project, std::string const& target_tcp_proxy,
+      google::cloud::cpp::compute::v1::
+          TargetTcpProxiesSetProxyHeaderRequest const&
+              target_tcp_proxies_set_proxy_header_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -550,11 +582,13 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L317}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L338}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetProxyHeader(google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          SetProxyHeaderRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<TargetTcpProxiesConnection> connection_;

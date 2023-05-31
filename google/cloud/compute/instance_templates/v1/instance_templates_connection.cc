@@ -17,11 +17,11 @@
 // source: google/cloud/compute/instance_templates/v1/instance_templates.proto
 
 #include "google/cloud/compute/instance_templates/v1/instance_templates_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/instance_templates/v1/instance_templates_options.h"
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_option_defaults.h"
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,53 +36,62 @@ InstanceTemplatesConnection::~InstanceTemplatesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
 InstanceTemplatesConnection::AggregatedListInstanceTemplates(
-    google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest const&) {
+    google::cloud::cpp::compute::instance_templates::v1::
+        AggregatedListInstanceTemplatesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesConnection::DeleteInstanceTemplates(
-    google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplatesRequest const&) {
+    google::cloud::cpp::compute::instance_templates::v1::
+        DeleteInstanceTemplatesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
 InstanceTemplatesConnection::GetInstanceTemplates(
-    google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplatesRequest const&) {
+    google::cloud::cpp::compute::instance_templates::v1::
+        GetInstanceTemplatesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstanceTemplatesConnection::GetIamPolicy(
-    google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::instance_templates::v1::
+        GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesConnection::InsertInstanceTemplates(
-    google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplatesRequest const&) {
+    google::cloud::cpp::compute::instance_templates::v1::
+        InsertInstanceTemplatesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate> InstanceTemplatesConnection::ListInstanceTemplates(
-    google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
+InstanceTemplatesConnection::ListInstanceTemplates(
+    google::cloud::cpp::compute::instance_templates::v1::
+        ListInstanceTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstanceTemplatesConnection::SetIamPolicy(
-    google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::instance_templates::v1::
+        SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 InstanceTemplatesConnection::TestIamPermissions(
-    google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::instance_templates::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_TCP_PROXIES_V1_TARGET_TCP_PROXIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_TCP_PROXIES_V1_TARGET_TCP_PROXIES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_tcp_proxies/v1/internal/target_tcp_proxies_retry_traits.h"
 #include "google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -38,11 +38,13 @@ namespace cloud {
 namespace compute_target_tcp_proxies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using TargetTcpProxiesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_target_tcp_proxies_v1_internal::TargetTcpProxiesRetryTraits>;
+using TargetTcpProxiesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_target_tcp_proxies_v1_internal::TargetTcpProxiesRetryTraits>;
 
-using TargetTcpProxiesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_target_tcp_proxies_v1_internal::TargetTcpProxiesRetryTraits>;
+using TargetTcpProxiesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_target_tcp_proxies_v1_internal::TargetTcpProxiesRetryTraits>;
 
 using TargetTcpProxiesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -58,7 +60,8 @@ using TargetTcpProxiesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeTargetTcpProxiesConnection()`.
  *
- * For mocking, see `compute_target_tcp_proxies_v1_mocks::MockTargetTcpProxiesConnection`.
+ * For mocking, see
+ * `compute_target_tcp_proxies_v1_mocks::MockTargetTcpProxiesConnection`.
  */
 class TargetTcpProxiesConnection {
  public:
@@ -66,26 +69,35 @@ class TargetTcpProxiesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
-  AggregatedListTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::AggregatedListTargetTcpProxiesRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
+  AggregatedListTargetTcpProxies(
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          AggregatedListTargetTcpProxiesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxiesRequest const& request);
+  DeleteTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                             DeleteTargetTcpProxiesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-  GetTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::GetTargetTcpProxiesRequest const& request);
+  GetTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                          GetTargetTcpProxiesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxiesRequest const& request);
+  InsertTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                             InsertTargetTcpProxiesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>
-  ListTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::ListTargetTcpProxiesRequest request);
+  ListTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                           ListTargetTcpProxiesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetBackendService(google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const& request);
+  SetBackendService(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                        SetBackendServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetProxyHeader(google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const& request);
+  SetProxyHeader(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                     SetProxyHeaderRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

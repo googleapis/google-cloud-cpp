@@ -26,43 +26,58 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-MachineImagesConnectionIdempotencyPolicy::~MachineImagesConnectionIdempotencyPolicy() = default;
+MachineImagesConnectionIdempotencyPolicy::
+    ~MachineImagesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<MachineImagesConnectionIdempotencyPolicy>
 MachineImagesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MachineImagesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::DeleteMachineImages(google::cloud::cpp::compute::machine_images::v1::DeleteMachineImagesRequest const&) {
+Idempotency MachineImagesConnectionIdempotencyPolicy::DeleteMachineImages(
+    google::cloud::cpp::compute::machine_images::v1::
+        DeleteMachineImagesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::GetMachineImages(google::cloud::cpp::compute::machine_images::v1::GetMachineImagesRequest const&) {
+Idempotency MachineImagesConnectionIdempotencyPolicy::GetMachineImages(
+    google::cloud::cpp::compute::machine_images::v1::
+        GetMachineImagesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const&) {
+Idempotency MachineImagesConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::machine_images::v1::
+        GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::InsertMachineImages(google::cloud::cpp::compute::machine_images::v1::InsertMachineImagesRequest const&) {
+Idempotency MachineImagesConnectionIdempotencyPolicy::InsertMachineImages(
+    google::cloud::cpp::compute::machine_images::v1::
+        InsertMachineImagesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::ListMachineImages(google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest) {  // NOLINT
+Idempotency MachineImagesConnectionIdempotencyPolicy::ListMachineImages(
+    google::cloud::cpp::compute::machine_images::v1::
+        ListMachineImagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const&) {
+Idempotency MachineImagesConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::machine_images::v1::
+        SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const&) {
+Idempotency MachineImagesConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::machine_images::v1::
+        TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<MachineImagesConnectionIdempotencyPolicy>
-    MakeDefaultMachineImagesConnectionIdempotencyPolicy() {
+MakeDefaultMachineImagesConnectionIdempotencyPolicy() {
   return std::make_unique<MachineImagesConnectionIdempotencyPolicy>();
 }
 

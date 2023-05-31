@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service Addresses {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of addresses.
-  rpc AggregatedListAddresses(AggregatedListAddressesRequest) returns (google.cloud.cpp.compute.v1.AddressAggregatedList) {
+  rpc AggregatedListAddresses(AggregatedListAddressesRequest)
+      returns (google.cloud.cpp.compute.v1.AddressAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/addresses"
     };
@@ -40,7 +41,8 @@ service Addresses {
   }
 
   // Deletes the specified address resource.
-  rpc DeleteAddresses(DeleteAddressesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteAddresses(DeleteAddressesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/regions/{region=region}/addresses/{address=address}"
     };
@@ -49,7 +51,8 @@ service Addresses {
   }
 
   // Returns the specified address resource.
-  rpc GetAddresses(GetAddressesRequest) returns (google.cloud.cpp.compute.v1.Address) {
+  rpc GetAddresses(GetAddressesRequest)
+      returns (google.cloud.cpp.compute.v1.Address) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/addresses/{address=address}"
     };
@@ -58,7 +61,8 @@ service Addresses {
 
   // Creates an address resource in the specified project by using the data
   // included in the request.
-  rpc InsertAddresses(InsertAddressesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertAddresses(InsertAddressesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/addresses"
       body: "address_resource"
@@ -68,7 +72,8 @@ service Addresses {
   }
 
   // Retrieves a list of addresses contained within the specified region.
-  rpc ListAddresses(ListAddressesRequest) returns (google.cloud.cpp.compute.v1.AddressList) {
+  rpc ListAddresses(ListAddressesRequest)
+      returns (google.cloud.cpp.compute.v1.AddressList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/addresses"
     };
@@ -77,12 +82,14 @@ service Addresses {
 
   // Sets the labels on an Address. To learn more about labels, read the
   // Labeling Resources documentation.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/addresses/{resource=resource}/setLabels"
       body: "region_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,region_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,region_set_labels_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -167,10 +174,16 @@ message DeleteAddressesRequest {
   string address = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -200,13 +213,20 @@ message GetAddressesRequest {
 // Request message for InsertAddresses.
 message InsertAddressesRequest {
   // The Address for this request.
-  optional google.cloud.cpp.compute.v1.Address address_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Address address_resource = 1
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -292,13 +312,21 @@ message ListAddressesRequest {
 // Request message for SetLabels.
 message SetLabelsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // The RegionSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest region_set_labels_request_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest
+      region_set_labels_request_resource = 3
+      [json_name = "__json_request_body"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

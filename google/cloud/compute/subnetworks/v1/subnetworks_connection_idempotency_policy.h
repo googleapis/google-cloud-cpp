@@ -37,45 +37,56 @@ class SubnetworksConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<SubnetworksConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::
+          AggregatedListSubnetworksRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteSubnetworks(google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest const& request);
+  virtual google::cloud::Idempotency DeleteSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::
+          DeleteSubnetworksRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request);
+  virtual google::cloud::Idempotency ExpandIpCidrRange(
+      google::cloud::cpp::compute::subnetworks::v1::
+          ExpandIpCidrRangeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetSubnetworks(google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const& request);
+  virtual google::cloud::Idempotency GetSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertSubnetworks(google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest const& request);
+  virtual google::cloud::Idempotency InsertSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::
+          InsertSubnetworksRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest request);
+  virtual google::cloud::Idempotency ListSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  ListUsable(google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request);
+  virtual google::cloud::Idempotency ListUsable(
+      google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request);
 
-  virtual google::cloud::Idempotency
-  PatchSubnetworks(google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const& request);
+  virtual google::cloud::Idempotency PatchSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::
+          PatchSubnetworksRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SetPrivateIpGoogleAccess(google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request);
+  virtual google::cloud::Idempotency SetPrivateIpGoogleAccess(
+      google::cloud::cpp::compute::subnetworks::v1::
+          SetPrivateIpGoogleAccessRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::subnetworks::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<SubnetworksConnectionIdempotencyPolicy>
-    MakeDefaultSubnetworksConnectionIdempotencyPolicy();
+MakeDefaultSubnetworksConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_subnetworks_v1

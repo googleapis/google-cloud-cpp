@@ -36,30 +36,38 @@ class AutoscalersTracingConnection
   ~AutoscalersTracingConnection() override = default;
 
   explicit AutoscalersTracingConnection(
-    std::shared_ptr<compute_autoscalers_v1::AutoscalersConnection> child);
+      std::shared_ptr<compute_autoscalers_v1::AutoscalersConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
-  AggregatedListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request) override;
+  AggregatedListAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          AggregatedListAutoscalersRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAutoscalers(google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalersRequest const& request) override;
+  DeleteAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
+                        DeleteAutoscalersRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-  GetAutoscalers(google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAutoscalers(google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalersRequest const& request) override;
-
-  StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-  ListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchAutoscalers(google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const& request) override;
+  InsertAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
+                        InsertAutoscalersRequest const& request) override;
+
+  StreamRange<google::cloud::cpp::compute::v1::Autoscaler> ListAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          PatchAutoscalersRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateAutoscalers(google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalersRequest const& request) override;
+  UpdateAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
+                        UpdateAutoscalersRequest const& request) override;
 
  private:
   std::shared_ptr<compute_autoscalers_v1::AutoscalersConnection> child_;

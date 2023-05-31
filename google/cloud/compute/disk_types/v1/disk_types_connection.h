@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISK_TYPES_V1_DISK_TYPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISK_TYPES_V1_DISK_TYPES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/disk_types/v1/disk_types_connection_idempotency_policy.h"
 #include "google/cloud/compute/disk_types/v1/internal/disk_types_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -38,8 +38,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using DiskTypesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_disk_types_v1_internal::DiskTypesRetryTraits>;
 
-using DiskTypesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_disk_types_v1_internal::DiskTypesRetryTraits>;
+using DiskTypesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_disk_types_v1_internal::DiskTypesRetryTraits>;
 
 using DiskTypesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -64,13 +65,16 @@ class DiskTypesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
-  AggregatedListDiskTypes(google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest const& request);
+  AggregatedListDiskTypes(google::cloud::cpp::compute::disk_types::v1::
+                              AggregatedListDiskTypesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::DiskType>
-  GetDiskTypes(google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskTypes(
+      google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::DiskType>
-  ListDiskTypes(google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::DiskType> ListDiskTypes(
+      google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

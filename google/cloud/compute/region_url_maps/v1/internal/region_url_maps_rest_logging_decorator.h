@@ -39,50 +39,64 @@ class RegionUrlMapsRestLogging : public RegionUrlMapsRestStub {
  public:
   ~RegionUrlMapsRestLogging() override = default;
   RegionUrlMapsRestLogging(std::shared_ptr<RegionUrlMapsRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                           TracingOptions tracing_options,
+                           std::set<std::string> components);
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteRegionUrlMaps(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteRegionUrlMaps(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_url_maps::v1::DeleteRegionUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::region_url_maps::v1::
+          DeleteRegionUrlMapsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_url_maps::v1::GetRegionUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::region_url_maps::v1::
+          GetRegionUrlMapsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertRegionUrlMaps(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertRegionUrlMaps(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_url_maps::v1::InsertRegionUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::region_url_maps::v1::
+          InsertRegionUrlMapsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapList> ListRegionUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::region_url_maps::v1::
+          ListRegionUrlMapsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchRegionUrlMaps(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchRegionUrlMaps(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_url_maps::v1::PatchRegionUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::region_url_maps::v1::
+          PatchRegionUrlMapsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateRegionUrlMaps(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateRegionUrlMaps(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_url_maps::v1::UpdateRegionUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::region_url_maps::v1::
+          UpdateRegionUrlMapsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const& request) override;
+      google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest const& request) override;
 
  private:
   std::shared_ptr<RegionUrlMapsRestStub> child_;

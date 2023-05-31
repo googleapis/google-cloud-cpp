@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_OPERATIONS_V1_REGION_OPERATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_OPERATIONS_V1_REGION_OPERATIONS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_operations/v1/internal/region_operations_retry_traits.h"
 #include "google/cloud/compute/region_operations/v1/region_operations_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_region_operations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using RegionOperationsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_region_operations_v1_internal::RegionOperationsRetryTraits>;
+using RegionOperationsRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_region_operations_v1_internal::RegionOperationsRetryTraits>;
 
-using RegionOperationsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_region_operations_v1_internal::RegionOperationsRetryTraits>;
+using RegionOperationsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_region_operations_v1_internal::RegionOperationsRetryTraits>;
 
 using RegionOperationsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -55,7 +57,8 @@ using RegionOperationsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeRegionOperationsConnection()`.
  *
- * For mocking, see `compute_region_operations_v1_mocks::MockRegionOperationsConnection`.
+ * For mocking, see
+ * `compute_region_operations_v1_mocks::MockRegionOperationsConnection`.
  */
 class RegionOperationsConnection {
  public:
@@ -63,17 +66,21 @@ class RegionOperationsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual Status
-  DeleteRegionOperations(google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request);
+  virtual Status DeleteRegionOperations(
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetRegionOperations(google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request);
+  GetRegionOperations(google::cloud::cpp::compute::region_operations::v1::
+                          GetRegionOperationsRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListRegionOperations(google::cloud::cpp::compute::region_operations::v1::ListRegionOperationsRequest request);
+  ListRegionOperations(google::cloud::cpp::compute::region_operations::v1::
+                           ListRegionOperationsRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Wait(google::cloud::cpp::compute::region_operations::v1::WaitRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
+      google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -24,76 +24,107 @@ namespace cloud {
 namespace compute_http_health_checks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-HttpHealthChecksClient::HttpHealthChecksClient(ExperimentalTag,
-    std::shared_ptr<HttpHealthChecksConnection> connection, Options opts)
+HttpHealthChecksClient::HttpHealthChecksClient(
+    ExperimentalTag, std::shared_ptr<HttpHealthChecksConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 HttpHealthChecksClient::~HttpHealthChecksClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpHealthChecksClient::DeleteHttpHealthChecks(std::string const& project, std::string const& http_health_check, Options opts) {
+HttpHealthChecksClient::DeleteHttpHealthChecks(
+    std::string const& project, std::string const& http_health_check,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::http_health_checks::v1::DeleteHttpHealthChecksRequest request;
+  google::cloud::cpp::compute::http_health_checks::v1::
+      DeleteHttpHealthChecksRequest request;
   request.set_project(project);
   request.set_http_health_check(http_health_check);
   return connection_->DeleteHttpHealthChecks(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpHealthChecksClient::DeleteHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::DeleteHttpHealthChecksRequest const& request, Options opts) {
+HttpHealthChecksClient::DeleteHttpHealthChecks(
+    google::cloud::cpp::compute::http_health_checks::v1::
+        DeleteHttpHealthChecksRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteHttpHealthChecks(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
-HttpHealthChecksClient::GetHttpHealthChecks(std::string const& project, std::string const& http_health_check, Options opts) {
+HttpHealthChecksClient::GetHttpHealthChecks(
+    std::string const& project, std::string const& http_health_check,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::http_health_checks::v1::GetHttpHealthChecksRequest request;
+  google::cloud::cpp::compute::http_health_checks::v1::
+      GetHttpHealthChecksRequest request;
   request.set_project(project);
   request.set_http_health_check(http_health_check);
   return connection_->GetHttpHealthChecks(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
-HttpHealthChecksClient::GetHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::GetHttpHealthChecksRequest const& request, Options opts) {
+HttpHealthChecksClient::GetHttpHealthChecks(
+    google::cloud::cpp::compute::http_health_checks::v1::
+        GetHttpHealthChecksRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetHttpHealthChecks(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpHealthChecksClient::InsertHttpHealthChecks(std::string const& project, google::cloud::cpp::compute::v1::HttpHealthCheck const& http_health_check_resource, Options opts) {
+HttpHealthChecksClient::InsertHttpHealthChecks(
+    std::string const& project,
+    google::cloud::cpp::compute::v1::HttpHealthCheck const&
+        http_health_check_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::http_health_checks::v1::InsertHttpHealthChecksRequest request;
+  google::cloud::cpp::compute::http_health_checks::v1::
+      InsertHttpHealthChecksRequest request;
   request.set_project(project);
   *request.mutable_http_health_check_resource() = http_health_check_resource;
   return connection_->InsertHttpHealthChecks(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpHealthChecksClient::InsertHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::InsertHttpHealthChecksRequest const& request, Options opts) {
+HttpHealthChecksClient::InsertHttpHealthChecks(
+    google::cloud::cpp::compute::http_health_checks::v1::
+        InsertHttpHealthChecksRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertHttpHealthChecks(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>
-HttpHealthChecksClient::ListHttpHealthChecks(std::string const& project, Options opts) {
+HttpHealthChecksClient::ListHttpHealthChecks(std::string const& project,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::http_health_checks::v1::ListHttpHealthChecksRequest request;
+  google::cloud::cpp::compute::http_health_checks::v1::
+      ListHttpHealthChecksRequest request;
   request.set_project(project);
   return connection_->ListHttpHealthChecks(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>
-HttpHealthChecksClient::ListHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::ListHttpHealthChecksRequest request, Options opts) {
+HttpHealthChecksClient::ListHttpHealthChecks(
+    google::cloud::cpp::compute::http_health_checks::v1::
+        ListHttpHealthChecksRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListHttpHealthChecks(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpHealthChecksClient::PatchHttpHealthChecks(std::string const& project, std::string const& http_health_check, google::cloud::cpp::compute::v1::HttpHealthCheck const& http_health_check_resource, Options opts) {
+HttpHealthChecksClient::PatchHttpHealthChecks(
+    std::string const& project, std::string const& http_health_check,
+    google::cloud::cpp::compute::v1::HttpHealthCheck const&
+        http_health_check_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::http_health_checks::v1::PatchHttpHealthChecksRequest request;
+  google::cloud::cpp::compute::http_health_checks::v1::
+      PatchHttpHealthChecksRequest request;
   request.set_project(project);
   request.set_http_health_check(http_health_check);
   *request.mutable_http_health_check_resource() = http_health_check_resource;
@@ -101,15 +132,23 @@ HttpHealthChecksClient::PatchHttpHealthChecks(std::string const& project, std::s
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpHealthChecksClient::PatchHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::PatchHttpHealthChecksRequest const& request, Options opts) {
+HttpHealthChecksClient::PatchHttpHealthChecks(
+    google::cloud::cpp::compute::http_health_checks::v1::
+        PatchHttpHealthChecksRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchHttpHealthChecks(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpHealthChecksClient::UpdateHttpHealthChecks(std::string const& project, std::string const& http_health_check, google::cloud::cpp::compute::v1::HttpHealthCheck const& http_health_check_resource, Options opts) {
+HttpHealthChecksClient::UpdateHttpHealthChecks(
+    std::string const& project, std::string const& http_health_check,
+    google::cloud::cpp::compute::v1::HttpHealthCheck const&
+        http_health_check_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::http_health_checks::v1::UpdateHttpHealthChecksRequest request;
+  google::cloud::cpp::compute::http_health_checks::v1::
+      UpdateHttpHealthChecksRequest request;
   request.set_project(project);
   request.set_http_health_check(http_health_check);
   *request.mutable_http_health_check_resource() = http_health_check_resource;
@@ -117,7 +156,10 @@ HttpHealthChecksClient::UpdateHttpHealthChecks(std::string const& project, std::
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpHealthChecksClient::UpdateHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::UpdateHttpHealthChecksRequest const& request, Options opts) {
+HttpHealthChecksClient::UpdateHttpHealthChecks(
+    google::cloud::cpp::compute::http_health_checks::v1::
+        UpdateHttpHealthChecksRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateHttpHealthChecks(request);
 }

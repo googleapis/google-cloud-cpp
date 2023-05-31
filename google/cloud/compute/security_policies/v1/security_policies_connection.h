@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SECURITY_POLICIES_V1_SECURITY_POLICIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SECURITY_POLICIES_V1_SECURITY_POLICIES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_retry_traits.h"
 #include "google/cloud/compute/security_policies/v1/security_policies_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -38,11 +38,13 @@ namespace cloud {
 namespace compute_security_policies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using SecurityPoliciesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_security_policies_v1_internal::SecurityPoliciesRetryTraits>;
+using SecurityPoliciesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_security_policies_v1_internal::SecurityPoliciesRetryTraits>;
 
-using SecurityPoliciesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_security_policies_v1_internal::SecurityPoliciesRetryTraits>;
+using SecurityPoliciesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_security_policies_v1_internal::SecurityPoliciesRetryTraits>;
 
 using SecurityPoliciesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -58,7 +60,8 @@ using SecurityPoliciesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeSecurityPoliciesConnection()`.
  *
- * For mocking, see `compute_security_policies_v1_mocks::MockSecurityPoliciesConnection`.
+ * For mocking, see
+ * `compute_security_policies_v1_mocks::MockSecurityPoliciesConnection`.
  */
 class SecurityPoliciesConnection {
  public:
@@ -66,41 +69,57 @@ class SecurityPoliciesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddRule(google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const& request);
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
+      google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
-  AggregatedListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::AggregatedListSecurityPoliciesRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
+  AggregatedListSecurityPolicies(
+      google::cloud::cpp::compute::security_policies::v1::
+          AggregatedListSecurityPoliciesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPoliciesRequest const& request);
+  DeleteSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::
+                             DeleteSecurityPoliciesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-  GetSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::GetSecurityPoliciesRequest const& request);
+  GetSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::
+                          GetSecurityPoliciesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
-  GetRule(google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
+      google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::InsertSecurityPoliciesRequest const& request);
+  InsertSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::
+                             InsertSecurityPoliciesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
-  ListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::ListSecurityPoliciesRequest request);
+  ListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::
+                           ListSecurityPoliciesRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>
-  ListPreconfiguredExpressionSets(google::cloud::cpp::compute::security_policies::v1::ListPreconfiguredExpressionSetsRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::PatchSecurityPoliciesRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRule(google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::
+                       SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+  ListPreconfiguredExpressionSets(
+      google::cloud::cpp::compute::security_policies::v1::
+          ListPreconfiguredExpressionSetsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveRule(google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const& request);
+  PatchSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::
+                            PatchSecurityPoliciesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const& request);
+  PatchRule(google::cloud::cpp::compute::security_policies::v1::
+                PatchRuleRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveRule(google::cloud::cpp::compute::security_policies::v1::
+                 RemoveRuleRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::security_policies::v1::
+                SetLabelsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

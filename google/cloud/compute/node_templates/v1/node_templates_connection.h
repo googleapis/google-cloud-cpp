@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TEMPLATES_V1_NODE_TEMPLATES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TEMPLATES_V1_NODE_TEMPLATES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/node_templates/v1/internal/node_templates_retry_traits.h"
 #include "google/cloud/compute/node_templates/v1/node_templates_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -38,11 +38,13 @@ namespace cloud {
 namespace compute_node_templates_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using NodeTemplatesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_node_templates_v1_internal::NodeTemplatesRetryTraits>;
+using NodeTemplatesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_node_templates_v1_internal::NodeTemplatesRetryTraits>;
 
-using NodeTemplatesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_node_templates_v1_internal::NodeTemplatesRetryTraits>;
+using NodeTemplatesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_node_templates_v1_internal::NodeTemplatesRetryTraits>;
 
 using NodeTemplatesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -58,7 +60,8 @@ using NodeTemplatesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeNodeTemplatesConnection()`.
  *
- * For mocking, see `compute_node_templates_v1_mocks::MockNodeTemplatesConnection`.
+ * For mocking, see
+ * `compute_node_templates_v1_mocks::MockNodeTemplatesConnection`.
  */
 class NodeTemplatesConnection {
  public:
@@ -67,28 +70,38 @@ class NodeTemplatesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
-  AggregatedListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::AggregatedListNodeTemplatesRequest const& request);
+  AggregatedListNodeTemplates(
+      google::cloud::cpp::compute::node_templates::v1::
+          AggregatedListNodeTemplatesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeTemplates(google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplatesRequest const& request);
+  DeleteNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
+                          DeleteNodeTemplatesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-  GetNodeTemplates(google::cloud::cpp::compute::node_templates::v1::GetNodeTemplatesRequest const& request);
+  GetNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
+                       GetNodeTemplatesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::node_templates::v1::
+          GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeTemplates(google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplatesRequest const& request);
+  InsertNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
+                          InsertNodeTemplatesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>
-  ListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest request);
+  ListNodeTemplates(
+      google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::node_templates::v1::
+          SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::node_templates::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::node_templates::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

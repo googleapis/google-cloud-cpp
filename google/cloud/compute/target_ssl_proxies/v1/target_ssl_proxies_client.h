@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TargetSslProxiesClient {
  public:
-  explicit TargetSslProxiesClient(ExperimentalTag, std::shared_ptr<TargetSslProxiesConnection> connection, Options opts = {});
+  explicit TargetSslProxiesClient(
+      ExperimentalTag, std::shared_ptr<TargetSslProxiesConnection> connection,
+      Options opts = {});
   ~TargetSslProxiesClient();
 
   ///@{
@@ -76,10 +78,12 @@ class TargetSslProxiesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TargetSslProxiesClient const& a, TargetSslProxiesClient const& b) {
+  friend bool operator==(TargetSslProxiesClient const& a,
+                         TargetSslProxiesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TargetSslProxiesClient const& a, TargetSslProxiesClient const& b) {
+  friend bool operator!=(TargetSslProxiesClient const& a,
+                         TargetSslProxiesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -110,11 +114,13 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.DeleteTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L126}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.DeleteTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L140}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetSslProxies(std::string const& project, std::string const& target_ssl_proxy, Options opts = {});
+  DeleteTargetSslProxies(std::string const& project,
+                         std::string const& target_ssl_proxy,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -146,11 +152,13 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.DeleteTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L126}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.DeleteTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L140}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxiesRequest const& request, Options opts = {});
+  DeleteTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::
+                             DeleteTargetSslProxiesRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -172,12 +180,13 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L147}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L164}
   /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28021}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
-  GetTargetSslProxies(std::string const& project, std::string const& target_ssl_proxy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxies(
+      std::string const& project, std::string const& target_ssl_proxy,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -203,12 +212,14 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L147}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L164}
   /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28021}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
-  GetTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::GetTargetSslProxiesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxies(
+      google::cloud::cpp::compute::target_ssl_proxies::v1::
+          GetTargetSslProxiesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -237,11 +248,14 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.InsertTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L156}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.InsertTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L173}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetSslProxies(std::string const& project, google::cloud::cpp::compute::v1::TargetSslProxy const& target_ssl_proxy_resource, Options opts = {});
+  InsertTargetSslProxies(std::string const& project,
+                         google::cloud::cpp::compute::v1::TargetSslProxy const&
+                             target_ssl_proxy_resource,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -274,11 +288,13 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.InsertTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L156}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.InsertTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L173}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxiesRequest const& request, Options opts = {});
+  InsertTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::
+                             InsertTargetSslProxiesRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -309,7 +325,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L177}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L198}
   /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28021}
   ///
   // clang-format on
@@ -350,12 +366,14 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L177}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L198}
   /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28021}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
-  ListTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::ListTargetSslProxiesRequest request, Options opts = {});
+  ListTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::
+                           ListTargetSslProxiesRequest request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -385,11 +403,16 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L242}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L263}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetBackendService(std::string const& project, std::string const& target_ssl_proxy, google::cloud::cpp::compute::v1::TargetSslProxiesSetBackendServiceRequest const& target_ssl_proxies_set_backend_service_request_resource, Options opts = {});
+  SetBackendService(
+      std::string const& project, std::string const& target_ssl_proxy,
+      google::cloud::cpp::compute::v1::
+          TargetSslProxiesSetBackendServiceRequest const&
+              target_ssl_proxies_set_backend_service_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -421,11 +444,13 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L242}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L263}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetBackendService(google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const& request, Options opts = {});
+  SetBackendService(google::cloud::cpp::compute::target_ssl_proxies::v1::
+                        SetBackendServiceRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -455,11 +480,16 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L267}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L293}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCertificateMap(std::string const& project, std::string const& target_ssl_proxy, google::cloud::cpp::compute::v1::TargetSslProxiesSetCertificateMapRequest const& target_ssl_proxies_set_certificate_map_request_resource, Options opts = {});
+  SetCertificateMap(
+      std::string const& project, std::string const& target_ssl_proxy,
+      google::cloud::cpp::compute::v1::
+          TargetSslProxiesSetCertificateMapRequest const&
+              target_ssl_proxies_set_certificate_map_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -491,11 +521,13 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L267}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L293}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCertificateMap(google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const& request, Options opts = {});
+  SetCertificateMap(google::cloud::cpp::compute::target_ssl_proxies::v1::
+                        SetCertificateMapRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -524,11 +556,15 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L292}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L323}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetProxyHeader(std::string const& project, std::string const& target_ssl_proxy, google::cloud::cpp::compute::v1::TargetSslProxiesSetProxyHeaderRequest const& target_ssl_proxies_set_proxy_header_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
+      std::string const& project, std::string const& target_ssl_proxy,
+      google::cloud::cpp::compute::v1::
+          TargetSslProxiesSetProxyHeaderRequest const&
+              target_ssl_proxies_set_proxy_header_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -560,11 +596,13 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L292}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L323}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetProxyHeader(google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
+      google::cloud::cpp::compute::target_ssl_proxies::v1::
+          SetProxyHeaderRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -594,11 +632,16 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L316}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L352}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSslCertificates(std::string const& project, std::string const& target_ssl_proxy, google::cloud::cpp::compute::v1::TargetSslProxiesSetSslCertificatesRequest const& target_ssl_proxies_set_ssl_certificates_request_resource, Options opts = {});
+  SetSslCertificates(
+      std::string const& project, std::string const& target_ssl_proxy,
+      google::cloud::cpp::compute::v1::
+          TargetSslProxiesSetSslCertificatesRequest const&
+              target_ssl_proxies_set_ssl_certificates_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -630,11 +673,13 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L316}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L352}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSslCertificates(google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const& request, Options opts = {});
+  SetSslCertificates(google::cloud::cpp::compute::target_ssl_proxies::v1::
+                         SetSslCertificatesRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -667,11 +712,14 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L341}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L382}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSslPolicy(std::string const& project, std::string const& target_ssl_proxy, google::cloud::cpp::compute::v1::SslPolicyReference const& ssl_policy_reference_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
+      std::string const& project, std::string const& target_ssl_proxy,
+      google::cloud::cpp::compute::v1::SslPolicyReference const&
+          ssl_policy_reference_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -706,11 +754,13 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L341}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L382}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSslPolicy(google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
+      google::cloud::cpp::compute::target_ssl_proxies::v1::
+          SetSslPolicyRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<TargetSslProxiesConnection> connection_;

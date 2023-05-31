@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALLS_V1_FIREWALLS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALLS_V1_FIREWALLS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/firewalls/v1/firewalls_connection_idempotency_policy.h"
 #include "google/cloud/compute/firewalls/v1/internal/firewalls_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -41,8 +41,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using FirewallsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_firewalls_v1_internal::FirewallsRetryTraits>;
 
-using FirewallsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_firewalls_v1_internal::FirewallsRetryTraits>;
+using FirewallsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_firewalls_v1_internal::FirewallsRetryTraits>;
 
 using FirewallsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -67,22 +68,31 @@ class FirewallsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteFirewalls(google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request);
+  DeleteFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Firewall>
-  GetFirewalls(google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertFirewalls(google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request);
-
-  virtual StreamRange<google::cloud::cpp::compute::v1::Firewall>
-  ListFirewalls(google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchFirewalls(google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request);
+  InsertFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::cpp::compute::v1::Firewall> ListFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateFirewalls(google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request);
+  PatchFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

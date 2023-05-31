@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ImageFamilyViewsClient {
  public:
-  explicit ImageFamilyViewsClient(ExperimentalTag, std::shared_ptr<ImageFamilyViewsConnection> connection, Options opts = {});
+  explicit ImageFamilyViewsClient(
+      ExperimentalTag, std::shared_ptr<ImageFamilyViewsConnection> connection,
+      Options opts = {});
   ~ImageFamilyViewsClient();
 
   ///@{
@@ -75,10 +77,12 @@ class ImageFamilyViewsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ImageFamilyViewsClient const& a, ImageFamilyViewsClient const& b) {
+  friend bool operator==(ImageFamilyViewsClient const& a,
+                         ImageFamilyViewsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ImageFamilyViewsClient const& a, ImageFamilyViewsClient const& b) {
+  friend bool operator!=(ImageFamilyViewsClient const& a,
+                         ImageFamilyViewsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -105,12 +109,13 @@ class ImageFamilyViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L44}
+  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L45}
   /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8973}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(std::string const& project, std::string const& zone, std::string const& family, Options opts = {});
+  GetImageFamilyViews(std::string const& project, std::string const& zone,
+                      std::string const& family, Options opts = {});
 
   // clang-format off
   ///
@@ -137,12 +142,14 @@ class ImageFamilyViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L44}
+  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L45}
   /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8973}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewsRequest const& request, Options opts = {});
+  GetImageFamilyViews(google::cloud::cpp::compute::image_family_views::v1::
+                          GetImageFamilyViewsRequest const& request,
+                      Options opts = {});
 
  private:
   std::shared_ptr<ImageFamilyViewsConnection> connection_;

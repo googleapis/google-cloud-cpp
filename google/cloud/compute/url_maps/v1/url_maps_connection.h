@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_URL_MAPS_V1_URL_MAPS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_URL_MAPS_V1_URL_MAPS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/url_maps/v1/internal/url_maps_retry_traits.h"
 #include "google/cloud/compute/url_maps/v1/url_maps_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -41,8 +41,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using UrlMapsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_url_maps_v1_internal::UrlMapsRetryTraits>;
 
-using UrlMapsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_url_maps_v1_internal::UrlMapsRetryTraits>;
+using UrlMapsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_url_maps_v1_internal::UrlMapsRetryTraits>;
 
 using UrlMapsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -67,31 +68,44 @@ class UrlMapsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
-  AggregatedListUrlMaps(google::cloud::cpp::compute::url_maps::v1::AggregatedListUrlMapsRequest const& request);
+  AggregatedListUrlMaps(google::cloud::cpp::compute::url_maps::v1::
+                            AggregatedListUrlMapsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteUrlMaps(google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const& request);
+  DeleteUrlMaps(
+      google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-  GetUrlMaps(google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertUrlMaps(google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InvalidateCache(google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const& request);
-
-  virtual StreamRange<google::cloud::cpp::compute::v1::UrlMap>
-  ListUrlMaps(google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMaps(
+      google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchUrlMaps(google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const& request);
+  InsertUrlMaps(
+      google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateUrlMaps(google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const& request);
+  InvalidateCache(
+      google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListUrlMaps(
+      google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchUrlMaps(
+      google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateUrlMaps(
+      google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
-  Validate(google::cloud::cpp::compute::url_maps::v1::ValidateRequest const& request);
+  Validate(google::cloud::cpp::compute::url_maps::v1::ValidateRequest const&
+               request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

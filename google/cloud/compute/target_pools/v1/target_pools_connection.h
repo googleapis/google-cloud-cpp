@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_POOLS_V1_TARGET_POOLS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_POOLS_V1_TARGET_POOLS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_retry_traits.h"
 #include "google/cloud/compute/target_pools/v1/target_pools_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -41,8 +41,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using TargetPoolsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_target_pools_v1_internal::TargetPoolsRetryTraits>;
 
-using TargetPoolsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_target_pools_v1_internal::TargetPoolsRetryTraits>;
+using TargetPoolsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_target_pools_v1_internal::TargetPoolsRetryTraits>;
 
 using TargetPoolsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -67,37 +68,53 @@ class TargetPoolsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddHealthCheck(google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request);
+  AddHealthCheck(google::cloud::cpp::compute::target_pools::v1::
+                     AddHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddInstance(google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request);
+  AddInstance(
+      google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
-  AggregatedListTargetPools(google::cloud::cpp::compute::target_pools::v1::AggregatedListTargetPoolsRequest const& request);
+  AggregatedListTargetPools(
+      google::cloud::cpp::compute::target_pools::v1::
+          AggregatedListTargetPoolsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetPools(google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolsRequest const& request);
+  DeleteTargetPools(google::cloud::cpp::compute::target_pools::v1::
+                        DeleteTargetPoolsRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetPool>
-  GetTargetPools(google::cloud::cpp::compute::target_pools::v1::GetTargetPoolsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPools(
+      google::cloud::cpp::compute::target_pools::v1::
+          GetTargetPoolsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
-  GetHealth(google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const& request);
+  GetHealth(
+      google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetPools(google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolsRequest const& request);
+  InsertTargetPools(google::cloud::cpp::compute::target_pools::v1::
+                        InsertTargetPoolsRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetPool>
-  ListTargetPools(google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest request);
+  ListTargetPools(
+      google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveHealthCheck(google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request);
+  RemoveHealthCheck(google::cloud::cpp::compute::target_pools::v1::
+                        RemoveHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveInstance(google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request);
+  RemoveInstance(google::cloud::cpp::compute::target_pools::v1::
+                     RemoveInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetBackup(google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request);
+  SetBackup(
+      google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

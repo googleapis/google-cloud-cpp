@@ -39,173 +39,208 @@ DefaultVpnGatewaysRestStub::DefaultVpnGatewaysRestStub(Options options)
 
 DefaultVpnGatewaysRestStub::DefaultVpnGatewaysRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations,
-    Options options)
+    std::shared_ptr<rest_internal::RestClient> operations, Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
 DefaultVpnGatewaysRestStub::AggregatedListVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpn_gateways::v1::AggregatedListVpnGatewaysRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpn_gateways::v1::
+        AggregatedListVpnGatewaysRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/aggregated/vpnGateways"),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/aggregated/vpnGateways"),
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultVpnGatewaysRestStub::AsyncDeleteVpnGateways(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::vpn_gateways::v1::DeleteVpnGatewaysRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::vpn_gateways::v1::
+        DeleteVpnGatewaysRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/vpnGateways/", request.vpn_gateway(), "")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/vpnGateways/",
+                             request.vpn_gateway(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGateway>
 DefaultVpnGatewaysRestStub::GetVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewaysRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewaysRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnGateway>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/vpnGateways/", request.vpn_gateway(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/vpnGateways/", request.vpn_gateway(),
+                   ""),
       {std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>
 DefaultVpnGatewaysRestStub::GetStatus(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/vpnGateways/", request.vpn_gateway(), "/getStatus"),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/vpnGateways/", request.vpn_gateway(),
+                   "/getStatus"),
       {std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultVpnGatewaysRestStub::AsyncInsertVpnGateways(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::vpn_gateways::v1::InsertVpnGatewaysRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::vpn_gateways::v1::
+        InsertVpnGatewaysRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.vpn_gateway_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/vpnGateways")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.vpn_gateway_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/vpnGateways")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewayList>
 DefaultVpnGatewaysRestStub::ListVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnGatewayList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/vpnGateways"),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/vpnGateways"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultVpnGatewaysRestStub::AsyncSetLabels(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.region_set_labels_request_resource(),
-          absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/vpnGateways/", request.resource(), "/setLabels")));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.region_set_labels_request_resource(),
+                absl::StrCat("/compute/v1/projects/", request.project(),
+                             "/regions/", request.region(), "/vpnGateways/",
+                             request.resource(), "/setLabels")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultVpnGatewaysRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpn_gateways::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpn_gateways::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/vpnGateways/", request.resource(), "/testIamPermissions"));
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/vpnGateways/", request.resource(),
+                   "/testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultVpnGatewaysRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        GetRegionOperationsRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+                *operations, *rest_context, request,
+                absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+      },
+      std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
-future<Status>
-DefaultVpnGatewaysRestStub::AsyncCancelOperation(
+future<Status> DefaultVpnGatewaysRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteRegionOperationsRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request,
-          absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/operations/",
-                             request.operation())));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+                  p.set_value(rest_internal::Post<google::protobuf::Empty>(
+                      *operations, *rest_context, request,
+                      absl::StrCat("/compute/v1/projects/", request.project(),
+                                   "/regions/", request.region(),
+                                   "/operations/", request.operation())));
+                },
+                std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
   });
 }

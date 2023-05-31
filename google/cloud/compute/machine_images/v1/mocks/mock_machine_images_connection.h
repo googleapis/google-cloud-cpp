@@ -42,37 +42,52 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockMachineImagesConnection : public compute_machine_images_v1::MachineImagesConnection {
+class MockMachineImagesConnection
+    : public compute_machine_images_v1::MachineImagesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteMachineImages,
-  (google::cloud::cpp::compute::machine_images::v1::DeleteMachineImagesRequest const& request), (override));
+              DeleteMachineImages,
+              (google::cloud::cpp::compute::machine_images::v1::
+                   DeleteMachineImagesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::MachineImage>,
-  GetMachineImages,
-  (google::cloud::cpp::compute::machine_images::v1::GetMachineImagesRequest const& request), (override));
+              GetMachineImages,
+              (google::cloud::cpp::compute::machine_images::v1::
+                   GetMachineImagesRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  GetIamPolicy,
-  (google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+              (google::cloud::cpp::compute::machine_images::v1::
+                   GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertMachineImages,
-  (google::cloud::cpp::compute::machine_images::v1::InsertMachineImagesRequest const& request), (override));
+              InsertMachineImages,
+              (google::cloud::cpp::compute::machine_images::v1::
+                   InsertMachineImagesRequest const& request),
+              (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::MachineImage>,
-  ListMachineImages,
-  (google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::MachineImage>,
+      ListMachineImages,
+      (google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  SetIamPolicy,
-  (google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+              (google::cloud::cpp::compute::machine_images::v1::
+                   SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::machine_images::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

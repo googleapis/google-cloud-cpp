@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class GlobalOperationsClient {
  public:
-  explicit GlobalOperationsClient(ExperimentalTag, std::shared_ptr<GlobalOperationsConnection> connection, Options opts = {});
+  explicit GlobalOperationsClient(
+      ExperimentalTag, std::shared_ptr<GlobalOperationsConnection> connection,
+      Options opts = {});
   ~GlobalOperationsClient();
 
   ///@{
@@ -76,10 +78,12 @@ class GlobalOperationsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(GlobalOperationsClient const& a, GlobalOperationsClient const& b) {
+  friend bool operator==(GlobalOperationsClient const& a,
+                         GlobalOperationsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(GlobalOperationsClient const& a, GlobalOperationsClient const& b) {
+  friend bool operator!=(GlobalOperationsClient const& a,
+                         GlobalOperationsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -103,7 +107,7 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.AggregatedListGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L89}
+  /// [google.cloud.cpp.compute.global_operations.v1.AggregatedListGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L93}
   /// [google.cloud.cpp.compute.v1.OperationAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17659}
   ///
   // clang-format on
@@ -134,12 +138,15 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.AggregatedListGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L89}
+  /// [google.cloud.cpp.compute.global_operations.v1.AggregatedListGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L93}
   /// [google.cloud.cpp.compute.v1.OperationAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17659}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
-  AggregatedListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::AggregatedListGlobalOperationsRequest const& request, Options opts = {});
+  AggregatedListGlobalOperations(
+      google::cloud::cpp::compute::global_operations::v1::
+          AggregatedListGlobalOperationsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -159,11 +166,12 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.DeleteGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L163}
+  /// [google.cloud.cpp.compute.global_operations.v1.DeleteGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L167}
   ///
   // clang-format on
-  Status
-  DeleteGlobalOperations(std::string const& project, std::string const& operation, Options opts = {});
+  Status DeleteGlobalOperations(std::string const& project,
+                                std::string const& operation,
+                                Options opts = {});
 
   // clang-format off
   ///
@@ -187,11 +195,13 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.DeleteGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L163}
+  /// [google.cloud.cpp.compute.global_operations.v1.DeleteGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L167}
   ///
   // clang-format on
-  Status
-  DeleteGlobalOperations(google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request, Options opts = {});
+  Status DeleteGlobalOperations(
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -213,12 +223,13 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.GetGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L172}
+  /// [google.cloud.cpp.compute.global_operations.v1.GetGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L176}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetGlobalOperations(std::string const& project, std::string const& operation, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperations(
+      std::string const& project, std::string const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -244,12 +255,14 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.GetGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L172}
+  /// [google.cloud.cpp.compute.global_operations.v1.GetGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L176}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetGlobalOperations(google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperations(
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -280,12 +293,12 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.ListGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L181}
+  /// [google.cloud.cpp.compute.global_operations.v1.ListGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L188}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListGlobalOperations(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Operation> ListGlobalOperations(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -321,12 +334,14 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.ListGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L181}
+  /// [google.cloud.cpp.compute.global_operations.v1.ListGlobalOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L188}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::ListGlobalOperationsRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Operation> ListGlobalOperations(
+      google::cloud::cpp::compute::global_operations::v1::
+          ListGlobalOperationsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -340,7 +355,7 @@ class GlobalOperationsClient {
   /// before the default deadline is reached, or might return after zero seconds.
   /// - If the default deadline is reached, there is no guarantee that the
   /// operation is actually done when the method returns. Be prepared to retry if
-  /// the operation is not `DONE`. 
+  /// the operation is not `DONE`.
   ///
   /// @param project  Project ID for this request.
   /// @param operation  Name of the Operations resource to return.
@@ -358,12 +373,13 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L246}
+  /// [google.cloud.cpp.compute.global_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L253}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Wait(std::string const& project, std::string const& operation, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
+      std::string const& project, std::string const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -377,7 +393,7 @@ class GlobalOperationsClient {
   /// before the default deadline is reached, or might return after zero seconds.
   /// - If the default deadline is reached, there is no guarantee that the
   /// operation is actually done when the method returns. Be prepared to retry if
-  /// the operation is not `DONE`. 
+  /// the operation is not `DONE`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -399,12 +415,14 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L246}
+  /// [google.cloud.cpp.compute.global_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L253}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Wait(google::cloud::cpp::compute::global_operations::v1::WaitRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
+      google::cloud::cpp::compute::global_operations::v1::WaitRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<GlobalOperationsConnection> connection_;

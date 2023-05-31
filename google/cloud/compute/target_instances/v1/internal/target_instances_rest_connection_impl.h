@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_INSTANCES_V1_INTERNAL_TARGET_INSTANCES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_INSTANCES_V1_INTERNAL_TARGET_INSTANCES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_rest_stub.h"
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_retry_traits.h"
 #include "google/cloud/compute/target_instances/v1/target_instances_connection.h"
 #include "google/cloud/compute/target_instances/v1/target_instances_connection_idempotency_policy.h"
 #include "google/cloud/compute/target_instances/v1/target_instances_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,63 +44,100 @@ class TargetInstancesRestConnectionImpl
   ~TargetInstancesRestConnectionImpl() override = default;
 
   TargetInstancesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_target_instances_v1_internal::TargetInstancesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_target_instances_v1_internal::TargetInstancesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
-  AggregatedListTargetInstances(google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest const& request) override;
+  AggregatedListTargetInstances(
+      google::cloud::cpp::compute::target_instances::v1::
+          AggregatedListTargetInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstances(google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstancesRequest const& request) override;
+  DeleteTargetInstances(
+      google::cloud::cpp::compute::target_instances::v1::
+          DeleteTargetInstancesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-  GetTargetInstances(google::cloud::cpp::compute::target_instances::v1::GetTargetInstancesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
+      google::cloud::cpp::compute::target_instances::v1::
+          GetTargetInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstances(google::cloud::cpp::compute::target_instances::v1::InsertTargetInstancesRequest const& request) override;
+  InsertTargetInstances(
+      google::cloud::cpp::compute::target_instances::v1::
+          InsertTargetInstancesRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
-  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest request) override;
+  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::
+                          ListTargetInstancesRequest request) override;
 
  private:
-  std::unique_ptr<compute_target_instances_v1::TargetInstancesRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_target_instances_v1::TargetInstancesRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_instances_v1::TargetInstancesRetryPolicyOption>()) {
-      return options.get<compute_target_instances_v1::TargetInstancesRetryPolicyOption>()->clone();
+    if (options.has<
+            compute_target_instances_v1::TargetInstancesRetryPolicyOption>()) {
+      return options
+          .get<compute_target_instances_v1::TargetInstancesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_target_instances_v1::TargetInstancesRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_target_instances_v1::TargetInstancesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_instances_v1::TargetInstancesBackoffPolicyOption>()) {
-      return options.get<compute_target_instances_v1::TargetInstancesBackoffPolicyOption>()->clone();
+    if (options.has<compute_target_instances_v1::
+                        TargetInstancesBackoffPolicyOption>()) {
+      return options
+          .get<
+              compute_target_instances_v1::TargetInstancesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_target_instances_v1::TargetInstancesBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_target_instances_v1::TargetInstancesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_target_instances_v1::TargetInstancesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_target_instances_v1::TargetInstancesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_instances_v1::TargetInstancesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_target_instances_v1::TargetInstancesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_target_instances_v1::
+                        TargetInstancesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_target_instances_v1::
+                   TargetInstancesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_target_instances_v1::TargetInstancesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_target_instances_v1::
+                 TargetInstancesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_instances_v1::TargetInstancesPollingPolicyOption>()) {
-      return options.get<compute_target_instances_v1::TargetInstancesPollingPolicyOption>()->clone();
+    if (options.has<compute_target_instances_v1::
+                        TargetInstancesPollingPolicyOption>()) {
+      return options
+          .get<
+              compute_target_instances_v1::TargetInstancesPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_target_instances_v1::TargetInstancesPollingPolicyOption>()->clone();
+    return options_
+        .get<compute_target_instances_v1::TargetInstancesPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_target_instances_v1_internal::TargetInstancesRestStub> stub_;
+  std::shared_ptr<compute_target_instances_v1_internal::TargetInstancesRestStub>
+      stub_;
   Options options_;
 };
 

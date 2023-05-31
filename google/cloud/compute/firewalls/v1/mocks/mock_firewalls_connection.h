@@ -42,33 +42,50 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockFirewallsConnection : public compute_firewalls_v1::FirewallsConnection {
+class MockFirewallsConnection
+    : public compute_firewalls_v1::FirewallsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteFirewalls,
-  (google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      DeleteFirewalls,
+      (google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Firewall>,
-  GetFirewalls,
-  (google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Firewall>, GetFirewalls,
+      (google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertFirewalls,
-  (google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      InsertFirewalls,
+      (google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Firewall>,
-  ListFirewalls,
-  (google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request), (override));
+              ListFirewalls,
+              (google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest
+                   request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchFirewalls,
-  (google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      PatchFirewalls,
+      (google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  UpdateFirewalls,
-  (google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+      UpdateFirewalls,
+      (google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

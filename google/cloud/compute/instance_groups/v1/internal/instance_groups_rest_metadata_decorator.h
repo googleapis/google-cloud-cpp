@@ -36,58 +36,77 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InstanceGroupsRestMetadata : public InstanceGroupsRestStub {
  public:
   ~InstanceGroupsRestMetadata() override = default;
-  explicit InstanceGroupsRestMetadata(std::shared_ptr<InstanceGroupsRestStub> child);
+  explicit InstanceGroupsRestMetadata(
+      std::shared_ptr<InstanceGroupsRestStub> child);
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddInstances(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAddInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instance_groups::v1::
+          AddInstancesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList> AggregatedListInstanceGroups(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
+  AggregatedListInstanceGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instance_groups::v1::AggregatedListInstanceGroupsRequest const& request) override;
+      google::cloud::cpp::compute::instance_groups::v1::
+          AggregatedListInstanceGroupsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteInstanceGroups(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteInstanceGroups(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupsRequest const& request) override;
+      google::cloud::cpp::compute::instance_groups::v1::
+          DeleteInstanceGroupsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instance_groups::v1::GetInstanceGroupsRequest const& request) override;
+      google::cloud::cpp::compute::instance_groups::v1::
+          GetInstanceGroupsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertInstanceGroups(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertInstanceGroups(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupsRequest const& request) override;
+      google::cloud::cpp::compute::instance_groups::v1::
+          InsertInstanceGroupsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList> ListInstanceGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList>
+  ListInstanceGroups(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::instance_groups::v1::
+                         ListInstanceGroupsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupsListInstances> ListInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupsListInstances>
+  ListInstances(google::cloud::rest_internal::RestContext& rest_context,
+                google::cloud::cpp::compute::instance_groups::v1::
+                    ListInstancesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncRemoveInstances(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncRemoveInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instance_groups::v1::
+          RemoveInstancesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetNamedPorts(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetNamedPorts(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request) override;
+      google::cloud::cpp::compute::instance_groups::v1::
+          SetNamedPortsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetZoneOperationsRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteZoneOperationsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

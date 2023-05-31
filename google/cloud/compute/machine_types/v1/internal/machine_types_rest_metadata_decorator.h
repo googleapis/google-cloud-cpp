@@ -35,19 +35,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MachineTypesRestMetadata : public MachineTypesRestStub {
  public:
   ~MachineTypesRestMetadata() override = default;
-  explicit MachineTypesRestMetadata(std::shared_ptr<MachineTypesRestStub> child);
+  explicit MachineTypesRestMetadata(
+      std::shared_ptr<MachineTypesRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList> AggregatedListMachineTypes(
+  StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
+  AggregatedListMachineTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest const& request) override;
+      google::cloud::cpp::compute::machine_types::v1::
+          AggregatedListMachineTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machine_types::v1::GetMachineTypesRequest const& request) override;
+      google::cloud::cpp::compute::machine_types::v1::
+          GetMachineTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineTypeList> ListMachineTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest const& request) override;
+      google::cloud::cpp::compute::machine_types::v1::
+          ListMachineTypesRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

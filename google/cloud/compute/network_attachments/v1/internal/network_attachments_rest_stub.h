@@ -37,49 +37,65 @@ class NetworkAttachmentsRestStub {
  public:
   virtual ~NetworkAttachmentsRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList> AggregatedListNetworkAttachments(
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
+  AggregatedListNetworkAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::AggregatedListNetworkAttachmentsRequest const& request) = 0;
+      google::cloud::cpp::compute::network_attachments::v1::
+          AggregatedListNetworkAttachmentsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteNetworkAttachments(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteNetworkAttachments(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentsRequest const& request) = 0;
+      google::cloud::cpp::compute::network_attachments::v1::
+          DeleteNetworkAttachmentsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment> GetNetworkAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::GetNetworkAttachmentsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
+  GetNetworkAttachments(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::network_attachments::v1::
+                            GetNetworkAttachmentsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::GetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::network_attachments::v1::
+          GetIamPolicyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertNetworkAttachments(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertNetworkAttachments(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentsRequest const& request) = 0;
+      google::cloud::cpp::compute::network_attachments::v1::
+          InsertNetworkAttachmentsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentList> ListNetworkAttachments(
+  virtual StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentList>
+  ListNetworkAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::ListNetworkAttachmentsRequest const& request) = 0;
+      google::cloud::cpp::compute::network_attachments::v1::
+          ListNetworkAttachmentsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::SetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::network_attachments::v1::
+          SetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::network_attachments::v1::
+                         TestIamPermissionsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) = 0;
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) = 0;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest const& request) = 0;
 };
 
 class DefaultNetworkAttachmentsRestStub : public NetworkAttachmentsRestStub {
@@ -89,52 +105,67 @@ class DefaultNetworkAttachmentsRestStub : public NetworkAttachmentsRestStub {
   explicit DefaultNetworkAttachmentsRestStub(Options options);
   DefaultNetworkAttachmentsRestStub(
       std::shared_ptr<rest_internal::RestClient> service,
-      std::shared_ptr<rest_internal::RestClient> operations,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> operations, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList> AggregatedListNetworkAttachments(
+  StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
+  AggregatedListNetworkAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::AggregatedListNetworkAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::network_attachments::v1::
+          AggregatedListNetworkAttachmentsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteNetworkAttachments(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteNetworkAttachments(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::network_attachments::v1::
+          DeleteNetworkAttachmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment> GetNetworkAttachments(
+  StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
+  GetNetworkAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::GetNetworkAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::network_attachments::v1::
+          GetNetworkAttachmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::network_attachments::v1::
+          GetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertNetworkAttachments(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertNetworkAttachments(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::network_attachments::v1::
+          InsertNetworkAttachmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentList> ListNetworkAttachments(
+  StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentList>
+  ListNetworkAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::ListNetworkAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::network_attachments::v1::
+          ListNetworkAttachmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::network_attachments::v1::
+          SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::network_attachments::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::network_attachments::v1::
+                         TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

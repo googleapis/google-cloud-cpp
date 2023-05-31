@@ -33,7 +33,9 @@ LicensesTracingConnection::LicensesTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesTracingConnection::DeleteLicenses(google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request) {
+LicensesTracingConnection::DeleteLicenses(
+    google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_licenses_v1::LicensesConnection::DeleteLicenses");
   auto scope = opentelemetry::trace::Scope(span);
@@ -41,21 +43,29 @@ LicensesTracingConnection::DeleteLicenses(google::cloud::cpp::compute::licenses:
 }
 
 StatusOr<google::cloud::cpp::compute::v1::License>
-LicensesTracingConnection::GetLicenses(google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request) {
-  auto span = internal::MakeSpan("compute_licenses_v1::LicensesConnection::GetLicenses");
+LicensesTracingConnection::GetLicenses(
+    google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_licenses_v1::LicensesConnection::GetLicenses");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLicenses(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-LicensesTracingConnection::GetIamPolicy(google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_licenses_v1::LicensesConnection::GetIamPolicy");
+LicensesTracingConnection::GetIamPolicy(
+    google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_licenses_v1::LicensesConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesTracingConnection::InsertLicenses(google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request) {
+LicensesTracingConnection::InsertLicenses(
+    google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_licenses_v1::LicensesConnection::InsertLicenses");
   auto scope = opentelemetry::trace::Scope(span);
@@ -63,24 +73,32 @@ LicensesTracingConnection::InsertLicenses(google::cloud::cpp::compute::licenses:
 }
 
 StreamRange<google::cloud::cpp::compute::v1::License>
-LicensesTracingConnection::ListLicenses(google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request) {
-  auto span = internal::MakeSpan("compute_licenses_v1::LicensesConnection::ListLicenses");
+LicensesTracingConnection::ListLicenses(
+    google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_licenses_v1::LicensesConnection::ListLicenses");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListLicenses(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::License>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::License>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-LicensesTracingConnection::SetIamPolicy(google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_licenses_v1::LicensesConnection::SetIamPolicy");
+LicensesTracingConnection::SetIamPolicy(
+    google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_licenses_v1::LicensesConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-LicensesTracingConnection::TestIamPermissions(google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("compute_licenses_v1::LicensesConnection::TestIamPermissions");
+LicensesTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_licenses_v1::LicensesConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }

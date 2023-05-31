@@ -26,20 +26,22 @@ namespace cloud {
 namespace compute_url_maps_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-UrlMapsRestLogging::UrlMapsRestLogging(
-    std::shared_ptr<UrlMapsRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+UrlMapsRestLogging::UrlMapsRestLogging(std::shared_ptr<UrlMapsRestStub> child,
+                                       TracingOptions tracing_options,
+                                       std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
 UrlMapsRestLogging::AggregatedListUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::url_maps::v1::AggregatedListUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::url_maps::v1::
+        AggregatedListUrlMapsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::url_maps::v1::AggregatedListUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::url_maps::v1::
+                 AggregatedListUrlMapsRequest const& request) {
         return child_->AggregatedListUrlMaps(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -47,13 +49,16 @@ UrlMapsRestLogging::AggregatedListUrlMaps(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestLogging::AsyncDeleteUrlMaps(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const& request) {
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&
+              request) {
         return child_->AsyncDeleteUrlMaps(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -62,24 +67,27 @@ UrlMapsRestLogging::AsyncDeleteUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
 UrlMapsRestLogging::GetUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const& request) {
-        return child_->GetUrlMaps(rest_context, request);
-      },
+             google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&
+                 request) { return child_->GetUrlMaps(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestLogging::AsyncInsertUrlMaps(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const& request) {
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&
+              request) {
         return child_->AsyncInsertUrlMaps(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -87,14 +95,17 @@ UrlMapsRestLogging::AsyncInsertUrlMaps(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestLogging::AsyncInvalidateCache(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const& request) {
-        return child_->AsyncInvalidateCache(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::url_maps::v1::
+                 InvalidateCacheRequest const& request) {
+        return child_->AsyncInvalidateCache(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -102,24 +113,28 @@ UrlMapsRestLogging::AsyncInvalidateCache(
 StatusOr<google::cloud::cpp::compute::v1::UrlMapList>
 UrlMapsRestLogging::ListUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest const& request) {
-        return child_->ListUrlMaps(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest const&
+              request) { return child_->ListUrlMaps(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestLogging::AsyncPatchUrlMaps(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const& request) {
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&
+              request) {
         return child_->AsyncPatchUrlMaps(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -127,13 +142,16 @@ UrlMapsRestLogging::AsyncPatchUrlMaps(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestLogging::AsyncUpdateUrlMaps(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const& request) {
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&
+              request) {
         return child_->AsyncUpdateUrlMaps(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -145,9 +163,8 @@ UrlMapsRestLogging::Validate(
     google::cloud::cpp::compute::url_maps::v1::ValidateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::url_maps::v1::ValidateRequest const& request) {
-        return child_->Validate(rest_context, request);
-      },
+             google::cloud::cpp::compute::url_maps::v1::ValidateRequest const&
+                 request) { return child_->Validate(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
@@ -155,26 +172,30 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
-future<Status>
-UrlMapsRestLogging::AsyncCancelOperation(
+future<Status> UrlMapsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }

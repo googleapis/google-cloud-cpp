@@ -24,129 +24,184 @@ namespace cloud {
 namespace compute_instance_templates_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-InstanceTemplatesClient::InstanceTemplatesClient(ExperimentalTag,
-    std::shared_ptr<InstanceTemplatesConnection> connection, Options opts)
+InstanceTemplatesClient::InstanceTemplatesClient(
+    ExperimentalTag, std::shared_ptr<InstanceTemplatesConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 InstanceTemplatesClient::~InstanceTemplatesClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
-InstanceTemplatesClient::AggregatedListInstanceTemplates(std::string const& project, Options opts) {
+InstanceTemplatesClient::AggregatedListInstanceTemplates(
+    std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest request;
+  google::cloud::cpp::compute::instance_templates::v1::
+      AggregatedListInstanceTemplatesRequest request;
   request.set_project(project);
   return connection_->AggregatedListInstanceTemplates(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
-InstanceTemplatesClient::AggregatedListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest const& request, Options opts) {
+InstanceTemplatesClient::AggregatedListInstanceTemplates(
+    google::cloud::cpp::compute::instance_templates::v1::
+        AggregatedListInstanceTemplatesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListInstanceTemplates(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceTemplatesClient::DeleteInstanceTemplates(std::string const& project, std::string const& instance_template, Options opts) {
+InstanceTemplatesClient::DeleteInstanceTemplates(
+    std::string const& project, std::string const& instance_template,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplatesRequest request;
+  google::cloud::cpp::compute::instance_templates::v1::
+      DeleteInstanceTemplatesRequest request;
   request.set_project(project);
   request.set_instance_template(instance_template);
   return connection_->DeleteInstanceTemplates(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceTemplatesClient::DeleteInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplatesRequest const& request, Options opts) {
+InstanceTemplatesClient::DeleteInstanceTemplates(
+    google::cloud::cpp::compute::instance_templates::v1::
+        DeleteInstanceTemplatesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstanceTemplates(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-InstanceTemplatesClient::GetInstanceTemplates(std::string const& project, std::string const& instance_template, Options opts) {
+InstanceTemplatesClient::GetInstanceTemplates(
+    std::string const& project, std::string const& instance_template,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplatesRequest request;
+  google::cloud::cpp::compute::instance_templates::v1::
+      GetInstanceTemplatesRequest request;
   request.set_project(project);
   request.set_instance_template(instance_template);
   return connection_->GetInstanceTemplates(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-InstanceTemplatesClient::GetInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplatesRequest const& request, Options opts) {
+InstanceTemplatesClient::GetInstanceTemplates(
+    google::cloud::cpp::compute::instance_templates::v1::
+        GetInstanceTemplatesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstanceTemplates(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InstanceTemplatesClient::GetIamPolicy(std::string const& project, std::string const& resource, Options opts) {
+InstanceTemplatesClient::GetIamPolicy(std::string const& project,
+                                      std::string const& resource,
+                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest request;
+  google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest
+      request;
   request.set_project(project);
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InstanceTemplatesClient::GetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest const& request, Options opts) {
+InstanceTemplatesClient::GetIamPolicy(
+    google::cloud::cpp::compute::instance_templates::v1::
+        GetIamPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceTemplatesClient::InsertInstanceTemplates(std::string const& project, google::cloud::cpp::compute::v1::InstanceTemplate const& instance_template_resource, Options opts) {
+InstanceTemplatesClient::InsertInstanceTemplates(
+    std::string const& project,
+    google::cloud::cpp::compute::v1::InstanceTemplate const&
+        instance_template_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplatesRequest request;
+  google::cloud::cpp::compute::instance_templates::v1::
+      InsertInstanceTemplatesRequest request;
   request.set_project(project);
   *request.mutable_instance_template_resource() = instance_template_resource;
   return connection_->InsertInstanceTemplates(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceTemplatesClient::InsertInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplatesRequest const& request, Options opts) {
+InstanceTemplatesClient::InsertInstanceTemplates(
+    google::cloud::cpp::compute::instance_templates::v1::
+        InsertInstanceTemplatesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertInstanceTemplates(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
-InstanceTemplatesClient::ListInstanceTemplates(std::string const& project, Options opts) {
+InstanceTemplatesClient::ListInstanceTemplates(std::string const& project,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest request;
+  google::cloud::cpp::compute::instance_templates::v1::
+      ListInstanceTemplatesRequest request;
   request.set_project(project);
   return connection_->ListInstanceTemplates(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
-InstanceTemplatesClient::ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest request, Options opts) {
+InstanceTemplatesClient::ListInstanceTemplates(
+    google::cloud::cpp::compute::instance_templates::v1::
+        ListInstanceTemplatesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstanceTemplates(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InstanceTemplatesClient::SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts) {
+InstanceTemplatesClient::SetIamPolicy(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+        global_set_policy_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest request;
+  google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest
+      request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_global_set_policy_request_resource() = global_set_policy_request_resource;
+  *request.mutable_global_set_policy_request_resource() =
+      global_set_policy_request_resource;
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InstanceTemplatesClient::SetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest const& request, Options opts) {
+InstanceTemplatesClient::SetIamPolicy(
+    google::cloud::cpp::compute::instance_templates::v1::
+        SetIamPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-InstanceTemplatesClient::TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts) {
+InstanceTemplatesClient::TestIamPermissions(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest request;
+  google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest
+      request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_test_permissions_request_resource() = test_permissions_request_resource;
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-InstanceTemplatesClient::TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest const& request, Options opts) {
+InstanceTemplatesClient::TestIamPermissions(
+    google::cloud::cpp::compute::instance_templates::v1::
+        TestIamPermissionsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

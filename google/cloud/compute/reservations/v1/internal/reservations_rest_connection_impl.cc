@@ -17,8 +17,8 @@
 // source: google/cloud/compute/reservations/v1/reservations.proto
 
 #include "google/cloud/compute/reservations/v1/internal/reservations_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/reservations/v1/internal/reservations_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation.h"
 #include "google/cloud/internal/extract_long_running_result.h"
@@ -34,170 +34,199 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReservationsRestConnectionImpl::ReservationsRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_reservations_v1_internal::ReservationsRestStub> stub,
+    std::shared_ptr<compute_reservations_v1_internal::ReservationsRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        ReservationsConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      ReservationsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
-ReservationsRestConnectionImpl::AggregatedListReservations(google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest const& request) {
+ReservationsRestConnectionImpl::AggregatedListReservations(
+    google::cloud::cpp::compute::reservations::v1::
+        AggregatedListReservationsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListReservations(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest const& request) {
+             google::cloud::cpp::compute::reservations::v1::
+                 AggregatedListReservationsRequest const& request) {
         return stub_->AggregatedListReservations(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsRestConnectionImpl::DeleteReservations(google::cloud::cpp::compute::reservations::v1::DeleteReservationsRequest const& request) {
+ReservationsRestConnectionImpl::DeleteReservations(
+    google::cloud::cpp::compute::reservations::v1::
+        DeleteReservationsRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest,
-    google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::reservations::v1::DeleteReservationsRequest const& request) {
-     return stub->AsyncDeleteReservations(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->DeleteReservations(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetZoneOperationsRequest,
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteZoneOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::reservations::v1::
+                 DeleteReservationsRequest const& request) {
+        return stub->AsyncDeleteReservations(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::zone_operations::v1::
+                 GetZoneOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::zone_operations::v1::
+                 DeleteZoneOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteReservations(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_zone(request.zone());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_zone(request.zone());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::zone_operations::v1::
+                    GetZoneOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_zone(request.zone());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::zone_operations::v1::
+                    DeleteZoneOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_zone(request.zone());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
-ReservationsRestConnectionImpl::GetReservations(google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const& request) {
+ReservationsRestConnectionImpl::GetReservations(
+    google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetReservations(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const& request) {
+             google::cloud::cpp::compute::reservations::v1::
+                 GetReservationsRequest const& request) {
         return stub_->GetReservations(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ReservationsRestConnectionImpl::GetIamPolicy(google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request) {
+ReservationsRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::reservations::v1::
+                 GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsRestConnectionImpl::InsertReservations(google::cloud::cpp::compute::reservations::v1::InsertReservationsRequest const& request) {
+ReservationsRestConnectionImpl::InsertReservations(
+    google::cloud::cpp::compute::reservations::v1::
+        InsertReservationsRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest,
-    google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::reservations::v1::InsertReservationsRequest const& request) {
-     return stub->AsyncInsertReservations(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->InsertReservations(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetZoneOperationsRequest,
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteZoneOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::reservations::v1::
+                 InsertReservationsRequest const& request) {
+        return stub->AsyncInsertReservations(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::zone_operations::v1::
+                 GetZoneOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::zone_operations::v1::
+                 DeleteZoneOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->InsertReservations(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_zone(request.zone());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_zone(request.zone());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::zone_operations::v1::
+                    GetZoneOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_zone(request.zone());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::zone_operations::v1::
+                    DeleteZoneOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_zone(request.zone());
+        r.set_operation(op);
+      });
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Reservation>
-ReservationsRestConnectionImpl::ListReservations(google::cloud::cpp::compute::reservations::v1::ListReservationsRequest request) {
+ReservationsRestConnectionImpl::ListReservations(
+    google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
+        request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_reservations_v1::ReservationsRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<compute_reservations_v1::ReservationsRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListReservations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Reservation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Reservation>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::reservations::v1::ListReservationsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::reservations::v1::
+                          ListReservationsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::reservations::v1::ListReservationsRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::reservations::v1::
+                       ListReservationsRequest const& request) {
               return stub->ListReservations(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::ReservationList r) {
-        std::vector<google::cloud::cpp::compute::v1::Reservation> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Reservation> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -205,127 +234,142 @@ ReservationsRestConnectionImpl::ListReservations(google::cloud::cpp::compute::re
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsRestConnectionImpl::Resize(google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request) {
+ReservationsRestConnectionImpl::Resize(
+    google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+        request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest,
-    google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request) {
-     return stub->AsyncResize(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->Resize(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetZoneOperationsRequest,
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteZoneOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+                 request) {
+        return stub->AsyncResize(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::zone_operations::v1::
+                 GetZoneOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::zone_operations::v1::
+                 DeleteZoneOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(), idempotency_policy()->Resize(request),
+      polling_policy(), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_zone(request.zone());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_zone(request.zone());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::zone_operations::v1::
+                    GetZoneOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_zone(request.zone());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::zone_operations::v1::
+                    DeleteZoneOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_zone(request.zone());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ReservationsRestConnectionImpl::SetIamPolicy(google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request) {
+ReservationsRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::reservations::v1::
+                 SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-ReservationsRestConnectionImpl::TestIamPermissions(google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request) {
+ReservationsRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::reservations::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::reservations::v1::
+                 TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsRestConnectionImpl::UpdateReservations(google::cloud::cpp::compute::reservations::v1::UpdateReservationsRequest const& request) {
+ReservationsRestConnectionImpl::UpdateReservations(
+    google::cloud::cpp::compute::reservations::v1::
+        UpdateReservationsRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest,
-    google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::reservations::v1::UpdateReservationsRequest const& request) {
-     return stub->AsyncUpdateReservations(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->UpdateReservations(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetZoneOperationsRequest,
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteZoneOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::reservations::v1::
+                 UpdateReservationsRequest const& request) {
+        return stub->AsyncUpdateReservations(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::zone_operations::v1::
+                 GetZoneOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::zone_operations::v1::
+                 DeleteZoneOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateReservations(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_zone(request.zone());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_zone(request.zone());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::zone_operations::v1::
+                    GetZoneOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_zone(request.zone());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::zone_operations::v1::
+                    DeleteZoneOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_zone(request.zone());
+        r.set_operation(op);
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

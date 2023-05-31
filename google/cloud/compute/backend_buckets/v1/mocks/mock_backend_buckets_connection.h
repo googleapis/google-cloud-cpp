@@ -42,45 +42,64 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockBackendBucketsConnection : public compute_backend_buckets_v1::BackendBucketsConnection {
+class MockBackendBucketsConnection
+    : public compute_backend_buckets_v1::BackendBucketsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  AddSignedUrlKey,
-  (google::cloud::cpp::compute::backend_buckets::v1::AddSignedUrlKeyRequest const& request), (override));
+              AddSignedUrlKey,
+              (google::cloud::cpp::compute::backend_buckets::v1::
+                   AddSignedUrlKeyRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteBackendBuckets,
-  (google::cloud::cpp::compute::backend_buckets::v1::DeleteBackendBucketsRequest const& request), (override));
+              DeleteBackendBuckets,
+              (google::cloud::cpp::compute::backend_buckets::v1::
+                   DeleteBackendBucketsRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteSignedUrlKey,
-  (google::cloud::cpp::compute::backend_buckets::v1::DeleteSignedUrlKeyRequest const& request), (override));
+              DeleteSignedUrlKey,
+              (google::cloud::cpp::compute::backend_buckets::v1::
+                   DeleteSignedUrlKeyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::BackendBucket>,
-  GetBackendBuckets,
-  (google::cloud::cpp::compute::backend_buckets::v1::GetBackendBucketsRequest const& request), (override));
+              GetBackendBuckets,
+              (google::cloud::cpp::compute::backend_buckets::v1::
+                   GetBackendBucketsRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertBackendBuckets,
-  (google::cloud::cpp::compute::backend_buckets::v1::InsertBackendBucketsRequest const& request), (override));
+              InsertBackendBuckets,
+              (google::cloud::cpp::compute::backend_buckets::v1::
+                   InsertBackendBucketsRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::BackendBucket>,
-  ListBackendBuckets,
-  (google::cloud::cpp::compute::backend_buckets::v1::ListBackendBucketsRequest request), (override));
+              ListBackendBuckets,
+              (google::cloud::cpp::compute::backend_buckets::v1::
+                   ListBackendBucketsRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchBackendBuckets,
-  (google::cloud::cpp::compute::backend_buckets::v1::PatchBackendBucketsRequest const& request), (override));
+              PatchBackendBuckets,
+              (google::cloud::cpp::compute::backend_buckets::v1::
+                   PatchBackendBucketsRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetEdgeSecurityPolicy,
-  (google::cloud::cpp::compute::backend_buckets::v1::SetEdgeSecurityPolicyRequest const& request), (override));
+              SetEdgeSecurityPolicy,
+              (google::cloud::cpp::compute::backend_buckets::v1::
+                   SetEdgeSecurityPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  UpdateBackendBuckets,
-  (google::cloud::cpp::compute::backend_buckets::v1::UpdateBackendBucketsRequest const& request), (override));
+              UpdateBackendBuckets,
+              (google::cloud::cpp::compute::backend_buckets::v1::
+                   UpdateBackendBucketsRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

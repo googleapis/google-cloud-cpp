@@ -38,43 +38,56 @@ class FirewallsRestMetadata : public FirewallsRestStub {
   ~FirewallsRestMetadata() override = default;
   explicit FirewallsRestMetadata(std::shared_ptr<FirewallsRestStub> child);
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteFirewalls(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteFirewalls(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewalls(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertFirewalls(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertFirewalls(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::FirewallList> ListFirewalls(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchFirewalls(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchFirewalls(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateFirewalls(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateFirewalls(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

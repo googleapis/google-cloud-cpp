@@ -27,13 +27,14 @@ import "google/cloud/extended_operations.proto";
 service RegionInstanceTemplates {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified instance template. Deleting an instance template is
   // permanent and cannot be undone.
-  rpc DeleteRegionInstanceTemplates(DeleteRegionInstanceTemplatesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteRegionInstanceTemplates(DeleteRegionInstanceTemplatesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceTemplates/{instance_template=instance_template}"
     };
@@ -42,7 +43,8 @@ service RegionInstanceTemplates {
   }
 
   // Returns the specified instance template.
-  rpc GetRegionInstanceTemplates(GetRegionInstanceTemplatesRequest) returns (google.cloud.cpp.compute.v1.InstanceTemplate) {
+  rpc GetRegionInstanceTemplates(GetRegionInstanceTemplatesRequest)
+      returns (google.cloud.cpp.compute.v1.InstanceTemplate) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceTemplates/{instance_template=instance_template}"
     };
@@ -51,18 +53,21 @@ service RegionInstanceTemplates {
 
   // Creates an instance template in the specified project and region using the
   // global instance template whose URL is included in the request.
-  rpc InsertRegionInstanceTemplates(InsertRegionInstanceTemplatesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertRegionInstanceTemplates(InsertRegionInstanceTemplatesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceTemplates"
       body: "instance_template_resource"
     };
-    option (google.api.method_signature) = "project,region,instance_template_resource";
+    option (google.api.method_signature) =
+        "project,region,instance_template_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Retrieves a list of instance templates that are contained within the
   // specified project and region.
-  rpc ListRegionInstanceTemplates(ListRegionInstanceTemplatesRequest) returns (google.cloud.cpp.compute.v1.InstanceTemplateList) {
+  rpc ListRegionInstanceTemplates(ListRegionInstanceTemplatesRequest)
+      returns (google.cloud.cpp.compute.v1.InstanceTemplateList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceTemplates"
     };
@@ -76,10 +81,16 @@ message DeleteRegionInstanceTemplatesRequest {
   string instance_template = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -109,13 +120,20 @@ message GetRegionInstanceTemplatesRequest {
 // Request message for InsertRegionInstanceTemplates.
 message InsertRegionInstanceTemplatesRequest {
   // The InstanceTemplate for this request.
-  optional google.cloud.cpp.compute.v1.InstanceTemplate instance_template_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.InstanceTemplate
+      instance_template_resource = 1 [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

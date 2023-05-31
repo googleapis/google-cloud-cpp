@@ -35,27 +35,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GlobalOperationsRestMetadata : public GlobalOperationsRestStub {
  public:
   ~GlobalOperationsRestMetadata() override = default;
-  explicit GlobalOperationsRestMetadata(std::shared_ptr<GlobalOperationsRestStub> child);
+  explicit GlobalOperationsRestMetadata(
+      std::shared_ptr<GlobalOperationsRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList> AggregatedListGlobalOperations(
+  StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
+  AggregatedListGlobalOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::global_operations::v1::AggregatedListGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          AggregatedListGlobalOperationsRequest const& request) override;
 
   Status DeleteGlobalOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListGlobalOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::global_operations::v1::ListGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          ListGlobalOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::global_operations::v1::WaitRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::WaitRequest const&
+          request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

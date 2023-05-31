@@ -30,48 +30,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class ImagesTracingConnection
-    : public compute_images_v1::ImagesConnection {
+class ImagesTracingConnection : public compute_images_v1::ImagesConnection {
  public:
   ~ImagesTracingConnection() override = default;
 
   explicit ImagesTracingConnection(
-    std::shared_ptr<compute_images_v1::ImagesConnection> child);
+      std::shared_ptr<compute_images_v1::ImagesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteImages(google::cloud::cpp::compute::images::v1::DeleteImagesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImages(
+      google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Deprecate(google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Deprecate(
+      google::cloud::cpp::compute::images::v1::DeprecateRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Image>
-  GetImages(google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Image> GetImages(
+      google::cloud::cpp::compute::images::v1::GetImagesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Image>
-  GetFromFamily(google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Image> GetFromFamily(
+      google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertImages(google::cloud::cpp::compute::images::v1::InsertImagesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertImages(
+      google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Image>
-  ListImages(google::cloud::cpp::compute::images::v1::ListImagesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Image> ListImages(
+      google::cloud::cpp::compute::images::v1::ListImagesRequest request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchImages(google::cloud::cpp::compute::images::v1::PatchImagesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchImages(
+      google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(
+      google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<compute_images_v1::ImagesConnection> child_;

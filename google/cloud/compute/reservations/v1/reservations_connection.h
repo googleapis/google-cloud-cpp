@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATIONS_V1_RESERVATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATIONS_V1_RESERVATIONS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/reservations/v1/internal/reservations_retry_traits.h"
 #include "google/cloud/compute/reservations/v1/reservations_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -38,11 +38,13 @@ namespace cloud {
 namespace compute_reservations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ReservationsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_reservations_v1_internal::ReservationsRetryTraits>;
+using ReservationsRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_reservations_v1_internal::ReservationsRetryTraits>;
 
-using ReservationsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_reservations_v1_internal::ReservationsRetryTraits>;
+using ReservationsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_reservations_v1_internal::ReservationsRetryTraits>;
 
 using ReservationsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -67,34 +69,46 @@ class ReservationsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
-  AggregatedListReservations(google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest const& request);
+  AggregatedListReservations(
+      google::cloud::cpp::compute::reservations::v1::
+          AggregatedListReservationsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteReservations(google::cloud::cpp::compute::reservations::v1::DeleteReservationsRequest const& request);
+  DeleteReservations(google::cloud::cpp::compute::reservations::v1::
+                         DeleteReservationsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Reservation>
-  GetReservations(google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const& request);
+  GetReservations(google::cloud::cpp::compute::reservations::v1::
+                      GetReservationsRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertReservations(google::cloud::cpp::compute::reservations::v1::InsertReservationsRequest const& request);
+  InsertReservations(google::cloud::cpp::compute::reservations::v1::
+                         InsertReservationsRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Reservation>
-  ListReservations(google::cloud::cpp::compute::reservations::v1::ListReservationsRequest request);
+  ListReservations(
+      google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
+          request);
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Resize(google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request);
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
+      google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::reservations::v1::
+                         TestIamPermissionsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateReservations(google::cloud::cpp::compute::reservations::v1::UpdateReservationsRequest const& request);
+  UpdateReservations(google::cloud::cpp::compute::reservations::v1::
+                         UpdateReservationsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

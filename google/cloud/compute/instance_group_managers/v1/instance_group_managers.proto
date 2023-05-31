@@ -27,9 +27,9 @@ import "google/cloud/extended_operations.proto";
 service InstanceGroupManagers {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Flags the specified instances to be removed from the managed instance
   // group. Abandoning an instance does not delete the instance, but it does
@@ -43,17 +43,21 @@ service InstanceGroupManagers {
   // up to 60 seconds after the connection draining duration has elapsed before
   // the VM instance is removed or deleted. You can specify a maximum of 1000
   // instances with this method per request.
-  rpc AbandonInstances(AbandonInstancesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AbandonInstances(AbandonInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/abandonInstances"
       body: "instance_group_managers_abandon_instances_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager,instance_group_managers_abandon_instances_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager,instance_group_managers_abandon_instances_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Retrieves the list of managed instance groups and groups them by zone.
-  rpc AggregatedListInstanceGroupManagers(AggregatedListInstanceGroupManagersRequest) returns (google.cloud.cpp.compute.v1.InstanceGroupManagerAggregatedList) {
+  rpc AggregatedListInstanceGroupManagers(
+      AggregatedListInstanceGroupManagersRequest)
+      returns (google.cloud.cpp.compute.v1.InstanceGroupManagerAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/instanceGroupManagers"
     };
@@ -62,12 +66,14 @@ service InstanceGroupManagers {
 
   // Applies changes to selected instances on the managed instance group. This
   // method can be used to apply new overrides and/or new versions.
-  rpc ApplyUpdatesToInstances(ApplyUpdatesToInstancesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc ApplyUpdatesToInstances(ApplyUpdatesToInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/applyUpdatesToInstances"
       body: "instance_group_managers_apply_updates_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager,instance_group_managers_apply_updates_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager,instance_group_managers_apply_updates_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -77,23 +83,27 @@ service InstanceGroupManagers {
   // successful. The underlying actions take additional time. You must
   // separately verify the status of the creating or actions with the
   // listmanagedinstances method.
-  rpc CreateInstances(CreateInstancesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc CreateInstances(CreateInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/createInstances"
       body: "instance_group_managers_create_instances_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager,instance_group_managers_create_instances_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager,instance_group_managers_create_instances_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Deletes the specified managed instance group and all of the instances in
   // that group. Note that the instance group must not belong to a backend
   // service. Read Deleting an instance group for more information.
-  rpc DeleteInstanceGroupManagers(DeleteInstanceGroupManagersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteInstanceGroupManagers(DeleteInstanceGroupManagersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -108,32 +118,38 @@ service InstanceGroupManagers {
   // seconds after the connection draining duration has elapsed before the VM
   // instance is removed or deleted. You can specify a maximum of 1000 instances
   // with this method per request.
-  rpc DeleteInstances(DeleteInstancesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteInstances(DeleteInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/deleteInstances"
       body: "instance_group_managers_delete_instances_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager,instance_group_managers_delete_instances_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager,instance_group_managers_delete_instances_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Deletes selected per-instance configurations for the managed instance
   // group.
-  rpc DeletePerInstanceConfigs(DeletePerInstanceConfigsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeletePerInstanceConfigs(DeletePerInstanceConfigsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/deletePerInstanceConfigs"
       body: "instance_group_managers_delete_per_instance_configs_req_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager,instance_group_managers_delete_per_instance_configs_req_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager,instance_group_managers_delete_per_instance_configs_req_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Returns all of the details about the specified managed instance group.
-  rpc GetInstanceGroupManagers(GetInstanceGroupManagersRequest) returns (google.cloud.cpp.compute.v1.InstanceGroupManager) {
+  rpc GetInstanceGroupManagers(GetInstanceGroupManagersRequest)
+      returns (google.cloud.cpp.compute.v1.InstanceGroupManager) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager";
   }
 
   // Creates a managed instance group using the information that you specify in
@@ -144,18 +160,21 @@ service InstanceGroupManagers {
   // instances with the listmanagedinstances method. A managed instance group
   // can have up to 1000 VM instances per group. Please contact Cloud Support if
   // you need an increase in this limit.
-  rpc InsertInstanceGroupManagers(InsertInstanceGroupManagersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertInstanceGroupManagers(InsertInstanceGroupManagersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers"
       body: "instance_group_manager_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Retrieves a list of managed instance groups that are contained within the
   // specified project and zone.
-  rpc ListInstanceGroupManagers(ListInstanceGroupManagersRequest) returns (google.cloud.cpp.compute.v1.InstanceGroupManagerList) {
+  rpc ListInstanceGroupManagers(ListInstanceGroupManagersRequest)
+      returns (google.cloud.cpp.compute.v1.InstanceGroupManagerList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers"
     };
@@ -164,11 +183,13 @@ service InstanceGroupManagers {
 
   // Lists all errors thrown by actions on instances for a given managed
   // instance group. The filter and orderBy query parameters are not supported.
-  rpc ListErrors(ListErrorsRequest) returns (google.cloud.cpp.compute.v1.InstanceGroupManagersListErrorsResponse) {
+  rpc ListErrors(ListErrorsRequest) returns (
+      google.cloud.cpp.compute.v1.InstanceGroupManagersListErrorsResponse) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/listErrors"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager";
   }
 
   // Lists all of the instances in the managed instance group. Each instance in
@@ -179,22 +200,28 @@ service InstanceGroupManagers {
   // orderBy query parameter is not supported. The `pageToken` query parameter
   // is supported only in the alpha and beta API and only if the group's
   // `listManagedInstancesResults` field is set to `PAGINATED`.
-  rpc ListManagedInstances(ListManagedInstancesRequest) returns (google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse) {
+  rpc ListManagedInstances(ListManagedInstancesRequest)
+      returns (google.cloud.cpp.compute.v1
+                   .InstanceGroupManagersListManagedInstancesResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/listManagedInstances"
       body: "*"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager";
   }
 
   // Lists all of the per-instance configurations defined for the managed
   // instance group. The orderBy query parameter is not supported.
-  rpc ListPerInstanceConfigs(ListPerInstanceConfigsRequest) returns (google.cloud.cpp.compute.v1.InstanceGroupManagersListPerInstanceConfigsResp) {
+  rpc ListPerInstanceConfigs(ListPerInstanceConfigsRequest)
+      returns (google.cloud.cpp.compute.v1
+                   .InstanceGroupManagersListPerInstanceConfigsResp) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/listPerInstanceConfigs"
       body: "*"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager";
   }
 
   // Updates a managed instance group using the information that you specify in
@@ -207,24 +234,28 @@ service InstanceGroupManagers {
   // possible that your intended specification for each VM in the group is
   // different from the current state of that VM. To learn how to apply an
   // updated configuration to the VMs in a MIG, see Updating instances in a MIG.
-  rpc PatchInstanceGroupManagers(PatchInstanceGroupManagersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchInstanceGroupManagers(PatchInstanceGroupManagersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}"
       body: "instance_group_manager_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager,instance_group_manager_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager,instance_group_manager_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Inserts or patches per-instance configurations for the managed instance
   // group. perInstanceConfig.name serves as a key used to distinguish whether
   // to perform insert or patch.
-  rpc PatchPerInstanceConfigs(PatchPerInstanceConfigsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchPerInstanceConfigs(PatchPerInstanceConfigsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/patchPerInstanceConfigs"
       body: "instance_group_managers_patch_per_instance_configs_req_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager,instance_group_managers_patch_per_instance_configs_req_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager,instance_group_managers_patch_per_instance_configs_req_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -238,12 +269,14 @@ service InstanceGroupManagers {
   // up to 60 seconds after the connection draining duration has elapsed before
   // the VM instance is removed or deleted. You can specify a maximum of 1000
   // instances with this method per request.
-  rpc RecreateInstances(RecreateInstancesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc RecreateInstances(RecreateInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/recreateInstances"
       body: "instance_group_managers_recreate_instances_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager,instance_group_managers_recreate_instances_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager,instance_group_managers_recreate_instances_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -267,7 +300,8 @@ service InstanceGroupManagers {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/resize"
       body: "*"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager,size";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager,size";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -275,12 +309,14 @@ service InstanceGroupManagers {
   // group. The templates for existing instances in the group do not change
   // unless you run recreateInstances, run applyUpdatesToInstances, or set the
   // group's updatePolicy.type to PROACTIVE.
-  rpc SetInstanceTemplate(SetInstanceTemplateRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetInstanceTemplate(SetInstanceTemplateRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/setInstanceTemplate"
       body: "instance_group_managers_set_instance_template_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager,instance_group_managers_set_instance_template_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager,instance_group_managers_set_instance_template_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -290,24 +326,28 @@ service InstanceGroupManagers {
   // you make the request even if the instances have not yet been added to their
   // target pools. The change might take some time to apply to all of the
   // instances in the group depending on the size of the group.
-  rpc SetTargetPools(SetTargetPoolsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetTargetPools(SetTargetPoolsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/setTargetPools"
       body: "instance_group_managers_set_target_pools_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager,instance_group_managers_set_target_pools_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager,instance_group_managers_set_target_pools_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Inserts or updates per-instance configurations for the managed instance
   // group. perInstanceConfig.name serves as a key used to distinguish whether
   // to perform insert or patch.
-  rpc UpdatePerInstanceConfigs(UpdatePerInstanceConfigsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdatePerInstanceConfigs(UpdatePerInstanceConfigsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/updatePerInstanceConfigs"
       body: "instance_group_managers_update_per_instance_configs_req_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance_group_manager,instance_group_managers_update_per_instance_configs_req_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance_group_manager,instance_group_managers_update_per_instance_configs_req_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 }
@@ -318,10 +358,16 @@ message AbandonInstancesRequest {
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstanceGroupManagersAbandonInstancesRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstanceGroupManagersAbandonInstancesRequest instance_group_managers_abandon_instances_request_resource = 2 [json_name="__json_request_body"];
+  optional
+      google.cloud.cpp.compute.v1.InstanceGroupManagersAbandonInstancesRequest
+          instance_group_managers_abandon_instances_request_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -336,7 +382,10 @@ message AbandonInstancesRequest {
   optional string request_id = 4;
 
   // The name of the zone where the managed instance group is located.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for AggregatedListInstanceGroupManagers.
@@ -419,14 +468,22 @@ message ApplyUpdatesToInstancesRequest {
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstanceGroupManagersApplyUpdatesRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstanceGroupManagersApplyUpdatesRequest instance_group_managers_apply_updates_request_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.InstanceGroupManagersApplyUpdatesRequest
+      instance_group_managers_apply_updates_request_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The name of the zone where the managed instance group is located. Should
   // conform to RFC1035.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for CreateInstances.
@@ -435,10 +492,16 @@ message CreateInstancesRequest {
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstanceGroupManagersCreateInstancesRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstanceGroupManagersCreateInstancesRequest instance_group_managers_create_instances_request_resource = 2 [json_name="__json_request_body"];
+  optional
+      google.cloud.cpp.compute.v1.InstanceGroupManagersCreateInstancesRequest
+          instance_group_managers_create_instances_request_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -453,7 +516,10 @@ message CreateInstancesRequest {
 
   // The name of the zone where the managed instance group is located. It should
   // conform to RFC1035.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for DeleteInstanceGroupManagers.
@@ -462,7 +528,10 @@ message DeleteInstanceGroupManagersRequest {
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -477,7 +546,10 @@ message DeleteInstanceGroupManagersRequest {
   optional string request_id = 3;
 
   // The name of the zone where the managed instance group is located.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for DeleteInstances.
@@ -486,10 +558,16 @@ message DeleteInstancesRequest {
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstanceGroupManagersDeleteInstancesRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstanceGroupManagersDeleteInstancesRequest instance_group_managers_delete_instances_request_resource = 2 [json_name="__json_request_body"];
+  optional
+      google.cloud.cpp.compute.v1.InstanceGroupManagersDeleteInstancesRequest
+          instance_group_managers_delete_instances_request_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -504,7 +582,10 @@ message DeleteInstancesRequest {
   optional string request_id = 4;
 
   // The name of the zone where the managed instance group is located.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for DeletePerInstanceConfigs.
@@ -513,14 +594,23 @@ message DeletePerInstanceConfigsRequest {
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstanceGroupManagersDeletePerInstanceConfigsReq for this request.
-  optional google.cloud.cpp.compute.v1.InstanceGroupManagersDeletePerInstanceConfigsReq instance_group_managers_delete_per_instance_configs_req_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1
+      .InstanceGroupManagersDeletePerInstanceConfigsReq
+          instance_group_managers_delete_per_instance_configs_req_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The name of the zone where the managed instance group is located. It should
   // conform to RFC1035.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for GetInstanceGroupManagers.
@@ -538,10 +628,14 @@ message GetInstanceGroupManagersRequest {
 // Request message for InsertInstanceGroupManagers.
 message InsertInstanceGroupManagersRequest {
   // The InstanceGroupManager for this request.
-  optional google.cloud.cpp.compute.v1.InstanceGroupManager instance_group_manager_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.InstanceGroupManager
+      instance_group_manager_resource = 1 [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -556,7 +650,10 @@ message InsertInstanceGroupManagersRequest {
   optional string request_id = 3;
 
   // The name of the zone where you want to create the managed instance group.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for ListErrors.
@@ -850,10 +947,14 @@ message PatchInstanceGroupManagersRequest {
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstanceGroupManager for this request.
-  optional google.cloud.cpp.compute.v1.InstanceGroupManager instance_group_manager_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.InstanceGroupManager
+      instance_group_manager_resource = 2 [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -868,7 +969,10 @@ message PatchInstanceGroupManagersRequest {
   optional string request_id = 4;
 
   // The name of the zone where you want to create the managed instance group.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for PatchPerInstanceConfigs.
@@ -877,10 +981,16 @@ message PatchPerInstanceConfigsRequest {
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstanceGroupManagersPatchPerInstanceConfigsReq for this request.
-  optional google.cloud.cpp.compute.v1.InstanceGroupManagersPatchPerInstanceConfigsReq instance_group_managers_patch_per_instance_configs_req_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1
+      .InstanceGroupManagersPatchPerInstanceConfigsReq
+          instance_group_managers_patch_per_instance_configs_req_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -896,7 +1006,10 @@ message PatchPerInstanceConfigsRequest {
 
   // The name of the zone where the managed instance group is located. It should
   // conform to RFC1035.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for RecreateInstances.
@@ -905,10 +1018,16 @@ message RecreateInstancesRequest {
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstanceGroupManagersRecreateInstancesRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstanceGroupManagersRecreateInstancesRequest instance_group_managers_recreate_instances_request_resource = 2 [json_name="__json_request_body"];
+  optional
+      google.cloud.cpp.compute.v1.InstanceGroupManagersRecreateInstancesRequest
+          instance_group_managers_recreate_instances_request_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -923,7 +1042,10 @@ message RecreateInstancesRequest {
   optional string request_id = 4;
 
   // The name of the zone where the managed instance group is located.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for Resize.
@@ -932,7 +1054,10 @@ message ResizeRequest {
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -952,7 +1077,10 @@ message ResizeRequest {
   int32 size = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The name of the zone where the managed instance group is located.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetInstanceTemplate.
@@ -961,10 +1089,16 @@ message SetInstanceTemplateRequest {
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstanceGroupManagersSetInstanceTemplateRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstanceGroupManagersSetInstanceTemplateRequest instance_group_managers_set_instance_template_request_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1
+      .InstanceGroupManagersSetInstanceTemplateRequest
+          instance_group_managers_set_instance_template_request_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -979,7 +1113,10 @@ message SetInstanceTemplateRequest {
   optional string request_id = 4;
 
   // The name of the zone where the managed instance group is located.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetTargetPools.
@@ -988,10 +1125,16 @@ message SetTargetPoolsRequest {
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstanceGroupManagersSetTargetPoolsRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstanceGroupManagersSetTargetPoolsRequest instance_group_managers_set_target_pools_request_resource = 2 [json_name="__json_request_body"];
+  optional
+      google.cloud.cpp.compute.v1.InstanceGroupManagersSetTargetPoolsRequest
+          instance_group_managers_set_target_pools_request_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1006,7 +1149,10 @@ message SetTargetPoolsRequest {
   optional string request_id = 4;
 
   // The name of the zone where the managed instance group is located.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for UpdatePerInstanceConfigs.
@@ -1015,10 +1161,16 @@ message UpdatePerInstanceConfigsRequest {
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstanceGroupManagersUpdatePerInstanceConfigsReq for this request.
-  optional google.cloud.cpp.compute.v1.InstanceGroupManagersUpdatePerInstanceConfigsReq instance_group_managers_update_per_instance_configs_req_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1
+      .InstanceGroupManagersUpdatePerInstanceConfigsReq
+          instance_group_managers_update_per_instance_configs_req_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1034,5 +1186,8 @@ message UpdatePerInstanceConfigsRequest {
 
   // The name of the zone where the managed instance group is located. It should
   // conform to RFC1035.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }

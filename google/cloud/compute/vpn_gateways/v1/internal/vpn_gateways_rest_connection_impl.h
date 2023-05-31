@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_VPN_GATEWAYS_V1_INTERNAL_VPN_GATEWAYS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_VPN_GATEWAYS_V1_INTERNAL_VPN_GATEWAYS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/vpn_gateways/v1/internal/vpn_gateways_rest_stub.h"
 #include "google/cloud/compute/vpn_gateways/v1/internal/vpn_gateways_retry_traits.h"
 #include "google/cloud/compute/vpn_gateways/v1/vpn_gateways_connection.h"
 #include "google/cloud/compute/vpn_gateways/v1/vpn_gateways_connection_idempotency_policy.h"
 #include "google/cloud/compute/vpn_gateways/v1/vpn_gateways_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,68 +44,102 @@ class VpnGatewaysRestConnectionImpl
   ~VpnGatewaysRestConnectionImpl() override = default;
 
   VpnGatewaysRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_vpn_gateways_v1_internal::VpnGatewaysRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_vpn_gateways_v1_internal::VpnGatewaysRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
-  AggregatedListVpnGateways(google::cloud::cpp::compute::vpn_gateways::v1::AggregatedListVpnGatewaysRequest const& request) override;
+  AggregatedListVpnGateways(
+      google::cloud::cpp::compute::vpn_gateways::v1::
+          AggregatedListVpnGatewaysRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteVpnGateways(google::cloud::cpp::compute::vpn_gateways::v1::DeleteVpnGatewaysRequest const& request) override;
+  DeleteVpnGateways(google::cloud::cpp::compute::vpn_gateways::v1::
+                        DeleteVpnGatewaysRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::VpnGateway>
-  GetVpnGateways(google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewaysRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateways(
+      google::cloud::cpp::compute::vpn_gateways::v1::
+          GetVpnGatewaysRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>
-  GetStatus(google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const& request) override;
+  GetStatus(
+      google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertVpnGateways(google::cloud::cpp::compute::vpn_gateways::v1::InsertVpnGatewaysRequest const& request) override;
+  InsertVpnGateways(google::cloud::cpp::compute::vpn_gateways::v1::
+                        InsertVpnGatewaysRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::VpnGateway>
-  ListVpnGateways(google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::VpnGateway> ListVpnGateways(
+      google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::vpn_gateways::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::vpn_gateways::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_vpn_gateways_v1::VpnGatewaysRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_vpn_gateways_v1::VpnGatewaysRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption>()) {
-      return options.get<compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption>()->clone();
+      return options
+          .get<compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_vpn_gateways_v1::VpnGatewaysBackoffPolicyOption>()) {
-      return options.get<compute_vpn_gateways_v1::VpnGatewaysBackoffPolicyOption>()->clone();
+    if (options
+            .has<compute_vpn_gateways_v1::VpnGatewaysBackoffPolicyOption>()) {
+      return options
+          .get<compute_vpn_gateways_v1::VpnGatewaysBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_vpn_gateways_v1::VpnGatewaysBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_vpn_gateways_v1::VpnGatewaysBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_vpn_gateways_v1::VpnGatewaysConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_vpn_gateways_v1::VpnGatewaysConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_vpn_gateways_v1::VpnGatewaysConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_vpn_gateways_v1::VpnGatewaysConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_vpn_gateways_v1::
+                        VpnGatewaysConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_vpn_gateways_v1::
+                   VpnGatewaysConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_vpn_gateways_v1::VpnGatewaysConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_vpn_gateways_v1::
+                 VpnGatewaysConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_vpn_gateways_v1::VpnGatewaysPollingPolicyOption>()) {
-      return options.get<compute_vpn_gateways_v1::VpnGatewaysPollingPolicyOption>()->clone();
+    if (options
+            .has<compute_vpn_gateways_v1::VpnGatewaysPollingPolicyOption>()) {
+      return options
+          .get<compute_vpn_gateways_v1::VpnGatewaysPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_vpn_gateways_v1::VpnGatewaysPollingPolicyOption>()->clone();
+    return options_
+        .get<compute_vpn_gateways_v1::VpnGatewaysPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -34,33 +34,39 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SnapshotsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SNAPSHOTS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_SNAPSHOTS_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
+      std::move(options), "GOOGLE_CLOUD_CPP_SNAPSHOTS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SNAPSHOTS_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<compute_snapshots_v1::SnapshotsRetryPolicyOption>()) {
     options.set<compute_snapshots_v1::SnapshotsRetryPolicyOption>(
         compute_snapshots_v1::SnapshotsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<compute_snapshots_v1::SnapshotsBackoffPolicyOption>()) {
     options.set<compute_snapshots_v1::SnapshotsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
   if (!options.has<compute_snapshots_v1::SnapshotsPollingPolicyOption>()) {
     options.set<compute_snapshots_v1::SnapshotsPollingPolicyOption>(
         GenericPollingPolicy<
             compute_snapshots_v1::SnapshotsRetryPolicyOption::Type,
             compute_snapshots_v1::SnapshotsBackoffPolicyOption::Type>(
-            options.get<compute_snapshots_v1::SnapshotsRetryPolicyOption>()->clone(),
-            options.get<compute_snapshots_v1::SnapshotsBackoffPolicyOption>()->clone())
+            options.get<compute_snapshots_v1::SnapshotsRetryPolicyOption>()
+                ->clone(),
+            options.get<compute_snapshots_v1::SnapshotsBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<compute_snapshots_v1::SnapshotsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_snapshots_v1::SnapshotsConnectionIdempotencyPolicyOption>(
-        compute_snapshots_v1::MakeDefaultSnapshotsConnectionIdempotencyPolicy());
+  if (!options.has<
+          compute_snapshots_v1::SnapshotsConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<compute_snapshots_v1::SnapshotsConnectionIdempotencyPolicyOption>(
+            compute_snapshots_v1::
+                MakeDefaultSnapshotsConnectionIdempotencyPolicy());
   }
 
   return options;

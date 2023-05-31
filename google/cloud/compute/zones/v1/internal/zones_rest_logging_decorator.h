@@ -38,16 +38,18 @@ class ZonesRestLogging : public ZonesRestStub {
  public:
   ~ZonesRestLogging() override = default;
   ZonesRestLogging(std::shared_ptr<ZonesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                   TracingOptions tracing_options,
+                   std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) override;
+      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) override;
+      google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request)
+      override;
 
  private:
   std::shared_ptr<ZonesRestStub> child_;

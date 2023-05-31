@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 InstanceTemplatesRestLogging::InstanceTemplatesRestLogging(
     std::shared_ptr<InstanceTemplatesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
 InstanceTemplatesRestLogging::AggregatedListInstanceTemplates(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest const& request) {
+    google::cloud::cpp::compute::instance_templates::v1::
+        AggregatedListInstanceTemplatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest const& request) {
+             google::cloud::cpp::compute::instance_templates::v1::
+                 AggregatedListInstanceTemplatesRequest const& request) {
         return child_->AggregatedListInstanceTemplates(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -47,14 +49,17 @@ InstanceTemplatesRestLogging::AggregatedListInstanceTemplates(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesRestLogging::AsyncDeleteInstanceTemplates(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplatesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::instance_templates::v1::
+        DeleteInstanceTemplatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplatesRequest const& request) {
-        return child_->AsyncDeleteInstanceTemplates(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::instance_templates::v1::
+                 DeleteInstanceTemplatesRequest const& request) {
+        return child_->AsyncDeleteInstanceTemplates(cq, std::move(rest_context),
+                                                    request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -62,10 +67,12 @@ InstanceTemplatesRestLogging::AsyncDeleteInstanceTemplates(
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
 InstanceTemplatesRestLogging::GetInstanceTemplates(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplatesRequest const& request) {
+    google::cloud::cpp::compute::instance_templates::v1::
+        GetInstanceTemplatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplatesRequest const& request) {
+             google::cloud::cpp::compute::instance_templates::v1::
+                 GetInstanceTemplatesRequest const& request) {
         return child_->GetInstanceTemplates(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -74,10 +81,12 @@ InstanceTemplatesRestLogging::GetInstanceTemplates(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstanceTemplatesRestLogging::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::instance_templates::v1::
+        GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::instance_templates::v1::
+                 GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -85,14 +94,17 @@ InstanceTemplatesRestLogging::GetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesRestLogging::AsyncInsertInstanceTemplates(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplatesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::instance_templates::v1::
+        InsertInstanceTemplatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplatesRequest const& request) {
-        return child_->AsyncInsertInstanceTemplates(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::instance_templates::v1::
+                 InsertInstanceTemplatesRequest const& request) {
+        return child_->AsyncInsertInstanceTemplates(cq, std::move(rest_context),
+                                                    request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -100,10 +112,12 @@ InstanceTemplatesRestLogging::AsyncInsertInstanceTemplates(
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>
 InstanceTemplatesRestLogging::ListInstanceTemplates(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest const& request) {
+    google::cloud::cpp::compute::instance_templates::v1::
+        ListInstanceTemplatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest const& request) {
+             google::cloud::cpp::compute::instance_templates::v1::
+                 ListInstanceTemplatesRequest const& request) {
         return child_->ListInstanceTemplates(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -112,10 +126,12 @@ InstanceTemplatesRestLogging::ListInstanceTemplates(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstanceTemplatesRestLogging::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::instance_templates::v1::
+        SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::instance_templates::v1::
+                 SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -124,10 +140,12 @@ InstanceTemplatesRestLogging::SetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 InstanceTemplatesRestLogging::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::instance_templates::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::instance_templates::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -137,26 +155,30 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
-future<Status>
-InstanceTemplatesRestLogging::AsyncCancelOperation(
+future<Status> InstanceTemplatesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }

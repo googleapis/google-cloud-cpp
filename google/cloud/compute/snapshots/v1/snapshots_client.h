@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SnapshotsClient {
  public:
-  explicit SnapshotsClient(ExperimentalTag, std::shared_ptr<SnapshotsConnection> connection, Options opts = {});
+  explicit SnapshotsClient(ExperimentalTag,
+                           std::shared_ptr<SnapshotsConnection> connection,
+                           Options opts = {});
   ~SnapshotsClient();
 
   ///@{
@@ -115,11 +117,12 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L118}
+  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L129}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSnapshots(std::string const& project, std::string const& snapshot, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshots(
+      std::string const& project, std::string const& snapshot,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -155,11 +158,13 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L118}
+  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L129}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSnapshots(google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -181,12 +186,13 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L151}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L165}
   /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24450}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-  GetSnapshots(std::string const& project, std::string const& snapshot, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshots(
+      std::string const& project, std::string const& snapshot,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -212,12 +218,14 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L151}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L165}
   /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24450}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-  GetSnapshots(google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -240,12 +248,13 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L139}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L153}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -272,12 +281,14 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L139}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L153}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -308,11 +319,13 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L160}
+  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L174}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSnapshots(std::string const& project, google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshots(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -347,11 +360,13 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L160}
+  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L174}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSnapshots(google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -382,12 +397,12 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L181}
+  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L199}
   /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24450}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Snapshot>
-  ListSnapshots(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -423,12 +438,13 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L181}
+  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L199}
   /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24450}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Snapshot>
-  ListSnapshots(google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -452,12 +468,15 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L246}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L264}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+          global_set_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -484,12 +503,14 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L246}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L264}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -519,11 +540,14 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L258}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L278}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+          global_set_labels_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -556,11 +580,13 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L258}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L278}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -583,12 +609,16 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L270}
+  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L295}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -614,12 +644,14 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L270}
+  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L295}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<SnapshotsConnection> connection_;

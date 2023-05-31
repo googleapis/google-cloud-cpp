@@ -29,24 +29,25 @@ namespace cloud {
 namespace compute_image_family_views_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultImageFamilyViewsRestStub::DefaultImageFamilyViewsRestStub(Options options)
+DefaultImageFamilyViewsRestStub::DefaultImageFamilyViewsRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultImageFamilyViewsRestStub::DefaultImageFamilyViewsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
 DefaultImageFamilyViewsRestStub::GetImageFamilyViews(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::image_family_views::v1::
+        GetImageFamilyViewsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ImageFamilyView>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/imageFamilyViews/", request.family(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
+                   request.zone(), "/imageFamilyViews/", request.family(), ""),
       {std::make_pair("project", request.project()),
        std::make_pair("zone", request.zone())});
 }

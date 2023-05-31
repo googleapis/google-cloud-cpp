@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TargetVpnGatewaysClient {
  public:
-  explicit TargetVpnGatewaysClient(ExperimentalTag, std::shared_ptr<TargetVpnGatewaysConnection> connection, Options opts = {});
+  explicit TargetVpnGatewaysClient(
+      ExperimentalTag, std::shared_ptr<TargetVpnGatewaysConnection> connection,
+      Options opts = {});
   ~TargetVpnGatewaysClient();
 
   ///@{
@@ -77,10 +79,12 @@ class TargetVpnGatewaysClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TargetVpnGatewaysClient const& a, TargetVpnGatewaysClient const& b) {
+  friend bool operator==(TargetVpnGatewaysClient const& a,
+                         TargetVpnGatewaysClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TargetVpnGatewaysClient const& a, TargetVpnGatewaysClient const& b) {
+  friend bool operator!=(TargetVpnGatewaysClient const& a,
+                         TargetVpnGatewaysClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -104,12 +108,13 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.AggregatedListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L92}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.AggregatedListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L100}
   /// [google.cloud.cpp.compute.v1.TargetVpnGatewayAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28602}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
-  AggregatedListTargetVpnGateways(std::string const& project, Options opts = {});
+  AggregatedListTargetVpnGateways(std::string const& project,
+                                  Options opts = {});
 
   // clang-format off
   ///
@@ -135,12 +140,15 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.AggregatedListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L92}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.AggregatedListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L100}
   /// [google.cloud.cpp.compute.v1.TargetVpnGatewayAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28602}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
-  AggregatedListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::AggregatedListTargetVpnGatewaysRequest const& request, Options opts = {});
+  AggregatedListTargetVpnGateways(
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          AggregatedListTargetVpnGatewaysRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -169,11 +177,13 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.DeleteTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L166}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.DeleteTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L174}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetVpnGateways(std::string const& project, std::string const& region, std::string const& target_vpn_gateway, Options opts = {});
+  DeleteTargetVpnGateways(std::string const& project, std::string const& region,
+                          std::string const& target_vpn_gateway,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -205,11 +215,13 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.DeleteTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L166}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.DeleteTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L174}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewaysRequest const& request, Options opts = {});
+  DeleteTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::
+                              DeleteTargetVpnGatewaysRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -232,12 +244,14 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.GetTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L190}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.GetTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L204}
   /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28546}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  GetTargetVpnGateways(std::string const& project, std::string const& region, std::string const& target_vpn_gateway, Options opts = {});
+  GetTargetVpnGateways(std::string const& project, std::string const& region,
+                       std::string const& target_vpn_gateway,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -263,12 +277,14 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.GetTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L190}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.GetTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L204}
   /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28546}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  GetTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::GetTargetVpnGatewaysRequest const& request, Options opts = {});
+  GetTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::
+                           GetTargetVpnGatewaysRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -298,11 +314,15 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.InsertTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L202}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.InsertTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L216}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetVpnGateways(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::TargetVpnGateway const& target_vpn_gateway_resource, Options opts = {});
+  InsertTargetVpnGateways(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::TargetVpnGateway const&
+          target_vpn_gateway_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -335,11 +355,13 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.InsertTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L202}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.InsertTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L216}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewaysRequest const& request, Options opts = {});
+  InsertTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::
+                              InsertTargetVpnGatewaysRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -371,12 +393,13 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.ListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L226}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.ListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L247}
   /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28546}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  ListTargetVpnGateways(std::string const& project, std::string const& region, Options opts = {});
+  ListTargetVpnGateways(std::string const& project, std::string const& region,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -412,12 +435,14 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.ListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L226}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.ListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L247}
   /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28546}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::ListTargetVpnGatewaysRequest request, Options opts = {});
+  ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::
+                            ListTargetVpnGatewaysRequest request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -448,11 +473,15 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L294}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L315}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetLabelsRequest const& region_set_labels_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
+          region_set_labels_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -485,11 +514,13 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L294}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L315}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          SetLabelsRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<TargetVpnGatewaysConnection> connection_;

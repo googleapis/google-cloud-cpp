@@ -26,12 +26,13 @@ import "google/cloud/compute/v1/internal/common.proto";
 service RegionDiskTypes {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Returns the specified regional disk type.
-  rpc GetRegionDiskTypes(GetRegionDiskTypesRequest) returns (google.cloud.cpp.compute.v1.DiskType) {
+  rpc GetRegionDiskTypes(GetRegionDiskTypesRequest)
+      returns (google.cloud.cpp.compute.v1.DiskType) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/diskTypes/{disk_type=disk_type}"
     };
@@ -39,7 +40,8 @@ service RegionDiskTypes {
   }
 
   // Retrieves a list of regional disk types available to the specified project.
-  rpc ListRegionDiskTypes(ListRegionDiskTypesRequest) returns (google.cloud.cpp.compute.v1.RegionDiskTypeList) {
+  rpc ListRegionDiskTypes(ListRegionDiskTypesRequest)
+      returns (google.cloud.cpp.compute.v1.RegionDiskTypeList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/diskTypes"
     };

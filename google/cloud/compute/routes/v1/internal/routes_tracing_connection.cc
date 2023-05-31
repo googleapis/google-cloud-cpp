@@ -33,35 +33,43 @@ RoutesTracingConnection::RoutesTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutesTracingConnection::DeleteRoutes(google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_routes_v1::RoutesConnection::DeleteRoutes");
+RoutesTracingConnection::DeleteRoutes(
+    google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_routes_v1::RoutesConnection::DeleteRoutes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRoutes(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Route>
-RoutesTracingConnection::GetRoutes(google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request) {
-  auto span = internal::MakeSpan("compute_routes_v1::RoutesConnection::GetRoutes");
+RoutesTracingConnection::GetRoutes(
+    google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request) {
+  auto span =
+      internal::MakeSpan("compute_routes_v1::RoutesConnection::GetRoutes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRoutes(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutesTracingConnection::InsertRoutes(google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const& request) {
-  auto span = internal::MakeSpan(
-      "compute_routes_v1::RoutesConnection::InsertRoutes");
+RoutesTracingConnection::InsertRoutes(
+    google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_routes_v1::RoutesConnection::InsertRoutes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->InsertRoutes(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Route>
-RoutesTracingConnection::ListRoutes(google::cloud::cpp::compute::routes::v1::ListRoutesRequest request) {
-  auto span = internal::MakeSpan("compute_routes_v1::RoutesConnection::ListRoutes");
+RoutesTracingConnection::ListRoutes(
+    google::cloud::cpp::compute::routes::v1::ListRoutesRequest request) {
+  auto span =
+      internal::MakeSpan("compute_routes_v1::RoutesConnection::ListRoutes");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListRoutes(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Route>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::Route>(std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

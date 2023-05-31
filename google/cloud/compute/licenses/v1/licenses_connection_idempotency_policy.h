@@ -37,30 +37,36 @@ class LicensesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<LicensesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  DeleteLicenses(google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request);
+  virtual google::cloud::Idempotency DeleteLicenses(
+      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetLicenses(google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request);
+  virtual google::cloud::Idempotency GetLicenses(
+      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertLicenses(google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request);
+  virtual google::cloud::Idempotency InsertLicenses(
+      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLicenses(google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request);
+  virtual google::cloud::Idempotency ListLicenses(
+      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::licenses::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<LicensesConnectionIdempotencyPolicy>
-    MakeDefaultLicensesConnectionIdempotencyPolicy();
+MakeDefaultLicensesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_licenses_v1

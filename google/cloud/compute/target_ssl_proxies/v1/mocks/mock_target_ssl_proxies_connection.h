@@ -42,45 +42,64 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockTargetSslProxiesConnection : public compute_target_ssl_proxies_v1::TargetSslProxiesConnection {
+class MockTargetSslProxiesConnection
+    : public compute_target_ssl_proxies_v1::TargetSslProxiesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteTargetSslProxies,
-  (google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxiesRequest const& request), (override));
+              DeleteTargetSslProxies,
+              (google::cloud::cpp::compute::target_ssl_proxies::v1::
+                   DeleteTargetSslProxiesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>,
-  GetTargetSslProxies,
-  (google::cloud::cpp::compute::target_ssl_proxies::v1::GetTargetSslProxiesRequest const& request), (override));
+              GetTargetSslProxies,
+              (google::cloud::cpp::compute::target_ssl_proxies::v1::
+                   GetTargetSslProxiesRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertTargetSslProxies,
-  (google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxiesRequest const& request), (override));
+              InsertTargetSslProxies,
+              (google::cloud::cpp::compute::target_ssl_proxies::v1::
+                   InsertTargetSslProxiesRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>,
-  ListTargetSslProxies,
-  (google::cloud::cpp::compute::target_ssl_proxies::v1::ListTargetSslProxiesRequest request), (override));
+              ListTargetSslProxies,
+              (google::cloud::cpp::compute::target_ssl_proxies::v1::
+                   ListTargetSslProxiesRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetBackendService,
-  (google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const& request), (override));
+              SetBackendService,
+              (google::cloud::cpp::compute::target_ssl_proxies::v1::
+                   SetBackendServiceRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetCertificateMap,
-  (google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const& request), (override));
+              SetCertificateMap,
+              (google::cloud::cpp::compute::target_ssl_proxies::v1::
+                   SetCertificateMapRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetProxyHeader,
-  (google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const& request), (override));
+              SetProxyHeader,
+              (google::cloud::cpp::compute::target_ssl_proxies::v1::
+                   SetProxyHeaderRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetSslCertificates,
-  (google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const& request), (override));
+              SetSslCertificates,
+              (google::cloud::cpp::compute::target_ssl_proxies::v1::
+                   SetSslCertificatesRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetSslPolicy,
-  (google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const& request), (override));
+              SetSslPolicy,
+              (google::cloud::cpp::compute::target_ssl_proxies::v1::
+                   SetSslPolicyRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

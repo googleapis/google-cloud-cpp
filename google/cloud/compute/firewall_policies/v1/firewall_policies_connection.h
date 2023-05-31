@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALL_POLICIES_V1_FIREWALL_POLICIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALL_POLICIES_V1_FIREWALL_POLICIES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/firewall_policies/v1/firewall_policies_connection_idempotency_policy.h"
 #include "google/cloud/compute/firewall_policies/v1/internal/firewall_policies_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -38,11 +38,13 @@ namespace cloud {
 namespace compute_firewall_policies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using FirewallPoliciesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_firewall_policies_v1_internal::FirewallPoliciesRetryTraits>;
+using FirewallPoliciesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_firewall_policies_v1_internal::FirewallPoliciesRetryTraits>;
 
-using FirewallPoliciesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_firewall_policies_v1_internal::FirewallPoliciesRetryTraits>;
+using FirewallPoliciesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_firewall_policies_v1_internal::FirewallPoliciesRetryTraits>;
 
 using FirewallPoliciesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -58,7 +60,8 @@ using FirewallPoliciesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeFirewallPoliciesConnection()`.
  *
- * For mocking, see `compute_firewall_policies_v1_mocks::MockFirewallPoliciesConnection`.
+ * For mocking, see
+ * `compute_firewall_policies_v1_mocks::MockFirewallPoliciesConnection`.
  */
 class FirewallPoliciesConnection {
  public:
@@ -67,58 +70,77 @@ class FirewallPoliciesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddAssociation(google::cloud::cpp::compute::firewall_policies::v1::AddAssociationRequest const& request);
+  AddAssociation(google::cloud::cpp::compute::firewall_policies::v1::
+                     AddAssociationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
+      google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddRule(google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const& request);
+  CloneRules(google::cloud::cpp::compute::firewall_policies::v1::
+                 CloneRulesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  CloneRules(google::cloud::cpp::compute::firewall_policies::v1::CloneRulesRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::DeleteFirewallPoliciesRequest const& request);
+  DeleteFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::
+                             DeleteFirewallPoliciesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-  GetFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::GetFirewallPoliciesRequest const& request);
+  GetFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::
+                          GetFirewallPoliciesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
-  GetAssociation(google::cloud::cpp::compute::firewall_policies::v1::GetAssociationRequest const& request);
+  GetAssociation(google::cloud::cpp::compute::firewall_policies::v1::
+                     GetAssociationRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::firewall_policies::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
-  GetRule(google::cloud::cpp::compute::firewall_policies::v1::GetRuleRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule> GetRule(
+      google::cloud::cpp::compute::firewall_policies::v1::GetRuleRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::InsertFirewallPoliciesRequest const& request);
+  InsertFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::
+                             InsertFirewallPoliciesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
-  ListFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::ListFirewallPoliciesRequest request);
+  ListFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::
+                           ListFirewallPoliciesRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
-  ListAssociations(google::cloud::cpp::compute::firewall_policies::v1::ListAssociationsRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
+  ListAssociations(google::cloud::cpp::compute::firewall_policies::v1::
+                       ListAssociationsRequest const& request);
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Move(google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::PatchFirewallPoliciesRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRule(google::cloud::cpp::compute::firewall_policies::v1::PatchRuleRequest const& request);
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
+      google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveAssociation(google::cloud::cpp::compute::firewall_policies::v1::RemoveAssociationRequest const& request);
+  PatchFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::
+                            PatchFirewallPoliciesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveRule(google::cloud::cpp::compute::firewall_policies::v1::RemoveRuleRequest const& request);
+  PatchRule(google::cloud::cpp::compute::firewall_policies::v1::
+                PatchRuleRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::firewall_policies::v1::SetIamPolicyRequest const& request);
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveAssociation(google::cloud::cpp::compute::firewall_policies::v1::
+                        RemoveAssociationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveRule(google::cloud::cpp::compute::firewall_policies::v1::
+                 RemoveRuleRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::firewall_policies::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::firewall_policies::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

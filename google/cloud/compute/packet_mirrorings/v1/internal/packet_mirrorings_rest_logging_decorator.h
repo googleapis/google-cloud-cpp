@@ -39,49 +39,63 @@ class PacketMirroringsRestLogging : public PacketMirroringsRestStub {
  public:
   ~PacketMirroringsRestLogging() override = default;
   PacketMirroringsRestLogging(std::shared_ptr<PacketMirroringsRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                              TracingOptions tracing_options,
+                              std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList> AggregatedListPacketMirrorings(
+  StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
+  AggregatedListPacketMirrorings(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::packet_mirrorings::v1::AggregatedListPacketMirroringsRequest const& request) override;
+      google::cloud::cpp::compute::packet_mirrorings::v1::
+          AggregatedListPacketMirroringsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeletePacketMirrorings(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeletePacketMirrorings(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringsRequest const& request) override;
+      google::cloud::cpp::compute::packet_mirrorings::v1::
+          DeletePacketMirroringsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::PacketMirroring> GetPacketMirrorings(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::packet_mirrorings::v1::GetPacketMirroringsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
+  GetPacketMirrorings(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::packet_mirrorings::v1::
+                          GetPacketMirroringsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertPacketMirrorings(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertPacketMirrorings(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringsRequest const& request) override;
+      google::cloud::cpp::compute::packet_mirrorings::v1::
+          InsertPacketMirroringsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::PacketMirroringList> ListPacketMirrorings(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::packet_mirrorings::v1::ListPacketMirroringsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::PacketMirroringList>
+  ListPacketMirrorings(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::packet_mirrorings::v1::
+                           ListPacketMirroringsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchPacketMirrorings(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchPacketMirrorings(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringsRequest const& request) override;
+      google::cloud::cpp::compute::packet_mirrorings::v1::
+          PatchPacketMirroringsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::packet_mirrorings::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::packet_mirrorings::v1::
+                         TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest const& request) override;
 
  private:
   std::shared_ptr<PacketMirroringsRestStub> child_;

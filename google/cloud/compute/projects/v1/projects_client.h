@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ProjectsClient {
  public:
-  explicit ProjectsClient(ExperimentalTag, std::shared_ptr<ProjectsConnection> connection, Options opts = {});
+  explicit ProjectsClient(ExperimentalTag,
+                          std::shared_ptr<ProjectsConnection> connection,
+                          Options opts = {});
   ~ProjectsClient();
 
   ///@{
@@ -109,11 +111,11 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L181}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L200}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DisableXpnHost(std::string const& project, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -145,11 +147,13 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L181}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L200}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DisableXpnHost(google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
+      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -178,11 +182,15 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L199}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L221}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DisableXpnResource(std::string const& project, google::cloud::cpp::compute::v1::ProjectsDisableXpnResourceRequest const& projects_disable_xpn_resource_request_resource, Options opts = {});
+  DisableXpnResource(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::ProjectsDisableXpnResourceRequest const&
+          projects_disable_xpn_resource_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -215,11 +223,13 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L199}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L221}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DisableXpnResource(google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request, Options opts = {});
+  DisableXpnResource(google::cloud::cpp::compute::projects::v1::
+                         DisableXpnResourceRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -246,11 +256,11 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L220}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L247}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  EnableXpnHost(std::string const& project, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -282,11 +292,13 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L220}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L247}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  EnableXpnHost(google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
+      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -316,11 +328,15 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L238}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L268}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  EnableXpnResource(std::string const& project, google::cloud::cpp::compute::v1::ProjectsEnableXpnResourceRequest const& projects_enable_xpn_resource_request_resource, Options opts = {});
+  EnableXpnResource(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::ProjectsEnableXpnResourceRequest const&
+          projects_enable_xpn_resource_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -354,11 +370,14 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L238}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L268}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  EnableXpnResource(google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request, Options opts = {});
+  EnableXpnResource(
+      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -385,12 +404,12 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L259}
+  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L294}
   /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18765}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Project>
-  GetProjects(std::string const& project, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -422,12 +441,14 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L259}
+  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L294}
   /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18765}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Project>
-  GetProjects(google::cloud::cpp::compute::projects::v1::GetProjectsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
+      google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -449,12 +470,12 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L265}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L300}
   /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18765}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Project>
-  GetXpnHost(std::string const& project, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -481,12 +502,14 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L265}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L300}
   /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18765}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Project>
-  GetXpnHost(google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
+      google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -508,7 +531,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L271}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L306}
   /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18842}
   ///
   // clang-format on
@@ -540,12 +563,15 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L271}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L306}
   /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18842}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
-  GetXpnResources(google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request, Options opts = {});
+  GetXpnResources(
+      google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -576,12 +602,15 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L336}
+  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L371}
   /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18765}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Project>
-  ListXpnHosts(std::string const& project, google::cloud::cpp::compute::v1::ProjectsListXpnHostsRequest const& projects_list_xpn_hosts_request_resource, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Project> ListXpnHosts(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::ProjectsListXpnHostsRequest const&
+          projects_list_xpn_hosts_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -616,12 +645,13 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L336}
+  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L371}
   /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18765}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Project>
-  ListXpnHosts(google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Project> ListXpnHosts(
+      google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -649,11 +679,14 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L404}
+  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L441}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  MoveDisk(std::string const& project, google::cloud::cpp::compute::v1::DiskMoveRequest const& disk_move_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::DiskMoveRequest const&
+          disk_move_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -685,11 +718,12 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L404}
+  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L441}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  MoveDisk(google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
+      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -720,11 +754,14 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L425}
+  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L466}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  MoveInstance(std::string const& project, google::cloud::cpp::compute::v1::InstanceMoveRequest const& instance_move_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::InstanceMoveRequest const&
+          instance_move_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -759,11 +796,13 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L425}
+  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L466}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  MoveInstance(google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
+      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -792,11 +831,14 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L446}
+  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L491}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCommonInstanceMetadata(std::string const& project, google::cloud::cpp::compute::v1::Metadata const& metadata_resource, Options opts = {});
+  SetCommonInstanceMetadata(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::Metadata const& metadata_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -829,11 +871,13 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L446}
+  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L491}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCommonInstanceMetadata(google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request, Options opts = {});
+  SetCommonInstanceMetadata(google::cloud::cpp::compute::projects::v1::
+                                SetCommonInstanceMetadataRequest const& request,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -863,11 +907,16 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L467}
+  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L516}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDefaultNetworkTier(std::string const& project, google::cloud::cpp::compute::v1::ProjectsSetDefaultNetworkTierRequest const& projects_set_default_network_tier_request_resource, Options opts = {});
+  SetDefaultNetworkTier(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::
+          ProjectsSetDefaultNetworkTierRequest const&
+              projects_set_default_network_tier_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -901,11 +950,13 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L467}
+  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L516}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDefaultNetworkTier(google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request, Options opts = {});
+  SetDefaultNetworkTier(google::cloud::cpp::compute::projects::v1::
+                            SetDefaultNetworkTierRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -935,11 +986,15 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L488}
+  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L542}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUsageExportBucket(std::string const& project, google::cloud::cpp::compute::v1::UsageExportLocation const& usage_export_location_resource, Options opts = {});
+  SetUsageExportBucket(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::UsageExportLocation const&
+          usage_export_location_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -973,11 +1028,13 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L488}
+  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L542}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request, Options opts = {});
+  SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::
+                           SetUsageExportBucketRequest const& request,
+                       Options opts = {});
 
  private:
   std::shared_ptr<ProjectsConnection> connection_;

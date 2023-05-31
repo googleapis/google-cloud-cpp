@@ -17,11 +17,11 @@
 // source: google/cloud/compute/backend_buckets/v1/backend_buckets.proto
 
 #include "google/cloud/compute/backend_buckets/v1/backend_buckets_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/backend_buckets/v1/backend_buckets_options.h"
 #include "google/cloud/compute/backend_buckets/v1/internal/backend_buckets_option_defaults.h"
 #include "google/cloud/compute/backend_buckets/v1/internal/backend_buckets_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,70 +36,80 @@ BackendBucketsConnection::~BackendBucketsConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsConnection::AddSignedUrlKey(
-    google::cloud::cpp::compute::backend_buckets::v1::AddSignedUrlKeyRequest const&) {
+    google::cloud::cpp::compute::backend_buckets::v1::
+        AddSignedUrlKeyRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsConnection::DeleteBackendBuckets(
-    google::cloud::cpp::compute::backend_buckets::v1::DeleteBackendBucketsRequest const&) {
+    google::cloud::cpp::compute::backend_buckets::v1::
+        DeleteBackendBucketsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsConnection::DeleteSignedUrlKey(
-    google::cloud::cpp::compute::backend_buckets::v1::DeleteSignedUrlKeyRequest const&) {
+    google::cloud::cpp::compute::backend_buckets::v1::
+        DeleteSignedUrlKeyRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
 BackendBucketsConnection::GetBackendBuckets(
-    google::cloud::cpp::compute::backend_buckets::v1::GetBackendBucketsRequest const&) {
+    google::cloud::cpp::compute::backend_buckets::v1::
+        GetBackendBucketsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsConnection::InsertBackendBuckets(
-    google::cloud::cpp::compute::backend_buckets::v1::InsertBackendBucketsRequest const&) {
+    google::cloud::cpp::compute::backend_buckets::v1::
+        InsertBackendBucketsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::BackendBucket> BackendBucketsConnection::ListBackendBuckets(
-    google::cloud::cpp::compute::backend_buckets::v1::ListBackendBucketsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
+BackendBucketsConnection::ListBackendBuckets(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        ListBackendBucketsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::BackendBucket>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsConnection::PatchBackendBuckets(
-    google::cloud::cpp::compute::backend_buckets::v1::PatchBackendBucketsRequest const&) {
+    google::cloud::cpp::compute::backend_buckets::v1::
+        PatchBackendBucketsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsConnection::SetEdgeSecurityPolicy(
-    google::cloud::cpp::compute::backend_buckets::v1::SetEdgeSecurityPolicyRequest const&) {
+    google::cloud::cpp::compute::backend_buckets::v1::
+        SetEdgeSecurityPolicyRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsConnection::UpdateBackendBuckets(
-    google::cloud::cpp::compute::backend_buckets::v1::UpdateBackendBucketsRequest const&) {
+    google::cloud::cpp::compute::backend_buckets::v1::
+        UpdateBackendBucketsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

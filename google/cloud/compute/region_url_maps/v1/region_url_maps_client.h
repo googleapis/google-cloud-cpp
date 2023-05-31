@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionUrlMapsClient {
  public:
-  explicit RegionUrlMapsClient(ExperimentalTag, std::shared_ptr<RegionUrlMapsConnection> connection, Options opts = {});
+  explicit RegionUrlMapsClient(
+      ExperimentalTag, std::shared_ptr<RegionUrlMapsConnection> connection,
+      Options opts = {});
   ~RegionUrlMapsClient();
 
   ///@{
@@ -76,10 +78,12 @@ class RegionUrlMapsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RegionUrlMapsClient const& a, RegionUrlMapsClient const& b) {
+  friend bool operator==(RegionUrlMapsClient const& a,
+                         RegionUrlMapsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RegionUrlMapsClient const& a, RegionUrlMapsClient const& b) {
+  friend bool operator!=(RegionUrlMapsClient const& a,
+                         RegionUrlMapsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -111,11 +115,12 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.DeleteRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L107}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.DeleteRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionUrlMaps(std::string const& project, std::string const& region, std::string const& url_map, Options opts = {});
+  DeleteRegionUrlMaps(std::string const& project, std::string const& region,
+                      std::string const& url_map, Options opts = {});
 
   // clang-format off
   ///
@@ -147,11 +152,13 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.DeleteRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L107}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.DeleteRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::DeleteRegionUrlMapsRequest const& request, Options opts = {});
+  DeleteRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
+                          DeleteRegionUrlMapsRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -174,12 +181,13 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.GetRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L123}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.GetRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L139}
   /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-  GetRegionUrlMaps(std::string const& project, std::string const& region, std::string const& url_map, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMaps(
+      std::string const& project, std::string const& region,
+      std::string const& url_map, Options opts = {});
 
   // clang-format off
   ///
@@ -205,12 +213,14 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.GetRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L123}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.GetRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L139}
   /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-  GetRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::GetRegionUrlMapsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMaps(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          GetRegionUrlMapsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -240,11 +250,14 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.InsertRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L135}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.InsertRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L151}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionUrlMaps(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::UrlMap const& url_map_resource, Options opts = {});
+  InsertRegionUrlMaps(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -277,11 +290,13 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.InsertRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L135}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.InsertRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L151}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::InsertRegionUrlMapsRequest const& request, Options opts = {});
+  InsertRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
+                          InsertRegionUrlMapsRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -313,12 +328,12 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.ListRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L151}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.ListRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L174}
   /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::UrlMap>
-  ListRegionUrlMaps(std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListRegionUrlMaps(
+      std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -354,12 +369,14 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.ListRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L151}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.ListRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L174}
   /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::UrlMap>
-  ListRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListRegionUrlMaps(
+      google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -391,11 +408,15 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.PatchRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L219}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.PatchRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L242}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionUrlMaps(std::string const& project, std::string const& region, std::string const& url_map, google::cloud::cpp::compute::v1::UrlMap const& url_map_resource, Options opts = {});
+  PatchRegionUrlMaps(
+      std::string const& project, std::string const& region,
+      std::string const& url_map,
+      google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -429,11 +450,13 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.PatchRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L219}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.PatchRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L242}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::PatchRegionUrlMapsRequest const& request, Options opts = {});
+  PatchRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
+                         PatchRegionUrlMapsRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -464,11 +487,15 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.UpdateRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L238}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.UpdateRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L268}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionUrlMaps(std::string const& project, std::string const& region, std::string const& url_map, google::cloud::cpp::compute::v1::UrlMap const& url_map_resource, Options opts = {});
+  UpdateRegionUrlMaps(
+      std::string const& project, std::string const& region,
+      std::string const& url_map,
+      google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -501,11 +528,13 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.UpdateRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L238}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.UpdateRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L268}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::UpdateRegionUrlMapsRequest const& request, Options opts = {});
+  UpdateRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
+                          UpdateRegionUrlMapsRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -531,12 +560,16 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L257}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L294}
   /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29444}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
-  Validate(std::string const& project, std::string const& region, std::string const& url_map, google::cloud::cpp::compute::v1::RegionUrlMapsValidateRequest const& region_url_maps_validate_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
+      std::string const& project, std::string const& region,
+      std::string const& url_map,
+      google::cloud::cpp::compute::v1::RegionUrlMapsValidateRequest const&
+          region_url_maps_validate_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -564,12 +597,14 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L257}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L294}
   /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29444}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
-  Validate(google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
+      google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionUrlMapsConnection> connection_;

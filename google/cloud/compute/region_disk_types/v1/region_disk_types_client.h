@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionDiskTypesClient {
  public:
-  explicit RegionDiskTypesClient(ExperimentalTag, std::shared_ptr<RegionDiskTypesConnection> connection, Options opts = {});
+  explicit RegionDiskTypesClient(
+      ExperimentalTag, std::shared_ptr<RegionDiskTypesConnection> connection,
+      Options opts = {});
   ~RegionDiskTypesClient();
 
   ///@{
@@ -75,10 +77,12 @@ class RegionDiskTypesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RegionDiskTypesClient const& a, RegionDiskTypesClient const& b) {
+  friend bool operator==(RegionDiskTypesClient const& a,
+                         RegionDiskTypesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RegionDiskTypesClient const& a, RegionDiskTypesClient const& b) {
+  friend bool operator!=(RegionDiskTypesClient const& a,
+                         RegionDiskTypesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -104,12 +108,13 @@ class RegionDiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disk_types.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L51}
+  /// [google.cloud.cpp.compute.region_disk_types.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L53}
   /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4812}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::DiskType>
-  GetRegionDiskTypes(std::string const& project, std::string const& region, std::string const& disk_type, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskTypes(
+      std::string const& project, std::string const& region,
+      std::string const& disk_type, Options opts = {});
 
   // clang-format off
   ///
@@ -135,12 +140,14 @@ class RegionDiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disk_types.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L51}
+  /// [google.cloud.cpp.compute.region_disk_types.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L53}
   /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4812}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::DiskType>
-  GetRegionDiskTypes(google::cloud::cpp::compute::region_disk_types::v1::GetRegionDiskTypesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskTypes(
+      google::cloud::cpp::compute::region_disk_types::v1::
+          GetRegionDiskTypesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -171,12 +178,12 @@ class RegionDiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disk_types.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L63}
+  /// [google.cloud.cpp.compute.region_disk_types.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L65}
   /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4812}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::DiskType>
-  ListRegionDiskTypes(std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::DiskType> ListRegionDiskTypes(
+      std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -211,12 +218,14 @@ class RegionDiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disk_types.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L63}
+  /// [google.cloud.cpp.compute.region_disk_types.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L65}
   /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4812}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::DiskType>
-  ListRegionDiskTypes(google::cloud::cpp::compute::region_disk_types::v1::ListRegionDiskTypesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::DiskType> ListRegionDiskTypes(
+      google::cloud::cpp::compute::region_disk_types::v1::
+          ListRegionDiskTypesRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionDiskTypesConnection> connection_;
