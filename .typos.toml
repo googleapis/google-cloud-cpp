@@ -1,5 +1,11 @@
 [files]
 extend-exclude = [
+    # The discovery docs have one or more typos in their comments and enum
+    # fields. These typos can be propagated to the generated .h files.
+    # TODO(#11736): Try and get typos fixed upstream.
+    "generator/discovery/compute_public_google_rest_v1.json",
+    "google/cloud/compute/*/*/*.proto",
+    "google/cloud/compute/*/*/*.h",
     # Testing input file
     "google/cloud/testing_util/rest_testing_large_json.json",
     # Test files
