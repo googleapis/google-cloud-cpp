@@ -107,32 +107,31 @@ void from_json(nlohmann::json const& j, StandardSqlStructType& t) {
 void to_json(nlohmann::json& j, StandardSqlDataType const& t) {
   if (t.sub_type.valueless_by_exception()) {
     j = nlohmann::json{{"type_kind", t.type_kind}};
-  } else {
-    auto index = t.sub_type.index();
-    switch (index) {
-      case 1: {
-        auto type = absl::get<1>(t.sub_type);
-        if (type != nullptr) {
-          j = nlohmann::json{{"type_kind", t.type_kind},
-                             {"sub_type", *type},
-                             {"sub_type_index", index}};
-        }
-        break;
-      }
-      case 2: {
-        auto type = absl::get<2>(t.sub_type);
-        j = nlohmann::json{{"type_kind", t.type_kind},
-                           {"sub_type", type},
-                           {"sub_type_index", index}};
-        break;
-      }
-      default: {
-        j = nlohmann::json{{"type_kind", t.type_kind}};
-        break;
-      }
-    }
+    return;
   }
+
+  struct Visitor {
+    TypeKind type_kind;
+    nlohmann::json& j;
+
+    void operator()(absl::monostate const&) {
+      j = nlohmann::json{{"type_kind", std::move(type_kind)}};
+    }
+    void operator()(std::shared_ptr<StandardSqlDataType> const& type) {
+      j = nlohmann::json{{"type_kind", std::move(type_kind)},
+                         {"sub_type", *type},
+                         {"sub_type_index", 1}};
+    }
+    void operator()(StandardSqlStructType const& type) {
+      j = nlohmann::json{{"type_kind", std::move(type_kind)},
+                         {"sub_type", type},
+                         {"sub_type_index", 2}};
+    }
+  };
+
+  absl::visit(Visitor{t.type_kind, j}, t.sub_type);
 }
+
 void from_json(nlohmann::json const& j, StandardSqlDataType& t) {
   if (j.contains("type_kind")) j.at("type_kind").get_to(t.type_kind);
   if (j.contains("sub_type_index") && j.contains("sub_type")) {
@@ -152,64 +151,58 @@ void from_json(nlohmann::json const& j, StandardSqlDataType& t) {
 }
 
 void to_json(nlohmann::json& j, Value const& v) {
-  if (!v.kind.valueless_by_exception()) {
-    auto index = v.kind.index();
-    switch (index) {
-      case 0:
-        // Nothing to do.
-        break;
-      case 1: {
-        auto kind_val = absl::get<double>(v.kind);
-        j = nlohmann::json{{"kind", kind_val}, {"kind_index", index}};
-        break;
-      }
-      case 2: {
-        auto kind_val = absl::get<std::string>(v.kind);
-        j = nlohmann::json{{"kind", kind_val}, {"kind_index", index}};
-        break;
-      }
-      case 3: {
-        auto kind_val = absl::get<bool>(v.kind);
-        j = nlohmann::json{{"kind", kind_val}, {"kind_index", index}};
-        break;
-      }
-      case 4: {
-        auto kind_val = absl::get<std::shared_ptr<Struct>>(v.kind);
-        j = nlohmann::json{{"kind", *kind_val}, {"kind_index", index}};
-        break;
-      }
-      case 5: {
-        auto kind_val = absl::get<std::vector<Value>>(v.kind);
-        j = nlohmann::json{{"kind", kind_val}, {"kind_index", index}};
-        break;
-      }
-      default:
-        break;
-    }
+  if (v.value_kind.valueless_by_exception()) {
+    return;
   }
+
+  struct Visitor {
+    nlohmann::json& j;
+
+    void operator()(absl::monostate const&) {
+      // Nothing to do.
+    }
+    void operator()(double const& val) {
+      j = nlohmann::json{{"value_kind", val}, {"kind_index", 1}};
+    }
+    void operator()(std::string const& val) {
+      j = nlohmann::json{{"value_kind", val}, {"kind_index", 2}};
+    }
+    void operator()(bool const& val) {
+      j = nlohmann::json{{"value_kind", val}, {"kind_index", 3}};
+    }
+    void operator()(std::shared_ptr<Struct> const& val) {
+      j = nlohmann::json{{"value_kind", *val}, {"kind_index", 4}};
+    }
+    void operator()(std::vector<Value> const& val) {
+      j = nlohmann::json{{"value_kind", val}, {"kind_index", 5}};
+    }
+  };
+
+  absl::visit(Visitor{j}, v.value_kind);
 }
 
 void from_json(nlohmann::json const& j, Value& v) {
-  if (j.contains("kind_index") && j.contains("kind")) {
+  if (j.contains("kind_index") && j.contains("value_kind")) {
     auto const index = j.at("kind_index").get<int>();
     switch (index) {
       case 0:
         // Do not set any value
         break;
       case 1:
-        v.kind = j.at("kind").get<double>();
+        v.value_kind = j.at("value_kind").get<double>();
         break;
       case 2:
-        v.kind = j.at("kind").get<std::string>();
+        v.value_kind = j.at("value_kind").get<std::string>();
         break;
       case 3:
-        v.kind = j.at("kind").get<bool>();
+        v.value_kind = j.at("value_kind").get<bool>();
         break;
       case 4:
-        v.kind = std::make_shared<Struct>(j.at("kind").get<Struct>());
+        v.value_kind =
+            std::make_shared<Struct>(j.at("value_kind").get<Struct>());
         break;
       case 5:
-        v.kind = j.at("kind").get<std::vector<Value>>();
+        v.value_kind = j.at("value_kind").get<std::vector<Value>>();
         break;
       default:
         break;
@@ -234,117 +227,30 @@ void from_json(nlohmann::json const& j, SystemVariables& s) {
   if (j.contains("values")) j.at("values").get_to(s.values);
 }
 
+bool operator==(StandardSqlStructType const& lhs,
+                StandardSqlStructType const& rhs) {
+  return std::equal(lhs.fields.begin(), lhs.fields.end(), rhs.fields.begin());
+}
+
+bool operator==(StandardSqlField const& lhs, StandardSqlField const& rhs) {
+  auto eq_name = (lhs.name == rhs.name);
+  auto eq_type = ((lhs.type == nullptr) && (rhs.type == nullptr));
+  if (eq_type) return eq_name;
+
+  if (lhs.type != nullptr && rhs.type != nullptr) {
+    return (*lhs.type == *rhs.type);
+  }
+
+  return false;
+}
+
 bool operator==(StandardSqlDataType const& lhs,
                 StandardSqlDataType const& rhs) {
-  if (lhs.type_kind.value != rhs.type_kind.value) {
-    return false;
-  }
-  if (lhs.sub_type.valueless_by_exception() !=
-      rhs.sub_type.valueless_by_exception()) {
-    return false;
-  }
-  if (lhs.sub_type.index() != rhs.sub_type.index()) {
-    return false;
-  }
-  auto index = lhs.sub_type.index();
-  switch (index) {
-    case 1: {
-      auto lhs_ptr = absl::get<1>(lhs.sub_type);
-      auto rhs_ptr = absl::get<1>(rhs.sub_type);
-      if ((lhs_ptr != nullptr && rhs_ptr == nullptr) ||
-          (lhs_ptr == nullptr && rhs_ptr != nullptr)) {
-        return false;
-      }
-      if ((lhs_ptr != nullptr && rhs_ptr != nullptr) &&
-          (lhs_ptr->type_kind.value != rhs_ptr->type_kind.value)) {
-        return false;
-      }
-      break;
-    }
-    case 2: {
-      auto lhs_val = absl::get<2>(lhs.sub_type);
-      auto rhs_val = absl::get<2>(rhs.sub_type);
-      if (lhs_val.fields.size() != rhs_val.fields.size()) {
-        return false;
-      }
-      for (std::size_t i = 0; i < lhs_val.fields.size(); i++) {
-        auto lf1 = lhs_val.fields[i];
-        auto rf1 = rhs_val.fields[i];
-        if (lf1.name != rf1.name) {
-          return false;
-        }
-      }
-      break;
-    }
-    default:
-      break;
-  }
-  return true;
+  return (lhs.type_kind.value == rhs.type_kind.value);
 }
 
 bool operator==(Value const& lhs, Value const& rhs) {
-  if (lhs.kind.valueless_by_exception() != rhs.kind.valueless_by_exception()) {
-    return false;
-  }
-  if (lhs.kind.index() != rhs.kind.index()) {
-    return false;
-  }
-  auto index = lhs.kind.index();
-  switch (index) {
-    case 1: {
-      auto lhs_val = absl::get<1>(lhs.kind);
-      auto rhs_val = absl::get<1>(rhs.kind);
-      if (lhs_val != rhs_val) {
-        return false;
-      }
-      break;
-    }
-    case 2: {
-      auto lhs_val = absl::get<2>(lhs.kind);
-      auto rhs_val = absl::get<2>(rhs.kind);
-      if (lhs_val != rhs_val) {
-        return false;
-      }
-      break;
-    }
-    case 3: {
-      auto lhs_val = absl::get<3>(lhs.kind);
-      auto rhs_val = absl::get<3>(rhs.kind);
-      if (lhs_val != rhs_val) {
-        return false;
-      }
-      break;
-    }
-    case 4: {
-      auto lhs_val = absl::get<4>(lhs.kind);
-      auto rhs_val = absl::get<4>(rhs.kind);
-      if ((lhs_val != nullptr && rhs_val == nullptr) ||
-          (lhs_val == nullptr && rhs_val != nullptr)) {
-        return false;
-      }
-      if (lhs_val != nullptr && rhs_val != nullptr) {
-        if (lhs_val->fields.size() != rhs_val->fields.size()) {
-          return false;
-        }
-        if (!std::equal(lhs_val->fields.begin(), lhs_val->fields.end(),
-                        rhs_val->fields.begin())) {
-          return false;
-        }
-      }
-      break;
-    }
-    case 5: {
-      auto lhs_val = absl::get<5>(lhs.kind);
-      auto rhs_val = absl::get<5>(rhs.kind);
-      if (lhs_val != rhs_val) {
-        return false;
-      }
-      break;
-    }
-    default:
-      break;
-  }
-  return true;
+  return (lhs.value_kind == rhs.value_kind);
 }
 // NOLINTEND
 

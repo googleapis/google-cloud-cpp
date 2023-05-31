@@ -79,18 +79,33 @@ struct RoundingMode {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RoundingMode, value);
 
+// Customizes QUERY behavior.
+// For ODBC, corresponds to properties in a connection string.
+//
+// For more details, see:
+// https://cloud.google.com/bigquery/docs/reference/rest/v2/ConnectionProperty
 struct ConnectionProperty {
   std::string key;
   std::string value;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ConnectionProperty, key, value);
 
+// Describes the encryption key used to protect the BigQuery destination table.
+//
+// For more details, see:
+// https://cloud.google.com/bigquery/docs/reference/rest/v2/EncryptionConfiguration
 struct EncryptionConfiguration {
   std::string kms_key_name;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(EncryptionConfiguration,
                                                 kms_key_name);
 
+// Used in ScriptOptions to control the execution of script.
+// Determines which statement in the script represents the "key result",
+// used to populate the schema and query results of the script job.
+//
+// For more details, please see:
+// https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#KeyResultStatementKind
 struct KeyResultStatementKind {
   static KeyResultStatementKind UnSpecified();
   static KeyResultStatementKind Last();
@@ -100,6 +115,11 @@ struct KeyResultStatementKind {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(KeyResultStatementKind, value);
 
+// Controls the execution of a script job using timeout, bytes billed
+// and result statements.
+//
+// For more details, please see:
+// https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#ScriptOptions
 struct ScriptOptions {
   std::int64_t statement_timeout_ms;
   std::int64_t statement_byte_budget;
@@ -110,6 +130,15 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ScriptOptions,
                                                 statement_timeout_ms,
                                                 statement_byte_budget,
                                                 key_result_statement);
+
+// Represents a GoogleSQL Data Type.
+//
+// This is used to define a top level type or a sub type
+// for a sql field. The latter is applicable if the top level field is an
+// ARRAY or STRUCT.
+//
+// For more details, please see
+// https://cloud.google.com/bigquery/docs/reference/rest/v2/StandardSqlDataType#typekind
 struct TypeKind {
   static TypeKind UnSpecified();
   static TypeKind Int64();
@@ -139,51 +168,107 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TypeKind, value);
 // protobuf definition as possible.
 
 // NOLINTBEGIN
+// Represents the data type of a variable.
+// Please see the full definition for more details.
 struct StandardSqlDataType;
 
+// Represents a Google SQL field or column.
+// Used to define field members for a STRUCT type fields.
+// For more details see
+// https://cloud.google.com/bigquery/docs/reference/rest/v2/StandardSqlField
 struct StandardSqlField {
   std::string name;
   std::shared_ptr<StandardSqlDataType> type;
 };
 void to_json(nlohmann::json& j, StandardSqlField const& f);
 void from_json(nlohmann::json const& j, StandardSqlField& f);
+bool operator==(StandardSqlField const& lhs, StandardSqlField const& rhs);
 
+// Represents a STRUCT type field.
+// Used to define struct members for a top level TypeKind of STRUCT
+// in a StandardSqlDataType definition.
+//
+// For more details, see:
+// https://cloud.google.com/bigquery/docs/reference/rest/v2/StandardSqlDataType
 struct StandardSqlStructType {
   std::vector<StandardSqlField> fields;
 };
 void to_json(nlohmann::json& j, StandardSqlStructType const& t);
 void from_json(nlohmann::json const& j, StandardSqlStructType& t);
+bool operator==(StandardSqlStructType const& lhs,
+                StandardSqlStructType const& rhs);
 
+// Represents the data type of a variable such as function argument.
+//
+// TypeKind defines the top level type for the field and can be any
+// GoogleSQL Data type.
+//
+// An additional SubType is applicable if the top level type is either a
+// STRUCT or an ARRAY. This is a recursive self-referential field which
+// defines the sub types for an array or record elements.
+//
+// For more details, see:
+// https://cloud.google.com/bigquery/docs/reference/rest/v2/StandardSqlDataType
 struct StandardSqlDataType {
+  using ValueType =
+      absl::variant<absl::monostate, std::shared_ptr<StandardSqlDataType>,
+                    StandardSqlStructType>;
   TypeKind type_kind;
 
-  absl::variant<absl::monostate, std::shared_ptr<StandardSqlDataType>,
-                StandardSqlStructType>
-      sub_type;
+  ValueType sub_type;
 };
 void to_json(nlohmann::json& j, StandardSqlDataType const& t);
 void from_json(nlohmann::json const& j, StandardSqlDataType& t);
 bool operator==(StandardSqlDataType const& lhs, StandardSqlDataType const& rhs);
 
+// Represents a structured data value, consisting of fields
+// which map to dynamically typed values.
+//
+// For more details see:
+// https://protobuf.dev/reference/protobuf/google.protobuf/#struct
+//
+// Please see the full definition for more details on the field members.
 struct Struct;
 
+// Value represents a dynamically typed value which can be either null,
+// a number, a string, a boolean, a recursive struct value,
+// or a list of values. A producer of value is expected to set
+// one of the variants, and absence of any variant indicates an error.
+//
+// For more details, please see:
+// https://protobuf.dev/reference/protobuf/google.protobuf/#value
 struct Value {
-  absl::variant<absl::monostate, double, std::string, bool,
-                std::shared_ptr<Struct>, std::vector<Value>>
-      kind;
+  using KindType = absl::variant<absl::monostate, double, std::string, bool,
+                                 std::shared_ptr<Struct>, std::vector<Value>>;
+  KindType value_kind;
 };
 void to_json(nlohmann::json& j, Value const& v);
 void from_json(nlohmann::json const& j, Value& v);
 bool operator==(Value const& lhs, Value const& rhs);
 
+// Represents a structured data value, consisting of fields
+// which map to dynamically typed values.
+//
+// For more details see:
+// https://protobuf.dev/reference/protobuf/google.protobuf/#struct
 struct Struct {
   std::map<std::string, Value> fields;
 };
 void to_json(nlohmann::json& j, Struct const& s);
 void from_json(nlohmann::json const& j, Struct& s);
 
+// Represents the system variables that can be given to a query job.
+// System variables can be used to check information during query execution.
+//
+// For more details on SystemVariable structure definition, please see:
+// https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#systemvariables
+//
+// For system variables supported by bigquery , please see:
+// https://cloud.google.com/bigquery/docs/reference/system-variables
 struct SystemVariables {
+  // Represents the data type for each system variable.
   std::map<std::string, StandardSqlDataType> types;
+  //  Value for each system variable.
   Struct values;
 };
 void to_json(nlohmann::json& j, SystemVariables const& s);

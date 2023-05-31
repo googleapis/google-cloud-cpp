@@ -121,13 +121,13 @@ SystemVariables MakeSystemVariables() {
       std::make_shared<StandardSqlDataType>(sql_data_type2);
 
   Value val1;
-  val1.kind = 3.4;
+  val1.value_kind = 3.4;
 
   Value val2;
-  val2.kind = true;
+  val2.value_kind = true;
 
   Value val3;
-  val3.kind = std::string("val3");
+  val3.value_kind = std::string("val3");
 
   expected.types.insert({"sql-struct-type-key-1", sql_data_type1});
   expected.types.insert({"sql-struct-type-key-2", sql_data_type2});
@@ -192,14 +192,11 @@ void AssertParamTypeEquals(QueryParameterType& expected,
 void AssertEquals(SystemVariables& expected, SystemVariables& actual) {
   EXPECT_EQ(expected.types.size(), 3);
   EXPECT_EQ(expected.types.size(), actual.types.size());
-  EXPECT_TRUE(std::equal(expected.types.begin(), expected.types.end(),
-                         actual.types.begin()));
+  EXPECT_EQ(expected.types, actual.types);
 
   EXPECT_EQ(expected.values.fields.size(), 3);
   EXPECT_EQ(expected.values.fields.size(), actual.values.fields.size());
-  EXPECT_TRUE(std::equal(expected.values.fields.begin(),
-                         expected.values.fields.end(),
-                         actual.values.fields.begin()));
+  EXPECT_EQ(expected.values.fields, actual.values.fields);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
