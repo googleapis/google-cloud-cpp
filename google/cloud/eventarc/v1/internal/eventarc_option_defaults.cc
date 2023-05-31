@@ -45,8 +45,9 @@ Options EventarcDefaultOptions(Options options) {
   }
   if (!options.has<eventarc_v1::EventarcBackoffPolicyOption>()) {
     options.set<eventarc_v1::EventarcBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<eventarc_v1::EventarcPollingPolicyOption>()) {
@@ -54,7 +55,9 @@ Options EventarcDefaultOptions(Options options) {
         GenericPollingPolicy<eventarc_v1::EventarcRetryPolicyOption::Type,
                              eventarc_v1::EventarcBackoffPolicyOption::Type>(
             options.get<eventarc_v1::EventarcRetryPolicyOption>()->clone(),
-            options.get<eventarc_v1::EventarcBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<eventarc_v1::EventarcConnectionIdempotencyPolicyOption>()) {

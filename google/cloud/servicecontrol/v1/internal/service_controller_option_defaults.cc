@@ -47,8 +47,9 @@ Options ServiceControllerDefaultOptions(Options options) {
   }
   if (!options.has<servicecontrol_v1::ServiceControllerBackoffPolicyOption>()) {
     options.set<servicecontrol_v1::ServiceControllerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<servicecontrol_v1::

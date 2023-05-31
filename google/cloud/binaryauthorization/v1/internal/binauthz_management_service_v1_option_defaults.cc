@@ -53,8 +53,9 @@ Options BinauthzManagementServiceV1DefaultOptions(Options options) {
                        BinauthzManagementServiceV1BackoffPolicyOption>()) {
     options.set<
         binaryauthorization_v1::BinauthzManagementServiceV1BackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<

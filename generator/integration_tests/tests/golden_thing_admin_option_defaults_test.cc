@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -25,6 +26,9 @@ namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::golden_v1::GoldenThingAdminBackoffPolicyOption;
+using ::google::cloud::golden_v1::GoldenThingAdminPollingPolicyOption;
+using ::google::cloud::golden_v1::GoldenThingAdminRetryPolicyOption;
 using ::google::cloud::testing_util::ScopedEnvironment;
 
 TEST(GoldenThingAdminDefaultOptions, DefaultEndpoint) {
@@ -47,6 +51,24 @@ TEST(GoldenThingAdminDefaultOptions, OptionEndpoint) {
   options.set<EndpointOption>("bar.googleapis.com");
   auto updated_options = GoldenThingAdminDefaultOptions(options);
   EXPECT_EQ("bar.googleapis.com", updated_options.get<EndpointOption>());
+}
+
+TEST(GoldenThingAdminDefaultOptions, RetryPolicySet) {
+  auto options = Options{};
+  auto updated_options = GoldenThingAdminDefaultOptions(options);
+  EXPECT_TRUE(updated_options.has<GoldenThingAdminRetryPolicyOption>());
+}
+
+TEST(GoldenThingAdminDefaultOptions, BackoffPolicySet) {
+  auto options = Options{};
+  auto updated_options = GoldenThingAdminDefaultOptions(options);
+  EXPECT_TRUE(updated_options.has<GoldenThingAdminBackoffPolicyOption>());
+}
+
+TEST(GoldenThingAdminDefaultOptions, PollingPolicySet) {
+  auto options = Options{};
+  auto updated_options = GoldenThingAdminDefaultOptions(options);
+  EXPECT_TRUE(updated_options.has<GoldenThingAdminPollingPolicyOption>());
 }
 
 }  // namespace

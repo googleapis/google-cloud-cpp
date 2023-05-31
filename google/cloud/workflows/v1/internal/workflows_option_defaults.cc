@@ -45,8 +45,9 @@ Options WorkflowsDefaultOptions(Options options) {
   }
   if (!options.has<workflows_v1::WorkflowsBackoffPolicyOption>()) {
     options.set<workflows_v1::WorkflowsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<workflows_v1::WorkflowsPollingPolicyOption>()) {
@@ -54,7 +55,9 @@ Options WorkflowsDefaultOptions(Options options) {
         GenericPollingPolicy<workflows_v1::WorkflowsRetryPolicyOption::Type,
                              workflows_v1::WorkflowsBackoffPolicyOption::Type>(
             options.get<workflows_v1::WorkflowsRetryPolicyOption>()->clone(),
-            options.get<workflows_v1::WorkflowsBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

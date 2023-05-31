@@ -45,8 +45,9 @@ Options ApiKeysDefaultOptions(Options options) {
   }
   if (!options.has<apikeys_v2::ApiKeysBackoffPolicyOption>()) {
     options.set<apikeys_v2::ApiKeysBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<apikeys_v2::ApiKeysPollingPolicyOption>()) {
@@ -54,7 +55,9 @@ Options ApiKeysDefaultOptions(Options options) {
         GenericPollingPolicy<apikeys_v2::ApiKeysRetryPolicyOption::Type,
                              apikeys_v2::ApiKeysBackoffPolicyOption::Type>(
             options.get<apikeys_v2::ApiKeysRetryPolicyOption>()->clone(),
-            options.get<apikeys_v2::ApiKeysBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<apikeys_v2::ApiKeysConnectionIdempotencyPolicyOption>()) {

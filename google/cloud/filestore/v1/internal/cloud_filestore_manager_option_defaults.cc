@@ -47,8 +47,9 @@ Options CloudFilestoreManagerDefaultOptions(Options options) {
   }
   if (!options.has<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>()) {
     options.set<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<filestore_v1::CloudFilestoreManagerPollingPolicyOption>()) {
@@ -58,9 +59,9 @@ Options CloudFilestoreManagerDefaultOptions(Options options) {
             filestore_v1::CloudFilestoreManagerBackoffPolicyOption::Type>(
             options.get<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

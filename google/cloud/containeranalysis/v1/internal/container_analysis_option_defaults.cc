@@ -49,8 +49,9 @@ Options ContainerAnalysisDefaultOptions(Options options) {
   if (!options
            .has<containeranalysis_v1::ContainerAnalysisBackoffPolicyOption>()) {
     options.set<containeranalysis_v1::ContainerAnalysisBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<containeranalysis_v1::

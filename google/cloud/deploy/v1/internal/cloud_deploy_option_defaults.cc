@@ -45,8 +45,9 @@ Options CloudDeployDefaultOptions(Options options) {
   }
   if (!options.has<deploy_v1::CloudDeployBackoffPolicyOption>()) {
     options.set<deploy_v1::CloudDeployBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<deploy_v1::CloudDeployPollingPolicyOption>()) {
@@ -54,7 +55,9 @@ Options CloudDeployDefaultOptions(Options options) {
         GenericPollingPolicy<deploy_v1::CloudDeployRetryPolicyOption::Type,
                              deploy_v1::CloudDeployBackoffPolicyOption::Type>(
             options.get<deploy_v1::CloudDeployRetryPolicyOption>()->clone(),
-            options.get<deploy_v1::CloudDeployBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<deploy_v1::CloudDeployConnectionIdempotencyPolicyOption>()) {

@@ -47,8 +47,9 @@ Options BigQueryReadDefaultOptions(Options options) {
   }
   if (!options.has<bigquery_storage_v1::BigQueryReadBackoffPolicyOption>()) {
     options.set<bigquery_storage_v1::BigQueryReadBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<bigquery_storage_v1::

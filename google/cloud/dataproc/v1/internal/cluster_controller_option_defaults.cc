@@ -50,8 +50,9 @@ Options ClusterControllerDefaultOptions(std::string const& location,
   }
   if (!options.has<dataproc_v1::ClusterControllerBackoffPolicyOption>()) {
     options.set<dataproc_v1::ClusterControllerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<dataproc_v1::ClusterControllerPollingPolicyOption>()) {
@@ -61,8 +62,9 @@ Options ClusterControllerDefaultOptions(std::string const& location,
             dataproc_v1::ClusterControllerBackoffPolicyOption::Type>(
             options.get<dataproc_v1::ClusterControllerRetryPolicyOption>()
                 ->clone(),
-            options.get<dataproc_v1::ClusterControllerBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

@@ -47,8 +47,9 @@ Options StorageInsightsDefaultOptions(Options options) {
   }
   if (!options.has<storageinsights_v1::StorageInsightsBackoffPolicyOption>()) {
     options.set<storageinsights_v1::StorageInsightsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<storageinsights_v1::

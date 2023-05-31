@@ -49,8 +49,9 @@ Options ReservationServiceDefaultOptions(Options options) {
   if (!options.has<
           bigquery_reservation_v1::ReservationServiceBackoffPolicyOption>()) {
     options.set<bigquery_reservation_v1::ReservationServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<bigquery_reservation_v1::

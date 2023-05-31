@@ -50,8 +50,9 @@ Options WorkflowTemplateServiceDefaultOptions(std::string const& location,
   }
   if (!options.has<dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption>()) {
     options.set<dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<dataproc_v1::WorkflowTemplateServicePollingPolicyOption>()) {
@@ -62,9 +63,9 @@ Options WorkflowTemplateServiceDefaultOptions(std::string const& location,
             options
                 .get<dataproc_v1::WorkflowTemplateServiceRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

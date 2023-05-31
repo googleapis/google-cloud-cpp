@@ -48,8 +48,9 @@ Options KeyDashboardServiceDefaultOptions(Options options) {
   if (!options
            .has<kms_inventory_v1::KeyDashboardServiceBackoffPolicyOption>()) {
     options.set<kms_inventory_v1::KeyDashboardServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options

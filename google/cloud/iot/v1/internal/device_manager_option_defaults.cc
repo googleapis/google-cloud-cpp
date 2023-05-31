@@ -45,8 +45,9 @@ Options DeviceManagerDefaultOptions(Options options) {
   }
   if (!options.has<iot_v1::DeviceManagerBackoffPolicyOption>()) {
     options.set<iot_v1::DeviceManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<iot_v1::DeviceManagerConnectionIdempotencyPolicyOption>()) {

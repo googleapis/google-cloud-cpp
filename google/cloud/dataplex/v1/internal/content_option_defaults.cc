@@ -46,8 +46,9 @@ Options ContentServiceDefaultOptions(Options options) {
   }
   if (!options.has<dataplex_v1::ContentServiceBackoffPolicyOption>()) {
     options.set<dataplex_v1::ContentServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<

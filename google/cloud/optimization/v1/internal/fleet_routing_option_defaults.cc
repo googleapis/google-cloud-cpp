@@ -47,8 +47,9 @@ Options FleetRoutingDefaultOptions(Options options) {
   }
   if (!options.has<optimization_v1::FleetRoutingBackoffPolicyOption>()) {
     options.set<optimization_v1::FleetRoutingBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<optimization_v1::FleetRoutingPollingPolicyOption>()) {
@@ -58,8 +59,9 @@ Options FleetRoutingDefaultOptions(Options options) {
             optimization_v1::FleetRoutingBackoffPolicyOption::Type>(
             options.get<optimization_v1::FleetRoutingRetryPolicyOption>()
                 ->clone(),
-            options.get<optimization_v1::FleetRoutingBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

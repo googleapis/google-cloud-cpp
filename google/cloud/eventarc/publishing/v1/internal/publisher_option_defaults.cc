@@ -47,8 +47,9 @@ Options PublisherDefaultOptions(Options options) {
   }
   if (!options.has<eventarc_publishing_v1::PublisherBackoffPolicyOption>()) {
     options.set<eventarc_publishing_v1::PublisherBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<eventarc_publishing_v1::

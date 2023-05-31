@@ -47,8 +47,9 @@ Options CloudSchedulerDefaultOptions(Options options) {
   }
   if (!options.has<scheduler_v1::CloudSchedulerBackoffPolicyOption>()) {
     options.set<scheduler_v1::CloudSchedulerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<

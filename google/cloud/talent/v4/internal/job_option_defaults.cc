@@ -45,8 +45,9 @@ Options JobServiceDefaultOptions(Options options) {
   }
   if (!options.has<talent_v4::JobServiceBackoffPolicyOption>()) {
     options.set<talent_v4::JobServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<talent_v4::JobServicePollingPolicyOption>()) {
@@ -54,7 +55,9 @@ Options JobServiceDefaultOptions(Options options) {
         GenericPollingPolicy<talent_v4::JobServiceRetryPolicyOption::Type,
                              talent_v4::JobServiceBackoffPolicyOption::Type>(
             options.get<talent_v4::JobServiceRetryPolicyOption>()->clone(),
-            options.get<talent_v4::JobServiceBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<talent_v4::JobServiceConnectionIdempotencyPolicyOption>()) {

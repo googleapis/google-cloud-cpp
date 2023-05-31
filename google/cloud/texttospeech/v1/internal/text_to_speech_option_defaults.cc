@@ -47,8 +47,9 @@ Options TextToSpeechDefaultOptions(Options options) {
   }
   if (!options.has<texttospeech_v1::TextToSpeechBackoffPolicyOption>()) {
     options.set<texttospeech_v1::TextToSpeechBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<

@@ -47,8 +47,9 @@ Options BudgetServiceDefaultOptions(Options options) {
   }
   if (!options.has<billing_budgets_v1::BudgetServiceBackoffPolicyOption>()) {
     options.set<billing_budgets_v1::BudgetServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<billing_budgets_v1::

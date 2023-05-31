@@ -46,8 +46,9 @@ Options CompletionServiceDefaultOptions(Options options) {
   }
   if (!options.has<retail_v2::CompletionServiceBackoffPolicyOption>()) {
     options.set<retail_v2::CompletionServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<retail_v2::CompletionServicePollingPolicyOption>()) {
@@ -57,8 +58,9 @@ Options CompletionServiceDefaultOptions(Options options) {
             retail_v2::CompletionServiceBackoffPolicyOption::Type>(
             options.get<retail_v2::CompletionServiceRetryPolicyOption>()
                 ->clone(),
-            options.get<retail_v2::CompletionServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

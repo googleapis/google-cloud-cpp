@@ -46,8 +46,9 @@ Options SchemaServiceDefaultOptions(Options options) {
   }
   if (!options.has<pubsub::SchemaServiceBackoffPolicyOption>()) {
     options.set<pubsub::SchemaServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<pubsub::SchemaServiceConnectionIdempotencyPolicyOption>()) {

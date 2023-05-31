@@ -46,8 +46,9 @@ Options DomainMappingsDefaultOptions(Options options) {
   }
   if (!options.has<appengine_v1::DomainMappingsBackoffPolicyOption>()) {
     options.set<appengine_v1::DomainMappingsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<appengine_v1::DomainMappingsPollingPolicyOption>()) {
@@ -57,8 +58,9 @@ Options DomainMappingsDefaultOptions(Options options) {
             appengine_v1::DomainMappingsBackoffPolicyOption::Type>(
             options.get<appengine_v1::DomainMappingsRetryPolicyOption>()
                 ->clone(),
-            options.get<appengine_v1::DomainMappingsBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

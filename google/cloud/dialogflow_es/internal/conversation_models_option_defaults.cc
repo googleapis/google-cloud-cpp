@@ -50,8 +50,9 @@ Options ConversationModelsDefaultOptions(std::string const& location,
   }
   if (!options.has<dialogflow_es::ConversationModelsBackoffPolicyOption>()) {
     options.set<dialogflow_es::ConversationModelsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<dialogflow_es::ConversationModelsPollingPolicyOption>()) {
@@ -61,8 +62,9 @@ Options ConversationModelsDefaultOptions(std::string const& location,
             dialogflow_es::ConversationModelsBackoffPolicyOption::Type>(
             options.get<dialogflow_es::ConversationModelsRetryPolicyOption>()
                 ->clone(),
-            options.get<dialogflow_es::ConversationModelsBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<dialogflow_es::

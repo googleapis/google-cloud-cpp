@@ -46,8 +46,9 @@ Options ConnectorsDefaultOptions(Options options) {
   }
   if (!options.has<connectors_v1::ConnectorsBackoffPolicyOption>()) {
     options.set<connectors_v1::ConnectorsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<connectors_v1::ConnectorsPollingPolicyOption>()) {
@@ -56,8 +57,9 @@ Options ConnectorsDefaultOptions(Options options) {
             connectors_v1::ConnectorsRetryPolicyOption::Type,
             connectors_v1::ConnectorsBackoffPolicyOption::Type>(
             options.get<connectors_v1::ConnectorsRetryPolicyOption>()->clone(),
-            options.get<connectors_v1::ConnectorsBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

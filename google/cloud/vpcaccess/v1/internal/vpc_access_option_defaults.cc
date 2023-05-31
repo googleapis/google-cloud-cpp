@@ -47,8 +47,9 @@ Options VpcAccessServiceDefaultOptions(Options options) {
   }
   if (!options.has<vpcaccess_v1::VpcAccessServiceBackoffPolicyOption>()) {
     options.set<vpcaccess_v1::VpcAccessServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<vpcaccess_v1::VpcAccessServicePollingPolicyOption>()) {
@@ -58,8 +59,9 @@ Options VpcAccessServiceDefaultOptions(Options options) {
             vpcaccess_v1::VpcAccessServiceBackoffPolicyOption::Type>(
             options.get<vpcaccess_v1::VpcAccessServiceRetryPolicyOption>()
                 ->clone(),
-            options.get<vpcaccess_v1::VpcAccessServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

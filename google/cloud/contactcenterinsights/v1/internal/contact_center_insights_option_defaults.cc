@@ -51,8 +51,9 @@ Options ContactCenterInsightsDefaultOptions(Options options) {
                        ContactCenterInsightsBackoffPolicyOption>()) {
     options.set<
         contactcenterinsights_v1::ContactCenterInsightsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<contactcenterinsights_v1::
@@ -63,14 +64,14 @@ Options ContactCenterInsightsDefaultOptions(Options options) {
             contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption::
                 Type,
             contactcenterinsights_v1::ContactCenterInsightsBackoffPolicyOption::
-                Type>(options
-                          .get<contactcenterinsights_v1::
-                                   ContactCenterInsightsRetryPolicyOption>()
-                          ->clone(),
-                      options
-                          .get<contactcenterinsights_v1::
-                                   ContactCenterInsightsBackoffPolicyOption>()
-                          ->clone())
+                Type>(
+            options
+                .get<contactcenterinsights_v1::
+                         ContactCenterInsightsRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

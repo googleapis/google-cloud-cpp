@@ -49,8 +49,9 @@ Options BigtableInstanceAdminDefaultOptions(Options options) {
   if (!options
            .has<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>()) {
     options.set<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options
@@ -62,9 +63,9 @@ Options BigtableInstanceAdminDefaultOptions(Options options) {
             options
                 .get<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

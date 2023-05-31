@@ -47,8 +47,9 @@ Options ApiGatewayServiceDefaultOptions(Options options) {
   }
   if (!options.has<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>()) {
     options.set<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<apigateway_v1::ApiGatewayServicePollingPolicyOption>()) {
@@ -58,8 +59,9 @@ Options ApiGatewayServiceDefaultOptions(Options options) {
             apigateway_v1::ApiGatewayServiceBackoffPolicyOption::Type>(
             options.get<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()
                 ->clone(),
-            options.get<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<apigateway_v1::

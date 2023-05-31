@@ -46,8 +46,8 @@ Options GoldenKitchenSinkDefaultOptions(Options options) {
   }
   if (!options.has<golden_v1::GoldenKitchenSinkBackoffPolicyOption>()) {
     options.set<golden_v1::GoldenKitchenSinkBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {
     options.set<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicyOption>(

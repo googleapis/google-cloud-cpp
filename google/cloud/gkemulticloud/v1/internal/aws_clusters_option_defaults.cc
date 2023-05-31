@@ -49,8 +49,9 @@ Options AwsClustersDefaultOptions(std::string const& location,
   }
   if (!options.has<gkemulticloud_v1::AwsClustersBackoffPolicyOption>()) {
     options.set<gkemulticloud_v1::AwsClustersBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<gkemulticloud_v1::AwsClustersPollingPolicyOption>()) {
@@ -60,8 +61,9 @@ Options AwsClustersDefaultOptions(std::string const& location,
             gkemulticloud_v1::AwsClustersBackoffPolicyOption::Type>(
             options.get<gkemulticloud_v1::AwsClustersRetryPolicyOption>()
                 ->clone(),
-            options.get<gkemulticloud_v1::AwsClustersBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

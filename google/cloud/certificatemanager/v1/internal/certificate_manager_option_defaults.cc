@@ -49,8 +49,9 @@ Options CertificateManagerDefaultOptions(Options options) {
   if (!options.has<
           certificatemanager_v1::CertificateManagerBackoffPolicyOption>()) {
     options.set<certificatemanager_v1::CertificateManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<
@@ -63,10 +64,9 @@ Options CertificateManagerDefaultOptions(Options options) {
                 .get<certificatemanager_v1::
                          CertificateManagerRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<certificatemanager_v1::
-                         CertificateManagerBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<certificatemanager_v1::

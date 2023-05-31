@@ -45,8 +45,9 @@ Options GkeHubDefaultOptions(Options options) {
   }
   if (!options.has<gkehub_v1::GkeHubBackoffPolicyOption>()) {
     options.set<gkehub_v1::GkeHubBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<gkehub_v1::GkeHubPollingPolicyOption>()) {
@@ -54,7 +55,9 @@ Options GkeHubDefaultOptions(Options options) {
         GenericPollingPolicy<gkehub_v1::GkeHubRetryPolicyOption::Type,
                              gkehub_v1::GkeHubBackoffPolicyOption::Type>(
             options.get<gkehub_v1::GkeHubRetryPolicyOption>()->clone(),
-            options.get<gkehub_v1::GkeHubBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<gkehub_v1::GkeHubConnectionIdempotencyPolicyOption>()) {

@@ -46,8 +46,8 @@ Options GoldenRestOnlyDefaultOptions(Options options) {
   }
   if (!options.has<golden_v1::GoldenRestOnlyBackoffPolicyOption>()) {
     options.set<golden_v1::GoldenRestOnlyBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
   }
   if (!options.has<golden_v1::GoldenRestOnlyConnectionIdempotencyPolicyOption>()) {
     options.set<golden_v1::GoldenRestOnlyConnectionIdempotencyPolicyOption>(

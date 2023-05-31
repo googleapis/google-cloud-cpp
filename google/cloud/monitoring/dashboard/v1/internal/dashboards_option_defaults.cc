@@ -49,8 +49,9 @@ Options DashboardsServiceDefaultOptions(Options options) {
   if (!options.has<
           monitoring_dashboard_v1::DashboardsServiceBackoffPolicyOption>()) {
     options.set<monitoring_dashboard_v1::DashboardsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<monitoring_dashboard_v1::

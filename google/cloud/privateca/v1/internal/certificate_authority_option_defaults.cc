@@ -50,8 +50,9 @@ Options CertificateAuthorityServiceDefaultOptions(Options options) {
   if (!options.has<
           privateca_v1::CertificateAuthorityServiceBackoffPolicyOption>()) {
     options.set<privateca_v1::CertificateAuthorityServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<
@@ -64,10 +65,9 @@ Options CertificateAuthorityServiceDefaultOptions(Options options) {
                 .get<privateca_v1::
                          CertificateAuthorityServiceRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<privateca_v1::
-                         CertificateAuthorityServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<
