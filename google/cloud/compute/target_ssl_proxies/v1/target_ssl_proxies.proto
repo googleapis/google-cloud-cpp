@@ -1,0 +1,363 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.cloud.cpp.compute.target_ssl_proxies.v1;
+
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/cloud/compute/v1/internal/common.proto";
+import "google/cloud/extended_operations.proto";
+
+// Service for the targetSslProxies resource.
+// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies
+service TargetSslProxies {
+  option (google.api.default_host) = "compute.googleapis.com";
+  option (google.api.oauth_scopes) =
+    "https://www.googleapis.com/auth/cloud-platform,"
+    "https://www.googleapis.com/auth/compute,"
+    "https://www.googleapis.com/auth/compute.readonly";
+
+  // Deletes the specified TargetSslProxy resource.
+  rpc DeleteTargetSslProxies(DeleteTargetSslProxiesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      delete: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}"
+    };
+    option (google.api.method_signature) = "project,target_ssl_proxy";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+
+  // Returns the specified TargetSslProxy resource.
+  rpc GetTargetSslProxies(GetTargetSslProxiesRequest) returns (google.cloud.cpp.compute.v1.TargetSslProxy) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}"
+    };
+    option (google.api.method_signature) = "project,target_ssl_proxy";
+  }
+
+  // Creates a TargetSslProxy resource in the specified project using the data
+  // included in the request.
+  rpc InsertTargetSslProxies(InsertTargetSslProxiesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project=project}/global/targetSslProxies"
+      body: "target_ssl_proxy_resource"
+    };
+    option (google.api.method_signature) = "project,target_ssl_proxy_resource";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+
+  // Retrieves the list of TargetSslProxy resources available to the specified
+  // project.
+  rpc ListTargetSslProxies(ListTargetSslProxiesRequest) returns (google.cloud.cpp.compute.v1.TargetSslProxyList) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project=project}/global/targetSslProxies"
+    };
+    option (google.api.method_signature) = "project";
+  }
+
+  // Changes the BackendService for TargetSslProxy.
+  rpc SetBackendService(SetBackendServiceRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setBackendService"
+      body: "target_ssl_proxies_set_backend_service_request_resource"
+    };
+    option (google.api.method_signature) = "project,target_ssl_proxy,target_ssl_proxies_set_backend_service_request_resource";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+
+  // Changes the Certificate Map for TargetSslProxy.
+  rpc SetCertificateMap(SetCertificateMapRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setCertificateMap"
+      body: "target_ssl_proxies_set_certificate_map_request_resource"
+    };
+    option (google.api.method_signature) = "project,target_ssl_proxy,target_ssl_proxies_set_certificate_map_request_resource";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+
+  // Changes the ProxyHeaderType for TargetSslProxy.
+  rpc SetProxyHeader(SetProxyHeaderRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setProxyHeader"
+      body: "target_ssl_proxies_set_proxy_header_request_resource"
+    };
+    option (google.api.method_signature) = "project,target_ssl_proxy,target_ssl_proxies_set_proxy_header_request_resource";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+
+  // Changes SslCertificates for TargetSslProxy.
+  rpc SetSslCertificates(SetSslCertificatesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setSslCertificates"
+      body: "target_ssl_proxies_set_ssl_certificates_request_resource"
+    };
+    option (google.api.method_signature) = "project,target_ssl_proxy,target_ssl_proxies_set_ssl_certificates_request_resource";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+
+  // Sets the SSL policy for TargetSslProxy. The SSL policy specifies the
+  // server-side support for SSL features. This affects connections between
+  // clients and the SSL proxy load balancer. They do not affect the connection
+  // between the load balancer and the backends.
+  rpc SetSslPolicy(SetSslPolicyRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setSslPolicy"
+      body: "ssl_policy_reference_resource"
+    };
+    option (google.api.method_signature) = "project,target_ssl_proxy,ssl_policy_reference_resource";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+}
+
+// Request message for DeleteTargetSslProxies.
+message DeleteTargetSslProxiesRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 2;
+
+  // Name of the TargetSslProxy resource to delete.
+  string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for GetTargetSslProxies.
+message GetTargetSslProxiesRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the TargetSslProxy resource to return.
+  string target_ssl_proxy = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for InsertTargetSslProxies.
+message InsertTargetSslProxiesRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 2;
+
+  // The TargetSslProxy for this request.
+  optional google.cloud.cpp.compute.v1.TargetSslProxy target_ssl_proxy_resource = 3 [json_name="__json_request_body"];
+}
+
+// Request message for ListTargetSslProxies.
+message ListTargetSslProxiesRequest {
+  // A filter expression that filters resources listed in the response. Most
+  // Compute resources support two types of filter expressions: expressions that
+  // support regular expressions and expressions that follow API improvement
+  // proposal AIP-160. If you want to use AIP-160, your expression must specify
+  // the field name, an operator, and the value that you want to use for
+  // filtering. The value must be a string, a number, or a boolean. The operator
+  // must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`. For example, if you
+  // are filtering Compute Engine instances, you can exclude instances named
+  // `example-instance` by specifying `name != example-instance`. The `:`
+  // operator can be used with string fields to match substrings. For non-string
+  // fields it is equivalent to the `=` operator. The `:*` comparison can be
+  // used to test whether a key has been defined. For example, to find all
+  // objects with `owner` label use: ``` labels.owner:* ``` You can also filter
+  // nested fields. For example, you could specify `scheduling.automaticRestart
+  // = false` to include instances only if they are not scheduled for automatic
+  // restarts. You can use filtering on nested fields to filter based on
+  // resource labels. To filter on multiple expressions, provide each separate
+  // expression within parentheses. For example: ```
+  // (scheduling.automaticRestart = true) (cpuPlatform = "Intel Skylake") ``` By
+  // default, each expression is an `AND` expression. However, you can include
+  // `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform =
+  // "Intel Skylake") OR (cpuPlatform = "Intel Broadwell") AND
+  // (scheduling.automaticRestart = true) ``` If you want to use a regular
+  // expression, use the `eq` (equal) or `ne` (not equal) operator against a
+  // single un-parenthesized expression with or without quotes or against
+  // multiple parenthesized expressions. Examples: `fieldname eq unquoted
+  // literal` `fieldname eq 'single quoted literal'` `fieldname eq "double
+  // quoted literal"` `(fieldname1 eq literal) (fieldname2 ne "literal")` The
+  // literal value is interpreted as a regular expression using Google RE2
+  // library syntax. The literal value must match the entire field. For example,
+  // to filter for instances that do not end with name "instance", you would use
+  // `name ne .*instance`.
+  optional string filter = 1;
+
+  // The maximum number of results per page that should be returned. If the
+  // number of available results is larger than `maxResults`, Compute Engine
+  // returns a `nextPageToken` that can be used to get the next page of results
+  // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
+  // (Default: `500`)
+  optional uint32 max_results = 2;
+
+  // Sorts list results by a certain order. By default, results are returned in
+  // alphanumerical order based on the resource name. You can also sort results
+  // in descending order based on the creation timestamp using
+  // `orderBy="creationTimestamp desc"`. This sorts results based on the
+  // `creationTimestamp` field in reverse chronological order (newest result
+  // first). Use this to sort resources like operations so that the newest
+  // operation is returned first. Currently, only sorting by `name` or
+  // `creationTimestamp desc` is supported.
+  optional string order_by = 3;
+
+  // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
+  // returned by a previous list request to get the next page of results.
+  optional string page_token = 4;
+
+  // Project ID for this request.
+  string project = 5 [(google.api.field_behavior) = REQUIRED];
+
+  // Opt-in for partial success behavior which provides partial results in case
+  // of failure. The default value is false.
+  optional bool return_partial_success = 6;
+}
+
+// Request message for SetBackendService.
+message SetBackendServiceRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 2;
+
+  // Name of the TargetSslProxy resource whose BackendService resource is to be
+  // set.
+  string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The TargetSslProxiesSetBackendServiceRequest for this request.
+  optional google.cloud.cpp.compute.v1.TargetSslProxiesSetBackendServiceRequest target_ssl_proxies_set_backend_service_request_resource = 4 [json_name="__json_request_body"];
+}
+
+// Request message for SetCertificateMap.
+message SetCertificateMapRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 2;
+
+  // Name of the TargetSslProxy resource whose CertificateMap is to be set. The
+  // name must be 1-63 characters long, and comply with RFC1035.
+  string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The TargetSslProxiesSetCertificateMapRequest for this request.
+  optional google.cloud.cpp.compute.v1.TargetSslProxiesSetCertificateMapRequest target_ssl_proxies_set_certificate_map_request_resource = 4 [json_name="__json_request_body"];
+}
+
+// Request message for SetProxyHeader.
+message SetProxyHeaderRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 2;
+
+  // Name of the TargetSslProxy resource whose ProxyHeader is to be set.
+  string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The TargetSslProxiesSetProxyHeaderRequest for this request.
+  optional google.cloud.cpp.compute.v1.TargetSslProxiesSetProxyHeaderRequest target_ssl_proxies_set_proxy_header_request_resource = 4 [json_name="__json_request_body"];
+}
+
+// Request message for SetSslCertificates.
+message SetSslCertificatesRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 2;
+
+  // Name of the TargetSslProxy resource whose SslCertificate resource is to be
+  // set.
+  string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The TargetSslProxiesSetSslCertificatesRequest for this request.
+  optional google.cloud.cpp.compute.v1.TargetSslProxiesSetSslCertificatesRequest target_ssl_proxies_set_ssl_certificates_request_resource = 4 [json_name="__json_request_body"];
+}
+
+// Request message for SetSslPolicy.
+message SetSslPolicyRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 2;
+
+  // The SslPolicyReference for this request.
+  optional google.cloud.cpp.compute.v1.SslPolicyReference ssl_policy_reference_resource = 3 [json_name="__json_request_body"];
+
+  // Name of the TargetSslProxy resource whose SSL policy is to be set. The name
+  // must be 1-63 characters long, and comply with RFC1035.
+  string target_ssl_proxy = 4 [(google.api.field_behavior) = REQUIRED];
+}
