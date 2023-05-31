@@ -56,19 +56,19 @@ TEST(GoldenThingAdminDefaultOptions, OptionEndpoint) {
 TEST(GoldenThingAdminDefaultOptions, RetryPolicySet) {
   auto options = Options{};
   auto updated_options = GoldenThingAdminDefaultOptions(options);
-  EXPECT_EQ(true, updated_options.has<GoldenThingAdminRetryPolicyOption>());
+  EXPECT_TRUE(updated_options.has<GoldenThingAdminRetryPolicyOption>());
 }
 
 TEST(GoldenThingAdminDefaultOptions, BackoffPolicySet) {
   auto options = Options{};
   auto updated_options = GoldenThingAdminDefaultOptions(options);
-  EXPECT_EQ(true, updated_options.has<GoldenThingAdminBackoffPolicyOption>());
+  EXPECT_TRUE(updated_options.has<GoldenThingAdminBackoffPolicyOption>());
 }
 
 TEST(GoldenThingAdminDefaultOptions, PollingPolicySet) {
   auto options = Options{};
   auto updated_options = GoldenThingAdminDefaultOptions(options);
-  EXPECT_EQ(true, updated_options.has<GoldenThingAdminPollingPolicyOption>());
+  EXPECT_TRUE(updated_options.has<GoldenThingAdminPollingPolicyOption>());
 }
 
 }  // namespace

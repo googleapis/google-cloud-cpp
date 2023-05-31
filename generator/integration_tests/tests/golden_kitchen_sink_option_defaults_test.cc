@@ -26,10 +26,10 @@ namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::golden_v1::v2_11::GoldenKitchenSinkBackoffPolicyOption;
-using ::google::cloud::golden_v1::v2_11::
+using ::google::cloud::golden_v1::GoldenKitchenSinkBackoffPolicyOption;
+using ::google::cloud::golden_v1::
     GoldenKitchenSinkConnectionIdempotencyPolicyOption;
-using ::google::cloud::golden_v1::v2_11::GoldenKitchenSinkRetryPolicyOption;
+using ::google::cloud::golden_v1::GoldenKitchenSinkRetryPolicyOption;
 using ::google::cloud::testing_util::ScopedEnvironment;
 
 TEST(GoldenKitchenSinkDefaultOptions, DefaultEndpoint) {
@@ -88,21 +88,20 @@ TEST(GoldenKitchenSinkDefaultOptions, UserProjectOptionAndEnvVar) {
 TEST(GoldenKitchenSinkDefaultOptions, RetryPolicySet) {
   auto options = Options{};
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
-  EXPECT_EQ(true, updated_options.has<GoldenKitchenSinkRetryPolicyOption>());
+  EXPECT_TRUE(updated_options.has<GoldenKitchenSinkRetryPolicyOption>());
 }
 
 TEST(GoldenKitchenSinkDefaultOptions, BackoffPolicySet) {
   auto options = Options{};
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
-  EXPECT_EQ(true, updated_options.has<GoldenKitchenSinkBackoffPolicyOption>());
+  EXPECT_TRUE(updated_options.has<GoldenKitchenSinkBackoffPolicyOption>());
 }
 
 TEST(GoldenKitchenSinkDefaultOptions, IdempotencyPolicySet) {
   auto options = Options{};
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
-  EXPECT_EQ(true,
-            updated_options
-                .has<GoldenKitchenSinkConnectionIdempotencyPolicyOption>());
+  EXPECT_TRUE(updated_options
+                  .has<GoldenKitchenSinkConnectionIdempotencyPolicyOption>());
 }
 
 }  // namespace
