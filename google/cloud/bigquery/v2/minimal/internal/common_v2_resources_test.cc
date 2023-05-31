@@ -411,9 +411,9 @@ TEST(CommonV2ResourcesTest, SystemVariablesToFromJson) {
       R"(}}})"
       R"(,"values":{)"
       R"("fields":{)"
-      R"("bool-key":{"kind":true,"kind_index":3})"
-      R"(,"double-key":{"kind":3.4,"kind_index":1})"
-      R"(,"string-key":{"kind":"val3","kind_index":2})"
+      R"("bool-key":{"value_kind":true,"kind_index":3})"
+      R"(,"double-key":{"value_kind":3.4,"kind_index":1})"
+      R"(,"string-key":{"value_kind":"val3","kind_index":2})"
       R"(}}})";
   auto expected_json = nlohmann::json::parse(expected_text, nullptr, false);
   EXPECT_TRUE(expected_json.is_object());
