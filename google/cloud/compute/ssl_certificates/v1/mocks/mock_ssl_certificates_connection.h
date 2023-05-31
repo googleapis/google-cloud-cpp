@@ -42,29 +42,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockSslCertificatesConnection : public compute_ssl_certificates_v1::SslCertificatesConnection {
+class MockSslCertificatesConnection
+    : public compute_ssl_certificates_v1::SslCertificatesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>,
-  AggregatedListSslCertificates,
-  (google::cloud::cpp::compute::ssl_certificates::v1::AggregatedListSslCertificatesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>,
+      AggregatedListSslCertificates,
+      (google::cloud::cpp::compute::ssl_certificates::v1::
+           AggregatedListSslCertificatesRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteSslCertificates,
-  (google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificatesRequest const& request), (override));
+              DeleteSslCertificates,
+              (google::cloud::cpp::compute::ssl_certificates::v1::
+                   DeleteSslCertificatesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SslCertificate>,
-  GetSslCertificates,
-  (google::cloud::cpp::compute::ssl_certificates::v1::GetSslCertificatesRequest const& request), (override));
+              GetSslCertificates,
+              (google::cloud::cpp::compute::ssl_certificates::v1::
+                   GetSslCertificatesRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertSslCertificates,
-  (google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificatesRequest const& request), (override));
+              InsertSslCertificates,
+              (google::cloud::cpp::compute::ssl_certificates::v1::
+                   InsertSslCertificatesRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::SslCertificate>,
-  ListSslCertificates,
-  (google::cloud::cpp::compute::ssl_certificates::v1::ListSslCertificatesRequest request), (override));
+              ListSslCertificates,
+              (google::cloud::cpp::compute::ssl_certificates::v1::
+                   ListSslCertificatesRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

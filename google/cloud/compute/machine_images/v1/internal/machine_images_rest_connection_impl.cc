@@ -17,8 +17,8 @@
 // source: google/cloud/compute/machine_images/v1/machine_images.proto
 
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation.h"
 #include "google/cloud/internal/extract_long_running_result.h"
@@ -34,154 +34,180 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MachineImagesRestConnectionImpl::MachineImagesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_machine_images_v1_internal::MachineImagesRestStub> stub,
+    std::shared_ptr<compute_machine_images_v1_internal::MachineImagesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        MachineImagesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      MachineImagesConnection::options())) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-MachineImagesRestConnectionImpl::DeleteMachineImages(google::cloud::cpp::compute::machine_images::v1::DeleteMachineImagesRequest const& request) {
+MachineImagesRestConnectionImpl::DeleteMachineImages(
+    google::cloud::cpp::compute::machine_images::v1::
+        DeleteMachineImagesRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::machine_images::v1::DeleteMachineImagesRequest const& request) {
-     return stub->AsyncDeleteMachineImages(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->DeleteMachineImages(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::machine_images::v1::
+                 DeleteMachineImagesRequest const& request) {
+        return stub->AsyncDeleteMachineImages(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteMachineImages(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-MachineImagesRestConnectionImpl::GetMachineImages(google::cloud::cpp::compute::machine_images::v1::GetMachineImagesRequest const& request) {
+MachineImagesRestConnectionImpl::GetMachineImages(
+    google::cloud::cpp::compute::machine_images::v1::
+        GetMachineImagesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetMachineImages(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::machine_images::v1::GetMachineImagesRequest const& request) {
+             google::cloud::cpp::compute::machine_images::v1::
+                 GetMachineImagesRequest const& request) {
         return stub_->GetMachineImages(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-MachineImagesRestConnectionImpl::GetIamPolicy(google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const& request) {
+MachineImagesRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::machine_images::v1::
+                 GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-MachineImagesRestConnectionImpl::InsertMachineImages(google::cloud::cpp::compute::machine_images::v1::InsertMachineImagesRequest const& request) {
+MachineImagesRestConnectionImpl::InsertMachineImages(
+    google::cloud::cpp::compute::machine_images::v1::
+        InsertMachineImagesRequest const& request) {
   auto& stub = stub_;
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest>(
-    background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::machine_images::v1::InsertMachineImagesRequest const& request) {
-     return stub->AsyncInsertMachineImages(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->InsertMachineImages(request),
-    polling_policy(), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest>(
+      background_->cq(), request,
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::machine_images::v1::
+                 InsertMachineImagesRequest const& request) {
+        return stub->AsyncInsertMachineImages(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> context,
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->InsertMachineImages(request), polling_policy(),
+      __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteGlobalOperationsRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StreamRange<google::cloud::cpp::compute::v1::MachineImage>
-MachineImagesRestConnectionImpl::ListMachineImages(google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest request) {
+MachineImagesRestConnectionImpl::ListMachineImages(
+    google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest
+        request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_machine_images_v1::MachineImagesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_machine_images_v1::MachineImagesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListMachineImages(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::MachineImage>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::MachineImage>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::machine_images::v1::
+                          ListMachineImagesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::machine_images::v1::
+                       ListMachineImagesRequest const& request) {
               return stub->ListMachineImages(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::MachineImageList r) {
-        std::vector<google::cloud::cpp::compute::v1::MachineImage> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::MachineImage> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -189,24 +215,30 @@ MachineImagesRestConnectionImpl::ListMachineImages(google::cloud::cpp::compute::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-MachineImagesRestConnectionImpl::SetIamPolicy(google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const& request) {
+MachineImagesRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::machine_images::v1::
+                 SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-MachineImagesRestConnectionImpl::TestIamPermissions(google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const& request) {
+MachineImagesRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::machine_images::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::machine_images::v1::
+                 TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, request);
       },
       request, __func__);

@@ -33,46 +33,65 @@ HealthChecksTracingConnection::HealthChecksTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>
-HealthChecksTracingConnection::AggregatedListHealthChecks(google::cloud::cpp::compute::health_checks::v1::AggregatedListHealthChecksRequest const& request) {
-  auto span = internal::MakeSpan("compute_health_checks_v1::HealthChecksConnection::AggregatedListHealthChecks");
+HealthChecksTracingConnection::AggregatedListHealthChecks(
+    google::cloud::cpp::compute::health_checks::v1::
+        AggregatedListHealthChecksRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_health_checks_v1::HealthChecksConnection::"
+      "AggregatedListHealthChecks");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AggregatedListHealthChecks(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HealthChecksTracingConnection::DeleteHealthChecks(google::cloud::cpp::compute::health_checks::v1::DeleteHealthChecksRequest const& request) {
+HealthChecksTracingConnection::DeleteHealthChecks(
+    google::cloud::cpp::compute::health_checks::v1::
+        DeleteHealthChecksRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_health_checks_v1::HealthChecksConnection::DeleteHealthChecks");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteHealthChecks(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteHealthChecks(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
-HealthChecksTracingConnection::GetHealthChecks(google::cloud::cpp::compute::health_checks::v1::GetHealthChecksRequest const& request) {
-  auto span = internal::MakeSpan("compute_health_checks_v1::HealthChecksConnection::GetHealthChecks");
+HealthChecksTracingConnection::GetHealthChecks(
+    google::cloud::cpp::compute::health_checks::v1::
+        GetHealthChecksRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_health_checks_v1::HealthChecksConnection::GetHealthChecks");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetHealthChecks(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HealthChecksTracingConnection::InsertHealthChecks(google::cloud::cpp::compute::health_checks::v1::InsertHealthChecksRequest const& request) {
+HealthChecksTracingConnection::InsertHealthChecks(
+    google::cloud::cpp::compute::health_checks::v1::
+        InsertHealthChecksRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_health_checks_v1::HealthChecksConnection::InsertHealthChecks");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertHealthChecks(request));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertHealthChecks(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
-HealthChecksTracingConnection::ListHealthChecks(google::cloud::cpp::compute::health_checks::v1::ListHealthChecksRequest request) {
-  auto span = internal::MakeSpan("compute_health_checks_v1::HealthChecksConnection::ListHealthChecks");
+HealthChecksTracingConnection::ListHealthChecks(
+    google::cloud::cpp::compute::health_checks::v1::ListHealthChecksRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_health_checks_v1::HealthChecksConnection::ListHealthChecks");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListHealthChecks(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::HealthCheck>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::HealthCheck>(std::move(span),
+                                                    std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HealthChecksTracingConnection::PatchHealthChecks(google::cloud::cpp::compute::health_checks::v1::PatchHealthChecksRequest const& request) {
+HealthChecksTracingConnection::PatchHealthChecks(
+    google::cloud::cpp::compute::health_checks::v1::
+        PatchHealthChecksRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_health_checks_v1::HealthChecksConnection::PatchHealthChecks");
   auto scope = opentelemetry::trace::Scope(span);
@@ -80,11 +99,14 @@ HealthChecksTracingConnection::PatchHealthChecks(google::cloud::cpp::compute::he
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HealthChecksTracingConnection::UpdateHealthChecks(google::cloud::cpp::compute::health_checks::v1::UpdateHealthChecksRequest const& request) {
+HealthChecksTracingConnection::UpdateHealthChecks(
+    google::cloud::cpp::compute::health_checks::v1::
+        UpdateHealthChecksRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_health_checks_v1::HealthChecksConnection::UpdateHealthChecks");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateHealthChecks(request));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateHealthChecks(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

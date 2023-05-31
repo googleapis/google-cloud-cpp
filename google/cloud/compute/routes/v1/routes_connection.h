@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_ROUTES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_ROUTES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/routes/v1/internal/routes_retry_traits.h"
 #include "google/cloud/compute/routes/v1/routes_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -41,8 +41,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using RoutesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_routes_v1_internal::RoutesRetryTraits>;
 
-using RoutesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_routes_v1_internal::RoutesRetryTraits>;
+using RoutesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_routes_v1_internal::RoutesRetryTraits>;
 
 using RoutesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -67,16 +68,20 @@ class RoutesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRoutes(google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const& request);
+  DeleteRoutes(
+      google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Route>
-  GetRoutes(google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Route> GetRoutes(
+      google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRoutes(google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const& request);
+  InsertRoutes(
+      google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::Route>
-  ListRoutes(google::cloud::cpp::compute::routes::v1::ListRoutesRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(
+      google::cloud::cpp::compute::routes::v1::ListRoutesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

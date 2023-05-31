@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_OPERATIONS_V1_INTERNAL_REGION_OPERATIONS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_OPERATIONS_V1_INTERNAL_REGION_OPERATIONS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_operations/v1/internal/region_operations_rest_stub.h"
 #include "google/cloud/compute/region_operations/v1/internal/region_operations_retry_traits.h"
 #include "google/cloud/compute/region_operations/v1/region_operations_connection.h"
 #include "google/cloud/compute/region_operations/v1/region_operations_connection_idempotency_policy.h"
 #include "google/cloud/compute/region_operations/v1/region_operations_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,52 +43,82 @@ class RegionOperationsRestConnectionImpl
   ~RegionOperationsRestConnectionImpl() override = default;
 
   RegionOperationsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_region_operations_v1_internal::RegionOperationsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_region_operations_v1_internal::RegionOperationsRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  Status
-  DeleteRegionOperations(google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) override;
+  Status DeleteRegionOperations(
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetRegionOperations(google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperations(
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListRegionOperations(google::cloud::cpp::compute::region_operations::v1::ListRegionOperationsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Operation> ListRegionOperations(
+      google::cloud::cpp::compute::region_operations::v1::
+          ListRegionOperationsRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Wait(google::cloud::cpp::compute::region_operations::v1::WaitRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
+      google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<compute_region_operations_v1::RegionOperationsRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_region_operations_v1::RegionOperationsRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_operations_v1::RegionOperationsRetryPolicyOption>()) {
-      return options.get<compute_region_operations_v1::RegionOperationsRetryPolicyOption>()->clone();
+    if (options.has<compute_region_operations_v1::
+                        RegionOperationsRetryPolicyOption>()) {
+      return options
+          .get<
+              compute_region_operations_v1::RegionOperationsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_region_operations_v1::RegionOperationsRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_region_operations_v1::RegionOperationsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_operations_v1::RegionOperationsBackoffPolicyOption>()) {
-      return options.get<compute_region_operations_v1::RegionOperationsBackoffPolicyOption>()->clone();
+    if (options.has<compute_region_operations_v1::
+                        RegionOperationsBackoffPolicyOption>()) {
+      return options
+          .get<compute_region_operations_v1::
+                   RegionOperationsBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_region_operations_v1::RegionOperationsBackoffPolicyOption>()->clone();
+    return options_
+        .get<
+            compute_region_operations_v1::RegionOperationsBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_region_operations_v1::RegionOperationsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_region_operations_v1::RegionOperationsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_operations_v1::RegionOperationsConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_region_operations_v1::RegionOperationsConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_region_operations_v1::
+                        RegionOperationsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_region_operations_v1::
+                   RegionOperationsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_region_operations_v1::RegionOperationsConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_region_operations_v1::
+                 RegionOperationsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_region_operations_v1_internal::RegionOperationsRestStub> stub_;
+  std::shared_ptr<
+      compute_region_operations_v1_internal::RegionOperationsRestStub>
+      stub_;
   Options options_;
 };
 

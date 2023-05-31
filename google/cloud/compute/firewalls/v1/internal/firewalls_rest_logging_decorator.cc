@@ -27,22 +27,25 @@ namespace compute_firewalls_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FirewallsRestLogging::FirewallsRestLogging(
-    std::shared_ptr<FirewallsRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<FirewallsRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestLogging::AsyncDeleteFirewalls(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request) {
-        return child_->AsyncDeleteFirewalls(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::firewalls::v1::
+                 DeleteFirewallsRequest const& request) {
+        return child_->AsyncDeleteFirewalls(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -50,25 +53,29 @@ FirewallsRestLogging::AsyncDeleteFirewalls(
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
 FirewallsRestLogging::GetFirewalls(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request) {
+    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request) {
-        return child_->GetFirewalls(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+              request) { return child_->GetFirewalls(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestLogging::AsyncInsertFirewalls(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request) {
-        return child_->AsyncInsertFirewalls(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::firewalls::v1::
+                 InsertFirewallsRequest const& request) {
+        return child_->AsyncInsertFirewalls(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -76,10 +83,12 @@ FirewallsRestLogging::AsyncInsertFirewalls(
 StatusOr<google::cloud::cpp::compute::v1::FirewallList>
 FirewallsRestLogging::ListFirewalls(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const& request) {
+    google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const& request) {
+             google::cloud::cpp::compute::firewalls::v1::
+                 ListFirewallsRequest const& request) {
         return child_->ListFirewalls(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -87,28 +96,34 @@ FirewallsRestLogging::ListFirewalls(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestLogging::AsyncPatchFirewalls(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request) {
-        return child_->AsyncPatchFirewalls(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::firewalls::v1::
+                 PatchFirewallsRequest const& request) {
+        return child_->AsyncPatchFirewalls(cq, std::move(rest_context),
+                                           request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestLogging::AsyncUpdateFirewalls(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request) {
-        return child_->AsyncUpdateFirewalls(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::firewalls::v1::
+                 UpdateFirewallsRequest const& request) {
+        return child_->AsyncUpdateFirewalls(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -117,26 +132,30 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
-future<Status>
-FirewallsRestLogging::AsyncCancelOperation(
+future<Status> FirewallsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }

@@ -27,13 +27,14 @@ import "google/cloud/extended_operations.proto";
 service ServiceAttachments {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves the list of all ServiceAttachment resources, regional and global,
   // available to the specified project.
-  rpc AggregatedListServiceAttachments(AggregatedListServiceAttachmentsRequest) returns (google.cloud.cpp.compute.v1.ServiceAttachmentAggregatedList) {
+  rpc AggregatedListServiceAttachments(AggregatedListServiceAttachmentsRequest)
+      returns (google.cloud.cpp.compute.v1.ServiceAttachmentAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/serviceAttachments"
     };
@@ -41,7 +42,8 @@ service ServiceAttachments {
   }
 
   // Deletes the specified ServiceAttachment in the given scope
-  rpc DeleteServiceAttachments(DeleteServiceAttachmentsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteServiceAttachments(DeleteServiceAttachmentsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments/{service_attachment=service_attachment}"
     };
@@ -50,7 +52,8 @@ service ServiceAttachments {
   }
 
   // Returns the specified ServiceAttachment resource in the given scope.
-  rpc GetServiceAttachments(GetServiceAttachmentsRequest) returns (google.cloud.cpp.compute.v1.ServiceAttachment) {
+  rpc GetServiceAttachments(GetServiceAttachmentsRequest)
+      returns (google.cloud.cpp.compute.v1.ServiceAttachment) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments/{service_attachment=service_attachment}"
     };
@@ -59,7 +62,8 @@ service ServiceAttachments {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments/{resource=resource}/getIamPolicy"
     };
@@ -68,17 +72,20 @@ service ServiceAttachments {
 
   // Creates a ServiceAttachment in the specified project in the given scope
   // using the parameters that are included in the request.
-  rpc InsertServiceAttachments(InsertServiceAttachmentsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertServiceAttachments(InsertServiceAttachmentsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments"
       body: "service_attachment_resource"
     };
-    option (google.api.method_signature) = "project,region,service_attachment_resource";
+    option (google.api.method_signature) =
+        "project,region,service_attachment_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Lists the ServiceAttachments for a project in the given scope.
-  rpc ListServiceAttachments(ListServiceAttachmentsRequest) returns (google.cloud.cpp.compute.v1.ServiceAttachmentList) {
+  rpc ListServiceAttachments(ListServiceAttachmentsRequest)
+      returns (google.cloud.cpp.compute.v1.ServiceAttachmentList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments"
     };
@@ -88,32 +95,38 @@ service ServiceAttachments {
   // Patches the specified ServiceAttachment resource with the data included in
   // the request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
-  rpc PatchServiceAttachments(PatchServiceAttachmentsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchServiceAttachments(PatchServiceAttachmentsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments/{service_attachment=service_attachment}"
       body: "service_attachment_resource"
     };
-    option (google.api.method_signature) = "project,region,service_attachment,service_attachment_resource";
+    option (google.api.method_signature) =
+        "project,region,service_attachment,service_attachment_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
-  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments/{resource=resource}/setIamPolicy"
       body: "region_set_policy_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,region_set_policy_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,region_set_policy_request_resource";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments/{resource=resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,test_permissions_request_resource";
   }
 }
 
@@ -194,10 +207,16 @@ message AggregatedListServiceAttachmentsRequest {
 // Request message for DeleteServiceAttachments.
 message DeleteServiceAttachmentsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region of this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -245,10 +264,16 @@ message GetServiceAttachmentsRequest {
 // Request message for InsertServiceAttachments.
 message InsertServiceAttachmentsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region of this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -263,7 +288,8 @@ message InsertServiceAttachmentsRequest {
   optional string request_id = 3;
 
   // The ServiceAttachment for this request.
-  optional google.cloud.cpp.compute.v1.ServiceAttachment service_attachment_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.ServiceAttachment
+      service_attachment_resource = 4 [json_name = "__json_request_body"];
 }
 
 // Request message for ListServiceAttachments.
@@ -337,10 +363,16 @@ message ListServiceAttachmentsRequest {
 // Request message for PatchServiceAttachments.
 message PatchServiceAttachmentsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The region scoping this request and should conform to RFC1035.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -359,7 +391,8 @@ message PatchServiceAttachmentsRequest {
   string service_attachment = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The ServiceAttachment for this request.
-  optional google.cloud.cpp.compute.v1.ServiceAttachment service_attachment_resource = 5 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.ServiceAttachment
+      service_attachment_resource = 5 [json_name = "__json_request_body"];
 }
 
 // Request message for SetIamPolicy.
@@ -371,7 +404,9 @@ message SetIamPolicyRequest {
   string region = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The RegionSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest region_set_policy_request_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest
+      region_set_policy_request_resource = 3
+      [json_name = "__json_request_body"];
 
   // Name or id of the resource for this request.
   string resource = 4 [(google.api.field_behavior) = REQUIRED];
@@ -389,5 +424,6 @@ message TestIamPermissionsRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 4 [json_name = "__json_request_body"];
 }

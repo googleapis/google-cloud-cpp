@@ -24,17 +24,22 @@ namespace cloud {
 namespace compute_image_family_views_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ImageFamilyViewsClient::ImageFamilyViewsClient(ExperimentalTag,
-    std::shared_ptr<ImageFamilyViewsConnection> connection, Options opts)
+ImageFamilyViewsClient::ImageFamilyViewsClient(
+    ExperimentalTag, std::shared_ptr<ImageFamilyViewsConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ImageFamilyViewsClient::~ImageFamilyViewsClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-ImageFamilyViewsClient::GetImageFamilyViews(std::string const& project, std::string const& zone, std::string const& family, Options opts) {
+ImageFamilyViewsClient::GetImageFamilyViews(std::string const& project,
+                                            std::string const& zone,
+                                            std::string const& family,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewsRequest request;
+  google::cloud::cpp::compute::image_family_views::v1::
+      GetImageFamilyViewsRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_family(family);
@@ -42,7 +47,10 @@ ImageFamilyViewsClient::GetImageFamilyViews(std::string const& project, std::str
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-ImageFamilyViewsClient::GetImageFamilyViews(google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewsRequest const& request, Options opts) {
+ImageFamilyViewsClient::GetImageFamilyViews(
+    google::cloud::cpp::compute::image_family_views::v1::
+        GetImageFamilyViewsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetImageFamilyViews(request);
 }

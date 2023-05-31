@@ -24,114 +24,165 @@ namespace cloud {
 namespace compute_target_tcp_proxies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TargetTcpProxiesClient::TargetTcpProxiesClient(ExperimentalTag,
-    std::shared_ptr<TargetTcpProxiesConnection> connection, Options opts)
+TargetTcpProxiesClient::TargetTcpProxiesClient(
+    ExperimentalTag, std::shared_ptr<TargetTcpProxiesConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TargetTcpProxiesClient::~TargetTcpProxiesClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
-TargetTcpProxiesClient::AggregatedListTargetTcpProxies(std::string const& project, Options opts) {
+TargetTcpProxiesClient::AggregatedListTargetTcpProxies(
+    std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_tcp_proxies::v1::AggregatedListTargetTcpProxiesRequest request;
+  google::cloud::cpp::compute::target_tcp_proxies::v1::
+      AggregatedListTargetTcpProxiesRequest request;
   request.set_project(project);
   return connection_->AggregatedListTargetTcpProxies(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
-TargetTcpProxiesClient::AggregatedListTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::AggregatedListTargetTcpProxiesRequest const& request, Options opts) {
+TargetTcpProxiesClient::AggregatedListTargetTcpProxies(
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        AggregatedListTargetTcpProxiesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListTargetTcpProxies(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetTcpProxiesClient::DeleteTargetTcpProxies(std::string const& project, std::string const& target_tcp_proxy, Options opts) {
+TargetTcpProxiesClient::DeleteTargetTcpProxies(
+    std::string const& project, std::string const& target_tcp_proxy,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxiesRequest request;
+  google::cloud::cpp::compute::target_tcp_proxies::v1::
+      DeleteTargetTcpProxiesRequest request;
   request.set_project(project);
   request.set_target_tcp_proxy(target_tcp_proxy);
   return connection_->DeleteTargetTcpProxies(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetTcpProxiesClient::DeleteTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxiesRequest const& request, Options opts) {
+TargetTcpProxiesClient::DeleteTargetTcpProxies(
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        DeleteTargetTcpProxiesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTargetTcpProxies(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-TargetTcpProxiesClient::GetTargetTcpProxies(std::string const& project, std::string const& target_tcp_proxy, Options opts) {
+TargetTcpProxiesClient::GetTargetTcpProxies(std::string const& project,
+                                            std::string const& target_tcp_proxy,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_tcp_proxies::v1::GetTargetTcpProxiesRequest request;
+  google::cloud::cpp::compute::target_tcp_proxies::v1::
+      GetTargetTcpProxiesRequest request;
   request.set_project(project);
   request.set_target_tcp_proxy(target_tcp_proxy);
   return connection_->GetTargetTcpProxies(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-TargetTcpProxiesClient::GetTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::GetTargetTcpProxiesRequest const& request, Options opts) {
+TargetTcpProxiesClient::GetTargetTcpProxies(
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        GetTargetTcpProxiesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTargetTcpProxies(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetTcpProxiesClient::InsertTargetTcpProxies(std::string const& project, google::cloud::cpp::compute::v1::TargetTcpProxy const& target_tcp_proxy_resource, Options opts) {
+TargetTcpProxiesClient::InsertTargetTcpProxies(
+    std::string const& project,
+    google::cloud::cpp::compute::v1::TargetTcpProxy const&
+        target_tcp_proxy_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxiesRequest request;
+  google::cloud::cpp::compute::target_tcp_proxies::v1::
+      InsertTargetTcpProxiesRequest request;
   request.set_project(project);
   *request.mutable_target_tcp_proxy_resource() = target_tcp_proxy_resource;
   return connection_->InsertTargetTcpProxies(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetTcpProxiesClient::InsertTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxiesRequest const& request, Options opts) {
+TargetTcpProxiesClient::InsertTargetTcpProxies(
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        InsertTargetTcpProxiesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertTargetTcpProxies(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>
-TargetTcpProxiesClient::ListTargetTcpProxies(std::string const& project, Options opts) {
+TargetTcpProxiesClient::ListTargetTcpProxies(std::string const& project,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_tcp_proxies::v1::ListTargetTcpProxiesRequest request;
+  google::cloud::cpp::compute::target_tcp_proxies::v1::
+      ListTargetTcpProxiesRequest request;
   request.set_project(project);
   return connection_->ListTargetTcpProxies(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>
-TargetTcpProxiesClient::ListTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::ListTargetTcpProxiesRequest request, Options opts) {
+TargetTcpProxiesClient::ListTargetTcpProxies(
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        ListTargetTcpProxiesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTargetTcpProxies(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetTcpProxiesClient::SetBackendService(std::string const& project, std::string const& target_tcp_proxy, google::cloud::cpp::compute::v1::TargetTcpProxiesSetBackendServiceRequest const& target_tcp_proxies_set_backend_service_request_resource, Options opts) {
+TargetTcpProxiesClient::SetBackendService(
+    std::string const& project, std::string const& target_tcp_proxy,
+    google::cloud::cpp::compute::v1::
+        TargetTcpProxiesSetBackendServiceRequest const&
+            target_tcp_proxies_set_backend_service_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest request;
+  google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest
+      request;
   request.set_project(project);
   request.set_target_tcp_proxy(target_tcp_proxy);
-  *request.mutable_target_tcp_proxies_set_backend_service_request_resource() = target_tcp_proxies_set_backend_service_request_resource;
+  *request.mutable_target_tcp_proxies_set_backend_service_request_resource() =
+      target_tcp_proxies_set_backend_service_request_resource;
   return connection_->SetBackendService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetTcpProxiesClient::SetBackendService(google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const& request, Options opts) {
+TargetTcpProxiesClient::SetBackendService(
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        SetBackendServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetBackendService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetTcpProxiesClient::SetProxyHeader(std::string const& project, std::string const& target_tcp_proxy, google::cloud::cpp::compute::v1::TargetTcpProxiesSetProxyHeaderRequest const& target_tcp_proxies_set_proxy_header_request_resource, Options opts) {
+TargetTcpProxiesClient::SetProxyHeader(
+    std::string const& project, std::string const& target_tcp_proxy,
+    google::cloud::cpp::compute::v1::
+        TargetTcpProxiesSetProxyHeaderRequest const&
+            target_tcp_proxies_set_proxy_header_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest request;
+  google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest
+      request;
   request.set_project(project);
   request.set_target_tcp_proxy(target_tcp_proxy);
-  *request.mutable_target_tcp_proxies_set_proxy_header_request_resource() = target_tcp_proxies_set_proxy_header_request_resource;
+  *request.mutable_target_tcp_proxies_set_proxy_header_request_resource() =
+      target_tcp_proxies_set_proxy_header_request_resource;
   return connection_->SetProxyHeader(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetTcpProxiesClient::SetProxyHeader(google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const& request, Options opts) {
+TargetTcpProxiesClient::SetProxyHeader(
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        SetProxyHeaderRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetProxyHeader(request);
 }

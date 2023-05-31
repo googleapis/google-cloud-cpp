@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/node_groups/v1/node_groups.proto
 
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/node_groups/v1/node_groups_client.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/getenv.h"
@@ -41,8 +41,10 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::compute_node_groups_v1::NodeGroupsClient(google::cloud::ExperimentalTag{},
-      google::cloud::compute_node_groups_v1::MakeNodeGroupsConnectionRest(google::cloud::ExperimentalTag{},options));
+  auto client = google::cloud::compute_node_groups_v1::NodeGroupsClient(
+      google::cloud::ExperimentalTag{},
+      google::cloud::compute_node_groups_v1::MakeNodeGroupsConnectionRest(
+          google::cloud::ExperimentalTag{}, options));
   //! [set-client-endpoint]
 }
 
@@ -58,8 +60,10 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::compute_node_groups_v1::NodeGroupsClient(google::cloud::ExperimentalTag{},
-      google::cloud::compute_node_groups_v1::MakeNodeGroupsConnectionRest(google::cloud::ExperimentalTag{},options));
+    return google::cloud::compute_node_groups_v1::NodeGroupsClient(
+        google::cloud::ExperimentalTag{},
+        google::cloud::compute_node_groups_v1::MakeNodeGroupsConnectionRest(
+            google::cloud::ExperimentalTag{}, options));
   }
   //! [with-service-account]
   (argv.at(0));
@@ -69,9 +73,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   using ::google::cloud::internal::GetEnv;
   if (!argv.empty()) throw examples::Usage{"auto"};
-  examples::CheckEnvironmentVariablesAreSet({
-    "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"
-  });
+  examples::CheckEnvironmentVariablesAreSet(
+      {"GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"});
   auto const keyfile =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 

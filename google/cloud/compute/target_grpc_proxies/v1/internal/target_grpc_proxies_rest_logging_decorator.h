@@ -39,41 +39,53 @@ class TargetGrpcProxiesRestLogging : public TargetGrpcProxiesRestStub {
  public:
   ~TargetGrpcProxiesRestLogging() override = default;
   TargetGrpcProxiesRestLogging(std::shared_ptr<TargetGrpcProxiesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                               TracingOptions tracing_options,
+                               std::set<std::string> components);
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteTargetGrpcProxies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteTargetGrpcProxies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxiesRequest const& request) override;
+      google::cloud::cpp::compute::target_grpc_proxies::v1::
+          DeleteTargetGrpcProxiesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy> GetTargetGrpcProxies(
+  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
+  GetTargetGrpcProxies(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::target_grpc_proxies::v1::
+                           GetTargetGrpcProxiesRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertTargetGrpcProxies(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::target_grpc_proxies::v1::
+          InsertTargetGrpcProxiesRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxyList>
+  ListTargetGrpcProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::GetTargetGrpcProxiesRequest const& request) override;
+      google::cloud::cpp::compute::target_grpc_proxies::v1::
+          ListTargetGrpcProxiesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertTargetGrpcProxies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchTargetGrpcProxies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxiesRequest const& request) override;
+      google::cloud::cpp::compute::target_grpc_proxies::v1::
+          PatchTargetGrpcProxiesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxyList> ListTargetGrpcProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::ListTargetGrpcProxiesRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchTargetGrpcProxies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxiesRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
  private:
   std::shared_ptr<TargetGrpcProxiesRestStub> child_;

@@ -26,51 +26,71 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-InstanceGroupsConnectionIdempotencyPolicy::~InstanceGroupsConnectionIdempotencyPolicy() = default;
+InstanceGroupsConnectionIdempotencyPolicy::
+    ~InstanceGroupsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<InstanceGroupsConnectionIdempotencyPolicy>
 InstanceGroupsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<InstanceGroupsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency InstanceGroupsConnectionIdempotencyPolicy::AddInstances(google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const&) {
+Idempotency InstanceGroupsConnectionIdempotencyPolicy::AddInstances(
+    google::cloud::cpp::compute::instance_groups::v1::
+        AddInstancesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstanceGroupsConnectionIdempotencyPolicy::AggregatedListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::AggregatedListInstanceGroupsRequest const&) {
+Idempotency
+InstanceGroupsConnectionIdempotencyPolicy::AggregatedListInstanceGroups(
+    google::cloud::cpp::compute::instance_groups::v1::
+        AggregatedListInstanceGroupsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstanceGroupsConnectionIdempotencyPolicy::DeleteInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupsRequest const&) {
+Idempotency InstanceGroupsConnectionIdempotencyPolicy::DeleteInstanceGroups(
+    google::cloud::cpp::compute::instance_groups::v1::
+        DeleteInstanceGroupsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstanceGroupsConnectionIdempotencyPolicy::GetInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::GetInstanceGroupsRequest const&) {
+Idempotency InstanceGroupsConnectionIdempotencyPolicy::GetInstanceGroups(
+    google::cloud::cpp::compute::instance_groups::v1::
+        GetInstanceGroupsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstanceGroupsConnectionIdempotencyPolicy::InsertInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupsRequest const&) {
+Idempotency InstanceGroupsConnectionIdempotencyPolicy::InsertInstanceGroups(
+    google::cloud::cpp::compute::instance_groups::v1::
+        InsertInstanceGroupsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstanceGroupsConnectionIdempotencyPolicy::ListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest) {  // NOLINT
+Idempotency InstanceGroupsConnectionIdempotencyPolicy::ListInstanceGroups(
+    google::cloud::cpp::compute::instance_groups::v1::
+        ListInstanceGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstanceGroupsConnectionIdempotencyPolicy::ListInstances(google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest) {  // NOLINT
+Idempotency InstanceGroupsConnectionIdempotencyPolicy::ListInstances(
+    google::cloud::cpp::compute::instance_groups::v1::
+        ListInstancesRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstanceGroupsConnectionIdempotencyPolicy::RemoveInstances(google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const&) {
+Idempotency InstanceGroupsConnectionIdempotencyPolicy::RemoveInstances(
+    google::cloud::cpp::compute::instance_groups::v1::
+        RemoveInstancesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstanceGroupsConnectionIdempotencyPolicy::SetNamedPorts(google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const&) {
+Idempotency InstanceGroupsConnectionIdempotencyPolicy::SetNamedPorts(
+    google::cloud::cpp::compute::instance_groups::v1::
+        SetNamedPortsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<InstanceGroupsConnectionIdempotencyPolicy>
-    MakeDefaultInstanceGroupsConnectionIdempotencyPolicy() {
+MakeDefaultInstanceGroupsConnectionIdempotencyPolicy() {
   return std::make_unique<InstanceGroupsConnectionIdempotencyPolicy>();
 }
 

@@ -29,65 +29,93 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 RegionAutoscalersTracingConnection::RegionAutoscalersTracingConnection(
-    std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection> child)
+    std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection>
+        child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersTracingConnection::DeleteRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::DeleteRegionAutoscalersRequest const& request) {
+RegionAutoscalersTracingConnection::DeleteRegionAutoscalers(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        DeleteRegionAutoscalersRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_autoscalers_v1::RegionAutoscalersConnection::DeleteRegionAutoscalers");
+      "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
+      "DeleteRegionAutoscalers");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteRegionAutoscalers(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteRegionAutoscalers(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-RegionAutoscalersTracingConnection::GetRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::GetRegionAutoscalersRequest const& request) {
-  auto span = internal::MakeSpan("compute_region_autoscalers_v1::RegionAutoscalersConnection::GetRegionAutoscalers");
+RegionAutoscalersTracingConnection::GetRegionAutoscalers(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        GetRegionAutoscalersRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
+      "GetRegionAutoscalers");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRegionAutoscalers(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersTracingConnection::InsertRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::InsertRegionAutoscalersRequest const& request) {
+RegionAutoscalersTracingConnection::InsertRegionAutoscalers(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        InsertRegionAutoscalersRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_autoscalers_v1::RegionAutoscalersConnection::InsertRegionAutoscalers");
+      "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
+      "InsertRegionAutoscalers");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertRegionAutoscalers(request));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertRegionAutoscalers(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-RegionAutoscalersTracingConnection::ListRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::ListRegionAutoscalersRequest request) {
-  auto span = internal::MakeSpan("compute_region_autoscalers_v1::RegionAutoscalersConnection::ListRegionAutoscalers");
+RegionAutoscalersTracingConnection::ListRegionAutoscalers(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        ListRegionAutoscalersRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
+      "ListRegionAutoscalers");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListRegionAutoscalers(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Autoscaler>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::Autoscaler>(std::move(span),
+                                                   std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersTracingConnection::PatchRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::PatchRegionAutoscalersRequest const& request) {
+RegionAutoscalersTracingConnection::PatchRegionAutoscalers(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        PatchRegionAutoscalersRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_autoscalers_v1::RegionAutoscalersConnection::PatchRegionAutoscalers");
+      "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
+      "PatchRegionAutoscalers");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchRegionAutoscalers(request));
+  return internal::EndSpan(std::move(span),
+                           child_->PatchRegionAutoscalers(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersTracingConnection::UpdateRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::UpdateRegionAutoscalersRequest const& request) {
+RegionAutoscalersTracingConnection::UpdateRegionAutoscalers(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        UpdateRegionAutoscalersRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_autoscalers_v1::RegionAutoscalersConnection::UpdateRegionAutoscalers");
+      "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
+      "UpdateRegionAutoscalers");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateRegionAutoscalers(request));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateRegionAutoscalers(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection>
 MakeRegionAutoscalersTracingConnection(
-    std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection> conn) {
+    std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<RegionAutoscalersTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<RegionAutoscalersTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

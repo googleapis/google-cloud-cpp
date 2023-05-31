@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class InterconnectsClient {
  public:
-  explicit InterconnectsClient(ExperimentalTag, std::shared_ptr<InterconnectsConnection> connection, Options opts = {});
+  explicit InterconnectsClient(
+      ExperimentalTag, std::shared_ptr<InterconnectsConnection> connection,
+      Options opts = {});
   ~InterconnectsClient();
 
   ///@{
@@ -76,10 +78,12 @@ class InterconnectsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(InterconnectsClient const& a, InterconnectsClient const& b) {
+  friend bool operator==(InterconnectsClient const& a,
+                         InterconnectsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(InterconnectsClient const& a, InterconnectsClient const& b) {
+  friend bool operator!=(InterconnectsClient const& a,
+                         InterconnectsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -110,11 +114,12 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L104}
+  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L113}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnects(std::string const& project, std::string const& interconnect, Options opts = {});
+  DeleteInterconnects(std::string const& project,
+                      std::string const& interconnect, Options opts = {});
 
   // clang-format off
   ///
@@ -146,11 +151,13 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L104}
+  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L113}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnects(google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest const& request, Options opts = {});
+  DeleteInterconnects(google::cloud::cpp::compute::interconnects::v1::
+                          DeleteInterconnectsRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -173,12 +180,13 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L134}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L146}
   /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11824}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-  GetInterconnects(std::string const& project, std::string const& interconnect, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnects(
+      std::string const& project, std::string const& interconnect,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -205,12 +213,14 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L134}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L146}
   /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11824}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-  GetInterconnects(google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::
+          GetInterconnectsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -232,12 +242,13 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L125}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L137}
   /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13054}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
-  GetDiagnostics(std::string const& project, std::string const& interconnect, Options opts = {});
+  GetDiagnostics(std::string const& project, std::string const& interconnect,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -263,12 +274,14 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L125}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L137}
   /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13054}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
-  GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request, Options opts = {});
+  GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::
+                     GetDiagnosticsRequest const& request,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -297,11 +310,14 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L143}
+  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L155}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnects(std::string const& project, google::cloud::cpp::compute::v1::Interconnect const& interconnect_resource, Options opts = {});
+  InsertInterconnects(std::string const& project,
+                      google::cloud::cpp::compute::v1::Interconnect const&
+                          interconnect_resource,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -334,11 +350,13 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L143}
+  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L155}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnects(google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest const& request, Options opts = {});
+  InsertInterconnects(google::cloud::cpp::compute::interconnects::v1::
+                          InsertInterconnectsRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -368,12 +386,12 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L164}
+  /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L180}
   /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11824}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Interconnect>
-  ListInterconnects(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Interconnect> ListInterconnects(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -408,12 +426,14 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L164}
+  /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L180}
   /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11824}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Interconnect>
-  ListInterconnects(google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Interconnect> ListInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -444,11 +464,15 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L229}
+  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L245}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnects(std::string const& project, std::string const& interconnect, google::cloud::cpp::compute::v1::Interconnect const& interconnect_resource, Options opts = {});
+  PatchInterconnects(std::string const& project,
+                     std::string const& interconnect,
+                     google::cloud::cpp::compute::v1::Interconnect const&
+                         interconnect_resource,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -482,11 +506,13 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L229}
+  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L245}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnects(google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest const& request, Options opts = {});
+  PatchInterconnects(google::cloud::cpp::compute::interconnects::v1::
+                         PatchInterconnectsRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -516,11 +542,14 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L253}
+  /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L273}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+          global_set_labels_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -553,11 +582,13 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L253}
+  /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L273}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<InterconnectsConnection> connection_;

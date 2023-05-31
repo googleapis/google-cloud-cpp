@@ -29,8 +29,8 @@ namespace cloud {
 namespace compute_region_ssl_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<RegionSslPoliciesRestStub> CreateDefaultRegionSslPoliciesRestStub(
-    Options const& options);
+std::shared_ptr<RegionSslPoliciesRestStub>
+CreateDefaultRegionSslPoliciesRestStub(Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_ssl_policies_v1_internal

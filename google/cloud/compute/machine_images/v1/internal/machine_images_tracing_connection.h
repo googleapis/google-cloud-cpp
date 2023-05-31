@@ -36,30 +36,38 @@ class MachineImagesTracingConnection
   ~MachineImagesTracingConnection() override = default;
 
   explicit MachineImagesTracingConnection(
-    std::shared_ptr<compute_machine_images_v1::MachineImagesConnection> child);
+      std::shared_ptr<compute_machine_images_v1::MachineImagesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteMachineImages(google::cloud::cpp::compute::machine_images::v1::DeleteMachineImagesRequest const& request) override;
+  DeleteMachineImages(google::cloud::cpp::compute::machine_images::v1::
+                          DeleteMachineImagesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-  GetMachineImages(google::cloud::cpp::compute::machine_images::v1::GetMachineImagesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImages(
+      google::cloud::cpp::compute::machine_images::v1::
+          GetMachineImagesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::machine_images::v1::
+          GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertMachineImages(google::cloud::cpp::compute::machine_images::v1::InsertMachineImagesRequest const& request) override;
+  InsertMachineImages(google::cloud::cpp::compute::machine_images::v1::
+                          InsertMachineImagesRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::MachineImage>
-  ListMachineImages(google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::MachineImage> ListMachineImages(
+      google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::machine_images::v1::
+          SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::machine_images::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_machine_images_v1::MachineImagesConnection> child_;

@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class InstanceTemplatesClient {
  public:
-  explicit InstanceTemplatesClient(ExperimentalTag, std::shared_ptr<InstanceTemplatesConnection> connection, Options opts = {});
+  explicit InstanceTemplatesClient(
+      ExperimentalTag, std::shared_ptr<InstanceTemplatesConnection> connection,
+      Options opts = {});
   ~InstanceTemplatesClient();
 
   ///@{
@@ -77,10 +79,12 @@ class InstanceTemplatesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(InstanceTemplatesClient const& a, InstanceTemplatesClient const& b) {
+  friend bool operator==(InstanceTemplatesClient const& a,
+                         InstanceTemplatesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(InstanceTemplatesClient const& a, InstanceTemplatesClient const& b) {
+  friend bool operator!=(InstanceTemplatesClient const& a,
+                         InstanceTemplatesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -105,12 +109,13 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.AggregatedListInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L114}
+  /// [google.cloud.cpp.compute.instance_templates.v1.AggregatedListInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L124}
   /// [google.cloud.cpp.compute.v1.InstanceTemplateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11311}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
-  AggregatedListInstanceTemplates(std::string const& project, Options opts = {});
+  AggregatedListInstanceTemplates(std::string const& project,
+                                  Options opts = {});
 
   // clang-format off
   ///
@@ -137,12 +142,15 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.AggregatedListInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L114}
+  /// [google.cloud.cpp.compute.instance_templates.v1.AggregatedListInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L124}
   /// [google.cloud.cpp.compute.v1.InstanceTemplateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11311}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
-  AggregatedListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest const& request, Options opts = {});
+  AggregatedListInstanceTemplates(
+      google::cloud::cpp::compute::instance_templates::v1::
+          AggregatedListInstanceTemplatesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -172,11 +180,13 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L188}
+  /// [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplates(std::string const& project, std::string const& instance_template, Options opts = {});
+  DeleteInstanceTemplates(std::string const& project,
+                          std::string const& instance_template,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -210,11 +220,13 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L188}
+  /// [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplatesRequest const& request, Options opts = {});
+  DeleteInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
+                              DeleteInstanceTemplatesRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -236,12 +248,13 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L221}
+  /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L234}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11263}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplates(std::string const& project, std::string const& instance_template, Options opts = {});
+  GetInstanceTemplates(std::string const& project,
+                       std::string const& instance_template, Options opts = {});
 
   // clang-format off
   ///
@@ -267,12 +280,14 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L221}
+  /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L234}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11263}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplatesRequest const& request, Options opts = {});
+  GetInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
+                           GetInstanceTemplatesRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -295,12 +310,13 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L209}
+  /// [google.cloud.cpp.compute.instance_templates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L222}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -327,12 +343,14 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L209}
+  /// [google.cloud.cpp.compute.instance_templates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L222}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::instance_templates::v1::
+          GetIamPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -363,11 +381,15 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L230}
+  /// [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L243}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplates(std::string const& project, google::cloud::cpp::compute::v1::InstanceTemplate const& instance_template_resource, Options opts = {});
+  InsertInstanceTemplates(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::InstanceTemplate const&
+          instance_template_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -402,11 +424,13 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L230}
+  /// [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L243}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplatesRequest const& request, Options opts = {});
+  InsertInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
+                              InsertInstanceTemplatesRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -437,7 +461,7 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.ListInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L251}
+  /// [google.cloud.cpp.compute.instance_templates.v1.ListInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L268}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11263}
   ///
   // clang-format on
@@ -478,12 +502,14 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.ListInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L251}
+  /// [google.cloud.cpp.compute.instance_templates.v1.ListInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L268}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11263}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
-  ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest request, Options opts = {});
+  ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
+                            ListInstanceTemplatesRequest request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -507,12 +533,15 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L316}
+  /// [google.cloud.cpp.compute.instance_templates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L333}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+          global_set_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -539,12 +568,14 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L316}
+  /// [google.cloud.cpp.compute.instance_templates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L333}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::instance_templates::v1::
+          SetIamPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -567,12 +598,16 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L328}
+  /// [google.cloud.cpp.compute.instance_templates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L347}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -598,12 +633,14 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L328}
+  /// [google.cloud.cpp.compute.instance_templates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L347}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<InstanceTemplatesConnection> connection_;

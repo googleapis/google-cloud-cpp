@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_SERVICES_V1_INTERNAL_BACKEND_SERVICES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_SERVICES_V1_INTERNAL_BACKEND_SERVICES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/backend_services/v1/backend_services_connection.h"
 #include "google/cloud/compute/backend_services/v1/backend_services_connection_idempotency_policy.h"
 #include "google/cloud/compute/backend_services/v1/backend_services_options.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_rest_stub.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,90 +44,139 @@ class BackendServicesRestConnectionImpl
   ~BackendServicesRestConnectionImpl() override = default;
 
   BackendServicesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_backend_services_v1_internal::BackendServicesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_backend_services_v1_internal::BackendServicesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
+      google::cloud::cpp::compute::backend_services::v1::
+          AddSignedUrlKeyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
-  AggregatedListBackendServices(google::cloud::cpp::compute::backend_services::v1::AggregatedListBackendServicesRequest const& request) override;
+  AggregatedListBackendServices(
+      google::cloud::cpp::compute::backend_services::v1::
+          AggregatedListBackendServicesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteBackendServices(google::cloud::cpp::compute::backend_services::v1::DeleteBackendServicesRequest const& request) override;
+  DeleteBackendServices(
+      google::cloud::cpp::compute::backend_services::v1::
+          DeleteBackendServicesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request) override;
+  DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::
+                         DeleteSignedUrlKeyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendService>
-  GetBackendServices(google::cloud::cpp::compute::backend_services::v1::GetBackendServicesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendServices(
+      google::cloud::cpp::compute::backend_services::v1::
+          GetBackendServicesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
-  GetHealth(google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const& request) override;
+  GetHealth(
+      google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::backend_services::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::backend_services::v1::
+          GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertBackendServices(google::cloud::cpp::compute::backend_services::v1::InsertBackendServicesRequest const& request) override;
+  InsertBackendServices(
+      google::cloud::cpp::compute::backend_services::v1::
+          InsertBackendServicesRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
-  ListBackendServices(google::cloud::cpp::compute::backend_services::v1::ListBackendServicesRequest request) override;
+  ListBackendServices(google::cloud::cpp::compute::backend_services::v1::
+                          ListBackendServicesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchBackendServices(google::cloud::cpp::compute::backend_services::v1::PatchBackendServicesRequest const& request) override;
+  PatchBackendServices(google::cloud::cpp::compute::backend_services::v1::
+                           PatchBackendServicesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request) override;
+  SetEdgeSecurityPolicy(
+      google::cloud::cpp::compute::backend_services::v1::
+          SetEdgeSecurityPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::backend_services::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::backend_services::v1::
+          SetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request) override;
+  SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::
+                        SetSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateBackendServices(google::cloud::cpp::compute::backend_services::v1::UpdateBackendServicesRequest const& request) override;
+  UpdateBackendServices(
+      google::cloud::cpp::compute::backend_services::v1::
+          UpdateBackendServicesRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_backend_services_v1::BackendServicesRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_backend_services_v1::BackendServicesRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_backend_services_v1::BackendServicesRetryPolicyOption>()) {
-      return options.get<compute_backend_services_v1::BackendServicesRetryPolicyOption>()->clone();
+    if (options.has<
+            compute_backend_services_v1::BackendServicesRetryPolicyOption>()) {
+      return options
+          .get<compute_backend_services_v1::BackendServicesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_backend_services_v1::BackendServicesRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_backend_services_v1::BackendServicesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_backend_services_v1::BackendServicesBackoffPolicyOption>()) {
-      return options.get<compute_backend_services_v1::BackendServicesBackoffPolicyOption>()->clone();
+    if (options.has<compute_backend_services_v1::
+                        BackendServicesBackoffPolicyOption>()) {
+      return options
+          .get<
+              compute_backend_services_v1::BackendServicesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_backend_services_v1::BackendServicesBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_backend_services_v1::BackendServicesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_backend_services_v1::BackendServicesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_backend_services_v1::BackendServicesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_backend_services_v1::BackendServicesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_backend_services_v1::BackendServicesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_backend_services_v1::
+                        BackendServicesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_backend_services_v1::
+                   BackendServicesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_backend_services_v1::BackendServicesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_backend_services_v1::
+                 BackendServicesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_backend_services_v1::BackendServicesPollingPolicyOption>()) {
-      return options.get<compute_backend_services_v1::BackendServicesPollingPolicyOption>()->clone();
+    if (options.has<compute_backend_services_v1::
+                        BackendServicesPollingPolicyOption>()) {
+      return options
+          .get<
+              compute_backend_services_v1::BackendServicesPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_backend_services_v1::BackendServicesPollingPolicyOption>()->clone();
+    return options_
+        .get<compute_backend_services_v1::BackendServicesPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_backend_services_v1_internal::BackendServicesRestStub> stub_;
+  std::shared_ptr<compute_backend_services_v1_internal::BackendServicesRestStub>
+      stub_;
   Options options_;
 };
 

@@ -33,7 +33,9 @@ InstanceGroupsTracingConnection::InstanceGroupsTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsTracingConnection::AddInstances(google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request) {
+InstanceGroupsTracingConnection::AddInstances(
+    google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::AddInstances");
   auto scope = opentelemetry::trace::Scope(span);
@@ -41,55 +43,83 @@ InstanceGroupsTracingConnection::AddInstances(google::cloud::cpp::compute::insta
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
-InstanceGroupsTracingConnection::AggregatedListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::AggregatedListInstanceGroupsRequest const& request) {
-  auto span = internal::MakeSpan("compute_instance_groups_v1::InstanceGroupsConnection::AggregatedListInstanceGroups");
+InstanceGroupsTracingConnection::AggregatedListInstanceGroups(
+    google::cloud::cpp::compute::instance_groups::v1::
+        AggregatedListInstanceGroupsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "AggregatedListInstanceGroups");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListInstanceGroups(request));
+  return internal::EndSpan(*span,
+                           child_->AggregatedListInstanceGroups(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsTracingConnection::DeleteInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupsRequest const& request) {
+InstanceGroupsTracingConnection::DeleteInstanceGroups(
+    google::cloud::cpp::compute::instance_groups::v1::
+        DeleteInstanceGroupsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instance_groups_v1::InstanceGroupsConnection::DeleteInstanceGroups");
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "DeleteInstanceGroups");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteInstanceGroups(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteInstanceGroups(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-InstanceGroupsTracingConnection::GetInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::GetInstanceGroupsRequest const& request) {
-  auto span = internal::MakeSpan("compute_instance_groups_v1::InstanceGroupsConnection::GetInstanceGroups");
+InstanceGroupsTracingConnection::GetInstanceGroups(
+    google::cloud::cpp::compute::instance_groups::v1::
+        GetInstanceGroupsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "GetInstanceGroups");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInstanceGroups(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsTracingConnection::InsertInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupsRequest const& request) {
+InstanceGroupsTracingConnection::InsertInstanceGroups(
+    google::cloud::cpp::compute::instance_groups::v1::
+        InsertInstanceGroupsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instance_groups_v1::InstanceGroupsConnection::InsertInstanceGroups");
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "InsertInstanceGroups");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertInstanceGroups(request));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertInstanceGroups(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
-InstanceGroupsTracingConnection::ListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest request) {
-  auto span = internal::MakeSpan("compute_instance_groups_v1::InstanceGroupsConnection::ListInstanceGroups");
+InstanceGroupsTracingConnection::ListInstanceGroups(
+    google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "ListInstanceGroups");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListInstanceGroups(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::InstanceGroup>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::InstanceGroup>(std::move(span),
+                                                      std::move(sr));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
-InstanceGroupsTracingConnection::ListInstances(google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest request) {
-  auto span = internal::MakeSpan("compute_instance_groups_v1::InstanceGroupsConnection::ListInstances");
+InstanceGroupsTracingConnection::ListInstances(
+    google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_groups_v1::InstanceGroupsConnection::ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListInstances(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::InstanceWithNamedPorts>(std::move(span),
+                                                               std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsTracingConnection::RemoveInstances(google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request) {
+InstanceGroupsTracingConnection::RemoveInstances(
+    google::cloud::cpp::compute::instance_groups::v1::
+        RemoveInstancesRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::RemoveInstances");
   auto scope = opentelemetry::trace::Scope(span);
@@ -97,7 +127,9 @@ InstanceGroupsTracingConnection::RemoveInstances(google::cloud::cpp::compute::in
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsTracingConnection::SetNamedPorts(google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request) {
+InstanceGroupsTracingConnection::SetNamedPorts(
+    google::cloud::cpp::compute::instance_groups::v1::
+        SetNamedPortsRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::SetNamedPorts");
   auto scope = opentelemetry::trace::Scope(span);
@@ -108,7 +140,8 @@ InstanceGroupsTracingConnection::SetNamedPorts(google::cloud::cpp::compute::inst
 
 std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection>
 MakeInstanceGroupsTracingConnection(
-    std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection> conn) {
+    std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<InstanceGroupsTracingConnection>(std::move(conn));

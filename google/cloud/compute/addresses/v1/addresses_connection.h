@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ADDRESSES_V1_ADDRESSES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ADDRESSES_V1_ADDRESSES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/addresses/v1/addresses_connection_idempotency_policy.h"
 #include "google/cloud/compute/addresses/v1/internal/addresses_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -41,8 +41,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using AddressesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_addresses_v1_internal::AddressesRetryTraits>;
 
-using AddressesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_addresses_v1_internal::AddressesRetryTraits>;
+using AddressesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_addresses_v1_internal::AddressesRetryTraits>;
 
 using AddressesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -67,22 +68,29 @@ class AddressesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
-  AggregatedListAddresses(google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const& request);
+  AggregatedListAddresses(google::cloud::cpp::compute::addresses::v1::
+                              AggregatedListAddressesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAddresses(google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const& request);
+  DeleteAddresses(
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Address>
-  GetAddresses(google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAddresses(google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const& request);
-
-  virtual StreamRange<google::cloud::cpp::compute::v1::Address>
-  ListAddresses(google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
+      google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request);
+  InsertAddresses(
+      google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
+      google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+                request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

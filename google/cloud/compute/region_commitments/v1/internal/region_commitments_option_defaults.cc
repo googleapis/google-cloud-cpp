@@ -34,33 +34,51 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RegionCommitmentsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_REGION_COMMITMENTS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_REGION_COMMITMENTS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_REGION_COMMITMENTS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_REGION_COMMITMENTS_AUTHORITY",
       "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_region_commitments_v1::RegionCommitmentsRetryPolicyOption>()) {
-    options.set<compute_region_commitments_v1::RegionCommitmentsRetryPolicyOption>(
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<compute_region_commitments_v1::
+                       RegionCommitmentsRetryPolicyOption>()) {
+    options.set<
+        compute_region_commitments_v1::RegionCommitmentsRetryPolicyOption>(
         compute_region_commitments_v1::RegionCommitmentsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
-  }
-  if (!options.has<compute_region_commitments_v1::RegionCommitmentsBackoffPolicyOption>()) {
-    options.set<compute_region_commitments_v1::RegionCommitmentsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
-  }
-  if (!options.has<compute_region_commitments_v1::RegionCommitmentsPollingPolicyOption>()) {
-    options.set<compute_region_commitments_v1::RegionCommitmentsPollingPolicyOption>(
-        GenericPollingPolicy<
-            compute_region_commitments_v1::RegionCommitmentsRetryPolicyOption::Type,
-            compute_region_commitments_v1::RegionCommitmentsBackoffPolicyOption::Type>(
-            options.get<compute_region_commitments_v1::RegionCommitmentsRetryPolicyOption>()->clone(),
-            options.get<compute_region_commitments_v1::RegionCommitmentsBackoffPolicyOption>()->clone())
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<compute_region_commitments_v1::RegionCommitmentsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_region_commitments_v1::RegionCommitmentsConnectionIdempotencyPolicyOption>(
-        compute_region_commitments_v1::MakeDefaultRegionCommitmentsConnectionIdempotencyPolicy());
+  if (!options.has<compute_region_commitments_v1::
+                       RegionCommitmentsBackoffPolicyOption>()) {
+    options.set<
+        compute_region_commitments_v1::RegionCommitmentsBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
+  }
+  if (!options.has<compute_region_commitments_v1::
+                       RegionCommitmentsPollingPolicyOption>()) {
+    options.set<
+        compute_region_commitments_v1::RegionCommitmentsPollingPolicyOption>(
+        GenericPollingPolicy<compute_region_commitments_v1::
+                                 RegionCommitmentsRetryPolicyOption::Type,
+                             compute_region_commitments_v1::
+                                 RegionCommitmentsBackoffPolicyOption::Type>(
+            options
+                .get<compute_region_commitments_v1::
+                         RegionCommitmentsRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<compute_region_commitments_v1::
+                         RegionCommitmentsBackoffPolicyOption>()
+                ->clone())
+            .clone());
+  }
+  if (!options.has<compute_region_commitments_v1::
+                       RegionCommitmentsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_region_commitments_v1::
+                    RegionCommitmentsConnectionIdempotencyPolicyOption>(
+        compute_region_commitments_v1::
+            MakeDefaultRegionCommitmentsConnectionIdempotencyPolicy());
   }
 
   return options;

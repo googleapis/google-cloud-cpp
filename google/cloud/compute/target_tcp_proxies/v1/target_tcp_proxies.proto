@@ -27,13 +27,14 @@ import "google/cloud/extended_operations.proto";
 service TargetTcpProxies {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves the list of all TargetTcpProxy resources, regional and global,
   // available to the specified project.
-  rpc AggregatedListTargetTcpProxies(AggregatedListTargetTcpProxiesRequest) returns (google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList) {
+  rpc AggregatedListTargetTcpProxies(AggregatedListTargetTcpProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/targetTcpProxies"
     };
@@ -41,7 +42,8 @@ service TargetTcpProxies {
   }
 
   // Deletes the specified TargetTcpProxy resource.
-  rpc DeleteTargetTcpProxies(DeleteTargetTcpProxiesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteTargetTcpProxies(DeleteTargetTcpProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/global/targetTcpProxies/{target_tcp_proxy=target_tcp_proxy}"
     };
@@ -50,7 +52,8 @@ service TargetTcpProxies {
   }
 
   // Returns the specified TargetTcpProxy resource.
-  rpc GetTargetTcpProxies(GetTargetTcpProxiesRequest) returns (google.cloud.cpp.compute.v1.TargetTcpProxy) {
+  rpc GetTargetTcpProxies(GetTargetTcpProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.TargetTcpProxy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/targetTcpProxies/{target_tcp_proxy=target_tcp_proxy}"
     };
@@ -59,7 +62,8 @@ service TargetTcpProxies {
 
   // Creates a TargetTcpProxy resource in the specified project using the data
   // included in the request.
-  rpc InsertTargetTcpProxies(InsertTargetTcpProxiesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertTargetTcpProxies(InsertTargetTcpProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/targetTcpProxies"
       body: "target_tcp_proxy_resource"
@@ -70,7 +74,8 @@ service TargetTcpProxies {
 
   // Retrieves the list of TargetTcpProxy resources available to the specified
   // project.
-  rpc ListTargetTcpProxies(ListTargetTcpProxiesRequest) returns (google.cloud.cpp.compute.v1.TargetTcpProxyList) {
+  rpc ListTargetTcpProxies(ListTargetTcpProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.TargetTcpProxyList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/targetTcpProxies"
     };
@@ -78,22 +83,26 @@ service TargetTcpProxies {
   }
 
   // Changes the BackendService for TargetTcpProxy.
-  rpc SetBackendService(SetBackendServiceRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetBackendService(SetBackendServiceRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/targetTcpProxies/{target_tcp_proxy=target_tcp_proxy}/setBackendService"
       body: "target_tcp_proxies_set_backend_service_request_resource"
     };
-    option (google.api.method_signature) = "project,target_tcp_proxy,target_tcp_proxies_set_backend_service_request_resource";
+    option (google.api.method_signature) =
+        "project,target_tcp_proxy,target_tcp_proxies_set_backend_service_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Changes the ProxyHeaderType for TargetTcpProxy.
-  rpc SetProxyHeader(SetProxyHeaderRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetProxyHeader(SetProxyHeaderRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/targetTcpProxies/{target_tcp_proxy=target_tcp_proxy}/setProxyHeader"
       body: "target_tcp_proxies_set_proxy_header_request_resource"
     };
-    option (google.api.method_signature) = "project,target_tcp_proxy,target_tcp_proxies_set_proxy_header_request_resource";
+    option (google.api.method_signature) =
+        "project,target_tcp_proxy,target_tcp_proxies_set_proxy_header_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -175,7 +184,10 @@ message AggregatedListTargetTcpProxiesRequest {
 // Request message for DeleteTargetTcpProxies.
 message DeleteTargetTcpProxiesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -205,7 +217,10 @@ message GetTargetTcpProxiesRequest {
 // Request message for InsertTargetTcpProxies.
 message InsertTargetTcpProxiesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -220,7 +235,8 @@ message InsertTargetTcpProxiesRequest {
   optional string request_id = 2;
 
   // The TargetTcpProxy for this request.
-  optional google.cloud.cpp.compute.v1.TargetTcpProxy target_tcp_proxy_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetTcpProxy
+      target_tcp_proxy_resource = 3 [json_name = "__json_request_body"];
 }
 
 // Request message for ListTargetTcpProxies.
@@ -291,7 +307,10 @@ message ListTargetTcpProxiesRequest {
 // Request message for SetBackendService.
 message SetBackendServiceRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -310,13 +329,18 @@ message SetBackendServiceRequest {
   string target_tcp_proxy = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TargetTcpProxiesSetBackendServiceRequest for this request.
-  optional google.cloud.cpp.compute.v1.TargetTcpProxiesSetBackendServiceRequest target_tcp_proxies_set_backend_service_request_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetTcpProxiesSetBackendServiceRequest
+      target_tcp_proxies_set_backend_service_request_resource = 4
+      [json_name = "__json_request_body"];
 }
 
 // Request message for SetProxyHeader.
 message SetProxyHeaderRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -334,5 +358,7 @@ message SetProxyHeaderRequest {
   string target_tcp_proxy = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TargetTcpProxiesSetProxyHeaderRequest for this request.
-  optional google.cloud.cpp.compute.v1.TargetTcpProxiesSetProxyHeaderRequest target_tcp_proxies_set_proxy_header_request_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetTcpProxiesSetProxyHeaderRequest
+      target_tcp_proxies_set_proxy_header_request_resource = 4
+      [json_name = "__json_request_body"];
 }

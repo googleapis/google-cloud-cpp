@@ -35,26 +35,32 @@ class RegionCommitmentsConnectionIdempotencyPolicy {
   virtual ~RegionCommitmentsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<RegionCommitmentsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<RegionCommitmentsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListRegionCommitments(
+      google::cloud::cpp::compute::region_commitments::v1::
+          AggregatedListRegionCommitmentsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::GetRegionCommitmentsRequest const& request);
+  virtual google::cloud::Idempotency GetRegionCommitments(
+      google::cloud::cpp::compute::region_commitments::v1::
+          GetRegionCommitmentsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::InsertRegionCommitmentsRequest const& request);
+  virtual google::cloud::Idempotency InsertRegionCommitments(
+      google::cloud::cpp::compute::region_commitments::v1::
+          InsertRegionCommitmentsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest request);
+  virtual google::cloud::Idempotency ListRegionCommitments(
+      google::cloud::cpp::compute::region_commitments::v1::
+          ListRegionCommitmentsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::UpdateRegionCommitmentsRequest const& request);
+  virtual google::cloud::Idempotency UpdateRegionCommitments(
+      google::cloud::cpp::compute::region_commitments::v1::
+          UpdateRegionCommitmentsRequest const& request);
 };
 
 std::unique_ptr<RegionCommitmentsConnectionIdempotencyPolicy>
-    MakeDefaultRegionCommitmentsConnectionIdempotencyPolicy();
+MakeDefaultRegionCommitmentsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_commitments_v1

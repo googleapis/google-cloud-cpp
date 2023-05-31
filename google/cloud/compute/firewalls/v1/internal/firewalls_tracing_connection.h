@@ -36,27 +36,33 @@ class FirewallsTracingConnection
   ~FirewallsTracingConnection() override = default;
 
   explicit FirewallsTracingConnection(
-    std::shared_ptr<compute_firewalls_v1::FirewallsConnection> child);
+      std::shared_ptr<compute_firewalls_v1::FirewallsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteFirewalls(google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Firewall>
-  GetFirewalls(google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertFirewalls(google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Firewall>
-  ListFirewalls(google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Firewall> ListFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchFirewalls(google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateFirewalls(google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<compute_firewalls_v1::FirewallsConnection> child_;

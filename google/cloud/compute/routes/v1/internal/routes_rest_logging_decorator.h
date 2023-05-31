@@ -39,36 +39,45 @@ class RoutesRestLogging : public RoutesRestStub {
  public:
   ~RoutesRestLogging() override = default;
   RoutesRestLogging(std::shared_ptr<RoutesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                    TracingOptions tracing_options,
+                    std::set<std::string> components);
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteRoutes(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteRoutes(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const& request) override;
+      google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Route> GetRoutes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request) override;
+      google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertRoutes(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertRoutes(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const& request) override;
+      google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RouteList> ListRoutes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routes::v1::ListRoutesRequest const& request) override;
+      google::cloud::cpp::compute::routes::v1::ListRoutesRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
  private:
   std::shared_ptr<RoutesRestStub> child_;

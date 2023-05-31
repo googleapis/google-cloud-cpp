@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class MachineImagesClient {
  public:
-  explicit MachineImagesClient(ExperimentalTag, std::shared_ptr<MachineImagesConnection> connection, Options opts = {});
+  explicit MachineImagesClient(
+      ExperimentalTag, std::shared_ptr<MachineImagesConnection> connection,
+      Options opts = {});
   ~MachineImagesClient();
 
   ///@{
@@ -76,10 +78,12 @@ class MachineImagesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(MachineImagesClient const& a, MachineImagesClient const& b) {
+  friend bool operator==(MachineImagesClient const& a,
+                         MachineImagesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(MachineImagesClient const& a, MachineImagesClient const& b) {
+  friend bool operator!=(MachineImagesClient const& a,
+                         MachineImagesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -111,11 +115,12 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.DeleteMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L104}
+  /// [google.cloud.cpp.compute.machine_images.v1.DeleteMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L113}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteMachineImages(std::string const& project, std::string const& machine_image, Options opts = {});
+  DeleteMachineImages(std::string const& project,
+                      std::string const& machine_image, Options opts = {});
 
   // clang-format off
   ///
@@ -148,11 +153,13 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.DeleteMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L104}
+  /// [google.cloud.cpp.compute.machine_images.v1.DeleteMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L113}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteMachineImages(google::cloud::cpp::compute::machine_images::v1::DeleteMachineImagesRequest const& request, Options opts = {});
+  DeleteMachineImages(google::cloud::cpp::compute::machine_images::v1::
+                          DeleteMachineImagesRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -174,12 +181,13 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.GetMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L137}
+  /// [google.cloud.cpp.compute.machine_images.v1.GetMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L149}
   /// [google.cloud.cpp.compute.v1.MachineImage]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13397}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-  GetMachineImages(std::string const& project, std::string const& machine_image, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImages(
+      std::string const& project, std::string const& machine_image,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -205,12 +213,14 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.GetMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L137}
+  /// [google.cloud.cpp.compute.machine_images.v1.GetMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L149}
   /// [google.cloud.cpp.compute.v1.MachineImage]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13397}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-  GetMachineImages(google::cloud::cpp::compute::machine_images::v1::GetMachineImagesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImages(
+      google::cloud::cpp::compute::machine_images::v1::
+          GetMachineImagesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -233,12 +243,13 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L125}
+  /// [google.cloud.cpp.compute.machine_images.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L137}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -265,12 +276,14 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L125}
+  /// [google.cloud.cpp.compute.machine_images.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L137}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::machine_images::v1::
+          GetIamPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -301,11 +314,14 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.InsertMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L146}
+  /// [google.cloud.cpp.compute.machine_images.v1.InsertMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L158}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertMachineImages(std::string const& project, google::cloud::cpp::compute::v1::MachineImage const& machine_image_resource, Options opts = {});
+  InsertMachineImages(std::string const& project,
+                      google::cloud::cpp::compute::v1::MachineImage const&
+                          machine_image_resource,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -340,11 +356,13 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.InsertMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L146}
+  /// [google.cloud.cpp.compute.machine_images.v1.InsertMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L158}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertMachineImages(google::cloud::cpp::compute::machine_images::v1::InsertMachineImagesRequest const& request, Options opts = {});
+  InsertMachineImages(google::cloud::cpp::compute::machine_images::v1::
+                          InsertMachineImagesRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -375,12 +393,12 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.ListMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L170}
+  /// [google.cloud.cpp.compute.machine_images.v1.ListMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L186}
   /// [google.cloud.cpp.compute.v1.MachineImage]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13397}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::MachineImage>
-  ListMachineImages(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::MachineImage> ListMachineImages(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -416,12 +434,14 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.ListMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L170}
+  /// [google.cloud.cpp.compute.machine_images.v1.ListMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L186}
   /// [google.cloud.cpp.compute.v1.MachineImage]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13397}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::MachineImage>
-  ListMachineImages(google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::MachineImage> ListMachineImages(
+      google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -445,12 +465,15 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L235}
+  /// [google.cloud.cpp.compute.machine_images.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L251}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+          global_set_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -477,12 +500,14 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L235}
+  /// [google.cloud.cpp.compute.machine_images.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L251}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::machine_images::v1::
+          SetIamPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -505,12 +530,16 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L247}
+  /// [google.cloud.cpp.compute.machine_images.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L265}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -536,12 +565,14 @@ class MachineImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L247}
+  /// [google.cloud.cpp.compute.machine_images.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L265}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::machine_images::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<MachineImagesConnection> connection_;

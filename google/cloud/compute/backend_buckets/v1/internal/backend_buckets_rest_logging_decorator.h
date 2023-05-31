@@ -39,61 +39,80 @@ class BackendBucketsRestLogging : public BackendBucketsRestStub {
  public:
   ~BackendBucketsRestLogging() override = default;
   BackendBucketsRestLogging(std::shared_ptr<BackendBucketsRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                            TracingOptions tracing_options,
+                            std::set<std::string> components);
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddSignedUrlKey(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAddSignedUrlKey(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::AddSignedUrlKeyRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          AddSignedUrlKeyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteBackendBuckets(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteBackendBuckets(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::DeleteBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          DeleteBackendBucketsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteSignedUrlKey(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteSignedUrlKey(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::DeleteSignedUrlKeyRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          DeleteSignedUrlKeyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBuckets(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::GetBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          GetBackendBucketsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertBackendBuckets(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertBackendBuckets(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::InsertBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          InsertBackendBucketsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendBucketList> ListBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::ListBackendBucketsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::BackendBucketList>
+  ListBackendBuckets(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::backend_buckets::v1::
+                         ListBackendBucketsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchBackendBuckets(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchBackendBuckets(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::PatchBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          PatchBackendBucketsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetEdgeSecurityPolicy(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetEdgeSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::SetEdgeSecurityPolicyRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          SetEdgeSecurityPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateBackendBuckets(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateBackendBuckets(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::UpdateBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          UpdateBackendBucketsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
  private:
   std::shared_ptr<BackendBucketsRestStub> child_;

@@ -36,30 +36,37 @@ class LicensesTracingConnection
   ~LicensesTracingConnection() override = default;
 
   explicit LicensesTracingConnection(
-    std::shared_ptr<compute_licenses_v1::LicensesConnection> child);
+      std::shared_ptr<compute_licenses_v1::LicensesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteLicenses(google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicenses(
+      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::License>
-  GetLicenses(google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
+      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertLicenses(google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicenses(
+      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::License>
-  ListLicenses(google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::License> ListLicenses(
+      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_licenses_v1::LicensesConnection> child_;

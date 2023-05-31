@@ -29,59 +29,90 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 PacketMirroringsTracingConnection::PacketMirroringsTracingConnection(
-    std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection> child)
+    std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
+        child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
-PacketMirroringsTracingConnection::AggregatedListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::AggregatedListPacketMirroringsRequest const& request) {
-  auto span = internal::MakeSpan("compute_packet_mirrorings_v1::PacketMirroringsConnection::AggregatedListPacketMirrorings");
+PacketMirroringsTracingConnection::AggregatedListPacketMirrorings(
+    google::cloud::cpp::compute::packet_mirrorings::v1::
+        AggregatedListPacketMirroringsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
+      "AggregatedListPacketMirrorings");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListPacketMirrorings(request));
+  return internal::EndSpan(*span,
+                           child_->AggregatedListPacketMirrorings(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsTracingConnection::DeletePacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringsRequest const& request) {
+PacketMirroringsTracingConnection::DeletePacketMirrorings(
+    google::cloud::cpp::compute::packet_mirrorings::v1::
+        DeletePacketMirroringsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_packet_mirrorings_v1::PacketMirroringsConnection::DeletePacketMirrorings");
+      "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
+      "DeletePacketMirrorings");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeletePacketMirrorings(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePacketMirrorings(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-PacketMirroringsTracingConnection::GetPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::GetPacketMirroringsRequest const& request) {
-  auto span = internal::MakeSpan("compute_packet_mirrorings_v1::PacketMirroringsConnection::GetPacketMirrorings");
+PacketMirroringsTracingConnection::GetPacketMirrorings(
+    google::cloud::cpp::compute::packet_mirrorings::v1::
+        GetPacketMirroringsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
+      "GetPacketMirrorings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPacketMirrorings(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsTracingConnection::InsertPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringsRequest const& request) {
+PacketMirroringsTracingConnection::InsertPacketMirrorings(
+    google::cloud::cpp::compute::packet_mirrorings::v1::
+        InsertPacketMirroringsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_packet_mirrorings_v1::PacketMirroringsConnection::InsertPacketMirrorings");
+      "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
+      "InsertPacketMirrorings");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertPacketMirrorings(request));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertPacketMirrorings(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
-PacketMirroringsTracingConnection::ListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::ListPacketMirroringsRequest request) {
-  auto span = internal::MakeSpan("compute_packet_mirrorings_v1::PacketMirroringsConnection::ListPacketMirrorings");
+PacketMirroringsTracingConnection::ListPacketMirrorings(
+    google::cloud::cpp::compute::packet_mirrorings::v1::
+        ListPacketMirroringsRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
+      "ListPacketMirrorings");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListPacketMirrorings(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::PacketMirroring>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::PacketMirroring>(std::move(span),
+                                                        std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsTracingConnection::PatchPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringsRequest const& request) {
+PacketMirroringsTracingConnection::PatchPacketMirrorings(
+    google::cloud::cpp::compute::packet_mirrorings::v1::
+        PatchPacketMirroringsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_packet_mirrorings_v1::PacketMirroringsConnection::PatchPacketMirrorings");
+      "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
+      "PatchPacketMirrorings");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchPacketMirrorings(request));
+  return internal::EndSpan(std::move(span),
+                           child_->PatchPacketMirrorings(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-PacketMirroringsTracingConnection::TestIamPermissions(google::cloud::cpp::compute::packet_mirrorings::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("compute_packet_mirrorings_v1::PacketMirroringsConnection::TestIamPermissions");
+PacketMirroringsTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::packet_mirrorings::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
+      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
@@ -90,7 +121,8 @@ PacketMirroringsTracingConnection::TestIamPermissions(google::cloud::cpp::comput
 
 std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
 MakePacketMirroringsTracingConnection(
-    std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection> conn) {
+    std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<PacketMirroringsTracingConnection>(std::move(conn));

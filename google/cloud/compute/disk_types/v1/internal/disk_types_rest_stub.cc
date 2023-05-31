@@ -35,50 +35,58 @@ DefaultDiskTypesRestStub::DefaultDiskTypesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultDiskTypesRestStub::DefaultDiskTypesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
 DefaultDiskTypesRestStub::AggregatedListDiskTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disk_types::v1::
+        AggregatedListDiskTypesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::DiskTypeAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/aggregated/diskTypes"),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/aggregated/diskTypes"),
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
 DefaultDiskTypesRestStub::GetDiskTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskType>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/diskTypes/", request.disk_type(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
+                   request.zone(), "/diskTypes/", request.disk_type(), ""),
       {std::make_pair("project", request.project()),
        std::make_pair("zone", request.zone())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskTypeList>
 DefaultDiskTypesRestStub::ListDiskTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskTypeList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/diskTypes"),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
+                   request.zone(), "/diskTypes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

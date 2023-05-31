@@ -36,39 +36,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SslCertificatesRestMetadata : public SslCertificatesRestStub {
  public:
   ~SslCertificatesRestMetadata() override = default;
-  explicit SslCertificatesRestMetadata(std::shared_ptr<SslCertificatesRestStub> child);
+  explicit SslCertificatesRestMetadata(
+      std::shared_ptr<SslCertificatesRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList> AggregatedListSslCertificates(
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
+  AggregatedListSslCertificates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::ssl_certificates::v1::AggregatedListSslCertificatesRequest const& request) override;
+      google::cloud::cpp::compute::ssl_certificates::v1::
+          AggregatedListSslCertificatesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteSslCertificates(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteSslCertificates(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificatesRequest const& request) override;
+      google::cloud::cpp::compute::ssl_certificates::v1::
+          DeleteSslCertificatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::ssl_certificates::v1::GetSslCertificatesRequest const& request) override;
+      google::cloud::cpp::compute::ssl_certificates::v1::
+          GetSslCertificatesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertSslCertificates(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertSslCertificates(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificatesRequest const& request) override;
+      google::cloud::cpp::compute::ssl_certificates::v1::
+          InsertSslCertificatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificateList> ListSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::ssl_certificates::v1::ListSslCertificatesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificateList>
+  ListSslCertificates(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::ssl_certificates::v1::
+                          ListSslCertificatesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_LICENSES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_LICENSES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/licenses/v1/internal/licenses_retry_traits.h"
 #include "google/cloud/compute/licenses/v1/licenses_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -41,8 +41,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using LicensesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_licenses_v1_internal::LicensesRetryTraits>;
 
-using LicensesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_licenses_v1_internal::LicensesRetryTraits>;
+using LicensesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_licenses_v1_internal::LicensesRetryTraits>;
 
 using LicensesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -67,25 +68,33 @@ class LicensesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteLicenses(google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request);
+  DeleteLicenses(
+      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::License>
-  GetLicenses(google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
+      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertLicenses(google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request);
+  InsertLicenses(
+      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::License>
-  ListLicenses(google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::License> ListLicenses(
+      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,11 +17,10 @@
 // source: google/cloud/compute/zones/v1/zones.proto
 
 #include "google/cloud/compute/zones/v1/internal/zones_rest_stub_factory.h"
-#include "absl/strings/match.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/zones/v1/internal/zones_rest_logging_decorator.h"
 #include "google/cloud/compute/zones/v1/internal/zones_rest_metadata_decorator.h"
 #include "google/cloud/compute/zones/v1/internal/zones_rest_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/algorithm.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/rest_options.h"
+#include "absl/strings/match.h"
 #include <memory>
 
 namespace google {
@@ -36,8 +36,8 @@ namespace cloud {
 namespace compute_zones_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ZonesRestStub>
-CreateDefaultZonesRestStub(Options const& options) {
+std::shared_ptr<ZonesRestStub> CreateDefaultZonesRestStub(
+    Options const& options) {
   Options opts = options;
   if (!opts.has<UnifiedCredentialsOption>()) {
     opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
@@ -55,12 +55,10 @@ CreateDefaultZonesRestStub(Options const& options) {
   std::shared_ptr<ZonesRestStub> stub =
       std::make_shared<DefaultZonesRestStub>(std::move(opts));
   stub = std::make_shared<ZonesRestMetadata>(std::move(stub));
-  if (internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<ZonesRestLogging>(
-        std::move(stub),
-        options.get<RestTracingOptionsOption>(),
+        std::move(stub), options.get<RestTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
   }
   return stub;

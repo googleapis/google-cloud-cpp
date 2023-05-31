@@ -35,29 +35,36 @@ class RegionSslPoliciesConnectionIdempotencyPolicy {
   virtual ~RegionSslPoliciesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<RegionSslPoliciesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<RegionSslPoliciesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  DeleteRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::DeleteRegionSslPoliciesRequest const& request);
+  virtual google::cloud::Idempotency DeleteRegionSslPolicies(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          DeleteRegionSslPoliciesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::GetRegionSslPoliciesRequest const& request);
+  virtual google::cloud::Idempotency GetRegionSslPolicies(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          GetRegionSslPoliciesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::InsertRegionSslPoliciesRequest const& request);
+  virtual google::cloud::Idempotency InsertRegionSslPolicies(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          InsertRegionSslPoliciesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::ListRegionSslPoliciesRequest request);
+  virtual google::cloud::Idempotency ListRegionSslPolicies(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          ListRegionSslPoliciesRequest request);
 
-  virtual google::cloud::Idempotency
-  ListAvailableFeatures(google::cloud::cpp::compute::region_ssl_policies::v1::ListAvailableFeaturesRequest const& request);
+  virtual google::cloud::Idempotency ListAvailableFeatures(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          ListAvailableFeaturesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  PatchRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::PatchRegionSslPoliciesRequest const& request);
+  virtual google::cloud::Idempotency PatchRegionSslPolicies(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          PatchRegionSslPoliciesRequest const& request);
 };
 
 std::unique_ptr<RegionSslPoliciesConnectionIdempotencyPolicy>
-    MakeDefaultRegionSslPoliciesConnectionIdempotencyPolicy();
+MakeDefaultRegionSslPoliciesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_ssl_policies_v1

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/resource_policies/v1/resource_policies.proto
 
 #include "google/cloud/compute/resource_policies/v1/resource_policies_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_option_defaults.h"
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_tracing_connection.h"
 #include "google/cloud/compute/resource_policies/v1/resource_policies_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,53 +36,62 @@ ResourcePoliciesConnection::~ResourcePoliciesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
 ResourcePoliciesConnection::AggregatedListResourcePolicies(
-    google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest const&) {
+    google::cloud::cpp::compute::resource_policies::v1::
+        AggregatedListResourcePoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesConnection::DeleteResourcePolicies(
-    google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePoliciesRequest const&) {
+    google::cloud::cpp::compute::resource_policies::v1::
+        DeleteResourcePoliciesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
 ResourcePoliciesConnection::GetResourcePolicies(
-    google::cloud::cpp::compute::resource_policies::v1::GetResourcePoliciesRequest const&) {
+    google::cloud::cpp::compute::resource_policies::v1::
+        GetResourcePoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ResourcePoliciesConnection::GetIamPolicy(
-    google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::resource_policies::v1::
+        GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesConnection::InsertResourcePolicies(
-    google::cloud::cpp::compute::resource_policies::v1::InsertResourcePoliciesRequest const&) {
+    google::cloud::cpp::compute::resource_policies::v1::
+        InsertResourcePoliciesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy> ResourcePoliciesConnection::ListResourcePolicies(
-    google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
+ResourcePoliciesConnection::ListResourcePolicies(
+    google::cloud::cpp::compute::resource_policies::v1::
+        ListResourcePoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ResourcePoliciesConnection::SetIamPolicy(
-    google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::resource_policies::v1::
+        SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 ResourcePoliciesConnection::TestIamPermissions(
-    google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::resource_policies::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

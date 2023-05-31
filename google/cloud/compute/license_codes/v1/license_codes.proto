@@ -26,15 +26,16 @@ import "google/cloud/compute/v1/internal/common.proto";
 service LicenseCodes {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Return a specified license code. License codes are mirrored across all
   // projects that have permissions to read the License Code. *Caution* This
   // resource is intended for use only by third-party partners who are creating
-  // Cloud Marketplace images. 
-  rpc GetLicenseCodes(GetLicenseCodesRequest) returns (google.cloud.cpp.compute.v1.LicenseCode) {
+  // Cloud Marketplace images.
+  rpc GetLicenseCodes(GetLicenseCodesRequest)
+      returns (google.cloud.cpp.compute.v1.LicenseCode) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/licenseCodes/{license_code=license_code}"
     };
@@ -43,13 +44,15 @@ service LicenseCodes {
 
   // Returns permissions that a caller has on the specified resource. *Caution*
   // This resource is intended for use only by third-party partners who are
-  // creating Cloud Marketplace images. 
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  // creating Cloud Marketplace images.
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/licenseCodes/{resource=resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,test_permissions_request_resource";
   }
 }
 
@@ -71,5 +74,6 @@ message TestIamPermissionsRequest {
   string resource = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 3 [json_name = "__json_request_body"];
 }

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_INTERNAL_GLOBAL_ADDRESSES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_INTERNAL_GLOBAL_ADDRESSES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/global_addresses/v1/global_addresses_connection.h"
 #include "google/cloud/compute/global_addresses/v1/global_addresses_connection_idempotency_policy.h"
 #include "google/cloud/compute/global_addresses/v1/global_addresses_options.h"
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_rest_stub.h"
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,63 +44,99 @@ class GlobalAddressesRestConnectionImpl
   ~GlobalAddressesRestConnectionImpl() override = default;
 
   GlobalAddressesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_global_addresses_v1_internal::GlobalAddressesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_global_addresses_v1_internal::GlobalAddressesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::DeleteGlobalAddressesRequest const& request) override;
+  DeleteGlobalAddresses(
+      google::cloud::cpp::compute::global_addresses::v1::
+          DeleteGlobalAddressesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Address>
-  GetGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::GetGlobalAddressesRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::InsertGlobalAddressesRequest const& request) override;
-
-  StreamRange<google::cloud::cpp::compute::v1::Address>
-  ListGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::ListGlobalAddressesRequest request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddresses(
+      google::cloud::cpp::compute::global_addresses::v1::
+          GetGlobalAddressesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request) override;
+  InsertGlobalAddresses(
+      google::cloud::cpp::compute::global_addresses::v1::
+          InsertGlobalAddressesRequest const& request) override;
+
+  StreamRange<google::cloud::cpp::compute::v1::Address> ListGlobalAddresses(
+      google::cloud::cpp::compute::global_addresses::v1::
+          ListGlobalAddressesRequest request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<compute_global_addresses_v1::GlobalAddressesRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_global_addresses_v1::GlobalAddressesRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()) {
-      return options.get<compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()->clone();
+    if (options.has<
+            compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()) {
+      return options
+          .get<compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>()) {
-      return options.get<compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>()->clone();
+    if (options.has<compute_global_addresses_v1::
+                        GlobalAddressesBackoffPolicyOption>()) {
+      return options
+          .get<
+              compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_global_addresses_v1::GlobalAddressesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_global_addresses_v1::GlobalAddressesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_addresses_v1::GlobalAddressesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_global_addresses_v1::GlobalAddressesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_global_addresses_v1::
+                        GlobalAddressesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_global_addresses_v1::
+                   GlobalAddressesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_global_addresses_v1::GlobalAddressesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_global_addresses_v1::
+                 GlobalAddressesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_addresses_v1::GlobalAddressesPollingPolicyOption>()) {
-      return options.get<compute_global_addresses_v1::GlobalAddressesPollingPolicyOption>()->clone();
+    if (options.has<compute_global_addresses_v1::
+                        GlobalAddressesPollingPolicyOption>()) {
+      return options
+          .get<
+              compute_global_addresses_v1::GlobalAddressesPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_global_addresses_v1::GlobalAddressesPollingPolicyOption>()->clone();
+    return options_
+        .get<compute_global_addresses_v1::GlobalAddressesPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_global_addresses_v1_internal::GlobalAddressesRestStub> stub_;
+  std::shared_ptr<compute_global_addresses_v1_internal::GlobalAddressesRestStub>
+      stub_;
   Options options_;
 };
 

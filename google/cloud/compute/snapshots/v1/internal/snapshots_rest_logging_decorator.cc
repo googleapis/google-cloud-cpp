@@ -27,22 +27,25 @@ namespace compute_snapshots_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SnapshotsRestLogging::SnapshotsRestLogging(
-    std::shared_ptr<SnapshotsRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<SnapshotsRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsRestLogging::AsyncDeleteSnapshots(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const& request) {
-        return child_->AsyncDeleteSnapshots(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::snapshots::v1::
+                 DeleteSnapshotsRequest const& request) {
+        return child_->AsyncDeleteSnapshots(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -50,37 +53,42 @@ SnapshotsRestLogging::AsyncDeleteSnapshots(
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
 SnapshotsRestLogging::GetSnapshots(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const& request) {
+    google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const& request) {
-        return child_->GetSnapshots(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+              request) { return child_->GetSnapshots(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 SnapshotsRestLogging::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request) {
-        return child_->GetIamPolicy(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+              request) { return child_->GetIamPolicy(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsRestLogging::AsyncInsertSnapshots(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const& request) {
-        return child_->AsyncInsertSnapshots(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::snapshots::v1::
+                 InsertSnapshotsRequest const& request) {
+        return child_->AsyncInsertSnapshots(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -88,10 +96,12 @@ SnapshotsRestLogging::AsyncInsertSnapshots(
 StatusOr<google::cloud::cpp::compute::v1::SnapshotList>
 SnapshotsRestLogging::ListSnapshots(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const& request) {
+    google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const& request) {
+             google::cloud::cpp::compute::snapshots::v1::
+                 ListSnapshotsRequest const& request) {
         return child_->ListSnapshots(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -100,24 +110,27 @@ SnapshotsRestLogging::ListSnapshots(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 SnapshotsRestLogging::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request) {
-        return child_->SetIamPolicy(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+              request) { return child_->SetIamPolicy(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsRestLogging::AsyncSetLabels(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request) {
+             google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+                 request) {
         return child_->AsyncSetLabels(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -126,10 +139,12 @@ SnapshotsRestLogging::AsyncSetLabels(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 SnapshotsRestLogging::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::snapshots::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -139,26 +154,30 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
-future<Status>
-SnapshotsRestLogging::AsyncCancelOperation(
+future<Status> SnapshotsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }

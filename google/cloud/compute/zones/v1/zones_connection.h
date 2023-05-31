@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONES_V1_ZONES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONES_V1_ZONES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/zones/v1/internal/zones_retry_traits.h"
 #include "google/cloud/compute/zones/v1/zones_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -38,8 +38,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using ZonesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_zones_v1_internal::ZonesRetryTraits>;
 
-using ZonesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_zones_v1_internal::ZonesRetryTraits>;
+using ZonesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_zones_v1_internal::ZonesRetryTraits>;
 
 using ZonesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -63,11 +64,11 @@ class ZonesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Zone>
-  GetZones(google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
+      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::Zone>
-  ListZones(google::cloud::cpp::compute::zones::v1::ListZonesRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
+      google::cloud::cpp::compute::zones::v1::ListZonesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

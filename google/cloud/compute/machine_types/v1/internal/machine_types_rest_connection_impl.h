@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_TYPES_V1_INTERNAL_MACHINE_TYPES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_TYPES_V1_INTERNAL_MACHINE_TYPES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_rest_stub.h"
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_retry_traits.h"
 #include "google/cloud/compute/machine_types/v1/machine_types_connection.h"
 #include "google/cloud/compute/machine_types/v1/machine_types_connection_idempotency_policy.h"
 #include "google/cloud/compute/machine_types/v1/machine_types_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,49 +43,74 @@ class MachineTypesRestConnectionImpl
   ~MachineTypesRestConnectionImpl() override = default;
 
   MachineTypesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_machine_types_v1_internal::MachineTypesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_machine_types_v1_internal::MachineTypesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
-  AggregatedListMachineTypes(google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest const& request) override;
+  AggregatedListMachineTypes(
+      google::cloud::cpp::compute::machine_types::v1::
+          AggregatedListMachineTypesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::MachineType>
-  GetMachineTypes(google::cloud::cpp::compute::machine_types::v1::GetMachineTypesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineTypes(
+      google::cloud::cpp::compute::machine_types::v1::
+          GetMachineTypesRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::MachineType>
-  ListMachineTypes(google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::MachineType> ListMachineTypes(
+      google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest
+          request) override;
 
  private:
-  std::unique_ptr<compute_machine_types_v1::MachineTypesRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_machine_types_v1::MachineTypesRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_machine_types_v1::MachineTypesRetryPolicyOption>()) {
-      return options.get<compute_machine_types_v1::MachineTypesRetryPolicyOption>()->clone();
+    if (options
+            .has<compute_machine_types_v1::MachineTypesRetryPolicyOption>()) {
+      return options
+          .get<compute_machine_types_v1::MachineTypesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_machine_types_v1::MachineTypesRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_machine_types_v1::MachineTypesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_machine_types_v1::MachineTypesBackoffPolicyOption>()) {
-      return options.get<compute_machine_types_v1::MachineTypesBackoffPolicyOption>()->clone();
+    if (options
+            .has<compute_machine_types_v1::MachineTypesBackoffPolicyOption>()) {
+      return options
+          .get<compute_machine_types_v1::MachineTypesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_machine_types_v1::MachineTypesBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_machine_types_v1::MachineTypesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_machine_types_v1::MachineTypesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_machine_types_v1::MachineTypesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_machine_types_v1::MachineTypesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_machine_types_v1::MachineTypesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_machine_types_v1::
+                        MachineTypesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_machine_types_v1::
+                   MachineTypesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_machine_types_v1::MachineTypesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_machine_types_v1::
+                 MachineTypesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_machine_types_v1_internal::MachineTypesRestStub> stub_;
+  std::shared_ptr<compute_machine_types_v1_internal::MachineTypesRestStub>
+      stub_;
   Options options_;
 };
 

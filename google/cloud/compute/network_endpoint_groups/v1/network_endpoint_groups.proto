@@ -27,12 +27,14 @@ import "google/cloud/extended_operations.proto";
 service NetworkEndpointGroups {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves the list of network endpoint groups and sorts them by zone.
-  rpc AggregatedListNetworkEndpointGroups(AggregatedListNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupAggregatedList) {
+  rpc AggregatedListNetworkEndpointGroups(
+      AggregatedListNetworkEndpointGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/networkEndpointGroups"
     };
@@ -40,12 +42,14 @@ service NetworkEndpointGroups {
   }
 
   // Attach a list of network endpoints to the specified network endpoint group.
-  rpc AttachNetworkEndpoints(AttachNetworkEndpointsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AttachNetworkEndpoints(AttachNetworkEndpointsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}/attachNetworkEndpoints"
       body: "network_endpoint_groups_attach_endpoints_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,network_endpoint_group,network_endpoint_groups_attach_endpoints_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,network_endpoint_group,network_endpoint_groups_attach_endpoints_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -53,47 +57,56 @@ service NetworkEndpointGroups {
   // NEG and the VM instances they belong to are not terminated when the NEG is
   // deleted. Note that the NEG cannot be deleted if there are backend services
   // referencing it.
-  rpc DeleteNetworkEndpointGroups(DeleteNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteNetworkEndpointGroups(DeleteNetworkEndpointGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/zones/{zone=zone}/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}"
     };
-    option (google.api.method_signature) = "project,zone,network_endpoint_group";
+    option (google.api.method_signature) =
+        "project,zone,network_endpoint_group";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Detach a list of network endpoints from the specified network endpoint
   // group.
-  rpc DetachNetworkEndpoints(DetachNetworkEndpointsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DetachNetworkEndpoints(DetachNetworkEndpointsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}/detachNetworkEndpoints"
       body: "network_endpoint_groups_detach_endpoints_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,network_endpoint_group,network_endpoint_groups_detach_endpoints_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,network_endpoint_group,network_endpoint_groups_detach_endpoints_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Returns the specified network endpoint group.
-  rpc GetNetworkEndpointGroups(GetNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.NetworkEndpointGroup) {
+  rpc GetNetworkEndpointGroups(GetNetworkEndpointGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.NetworkEndpointGroup) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}"
     };
-    option (google.api.method_signature) = "project,zone,network_endpoint_group";
+    option (google.api.method_signature) =
+        "project,zone,network_endpoint_group";
   }
 
   // Creates a network endpoint group in the specified project using the
   // parameters that are included in the request.
-  rpc InsertNetworkEndpointGroups(InsertNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertNetworkEndpointGroups(InsertNetworkEndpointGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/networkEndpointGroups"
       body: "network_endpoint_group_resource"
     };
-    option (google.api.method_signature) = "project,zone,network_endpoint_group_resource";
+    option (google.api.method_signature) =
+        "project,zone,network_endpoint_group_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Retrieves the list of network endpoint groups that are located in the
   // specified project and zone.
-  rpc ListNetworkEndpointGroups(ListNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupList) {
+  rpc ListNetworkEndpointGroups(ListNetworkEndpointGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/networkEndpointGroups"
     };
@@ -101,21 +114,25 @@ service NetworkEndpointGroups {
   }
 
   // Lists the network endpoints in the specified network endpoint group.
-  rpc ListNetworkEndpoints(ListNetworkEndpointsRequest) returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupsListNetworkEndpoints) {
+  rpc ListNetworkEndpoints(ListNetworkEndpointsRequest) returns (
+      google.cloud.cpp.compute.v1.NetworkEndpointGroupsListNetworkEndpoints) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}/listNetworkEndpoints"
       body: "network_endpoint_groups_list_endpoints_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,network_endpoint_group,network_endpoint_groups_list_endpoints_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,network_endpoint_group,network_endpoint_groups_list_endpoints_request_resource";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/networkEndpointGroups/{resource=resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,resource,test_permissions_request_resource";
   }
 }
 
@@ -200,10 +217,16 @@ message AttachNetworkEndpointsRequest {
   string network_endpoint_group = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The NetworkEndpointGroupsAttachEndpointsRequest for this request.
-  optional google.cloud.cpp.compute.v1.NetworkEndpointGroupsAttachEndpointsRequest network_endpoint_groups_attach_endpoints_request_resource = 2 [json_name="__json_request_body"];
+  optional
+      google.cloud.cpp.compute.v1.NetworkEndpointGroupsAttachEndpointsRequest
+          network_endpoint_groups_attach_endpoints_request_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -219,7 +242,10 @@ message AttachNetworkEndpointsRequest {
 
   // The name of the zone where the network endpoint group is located. It should
   // comply with RFC1035.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for DeleteNetworkEndpointGroups.
@@ -229,7 +255,10 @@ message DeleteNetworkEndpointGroupsRequest {
   string network_endpoint_group = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -245,7 +274,10 @@ message DeleteNetworkEndpointGroupsRequest {
 
   // The name of the zone where the network endpoint group is located. It should
   // comply with RFC1035.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for DetachNetworkEndpoints.
@@ -255,10 +287,16 @@ message DetachNetworkEndpointsRequest {
   string network_endpoint_group = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The NetworkEndpointGroupsDetachEndpointsRequest for this request.
-  optional google.cloud.cpp.compute.v1.NetworkEndpointGroupsDetachEndpointsRequest network_endpoint_groups_detach_endpoints_request_resource = 2 [json_name="__json_request_body"];
+  optional
+      google.cloud.cpp.compute.v1.NetworkEndpointGroupsDetachEndpointsRequest
+          network_endpoint_groups_detach_endpoints_request_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -274,7 +312,10 @@ message DetachNetworkEndpointsRequest {
 
   // The name of the zone where the network endpoint group is located. It should
   // comply with RFC1035.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for GetNetworkEndpointGroups.
@@ -293,10 +334,14 @@ message GetNetworkEndpointGroupsRequest {
 // Request message for InsertNetworkEndpointGroups.
 message InsertNetworkEndpointGroupsRequest {
   // The NetworkEndpointGroup for this request.
-  optional google.cloud.cpp.compute.v1.NetworkEndpointGroup network_endpoint_group_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.NetworkEndpointGroup
+      network_endpoint_group_resource = 1 [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -312,7 +357,10 @@ message InsertNetworkEndpointGroupsRequest {
 
   // The name of the zone where you want to create the network endpoint group.
   // It should comply with RFC1035.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for ListNetworkEndpointGroups.
@@ -432,7 +480,9 @@ message ListNetworkEndpointsRequest {
   string network_endpoint_group = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The NetworkEndpointGroupsListEndpointsRequest for this request.
-  optional google.cloud.cpp.compute.v1.NetworkEndpointGroupsListEndpointsRequest network_endpoint_groups_list_endpoints_request_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.NetworkEndpointGroupsListEndpointsRequest
+      network_endpoint_groups_list_endpoints_request_resource = 4
+      [json_name = "__json_request_body"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -469,7 +519,8 @@ message TestIamPermissionsRequest {
   string resource = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 3 [json_name = "__json_request_body"];
 
   // The name of the zone for this request.
   string zone = 4 [(google.api.field_behavior) = REQUIRED];

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/licenses/v1/licenses.proto
 
 #include "google/cloud/compute/licenses/v1/licenses_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/licenses/v1/internal/licenses_option_defaults.h"
 #include "google/cloud/compute/licenses/v1/internal/licenses_tracing_connection.h"
 #include "google/cloud/compute/licenses/v1/licenses_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -38,8 +38,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesConnection::DeleteLicenses(
     google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::License>
@@ -58,12 +58,14 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesConnection::InsertLicenses(
     google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::License> LicensesConnection::ListLicenses(
-    google::cloud::cpp::compute::licenses::v1::ListLicensesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::License>
+LicensesConnection::ListLicenses(
+    google::cloud::cpp::compute::licenses::v1::
+        ListLicensesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::License>>();
 }
@@ -76,7 +78,8 @@ LicensesConnection::SetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicensesConnection::TestIamPermissions(
-    google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::licenses::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

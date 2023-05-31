@@ -17,11 +17,11 @@
 // source: google/cloud/compute/backend_services/v1/backend_services.proto
 
 #include "google/cloud/compute/backend_services/v1/backend_services_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/backend_services/v1/backend_services_options.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_option_defaults.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_rest_connection_impl.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -34,15 +34,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<BackendServicesConnection> MakeBackendServicesConnectionRest(
     ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      BackendServicesPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 BackendServicesPolicyOptionList>(options,
+                                                                  __func__);
   options = compute_backend_services_v1_internal::BackendServicesDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_backend_services_v1_internal::CreateDefaultBackendServicesRestStub(
-    options);
-  return std::make_shared<compute_backend_services_v1_internal::BackendServicesRestConnectionImpl>(
+  auto stub = compute_backend_services_v1_internal::
+      CreateDefaultBackendServicesRestStub(options);
+  return std::make_shared<
+      compute_backend_services_v1_internal::BackendServicesRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 

@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service RegionUrlMaps {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified UrlMap resource.
-  rpc DeleteRegionUrlMaps(DeleteRegionUrlMapsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteRegionUrlMaps(DeleteRegionUrlMapsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/regions/{region=region}/urlMaps/{url_map=url_map}"
     };
@@ -41,7 +42,8 @@ service RegionUrlMaps {
   }
 
   // Returns the specified UrlMap resource.
-  rpc GetRegionUrlMaps(GetRegionUrlMapsRequest) returns (google.cloud.cpp.compute.v1.UrlMap) {
+  rpc GetRegionUrlMaps(GetRegionUrlMapsRequest)
+      returns (google.cloud.cpp.compute.v1.UrlMap) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/urlMaps/{url_map=url_map}"
     };
@@ -50,7 +52,8 @@ service RegionUrlMaps {
 
   // Creates a UrlMap resource in the specified project using the data included
   // in the request.
-  rpc InsertRegionUrlMaps(InsertRegionUrlMapsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertRegionUrlMaps(InsertRegionUrlMapsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/urlMaps"
       body: "url_map_resource"
@@ -61,7 +64,8 @@ service RegionUrlMaps {
 
   // Retrieves the list of UrlMap resources available to the specified project
   // in the specified region.
-  rpc ListRegionUrlMaps(ListRegionUrlMapsRequest) returns (google.cloud.cpp.compute.v1.UrlMapList) {
+  rpc ListRegionUrlMaps(ListRegionUrlMapsRequest)
+      returns (google.cloud.cpp.compute.v1.UrlMapList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/urlMaps"
     };
@@ -71,45 +75,57 @@ service RegionUrlMaps {
   // Patches the specified UrlMap resource with the data included in the
   // request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
-  rpc PatchRegionUrlMaps(PatchRegionUrlMapsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchRegionUrlMaps(PatchRegionUrlMapsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/regions/{region=region}/urlMaps/{url_map=url_map}"
       body: "url_map_resource"
     };
-    option (google.api.method_signature) = "project,region,url_map,url_map_resource";
+    option (google.api.method_signature) =
+        "project,region,url_map,url_map_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Updates the specified UrlMap resource with the data included in the
   // request.
-  rpc UpdateRegionUrlMaps(UpdateRegionUrlMapsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateRegionUrlMaps(UpdateRegionUrlMapsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project=project}/regions/{region=region}/urlMaps/{url_map=url_map}"
       body: "url_map_resource"
     };
-    option (google.api.method_signature) = "project,region,url_map,url_map_resource";
+    option (google.api.method_signature) =
+        "project,region,url_map,url_map_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Runs static validation for the UrlMap. In particular, the tests of the
   // provided UrlMap will be run. Calling this method does NOT create the
   // UrlMap.
-  rpc Validate(ValidateRequest) returns (google.cloud.cpp.compute.v1.UrlMapsValidateResponse) {
+  rpc Validate(ValidateRequest)
+      returns (google.cloud.cpp.compute.v1.UrlMapsValidateResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/urlMaps/{url_map=url_map}/validate"
       body: "region_url_maps_validate_request_resource"
     };
-    option (google.api.method_signature) = "project,region,url_map,region_url_maps_validate_request_resource";
+    option (google.api.method_signature) =
+        "project,region,url_map,region_url_maps_validate_request_resource";
   }
 }
 
 // Request message for DeleteRegionUrlMaps.
 message DeleteRegionUrlMapsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // begin_interface: MixerMutationRequestBuilder Request ID to support
   // idempotency.
@@ -134,17 +150,24 @@ message GetRegionUrlMapsRequest {
 // Request message for InsertRegionUrlMaps.
 message InsertRegionUrlMapsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // begin_interface: MixerMutationRequestBuilder Request ID to support
   // idempotency.
   optional string request_id = 3;
 
   // The UrlMap for this request.
-  optional google.cloud.cpp.compute.v1.UrlMap url_map_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.UrlMap url_map_resource = 4
+      [json_name = "__json_request_body"];
 }
 
 // Request message for ListRegionUrlMaps.
@@ -218,10 +241,16 @@ message ListRegionUrlMapsRequest {
 // Request message for PatchRegionUrlMaps.
 message PatchRegionUrlMapsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // begin_interface: MixerMutationRequestBuilder Request ID to support
   // idempotency.
@@ -231,16 +260,23 @@ message PatchRegionUrlMapsRequest {
   string url_map = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The UrlMap for this request.
-  optional google.cloud.cpp.compute.v1.UrlMap url_map_resource = 5 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.UrlMap url_map_resource = 5
+      [json_name = "__json_request_body"];
 }
 
 // Request message for UpdateRegionUrlMaps.
 message UpdateRegionUrlMapsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // begin_interface: MixerMutationRequestBuilder Request ID to support
   // idempotency.
@@ -250,7 +286,8 @@ message UpdateRegionUrlMapsRequest {
   string url_map = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The UrlMap for this request.
-  optional google.cloud.cpp.compute.v1.UrlMap url_map_resource = 5 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.UrlMap url_map_resource = 5
+      [json_name = "__json_request_body"];
 }
 
 // Request message for Validate.
@@ -262,7 +299,9 @@ message ValidateRequest {
   string region = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The RegionUrlMapsValidateRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionUrlMapsValidateRequest region_url_maps_validate_request_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.RegionUrlMapsValidateRequest
+      region_url_maps_validate_request_resource = 3
+      [json_name = "__json_request_body"];
 
   // Name of the UrlMap resource to be validated as.
   string url_map = 4 [(google.api.field_behavior) = REQUIRED];

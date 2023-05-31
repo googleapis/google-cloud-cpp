@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGES_V1_INTERNAL_IMAGES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGES_V1_INTERNAL_IMAGES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/images/v1/images_connection.h"
 #include "google/cloud/compute/images/v1/images_connection_idempotency_policy.h"
 #include "google/cloud/compute/images/v1/images_options.h"
 #include "google/cloud/compute/images/v1/internal/images_rest_stub.h"
 #include "google/cloud/compute/images/v1/internal/images_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -38,50 +38,61 @@ namespace cloud {
 namespace compute_images_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ImagesRestConnectionImpl
-    : public compute_images_v1::ImagesConnection {
+class ImagesRestConnectionImpl : public compute_images_v1::ImagesConnection {
  public:
   ~ImagesRestConnectionImpl() override = default;
 
   ImagesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_images_v1_internal::ImagesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_images_v1_internal::ImagesRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteImages(google::cloud::cpp::compute::images::v1::DeleteImagesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImages(
+      google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Deprecate(google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Deprecate(
+      google::cloud::cpp::compute::images::v1::DeprecateRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Image>
-  GetImages(google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Image> GetImages(
+      google::cloud::cpp::compute::images::v1::GetImagesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Image>
-  GetFromFamily(google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Image> GetFromFamily(
+      google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertImages(google::cloud::cpp::compute::images::v1::InsertImagesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertImages(
+      google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Image>
-  ListImages(google::cloud::cpp::compute::images::v1::ListImagesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Image> ListImages(
+      google::cloud::cpp::compute::images::v1::ListImagesRequest request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchImages(google::cloud::cpp::compute::images::v1::PatchImagesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchImages(
+      google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(
+      google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&
+          request) override;
 
  private:
   std::unique_ptr<compute_images_v1::ImagesRetryPolicy> retry_policy() {
@@ -95,26 +106,35 @@ class ImagesRestConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_images_v1::ImagesBackoffPolicyOption>()) {
-      return options.get<compute_images_v1::ImagesBackoffPolicyOption>()->clone();
+      return options.get<compute_images_v1::ImagesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_images_v1::ImagesBackoffPolicyOption>()->clone();
+    return options_.get<compute_images_v1::ImagesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_images_v1::ImagesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<compute_images_v1::ImagesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_images_v1::ImagesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_images_v1::ImagesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            compute_images_v1::ImagesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_images_v1::ImagesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_images_v1::ImagesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_images_v1::ImagesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_images_v1::ImagesPollingPolicyOption>()) {
-      return options.get<compute_images_v1::ImagesPollingPolicyOption>()->clone();
+      return options.get<compute_images_v1::ImagesPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_images_v1::ImagesPollingPolicyOption>()->clone();
+    return options_.get<compute_images_v1::ImagesPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

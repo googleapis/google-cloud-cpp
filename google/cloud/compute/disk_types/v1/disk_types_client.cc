@@ -24,29 +24,37 @@ namespace cloud {
 namespace compute_disk_types_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DiskTypesClient::DiskTypesClient(ExperimentalTag,
-    std::shared_ptr<DiskTypesConnection> connection, Options opts)
+DiskTypesClient::DiskTypesClient(
+    ExperimentalTag, std::shared_ptr<DiskTypesConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DiskTypesClient::~DiskTypesClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
-DiskTypesClient::AggregatedListDiskTypes(std::string const& project, Options opts) {
+DiskTypesClient::AggregatedListDiskTypes(std::string const& project,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest request;
+  google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest
+      request;
   request.set_project(project);
   return connection_->AggregatedListDiskTypes(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
-DiskTypesClient::AggregatedListDiskTypes(google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest const& request, Options opts) {
+DiskTypesClient::AggregatedListDiskTypes(
+    google::cloud::cpp::compute::disk_types::v1::
+        AggregatedListDiskTypesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListDiskTypes(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-DiskTypesClient::GetDiskTypes(std::string const& project, std::string const& zone, std::string const& disk_type, Options opts) {
+DiskTypesClient::GetDiskTypes(std::string const& project,
+                              std::string const& zone,
+                              std::string const& disk_type, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest request;
   request.set_project(project);
@@ -56,13 +64,17 @@ DiskTypesClient::GetDiskTypes(std::string const& project, std::string const& zon
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-DiskTypesClient::GetDiskTypes(google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const& request, Options opts) {
+DiskTypesClient::GetDiskTypes(
+    google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDiskTypes(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::DiskType>
-DiskTypesClient::ListDiskTypes(std::string const& project, std::string const& zone, Options opts) {
+DiskTypesClient::ListDiskTypes(std::string const& project,
+                               std::string const& zone, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request;
   request.set_project(project);
@@ -71,7 +83,9 @@ DiskTypesClient::ListDiskTypes(std::string const& project, std::string const& zo
 }
 
 StreamRange<google::cloud::cpp::compute::v1::DiskType>
-DiskTypesClient::ListDiskTypes(google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request, Options opts) {
+DiskTypesClient::ListDiskTypes(
+    google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDiskTypes(std::move(request));
 }

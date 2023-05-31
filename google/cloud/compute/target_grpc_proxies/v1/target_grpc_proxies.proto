@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service TargetGrpcProxies {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified TargetGrpcProxy in the given scope
-  rpc DeleteTargetGrpcProxies(DeleteTargetGrpcProxiesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteTargetGrpcProxies(DeleteTargetGrpcProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/global/targetGrpcProxies/{target_grpc_proxy=target_grpc_proxy}"
     };
@@ -41,7 +42,8 @@ service TargetGrpcProxies {
   }
 
   // Returns the specified TargetGrpcProxy resource in the given scope.
-  rpc GetTargetGrpcProxies(GetTargetGrpcProxiesRequest) returns (google.cloud.cpp.compute.v1.TargetGrpcProxy) {
+  rpc GetTargetGrpcProxies(GetTargetGrpcProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.TargetGrpcProxy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/targetGrpcProxies/{target_grpc_proxy=target_grpc_proxy}"
     };
@@ -50,7 +52,8 @@ service TargetGrpcProxies {
 
   // Creates a TargetGrpcProxy in the specified project in the given scope using
   // the parameters that are included in the request.
-  rpc InsertTargetGrpcProxies(InsertTargetGrpcProxiesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertTargetGrpcProxies(InsertTargetGrpcProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/targetGrpcProxies"
       body: "target_grpc_proxy_resource"
@@ -60,7 +63,8 @@ service TargetGrpcProxies {
   }
 
   // Lists the TargetGrpcProxies for a project in the given scope.
-  rpc ListTargetGrpcProxies(ListTargetGrpcProxiesRequest) returns (google.cloud.cpp.compute.v1.TargetGrpcProxyList) {
+  rpc ListTargetGrpcProxies(ListTargetGrpcProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.TargetGrpcProxyList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/targetGrpcProxies"
     };
@@ -70,12 +74,14 @@ service TargetGrpcProxies {
   // Patches the specified TargetGrpcProxy resource with the data included in
   // the request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
-  rpc PatchTargetGrpcProxies(PatchTargetGrpcProxiesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchTargetGrpcProxies(PatchTargetGrpcProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/global/targetGrpcProxies/{target_grpc_proxy=target_grpc_proxy}"
       body: "target_grpc_proxy_resource"
     };
-    option (google.api.method_signature) = "project,target_grpc_proxy,target_grpc_proxy_resource";
+    option (google.api.method_signature) =
+        "project,target_grpc_proxy,target_grpc_proxy_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -83,7 +89,10 @@ service TargetGrpcProxies {
 // Request message for DeleteTargetGrpcProxies.
 message DeleteTargetGrpcProxiesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -113,7 +122,10 @@ message GetTargetGrpcProxiesRequest {
 // Request message for InsertTargetGrpcProxies.
 message InsertTargetGrpcProxiesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -128,7 +140,8 @@ message InsertTargetGrpcProxiesRequest {
   optional string request_id = 2;
 
   // The TargetGrpcProxy for this request.
-  optional google.cloud.cpp.compute.v1.TargetGrpcProxy target_grpc_proxy_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetGrpcProxy
+      target_grpc_proxy_resource = 3 [json_name = "__json_request_body"];
 }
 
 // Request message for ListTargetGrpcProxies.
@@ -199,7 +212,10 @@ message ListTargetGrpcProxiesRequest {
 // Request message for PatchTargetGrpcProxies.
 message PatchTargetGrpcProxiesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -217,5 +233,6 @@ message PatchTargetGrpcProxiesRequest {
   string target_grpc_proxy = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TargetGrpcProxy for this request.
-  optional google.cloud.cpp.compute.v1.TargetGrpcProxy target_grpc_proxy_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetGrpcProxy
+      target_grpc_proxy_resource = 4 [json_name = "__json_request_body"];
 }

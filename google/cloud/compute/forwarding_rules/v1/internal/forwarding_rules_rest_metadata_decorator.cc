@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto
 
-
 #include "google/cloud/compute/forwarding_rules/v1/internal/forwarding_rules_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,73 +33,85 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ForwardingRulesRestMetadata::ForwardingRulesRestMetadata(
     std::shared_ptr<ForwardingRulesRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
 ForwardingRulesRestMetadata::AggregatedListForwardingRules(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::forwarding_rules::v1::AggregatedListForwardingRulesRequest const& request) {
+    google::cloud::cpp::compute::forwarding_rules::v1::
+        AggregatedListForwardingRulesRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListForwardingRules(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestMetadata::AsyncDeleteForwardingRules(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRulesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::forwarding_rules::v1::
+        DeleteForwardingRulesRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteForwardingRules(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteForwardingRules(cq, std::move(rest_context),
+                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
 ForwardingRulesRestMetadata::GetForwardingRules(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::forwarding_rules::v1::GetForwardingRulesRequest const& request) {
+    google::cloud::cpp::compute::forwarding_rules::v1::
+        GetForwardingRulesRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetForwardingRules(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestMetadata::AsyncInsertForwardingRules(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRulesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::forwarding_rules::v1::
+        InsertForwardingRulesRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertForwardingRules(cq, std::move(rest_context), request);
+  return child_->AsyncInsertForwardingRules(cq, std::move(rest_context),
+                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList>
 ForwardingRulesRestMetadata::ListForwardingRules(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::forwarding_rules::v1::ListForwardingRulesRequest const& request) {
+    google::cloud::cpp::compute::forwarding_rules::v1::
+        ListForwardingRulesRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListForwardingRules(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestMetadata::AsyncPatchForwardingRules(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRulesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::forwarding_rules::v1::
+        PatchForwardingRulesRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchForwardingRules(cq, std::move(rest_context), request);
+  return child_->AsyncPatchForwardingRules(cq, std::move(rest_context),
+                                           request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestMetadata::AsyncSetLabels(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
+        request) {
   SetMetadata(*rest_context);
   return child_->AsyncSetLabels(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestMetadata::AsyncSetTarget(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
+        request) {
   SetMetadata(*rest_context);
   return child_->AsyncSetTarget(cq, std::move(rest_context), request);
 }
@@ -109,42 +120,43 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        GetRegionOperationsRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
 
-future<Status>
-ForwardingRulesRestMetadata::AsyncCancelOperation(
+future<Status> ForwardingRulesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteRegionOperationsRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }
 
 void ForwardingRulesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

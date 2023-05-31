@@ -36,39 +36,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TargetInstancesRestMetadata : public TargetInstancesRestStub {
  public:
   ~TargetInstancesRestMetadata() override = default;
-  explicit TargetInstancesRestMetadata(std::shared_ptr<TargetInstancesRestStub> child);
+  explicit TargetInstancesRestMetadata(
+      std::shared_ptr<TargetInstancesRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList> AggregatedListTargetInstances(
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
+  AggregatedListTargetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::target_instances::v1::
+          AggregatedListTargetInstancesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteTargetInstances(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteTargetInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::target_instances::v1::
+          DeleteTargetInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::target_instances::v1::GetTargetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::target_instances::v1::
+          GetTargetInstancesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertTargetInstances(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertTargetInstances(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::target_instances::v1::InsertTargetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::target_instances::v1::
+          InsertTargetInstancesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList> ListTargetInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
+  ListTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::target_instances::v1::
+                          ListTargetInstancesRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetZoneOperationsRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteZoneOperationsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

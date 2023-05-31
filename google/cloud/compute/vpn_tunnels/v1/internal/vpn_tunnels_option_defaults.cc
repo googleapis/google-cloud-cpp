@@ -34,33 +34,40 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options VpnTunnelsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_VPN_TUNNELS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_VPN_TUNNELS_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
+      std::move(options), "GOOGLE_CLOUD_CPP_VPN_TUNNELS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_VPN_TUNNELS_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<compute_vpn_tunnels_v1::VpnTunnelsRetryPolicyOption>()) {
     options.set<compute_vpn_tunnels_v1::VpnTunnelsRetryPolicyOption>(
         compute_vpn_tunnels_v1::VpnTunnelsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<compute_vpn_tunnels_v1::VpnTunnelsBackoffPolicyOption>()) {
     options.set<compute_vpn_tunnels_v1::VpnTunnelsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
   if (!options.has<compute_vpn_tunnels_v1::VpnTunnelsPollingPolicyOption>()) {
     options.set<compute_vpn_tunnels_v1::VpnTunnelsPollingPolicyOption>(
         GenericPollingPolicy<
             compute_vpn_tunnels_v1::VpnTunnelsRetryPolicyOption::Type,
             compute_vpn_tunnels_v1::VpnTunnelsBackoffPolicyOption::Type>(
-            options.get<compute_vpn_tunnels_v1::VpnTunnelsRetryPolicyOption>()->clone(),
-            options.get<compute_vpn_tunnels_v1::VpnTunnelsBackoffPolicyOption>()->clone())
+            options.get<compute_vpn_tunnels_v1::VpnTunnelsRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<compute_vpn_tunnels_v1::VpnTunnelsBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<compute_vpn_tunnels_v1::VpnTunnelsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_vpn_tunnels_v1::VpnTunnelsConnectionIdempotencyPolicyOption>(
-        compute_vpn_tunnels_v1::MakeDefaultVpnTunnelsConnectionIdempotencyPolicy());
+  if (!options.has<compute_vpn_tunnels_v1::
+                       VpnTunnelsConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        compute_vpn_tunnels_v1::VpnTunnelsConnectionIdempotencyPolicyOption>(
+        compute_vpn_tunnels_v1::
+            MakeDefaultVpnTunnelsConnectionIdempotencyPolicy());
   }
 
   return options;

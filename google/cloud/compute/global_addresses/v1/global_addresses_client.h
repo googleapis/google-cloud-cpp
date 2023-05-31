@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class GlobalAddressesClient {
  public:
-  explicit GlobalAddressesClient(ExperimentalTag, std::shared_ptr<GlobalAddressesConnection> connection, Options opts = {});
+  explicit GlobalAddressesClient(
+      ExperimentalTag, std::shared_ptr<GlobalAddressesConnection> connection,
+      Options opts = {});
   ~GlobalAddressesClient();
 
   ///@{
@@ -76,10 +78,12 @@ class GlobalAddressesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(GlobalAddressesClient const& a, GlobalAddressesClient const& b) {
+  friend bool operator==(GlobalAddressesClient const& a,
+                         GlobalAddressesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(GlobalAddressesClient const& a, GlobalAddressesClient const& b) {
+  friend bool operator!=(GlobalAddressesClient const& a,
+                         GlobalAddressesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -110,11 +114,12 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.DeleteGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L83}
+  /// [google.cloud.cpp.compute.global_addresses.v1.DeleteGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalAddresses(std::string const& project, std::string const& address, Options opts = {});
+  DeleteGlobalAddresses(std::string const& project, std::string const& address,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -146,11 +151,13 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.DeleteGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L83}
+  /// [google.cloud.cpp.compute.global_addresses.v1.DeleteGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::DeleteGlobalAddressesRequest const& request, Options opts = {});
+  DeleteGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::
+                            DeleteGlobalAddressesRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -172,12 +179,13 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.GetGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L104}
+  /// [google.cloud.cpp.compute.global_addresses.v1.GetGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L113}
   /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Address>
-  GetGlobalAddresses(std::string const& project, std::string const& address, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddresses(
+      std::string const& project, std::string const& address,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -203,12 +211,14 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.GetGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L104}
+  /// [google.cloud.cpp.compute.global_addresses.v1.GetGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L113}
   /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Address>
-  GetGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::GetGlobalAddressesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddresses(
+      google::cloud::cpp::compute::global_addresses::v1::
+          GetGlobalAddressesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -237,11 +247,14 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.InsertGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L113}
+  /// [google.cloud.cpp.compute.global_addresses.v1.InsertGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L122}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalAddresses(std::string const& project, google::cloud::cpp::compute::v1::Address const& address_resource, Options opts = {});
+  InsertGlobalAddresses(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::Address const& address_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -274,11 +287,13 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.InsertGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L113}
+  /// [google.cloud.cpp.compute.global_addresses.v1.InsertGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L122}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::InsertGlobalAddressesRequest const& request, Options opts = {});
+  InsertGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::
+                            InsertGlobalAddressesRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -308,12 +323,12 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.ListGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L134}
+  /// [google.cloud.cpp.compute.global_addresses.v1.ListGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L147}
   /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Address>
-  ListGlobalAddresses(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Address> ListGlobalAddresses(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -348,12 +363,14 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.ListGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L134}
+  /// [google.cloud.cpp.compute.global_addresses.v1.ListGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L147}
   /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Address>
-  ListGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::ListGlobalAddressesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Address> ListGlobalAddresses(
+      google::cloud::cpp::compute::global_addresses::v1::
+          ListGlobalAddressesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -383,11 +400,14 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L199}
+  /// [google.cloud.cpp.compute.global_addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L212}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+          global_set_labels_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -420,11 +440,13 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L199}
+  /// [google.cloud.cpp.compute.global_addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L212}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<GlobalAddressesConnection> connection_;

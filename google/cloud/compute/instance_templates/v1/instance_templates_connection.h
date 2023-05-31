@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_TEMPLATES_V1_INSTANCE_TEMPLATES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_TEMPLATES_V1_INSTANCE_TEMPLATES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/instance_templates/v1/instance_templates_connection_idempotency_policy.h"
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -38,11 +38,13 @@ namespace cloud {
 namespace compute_instance_templates_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using InstanceTemplatesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_instance_templates_v1_internal::InstanceTemplatesRetryTraits>;
+using InstanceTemplatesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_instance_templates_v1_internal::InstanceTemplatesRetryTraits>;
 
-using InstanceTemplatesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_instance_templates_v1_internal::InstanceTemplatesRetryTraits>;
+using InstanceTemplatesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_instance_templates_v1_internal::InstanceTemplatesRetryTraits>;
 
 using InstanceTemplatesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -52,13 +54,14 @@ using InstanceTemplatesLimitedErrorCountRetryPolicy =
  * The `InstanceTemplatesConnection` object for `InstanceTemplatesClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `InstanceTemplatesClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `InstanceTemplatesClient`.
+ * sets in `InstanceTemplatesClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `InstanceTemplatesClient`.
  *
  * To create a concrete instance, see `MakeInstanceTemplatesConnection()`.
  *
- * For mocking, see `compute_instance_templates_v1_mocks::MockInstanceTemplatesConnection`.
+ * For mocking, see
+ * `compute_instance_templates_v1_mocks::MockInstanceTemplatesConnection`.
  */
 class InstanceTemplatesConnection {
  public:
@@ -66,29 +69,39 @@ class InstanceTemplatesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
-  AggregatedListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
+  AggregatedListInstanceTemplates(
+      google::cloud::cpp::compute::instance_templates::v1::
+          AggregatedListInstanceTemplatesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplatesRequest const& request);
+  DeleteInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
+                              DeleteInstanceTemplatesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplatesRequest const& request);
+  GetInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
+                           GetInstanceTemplatesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::instance_templates::v1::
+          GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplatesRequest const& request);
+  InsertInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
+                              InsertInstanceTemplatesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
-  ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest request);
+  ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
+                            ListInstanceTemplatesRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::instance_templates::v1::
+          SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

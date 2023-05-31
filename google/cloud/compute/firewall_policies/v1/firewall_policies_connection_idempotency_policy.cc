@@ -26,87 +26,121 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-FirewallPoliciesConnectionIdempotencyPolicy::~FirewallPoliciesConnectionIdempotencyPolicy() = default;
+FirewallPoliciesConnectionIdempotencyPolicy::
+    ~FirewallPoliciesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<FirewallPoliciesConnectionIdempotencyPolicy>
 FirewallPoliciesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<FirewallPoliciesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::AddAssociation(google::cloud::cpp::compute::firewall_policies::v1::AddAssociationRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::AddAssociation(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        AddAssociationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::AddRule(google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::AddRule(
+    google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::CloneRules(google::cloud::cpp::compute::firewall_policies::v1::CloneRulesRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::CloneRules(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        CloneRulesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::DeleteFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::DeleteFirewallPoliciesRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::DeleteFirewallPolicies(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        DeleteFirewallPoliciesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::GetFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::GetFirewallPoliciesRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::GetFirewallPolicies(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        GetFirewallPoliciesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::GetAssociation(google::cloud::cpp::compute::firewall_policies::v1::GetAssociationRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::GetAssociation(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        GetAssociationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::firewall_policies::v1::GetIamPolicyRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::GetRule(google::cloud::cpp::compute::firewall_policies::v1::GetRuleRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::GetRule(
+    google::cloud::cpp::compute::firewall_policies::v1::GetRuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::InsertFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::InsertFirewallPoliciesRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::InsertFirewallPolicies(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        InsertFirewallPoliciesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::ListFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::ListFirewallPoliciesRequest) {  // NOLINT
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::ListFirewallPolicies(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        ListFirewallPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::ListAssociations(google::cloud::cpp::compute::firewall_policies::v1::ListAssociationsRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::ListAssociations(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        ListAssociationsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::Move(google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::Move(
+    google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::PatchFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::PatchFirewallPoliciesRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::PatchFirewallPolicies(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        PatchFirewallPoliciesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::PatchRule(google::cloud::cpp::compute::firewall_policies::v1::PatchRuleRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::PatchRule(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        PatchRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::RemoveAssociation(google::cloud::cpp::compute::firewall_policies::v1::RemoveAssociationRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::RemoveAssociation(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        RemoveAssociationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::RemoveRule(google::cloud::cpp::compute::firewall_policies::v1::RemoveRuleRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::RemoveRule(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        RemoveRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::firewall_policies::v1::SetIamPolicyRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::firewall_policies::v1::TestIamPermissionsRequest const&) {
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::firewall_policies::v1::
+        TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<FirewallPoliciesConnectionIdempotencyPolicy>
-    MakeDefaultFirewallPoliciesConnectionIdempotencyPolicy() {
+MakeDefaultFirewallPoliciesConnectionIdempotencyPolicy() {
   return std::make_unique<FirewallPoliciesConnectionIdempotencyPolicy>();
 }
 

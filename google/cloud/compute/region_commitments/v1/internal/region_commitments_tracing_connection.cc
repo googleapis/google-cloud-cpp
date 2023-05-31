@@ -29,56 +29,81 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 RegionCommitmentsTracingConnection::RegionCommitmentsTracingConnection(
-    std::shared_ptr<compute_region_commitments_v1::RegionCommitmentsConnection> child)
+    std::shared_ptr<compute_region_commitments_v1::RegionCommitmentsConnection>
+        child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
-RegionCommitmentsTracingConnection::AggregatedListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest const& request) {
-  auto span = internal::MakeSpan("compute_region_commitments_v1::RegionCommitmentsConnection::AggregatedListRegionCommitments");
+RegionCommitmentsTracingConnection::AggregatedListRegionCommitments(
+    google::cloud::cpp::compute::region_commitments::v1::
+        AggregatedListRegionCommitmentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_commitments_v1::RegionCommitmentsConnection::"
+      "AggregatedListRegionCommitments");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListRegionCommitments(request));
+  return internal::EndSpan(*span,
+                           child_->AggregatedListRegionCommitments(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
-RegionCommitmentsTracingConnection::GetRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::GetRegionCommitmentsRequest const& request) {
-  auto span = internal::MakeSpan("compute_region_commitments_v1::RegionCommitmentsConnection::GetRegionCommitments");
+RegionCommitmentsTracingConnection::GetRegionCommitments(
+    google::cloud::cpp::compute::region_commitments::v1::
+        GetRegionCommitmentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_commitments_v1::RegionCommitmentsConnection::"
+      "GetRegionCommitments");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRegionCommitments(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionCommitmentsTracingConnection::InsertRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::InsertRegionCommitmentsRequest const& request) {
+RegionCommitmentsTracingConnection::InsertRegionCommitments(
+    google::cloud::cpp::compute::region_commitments::v1::
+        InsertRegionCommitmentsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_commitments_v1::RegionCommitmentsConnection::InsertRegionCommitments");
+      "compute_region_commitments_v1::RegionCommitmentsConnection::"
+      "InsertRegionCommitments");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertRegionCommitments(request));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertRegionCommitments(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Commitment>
-RegionCommitmentsTracingConnection::ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest request) {
-  auto span = internal::MakeSpan("compute_region_commitments_v1::RegionCommitmentsConnection::ListRegionCommitments");
+RegionCommitmentsTracingConnection::ListRegionCommitments(
+    google::cloud::cpp::compute::region_commitments::v1::
+        ListRegionCommitmentsRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_region_commitments_v1::RegionCommitmentsConnection::"
+      "ListRegionCommitments");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListRegionCommitments(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Commitment>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::Commitment>(std::move(span),
+                                                   std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionCommitmentsTracingConnection::UpdateRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::UpdateRegionCommitmentsRequest const& request) {
+RegionCommitmentsTracingConnection::UpdateRegionCommitments(
+    google::cloud::cpp::compute::region_commitments::v1::
+        UpdateRegionCommitmentsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_commitments_v1::RegionCommitmentsConnection::UpdateRegionCommitments");
+      "compute_region_commitments_v1::RegionCommitmentsConnection::"
+      "UpdateRegionCommitments");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateRegionCommitments(request));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateRegionCommitments(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_region_commitments_v1::RegionCommitmentsConnection>
 MakeRegionCommitmentsTracingConnection(
-    std::shared_ptr<compute_region_commitments_v1::RegionCommitmentsConnection> conn) {
+    std::shared_ptr<compute_region_commitments_v1::RegionCommitmentsConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<RegionCommitmentsTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<RegionCommitmentsTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

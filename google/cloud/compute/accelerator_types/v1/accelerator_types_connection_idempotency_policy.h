@@ -35,20 +35,24 @@ class AcceleratorTypesConnectionIdempotencyPolicy {
   virtual ~AcceleratorTypesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AcceleratorTypesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<AcceleratorTypesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListAcceleratorTypes(
+      google::cloud::cpp::compute::accelerator_types::v1::
+          AggregatedListAcceleratorTypesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypesRequest const& request);
+  virtual google::cloud::Idempotency GetAcceleratorTypes(
+      google::cloud::cpp::compute::accelerator_types::v1::
+          GetAcceleratorTypesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest request);
+  virtual google::cloud::Idempotency ListAcceleratorTypes(
+      google::cloud::cpp::compute::accelerator_types::v1::
+          ListAcceleratorTypesRequest request);
 };
 
 std::unique_ptr<AcceleratorTypesConnectionIdempotencyPolicy>
-    MakeDefaultAcceleratorTypesConnectionIdempotencyPolicy();
+MakeDefaultAcceleratorTypesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_accelerator_types_v1

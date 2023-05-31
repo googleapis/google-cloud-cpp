@@ -17,11 +17,11 @@
 // source: google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto
 
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_option_defaults.h"
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_rest_connection_impl.h"
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_rest_stub_factory.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -34,15 +34,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<PacketMirroringsConnection> MakePacketMirroringsConnectionRest(
     ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      PacketMirroringsPolicyOptionList>(options, __func__);
-  options = compute_packet_mirrorings_v1_internal::PacketMirroringsDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 PacketMirroringsPolicyOptionList>(options,
+                                                                   __func__);
+  options =
+      compute_packet_mirrorings_v1_internal::PacketMirroringsDefaultOptions(
+          std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_packet_mirrorings_v1_internal::CreateDefaultPacketMirroringsRestStub(
-    options);
-  return std::make_shared<compute_packet_mirrorings_v1_internal::PacketMirroringsRestConnectionImpl>(
+  auto stub = compute_packet_mirrorings_v1_internal::
+      CreateDefaultPacketMirroringsRestStub(options);
+  return std::make_shared<compute_packet_mirrorings_v1_internal::
+                              PacketMirroringsRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 

@@ -35,26 +35,32 @@ class SslCertificatesConnectionIdempotencyPolicy {
   virtual ~SslCertificatesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SslCertificatesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SslCertificatesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::AggregatedListSslCertificatesRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListSslCertificates(
+      google::cloud::cpp::compute::ssl_certificates::v1::
+          AggregatedListSslCertificatesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificatesRequest const& request);
+  virtual google::cloud::Idempotency DeleteSslCertificates(
+      google::cloud::cpp::compute::ssl_certificates::v1::
+          DeleteSslCertificatesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::GetSslCertificatesRequest const& request);
+  virtual google::cloud::Idempotency GetSslCertificates(
+      google::cloud::cpp::compute::ssl_certificates::v1::
+          GetSslCertificatesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificatesRequest const& request);
+  virtual google::cloud::Idempotency InsertSslCertificates(
+      google::cloud::cpp::compute::ssl_certificates::v1::
+          InsertSslCertificatesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::ListSslCertificatesRequest request);
+  virtual google::cloud::Idempotency ListSslCertificates(
+      google::cloud::cpp::compute::ssl_certificates::v1::
+          ListSslCertificatesRequest request);
 };
 
 std::unique_ptr<SslCertificatesConnectionIdempotencyPolicy>
-    MakeDefaultSslCertificatesConnectionIdempotencyPolicy();
+MakeDefaultSslCertificatesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_ssl_certificates_v1

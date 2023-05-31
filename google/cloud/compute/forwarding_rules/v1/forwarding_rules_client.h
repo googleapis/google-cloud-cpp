@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ForwardingRulesClient {
  public:
-  explicit ForwardingRulesClient(ExperimentalTag, std::shared_ptr<ForwardingRulesConnection> connection, Options opts = {});
+  explicit ForwardingRulesClient(
+      ExperimentalTag, std::shared_ptr<ForwardingRulesConnection> connection,
+      Options opts = {});
   ~ForwardingRulesClient();
 
   ///@{
@@ -77,10 +79,12 @@ class ForwardingRulesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ForwardingRulesClient const& a, ForwardingRulesClient const& b) {
+  friend bool operator==(ForwardingRulesClient const& a,
+                         ForwardingRulesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ForwardingRulesClient const& a, ForwardingRulesClient const& b) {
+  friend bool operator!=(ForwardingRulesClient const& a,
+                         ForwardingRulesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -104,7 +108,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.AggregatedListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L116}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.AggregatedListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L128}
   /// [google.cloud.cpp.compute.v1.ForwardingRuleAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6630}
   ///
   // clang-format on
@@ -135,12 +139,15 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.AggregatedListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L116}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.AggregatedListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L128}
   /// [google.cloud.cpp.compute.v1.ForwardingRuleAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6630}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
-  AggregatedListForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::AggregatedListForwardingRulesRequest const& request, Options opts = {});
+  AggregatedListForwardingRules(
+      google::cloud::cpp::compute::forwarding_rules::v1::
+          AggregatedListForwardingRulesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -169,11 +176,12 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L190}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L202}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteForwardingRules(std::string const& project, std::string const& region, std::string const& forwarding_rule, Options opts = {});
+  DeleteForwardingRules(std::string const& project, std::string const& region,
+                        std::string const& forwarding_rule, Options opts = {});
 
   // clang-format off
   ///
@@ -205,11 +213,13 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L190}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L202}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRulesRequest const& request, Options opts = {});
+  DeleteForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::
+                            DeleteForwardingRulesRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -232,12 +242,13 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L214}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L232}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6344}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-  GetForwardingRules(std::string const& project, std::string const& region, std::string const& forwarding_rule, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRules(
+      std::string const& project, std::string const& region,
+      std::string const& forwarding_rule, Options opts = {});
 
   // clang-format off
   ///
@@ -263,12 +274,14 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L214}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L232}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6344}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-  GetForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::GetForwardingRulesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRules(
+      google::cloud::cpp::compute::forwarding_rules::v1::
+          GetForwardingRulesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -298,11 +311,14 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L226}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L244}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertForwardingRules(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::ForwardingRule const& forwarding_rule_resource, Options opts = {});
+  InsertForwardingRules(std::string const& project, std::string const& region,
+                        google::cloud::cpp::compute::v1::ForwardingRule const&
+                            forwarding_rule_resource,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -335,11 +351,13 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L226}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L244}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRulesRequest const& request, Options opts = {});
+  InsertForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::
+                            InsertForwardingRulesRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -371,12 +389,13 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.ListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L250}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.ListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L275}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6344}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
-  ListForwardingRules(std::string const& project, std::string const& region, Options opts = {});
+  ListForwardingRules(std::string const& project, std::string const& region,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -412,12 +431,14 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.ListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L250}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.ListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L275}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6344}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
-  ListForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::ListForwardingRulesRequest request, Options opts = {});
+  ListForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::
+                          ListForwardingRulesRequest request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -450,11 +471,15 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L318}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L343}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchForwardingRules(std::string const& project, std::string const& region, std::string const& forwarding_rule, google::cloud::cpp::compute::v1::ForwardingRule const& forwarding_rule_resource, Options opts = {});
+  PatchForwardingRules(std::string const& project, std::string const& region,
+                       std::string const& forwarding_rule,
+                       google::cloud::cpp::compute::v1::ForwardingRule const&
+                           forwarding_rule_resource,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -489,11 +514,13 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L318}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L343}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRulesRequest const& request, Options opts = {});
+  PatchForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::
+                           PatchForwardingRulesRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -524,11 +551,15 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L345}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L377}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetLabelsRequest const& region_set_labels_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
+          region_set_labels_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -561,11 +592,13 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L345}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L377}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -596,11 +629,15 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetTargetRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L372}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetTargetRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L412}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetTarget(std::string const& project, std::string const& region, std::string const& forwarding_rule, google::cloud::cpp::compute::v1::TargetReference const& target_reference_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(
+      std::string const& project, std::string const& region,
+      std::string const& forwarding_rule,
+      google::cloud::cpp::compute::v1::TargetReference const&
+          target_reference_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -633,11 +670,13 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetTargetRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L372}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetTargetRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L412}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetTarget(google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(
+      google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ForwardingRulesConnection> connection_;

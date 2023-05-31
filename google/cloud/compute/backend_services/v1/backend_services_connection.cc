@@ -17,11 +17,11 @@
 // source: google/cloud/compute/backend_services/v1/backend_services.proto
 
 #include "google/cloud/compute/backend_services/v1/backend_services_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/backend_services/v1/backend_services_options.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_option_defaults.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,102 +36,117 @@ BackendServicesConnection::~BackendServicesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::AddSignedUrlKey(
-    google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const&) {
+    google::cloud::cpp::compute::backend_services::v1::
+        AddSignedUrlKeyRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
 BackendServicesConnection::AggregatedListBackendServices(
-    google::cloud::cpp::compute::backend_services::v1::AggregatedListBackendServicesRequest const&) {
+    google::cloud::cpp::compute::backend_services::v1::
+        AggregatedListBackendServicesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::DeleteBackendServices(
-    google::cloud::cpp::compute::backend_services::v1::DeleteBackendServicesRequest const&) {
+    google::cloud::cpp::compute::backend_services::v1::
+        DeleteBackendServicesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::DeleteSignedUrlKey(
-    google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const&) {
+    google::cloud::cpp::compute::backend_services::v1::
+        DeleteSignedUrlKeyRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
 BackendServicesConnection::GetBackendServices(
-    google::cloud::cpp::compute::backend_services::v1::GetBackendServicesRequest const&) {
+    google::cloud::cpp::compute::backend_services::v1::
+        GetBackendServicesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
 BackendServicesConnection::GetHealth(
-    google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&) {
+    google::cloud::cpp::compute::backend_services::v1::
+        GetHealthRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 BackendServicesConnection::GetIamPolicy(
-    google::cloud::cpp::compute::backend_services::v1::GetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::backend_services::v1::
+        GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::InsertBackendServices(
-    google::cloud::cpp::compute::backend_services::v1::InsertBackendServicesRequest const&) {
+    google::cloud::cpp::compute::backend_services::v1::
+        InsertBackendServicesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::BackendService> BackendServicesConnection::ListBackendServices(
-    google::cloud::cpp::compute::backend_services::v1::ListBackendServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::BackendService>
+BackendServicesConnection::ListBackendServices(
+    google::cloud::cpp::compute::backend_services::v1::
+        ListBackendServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::BackendService>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::PatchBackendServices(
-    google::cloud::cpp::compute::backend_services::v1::PatchBackendServicesRequest const&) {
+    google::cloud::cpp::compute::backend_services::v1::
+        PatchBackendServicesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::SetEdgeSecurityPolicy(
-    google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const&) {
+    google::cloud::cpp::compute::backend_services::v1::
+        SetEdgeSecurityPolicyRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 BackendServicesConnection::SetIamPolicy(
-    google::cloud::cpp::compute::backend_services::v1::SetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::backend_services::v1::
+        SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::SetSecurityPolicy(
-    google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const&) {
+    google::cloud::cpp::compute::backend_services::v1::
+        SetSecurityPolicyRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::UpdateBackendServices(
-    google::cloud::cpp::compute::backend_services::v1::UpdateBackendServicesRequest const&) {
+    google::cloud::cpp::compute::backend_services::v1::
+        UpdateBackendServicesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -26,51 +26,62 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-UrlMapsConnectionIdempotencyPolicy::~UrlMapsConnectionIdempotencyPolicy() = default;
+UrlMapsConnectionIdempotencyPolicy::~UrlMapsConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<UrlMapsConnectionIdempotencyPolicy>
 UrlMapsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<UrlMapsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::AggregatedListUrlMaps(google::cloud::cpp::compute::url_maps::v1::AggregatedListUrlMapsRequest const&) {
+Idempotency UrlMapsConnectionIdempotencyPolicy::AggregatedListUrlMaps(
+    google::cloud::cpp::compute::url_maps::v1::
+        AggregatedListUrlMapsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::DeleteUrlMaps(google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&) {
+Idempotency UrlMapsConnectionIdempotencyPolicy::DeleteUrlMaps(
+    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::GetUrlMaps(google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&) {
+Idempotency UrlMapsConnectionIdempotencyPolicy::GetUrlMaps(
+    google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::InsertUrlMaps(google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&) {
+Idempotency UrlMapsConnectionIdempotencyPolicy::InsertUrlMaps(
+    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::InvalidateCache(google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&) {
+Idempotency UrlMapsConnectionIdempotencyPolicy::InvalidateCache(
+    google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::ListUrlMaps(google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest) {  // NOLINT
+Idempotency UrlMapsConnectionIdempotencyPolicy::ListUrlMaps(
+    google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::PatchUrlMaps(google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&) {
+Idempotency UrlMapsConnectionIdempotencyPolicy::PatchUrlMaps(
+    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::UpdateUrlMaps(google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&) {
+Idempotency UrlMapsConnectionIdempotencyPolicy::UpdateUrlMaps(
+    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::Validate(google::cloud::cpp::compute::url_maps::v1::ValidateRequest const&) {
+Idempotency UrlMapsConnectionIdempotencyPolicy::Validate(
+    google::cloud::cpp::compute::url_maps::v1::ValidateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<UrlMapsConnectionIdempotencyPolicy>
-    MakeDefaultUrlMapsConnectionIdempotencyPolicy() {
+MakeDefaultUrlMapsConnectionIdempotencyPolicy() {
   return std::make_unique<UrlMapsConnectionIdempotencyPolicy>();
 }
 

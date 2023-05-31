@@ -33,26 +33,35 @@ NodeTypesTracingConnection::NodeTypesTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
-NodeTypesTracingConnection::AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest const& request) {
-  auto span = internal::MakeSpan("compute_node_types_v1::NodeTypesConnection::AggregatedListNodeTypes");
+NodeTypesTracingConnection::AggregatedListNodeTypes(
+    google::cloud::cpp::compute::node_types::v1::
+        AggregatedListNodeTypesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_node_types_v1::NodeTypesConnection::AggregatedListNodeTypes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AggregatedListNodeTypes(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesTracingConnection::GetNodeTypes(google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const& request) {
-  auto span = internal::MakeSpan("compute_node_types_v1::NodeTypesConnection::GetNodeTypes");
+NodeTypesTracingConnection::GetNodeTypes(
+    google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_node_types_v1::NodeTypesConnection::GetNodeTypes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNodeTypes(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesTracingConnection::ListNodeTypes(google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request) {
-  auto span = internal::MakeSpan("compute_node_types_v1::NodeTypesConnection::ListNodeTypes");
+NodeTypesTracingConnection::ListNodeTypes(
+    google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_node_types_v1::NodeTypesConnection::ListNodeTypes");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListNodeTypes(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::NodeType>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::NodeType>(std::move(span),
+                                                 std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

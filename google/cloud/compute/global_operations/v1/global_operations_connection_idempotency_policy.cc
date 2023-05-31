@@ -26,35 +26,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-GlobalOperationsConnectionIdempotencyPolicy::~GlobalOperationsConnectionIdempotencyPolicy() = default;
+GlobalOperationsConnectionIdempotencyPolicy::
+    ~GlobalOperationsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<GlobalOperationsConnectionIdempotencyPolicy>
 GlobalOperationsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<GlobalOperationsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency GlobalOperationsConnectionIdempotencyPolicy::AggregatedListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::AggregatedListGlobalOperationsRequest const&) {
+Idempotency
+GlobalOperationsConnectionIdempotencyPolicy::AggregatedListGlobalOperations(
+    google::cloud::cpp::compute::global_operations::v1::
+        AggregatedListGlobalOperationsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GlobalOperationsConnectionIdempotencyPolicy::DeleteGlobalOperations(google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const&) {
+Idempotency GlobalOperationsConnectionIdempotencyPolicy::DeleteGlobalOperations(
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GlobalOperationsConnectionIdempotencyPolicy::GetGlobalOperations(google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const&) {
+Idempotency GlobalOperationsConnectionIdempotencyPolicy::GetGlobalOperations(
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GlobalOperationsConnectionIdempotencyPolicy::ListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::ListGlobalOperationsRequest) {  // NOLINT
+Idempotency GlobalOperationsConnectionIdempotencyPolicy::ListGlobalOperations(
+    google::cloud::cpp::compute::global_operations::v1::
+        ListGlobalOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GlobalOperationsConnectionIdempotencyPolicy::Wait(google::cloud::cpp::compute::global_operations::v1::WaitRequest const&) {
+Idempotency GlobalOperationsConnectionIdempotencyPolicy::Wait(
+    google::cloud::cpp::compute::global_operations::v1::WaitRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<GlobalOperationsConnectionIdempotencyPolicy>
-    MakeDefaultGlobalOperationsConnectionIdempotencyPolicy() {
+MakeDefaultGlobalOperationsConnectionIdempotencyPolicy() {
   return std::make_unique<GlobalOperationsConnectionIdempotencyPolicy>();
 }
 

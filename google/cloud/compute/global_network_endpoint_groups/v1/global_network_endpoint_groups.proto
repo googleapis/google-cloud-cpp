@@ -27,23 +27,27 @@ import "google/cloud/extended_operations.proto";
 service GlobalNetworkEndpointGroups {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Attach a network endpoint to the specified network endpoint group.
-  rpc AttachNetworkEndpoints(AttachNetworkEndpointsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AttachNetworkEndpoints(AttachNetworkEndpointsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}/attachNetworkEndpoints"
       body: "global_network_endpoint_groups_attach_endpoints_request_resource"
     };
-    option (google.api.method_signature) = "project,network_endpoint_group,global_network_endpoint_groups_attach_endpoints_request_resource";
+    option (google.api.method_signature) =
+        "project,network_endpoint_group,global_network_endpoint_groups_attach_endpoints_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Deletes the specified network endpoint group.Note that the NEG cannot be
   // deleted if there are backend services referencing it.
-  rpc DeleteGlobalNetworkEndpointGroups(DeleteGlobalNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteGlobalNetworkEndpointGroups(
+      DeleteGlobalNetworkEndpointGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/global/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}"
     };
@@ -52,17 +56,20 @@ service GlobalNetworkEndpointGroups {
   }
 
   // Detach the network endpoint from the specified network endpoint group.
-  rpc DetachNetworkEndpoints(DetachNetworkEndpointsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DetachNetworkEndpoints(DetachNetworkEndpointsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}/detachNetworkEndpoints"
       body: "global_network_endpoint_groups_detach_endpoints_request_resource"
     };
-    option (google.api.method_signature) = "project,network_endpoint_group,global_network_endpoint_groups_detach_endpoints_request_resource";
+    option (google.api.method_signature) =
+        "project,network_endpoint_group,global_network_endpoint_groups_detach_endpoints_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Returns the specified network endpoint group.
-  rpc GetGlobalNetworkEndpointGroups(GetGlobalNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.NetworkEndpointGroup) {
+  rpc GetGlobalNetworkEndpointGroups(GetGlobalNetworkEndpointGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.NetworkEndpointGroup) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}"
     };
@@ -71,18 +78,22 @@ service GlobalNetworkEndpointGroups {
 
   // Creates a network endpoint group in the specified project using the
   // parameters that are included in the request.
-  rpc InsertGlobalNetworkEndpointGroups(InsertGlobalNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertGlobalNetworkEndpointGroups(
+      InsertGlobalNetworkEndpointGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/networkEndpointGroups"
       body: "network_endpoint_group_resource"
     };
-    option (google.api.method_signature) = "project,network_endpoint_group_resource";
+    option (google.api.method_signature) =
+        "project,network_endpoint_group_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Retrieves the list of network endpoint groups that are located in the
   // specified project.
-  rpc ListGlobalNetworkEndpointGroups(ListGlobalNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupList) {
+  rpc ListGlobalNetworkEndpointGroups(ListGlobalNetworkEndpointGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/networkEndpointGroups"
     };
@@ -90,7 +101,8 @@ service GlobalNetworkEndpointGroups {
   }
 
   // Lists the network endpoints in the specified network endpoint group.
-  rpc ListNetworkEndpoints(ListNetworkEndpointsRequest) returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupsListNetworkEndpoints) {
+  rpc ListNetworkEndpoints(ListNetworkEndpointsRequest) returns (
+      google.cloud.cpp.compute.v1.NetworkEndpointGroupsListNetworkEndpoints) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}/listNetworkEndpoints"
       body: "*"
@@ -102,14 +114,20 @@ service GlobalNetworkEndpointGroups {
 // Request message for AttachNetworkEndpoints.
 message AttachNetworkEndpointsRequest {
   // The GlobalNetworkEndpointGroupsAttachEndpointsRequest for this request.
-  optional google.cloud.cpp.compute.v1.GlobalNetworkEndpointGroupsAttachEndpointsRequest global_network_endpoint_groups_attach_endpoints_request_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1
+      .GlobalNetworkEndpointGroupsAttachEndpointsRequest
+          global_network_endpoint_groups_attach_endpoints_request_resource = 1
+      [json_name = "__json_request_body"];
 
   // The name of the network endpoint group where you are attaching network
   // endpoints to. It should comply with RFC1035.
   string network_endpoint_group = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -131,7 +149,10 @@ message DeleteGlobalNetworkEndpointGroupsRequest {
   string network_endpoint_group = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -149,14 +170,20 @@ message DeleteGlobalNetworkEndpointGroupsRequest {
 // Request message for DetachNetworkEndpoints.
 message DetachNetworkEndpointsRequest {
   // The GlobalNetworkEndpointGroupsDetachEndpointsRequest for this request.
-  optional google.cloud.cpp.compute.v1.GlobalNetworkEndpointGroupsDetachEndpointsRequest global_network_endpoint_groups_detach_endpoints_request_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1
+      .GlobalNetworkEndpointGroupsDetachEndpointsRequest
+          global_network_endpoint_groups_detach_endpoints_request_resource = 1
+      [json_name = "__json_request_body"];
 
   // The name of the network endpoint group where you are removing network
   // endpoints. It should comply with RFC1035.
   string network_endpoint_group = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -183,10 +210,14 @@ message GetGlobalNetworkEndpointGroupsRequest {
 // Request message for InsertGlobalNetworkEndpointGroups.
 message InsertGlobalNetworkEndpointGroupsRequest {
   // The NetworkEndpointGroup for this request.
-  optional google.cloud.cpp.compute.v1.NetworkEndpointGroup network_endpoint_group_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.NetworkEndpointGroup
+      network_endpoint_group_resource = 1 [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

@@ -34,33 +34,48 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ForwardingRulesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_FORWARDING_RULES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_FORWARDING_RULES_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption>()) {
+      std::move(options), "GOOGLE_CLOUD_CPP_FORWARDING_RULES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_FORWARDING_RULES_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<
+          compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption>()) {
     options.set<compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption>(
         compute_forwarding_rules_v1::ForwardingRulesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
-  }
-  if (!options.has<compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption>()) {
-    options.set<compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
-  }
-  if (!options.has<compute_forwarding_rules_v1::ForwardingRulesPollingPolicyOption>()) {
-    options.set<compute_forwarding_rules_v1::ForwardingRulesPollingPolicyOption>(
-        GenericPollingPolicy<
-            compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption::Type,
-            compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption::Type>(
-            options.get<compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption>()->clone(),
-            options.get<compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption>()->clone())
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<compute_forwarding_rules_v1::ForwardingRulesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_forwarding_rules_v1::ForwardingRulesConnectionIdempotencyPolicyOption>(
-        compute_forwarding_rules_v1::MakeDefaultForwardingRulesConnectionIdempotencyPolicy());
+  if (!options.has<
+          compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption>()) {
+    options
+        .set<compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
+  }
+  if (!options.has<
+          compute_forwarding_rules_v1::ForwardingRulesPollingPolicyOption>()) {
+    options.set<
+        compute_forwarding_rules_v1::ForwardingRulesPollingPolicyOption>(
+        GenericPollingPolicy<
+            compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption::Type,
+            compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption::
+                Type>(options
+                          .get<compute_forwarding_rules_v1::
+                                   ForwardingRulesRetryPolicyOption>()
+                          ->clone(),
+                      options
+                          .get<compute_forwarding_rules_v1::
+                                   ForwardingRulesBackoffPolicyOption>()
+                          ->clone())
+            .clone());
+  }
+  if (!options.has<compute_forwarding_rules_v1::
+                       ForwardingRulesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_forwarding_rules_v1::
+                    ForwardingRulesConnectionIdempotencyPolicyOption>(
+        compute_forwarding_rules_v1::
+            MakeDefaultForwardingRulesConnectionIdempotencyPolicy());
   }
 
   return options;

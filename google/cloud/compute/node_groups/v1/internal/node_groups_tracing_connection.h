@@ -36,48 +36,62 @@ class NodeGroupsTracingConnection
   ~NodeGroupsTracingConnection() override = default;
 
   explicit NodeGroupsTracingConnection(
-    std::shared_ptr<compute_node_groups_v1::NodeGroupsConnection> child);
+      std::shared_ptr<compute_node_groups_v1::NodeGroupsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddNodes(google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddNodes(
+      google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
-  AggregatedListNodeGroups(google::cloud::cpp::compute::node_groups::v1::AggregatedListNodeGroupsRequest const& request) override;
+  AggregatedListNodeGroups(
+      google::cloud::cpp::compute::node_groups::v1::
+          AggregatedListNodeGroupsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeGroups(google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroups(
+      google::cloud::cpp::compute::node_groups::v1::
+          DeleteNodeGroupsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodes(google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodes(
+      google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
-  GetNodeGroups(google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
+      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeGroups(google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNodeGroups(
+      google::cloud::cpp::compute::node_groups::v1::
+          InsertNodeGroupsRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
-  ListNodeGroups(google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::NodeGroup> ListNodeGroups(
+      google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>
-  ListNodes(google::cloud::cpp::compute::node_groups::v1::ListNodesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode> ListNodes(
+      google::cloud::cpp::compute::node_groups::v1::ListNodesRequest request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNodeGroups(google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNodeGroups(
+      google::cloud::cpp::compute::node_groups::v1::
+          PatchNodeGroupsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetNodeTemplate(google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNodeTemplate(
+      google::cloud::cpp::compute::node_groups::v1::
+          SetNodeTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::node_groups::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::node_groups::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_node_groups_v1::NodeGroupsConnection> child_;

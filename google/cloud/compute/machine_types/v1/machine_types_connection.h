@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_TYPES_V1_MACHINE_TYPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_TYPES_V1_MACHINE_TYPES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_retry_traits.h"
 #include "google/cloud/compute/machine_types/v1/machine_types_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_machine_types_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using MachineTypesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_machine_types_v1_internal::MachineTypesRetryTraits>;
+using MachineTypesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_machine_types_v1_internal::MachineTypesRetryTraits>;
 
-using MachineTypesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_machine_types_v1_internal::MachineTypesRetryTraits>;
+using MachineTypesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_machine_types_v1_internal::MachineTypesRetryTraits>;
 
 using MachineTypesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -55,7 +57,8 @@ using MachineTypesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeMachineTypesConnection()`.
  *
- * For mocking, see `compute_machine_types_v1_mocks::MockMachineTypesConnection`.
+ * For mocking, see
+ * `compute_machine_types_v1_mocks::MockMachineTypesConnection`.
  */
 class MachineTypesConnection {
  public:
@@ -64,13 +67,18 @@ class MachineTypesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
-  AggregatedListMachineTypes(google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest const& request);
+  AggregatedListMachineTypes(
+      google::cloud::cpp::compute::machine_types::v1::
+          AggregatedListMachineTypesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::MachineType>
-  GetMachineTypes(google::cloud::cpp::compute::machine_types::v1::GetMachineTypesRequest const& request);
+  GetMachineTypes(google::cloud::cpp::compute::machine_types::v1::
+                      GetMachineTypesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::MachineType>
-  ListMachineTypes(google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest request);
+  ListMachineTypes(
+      google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

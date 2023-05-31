@@ -37,48 +37,61 @@ class RegionDisksConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<RegionDisksConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  AddResourcePolicies(google::cloud::cpp::compute::region_disks::v1::AddResourcePoliciesRequest const& request);
+  virtual google::cloud::Idempotency AddResourcePolicies(
+      google::cloud::cpp::compute::region_disks::v1::
+          AddResourcePoliciesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateSnapshot(google::cloud::cpp::compute::region_disks::v1::CreateSnapshotRequest const& request);
+  virtual google::cloud::Idempotency CreateSnapshot(
+      google::cloud::cpp::compute::region_disks::v1::
+          CreateSnapshotRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteRegionDisks(google::cloud::cpp::compute::region_disks::v1::DeleteRegionDisksRequest const& request);
+  virtual google::cloud::Idempotency DeleteRegionDisks(
+      google::cloud::cpp::compute::region_disks::v1::
+          DeleteRegionDisksRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetRegionDisks(google::cloud::cpp::compute::region_disks::v1::GetRegionDisksRequest const& request);
+  virtual google::cloud::Idempotency GetRegionDisks(
+      google::cloud::cpp::compute::region_disks::v1::
+          GetRegionDisksRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertRegionDisks(google::cloud::cpp::compute::region_disks::v1::InsertRegionDisksRequest const& request);
+  virtual google::cloud::Idempotency InsertRegionDisks(
+      google::cloud::cpp::compute::region_disks::v1::
+          InsertRegionDisksRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListRegionDisks(google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest request);
+  virtual google::cloud::Idempotency ListRegionDisks(
+      google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  RemoveResourcePolicies(google::cloud::cpp::compute::region_disks::v1::RemoveResourcePoliciesRequest const& request);
+  virtual google::cloud::Idempotency RemoveResourcePolicies(
+      google::cloud::cpp::compute::region_disks::v1::
+          RemoveResourcePoliciesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  Resize(google::cloud::cpp::compute::region_disks::v1::ResizeRequest const& request);
+  virtual google::cloud::Idempotency Resize(
+      google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::cloud::cpp::compute::region_disks::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::region_disks::v1::SetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SetLabels(google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const& request);
+  virtual google::cloud::Idempotency SetLabels(
+      google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::cloud::cpp::compute::region_disks::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::region_disks::v1::
+          TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateRegionDisks(google::cloud::cpp::compute::region_disks::v1::UpdateRegionDisksRequest const& request);
+  virtual google::cloud::Idempotency UpdateRegionDisks(
+      google::cloud::cpp::compute::region_disks::v1::
+          UpdateRegionDisksRequest const& request);
 };
 
 std::unique_ptr<RegionDisksConnectionIdempotencyPolicy>
-    MakeDefaultRegionDisksConnectionIdempotencyPolicy();
+MakeDefaultRegionDisksConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_disks_v1

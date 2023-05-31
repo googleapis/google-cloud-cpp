@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_OPERATIONS_V1_INTERNAL_GLOBAL_OPERATIONS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_OPERATIONS_V1_INTERNAL_GLOBAL_OPERATIONS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/global_operations/v1/global_operations_connection.h"
 #include "google/cloud/compute/global_operations/v1/global_operations_connection_idempotency_policy.h"
 #include "google/cloud/compute/global_operations/v1/global_operations_options.h"
 #include "google/cloud/compute/global_operations/v1/internal/global_operations_rest_stub.h"
 #include "google/cloud/compute/global_operations/v1/internal/global_operations_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,55 +43,87 @@ class GlobalOperationsRestConnectionImpl
   ~GlobalOperationsRestConnectionImpl() override = default;
 
   GlobalOperationsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_global_operations_v1_internal::GlobalOperationsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_global_operations_v1_internal::GlobalOperationsRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
-  AggregatedListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::AggregatedListGlobalOperationsRequest const& request) override;
+  AggregatedListGlobalOperations(
+      google::cloud::cpp::compute::global_operations::v1::
+          AggregatedListGlobalOperationsRequest const& request) override;
 
-  Status
-  DeleteGlobalOperations(google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) override;
+  Status DeleteGlobalOperations(
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetGlobalOperations(google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperations(
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::ListGlobalOperationsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Operation> ListGlobalOperations(
+      google::cloud::cpp::compute::global_operations::v1::
+          ListGlobalOperationsRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Wait(google::cloud::cpp::compute::global_operations::v1::WaitRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
+      google::cloud::cpp::compute::global_operations::v1::WaitRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<compute_global_operations_v1::GlobalOperationsRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_global_operations_v1::GlobalOperationsRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_operations_v1::GlobalOperationsRetryPolicyOption>()) {
-      return options.get<compute_global_operations_v1::GlobalOperationsRetryPolicyOption>()->clone();
+    if (options.has<compute_global_operations_v1::
+                        GlobalOperationsRetryPolicyOption>()) {
+      return options
+          .get<
+              compute_global_operations_v1::GlobalOperationsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_global_operations_v1::GlobalOperationsRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_global_operations_v1::GlobalOperationsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_operations_v1::GlobalOperationsBackoffPolicyOption>()) {
-      return options.get<compute_global_operations_v1::GlobalOperationsBackoffPolicyOption>()->clone();
+    if (options.has<compute_global_operations_v1::
+                        GlobalOperationsBackoffPolicyOption>()) {
+      return options
+          .get<compute_global_operations_v1::
+                   GlobalOperationsBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_global_operations_v1::GlobalOperationsBackoffPolicyOption>()->clone();
+    return options_
+        .get<
+            compute_global_operations_v1::GlobalOperationsBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_global_operations_v1::GlobalOperationsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_global_operations_v1::GlobalOperationsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_operations_v1::GlobalOperationsConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_global_operations_v1::GlobalOperationsConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_global_operations_v1::
+                        GlobalOperationsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_global_operations_v1::
+                   GlobalOperationsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_global_operations_v1::GlobalOperationsConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_global_operations_v1::
+                 GlobalOperationsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_global_operations_v1_internal::GlobalOperationsRestStub> stub_;
+  std::shared_ptr<
+      compute_global_operations_v1_internal::GlobalOperationsRestStub>
+      stub_;
   Options options_;
 };
 

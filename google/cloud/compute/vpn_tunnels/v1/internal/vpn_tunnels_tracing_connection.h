@@ -36,27 +36,34 @@ class VpnTunnelsTracingConnection
   ~VpnTunnelsTracingConnection() override = default;
 
   explicit VpnTunnelsTracingConnection(
-    std::shared_ptr<compute_vpn_tunnels_v1::VpnTunnelsConnection> child);
+      std::shared_ptr<compute_vpn_tunnels_v1::VpnTunnelsConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
-  AggregatedListVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::AggregatedListVpnTunnelsRequest const& request) override;
+  AggregatedListVpnTunnels(
+      google::cloud::cpp::compute::vpn_tunnels::v1::
+          AggregatedListVpnTunnelsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnels(
+      google::cloud::cpp::compute::vpn_tunnels::v1::
+          DeleteVpnTunnelsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
-  GetVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnels(
+      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnels(
+      google::cloud::cpp::compute::vpn_tunnels::v1::
+          InsertVpnTunnelsRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>
-  ListVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::VpnTunnel> ListVpnTunnels(
+      google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<compute_vpn_tunnels_v1::VpnTunnelsConnection> child_;

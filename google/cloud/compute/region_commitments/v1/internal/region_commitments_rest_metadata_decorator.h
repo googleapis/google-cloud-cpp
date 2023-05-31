@@ -36,39 +36,52 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionCommitmentsRestMetadata : public RegionCommitmentsRestStub {
  public:
   ~RegionCommitmentsRestMetadata() override = default;
-  explicit RegionCommitmentsRestMetadata(std::shared_ptr<RegionCommitmentsRestStub> child);
+  explicit RegionCommitmentsRestMetadata(
+      std::shared_ptr<RegionCommitmentsRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList> AggregatedListRegionCommitments(
+  StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
+  AggregatedListRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::region_commitments::v1::
+          AggregatedListRegionCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_commitments::v1::GetRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::region_commitments::v1::
+          GetRegionCommitmentsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertRegionCommitments(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertRegionCommitments(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_commitments::v1::InsertRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::region_commitments::v1::
+          InsertRegionCommitmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::CommitmentList> ListRegionCommitments(
+  StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
+  ListRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::region_commitments::v1::
+          ListRegionCommitmentsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateRegionCommitments(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateRegionCommitments(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_commitments::v1::UpdateRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::region_commitments::v1::
+          UpdateRegionCommitmentsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

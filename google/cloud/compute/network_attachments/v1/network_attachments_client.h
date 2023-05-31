@@ -64,23 +64,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NetworkAttachmentsClient {
  public:
-  explicit NetworkAttachmentsClient(ExperimentalTag, std::shared_ptr<NetworkAttachmentsConnection> connection, Options opts = {});
+  explicit NetworkAttachmentsClient(
+      ExperimentalTag, std::shared_ptr<NetworkAttachmentsConnection> connection,
+      Options opts = {});
   ~NetworkAttachmentsClient();
 
   ///@{
   /// @name Copy and move support
   NetworkAttachmentsClient(NetworkAttachmentsClient const&) = default;
-  NetworkAttachmentsClient& operator=(NetworkAttachmentsClient const&) = default;
+  NetworkAttachmentsClient& operator=(NetworkAttachmentsClient const&) =
+      default;
   NetworkAttachmentsClient(NetworkAttachmentsClient&&) = default;
   NetworkAttachmentsClient& operator=(NetworkAttachmentsClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(NetworkAttachmentsClient const& a, NetworkAttachmentsClient const& b) {
+  friend bool operator==(NetworkAttachmentsClient const& a,
+                         NetworkAttachmentsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(NetworkAttachmentsClient const& a, NetworkAttachmentsClient const& b) {
+  friend bool operator!=(NetworkAttachmentsClient const& a,
+                         NetworkAttachmentsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -105,12 +110,13 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.AggregatedListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L109}
+  /// [google.cloud.cpp.compute.network_attachments.v1.AggregatedListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L120}
   /// [google.cloud.cpp.compute.v1.NetworkAttachmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14379}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
-  AggregatedListNetworkAttachments(std::string const& project, Options opts = {});
+  AggregatedListNetworkAttachments(std::string const& project,
+                                   Options opts = {});
 
   // clang-format off
   ///
@@ -137,12 +143,15 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.AggregatedListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L109}
+  /// [google.cloud.cpp.compute.network_attachments.v1.AggregatedListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L120}
   /// [google.cloud.cpp.compute.v1.NetworkAttachmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14379}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
-  AggregatedListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::AggregatedListNetworkAttachmentsRequest const& request, Options opts = {});
+  AggregatedListNetworkAttachments(
+      google::cloud::cpp::compute::network_attachments::v1::
+          AggregatedListNetworkAttachmentsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -171,11 +180,14 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.DeleteNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L183}
+  /// [google.cloud.cpp.compute.network_attachments.v1.DeleteNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L194}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkAttachments(std::string const& project, std::string const& region, std::string const& network_attachment, Options opts = {});
+  DeleteNetworkAttachments(std::string const& project,
+                           std::string const& region,
+                           std::string const& network_attachment,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -207,11 +219,14 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.DeleteNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L183}
+  /// [google.cloud.cpp.compute.network_attachments.v1.DeleteNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L194}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentsRequest const& request, Options opts = {});
+  DeleteNetworkAttachments(
+      google::cloud::cpp::compute::network_attachments::v1::
+          DeleteNetworkAttachmentsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -234,12 +249,14 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.GetNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L223}
+  /// [google.cloud.cpp.compute.network_attachments.v1.GetNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L240}
   /// [google.cloud.cpp.compute.v1.NetworkAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14310}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
-  GetNetworkAttachments(std::string const& project, std::string const& region, std::string const& network_attachment, Options opts = {});
+  GetNetworkAttachments(std::string const& project, std::string const& region,
+                        std::string const& network_attachment,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -265,12 +282,14 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.GetNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L223}
+  /// [google.cloud.cpp.compute.network_attachments.v1.GetNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L240}
   /// [google.cloud.cpp.compute.v1.NetworkAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14310}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
-  GetNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::GetNetworkAttachmentsRequest const& request, Options opts = {});
+  GetNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::
+                            GetNetworkAttachmentsRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -294,12 +313,13 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L208}
+  /// [google.cloud.cpp.compute.network_attachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L225}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -326,12 +346,14 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L208}
+  /// [google.cloud.cpp.compute.network_attachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L225}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::network_attachments::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::network_attachments::v1::
+          GetIamPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -361,11 +383,15 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.InsertNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L235}
+  /// [google.cloud.cpp.compute.network_attachments.v1.InsertNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L252}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkAttachments(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::NetworkAttachment const& network_attachment_resource, Options opts = {});
+  InsertNetworkAttachments(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::NetworkAttachment const&
+          network_attachment_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -398,11 +424,14 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.InsertNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L235}
+  /// [google.cloud.cpp.compute.network_attachments.v1.InsertNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L252}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentsRequest const& request, Options opts = {});
+  InsertNetworkAttachments(
+      google::cloud::cpp::compute::network_attachments::v1::
+          InsertNetworkAttachmentsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -433,12 +462,13 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.ListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L260}
+  /// [google.cloud.cpp.compute.network_attachments.v1.ListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L284}
   /// [google.cloud.cpp.compute.v1.NetworkAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14310}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
-  ListNetworkAttachments(std::string const& project, std::string const& region, Options opts = {});
+  ListNetworkAttachments(std::string const& project, std::string const& region,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -473,12 +503,14 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.ListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L260}
+  /// [google.cloud.cpp.compute.network_attachments.v1.ListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L284}
   /// [google.cloud.cpp.compute.v1.NetworkAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14310}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
-  ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::ListNetworkAttachmentsRequest request, Options opts = {});
+  ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::
+                             ListNetworkAttachmentsRequest request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -503,12 +535,16 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L328}
+  /// [google.cloud.cpp.compute.network_attachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L352}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetPolicyRequest const& region_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetPolicyRequest const&
+          region_set_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -535,12 +571,14 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L328}
+  /// [google.cloud.cpp.compute.network_attachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L352}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::network_attachments::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::network_attachments::v1::
+          SetIamPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -564,12 +602,17 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L343}
+  /// [google.cloud.cpp.compute.network_attachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L369}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -595,12 +638,14 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L343}
+  /// [google.cloud.cpp.compute.network_attachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L369}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::network_attachments::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::network_attachments::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<NetworkAttachmentsConnection> connection_;

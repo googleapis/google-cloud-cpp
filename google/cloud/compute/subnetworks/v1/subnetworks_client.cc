@@ -24,31 +24,41 @@ namespace cloud {
 namespace compute_subnetworks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SubnetworksClient::SubnetworksClient(ExperimentalTag,
-    std::shared_ptr<SubnetworksConnection> connection, Options opts)
+SubnetworksClient::SubnetworksClient(
+    ExperimentalTag, std::shared_ptr<SubnetworksConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SubnetworksClient::~SubnetworksClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
-SubnetworksClient::AggregatedListSubnetworks(std::string const& project, Options opts) {
+SubnetworksClient::AggregatedListSubnetworks(std::string const& project,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest request;
+  google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest
+      request;
   request.set_project(project);
   return connection_->AggregatedListSubnetworks(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
-SubnetworksClient::AggregatedListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest const& request, Options opts) {
+SubnetworksClient::AggregatedListSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::
+        AggregatedListSubnetworksRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListSubnetworks(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksClient::DeleteSubnetworks(std::string const& project, std::string const& region, std::string const& subnetwork, Options opts) {
+SubnetworksClient::DeleteSubnetworks(std::string const& project,
+                                     std::string const& region,
+                                     std::string const& subnetwork,
+                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest request;
+  google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest
+      request;
   request.set_project(project);
   request.set_region(region);
   request.set_subnetwork(subnetwork);
@@ -56,30 +66,45 @@ SubnetworksClient::DeleteSubnetworks(std::string const& project, std::string con
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksClient::DeleteSubnetworks(google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest const& request, Options opts) {
+SubnetworksClient::DeleteSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::
+        DeleteSubnetworksRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSubnetworks(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksClient::ExpandIpCidrRange(std::string const& project, std::string const& region, std::string const& subnetwork, google::cloud::cpp::compute::v1::SubnetworksExpandIpCidrRangeRequest const& subnetworks_expand_ip_cidr_range_request_resource, Options opts) {
+SubnetworksClient::ExpandIpCidrRange(
+    std::string const& project, std::string const& region,
+    std::string const& subnetwork,
+    google::cloud::cpp::compute::v1::SubnetworksExpandIpCidrRangeRequest const&
+        subnetworks_expand_ip_cidr_range_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest request;
+  google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest
+      request;
   request.set_project(project);
   request.set_region(region);
   request.set_subnetwork(subnetwork);
-  *request.mutable_subnetworks_expand_ip_cidr_range_request_resource() = subnetworks_expand_ip_cidr_range_request_resource;
+  *request.mutable_subnetworks_expand_ip_cidr_range_request_resource() =
+      subnetworks_expand_ip_cidr_range_request_resource;
   return connection_->ExpandIpCidrRange(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksClient::ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request, Options opts) {
+SubnetworksClient::ExpandIpCidrRange(
+    google::cloud::cpp::compute::subnetworks::v1::
+        ExpandIpCidrRangeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExpandIpCidrRange(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
-SubnetworksClient::GetSubnetworks(std::string const& project, std::string const& region, std::string const& subnetwork, Options opts) {
+SubnetworksClient::GetSubnetworks(std::string const& project,
+                                  std::string const& region,
+                                  std::string const& subnetwork, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest request;
   request.set_project(project);
@@ -89,13 +114,18 @@ SubnetworksClient::GetSubnetworks(std::string const& project, std::string const&
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
-SubnetworksClient::GetSubnetworks(google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const& request, Options opts) {
+SubnetworksClient::GetSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSubnetworks(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-SubnetworksClient::GetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, Options opts) {
+SubnetworksClient::GetIamPolicy(std::string const& project,
+                                std::string const& region,
+                                std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest request;
   request.set_project(project);
@@ -105,15 +135,22 @@ SubnetworksClient::GetIamPolicy(std::string const& project, std::string const& r
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-SubnetworksClient::GetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request, Options opts) {
+SubnetworksClient::GetIamPolicy(
+    google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksClient::InsertSubnetworks(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Subnetwork const& subnetwork_resource, Options opts) {
+SubnetworksClient::InsertSubnetworks(
+    std::string const& project, std::string const& region,
+    google::cloud::cpp::compute::v1::Subnetwork const& subnetwork_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest request;
+  google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest
+      request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_subnetwork_resource() = subnetwork_resource;
@@ -121,13 +158,17 @@ SubnetworksClient::InsertSubnetworks(std::string const& project, std::string con
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksClient::InsertSubnetworks(google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest const& request, Options opts) {
+SubnetworksClient::InsertSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::
+        InsertSubnetworksRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSubnetworks(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Subnetwork>
-SubnetworksClient::ListSubnetworks(std::string const& project, std::string const& region, Options opts) {
+SubnetworksClient::ListSubnetworks(std::string const& project,
+                                   std::string const& region, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest request;
   request.set_project(project);
@@ -136,7 +177,10 @@ SubnetworksClient::ListSubnetworks(std::string const& project, std::string const
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Subnetwork>
-SubnetworksClient::ListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest request, Options opts) {
+SubnetworksClient::ListSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSubnetworks(std::move(request));
 }
@@ -150,13 +194,19 @@ SubnetworksClient::ListUsable(std::string const& project, Options opts) {
 }
 
 StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>
-SubnetworksClient::ListUsable(google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request, Options opts) {
+SubnetworksClient::ListUsable(
+    google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListUsable(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksClient::PatchSubnetworks(std::string const& project, std::string const& region, std::string const& subnetwork, google::cloud::cpp::compute::v1::Subnetwork const& subnetwork_resource, Options opts) {
+SubnetworksClient::PatchSubnetworks(
+    std::string const& project, std::string const& region,
+    std::string const& subnetwork,
+    google::cloud::cpp::compute::v1::Subnetwork const& subnetwork_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest request;
   request.set_project(project);
@@ -167,58 +217,91 @@ SubnetworksClient::PatchSubnetworks(std::string const& project, std::string cons
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksClient::PatchSubnetworks(google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const& request, Options opts) {
+SubnetworksClient::PatchSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSubnetworks(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-SubnetworksClient::SetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetPolicyRequest const& region_set_policy_request_resource, Options opts) {
+SubnetworksClient::SetIamPolicy(
+    std::string const& project, std::string const& region,
+    std::string const& resource,
+    google::cloud::cpp::compute::v1::RegionSetPolicyRequest const&
+        region_set_policy_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_resource(resource);
-  *request.mutable_region_set_policy_request_resource() = region_set_policy_request_resource;
+  *request.mutable_region_set_policy_request_resource() =
+      region_set_policy_request_resource;
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-SubnetworksClient::SetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request, Options opts) {
+SubnetworksClient::SetIamPolicy(
+    google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksClient::SetPrivateIpGoogleAccess(std::string const& project, std::string const& region, std::string const& subnetwork, google::cloud::cpp::compute::v1::SubnetworksSetPrivateIpGoogleAccessRequest const& subnetworks_set_private_ip_google_access_request_resource, Options opts) {
+SubnetworksClient::SetPrivateIpGoogleAccess(
+    std::string const& project, std::string const& region,
+    std::string const& subnetwork,
+    google::cloud::cpp::compute::v1::
+        SubnetworksSetPrivateIpGoogleAccessRequest const&
+            subnetworks_set_private_ip_google_access_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest request;
+  google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest
+      request;
   request.set_project(project);
   request.set_region(region);
   request.set_subnetwork(subnetwork);
-  *request.mutable_subnetworks_set_private_ip_google_access_request_resource() = subnetworks_set_private_ip_google_access_request_resource;
+  *request.mutable_subnetworks_set_private_ip_google_access_request_resource() =
+      subnetworks_set_private_ip_google_access_request_resource;
   return connection_->SetPrivateIpGoogleAccess(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksClient::SetPrivateIpGoogleAccess(google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request, Options opts) {
+SubnetworksClient::SetPrivateIpGoogleAccess(
+    google::cloud::cpp::compute::subnetworks::v1::
+        SetPrivateIpGoogleAccessRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetPrivateIpGoogleAccess(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-SubnetworksClient::TestIamPermissions(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts) {
+SubnetworksClient::TestIamPermissions(
+    std::string const& project, std::string const& region,
+    std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest request;
+  google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest
+      request;
   request.set_project(project);
   request.set_region(region);
   request.set_resource(resource);
-  *request.mutable_test_permissions_request_resource() = test_permissions_request_resource;
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-SubnetworksClient::TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request, Options opts) {
+SubnetworksClient::TestIamPermissions(
+    google::cloud::cpp::compute::subnetworks::v1::
+        TestIamPermissionsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

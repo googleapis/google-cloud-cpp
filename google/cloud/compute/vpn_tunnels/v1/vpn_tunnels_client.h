@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class VpnTunnelsClient {
  public:
-  explicit VpnTunnelsClient(ExperimentalTag, std::shared_ptr<VpnTunnelsConnection> connection, Options opts = {});
+  explicit VpnTunnelsClient(ExperimentalTag,
+                            std::shared_ptr<VpnTunnelsConnection> connection,
+                            Options opts = {});
   ~VpnTunnelsClient();
 
   ///@{
@@ -105,7 +107,7 @@ class VpnTunnelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnTunnelAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30424}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L92}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L99}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
@@ -136,11 +138,13 @@ class VpnTunnelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnTunnelAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30424}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L92}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L99}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
-  AggregatedListVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::AggregatedListVpnTunnelsRequest const& request, Options opts = {});
+  AggregatedListVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::
+                               AggregatedListVpnTunnelsRequest const& request,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -169,11 +173,12 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.DeleteVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L166}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.DeleteVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L173}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteVpnTunnels(std::string const& project, std::string const& region, std::string const& vpn_tunnel, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnels(
+      std::string const& project, std::string const& region,
+      std::string const& vpn_tunnel, Options opts = {});
 
   // clang-format off
   ///
@@ -205,11 +210,13 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.DeleteVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L166}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.DeleteVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L173}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnels(
+      google::cloud::cpp::compute::vpn_tunnels::v1::
+          DeleteVpnTunnelsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -233,11 +240,12 @@ class VpnTunnelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnTunnel]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30291}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.GetVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L190}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.GetVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L203}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
-  GetVpnTunnels(std::string const& project, std::string const& region, std::string const& vpn_tunnel, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnels(
+      std::string const& project, std::string const& region,
+      std::string const& vpn_tunnel, Options opts = {});
 
   // clang-format off
   ///
@@ -264,11 +272,13 @@ class VpnTunnelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnTunnel]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30291}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.GetVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L190}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.GetVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L203}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
-  GetVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnels(
+      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -298,11 +308,13 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.InsertVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L202}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.InsertVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L215}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertVpnTunnels(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::VpnTunnel const& vpn_tunnel_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnels(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::VpnTunnel const& vpn_tunnel_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -335,11 +347,13 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.InsertVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L202}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.InsertVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L215}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnels(
+      google::cloud::cpp::compute::vpn_tunnels::v1::
+          InsertVpnTunnelsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -372,11 +386,11 @@ class VpnTunnelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnTunnel]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30291}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.ListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L226}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.ListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L246}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>
-  ListVpnTunnels(std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::VpnTunnel> ListVpnTunnels(
+      std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -413,11 +427,13 @@ class VpnTunnelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnTunnel]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30291}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.ListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L226}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.ListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L246}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>
-  ListVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::VpnTunnel> ListVpnTunnels(
+      google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -448,11 +464,15 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L294}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L314}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetLabelsRequest const& region_set_labels_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
+          region_set_labels_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -485,11 +505,13 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L294}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L314}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<VpnTunnelsConnection> connection_;

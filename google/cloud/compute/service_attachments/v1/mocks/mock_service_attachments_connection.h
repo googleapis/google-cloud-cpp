@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `ServiceAttachmentsConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ServiceAttachmentsClient`. To do so,
- * construct an object of type `ServiceAttachmentsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `ServiceAttachmentsClient`. To do
+ * so, construct an object of type `ServiceAttachmentsClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,45 +42,65 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockServiceAttachmentsConnection : public compute_service_attachments_v1::ServiceAttachmentsConnection {
+class MockServiceAttachmentsConnection
+    : public compute_service_attachments_v1::ServiceAttachmentsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>,
-  AggregatedListServiceAttachments,
-  (google::cloud::cpp::compute::service_attachments::v1::AggregatedListServiceAttachmentsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>,
+      AggregatedListServiceAttachments,
+      (google::cloud::cpp::compute::service_attachments::v1::
+           AggregatedListServiceAttachmentsRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteServiceAttachments,
-  (google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentsRequest const& request), (override));
+              DeleteServiceAttachments,
+              (google::cloud::cpp::compute::service_attachments::v1::
+                   DeleteServiceAttachmentsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>,
-  GetServiceAttachments,
-  (google::cloud::cpp::compute::service_attachments::v1::GetServiceAttachmentsRequest const& request), (override));
+              GetServiceAttachments,
+              (google::cloud::cpp::compute::service_attachments::v1::
+                   GetServiceAttachmentsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  GetIamPolicy,
-  (google::cloud::cpp::compute::service_attachments::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+              (google::cloud::cpp::compute::service_attachments::v1::
+                   GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertServiceAttachments,
-  (google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentsRequest const& request), (override));
+              InsertServiceAttachments,
+              (google::cloud::cpp::compute::service_attachments::v1::
+                   InsertServiceAttachmentsRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>,
-  ListServiceAttachments,
-  (google::cloud::cpp::compute::service_attachments::v1::ListServiceAttachmentsRequest request), (override));
+              ListServiceAttachments,
+              (google::cloud::cpp::compute::service_attachments::v1::
+                   ListServiceAttachmentsRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchServiceAttachments,
-  (google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentsRequest const& request), (override));
+              PatchServiceAttachments,
+              (google::cloud::cpp::compute::service_attachments::v1::
+                   PatchServiceAttachmentsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  SetIamPolicy,
-  (google::cloud::cpp::compute::service_attachments::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+              (google::cloud::cpp::compute::service_attachments::v1::
+                   SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::service_attachments::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::service_attachments::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

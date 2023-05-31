@@ -33,26 +33,37 @@ MachineTypesTracingConnection::MachineTypesTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
-MachineTypesTracingConnection::AggregatedListMachineTypes(google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest const& request) {
-  auto span = internal::MakeSpan("compute_machine_types_v1::MachineTypesConnection::AggregatedListMachineTypes");
+MachineTypesTracingConnection::AggregatedListMachineTypes(
+    google::cloud::cpp::compute::machine_types::v1::
+        AggregatedListMachineTypesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_machine_types_v1::MachineTypesConnection::"
+      "AggregatedListMachineTypes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AggregatedListMachineTypes(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
-MachineTypesTracingConnection::GetMachineTypes(google::cloud::cpp::compute::machine_types::v1::GetMachineTypesRequest const& request) {
-  auto span = internal::MakeSpan("compute_machine_types_v1::MachineTypesConnection::GetMachineTypes");
+MachineTypesTracingConnection::GetMachineTypes(
+    google::cloud::cpp::compute::machine_types::v1::
+        GetMachineTypesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_machine_types_v1::MachineTypesConnection::GetMachineTypes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetMachineTypes(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::MachineType>
-MachineTypesTracingConnection::ListMachineTypes(google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest request) {
-  auto span = internal::MakeSpan("compute_machine_types_v1::MachineTypesConnection::ListMachineTypes");
+MachineTypesTracingConnection::ListMachineTypes(
+    google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_machine_types_v1::MachineTypesConnection::ListMachineTypes");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListMachineTypes(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::MachineType>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::MachineType>(std::move(span),
+                                                    std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

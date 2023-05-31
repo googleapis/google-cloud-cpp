@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class LicenseCodesClient {
  public:
-  explicit LicenseCodesClient(ExperimentalTag, std::shared_ptr<LicenseCodesConnection> connection, Options opts = {});
+  explicit LicenseCodesClient(
+      ExperimentalTag, std::shared_ptr<LicenseCodesConnection> connection,
+      Options opts = {});
   ~LicenseCodesClient();
 
   ///@{
@@ -75,10 +77,12 @@ class LicenseCodesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(LicenseCodesClient const& a, LicenseCodesClient const& b) {
+  friend bool operator==(LicenseCodesClient const& a,
+                         LicenseCodesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(LicenseCodesClient const& a, LicenseCodesClient const& b) {
+  friend bool operator!=(LicenseCodesClient const& a,
+                         LicenseCodesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -88,7 +92,7 @@ class LicenseCodesClient {
   /// Return a specified license code. License codes are mirrored across all
   /// projects that have permissions to read the License Code. *Caution* This
   /// resource is intended for use only by third-party partners who are creating
-  /// Cloud Marketplace images. 
+  /// Cloud Marketplace images.
   ///
   /// @param project  Project ID for this request.
   /// @param license_code  Number corresponding to the License code resource to return.
@@ -106,19 +110,20 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L57}
+  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L60}
   /// [google.cloud.cpp.compute.v1.LicenseCode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13102}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
-  GetLicenseCodes(std::string const& project, std::string const& license_code, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
+      std::string const& project, std::string const& license_code,
+      Options opts = {});
 
   // clang-format off
   ///
   /// Return a specified license code. License codes are mirrored across all
   /// projects that have permissions to read the License Code. *Caution* This
   /// resource is intended for use only by third-party partners who are creating
-  /// Cloud Marketplace images. 
+  /// Cloud Marketplace images.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -140,18 +145,20 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L57}
+  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L60}
   /// [google.cloud.cpp.compute.v1.LicenseCode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13102}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
-  GetLicenseCodes(google::cloud::cpp::compute::license_codes::v1::GetLicenseCodesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
+      google::cloud::cpp::compute::license_codes::v1::
+          GetLicenseCodesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource. *Caution*
   /// This resource is intended for use only by third-party partners who are
-  /// creating Cloud Marketplace images. 
+  /// creating Cloud Marketplace images.
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -170,18 +177,22 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L66}
+  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L69}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource. *Caution*
   /// This resource is intended for use only by third-party partners who are
-  /// creating Cloud Marketplace images. 
+  /// creating Cloud Marketplace images.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -203,12 +214,14 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L66}
+  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L69}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<LicenseCodesConnection> connection_;

@@ -28,21 +28,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GlobalAddressesRestLogging::GlobalAddressesRestLogging(
     std::shared_ptr<GlobalAddressesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestLogging::AsyncDeleteGlobalAddresses(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_addresses::v1::DeleteGlobalAddressesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::global_addresses::v1::
+        DeleteGlobalAddressesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_addresses::v1::DeleteGlobalAddressesRequest const& request) {
-        return child_->AsyncDeleteGlobalAddresses(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::global_addresses::v1::
+                 DeleteGlobalAddressesRequest const& request) {
+        return child_->AsyncDeleteGlobalAddresses(cq, std::move(rest_context),
+                                                  request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -50,10 +53,12 @@ GlobalAddressesRestLogging::AsyncDeleteGlobalAddresses(
 StatusOr<google::cloud::cpp::compute::v1::Address>
 GlobalAddressesRestLogging::GetGlobalAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::global_addresses::v1::GetGlobalAddressesRequest const& request) {
+    google::cloud::cpp::compute::global_addresses::v1::
+        GetGlobalAddressesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::global_addresses::v1::GetGlobalAddressesRequest const& request) {
+             google::cloud::cpp::compute::global_addresses::v1::
+                 GetGlobalAddressesRequest const& request) {
         return child_->GetGlobalAddresses(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -61,14 +66,17 @@ GlobalAddressesRestLogging::GetGlobalAddresses(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestLogging::AsyncInsertGlobalAddresses(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_addresses::v1::InsertGlobalAddressesRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::global_addresses::v1::
+        InsertGlobalAddressesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_addresses::v1::InsertGlobalAddressesRequest const& request) {
-        return child_->AsyncInsertGlobalAddresses(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::global_addresses::v1::
+                 InsertGlobalAddressesRequest const& request) {
+        return child_->AsyncInsertGlobalAddresses(cq, std::move(rest_context),
+                                                  request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -76,10 +84,12 @@ GlobalAddressesRestLogging::AsyncInsertGlobalAddresses(
 StatusOr<google::cloud::cpp::compute::v1::AddressList>
 GlobalAddressesRestLogging::ListGlobalAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::global_addresses::v1::ListGlobalAddressesRequest const& request) {
+    google::cloud::cpp::compute::global_addresses::v1::
+        ListGlobalAddressesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::global_addresses::v1::ListGlobalAddressesRequest const& request) {
+             google::cloud::cpp::compute::global_addresses::v1::
+                 ListGlobalAddressesRequest const& request) {
         return child_->ListGlobalAddresses(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -87,13 +97,15 @@ GlobalAddressesRestLogging::ListGlobalAddresses(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestLogging::AsyncSetLabels(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request) {
+             google::cloud::cpp::compute::global_addresses::v1::
+                 SetLabelsRequest const& request) {
         return child_->AsyncSetLabels(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -103,26 +115,30 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetGlobalOperationsRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
-future<Status>
-GlobalAddressesRestLogging::AsyncCancelOperation(
+future<Status> GlobalAddressesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }

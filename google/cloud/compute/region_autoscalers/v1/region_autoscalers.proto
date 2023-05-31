@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service RegionAutoscalers {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified autoscaler.
-  rpc DeleteRegionAutoscalers(DeleteRegionAutoscalersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteRegionAutoscalers(DeleteRegionAutoscalersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/regions/{region=region}/autoscalers/{autoscaler=autoscaler}"
     };
@@ -41,7 +42,8 @@ service RegionAutoscalers {
   }
 
   // Returns the specified autoscaler.
-  rpc GetRegionAutoscalers(GetRegionAutoscalersRequest) returns (google.cloud.cpp.compute.v1.Autoscaler) {
+  rpc GetRegionAutoscalers(GetRegionAutoscalersRequest)
+      returns (google.cloud.cpp.compute.v1.Autoscaler) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/autoscalers/{autoscaler=autoscaler}"
     };
@@ -50,7 +52,8 @@ service RegionAutoscalers {
 
   // Creates an autoscaler in the specified project using the data included in
   // the request.
-  rpc InsertRegionAutoscalers(InsertRegionAutoscalersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertRegionAutoscalers(InsertRegionAutoscalersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/autoscalers"
       body: "autoscaler_resource"
@@ -60,7 +63,8 @@ service RegionAutoscalers {
   }
 
   // Retrieves a list of autoscalers contained within the specified region.
-  rpc ListRegionAutoscalers(ListRegionAutoscalersRequest) returns (google.cloud.cpp.compute.v1.RegionAutoscalerList) {
+  rpc ListRegionAutoscalers(ListRegionAutoscalersRequest)
+      returns (google.cloud.cpp.compute.v1.RegionAutoscalerList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/autoscalers"
     };
@@ -70,7 +74,8 @@ service RegionAutoscalers {
   // Updates an autoscaler in the specified project using the data included in
   // the request. This method supports PATCH semantics and uses the JSON merge
   // patch format and processing rules.
-  rpc PatchRegionAutoscalers(PatchRegionAutoscalersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchRegionAutoscalers(PatchRegionAutoscalersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/regions/{region=region}/autoscalers"
       body: "autoscaler_resource"
@@ -81,7 +86,8 @@ service RegionAutoscalers {
 
   // Updates an autoscaler in the specified project using the data included in
   // the request.
-  rpc UpdateRegionAutoscalers(UpdateRegionAutoscalersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateRegionAutoscalers(UpdateRegionAutoscalersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project=project}/regions/{region=region}/autoscalers"
       body: "autoscaler_resource"
@@ -97,10 +103,16 @@ message DeleteRegionAutoscalersRequest {
   string autoscaler = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -130,13 +142,20 @@ message GetRegionAutoscalersRequest {
 // Request message for InsertRegionAutoscalers.
 message InsertRegionAutoscalersRequest {
   // The Autoscaler for this request.
-  optional google.cloud.cpp.compute.v1.Autoscaler autoscaler_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Autoscaler autoscaler_resource = 1
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -225,13 +244,20 @@ message PatchRegionAutoscalersRequest {
   optional string autoscaler = 1;
 
   // The Autoscaler for this request.
-  optional google.cloud.cpp.compute.v1.Autoscaler autoscaler_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Autoscaler autoscaler_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -252,13 +278,20 @@ message UpdateRegionAutoscalersRequest {
   optional string autoscaler = 1;
 
   // The Autoscaler for this request.
-  optional google.cloud.cpp.compute.v1.Autoscaler autoscaler_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Autoscaler autoscaler_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

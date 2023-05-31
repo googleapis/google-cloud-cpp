@@ -17,11 +17,11 @@
 // source: google/cloud/compute/region_instances/v1/region_instances.proto
 
 #include "google/cloud/compute/region_instances/v1/region_instances_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_instances/v1/internal/region_instances_option_defaults.h"
 #include "google/cloud/compute/region_instances/v1/internal/region_instances_tracing_connection.h"
 #include "google/cloud/compute/region_instances/v1/region_instances_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
@@ -35,10 +35,11 @@ RegionInstancesConnection::~RegionInstancesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstancesConnection::BulkInsert(
-    google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const&) {
+    google::cloud::cpp::compute::region_instances::v1::
+        BulkInsertRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

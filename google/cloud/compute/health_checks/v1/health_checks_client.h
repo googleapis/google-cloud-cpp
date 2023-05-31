@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class HealthChecksClient {
  public:
-  explicit HealthChecksClient(ExperimentalTag, std::shared_ptr<HealthChecksConnection> connection, Options opts = {});
+  explicit HealthChecksClient(
+      ExperimentalTag, std::shared_ptr<HealthChecksConnection> connection,
+      Options opts = {});
   ~HealthChecksClient();
 
   ///@{
@@ -77,10 +79,12 @@ class HealthChecksClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(HealthChecksClient const& a, HealthChecksClient const& b) {
+  friend bool operator==(HealthChecksClient const& a,
+                         HealthChecksClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(HealthChecksClient const& a, HealthChecksClient const& b) {
+  friend bool operator!=(HealthChecksClient const& a,
+                         HealthChecksClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -105,7 +109,7 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.AggregatedListHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L105}
+  /// [google.cloud.cpp.compute.health_checks.v1.AggregatedListHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L114}
   /// [google.cloud.cpp.compute.v1.HealthChecksAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7702}
   ///
   // clang-format on
@@ -137,12 +141,15 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.AggregatedListHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L105}
+  /// [google.cloud.cpp.compute.health_checks.v1.AggregatedListHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L114}
   /// [google.cloud.cpp.compute.v1.HealthChecksAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7702}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>
-  AggregatedListHealthChecks(google::cloud::cpp::compute::health_checks::v1::AggregatedListHealthChecksRequest const& request, Options opts = {});
+  AggregatedListHealthChecks(
+      google::cloud::cpp::compute::health_checks::v1::
+          AggregatedListHealthChecksRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -170,11 +177,12 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.DeleteHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L179}
+  /// [google.cloud.cpp.compute.health_checks.v1.DeleteHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L188}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHealthChecks(std::string const& project, std::string const& health_check, Options opts = {});
+  DeleteHealthChecks(std::string const& project,
+                     std::string const& health_check, Options opts = {});
 
   // clang-format off
   ///
@@ -206,11 +214,13 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.DeleteHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L179}
+  /// [google.cloud.cpp.compute.health_checks.v1.DeleteHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L188}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHealthChecks(google::cloud::cpp::compute::health_checks::v1::DeleteHealthChecksRequest const& request, Options opts = {});
+  DeleteHealthChecks(google::cloud::cpp::compute::health_checks::v1::
+                         DeleteHealthChecksRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -232,12 +242,13 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.GetHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L200}
+  /// [google.cloud.cpp.compute.health_checks.v1.GetHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L212}
   /// [google.cloud.cpp.compute.v1.HealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7308}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
-  GetHealthChecks(std::string const& project, std::string const& health_check, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthChecks(
+      std::string const& project, std::string const& health_check,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -263,12 +274,14 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.GetHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L200}
+  /// [google.cloud.cpp.compute.health_checks.v1.GetHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L212}
   /// [google.cloud.cpp.compute.v1.HealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7308}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
-  GetHealthChecks(google::cloud::cpp::compute::health_checks::v1::GetHealthChecksRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthChecks(
+      google::cloud::cpp::compute::health_checks::v1::
+          GetHealthChecksRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -297,11 +310,14 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.InsertHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L209}
+  /// [google.cloud.cpp.compute.health_checks.v1.InsertHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L221}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHealthChecks(std::string const& project, google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource, Options opts = {});
+  InsertHealthChecks(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -334,11 +350,13 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.InsertHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L209}
+  /// [google.cloud.cpp.compute.health_checks.v1.InsertHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L221}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHealthChecks(google::cloud::cpp::compute::health_checks::v1::InsertHealthChecksRequest const& request, Options opts = {});
+  InsertHealthChecks(google::cloud::cpp::compute::health_checks::v1::
+                         InsertHealthChecksRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -369,12 +387,12 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.ListHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L230}
+  /// [google.cloud.cpp.compute.health_checks.v1.ListHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L246}
   /// [google.cloud.cpp.compute.v1.HealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7308}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
-  ListHealthChecks(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::HealthCheck> ListHealthChecks(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -410,12 +428,14 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.ListHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L230}
+  /// [google.cloud.cpp.compute.health_checks.v1.ListHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L246}
   /// [google.cloud.cpp.compute.v1.HealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7308}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
-  ListHealthChecks(google::cloud::cpp::compute::health_checks::v1::ListHealthChecksRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::HealthCheck> ListHealthChecks(
+      google::cloud::cpp::compute::health_checks::v1::ListHealthChecksRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -446,11 +466,14 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.PatchHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L295}
+  /// [google.cloud.cpp.compute.health_checks.v1.PatchHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L311}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHealthChecks(std::string const& project, std::string const& health_check, google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource, Options opts = {});
+  PatchHealthChecks(
+      std::string const& project, std::string const& health_check,
+      google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -484,11 +507,13 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.PatchHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L295}
+  /// [google.cloud.cpp.compute.health_checks.v1.PatchHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L311}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHealthChecks(google::cloud::cpp::compute::health_checks::v1::PatchHealthChecksRequest const& request, Options opts = {});
+  PatchHealthChecks(google::cloud::cpp::compute::health_checks::v1::
+                        PatchHealthChecksRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -518,11 +543,14 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.UpdateHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L319}
+  /// [google.cloud.cpp.compute.health_checks.v1.UpdateHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L339}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHealthChecks(std::string const& project, std::string const& health_check, google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource, Options opts = {});
+  UpdateHealthChecks(
+      std::string const& project, std::string const& health_check,
+      google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -555,11 +583,13 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.UpdateHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L319}
+  /// [google.cloud.cpp.compute.health_checks.v1.UpdateHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L339}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHealthChecks(google::cloud::cpp::compute::health_checks::v1::UpdateHealthChecksRequest const& request, Options opts = {});
+  UpdateHealthChecks(google::cloud::cpp::compute::health_checks::v1::
+                         UpdateHealthChecksRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<HealthChecksConnection> connection_;

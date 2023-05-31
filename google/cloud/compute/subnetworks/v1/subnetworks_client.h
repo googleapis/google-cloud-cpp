@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SubnetworksClient {
  public:
-  explicit SubnetworksClient(ExperimentalTag, std::shared_ptr<SubnetworksConnection> connection, Options opts = {});
+  explicit SubnetworksClient(ExperimentalTag,
+                             std::shared_ptr<SubnetworksConnection> connection,
+                             Options opts = {});
   ~SubnetworksClient();
 
   ///@{
@@ -77,10 +79,12 @@ class SubnetworksClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SubnetworksClient const& a, SubnetworksClient const& b) {
+  friend bool operator==(SubnetworksClient const& a,
+                         SubnetworksClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SubnetworksClient const& a, SubnetworksClient const& b) {
+  friend bool operator!=(SubnetworksClient const& a,
+                         SubnetworksClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -104,7 +108,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.AggregatedListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L150}
+  /// [google.cloud.cpp.compute.subnetworks.v1.AggregatedListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L167}
   /// [google.cloud.cpp.compute.v1.SubnetworkAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25859}
   ///
   // clang-format on
@@ -135,12 +139,14 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.AggregatedListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L150}
+  /// [google.cloud.cpp.compute.subnetworks.v1.AggregatedListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L167}
   /// [google.cloud.cpp.compute.v1.SubnetworkAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25859}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
-  AggregatedListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest const& request, Options opts = {});
+  AggregatedListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::
+                                AggregatedListSubnetworksRequest const& request,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -169,11 +175,12 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L224}
+  /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L241}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSubnetworks(std::string const& project, std::string const& region, std::string const& subnetwork, Options opts = {});
+  DeleteSubnetworks(std::string const& project, std::string const& region,
+                    std::string const& subnetwork, Options opts = {});
 
   // clang-format off
   ///
@@ -205,11 +212,13 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L224}
+  /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L241}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSubnetworks(google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest const& request, Options opts = {});
+  DeleteSubnetworks(google::cloud::cpp::compute::subnetworks::v1::
+                        DeleteSubnetworksRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -239,11 +248,16 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.ExpandIpCidrRangeRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L248}
+  /// [google.cloud.cpp.compute.subnetworks.v1.ExpandIpCidrRangeRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L271}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  ExpandIpCidrRange(std::string const& project, std::string const& region, std::string const& subnetwork, google::cloud::cpp::compute::v1::SubnetworksExpandIpCidrRangeRequest const& subnetworks_expand_ip_cidr_range_request_resource, Options opts = {});
+  ExpandIpCidrRange(std::string const& project, std::string const& region,
+                    std::string const& subnetwork,
+                    google::cloud::cpp::compute::v1::
+                        SubnetworksExpandIpCidrRangeRequest const&
+                            subnetworks_expand_ip_cidr_range_request_resource,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -275,11 +289,13 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.ExpandIpCidrRangeRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L248}
+  /// [google.cloud.cpp.compute.subnetworks.v1.ExpandIpCidrRangeRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L271}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request, Options opts = {});
+  ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::
+                        ExpandIpCidrRangeRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -302,12 +318,13 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L290}
+  /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L321}
   /// [google.cloud.cpp.compute.v1.Subnetwork]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25705}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
-  GetSubnetworks(std::string const& project, std::string const& region, std::string const& subnetwork, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetworks(
+      std::string const& project, std::string const& region,
+      std::string const& subnetwork, Options opts = {});
 
   // clang-format off
   ///
@@ -333,12 +350,14 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L290}
+  /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L321}
   /// [google.cloud.cpp.compute.v1.Subnetwork]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25705}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
-  GetSubnetworks(google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -362,12 +381,13 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L275}
+  /// [google.cloud.cpp.compute.subnetworks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L306}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -394,12 +414,14 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L275}
+  /// [google.cloud.cpp.compute.subnetworks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L306}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -429,11 +451,14 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L302}
+  /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L333}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSubnetworks(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Subnetwork const& subnetwork_resource, Options opts = {});
+  InsertSubnetworks(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::Subnetwork const& subnetwork_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -466,11 +491,13 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L302}
+  /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L333}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSubnetworks(google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest const& request, Options opts = {});
+  InsertSubnetworks(google::cloud::cpp::compute::subnetworks::v1::
+                        InsertSubnetworksRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -501,12 +528,12 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.ListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L326}
+  /// [google.cloud.cpp.compute.subnetworks.v1.ListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L364}
   /// [google.cloud.cpp.compute.v1.Subnetwork]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25705}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Subnetwork>
-  ListSubnetworks(std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Subnetwork> ListSubnetworks(
+      std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -541,12 +568,14 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.ListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L326}
+  /// [google.cloud.cpp.compute.subnetworks.v1.ListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L364}
   /// [google.cloud.cpp.compute.v1.Subnetwork]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25705}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Subnetwork>
-  ListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Subnetwork> ListSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -576,12 +605,12 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.ListUsableRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L394}
+  /// [google.cloud.cpp.compute.subnetworks.v1.ListUsableRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L432}
   /// [google.cloud.cpp.compute.v1.UsableSubnetwork]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29463}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>
-  ListUsable(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork> ListUsable(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -616,12 +645,13 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.ListUsableRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L394}
+  /// [google.cloud.cpp.compute.subnetworks.v1.ListUsableRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L432}
   /// [google.cloud.cpp.compute.v1.UsableSubnetwork]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29463}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>
-  ListUsable(google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork> ListUsable(
+      google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -654,11 +684,14 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L459}
+  /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L497}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSubnetworks(std::string const& project, std::string const& region, std::string const& subnetwork, google::cloud::cpp::compute::v1::Subnetwork const& subnetwork_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSubnetworks(
+      std::string const& project, std::string const& region,
+      std::string const& subnetwork,
+      google::cloud::cpp::compute::v1::Subnetwork const& subnetwork_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -693,11 +726,13 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L459}
+  /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L497}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSubnetworks(google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::
+          PatchSubnetworksRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -722,12 +757,16 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L496}
+  /// [google.cloud.cpp.compute.subnetworks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L541}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetPolicyRequest const& region_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetPolicyRequest const&
+          region_set_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -754,12 +793,14 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L496}
+  /// [google.cloud.cpp.compute.subnetworks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L541}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -790,11 +831,17 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.SetPrivateIpGoogleAccessRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L511}
+  /// [google.cloud.cpp.compute.subnetworks.v1.SetPrivateIpGoogleAccessRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L558}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetPrivateIpGoogleAccess(std::string const& project, std::string const& region, std::string const& subnetwork, google::cloud::cpp::compute::v1::SubnetworksSetPrivateIpGoogleAccessRequest const& subnetworks_set_private_ip_google_access_request_resource, Options opts = {});
+  SetPrivateIpGoogleAccess(
+      std::string const& project, std::string const& region,
+      std::string const& subnetwork,
+      google::cloud::cpp::compute::v1::
+          SubnetworksSetPrivateIpGoogleAccessRequest const&
+              subnetworks_set_private_ip_google_access_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -827,11 +874,13 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.SetPrivateIpGoogleAccessRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L511}
+  /// [google.cloud.cpp.compute.subnetworks.v1.SetPrivateIpGoogleAccessRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L558}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetPrivateIpGoogleAccess(google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request, Options opts = {});
+  SetPrivateIpGoogleAccess(google::cloud::cpp::compute::subnetworks::v1::
+                               SetPrivateIpGoogleAccessRequest const& request,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -855,12 +904,17 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L538}
+  /// [google.cloud.cpp.compute.subnetworks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L594}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -886,12 +940,14 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L538}
+  /// [google.cloud.cpp.compute.subnetworks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L594}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<SubnetworksConnection> connection_;

@@ -36,30 +36,42 @@ class HttpHealthChecksTracingConnection
   ~HttpHealthChecksTracingConnection() override = default;
 
   explicit HttpHealthChecksTracingConnection(
-    std::shared_ptr<compute_http_health_checks_v1::HttpHealthChecksConnection> child);
+      std::shared_ptr<compute_http_health_checks_v1::HttpHealthChecksConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::DeleteHttpHealthChecksRequest const& request) override;
+  DeleteHttpHealthChecks(
+      google::cloud::cpp::compute::http_health_checks::v1::
+          DeleteHttpHealthChecksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
-  GetHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::GetHttpHealthChecksRequest const& request) override;
+  GetHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::
+                          GetHttpHealthChecksRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::InsertHttpHealthChecksRequest const& request) override;
+  InsertHttpHealthChecks(
+      google::cloud::cpp::compute::http_health_checks::v1::
+          InsertHttpHealthChecksRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>
-  ListHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::ListHttpHealthChecksRequest request) override;
+  ListHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::
+                           ListHttpHealthChecksRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::PatchHttpHealthChecksRequest const& request) override;
+  PatchHttpHealthChecks(
+      google::cloud::cpp::compute::http_health_checks::v1::
+          PatchHttpHealthChecksRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::UpdateHttpHealthChecksRequest const& request) override;
+  UpdateHttpHealthChecks(
+      google::cloud::cpp::compute::http_health_checks::v1::
+          UpdateHttpHealthChecksRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_http_health_checks_v1::HttpHealthChecksConnection> child_;
+  std::shared_ptr<compute_http_health_checks_v1::HttpHealthChecksConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -72,7 +84,8 @@ class HttpHealthChecksTracingConnection
  */
 std::shared_ptr<compute_http_health_checks_v1::HttpHealthChecksConnection>
 MakeHttpHealthChecksTracingConnection(
-    std::shared_ptr<compute_http_health_checks_v1::HttpHealthChecksConnection> conn);
+    std::shared_ptr<compute_http_health_checks_v1::HttpHealthChecksConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_http_health_checks_v1_internal

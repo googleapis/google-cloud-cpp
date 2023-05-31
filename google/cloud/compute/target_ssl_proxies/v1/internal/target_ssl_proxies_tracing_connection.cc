@@ -29,77 +29,111 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TargetSslProxiesTracingConnection::TargetSslProxiesTracingConnection(
-    std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection> child)
+    std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>
+        child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesTracingConnection::DeleteTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::DeleteTargetSslProxiesRequest const& request) {
+TargetSslProxiesTracingConnection::DeleteTargetSslProxies(
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        DeleteTargetSslProxiesRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::DeleteTargetSslProxies");
+      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
+      "DeleteTargetSslProxies");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteTargetSslProxies(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteTargetSslProxies(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
-TargetSslProxiesTracingConnection::GetTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::GetTargetSslProxiesRequest const& request) {
-  auto span = internal::MakeSpan("compute_target_ssl_proxies_v1::TargetSslProxiesConnection::GetTargetSslProxies");
+TargetSslProxiesTracingConnection::GetTargetSslProxies(
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        GetTargetSslProxiesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
+      "GetTargetSslProxies");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTargetSslProxies(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesTracingConnection::InsertTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::InsertTargetSslProxiesRequest const& request) {
+TargetSslProxiesTracingConnection::InsertTargetSslProxies(
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        InsertTargetSslProxiesRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::InsertTargetSslProxies");
+      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
+      "InsertTargetSslProxies");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertTargetSslProxies(request));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertTargetSslProxies(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
-TargetSslProxiesTracingConnection::ListTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::ListTargetSslProxiesRequest request) {
-  auto span = internal::MakeSpan("compute_target_ssl_proxies_v1::TargetSslProxiesConnection::ListTargetSslProxies");
+TargetSslProxiesTracingConnection::ListTargetSslProxies(
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        ListTargetSslProxiesRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
+      "ListTargetSslProxies");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListTargetSslProxies(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::TargetSslProxy>(std::move(span),
+                                                       std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesTracingConnection::SetBackendService(google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest const& request) {
+TargetSslProxiesTracingConnection::SetBackendService(
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetBackendServiceRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::SetBackendService");
+      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
+      "SetBackendService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->SetBackendService(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesTracingConnection::SetCertificateMap(google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest const& request) {
+TargetSslProxiesTracingConnection::SetCertificateMap(
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetCertificateMapRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::SetCertificateMap");
+      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
+      "SetCertificateMap");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->SetCertificateMap(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesTracingConnection::SetProxyHeader(google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest const& request) {
+TargetSslProxiesTracingConnection::SetProxyHeader(
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetProxyHeaderRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::SetProxyHeader");
+      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
+      "SetProxyHeader");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->SetProxyHeader(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesTracingConnection::SetSslCertificates(google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest const& request) {
+TargetSslProxiesTracingConnection::SetSslCertificates(
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetSslCertificatesRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::SetSslCertificates");
+      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
+      "SetSslCertificates");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->SetSslCertificates(request));
+  return internal::EndSpan(std::move(span),
+                           child_->SetSslCertificates(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesTracingConnection::SetSslPolicy(google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest const& request) {
+TargetSslProxiesTracingConnection::SetSslPolicy(
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetSslPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::SetSslPolicy");
+      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
+      "SetSslPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->SetSslPolicy(request));
 }
@@ -108,7 +142,8 @@ TargetSslProxiesTracingConnection::SetSslPolicy(google::cloud::cpp::compute::tar
 
 std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>
 MakeTargetSslProxiesTracingConnection(
-    std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection> conn) {
+    std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<TargetSslProxiesTracingConnection>(std::move(conn));

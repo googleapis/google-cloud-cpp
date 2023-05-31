@@ -42,37 +42,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockAutoscalersConnection : public compute_autoscalers_v1::AutoscalersConnection {
+class MockAutoscalersConnection
+    : public compute_autoscalers_v1::AutoscalersConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>,
-  AggregatedListAutoscalers,
-  (google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>,
+      AggregatedListAutoscalers,
+      (google::cloud::cpp::compute::autoscalers::v1::
+           AggregatedListAutoscalersRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteAutoscalers,
-  (google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalersRequest const& request), (override));
+              DeleteAutoscalers,
+              (google::cloud::cpp::compute::autoscalers::v1::
+                   DeleteAutoscalersRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Autoscaler>,
-  GetAutoscalers,
-  (google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const& request), (override));
+              GetAutoscalers,
+              (google::cloud::cpp::compute::autoscalers::v1::
+                   GetAutoscalersRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertAutoscalers,
-  (google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalersRequest const& request), (override));
+              InsertAutoscalers,
+              (google::cloud::cpp::compute::autoscalers::v1::
+                   InsertAutoscalersRequest const& request),
+              (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Autoscaler>,
-  ListAutoscalers,
-  (google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::Autoscaler>, ListAutoscalers,
+      (google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest
+           request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchAutoscalers,
-  (google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const& request), (override));
+              PatchAutoscalers,
+              (google::cloud::cpp::compute::autoscalers::v1::
+                   PatchAutoscalersRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  UpdateAutoscalers,
-  (google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalersRequest const& request), (override));
+              UpdateAutoscalers,
+              (google::cloud::cpp::compute::autoscalers::v1::
+                   UpdateAutoscalersRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

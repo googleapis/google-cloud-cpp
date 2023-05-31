@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service ResourcePolicies {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of resource policies.
-  rpc AggregatedListResourcePolicies(AggregatedListResourcePoliciesRequest) returns (google.cloud.cpp.compute.v1.ResourcePolicyAggregatedList) {
+  rpc AggregatedListResourcePolicies(AggregatedListResourcePoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.ResourcePolicyAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/resourcePolicies"
     };
@@ -40,7 +41,8 @@ service ResourcePolicies {
   }
 
   // Deletes the specified resource policy.
-  rpc DeleteResourcePolicies(DeleteResourcePoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteResourcePolicies(DeleteResourcePoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies/{resource_policy=resource_policy}"
     };
@@ -49,7 +51,8 @@ service ResourcePolicies {
   }
 
   // Retrieves all information of the specified resource policy.
-  rpc GetResourcePolicies(GetResourcePoliciesRequest) returns (google.cloud.cpp.compute.v1.ResourcePolicy) {
+  rpc GetResourcePolicies(GetResourcePoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.ResourcePolicy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies/{resource_policy=resource_policy}"
     };
@@ -58,7 +61,8 @@ service ResourcePolicies {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies/{resource=resource}/getIamPolicy"
     };
@@ -66,18 +70,21 @@ service ResourcePolicies {
   }
 
   // Creates a new resource policy.
-  rpc InsertResourcePolicies(InsertResourcePoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertResourcePolicies(InsertResourcePoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies"
       body: "resource_policy_resource"
     };
-    option (google.api.method_signature) = "project,region,resource_policy_resource";
+    option (google.api.method_signature) =
+        "project,region,resource_policy_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // A list all the resource policies that have been configured for the
   // specified project in specified region.
-  rpc ListResourcePolicies(ListResourcePoliciesRequest) returns (google.cloud.cpp.compute.v1.ResourcePolicyList) {
+  rpc ListResourcePolicies(ListResourcePoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.ResourcePolicyList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies"
     };
@@ -86,21 +93,25 @@ service ResourcePolicies {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
-  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies/{resource=resource}/setIamPolicy"
       body: "region_set_policy_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,region_set_policy_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,region_set_policy_request_resource";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies/{resource=resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,test_permissions_request_resource";
   }
 }
 
@@ -181,10 +192,16 @@ message AggregatedListResourcePoliciesRequest {
 // Request message for DeleteResourcePolicies.
 message DeleteResourcePoliciesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -232,10 +249,16 @@ message GetResourcePoliciesRequest {
 // Request message for InsertResourcePolicies.
 message InsertResourcePoliciesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -250,7 +273,8 @@ message InsertResourcePoliciesRequest {
   optional string request_id = 3;
 
   // The ResourcePolicy for this request.
-  optional google.cloud.cpp.compute.v1.ResourcePolicy resource_policy_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.ResourcePolicy resource_policy_resource =
+      4 [json_name = "__json_request_body"];
 }
 
 // Request message for ListResourcePolicies.
@@ -330,7 +354,9 @@ message SetIamPolicyRequest {
   string region = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The RegionSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest region_set_policy_request_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest
+      region_set_policy_request_resource = 3
+      [json_name = "__json_request_body"];
 
   // Name or id of the resource for this request.
   string resource = 4 [(google.api.field_behavior) = REQUIRED];
@@ -348,5 +374,6 @@ message TestIamPermissionsRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 4 [json_name = "__json_request_body"];
 }

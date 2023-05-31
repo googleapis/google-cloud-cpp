@@ -37,18 +37,21 @@ class NodeTypesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<NodeTypesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListNodeTypes(
+      google::cloud::cpp::compute::node_types::v1::
+          AggregatedListNodeTypesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetNodeTypes(google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const& request);
+  virtual google::cloud::Idempotency GetNodeTypes(
+      google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListNodeTypes(google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request);
+  virtual google::cloud::Idempotency ListNodeTypes(
+      google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest
+          request);
 };
 
 std::unique_ptr<NodeTypesConnectionIdempotencyPolicy>
-    MakeDefaultNodeTypesConnectionIdempotencyPolicy();
+MakeDefaultNodeTypesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_node_types_v1

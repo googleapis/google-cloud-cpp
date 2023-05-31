@@ -38,45 +38,57 @@ class LicensesRestMetadata : public LicensesRestStub {
   ~LicensesRestMetadata() override = default;
   explicit LicensesRestMetadata(std::shared_ptr<LicensesRestStub> child);
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteLicenses(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteLicenses(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertLicenses(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertLicenses(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse> ListLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::licenses::v1::
+                         TestIamPermissionsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

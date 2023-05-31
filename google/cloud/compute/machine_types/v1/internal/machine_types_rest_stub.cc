@@ -35,50 +35,59 @@ DefaultMachineTypesRestStub::DefaultMachineTypesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultMachineTypesRestStub::DefaultMachineTypesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
 DefaultMachineTypesRestStub::AggregatedListMachineTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machine_types::v1::
+        AggregatedListMachineTypesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::MachineTypeAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/aggregated/machineTypes"),
+      absl::StrCat("/compute/v1/projects/", request.project(),
+                   "/aggregated/machineTypes"),
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
 DefaultMachineTypesRestStub::GetMachineTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machine_types::v1::GetMachineTypesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machine_types::v1::
+        GetMachineTypesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineType>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/machineTypes/", request.machine_type(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
+                   request.zone(), "/machineTypes/", request.machine_type(),
+                   ""),
       {std::make_pair("project", request.project()),
        std::make_pair("zone", request.zone())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineTypeList>
 DefaultMachineTypesRestStub::ListMachineTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machine_types::v1::
+        ListMachineTypesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineTypeList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/", request.zone(), "/machineTypes"),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
+                   request.zone(), "/machineTypes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

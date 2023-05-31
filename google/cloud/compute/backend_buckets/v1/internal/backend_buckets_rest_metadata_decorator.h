@@ -36,60 +36,80 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BackendBucketsRestMetadata : public BackendBucketsRestStub {
  public:
   ~BackendBucketsRestMetadata() override = default;
-  explicit BackendBucketsRestMetadata(std::shared_ptr<BackendBucketsRestStub> child);
+  explicit BackendBucketsRestMetadata(
+      std::shared_ptr<BackendBucketsRestStub> child);
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddSignedUrlKey(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAddSignedUrlKey(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::AddSignedUrlKeyRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          AddSignedUrlKeyRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteBackendBuckets(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteBackendBuckets(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::DeleteBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          DeleteBackendBucketsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteSignedUrlKey(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteSignedUrlKey(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::DeleteSignedUrlKeyRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          DeleteSignedUrlKeyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBuckets(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::GetBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          GetBackendBucketsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertBackendBuckets(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertBackendBuckets(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::InsertBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          InsertBackendBucketsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendBucketList> ListBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::ListBackendBucketsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::BackendBucketList>
+  ListBackendBuckets(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::backend_buckets::v1::
+                         ListBackendBucketsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchBackendBuckets(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchBackendBuckets(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::PatchBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          PatchBackendBucketsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetEdgeSecurityPolicy(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetEdgeSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::SetEdgeSecurityPolicyRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          SetEdgeSecurityPolicyRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateBackendBuckets(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateBackendBuckets(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::backend_buckets::v1::UpdateBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backend_buckets::v1::
+          UpdateBackendBucketsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

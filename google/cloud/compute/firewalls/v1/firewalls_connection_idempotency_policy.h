@@ -37,27 +37,32 @@ class FirewallsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<FirewallsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  DeleteFirewalls(google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request);
+  virtual google::cloud::Idempotency DeleteFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetFirewalls(google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request);
+  virtual google::cloud::Idempotency GetFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertFirewalls(google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request);
+  virtual google::cloud::Idempotency InsertFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListFirewalls(google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request);
+  virtual google::cloud::Idempotency ListFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request);
 
-  virtual google::cloud::Idempotency
-  PatchFirewalls(google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request);
+  virtual google::cloud::Idempotency PatchFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateFirewalls(google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request);
+  virtual google::cloud::Idempotency UpdateFirewalls(
+      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+          request);
 };
 
 std::unique_ptr<FirewallsConnectionIdempotencyPolicy>
-    MakeDefaultFirewallsConnectionIdempotencyPolicy();
+MakeDefaultFirewallsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_firewalls_v1

@@ -35,32 +35,40 @@ class InterconnectsConnectionIdempotencyPolicy {
   virtual ~InterconnectsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<InterconnectsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<InterconnectsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  DeleteInterconnects(google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest const& request);
+  virtual google::cloud::Idempotency DeleteInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::
+          DeleteInterconnectsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetInterconnects(google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest const& request);
+  virtual google::cloud::Idempotency GetInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::
+          GetInterconnectsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request);
+  virtual google::cloud::Idempotency GetDiagnostics(
+      google::cloud::cpp::compute::interconnects::v1::
+          GetDiagnosticsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertInterconnects(google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest const& request);
+  virtual google::cloud::Idempotency InsertInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::
+          InsertInterconnectsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListInterconnects(google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest request);
+  virtual google::cloud::Idempotency ListInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  PatchInterconnects(google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest const& request);
+  virtual google::cloud::Idempotency PatchInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::
+          PatchInterconnectsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetLabels(google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request);
+  virtual google::cloud::Idempotency SetLabels(
+      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+          request);
 };
 
 std::unique_ptr<InterconnectsConnectionIdempotencyPolicy>
-    MakeDefaultInterconnectsConnectionIdempotencyPolicy();
+MakeDefaultInterconnectsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_interconnects_v1

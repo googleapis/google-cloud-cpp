@@ -36,36 +36,48 @@ class InstanceGroupsTracingConnection
   ~InstanceGroupsTracingConnection() override = default;
 
   explicit InstanceGroupsTracingConnection(
-    std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection> child);
+      std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddInstances(google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstances(
+      google::cloud::cpp::compute::instance_groups::v1::
+          AddInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
-  AggregatedListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::AggregatedListInstanceGroupsRequest const& request) override;
+  AggregatedListInstanceGroups(
+      google::cloud::cpp::compute::instance_groups::v1::
+          AggregatedListInstanceGroupsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupsRequest const& request) override;
+  DeleteInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::
+                           DeleteInstanceGroupsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-  GetInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::GetInstanceGroupsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroups(
+      google::cloud::cpp::compute::instance_groups::v1::
+          GetInstanceGroupsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupsRequest const& request) override;
+  InsertInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::
+                           InsertInstanceGroupsRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
-  ListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest request) override;
+  ListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::
+                         ListInstanceGroupsRequest request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
-  ListInstances(google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest request) override;
+  ListInstances(
+      google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveInstances(google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstances(
+      google::cloud::cpp::compute::instance_groups::v1::
+          RemoveInstancesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetNamedPorts(google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
+      google::cloud::cpp::compute::instance_groups::v1::
+          SetNamedPortsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection> child_;

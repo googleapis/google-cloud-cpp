@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionInstancesClient {
  public:
-  explicit RegionInstancesClient(ExperimentalTag, std::shared_ptr<RegionInstancesConnection> connection, Options opts = {});
+  explicit RegionInstancesClient(
+      ExperimentalTag, std::shared_ptr<RegionInstancesConnection> connection,
+      Options opts = {});
   ~RegionInstancesClient();
 
   ///@{
@@ -76,10 +78,12 @@ class RegionInstancesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RegionInstancesClient const& a, RegionInstancesClient const& b) {
+  friend bool operator==(RegionInstancesClient const& a,
+                         RegionInstancesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RegionInstancesClient const& a, RegionInstancesClient const& b) {
+  friend bool operator!=(RegionInstancesClient const& a,
+                         RegionInstancesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -112,11 +116,14 @@ class RegionInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L46}
+  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L48}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  BulkInsert(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::BulkInsertInstanceResource const& bulk_insert_instance_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::BulkInsertInstanceResource const&
+          bulk_insert_instance_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -149,11 +156,13 @@ class RegionInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L46}
+  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L48}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  BulkInsert(google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      google::cloud::cpp::compute::region_instances::v1::
+          BulkInsertRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionInstancesConnection> connection_;

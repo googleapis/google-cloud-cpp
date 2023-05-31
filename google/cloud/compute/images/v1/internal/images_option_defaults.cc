@@ -34,20 +34,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ImagesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_IMAGES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_IMAGES_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
+      std::move(options), "GOOGLE_CLOUD_CPP_IMAGES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_IMAGES_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<compute_images_v1::ImagesRetryPolicyOption>()) {
     options.set<compute_images_v1::ImagesRetryPolicyOption>(
         compute_images_v1::ImagesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<compute_images_v1::ImagesBackoffPolicyOption>()) {
     options.set<compute_images_v1::ImagesBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
   if (!options.has<compute_images_v1::ImagesPollingPolicyOption>()) {
     options.set<compute_images_v1::ImagesPollingPolicyOption>(
@@ -55,10 +56,12 @@ Options ImagesDefaultOptions(Options options) {
             compute_images_v1::ImagesRetryPolicyOption::Type,
             compute_images_v1::ImagesBackoffPolicyOption::Type>(
             options.get<compute_images_v1::ImagesRetryPolicyOption>()->clone(),
-            options.get<compute_images_v1::ImagesBackoffPolicyOption>()->clone())
+            options.get<compute_images_v1::ImagesBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<compute_images_v1::ImagesConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<compute_images_v1::ImagesConnectionIdempotencyPolicyOption>()) {
     options.set<compute_images_v1::ImagesConnectionIdempotencyPolicyOption>(
         compute_images_v1::MakeDefaultImagesConnectionIdempotencyPolicy());
   }

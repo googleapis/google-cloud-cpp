@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_INSTANCES_V1_TARGET_INSTANCES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_INSTANCES_V1_TARGET_INSTANCES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_retry_traits.h"
 #include "google/cloud/compute/target_instances/v1/target_instances_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -38,11 +38,13 @@ namespace cloud {
 namespace compute_target_instances_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using TargetInstancesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_target_instances_v1_internal::TargetInstancesRetryTraits>;
+using TargetInstancesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_target_instances_v1_internal::TargetInstancesRetryTraits>;
 
-using TargetInstancesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_target_instances_v1_internal::TargetInstancesRetryTraits>;
+using TargetInstancesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_target_instances_v1_internal::TargetInstancesRetryTraits>;
 
 using TargetInstancesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -58,7 +60,8 @@ using TargetInstancesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeTargetInstancesConnection()`.
  *
- * For mocking, see `compute_target_instances_v1_mocks::MockTargetInstancesConnection`.
+ * For mocking, see
+ * `compute_target_instances_v1_mocks::MockTargetInstancesConnection`.
  */
 class TargetInstancesConnection {
  public:
@@ -66,20 +69,27 @@ class TargetInstancesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
-  AggregatedListTargetInstances(google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
+  AggregatedListTargetInstances(
+      google::cloud::cpp::compute::target_instances::v1::
+          AggregatedListTargetInstancesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstances(google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstancesRequest const& request);
+  DeleteTargetInstances(google::cloud::cpp::compute::target_instances::v1::
+                            DeleteTargetInstancesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-  GetTargetInstances(google::cloud::cpp::compute::target_instances::v1::GetTargetInstancesRequest const& request);
+  GetTargetInstances(google::cloud::cpp::compute::target_instances::v1::
+                         GetTargetInstancesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstances(google::cloud::cpp::compute::target_instances::v1::InsertTargetInstancesRequest const& request);
+  InsertTargetInstances(google::cloud::cpp::compute::target_instances::v1::
+                            InsertTargetInstancesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
-  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest request);
+  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::
+                          ListTargetInstancesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

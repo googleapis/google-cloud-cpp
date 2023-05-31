@@ -26,27 +26,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-MachineTypesConnectionIdempotencyPolicy::~MachineTypesConnectionIdempotencyPolicy() = default;
+MachineTypesConnectionIdempotencyPolicy::
+    ~MachineTypesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<MachineTypesConnectionIdempotencyPolicy>
 MachineTypesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MachineTypesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency MachineTypesConnectionIdempotencyPolicy::AggregatedListMachineTypes(google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest const&) {
+Idempotency MachineTypesConnectionIdempotencyPolicy::AggregatedListMachineTypes(
+    google::cloud::cpp::compute::machine_types::v1::
+        AggregatedListMachineTypesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MachineTypesConnectionIdempotencyPolicy::GetMachineTypes(google::cloud::cpp::compute::machine_types::v1::GetMachineTypesRequest const&) {
+Idempotency MachineTypesConnectionIdempotencyPolicy::GetMachineTypes(
+    google::cloud::cpp::compute::machine_types::v1::
+        GetMachineTypesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MachineTypesConnectionIdempotencyPolicy::ListMachineTypes(google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest) {  // NOLINT
+Idempotency MachineTypesConnectionIdempotencyPolicy::ListMachineTypes(
+    google::cloud::cpp::compute::machine_types::v1::
+        ListMachineTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<MachineTypesConnectionIdempotencyPolicy>
-    MakeDefaultMachineTypesConnectionIdempotencyPolicy() {
+MakeDefaultMachineTypesConnectionIdempotencyPolicy() {
   return std::make_unique<MachineTypesConnectionIdempotencyPolicy>();
 }
 

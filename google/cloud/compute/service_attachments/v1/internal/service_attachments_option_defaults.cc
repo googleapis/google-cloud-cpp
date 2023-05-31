@@ -34,33 +34,51 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ServiceAttachmentsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SERVICE_ATTACHMENTS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_SERVICE_ATTACHMENTS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_SERVICE_ATTACHMENTS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SERVICE_ATTACHMENTS_AUTHORITY",
       "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_service_attachments_v1::ServiceAttachmentsRetryPolicyOption>()) {
-    options.set<compute_service_attachments_v1::ServiceAttachmentsRetryPolicyOption>(
-        compute_service_attachments_v1::ServiceAttachmentsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<compute_service_attachments_v1::
+                       ServiceAttachmentsRetryPolicyOption>()) {
+    options.set<
+        compute_service_attachments_v1::ServiceAttachmentsRetryPolicyOption>(
+        compute_service_attachments_v1::
+            ServiceAttachmentsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+                .clone());
   }
-  if (!options.has<compute_service_attachments_v1::ServiceAttachmentsBackoffPolicyOption>()) {
-    options.set<compute_service_attachments_v1::ServiceAttachmentsBackoffPolicyOption>(
+  if (!options.has<compute_service_attachments_v1::
+                       ServiceAttachmentsBackoffPolicyOption>()) {
+    options.set<
+        compute_service_attachments_v1::ServiceAttachmentsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
-  }
-  if (!options.has<compute_service_attachments_v1::ServiceAttachmentsPollingPolicyOption>()) {
-    options.set<compute_service_attachments_v1::ServiceAttachmentsPollingPolicyOption>(
-        GenericPollingPolicy<
-            compute_service_attachments_v1::ServiceAttachmentsRetryPolicyOption::Type,
-            compute_service_attachments_v1::ServiceAttachmentsBackoffPolicyOption::Type>(
-            options.get<compute_service_attachments_v1::ServiceAttachmentsRetryPolicyOption>()->clone(),
-            options.get<compute_service_attachments_v1::ServiceAttachmentsBackoffPolicyOption>()->clone())
+                                 std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<compute_service_attachments_v1::ServiceAttachmentsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_service_attachments_v1::ServiceAttachmentsConnectionIdempotencyPolicyOption>(
-        compute_service_attachments_v1::MakeDefaultServiceAttachmentsConnectionIdempotencyPolicy());
+  if (!options.has<compute_service_attachments_v1::
+                       ServiceAttachmentsPollingPolicyOption>()) {
+    options.set<
+        compute_service_attachments_v1::ServiceAttachmentsPollingPolicyOption>(
+        GenericPollingPolicy<compute_service_attachments_v1::
+                                 ServiceAttachmentsRetryPolicyOption::Type,
+                             compute_service_attachments_v1::
+                                 ServiceAttachmentsBackoffPolicyOption::Type>(
+            options
+                .get<compute_service_attachments_v1::
+                         ServiceAttachmentsRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<compute_service_attachments_v1::
+                         ServiceAttachmentsBackoffPolicyOption>()
+                ->clone())
+            .clone());
+  }
+  if (!options.has<compute_service_attachments_v1::
+                       ServiceAttachmentsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_service_attachments_v1::
+                    ServiceAttachmentsConnectionIdempotencyPolicyOption>(
+        compute_service_attachments_v1::
+            MakeDefaultServiceAttachmentsConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -34,33 +34,50 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ResourcePoliciesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_RESOURCE_POLICIES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_RESOURCE_POLICIES_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_resource_policies_v1::ResourcePoliciesRetryPolicyOption>()) {
-    options.set<compute_resource_policies_v1::ResourcePoliciesRetryPolicyOption>(
+      std::move(options), "GOOGLE_CLOUD_CPP_RESOURCE_POLICIES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_RESOURCE_POLICIES_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<
+          compute_resource_policies_v1::ResourcePoliciesRetryPolicyOption>()) {
+    options.set<
+        compute_resource_policies_v1::ResourcePoliciesRetryPolicyOption>(
         compute_resource_policies_v1::ResourcePoliciesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
-  }
-  if (!options.has<compute_resource_policies_v1::ResourcePoliciesBackoffPolicyOption>()) {
-    options.set<compute_resource_policies_v1::ResourcePoliciesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
-  }
-  if (!options.has<compute_resource_policies_v1::ResourcePoliciesPollingPolicyOption>()) {
-    options.set<compute_resource_policies_v1::ResourcePoliciesPollingPolicyOption>(
-        GenericPollingPolicy<
-            compute_resource_policies_v1::ResourcePoliciesRetryPolicyOption::Type,
-            compute_resource_policies_v1::ResourcePoliciesBackoffPolicyOption::Type>(
-            options.get<compute_resource_policies_v1::ResourcePoliciesRetryPolicyOption>()->clone(),
-            options.get<compute_resource_policies_v1::ResourcePoliciesBackoffPolicyOption>()->clone())
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<compute_resource_policies_v1::ResourcePoliciesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_resource_policies_v1::ResourcePoliciesConnectionIdempotencyPolicyOption>(
-        compute_resource_policies_v1::MakeDefaultResourcePoliciesConnectionIdempotencyPolicy());
+  if (!options.has<compute_resource_policies_v1::
+                       ResourcePoliciesBackoffPolicyOption>()) {
+    options
+        .set<compute_resource_policies_v1::ResourcePoliciesBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
+  }
+  if (!options.has<compute_resource_policies_v1::
+                       ResourcePoliciesPollingPolicyOption>()) {
+    options
+        .set<compute_resource_policies_v1::ResourcePoliciesPollingPolicyOption>(
+            GenericPollingPolicy<compute_resource_policies_v1::
+                                     ResourcePoliciesRetryPolicyOption::Type,
+                                 compute_resource_policies_v1::
+                                     ResourcePoliciesBackoffPolicyOption::Type>(
+                options
+                    .get<compute_resource_policies_v1::
+                             ResourcePoliciesRetryPolicyOption>()
+                    ->clone(),
+                options
+                    .get<compute_resource_policies_v1::
+                             ResourcePoliciesBackoffPolicyOption>()
+                    ->clone())
+                .clone());
+  }
+  if (!options.has<compute_resource_policies_v1::
+                       ResourcePoliciesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_resource_policies_v1::
+                    ResourcePoliciesConnectionIdempotencyPolicyOption>(
+        compute_resource_policies_v1::
+            MakeDefaultResourcePoliciesConnectionIdempotencyPolicy());
   }
 
   return options;

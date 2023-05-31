@@ -42,41 +42,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockForwardingRulesConnection : public compute_forwarding_rules_v1::ForwardingRulesConnection {
+class MockForwardingRulesConnection
+    : public compute_forwarding_rules_v1::ForwardingRulesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>,
-  AggregatedListForwardingRules,
-  (google::cloud::cpp::compute::forwarding_rules::v1::AggregatedListForwardingRulesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>,
+      AggregatedListForwardingRules,
+      (google::cloud::cpp::compute::forwarding_rules::v1::
+           AggregatedListForwardingRulesRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteForwardingRules,
-  (google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRulesRequest const& request), (override));
+              DeleteForwardingRules,
+              (google::cloud::cpp::compute::forwarding_rules::v1::
+                   DeleteForwardingRulesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>,
-  GetForwardingRules,
-  (google::cloud::cpp::compute::forwarding_rules::v1::GetForwardingRulesRequest const& request), (override));
+              GetForwardingRules,
+              (google::cloud::cpp::compute::forwarding_rules::v1::
+                   GetForwardingRulesRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertForwardingRules,
-  (google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRulesRequest const& request), (override));
+              InsertForwardingRules,
+              (google::cloud::cpp::compute::forwarding_rules::v1::
+                   InsertForwardingRulesRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>,
-  ListForwardingRules,
-  (google::cloud::cpp::compute::forwarding_rules::v1::ListForwardingRulesRequest request), (override));
+              ListForwardingRules,
+              (google::cloud::cpp::compute::forwarding_rules::v1::
+                   ListForwardingRulesRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchForwardingRules,
-  (google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRulesRequest const& request), (override));
+              PatchForwardingRules,
+              (google::cloud::cpp::compute::forwarding_rules::v1::
+                   PatchForwardingRulesRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetLabels,
-  (google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const& request), (override));
+              SetLabels,
+              (google::cloud::cpp::compute::forwarding_rules::v1::
+                   SetLabelsRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetTarget,
-  (google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const& request), (override));
+              SetTarget,
+              (google::cloud::cpp::compute::forwarding_rules::v1::
+                   SetTargetRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -35,32 +35,40 @@ class RegionUrlMapsConnectionIdempotencyPolicy {
   virtual ~RegionUrlMapsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<RegionUrlMapsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<RegionUrlMapsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  DeleteRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::DeleteRegionUrlMapsRequest const& request);
+  virtual google::cloud::Idempotency DeleteRegionUrlMaps(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          DeleteRegionUrlMapsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::GetRegionUrlMapsRequest const& request);
+  virtual google::cloud::Idempotency GetRegionUrlMaps(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          GetRegionUrlMapsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::InsertRegionUrlMapsRequest const& request);
+  virtual google::cloud::Idempotency InsertRegionUrlMaps(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          InsertRegionUrlMapsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest request);
+  virtual google::cloud::Idempotency ListRegionUrlMaps(
+      google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  PatchRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::PatchRegionUrlMapsRequest const& request);
+  virtual google::cloud::Idempotency PatchRegionUrlMaps(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          PatchRegionUrlMapsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::UpdateRegionUrlMapsRequest const& request);
+  virtual google::cloud::Idempotency UpdateRegionUrlMaps(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          UpdateRegionUrlMapsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  Validate(google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const& request);
+  virtual google::cloud::Idempotency Validate(
+      google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
+          request);
 };
 
 std::unique_ptr<RegionUrlMapsConnectionIdempotencyPolicy>
-    MakeDefaultRegionUrlMapsConnectionIdempotencyPolicy();
+MakeDefaultRegionUrlMapsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_url_maps_v1

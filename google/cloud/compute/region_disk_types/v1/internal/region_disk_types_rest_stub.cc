@@ -35,35 +35,39 @@ DefaultRegionDiskTypesRestStub::DefaultRegionDiskTypesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultRegionDiskTypesRestStub::DefaultRegionDiskTypesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
 DefaultRegionDiskTypesRestStub::GetRegionDiskTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_disk_types::v1::GetRegionDiskTypesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::region_disk_types::v1::
+        GetRegionDiskTypesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskType>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/diskTypes/", request.disk_type(), ""),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/diskTypes/", request.disk_type(), ""),
       {std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionDiskTypeList>
 DefaultRegionDiskTypesRestStub::ListRegionDiskTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_disk_types::v1::ListRegionDiskTypesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::RegionDiskTypeList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::region_disk_types::v1::
+        ListRegionDiskTypesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::RegionDiskTypeList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/", request.region(), "/diskTypes"),
+      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
+                   request.region(), "/diskTypes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

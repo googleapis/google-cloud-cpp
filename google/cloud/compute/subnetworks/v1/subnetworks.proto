@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service Subnetworks {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of subnetworks.
-  rpc AggregatedListSubnetworks(AggregatedListSubnetworksRequest) returns (google.cloud.cpp.compute.v1.SubnetworkAggregatedList) {
+  rpc AggregatedListSubnetworks(AggregatedListSubnetworksRequest)
+      returns (google.cloud.cpp.compute.v1.SubnetworkAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/subnetworks"
     };
@@ -40,7 +41,8 @@ service Subnetworks {
   }
 
   // Deletes the specified subnetwork.
-  rpc DeleteSubnetworks(DeleteSubnetworksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteSubnetworks(DeleteSubnetworksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{subnetwork=subnetwork}"
     };
@@ -49,17 +51,20 @@ service Subnetworks {
   }
 
   // Expands the IP CIDR range of the subnetwork to a specified value.
-  rpc ExpandIpCidrRange(ExpandIpCidrRangeRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc ExpandIpCidrRange(ExpandIpCidrRangeRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{subnetwork=subnetwork}/expandIpCidrRange"
       body: "subnetworks_expand_ip_cidr_range_request_resource"
     };
-    option (google.api.method_signature) = "project,region,subnetwork,subnetworks_expand_ip_cidr_range_request_resource";
+    option (google.api.method_signature) =
+        "project,region,subnetwork,subnetworks_expand_ip_cidr_range_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Returns the specified subnetwork.
-  rpc GetSubnetworks(GetSubnetworksRequest) returns (google.cloud.cpp.compute.v1.Subnetwork) {
+  rpc GetSubnetworks(GetSubnetworksRequest)
+      returns (google.cloud.cpp.compute.v1.Subnetwork) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{subnetwork=subnetwork}"
     };
@@ -68,7 +73,8 @@ service Subnetworks {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{resource=resource}/getIamPolicy"
     };
@@ -77,7 +83,8 @@ service Subnetworks {
 
   // Creates a subnetwork in the specified project using the data included in
   // the request.
-  rpc InsertSubnetworks(InsertSubnetworksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertSubnetworks(InsertSubnetworksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks"
       body: "subnetwork_resource"
@@ -87,7 +94,8 @@ service Subnetworks {
   }
 
   // Retrieves a list of subnetworks available to the specified project.
-  rpc ListSubnetworks(ListSubnetworksRequest) returns (google.cloud.cpp.compute.v1.SubnetworkList) {
+  rpc ListSubnetworks(ListSubnetworksRequest)
+      returns (google.cloud.cpp.compute.v1.SubnetworkList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks"
     };
@@ -95,7 +103,8 @@ service Subnetworks {
   }
 
   // Retrieves an aggregated list of all usable subnetworks in the project.
-  rpc ListUsable(ListUsableRequest) returns (google.cloud.cpp.compute.v1.UsableSubnetworksAggregatedList) {
+  rpc ListUsable(ListUsableRequest)
+      returns (google.cloud.cpp.compute.v1.UsableSubnetworksAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/subnetworks/listUsable"
     };
@@ -106,43 +115,51 @@ service Subnetworks {
   // Only certain fields can be updated with a patch request as indicated in the
   // field descriptions. You must specify the current fingerprint of the
   // subnetwork resource being patched.
-  rpc PatchSubnetworks(PatchSubnetworksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchSubnetworks(PatchSubnetworksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{subnetwork=subnetwork}"
       body: "subnetwork_resource"
     };
-    option (google.api.method_signature) = "project,region,subnetwork,subnetwork_resource";
+    option (google.api.method_signature) =
+        "project,region,subnetwork,subnetwork_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
-  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{resource=resource}/setIamPolicy"
       body: "region_set_policy_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,region_set_policy_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,region_set_policy_request_resource";
   }
 
   // Set whether VMs in this subnet can access Google services without assigning
   // external IP addresses through Private Google Access.
-  rpc SetPrivateIpGoogleAccess(SetPrivateIpGoogleAccessRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetPrivateIpGoogleAccess(SetPrivateIpGoogleAccessRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{subnetwork=subnetwork}/setPrivateIpGoogleAccess"
       body: "subnetworks_set_private_ip_google_access_request_resource"
     };
-    option (google.api.method_signature) = "project,region,subnetwork,subnetworks_set_private_ip_google_access_request_resource";
+    option (google.api.method_signature) =
+        "project,region,subnetwork,subnetworks_set_private_ip_google_access_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{resource=resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,test_permissions_request_resource";
   }
 }
 
@@ -223,10 +240,16 @@ message AggregatedListSubnetworksRequest {
 // Request message for DeleteSubnetworks.
 message DeleteSubnetworksRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -247,10 +270,16 @@ message DeleteSubnetworksRequest {
 // Request message for ExpandIpCidrRange.
 message ExpandIpCidrRangeRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -268,7 +297,9 @@ message ExpandIpCidrRangeRequest {
   string subnetwork = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The SubnetworksExpandIpCidrRangeRequest for this request.
-  optional google.cloud.cpp.compute.v1.SubnetworksExpandIpCidrRangeRequest subnetworks_expand_ip_cidr_range_request_resource = 5 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.SubnetworksExpandIpCidrRangeRequest
+      subnetworks_expand_ip_cidr_range_request_resource = 5
+      [json_name = "__json_request_body"];
 }
 
 // Request message for GetIamPolicy.
@@ -301,10 +332,16 @@ message GetSubnetworksRequest {
 // Request message for InsertSubnetworks.
 message InsertSubnetworksRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -319,7 +356,8 @@ message InsertSubnetworksRequest {
   optional string request_id = 3;
 
   // The Subnetwork for this request.
-  optional google.cloud.cpp.compute.v1.Subnetwork subnetwork_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Subnetwork subnetwork_resource = 4
+      [json_name = "__json_request_body"];
 }
 
 // Request message for ListSubnetworks.
@@ -468,10 +506,16 @@ message PatchSubnetworksRequest {
   optional int32 drain_timeout_seconds = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -489,7 +533,8 @@ message PatchSubnetworksRequest {
   string subnetwork = 5 [(google.api.field_behavior) = REQUIRED];
 
   // The Subnetwork for this request.
-  optional google.cloud.cpp.compute.v1.Subnetwork subnetwork_resource = 6 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Subnetwork subnetwork_resource = 6
+      [json_name = "__json_request_body"];
 }
 
 // Request message for SetIamPolicy.
@@ -501,7 +546,9 @@ message SetIamPolicyRequest {
   string region = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The RegionSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest region_set_policy_request_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest
+      region_set_policy_request_resource = 3
+      [json_name = "__json_request_body"];
 
   // Name or id of the resource for this request.
   string resource = 4 [(google.api.field_behavior) = REQUIRED];
@@ -510,10 +557,16 @@ message SetIamPolicyRequest {
 // Request message for SetPrivateIpGoogleAccess.
 message SetPrivateIpGoogleAccessRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -531,7 +584,10 @@ message SetPrivateIpGoogleAccessRequest {
   string subnetwork = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The SubnetworksSetPrivateIpGoogleAccessRequest for this request.
-  optional google.cloud.cpp.compute.v1.SubnetworksSetPrivateIpGoogleAccessRequest subnetworks_set_private_ip_google_access_request_resource = 5 [json_name="__json_request_body"];
+  optional
+      google.cloud.cpp.compute.v1.SubnetworksSetPrivateIpGoogleAccessRequest
+          subnetworks_set_private_ip_google_access_request_resource = 5
+      [json_name = "__json_request_body"];
 }
 
 // Request message for TestIamPermissions.
@@ -546,5 +602,6 @@ message TestIamPermissionsRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 4 [json_name = "__json_request_body"];
 }

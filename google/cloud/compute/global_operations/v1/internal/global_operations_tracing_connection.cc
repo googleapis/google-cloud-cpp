@@ -29,42 +29,63 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GlobalOperationsTracingConnection::GlobalOperationsTracingConnection(
-    std::shared_ptr<compute_global_operations_v1::GlobalOperationsConnection> child)
+    std::shared_ptr<compute_global_operations_v1::GlobalOperationsConnection>
+        child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
-GlobalOperationsTracingConnection::AggregatedListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::AggregatedListGlobalOperationsRequest const& request) {
-  auto span = internal::MakeSpan("compute_global_operations_v1::GlobalOperationsConnection::AggregatedListGlobalOperations");
+GlobalOperationsTracingConnection::AggregatedListGlobalOperations(
+    google::cloud::cpp::compute::global_operations::v1::
+        AggregatedListGlobalOperationsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_global_operations_v1::GlobalOperationsConnection::"
+      "AggregatedListGlobalOperations");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListGlobalOperations(request));
+  return internal::EndSpan(*span,
+                           child_->AggregatedListGlobalOperations(request));
 }
 
-Status
-GlobalOperationsTracingConnection::DeleteGlobalOperations(google::cloud::cpp::compute::global_operations::v1::DeleteGlobalOperationsRequest const& request) {
-  auto span = internal::MakeSpan("compute_global_operations_v1::GlobalOperationsConnection::DeleteGlobalOperations");
+Status GlobalOperationsTracingConnection::DeleteGlobalOperations(
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteGlobalOperationsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_global_operations_v1::GlobalOperationsConnection::"
+      "DeleteGlobalOperations");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteGlobalOperations(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsTracingConnection::GetGlobalOperations(google::cloud::cpp::compute::global_operations::v1::GetGlobalOperationsRequest const& request) {
-  auto span = internal::MakeSpan("compute_global_operations_v1::GlobalOperationsConnection::GetGlobalOperations");
+GlobalOperationsTracingConnection::GetGlobalOperations(
+    google::cloud::cpp::compute::global_operations::v1::
+        GetGlobalOperationsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_global_operations_v1::GlobalOperationsConnection::"
+      "GetGlobalOperations");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetGlobalOperations(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsTracingConnection::ListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::ListGlobalOperationsRequest request) {
-  auto span = internal::MakeSpan("compute_global_operations_v1::GlobalOperationsConnection::ListGlobalOperations");
+GlobalOperationsTracingConnection::ListGlobalOperations(
+    google::cloud::cpp::compute::global_operations::v1::
+        ListGlobalOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_global_operations_v1::GlobalOperationsConnection::"
+      "ListGlobalOperations");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListGlobalOperations(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Operation>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::Operation>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsTracingConnection::Wait(google::cloud::cpp::compute::global_operations::v1::WaitRequest const& request) {
-  auto span = internal::MakeSpan("compute_global_operations_v1::GlobalOperationsConnection::Wait");
+GlobalOperationsTracingConnection::Wait(
+    google::cloud::cpp::compute::global_operations::v1::WaitRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_global_operations_v1::GlobalOperationsConnection::Wait");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Wait(request));
 }
@@ -73,7 +94,8 @@ GlobalOperationsTracingConnection::Wait(google::cloud::cpp::compute::global_oper
 
 std::shared_ptr<compute_global_operations_v1::GlobalOperationsConnection>
 MakeGlobalOperationsTracingConnection(
-    std::shared_ptr<compute_global_operations_v1::GlobalOperationsConnection> conn) {
+    std::shared_ptr<compute_global_operations_v1::GlobalOperationsConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<GlobalOperationsTracingConnection>(std::move(conn));

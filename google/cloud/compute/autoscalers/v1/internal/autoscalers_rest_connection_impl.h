@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_AUTOSCALERS_V1_INTERNAL_AUTOSCALERS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_AUTOSCALERS_V1_INTERNAL_AUTOSCALERS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/autoscalers/v1/autoscalers_connection.h"
 #include "google/cloud/compute/autoscalers/v1/autoscalers_connection_idempotency_policy.h"
 #include "google/cloud/compute/autoscalers/v1/autoscalers_options.h"
 #include "google/cloud/compute/autoscalers/v1/internal/autoscalers_rest_stub.h"
 #include "google/cloud/compute/autoscalers/v1/internal/autoscalers_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,65 +44,94 @@ class AutoscalersRestConnectionImpl
   ~AutoscalersRestConnectionImpl() override = default;
 
   AutoscalersRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_autoscalers_v1_internal::AutoscalersRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_autoscalers_v1_internal::AutoscalersRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
-  AggregatedListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request) override;
+  AggregatedListAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          AggregatedListAutoscalersRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAutoscalers(google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalersRequest const& request) override;
+  DeleteAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
+                        DeleteAutoscalersRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-  GetAutoscalers(google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAutoscalers(google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalersRequest const& request) override;
-
-  StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-  ListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchAutoscalers(google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const& request) override;
+  InsertAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
+                        InsertAutoscalersRequest const& request) override;
+
+  StreamRange<google::cloud::cpp::compute::v1::Autoscaler> ListAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          PatchAutoscalersRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateAutoscalers(google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalersRequest const& request) override;
+  UpdateAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
+                        UpdateAutoscalersRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_autoscalers_v1::AutoscalersRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_autoscalers_v1::AutoscalersRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()) {
-      return options.get<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()->clone();
+      return options
+          .get<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()->clone();
+    return options_.get<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_autoscalers_v1::AutoscalersBackoffPolicyOption>()) {
-      return options.get<compute_autoscalers_v1::AutoscalersBackoffPolicyOption>()->clone();
+      return options
+          .get<compute_autoscalers_v1::AutoscalersBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_autoscalers_v1::AutoscalersBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_autoscalers_v1::AutoscalersBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_autoscalers_v1::AutoscalersConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_autoscalers_v1::AutoscalersConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_autoscalers_v1::AutoscalersConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_autoscalers_v1::AutoscalersConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_autoscalers_v1::
+                        AutoscalersConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_autoscalers_v1::
+                   AutoscalersConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_autoscalers_v1::AutoscalersConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_autoscalers_v1::
+                 AutoscalersConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_autoscalers_v1::AutoscalersPollingPolicyOption>()) {
-      return options.get<compute_autoscalers_v1::AutoscalersPollingPolicyOption>()->clone();
+      return options
+          .get<compute_autoscalers_v1::AutoscalersPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_autoscalers_v1::AutoscalersPollingPolicyOption>()->clone();
+    return options_
+        .get<compute_autoscalers_v1::AutoscalersPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

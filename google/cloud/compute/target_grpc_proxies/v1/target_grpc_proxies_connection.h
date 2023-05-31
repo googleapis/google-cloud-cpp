@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_GRPC_PROXIES_V1_TARGET_GRPC_PROXIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_GRPC_PROXIES_V1_TARGET_GRPC_PROXIES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/internal/target_grpc_proxies_retry_traits.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -38,11 +38,13 @@ namespace cloud {
 namespace compute_target_grpc_proxies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using TargetGrpcProxiesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_target_grpc_proxies_v1_internal::TargetGrpcProxiesRetryTraits>;
+using TargetGrpcProxiesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_target_grpc_proxies_v1_internal::TargetGrpcProxiesRetryTraits>;
 
-using TargetGrpcProxiesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_target_grpc_proxies_v1_internal::TargetGrpcProxiesRetryTraits>;
+using TargetGrpcProxiesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_target_grpc_proxies_v1_internal::TargetGrpcProxiesRetryTraits>;
 
 using TargetGrpcProxiesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -52,13 +54,14 @@ using TargetGrpcProxiesLimitedErrorCountRetryPolicy =
  * The `TargetGrpcProxiesConnection` object for `TargetGrpcProxiesClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `TargetGrpcProxiesClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `TargetGrpcProxiesClient`.
+ * sets in `TargetGrpcProxiesClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `TargetGrpcProxiesClient`.
  *
  * To create a concrete instance, see `MakeTargetGrpcProxiesConnection()`.
  *
- * For mocking, see `compute_target_grpc_proxies_v1_mocks::MockTargetGrpcProxiesConnection`.
+ * For mocking, see
+ * `compute_target_grpc_proxies_v1_mocks::MockTargetGrpcProxiesConnection`.
  */
 class TargetGrpcProxiesConnection {
  public:
@@ -67,19 +70,24 @@ class TargetGrpcProxiesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxiesRequest const& request);
+  DeleteTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                              DeleteTargetGrpcProxiesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-  GetTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::GetTargetGrpcProxiesRequest const& request);
+  GetTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                           GetTargetGrpcProxiesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxiesRequest const& request);
+  InsertTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                              InsertTargetGrpcProxiesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-  ListTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::ListTargetGrpcProxiesRequest request);
+  ListTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                            ListTargetGrpcProxiesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxiesRequest const& request);
+  PatchTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                             PatchTargetGrpcProxiesRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

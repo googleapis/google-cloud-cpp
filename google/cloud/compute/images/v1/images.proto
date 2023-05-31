@@ -27,15 +27,16 @@ import "google/cloud/extended_operations.proto";
 service Images {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly,"
-    "https://www.googleapis.com/auth/devstorage.full_control,"
-    "https://www.googleapis.com/auth/devstorage.read_only,"
-    "https://www.googleapis.com/auth/devstorage.read_write";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly,"
+      "https://www.googleapis.com/auth/devstorage.full_control,"
+      "https://www.googleapis.com/auth/devstorage.read_only,"
+      "https://www.googleapis.com/auth/devstorage.read_write";
 
   // Deletes the specified image.
-  rpc DeleteImages(DeleteImagesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteImages(DeleteImagesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/global/images/{image=image}"
     };
@@ -45,12 +46,14 @@ service Images {
 
   // Sets the deprecation status of an image. If an empty request body is given,
   // clears the deprecation status instead.
-  rpc Deprecate(DeprecateRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc Deprecate(DeprecateRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/images/{image=image}/deprecate"
       body: "deprecation_status_resource"
     };
-    option (google.api.method_signature) = "project,image,deprecation_status_resource";
+    option (google.api.method_signature) =
+        "project,image,deprecation_status_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
@@ -65,7 +68,8 @@ service Images {
   // Returns the latest image that is part of an image family and is not
   // deprecated. For more information on image families, see Public image
   // families documentation.
-  rpc GetFromFamily(GetFromFamilyRequest) returns (google.cloud.cpp.compute.v1.Image) {
+  rpc GetFromFamily(GetFromFamilyRequest)
+      returns (google.cloud.cpp.compute.v1.Image) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/images/family/{family=family}"
     };
@@ -74,7 +78,8 @@ service Images {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/images/{resource=resource}/getIamPolicy"
     };
@@ -83,7 +88,8 @@ service Images {
 
   // Creates an image in the specified project using the data included in the
   // request.
-  rpc InsertImages(InsertImagesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertImages(InsertImagesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/images"
       body: "image_resource"
@@ -98,7 +104,8 @@ service Images {
   // publicly-available images, like Debian 8. If you want to get a list of
   // publicly-available images, use this method to make a request to the
   // respective image project, such as debian-cloud or windows-cloud.
-  rpc ListImages(ListImagesRequest) returns (google.cloud.cpp.compute.v1.ImageList) {
+  rpc ListImages(ListImagesRequest)
+      returns (google.cloud.cpp.compute.v1.ImageList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/images"
     };
@@ -107,7 +114,8 @@ service Images {
 
   // Patches the specified image with the data included in the request. Only the
   // following fields can be modified: family, description, deprecation status.
-  rpc PatchImages(PatchImagesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchImages(PatchImagesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/global/images/{image=image}"
       body: "image_resource"
@@ -118,32 +126,38 @@ service Images {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
-  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/images/{resource=resource}/setIamPolicy"
       body: "global_set_policy_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,global_set_policy_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,global_set_policy_request_resource";
   }
 
   // Sets the labels on an image. To learn more about labels, read the Labeling
   // Resources documentation.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/images/{resource=resource}/setLabels"
       body: "global_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,global_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,global_set_labels_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/images/{resource=resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,test_permissions_request_resource";
   }
 }
 
@@ -153,7 +167,10 @@ message DeleteImagesRequest {
   string image = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -171,13 +188,17 @@ message DeleteImagesRequest {
 // Request message for Deprecate.
 message DeprecateRequest {
   // The DeprecationStatus for this request.
-  optional google.cloud.cpp.compute.v1.DeprecationStatus deprecation_status_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.DeprecationStatus
+      deprecation_status_resource = 1 [json_name = "__json_request_body"];
 
   // Image name.
   string image = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -229,10 +250,14 @@ message InsertImagesRequest {
   optional bool force_create = 1;
 
   // The Image for this request.
-  optional google.cloud.cpp.compute.v1.Image image_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Image image_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -318,10 +343,14 @@ message PatchImagesRequest {
   string image = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The Image for this request.
-  optional google.cloud.cpp.compute.v1.Image image_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Image image_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -339,7 +368,9 @@ message PatchImagesRequest {
 // Request message for SetIamPolicy.
 message SetIamPolicyRequest {
   // The GlobalSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.GlobalSetPolicyRequest global_set_policy_request_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.GlobalSetPolicyRequest
+      global_set_policy_request_resource = 1
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
   string project = 2 [(google.api.field_behavior) = REQUIRED];
@@ -351,10 +382,15 @@ message SetIamPolicyRequest {
 // Request message for SetLabels.
 message SetLabelsRequest {
   // The GlobalSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.GlobalSetLabelsRequest global_set_labels_request_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.GlobalSetLabelsRequest
+      global_set_labels_request_resource = 1
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name or id of the resource for this request.
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
@@ -369,5 +405,6 @@ message TestIamPermissionsRequest {
   string resource = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 3 [json_name = "__json_request_body"];
 }

@@ -34,33 +34,46 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RegionUrlMapsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_REGION_URL_MAPS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_REGION_URL_MAPS_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_region_url_maps_v1::RegionUrlMapsRetryPolicyOption>()) {
+      std::move(options), "GOOGLE_CLOUD_CPP_REGION_URL_MAPS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_REGION_URL_MAPS_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options
+           .has<compute_region_url_maps_v1::RegionUrlMapsRetryPolicyOption>()) {
     options.set<compute_region_url_maps_v1::RegionUrlMapsRetryPolicyOption>(
         compute_region_url_maps_v1::RegionUrlMapsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_region_url_maps_v1::RegionUrlMapsBackoffPolicyOption>()) {
+  if (!options.has<
+          compute_region_url_maps_v1::RegionUrlMapsBackoffPolicyOption>()) {
     options.set<compute_region_url_maps_v1::RegionUrlMapsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_region_url_maps_v1::RegionUrlMapsPollingPolicyOption>()) {
+  if (!options.has<
+          compute_region_url_maps_v1::RegionUrlMapsPollingPolicyOption>()) {
     options.set<compute_region_url_maps_v1::RegionUrlMapsPollingPolicyOption>(
         GenericPollingPolicy<
             compute_region_url_maps_v1::RegionUrlMapsRetryPolicyOption::Type,
             compute_region_url_maps_v1::RegionUrlMapsBackoffPolicyOption::Type>(
-            options.get<compute_region_url_maps_v1::RegionUrlMapsRetryPolicyOption>()->clone(),
-            options.get<compute_region_url_maps_v1::RegionUrlMapsBackoffPolicyOption>()->clone())
+            options
+                .get<compute_region_url_maps_v1::
+                         RegionUrlMapsRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<compute_region_url_maps_v1::
+                         RegionUrlMapsBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<compute_region_url_maps_v1::RegionUrlMapsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_region_url_maps_v1::RegionUrlMapsConnectionIdempotencyPolicyOption>(
-        compute_region_url_maps_v1::MakeDefaultRegionUrlMapsConnectionIdempotencyPolicy());
+  if (!options.has<compute_region_url_maps_v1::
+                       RegionUrlMapsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_region_url_maps_v1::
+                    RegionUrlMapsConnectionIdempotencyPolicyOption>(
+        compute_region_url_maps_v1::
+            MakeDefaultRegionUrlMapsConnectionIdempotencyPolicy());
   }
 
   return options;

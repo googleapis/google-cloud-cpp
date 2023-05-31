@@ -24,17 +24,22 @@ namespace cloud {
 namespace compute_region_autoscalers_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RegionAutoscalersClient::RegionAutoscalersClient(ExperimentalTag,
-    std::shared_ptr<RegionAutoscalersConnection> connection, Options opts)
+RegionAutoscalersClient::RegionAutoscalersClient(
+    ExperimentalTag, std::shared_ptr<RegionAutoscalersConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 RegionAutoscalersClient::~RegionAutoscalersClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersClient::DeleteRegionAutoscalers(std::string const& project, std::string const& region, std::string const& autoscaler, Options opts) {
+RegionAutoscalersClient::DeleteRegionAutoscalers(std::string const& project,
+                                                 std::string const& region,
+                                                 std::string const& autoscaler,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_autoscalers::v1::DeleteRegionAutoscalersRequest request;
+  google::cloud::cpp::compute::region_autoscalers::v1::
+      DeleteRegionAutoscalersRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_autoscaler(autoscaler);
@@ -42,15 +47,22 @@ RegionAutoscalersClient::DeleteRegionAutoscalers(std::string const& project, std
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersClient::DeleteRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::DeleteRegionAutoscalersRequest const& request, Options opts) {
+RegionAutoscalersClient::DeleteRegionAutoscalers(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        DeleteRegionAutoscalersRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRegionAutoscalers(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-RegionAutoscalersClient::GetRegionAutoscalers(std::string const& project, std::string const& region, std::string const& autoscaler, Options opts) {
+RegionAutoscalersClient::GetRegionAutoscalers(std::string const& project,
+                                              std::string const& region,
+                                              std::string const& autoscaler,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_autoscalers::v1::GetRegionAutoscalersRequest request;
+  google::cloud::cpp::compute::region_autoscalers::v1::
+      GetRegionAutoscalersRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_autoscaler(autoscaler);
@@ -58,15 +70,22 @@ RegionAutoscalersClient::GetRegionAutoscalers(std::string const& project, std::s
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-RegionAutoscalersClient::GetRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::GetRegionAutoscalersRequest const& request, Options opts) {
+RegionAutoscalersClient::GetRegionAutoscalers(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        GetRegionAutoscalersRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRegionAutoscalers(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersClient::InsertRegionAutoscalers(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource, Options opts) {
+RegionAutoscalersClient::InsertRegionAutoscalers(
+    std::string const& project, std::string const& region,
+    google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_autoscalers::v1::InsertRegionAutoscalersRequest request;
+  google::cloud::cpp::compute::region_autoscalers::v1::
+      InsertRegionAutoscalersRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_autoscaler_resource() = autoscaler_resource;
@@ -74,30 +93,43 @@ RegionAutoscalersClient::InsertRegionAutoscalers(std::string const& project, std
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersClient::InsertRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::InsertRegionAutoscalersRequest const& request, Options opts) {
+RegionAutoscalersClient::InsertRegionAutoscalers(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        InsertRegionAutoscalersRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertRegionAutoscalers(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-RegionAutoscalersClient::ListRegionAutoscalers(std::string const& project, std::string const& region, Options opts) {
+RegionAutoscalersClient::ListRegionAutoscalers(std::string const& project,
+                                               std::string const& region,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_autoscalers::v1::ListRegionAutoscalersRequest request;
+  google::cloud::cpp::compute::region_autoscalers::v1::
+      ListRegionAutoscalersRequest request;
   request.set_project(project);
   request.set_region(region);
   return connection_->ListRegionAutoscalers(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-RegionAutoscalersClient::ListRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::ListRegionAutoscalersRequest request, Options opts) {
+RegionAutoscalersClient::ListRegionAutoscalers(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        ListRegionAutoscalersRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRegionAutoscalers(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersClient::PatchRegionAutoscalers(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource, Options opts) {
+RegionAutoscalersClient::PatchRegionAutoscalers(
+    std::string const& project, std::string const& region,
+    google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_autoscalers::v1::PatchRegionAutoscalersRequest request;
+  google::cloud::cpp::compute::region_autoscalers::v1::
+      PatchRegionAutoscalersRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_autoscaler_resource() = autoscaler_resource;
@@ -105,15 +137,22 @@ RegionAutoscalersClient::PatchRegionAutoscalers(std::string const& project, std:
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersClient::PatchRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::PatchRegionAutoscalersRequest const& request, Options opts) {
+RegionAutoscalersClient::PatchRegionAutoscalers(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        PatchRegionAutoscalersRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchRegionAutoscalers(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersClient::UpdateRegionAutoscalers(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource, Options opts) {
+RegionAutoscalersClient::UpdateRegionAutoscalers(
+    std::string const& project, std::string const& region,
+    google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_autoscalers::v1::UpdateRegionAutoscalersRequest request;
+  google::cloud::cpp::compute::region_autoscalers::v1::
+      UpdateRegionAutoscalersRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_autoscaler_resource() = autoscaler_resource;
@@ -121,7 +160,10 @@ RegionAutoscalersClient::UpdateRegionAutoscalers(std::string const& project, std
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersClient::UpdateRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::UpdateRegionAutoscalersRequest const& request, Options opts) {
+RegionAutoscalersClient::UpdateRegionAutoscalers(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        UpdateRegionAutoscalersRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRegionAutoscalers(request);
 }

@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service RegionTargetHttpProxies {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified TargetHttpProxy resource.
-  rpc DeleteRegionTargetHttpProxies(DeleteRegionTargetHttpProxiesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteRegionTargetHttpProxies(DeleteRegionTargetHttpProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/regions/{region=region}/targetHttpProxies/{target_http_proxy=target_http_proxy}"
     };
@@ -41,7 +42,8 @@ service RegionTargetHttpProxies {
   }
 
   // Returns the specified TargetHttpProxy resource in the specified region.
-  rpc GetRegionTargetHttpProxies(GetRegionTargetHttpProxiesRequest) returns (google.cloud.cpp.compute.v1.TargetHttpProxy) {
+  rpc GetRegionTargetHttpProxies(GetRegionTargetHttpProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.TargetHttpProxy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/targetHttpProxies/{target_http_proxy=target_http_proxy}"
     };
@@ -50,18 +52,21 @@ service RegionTargetHttpProxies {
 
   // Creates a TargetHttpProxy resource in the specified project and region
   // using the data included in the request.
-  rpc InsertRegionTargetHttpProxies(InsertRegionTargetHttpProxiesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertRegionTargetHttpProxies(InsertRegionTargetHttpProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetHttpProxies"
       body: "target_http_proxy_resource"
     };
-    option (google.api.method_signature) = "project,region,target_http_proxy_resource";
+    option (google.api.method_signature) =
+        "project,region,target_http_proxy_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Retrieves the list of TargetHttpProxy resources available to the specified
   // project in the specified region.
-  rpc ListRegionTargetHttpProxies(ListRegionTargetHttpProxiesRequest) returns (google.cloud.cpp.compute.v1.TargetHttpProxyList) {
+  rpc ListRegionTargetHttpProxies(ListRegionTargetHttpProxiesRequest)
+      returns (google.cloud.cpp.compute.v1.TargetHttpProxyList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/targetHttpProxies"
     };
@@ -69,12 +74,14 @@ service RegionTargetHttpProxies {
   }
 
   // Changes the URL map for TargetHttpProxy.
-  rpc SetUrlMap(SetUrlMapRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetUrlMap(SetUrlMapRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetHttpProxies/{target_http_proxy=target_http_proxy}/setUrlMap"
       body: "url_map_reference_resource"
     };
-    option (google.api.method_signature) = "project,region,target_http_proxy,url_map_reference_resource";
+    option (google.api.method_signature) =
+        "project,region,target_http_proxy,url_map_reference_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -82,10 +89,16 @@ service RegionTargetHttpProxies {
 // Request message for DeleteRegionTargetHttpProxies.
 message DeleteRegionTargetHttpProxiesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -118,10 +131,16 @@ message GetRegionTargetHttpProxiesRequest {
 // Request message for InsertRegionTargetHttpProxies.
 message InsertRegionTargetHttpProxiesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -136,7 +155,8 @@ message InsertRegionTargetHttpProxiesRequest {
   optional string request_id = 3;
 
   // The TargetHttpProxy for this request.
-  optional google.cloud.cpp.compute.v1.TargetHttpProxy target_http_proxy_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetHttpProxy
+      target_http_proxy_resource = 4 [json_name = "__json_request_body"];
 }
 
 // Request message for ListRegionTargetHttpProxies.
@@ -210,10 +230,16 @@ message ListRegionTargetHttpProxiesRequest {
 // Request message for SetUrlMap.
 message SetUrlMapRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -231,5 +257,6 @@ message SetUrlMapRequest {
   string target_http_proxy = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The UrlMapReference for this request.
-  optional google.cloud.cpp.compute.v1.UrlMapReference url_map_reference_resource = 5 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.UrlMapReference
+      url_map_reference_resource = 5 [json_name = "__json_request_body"];
 }

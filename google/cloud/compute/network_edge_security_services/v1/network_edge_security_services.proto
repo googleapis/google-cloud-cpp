@@ -27,13 +27,16 @@ import "google/cloud/extended_operations.proto";
 service NetworkEdgeSecurityServices {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves the list of all NetworkEdgeSecurityService resources available to
   // the specified project.
-  rpc AggregatedListNetworkEdgeSecurityServices(AggregatedListNetworkEdgeSecurityServicesRequest) returns (google.cloud.cpp.compute.v1.NetworkEdgeSecurityServiceAggregatedList) {
+  rpc AggregatedListNetworkEdgeSecurityServices(
+      AggregatedListNetworkEdgeSecurityServicesRequest)
+      returns (google.cloud.cpp.compute.v1
+                   .NetworkEdgeSecurityServiceAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/networkEdgeSecurityServices"
     };
@@ -41,40 +44,50 @@ service NetworkEdgeSecurityServices {
   }
 
   // Deletes the specified service.
-  rpc DeleteNetworkEdgeSecurityServices(DeleteNetworkEdgeSecurityServicesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteNetworkEdgeSecurityServices(
+      DeleteNetworkEdgeSecurityServicesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/regions/{region=region}/networkEdgeSecurityServices/{network_edge_security_service=network_edge_security_service}"
     };
-    option (google.api.method_signature) = "project,region,network_edge_security_service";
+    option (google.api.method_signature) =
+        "project,region,network_edge_security_service";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Gets a specified NetworkEdgeSecurityService.
-  rpc GetNetworkEdgeSecurityServices(GetNetworkEdgeSecurityServicesRequest) returns (google.cloud.cpp.compute.v1.NetworkEdgeSecurityService) {
+  rpc GetNetworkEdgeSecurityServices(GetNetworkEdgeSecurityServicesRequest)
+      returns (google.cloud.cpp.compute.v1.NetworkEdgeSecurityService) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/networkEdgeSecurityServices/{network_edge_security_service=network_edge_security_service}"
     };
-    option (google.api.method_signature) = "project,region,network_edge_security_service";
+    option (google.api.method_signature) =
+        "project,region,network_edge_security_service";
   }
 
   // Creates a new service in the specified project using the data included in
   // the request.
-  rpc InsertNetworkEdgeSecurityServices(InsertNetworkEdgeSecurityServicesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertNetworkEdgeSecurityServices(
+      InsertNetworkEdgeSecurityServicesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/networkEdgeSecurityServices"
       body: "network_edge_security_service_resource"
     };
-    option (google.api.method_signature) = "project,region,network_edge_security_service_resource";
+    option (google.api.method_signature) =
+        "project,region,network_edge_security_service_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Patches the specified policy with the data included in the request.
-  rpc PatchNetworkEdgeSecurityServices(PatchNetworkEdgeSecurityServicesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchNetworkEdgeSecurityServices(PatchNetworkEdgeSecurityServicesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/regions/{region=region}/networkEdgeSecurityServices/{network_edge_security_service=network_edge_security_service}"
       body: "network_edge_security_service_resource"
     };
-    option (google.api.method_signature) = "project,region,network_edge_security_service,network_edge_security_service_resource";
+    option (google.api.method_signature) =
+        "project,region,network_edge_security_service,network_edge_security_service_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -156,13 +169,20 @@ message AggregatedListNetworkEdgeSecurityServicesRequest {
 // Request message for DeleteNetworkEdgeSecurityServices.
 message DeleteNetworkEdgeSecurityServicesRequest {
   // Name of the network edge security service to delete.
-  string network_edge_security_service = 1 [(google.api.field_behavior) = REQUIRED];
+  string network_edge_security_service = 1
+      [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -180,7 +200,8 @@ message DeleteNetworkEdgeSecurityServicesRequest {
 // Request message for GetNetworkEdgeSecurityServices.
 message GetNetworkEdgeSecurityServicesRequest {
   // Name of the network edge security service to get.
-  string network_edge_security_service = 1 [(google.api.field_behavior) = REQUIRED];
+  string network_edge_security_service = 1
+      [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
   string project = 2 [(google.api.field_behavior) = REQUIRED];
@@ -192,13 +213,21 @@ message GetNetworkEdgeSecurityServicesRequest {
 // Request message for InsertNetworkEdgeSecurityServices.
 message InsertNetworkEdgeSecurityServicesRequest {
   // The NetworkEdgeSecurityService for this request.
-  optional google.cloud.cpp.compute.v1.NetworkEdgeSecurityService network_edge_security_service_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.NetworkEdgeSecurityService
+      network_edge_security_service_resource = 1
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -219,18 +248,27 @@ message InsertNetworkEdgeSecurityServicesRequest {
 // Request message for PatchNetworkEdgeSecurityServices.
 message PatchNetworkEdgeSecurityServicesRequest {
   // Name of the network edge security service to update.
-  string network_edge_security_service = 1 [(google.api.field_behavior) = REQUIRED];
+  string network_edge_security_service = 1
+      [(google.api.field_behavior) = REQUIRED];
 
   // The NetworkEdgeSecurityService for this request.
-  optional google.cloud.cpp.compute.v1.NetworkEdgeSecurityService network_edge_security_service_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.NetworkEdgeSecurityService
+      network_edge_security_service_resource = 2
+      [json_name = "__json_request_body"];
 
   optional string paths = 3;
 
   // Project ID for this request.
-  string project = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

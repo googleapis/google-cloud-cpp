@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/region_commitments/v1/region_commitments.proto
 
-
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionCommitmentsRestMetadata::RegionCommitmentsRestMetadata(
     std::shared_ptr<RegionCommitmentsRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
 RegionCommitmentsRestMetadata::AggregatedListRegionCommitments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest const& request) {
+    google::cloud::cpp::compute::region_commitments::v1::
+        AggregatedListRegionCommitmentsRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListRegionCommitments(rest_context, request);
 }
@@ -47,77 +48,84 @@ RegionCommitmentsRestMetadata::AggregatedListRegionCommitments(
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
 RegionCommitmentsRestMetadata::GetRegionCommitments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::region_commitments::v1::GetRegionCommitmentsRequest const& request) {
+    google::cloud::cpp::compute::region_commitments::v1::
+        GetRegionCommitmentsRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetRegionCommitments(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsRestMetadata::AsyncInsertRegionCommitments(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_commitments::v1::InsertRegionCommitmentsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_commitments::v1::
+        InsertRegionCommitmentsRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionCommitments(cq, std::move(rest_context), request);
+  return child_->AsyncInsertRegionCommitments(cq, std::move(rest_context),
+                                              request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
 RegionCommitmentsRestMetadata::ListRegionCommitments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest const& request) {
+    google::cloud::cpp::compute::region_commitments::v1::
+        ListRegionCommitmentsRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListRegionCommitments(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsRestMetadata::AsyncUpdateRegionCommitments(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_commitments::v1::UpdateRegionCommitmentsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_commitments::v1::
+        UpdateRegionCommitmentsRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncUpdateRegionCommitments(cq, std::move(rest_context), request);
+  return child_->AsyncUpdateRegionCommitments(cq, std::move(rest_context),
+                                              request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        GetRegionOperationsRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
 
-future<Status>
-RegionCommitmentsRestMetadata::AsyncCancelOperation(
+future<Status> RegionCommitmentsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteRegionOperationsRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }
 
 void RegionCommitmentsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

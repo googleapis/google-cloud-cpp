@@ -35,23 +35,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionOperationsRestMetadata : public RegionOperationsRestStub {
  public:
   ~RegionOperationsRestMetadata() override = default;
-  explicit RegionOperationsRestMetadata(std::shared_ptr<RegionOperationsRestStub> child);
+  explicit RegionOperationsRestMetadata(
+      std::shared_ptr<RegionOperationsRestStub> child);
 
   Status DeleteRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteRegionOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          GetRegionOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_operations::v1::ListRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          ListRegionOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_operations::v1::WaitRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
+          request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

@@ -27,19 +27,21 @@ namespace compute_license_codes_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LicenseCodesRestLogging::LicenseCodesRestLogging(
-    std::shared_ptr<LicenseCodesRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<LicenseCodesRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
 LicenseCodesRestLogging::GetLicenseCodes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::license_codes::v1::GetLicenseCodesRequest const& request) {
+    google::cloud::cpp::compute::license_codes::v1::
+        GetLicenseCodesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::license_codes::v1::GetLicenseCodesRequest const& request) {
+             google::cloud::cpp::compute::license_codes::v1::
+                 GetLicenseCodesRequest const& request) {
         return child_->GetLicenseCodes(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ LicenseCodesRestLogging::GetLicenseCodes(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicenseCodesRestLogging::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::license_codes::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::license_codes::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

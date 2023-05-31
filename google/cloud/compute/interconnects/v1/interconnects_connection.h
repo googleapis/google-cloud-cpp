@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECTS_V1_INTERCONNECTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECTS_V1_INTERCONNECTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/interconnects/v1/interconnects_connection_idempotency_policy.h"
 #include "google/cloud/compute/interconnects/v1/internal/interconnects_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -38,11 +38,13 @@ namespace cloud {
 namespace compute_interconnects_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using InterconnectsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_interconnects_v1_internal::InterconnectsRetryTraits>;
+using InterconnectsRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_interconnects_v1_internal::InterconnectsRetryTraits>;
 
-using InterconnectsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_interconnects_v1_internal::InterconnectsRetryTraits>;
+using InterconnectsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_interconnects_v1_internal::InterconnectsRetryTraits>;
 
 using InterconnectsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -58,7 +60,8 @@ using InterconnectsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeInterconnectsConnection()`.
  *
- * For mocking, see `compute_interconnects_v1_mocks::MockInterconnectsConnection`.
+ * For mocking, see
+ * `compute_interconnects_v1_mocks::MockInterconnectsConnection`.
  */
 class InterconnectsConnection {
  public:
@@ -67,25 +70,35 @@ class InterconnectsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnects(google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest const& request);
+  DeleteInterconnects(google::cloud::cpp::compute::interconnects::v1::
+                          DeleteInterconnectsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-  GetInterconnects(google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest const& request);
+  GetInterconnects(google::cloud::cpp::compute::interconnects::v1::
+                       GetInterconnectsRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
-  GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
+  GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::
+                     GetDiagnosticsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnects(google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest const& request);
+  InsertInterconnects(google::cloud::cpp::compute::interconnects::v1::
+                          InsertInterconnectsRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Interconnect>
-  ListInterconnects(google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest request);
+  ListInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnects(google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest const& request);
+  PatchInterconnects(google::cloud::cpp::compute::interconnects::v1::
+                         PatchInterconnectsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request);
+  SetLabels(
+      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

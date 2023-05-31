@@ -36,36 +36,47 @@ class BackendBucketsTracingConnection
   ~BackendBucketsTracingConnection() override = default;
 
   explicit BackendBucketsTracingConnection(
-    std::shared_ptr<compute_backend_buckets_v1::BackendBucketsConnection> child);
+      std::shared_ptr<compute_backend_buckets_v1::BackendBucketsConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddSignedUrlKey(google::cloud::cpp::compute::backend_buckets::v1::AddSignedUrlKeyRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          AddSignedUrlKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::DeleteBackendBucketsRequest const& request) override;
+  DeleteBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::
+                           DeleteBackendBucketsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSignedUrlKey(google::cloud::cpp::compute::backend_buckets::v1::DeleteSignedUrlKeyRequest const& request) override;
+  DeleteSignedUrlKey(google::cloud::cpp::compute::backend_buckets::v1::
+                         DeleteSignedUrlKeyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
-  GetBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::GetBackendBucketsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBuckets(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          GetBackendBucketsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::InsertBackendBucketsRequest const& request) override;
+  InsertBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::
+                           InsertBackendBucketsRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
-  ListBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::ListBackendBucketsRequest request) override;
+  ListBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::
+                         ListBackendBucketsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::PatchBackendBucketsRequest const& request) override;
+  PatchBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::
+                          PatchBackendBucketsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_buckets::v1::SetEdgeSecurityPolicyRequest const& request) override;
+  SetEdgeSecurityPolicy(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          SetEdgeSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::UpdateBackendBucketsRequest const& request) override;
+  UpdateBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::
+                           UpdateBackendBucketsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_backend_buckets_v1::BackendBucketsConnection> child_;

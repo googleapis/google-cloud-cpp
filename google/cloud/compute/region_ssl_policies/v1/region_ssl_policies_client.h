@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionSslPoliciesClient {
  public:
-  explicit RegionSslPoliciesClient(ExperimentalTag, std::shared_ptr<RegionSslPoliciesConnection> connection, Options opts = {});
+  explicit RegionSslPoliciesClient(
+      ExperimentalTag, std::shared_ptr<RegionSslPoliciesConnection> connection,
+      Options opts = {});
   ~RegionSslPoliciesClient();
 
   ///@{
@@ -76,10 +78,12 @@ class RegionSslPoliciesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RegionSslPoliciesClient const& a, RegionSslPoliciesClient const& b) {
+  friend bool operator==(RegionSslPoliciesClient const& a,
+                         RegionSslPoliciesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RegionSslPoliciesClient const& a, RegionSslPoliciesClient const& b) {
+  friend bool operator!=(RegionSslPoliciesClient const& a,
+                         RegionSslPoliciesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -114,11 +118,12 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L94}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L101}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionSslPolicies(std::string const& project, std::string const& region, std::string const& ssl_policy, Options opts = {});
+  DeleteRegionSslPolicies(std::string const& project, std::string const& region,
+                          std::string const& ssl_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -152,11 +157,13 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L94}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L101}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::DeleteRegionSslPoliciesRequest const& request, Options opts = {});
+  DeleteRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::
+                              DeleteRegionSslPoliciesRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -180,12 +187,13 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.GetRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L119}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.GetRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L132}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25520}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-  GetRegionSslPolicies(std::string const& project, std::string const& region, std::string const& ssl_policy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetRegionSslPolicies(
+      std::string const& project, std::string const& region,
+      std::string const& ssl_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -211,12 +219,14 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.GetRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L119}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.GetRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L132}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25520}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-  GetRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::GetRegionSslPoliciesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetRegionSslPolicies(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          GetRegionSslPoliciesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -246,11 +256,14 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.InsertRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L132}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.InsertRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L145}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionSslPolicies(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts = {});
+  InsertRegionSslPolicies(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -283,11 +296,13 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.InsertRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L132}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.InsertRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L145}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::InsertRegionSslPoliciesRequest const& request, Options opts = {});
+  InsertRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::
+                              InsertRegionSslPoliciesRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -319,12 +334,12 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L224}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L244}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25520}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-  ListRegionSslPolicies(std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListRegionSslPolicies(
+      std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -360,12 +375,14 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L224}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L244}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25520}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-  ListRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::ListRegionSslPoliciesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListRegionSslPolicies(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          ListRegionSslPoliciesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -388,12 +405,14 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L156}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L176}
   /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25426}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-  ListAvailableFeatures(std::string const& project, std::string const& region, Options opts = {});
+  StatusOr<
+      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  ListAvailableFeatures(std::string const& project, std::string const& region,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -420,12 +439,15 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L156}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L176}
   /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25426}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-  ListAvailableFeatures(google::cloud::cpp::compute::region_ssl_policies::v1::ListAvailableFeaturesRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  ListAvailableFeatures(google::cloud::cpp::compute::region_ssl_policies::v1::
+                            ListAvailableFeaturesRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -456,11 +478,15 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.PatchRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L292}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.PatchRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L312}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionSslPolicies(std::string const& project, std::string const& region, std::string const& ssl_policy, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts = {});
+  PatchRegionSslPolicies(
+      std::string const& project, std::string const& region,
+      std::string const& ssl_policy,
+      google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -492,11 +518,13 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.PatchRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L292}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.PatchRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L312}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::PatchRegionSslPoliciesRequest const& request, Options opts = {});
+  PatchRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::
+                             PatchRegionSslPoliciesRequest const& request,
+                         Options opts = {});
 
  private:
   std::shared_ptr<RegionSslPoliciesConnection> connection_;

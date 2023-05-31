@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_GLOBAL_ADDRESSES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_GLOBAL_ADDRESSES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/global_addresses/v1/global_addresses_connection_idempotency_policy.h"
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -38,11 +38,13 @@ namespace cloud {
 namespace compute_global_addresses_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using GlobalAddressesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_global_addresses_v1_internal::GlobalAddressesRetryTraits>;
+using GlobalAddressesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_global_addresses_v1_internal::GlobalAddressesRetryTraits>;
 
-using GlobalAddressesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_global_addresses_v1_internal::GlobalAddressesRetryTraits>;
+using GlobalAddressesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_global_addresses_v1_internal::GlobalAddressesRetryTraits>;
 
 using GlobalAddressesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -58,7 +60,8 @@ using GlobalAddressesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeGlobalAddressesConnection()`.
  *
- * For mocking, see `compute_global_addresses_v1_mocks::MockGlobalAddressesConnection`.
+ * For mocking, see
+ * `compute_global_addresses_v1_mocks::MockGlobalAddressesConnection`.
  */
 class GlobalAddressesConnection {
  public:
@@ -67,19 +70,25 @@ class GlobalAddressesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::DeleteGlobalAddressesRequest const& request);
+  DeleteGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::
+                            DeleteGlobalAddressesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Address>
-  GetGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::GetGlobalAddressesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddresses(
+      google::cloud::cpp::compute::global_addresses::v1::
+          GetGlobalAddressesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::InsertGlobalAddressesRequest const& request);
+  InsertGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::
+                            InsertGlobalAddressesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Address>
-  ListGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::ListGlobalAddressesRequest request);
+  ListGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::
+                          ListGlobalAddressesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request);
+  SetLabels(
+      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

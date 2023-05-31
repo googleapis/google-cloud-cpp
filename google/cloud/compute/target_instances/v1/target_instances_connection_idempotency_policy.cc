@@ -26,35 +26,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TargetInstancesConnectionIdempotencyPolicy::~TargetInstancesConnectionIdempotencyPolicy() = default;
+TargetInstancesConnectionIdempotencyPolicy::
+    ~TargetInstancesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TargetInstancesConnectionIdempotencyPolicy>
 TargetInstancesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TargetInstancesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TargetInstancesConnectionIdempotencyPolicy::AggregatedListTargetInstances(google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest const&) {
+Idempotency
+TargetInstancesConnectionIdempotencyPolicy::AggregatedListTargetInstances(
+    google::cloud::cpp::compute::target_instances::v1::
+        AggregatedListTargetInstancesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetInstancesConnectionIdempotencyPolicy::DeleteTargetInstances(google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstancesRequest const&) {
+Idempotency TargetInstancesConnectionIdempotencyPolicy::DeleteTargetInstances(
+    google::cloud::cpp::compute::target_instances::v1::
+        DeleteTargetInstancesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetInstancesConnectionIdempotencyPolicy::GetTargetInstances(google::cloud::cpp::compute::target_instances::v1::GetTargetInstancesRequest const&) {
+Idempotency TargetInstancesConnectionIdempotencyPolicy::GetTargetInstances(
+    google::cloud::cpp::compute::target_instances::v1::
+        GetTargetInstancesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetInstancesConnectionIdempotencyPolicy::InsertTargetInstances(google::cloud::cpp::compute::target_instances::v1::InsertTargetInstancesRequest const&) {
+Idempotency TargetInstancesConnectionIdempotencyPolicy::InsertTargetInstances(
+    google::cloud::cpp::compute::target_instances::v1::
+        InsertTargetInstancesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetInstancesConnectionIdempotencyPolicy::ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest) {  // NOLINT
+Idempotency TargetInstancesConnectionIdempotencyPolicy::ListTargetInstances(
+    google::cloud::cpp::compute::target_instances::v1::
+        ListTargetInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<TargetInstancesConnectionIdempotencyPolicy>
-    MakeDefaultTargetInstancesConnectionIdempotencyPolicy() {
+MakeDefaultTargetInstancesConnectionIdempotencyPolicy() {
   return std::make_unique<TargetInstancesConnectionIdempotencyPolicy>();
 }
 

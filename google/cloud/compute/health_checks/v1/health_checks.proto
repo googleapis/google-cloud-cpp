@@ -27,13 +27,14 @@ import "google/cloud/extended_operations.proto";
 service HealthChecks {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves the list of all HealthCheck resources, regional and global,
   // available to the specified project.
-  rpc AggregatedListHealthChecks(AggregatedListHealthChecksRequest) returns (google.cloud.cpp.compute.v1.HealthChecksAggregatedList) {
+  rpc AggregatedListHealthChecks(AggregatedListHealthChecksRequest)
+      returns (google.cloud.cpp.compute.v1.HealthChecksAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/healthChecks"
     };
@@ -41,7 +42,8 @@ service HealthChecks {
   }
 
   // Deletes the specified HealthCheck resource.
-  rpc DeleteHealthChecks(DeleteHealthChecksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteHealthChecks(DeleteHealthChecksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/global/healthChecks/{health_check=health_check}"
     };
@@ -50,7 +52,8 @@ service HealthChecks {
   }
 
   // Returns the specified HealthCheck resource.
-  rpc GetHealthChecks(GetHealthChecksRequest) returns (google.cloud.cpp.compute.v1.HealthCheck) {
+  rpc GetHealthChecks(GetHealthChecksRequest)
+      returns (google.cloud.cpp.compute.v1.HealthCheck) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/healthChecks/{health_check=health_check}"
     };
@@ -59,7 +62,8 @@ service HealthChecks {
 
   // Creates a HealthCheck resource in the specified project using the data
   // included in the request.
-  rpc InsertHealthChecks(InsertHealthChecksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertHealthChecks(InsertHealthChecksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/global/healthChecks"
       body: "health_check_resource"
@@ -70,7 +74,8 @@ service HealthChecks {
 
   // Retrieves the list of HealthCheck resources available to the specified
   // project.
-  rpc ListHealthChecks(ListHealthChecksRequest) returns (google.cloud.cpp.compute.v1.HealthCheckList) {
+  rpc ListHealthChecks(ListHealthChecksRequest)
+      returns (google.cloud.cpp.compute.v1.HealthCheckList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/global/healthChecks"
     };
@@ -80,23 +85,27 @@ service HealthChecks {
   // Updates a HealthCheck resource in the specified project using the data
   // included in the request. This method supports PATCH semantics and uses the
   // JSON merge patch format and processing rules.
-  rpc PatchHealthChecks(PatchHealthChecksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchHealthChecks(PatchHealthChecksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project=project}/global/healthChecks/{health_check=health_check}"
       body: "health_check_resource"
     };
-    option (google.api.method_signature) = "project,health_check,health_check_resource";
+    option (google.api.method_signature) =
+        "project,health_check,health_check_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Updates a HealthCheck resource in the specified project using the data
   // included in the request.
-  rpc UpdateHealthChecks(UpdateHealthChecksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateHealthChecks(UpdateHealthChecksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project=project}/global/healthChecks/{health_check=health_check}"
       body: "health_check_resource"
     };
-    option (google.api.method_signature) = "project,health_check,health_check_resource";
+    option (google.api.method_signature) =
+        "project,health_check,health_check_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -181,7 +190,10 @@ message DeleteHealthChecksRequest {
   string health_check = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -208,10 +220,14 @@ message GetHealthChecksRequest {
 // Request message for InsertHealthChecks.
 message InsertHealthChecksRequest {
   // The HealthCheck for this request.
-  optional google.cloud.cpp.compute.v1.HealthCheck health_check_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.HealthCheck health_check_resource = 1
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -297,10 +313,14 @@ message PatchHealthChecksRequest {
   string health_check = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The HealthCheck for this request.
-  optional google.cloud.cpp.compute.v1.HealthCheck health_check_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.HealthCheck health_check_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -321,10 +341,14 @@ message UpdateHealthChecksRequest {
   string health_check = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The HealthCheck for this request.
-  optional google.cloud.cpp.compute.v1.HealthCheck health_check_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.HealthCheck health_check_resource = 2
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

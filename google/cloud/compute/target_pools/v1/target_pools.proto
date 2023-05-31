@@ -27,32 +27,37 @@ import "google/cloud/extended_operations.proto";
 service TargetPools {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Adds health check URLs to a target pool.
-  rpc AddHealthCheck(AddHealthCheckRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AddHealthCheck(AddHealthCheckRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}/addHealthCheck"
       body: "target_pools_add_health_check_request_resource"
     };
-    option (google.api.method_signature) = "project,region,target_pool,target_pools_add_health_check_request_resource";
+    option (google.api.method_signature) =
+        "project,region,target_pool,target_pools_add_health_check_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Adds an instance to a target pool.
-  rpc AddInstance(AddInstanceRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AddInstance(AddInstanceRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}/addInstance"
       body: "target_pools_add_instance_request_resource"
     };
-    option (google.api.method_signature) = "project,region,target_pool,target_pools_add_instance_request_resource";
+    option (google.api.method_signature) =
+        "project,region,target_pool,target_pools_add_instance_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Retrieves an aggregated list of target pools.
-  rpc AggregatedListTargetPools(AggregatedListTargetPoolsRequest) returns (google.cloud.cpp.compute.v1.TargetPoolAggregatedList) {
+  rpc AggregatedListTargetPools(AggregatedListTargetPoolsRequest)
+      returns (google.cloud.cpp.compute.v1.TargetPoolAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/aggregated/targetPools"
     };
@@ -60,7 +65,8 @@ service TargetPools {
   }
 
   // Deletes the specified target pool.
-  rpc DeleteTargetPools(DeleteTargetPoolsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteTargetPools(DeleteTargetPoolsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}"
     };
@@ -69,7 +75,8 @@ service TargetPools {
   }
 
   // Returns the specified target pool.
-  rpc GetTargetPools(GetTargetPoolsRequest) returns (google.cloud.cpp.compute.v1.TargetPool) {
+  rpc GetTargetPools(GetTargetPoolsRequest)
+      returns (google.cloud.cpp.compute.v1.TargetPool) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}"
     };
@@ -78,28 +85,33 @@ service TargetPools {
 
   // Gets the most recent health check results for each IP for the instance that
   // is referenced by the given target pool.
-  rpc GetHealth(GetHealthRequest) returns (google.cloud.cpp.compute.v1.TargetPoolInstanceHealth) {
+  rpc GetHealth(GetHealthRequest)
+      returns (google.cloud.cpp.compute.v1.TargetPoolInstanceHealth) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}/getHealth"
       body: "instance_reference_resource"
     };
-    option (google.api.method_signature) = "project,region,target_pool,instance_reference_resource";
+    option (google.api.method_signature) =
+        "project,region,target_pool,instance_reference_resource";
   }
 
   // Creates a target pool in the specified project and region using the data
   // included in the request.
-  rpc InsertTargetPools(InsertTargetPoolsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertTargetPools(InsertTargetPoolsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools"
       body: "target_pool_resource"
     };
-    option (google.api.method_signature) = "project,region,target_pool_resource";
+    option (google.api.method_signature) =
+        "project,region,target_pool_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Retrieves a list of target pools available to the specified project and
   // region.
-  rpc ListTargetPools(ListTargetPoolsRequest) returns (google.cloud.cpp.compute.v1.TargetPoolList) {
+  rpc ListTargetPools(ListTargetPoolsRequest)
+      returns (google.cloud.cpp.compute.v1.TargetPoolList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools"
     };
@@ -107,32 +119,38 @@ service TargetPools {
   }
 
   // Removes health check URL from a target pool.
-  rpc RemoveHealthCheck(RemoveHealthCheckRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc RemoveHealthCheck(RemoveHealthCheckRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}/removeHealthCheck"
       body: "target_pools_remove_health_check_request_resource"
     };
-    option (google.api.method_signature) = "project,region,target_pool,target_pools_remove_health_check_request_resource";
+    option (google.api.method_signature) =
+        "project,region,target_pool,target_pools_remove_health_check_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Removes instance URL from a target pool.
-  rpc RemoveInstance(RemoveInstanceRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc RemoveInstance(RemoveInstanceRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}/removeInstance"
       body: "target_pools_remove_instance_request_resource"
     };
-    option (google.api.method_signature) = "project,region,target_pool,target_pools_remove_instance_request_resource";
+    option (google.api.method_signature) =
+        "project,region,target_pool,target_pools_remove_instance_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Changes a backup target pool's configurations.
-  rpc SetBackup(SetBackupRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetBackup(SetBackupRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}/setBackup"
       body: "target_reference_resource"
     };
-    option (google.api.method_signature) = "project,region,target_pool,target_reference_resource";
+    option (google.api.method_signature) =
+        "project,region,target_pool,target_reference_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -140,10 +158,16 @@ service TargetPools {
 // Request message for AddHealthCheck.
 message AddHealthCheckRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -161,16 +185,24 @@ message AddHealthCheckRequest {
   string target_pool = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The TargetPoolsAddHealthCheckRequest for this request.
-  optional google.cloud.cpp.compute.v1.TargetPoolsAddHealthCheckRequest target_pools_add_health_check_request_resource = 5 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetPoolsAddHealthCheckRequest
+      target_pools_add_health_check_request_resource = 5
+      [json_name = "__json_request_body"];
 }
 
 // Request message for AddInstance.
 message AddInstanceRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -188,7 +220,9 @@ message AddInstanceRequest {
   string target_pool = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The TargetPoolsAddInstanceRequest for this request.
-  optional google.cloud.cpp.compute.v1.TargetPoolsAddInstanceRequest target_pools_add_instance_request_resource = 5 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetPoolsAddInstanceRequest
+      target_pools_add_instance_request_resource = 5
+      [json_name = "__json_request_body"];
 }
 
 // Request message for AggregatedListTargetPools.
@@ -268,10 +302,16 @@ message AggregatedListTargetPoolsRequest {
 // Request message for DeleteTargetPools.
 message DeleteTargetPoolsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -292,7 +332,8 @@ message DeleteTargetPoolsRequest {
 // Request message for GetHealth.
 message GetHealthRequest {
   // The InstanceReference for this request.
-  optional google.cloud.cpp.compute.v1.InstanceReference instance_reference_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.InstanceReference
+      instance_reference_resource = 1 [json_name = "__json_request_body"];
 
   // Project ID for this request.
   string project = 2 [(google.api.field_behavior) = REQUIRED];
@@ -319,10 +360,16 @@ message GetTargetPoolsRequest {
 // Request message for InsertTargetPools.
 message InsertTargetPoolsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -337,7 +384,8 @@ message InsertTargetPoolsRequest {
   optional string request_id = 3;
 
   // The TargetPool for this request.
-  optional google.cloud.cpp.compute.v1.TargetPool target_pool_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetPool target_pool_resource = 4
+      [json_name = "__json_request_body"];
 }
 
 // Request message for ListTargetPools.
@@ -411,10 +459,16 @@ message ListTargetPoolsRequest {
 // Request message for RemoveHealthCheck.
 message RemoveHealthCheckRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -432,16 +486,24 @@ message RemoveHealthCheckRequest {
   string target_pool = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The TargetPoolsRemoveHealthCheckRequest for this request.
-  optional google.cloud.cpp.compute.v1.TargetPoolsRemoveHealthCheckRequest target_pools_remove_health_check_request_resource = 5 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetPoolsRemoveHealthCheckRequest
+      target_pools_remove_health_check_request_resource = 5
+      [json_name = "__json_request_body"];
 }
 
 // Request message for RemoveInstance.
 message RemoveInstanceRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -459,7 +521,9 @@ message RemoveInstanceRequest {
   string target_pool = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The TargetPoolsRemoveInstanceRequest for this request.
-  optional google.cloud.cpp.compute.v1.TargetPoolsRemoveInstanceRequest target_pools_remove_instance_request_resource = 5 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetPoolsRemoveInstanceRequest
+      target_pools_remove_instance_request_resource = 5
+      [json_name = "__json_request_body"];
 }
 
 // Request message for SetBackup.
@@ -468,10 +532,16 @@ message SetBackupRequest {
   optional float failover_ratio = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -489,5 +559,6 @@ message SetBackupRequest {
   string target_pool = 5 [(google.api.field_behavior) = REQUIRED];
 
   // The TargetReference for this request.
-  optional google.cloud.cpp.compute.v1.TargetReference target_reference_resource = 6 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TargetReference
+      target_reference_resource = 6 [json_name = "__json_request_body"];
 }

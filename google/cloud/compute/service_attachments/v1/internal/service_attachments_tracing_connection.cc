@@ -29,73 +29,113 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ServiceAttachmentsTracingConnection::ServiceAttachmentsTracingConnection(
-    std::shared_ptr<compute_service_attachments_v1::ServiceAttachmentsConnection> child)
+    std::shared_ptr<
+        compute_service_attachments_v1::ServiceAttachmentsConnection>
+        child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
-ServiceAttachmentsTracingConnection::AggregatedListServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::AggregatedListServiceAttachmentsRequest const& request) {
-  auto span = internal::MakeSpan("compute_service_attachments_v1::ServiceAttachmentsConnection::AggregatedListServiceAttachments");
+ServiceAttachmentsTracingConnection::AggregatedListServiceAttachments(
+    google::cloud::cpp::compute::service_attachments::v1::
+        AggregatedListServiceAttachmentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "AggregatedListServiceAttachments");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListServiceAttachments(request));
+  return internal::EndSpan(*span,
+                           child_->AggregatedListServiceAttachments(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsTracingConnection::DeleteServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentsRequest const& request) {
+ServiceAttachmentsTracingConnection::DeleteServiceAttachments(
+    google::cloud::cpp::compute::service_attachments::v1::
+        DeleteServiceAttachmentsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_service_attachments_v1::ServiceAttachmentsConnection::DeleteServiceAttachments");
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "DeleteServiceAttachments");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteServiceAttachments(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteServiceAttachments(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-ServiceAttachmentsTracingConnection::GetServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::GetServiceAttachmentsRequest const& request) {
-  auto span = internal::MakeSpan("compute_service_attachments_v1::ServiceAttachmentsConnection::GetServiceAttachments");
+ServiceAttachmentsTracingConnection::GetServiceAttachments(
+    google::cloud::cpp::compute::service_attachments::v1::
+        GetServiceAttachmentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "GetServiceAttachments");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetServiceAttachments(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ServiceAttachmentsTracingConnection::GetIamPolicy(google::cloud::cpp::compute::service_attachments::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_service_attachments_v1::ServiceAttachmentsConnection::GetIamPolicy");
+ServiceAttachmentsTracingConnection::GetIamPolicy(
+    google::cloud::cpp::compute::service_attachments::v1::
+        GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsTracingConnection::InsertServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentsRequest const& request) {
+ServiceAttachmentsTracingConnection::InsertServiceAttachments(
+    google::cloud::cpp::compute::service_attachments::v1::
+        InsertServiceAttachmentsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_service_attachments_v1::ServiceAttachmentsConnection::InsertServiceAttachments");
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "InsertServiceAttachments");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertServiceAttachments(request));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertServiceAttachments(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
-ServiceAttachmentsTracingConnection::ListServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::ListServiceAttachmentsRequest request) {
-  auto span = internal::MakeSpan("compute_service_attachments_v1::ServiceAttachmentsConnection::ListServiceAttachments");
+ServiceAttachmentsTracingConnection::ListServiceAttachments(
+    google::cloud::cpp::compute::service_attachments::v1::
+        ListServiceAttachmentsRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "ListServiceAttachments");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListServiceAttachments(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::ServiceAttachment>(std::move(span),
+                                                          std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsTracingConnection::PatchServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentsRequest const& request) {
+ServiceAttachmentsTracingConnection::PatchServiceAttachments(
+    google::cloud::cpp::compute::service_attachments::v1::
+        PatchServiceAttachmentsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_service_attachments_v1::ServiceAttachmentsConnection::PatchServiceAttachments");
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "PatchServiceAttachments");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchServiceAttachments(request));
+  return internal::EndSpan(std::move(span),
+                           child_->PatchServiceAttachments(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ServiceAttachmentsTracingConnection::SetIamPolicy(google::cloud::cpp::compute::service_attachments::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_service_attachments_v1::ServiceAttachmentsConnection::SetIamPolicy");
+ServiceAttachmentsTracingConnection::SetIamPolicy(
+    google::cloud::cpp::compute::service_attachments::v1::
+        SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-ServiceAttachmentsTracingConnection::TestIamPermissions(google::cloud::cpp::compute::service_attachments::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("compute_service_attachments_v1::ServiceAttachmentsConnection::TestIamPermissions");
+ServiceAttachmentsTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::service_attachments::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
@@ -104,10 +144,13 @@ ServiceAttachmentsTracingConnection::TestIamPermissions(google::cloud::cpp::comp
 
 std::shared_ptr<compute_service_attachments_v1::ServiceAttachmentsConnection>
 MakeServiceAttachmentsTracingConnection(
-    std::shared_ptr<compute_service_attachments_v1::ServiceAttachmentsConnection> conn) {
+    std::shared_ptr<
+        compute_service_attachments_v1::ServiceAttachmentsConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<ServiceAttachmentsTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<ServiceAttachmentsTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

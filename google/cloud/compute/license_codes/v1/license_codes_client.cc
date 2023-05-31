@@ -24,40 +24,56 @@ namespace cloud {
 namespace compute_license_codes_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-LicenseCodesClient::LicenseCodesClient(ExperimentalTag,
-    std::shared_ptr<LicenseCodesConnection> connection, Options opts)
+LicenseCodesClient::LicenseCodesClient(
+    ExperimentalTag, std::shared_ptr<LicenseCodesConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 LicenseCodesClient::~LicenseCodesClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
-LicenseCodesClient::GetLicenseCodes(std::string const& project, std::string const& license_code, Options opts) {
+LicenseCodesClient::GetLicenseCodes(std::string const& project,
+                                    std::string const& license_code,
+                                    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::license_codes::v1::GetLicenseCodesRequest request;
+  google::cloud::cpp::compute::license_codes::v1::GetLicenseCodesRequest
+      request;
   request.set_project(project);
   request.set_license_code(license_code);
   return connection_->GetLicenseCodes(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
-LicenseCodesClient::GetLicenseCodes(google::cloud::cpp::compute::license_codes::v1::GetLicenseCodesRequest const& request, Options opts) {
+LicenseCodesClient::GetLicenseCodes(
+    google::cloud::cpp::compute::license_codes::v1::
+        GetLicenseCodesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLicenseCodes(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-LicenseCodesClient::TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts) {
+LicenseCodesClient::TestIamPermissions(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest request;
+  google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest
+      request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_test_permissions_request_resource() = test_permissions_request_resource;
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-LicenseCodesClient::TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request, Options opts) {
+LicenseCodesClient::TestIamPermissions(
+    google::cloud::cpp::compute::license_codes::v1::
+        TestIamPermissionsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `InstanceTemplatesClient`. To do so,
- * construct an object of type `InstanceTemplatesClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `InstanceTemplatesClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,41 +42,58 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockInstanceTemplatesConnection : public compute_instance_templates_v1::InstanceTemplatesConnection {
+class MockInstanceTemplatesConnection
+    : public compute_instance_templates_v1::InstanceTemplatesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>,
-  AggregatedListInstanceTemplates,
-  (google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>,
+      AggregatedListInstanceTemplates,
+      (google::cloud::cpp::compute::instance_templates::v1::
+           AggregatedListInstanceTemplatesRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteInstanceTemplates,
-  (google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplatesRequest const& request), (override));
+              DeleteInstanceTemplates,
+              (google::cloud::cpp::compute::instance_templates::v1::
+                   DeleteInstanceTemplatesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>,
-  GetInstanceTemplates,
-  (google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplatesRequest const& request), (override));
+              GetInstanceTemplates,
+              (google::cloud::cpp::compute::instance_templates::v1::
+                   GetInstanceTemplatesRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  GetIamPolicy,
-  (google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+              (google::cloud::cpp::compute::instance_templates::v1::
+                   GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertInstanceTemplates,
-  (google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplatesRequest const& request), (override));
+              InsertInstanceTemplates,
+              (google::cloud::cpp::compute::instance_templates::v1::
+                   InsertInstanceTemplatesRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>,
-  ListInstanceTemplates,
-  (google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest request), (override));
+              ListInstanceTemplates,
+              (google::cloud::cpp::compute::instance_templates::v1::
+                   ListInstanceTemplatesRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  SetIamPolicy,
-  (google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+              (google::cloud::cpp::compute::instance_templates::v1::
+                   SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::instance_templates::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

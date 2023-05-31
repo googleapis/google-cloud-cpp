@@ -42,25 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockRegionOperationsConnection : public compute_region_operations_v1::RegionOperationsConnection {
+class MockRegionOperationsConnection
+    : public compute_region_operations_v1::RegionOperationsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(Status,
-  DeleteRegionOperations,
-  (google::cloud::cpp::compute::region_operations::v1::DeleteRegionOperationsRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteRegionOperations,
+              (google::cloud::cpp::compute::region_operations::v1::
+                   DeleteRegionOperationsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  GetRegionOperations,
-  (google::cloud::cpp::compute::region_operations::v1::GetRegionOperationsRequest const& request), (override));
+              GetRegionOperations,
+              (google::cloud::cpp::compute::region_operations::v1::
+                   GetRegionOperationsRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Operation>,
-  ListRegionOperations,
-  (google::cloud::cpp::compute::region_operations::v1::ListRegionOperationsRequest request), (override));
+              ListRegionOperations,
+              (google::cloud::cpp::compute::region_operations::v1::
+                   ListRegionOperationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  Wait,
-  (google::cloud::cpp::compute::region_operations::v1::WaitRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, Wait,
+      (google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

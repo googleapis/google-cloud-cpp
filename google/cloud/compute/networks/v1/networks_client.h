@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NetworksClient {
  public:
-  explicit NetworksClient(ExperimentalTag, std::shared_ptr<NetworksConnection> connection, Options opts = {});
+  explicit NetworksClient(ExperimentalTag,
+                          std::shared_ptr<NetworksConnection> connection,
+                          Options opts = {});
   ~NetworksClient();
 
   ///@{
@@ -111,11 +113,14 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L141}
+  /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L155}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddPeering(std::string const& project, std::string const& network, google::cloud::cpp::compute::v1::NetworksAddPeeringRequest const& networks_add_peering_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddPeering(
+      std::string const& project, std::string const& network,
+      google::cloud::cpp::compute::v1::NetworksAddPeeringRequest const&
+          networks_add_peering_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -147,11 +152,13 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L141}
+  /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L155}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddPeering(google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddPeering(
+      google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -179,11 +186,12 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L165}
+  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L184}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworks(std::string const& project, std::string const& network, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetworks(
+      std::string const& project, std::string const& network,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -215,11 +223,13 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L165}
+  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L184}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworks(google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetworks(
+      google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -241,12 +251,13 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L195}
+  /// [google.cloud.cpp.compute.networks.v1.GetNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L217}
   /// [google.cloud.cpp.compute.v1.Network]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14221}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Network>
-  GetNetworks(std::string const& project, std::string const& network, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Network> GetNetworks(
+      std::string const& project, std::string const& network,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -272,12 +283,14 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L195}
+  /// [google.cloud.cpp.compute.networks.v1.GetNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L217}
   /// [google.cloud.cpp.compute.v1.Network]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14221}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Network>
-  GetNetworks(google::cloud::cpp::compute::networks::v1::GetNetworksRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Network> GetNetworks(
+      google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -299,12 +312,14 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L186}
+  /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L208}
   /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15918}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
-  GetEffectiveFirewalls(std::string const& project, std::string const& network, Options opts = {});
+  StatusOr<
+      google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
+  GetEffectiveFirewalls(std::string const& project, std::string const& network,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -330,12 +345,15 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L186}
+  /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L208}
   /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15918}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
-  GetEffectiveFirewalls(google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
+  GetEffectiveFirewalls(google::cloud::cpp::compute::networks::v1::
+                            GetEffectiveFirewallsRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -364,11 +382,13 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.InsertNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L204}
+  /// [google.cloud.cpp.compute.networks.v1.InsertNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L226}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworks(std::string const& project, google::cloud::cpp::compute::v1::Network const& network_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetworks(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::Network const& network_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -401,11 +421,13 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.InsertNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L204}
+  /// [google.cloud.cpp.compute.networks.v1.InsertNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L226}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworks(google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetworks(
+      google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -435,12 +457,12 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L225}
+  /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L251}
   /// [google.cloud.cpp.compute.v1.Network]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14221}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Network>
-  ListNetworks(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Network> ListNetworks(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -475,12 +497,13 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L225}
+  /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L251}
   /// [google.cloud.cpp.compute.v1.Network]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14221}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Network>
-  ListNetworks(google::cloud::cpp::compute::networks::v1::ListNetworksRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Network> ListNetworks(
+      google::cloud::cpp::compute::networks::v1::ListNetworksRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -511,12 +534,13 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L290}
+  /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L316}
   /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5337}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
-  ListPeeringRoutes(std::string const& project, std::string const& network, Options opts = {});
+  ListPeeringRoutes(std::string const& project, std::string const& network,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -551,12 +575,15 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L290}
+  /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L316}
   /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5337}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
-  ListPeeringRoutes(google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest request, Options opts = {});
+  ListPeeringRoutes(
+      google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -586,11 +613,13 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.PatchNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L370}
+  /// [google.cloud.cpp.compute.networks.v1.PatchNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L396}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNetworks(std::string const& project, std::string const& network, google::cloud::cpp::compute::v1::Network const& network_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetworks(
+      std::string const& project, std::string const& network,
+      google::cloud::cpp::compute::v1::Network const& network_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -623,11 +652,13 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.PatchNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L370}
+  /// [google.cloud.cpp.compute.networks.v1.PatchNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L396}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNetworks(google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetworks(
+      google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -656,11 +687,14 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L394}
+  /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L424}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemovePeering(std::string const& project, std::string const& network, google::cloud::cpp::compute::v1::NetworksRemovePeeringRequest const& networks_remove_peering_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(
+      std::string const& project, std::string const& network,
+      google::cloud::cpp::compute::v1::NetworksRemovePeeringRequest const&
+          networks_remove_peering_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -692,11 +726,13 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L394}
+  /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L424}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemovePeering(google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(
+      google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -724,11 +760,12 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L418}
+  /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L453}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SwitchToCustomMode(std::string const& project, std::string const& network, Options opts = {});
+  SwitchToCustomMode(std::string const& project, std::string const& network,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -760,11 +797,13 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L418}
+  /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L453}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SwitchToCustomMode(google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request, Options opts = {});
+  SwitchToCustomMode(google::cloud::cpp::compute::networks::v1::
+                         SwitchToCustomModeRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -795,11 +834,14 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L439}
+  /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L477}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdatePeering(std::string const& project, std::string const& network, google::cloud::cpp::compute::v1::NetworksUpdatePeeringRequest const& networks_update_peering_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdatePeering(
+      std::string const& project, std::string const& network,
+      google::cloud::cpp::compute::v1::NetworksUpdatePeeringRequest const&
+          networks_update_peering_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -833,11 +875,13 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L439}
+  /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L477}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdatePeering(google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdatePeering(
+      google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<NetworksConnection> connection_;

@@ -36,27 +36,37 @@ class TargetInstancesTracingConnection
   ~TargetInstancesTracingConnection() override = default;
 
   explicit TargetInstancesTracingConnection(
-    std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection> child);
+      std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
-  AggregatedListTargetInstances(google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest const& request) override;
+  AggregatedListTargetInstances(
+      google::cloud::cpp::compute::target_instances::v1::
+          AggregatedListTargetInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstances(google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstancesRequest const& request) override;
+  DeleteTargetInstances(
+      google::cloud::cpp::compute::target_instances::v1::
+          DeleteTargetInstancesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-  GetTargetInstances(google::cloud::cpp::compute::target_instances::v1::GetTargetInstancesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
+      google::cloud::cpp::compute::target_instances::v1::
+          GetTargetInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstances(google::cloud::cpp::compute::target_instances::v1::InsertTargetInstancesRequest const& request) override;
+  InsertTargetInstances(
+      google::cloud::cpp::compute::target_instances::v1::
+          InsertTargetInstancesRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
-  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest request) override;
+  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::
+                          ListTargetInstancesRequest request) override;
 
  private:
-  std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection> child_;
+  std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -69,7 +79,8 @@ class TargetInstancesTracingConnection
  */
 std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection>
 MakeTargetInstancesTracingConnection(
-    std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection> conn);
+    std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_instances_v1_internal

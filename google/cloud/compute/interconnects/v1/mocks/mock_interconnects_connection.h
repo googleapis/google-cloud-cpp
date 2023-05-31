@@ -42,37 +42,55 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockInterconnectsConnection : public compute_interconnects_v1::InterconnectsConnection {
+class MockInterconnectsConnection
+    : public compute_interconnects_v1::InterconnectsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteInterconnects,
-  (google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest const& request), (override));
+              DeleteInterconnects,
+              (google::cloud::cpp::compute::interconnects::v1::
+                   DeleteInterconnectsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Interconnect>,
-  GetInterconnects,
-  (google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest const& request), (override));
+              GetInterconnects,
+              (google::cloud::cpp::compute::interconnects::v1::
+                   GetInterconnectsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>,
-  GetDiagnostics,
-  (google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request), (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertInterconnects,
-  (google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest const& request), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Interconnect>,
-  ListInterconnects,
-  (google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest request), (override));
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>,
+      GetDiagnostics,
+      (google::cloud::cpp::compute::interconnects::v1::
+           GetDiagnosticsRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchInterconnects,
-  (google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest const& request), (override));
+              InsertInterconnects,
+              (google::cloud::cpp::compute::interconnects::v1::
+                   InsertInterconnectsRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::Interconnect>,
+      ListInterconnects,
+      (google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
+           request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetLabels,
-  (google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request), (override));
+              PatchInterconnects,
+              (google::cloud::cpp::compute::interconnects::v1::
+                   PatchInterconnectsRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
+      (google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

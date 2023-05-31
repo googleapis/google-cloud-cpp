@@ -26,34 +26,30 @@ namespace cloud {
 namespace compute_zones_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ZonesRestLogging::ZonesRestLogging(
-    std::shared_ptr<ZonesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+ZonesRestLogging::ZonesRestLogging(std::shared_ptr<ZonesRestStub> child,
+                                   TracingOptions tracing_options,
+                                   std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::Zone>
-ZonesRestLogging::GetZones(
+StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesRestLogging::GetZones(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) {
-        return child_->GetZones(rest_context, request);
-      },
+             google::cloud::cpp::compute::zones::v1::GetZonesRequest const&
+                 request) { return child_->GetZones(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::ZoneList>
-ZonesRestLogging::ListZones(
+StatusOr<google::cloud::cpp::compute::v1::ZoneList> ZonesRestLogging::ListZones(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) {
-        return child_->ListZones(rest_context, request);
-      },
+             google::cloud::cpp::compute::zones::v1::ListZonesRequest const&
+                 request) { return child_->ListZones(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 

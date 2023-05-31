@@ -17,11 +17,11 @@
 // source: google/cloud/compute/autoscalers/v1/autoscalers.proto
 
 #include "google/cloud/compute/autoscalers/v1/autoscalers_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/autoscalers/v1/autoscalers_options.h"
 #include "google/cloud/compute/autoscalers/v1/internal/autoscalers_option_defaults.h"
 #include "google/cloud/compute/autoscalers/v1/internal/autoscalers_rest_connection_impl.h"
 #include "google/cloud/compute/autoscalers/v1/internal/autoscalers_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -34,15 +34,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<AutoscalersConnection> MakeAutoscalersConnectionRest(
     ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      AutoscalersPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 AutoscalersPolicyOptionList>(options,
+                                                              __func__);
   options = compute_autoscalers_v1_internal::AutoscalersDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_autoscalers_v1_internal::CreateDefaultAutoscalersRestStub(
-    options);
-  return std::make_shared<compute_autoscalers_v1_internal::AutoscalersRestConnectionImpl>(
+      options);
+  return std::make_shared<
+      compute_autoscalers_v1_internal::AutoscalersRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
