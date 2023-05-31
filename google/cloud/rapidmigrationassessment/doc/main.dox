@@ -2,8 +2,10 @@
 
 @mainpage Rapid Migration Assessment API C++ Client Library
 
-An idiomatic C++ client library for the [Rapid Migration Assessment API][cloud-service-docs], a service
-to The Rapid Migration Assessment service is our first-party migration assessment and planning tool.
+An idiomatic C++ client library for the
+[Rapid Migration Assessment API][cloud-service-docs], a unified migration
+platform that helps you accelerate your end-to-end cloud migration journey
+from your current on-premises environment to Google Cloud.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -45,7 +47,7 @@ can override the default policies.
 - @ref rapidmigrationassessment-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/rapidmigrationassessment
+[cloud-service-docs]: https://cloud.google.com/migration-center/docs
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */
