@@ -53,10 +53,12 @@ Options ServiceUsageDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<serviceusage_v1::ServiceUsagePollingPolicyOption>()) {
-    options.set<serviceusage_v1::ServiceUsageBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<serviceusage_v1::ServiceUsagePollingPolicyOption>(
+        GenericPollingPolicy<
+            serviceusage_v1::ServiceUsageRetryPolicyOption::Type,
+            serviceusage_v1::ServiceUsageBackoffPolicyOption::Type>(
+            options.get<serviceusage_v1::ServiceUsageRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           serviceusage_v1::ServiceUsageConnectionIdempotencyPolicyOption>()) {

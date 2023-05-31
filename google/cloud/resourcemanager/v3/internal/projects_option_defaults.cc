@@ -53,10 +53,12 @@ Options ProjectsDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<resourcemanager_v3::ProjectsPollingPolicyOption>()) {
-    options.set<resourcemanager_v3::ProjectsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<resourcemanager_v3::ProjectsPollingPolicyOption>(
+        GenericPollingPolicy<
+            resourcemanager_v3::ProjectsRetryPolicyOption::Type,
+            resourcemanager_v3::ProjectsBackoffPolicyOption::Type>(
+            options.get<resourcemanager_v3::ProjectsRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption>()) {

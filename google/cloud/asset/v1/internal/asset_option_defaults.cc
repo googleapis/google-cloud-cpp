@@ -51,10 +51,12 @@ Options AssetServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<asset_v1::AssetServicePollingPolicyOption>()) {
-    options.set<asset_v1::AssetServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<asset_v1::AssetServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            asset_v1::AssetServiceRetryPolicyOption::Type,
+            asset_v1::AssetServiceBackoffPolicyOption::Type>(
+            options.get<asset_v1::AssetServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<asset_v1::AssetServiceConnectionIdempotencyPolicyOption>()) {
     options.set<asset_v1::AssetServiceConnectionIdempotencyPolicyOption>(

@@ -55,10 +55,12 @@ Options MetricsScopesDefaultOptions(Options options) {
   }
   if (!options.has<
           monitoring_metricsscope_v1::MetricsScopesPollingPolicyOption>()) {
-    options.set<monitoring_metricsscope_v1::MetricsScopesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<monitoring_metricsscope_v1::MetricsScopesPollingPolicyOption>(
+        GenericPollingPolicy<
+            monitoring_metricsscope_v1::MetricsScopesRetryPolicyOption::Type,
+            monitoring_metricsscope_v1::MetricsScopesBackoffPolicyOption::Type>(
+            options.get<monitoring_metricsscope_v1::MetricsScopesRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<monitoring_metricsscope_v1::
                        MetricsScopesConnectionIdempotencyPolicyOption>()) {

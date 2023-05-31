@@ -51,10 +51,12 @@ Options PoliciesDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<iam_v2::PoliciesPollingPolicyOption>()) {
-    options.set<iam_v2::PoliciesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<iam_v2::PoliciesPollingPolicyOption>(
+        GenericPollingPolicy<
+            iam_v2::PoliciesRetryPolicyOption::Type,
+            iam_v2::PoliciesBackoffPolicyOption::Type>(
+            options.get<iam_v2::PoliciesRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<iam_v2::PoliciesConnectionIdempotencyPolicyOption>()) {
     options.set<iam_v2::PoliciesConnectionIdempotencyPolicyOption>(

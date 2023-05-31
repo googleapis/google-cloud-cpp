@@ -53,10 +53,12 @@ Options HubServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<networkconnectivity_v1::HubServicePollingPolicyOption>()) {
-    options.set<networkconnectivity_v1::HubServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<networkconnectivity_v1::HubServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            networkconnectivity_v1::HubServiceRetryPolicyOption::Type,
+            networkconnectivity_v1::HubServiceBackoffPolicyOption::Type>(
+            options.get<networkconnectivity_v1::HubServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<networkconnectivity_v1::
                        HubServiceConnectionIdempotencyPolicyOption>()) {

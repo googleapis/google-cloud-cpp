@@ -51,10 +51,12 @@ Options ApiKeysDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<apikeys_v2::ApiKeysPollingPolicyOption>()) {
-    options.set<apikeys_v2::ApiKeysBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<apikeys_v2::ApiKeysPollingPolicyOption>(
+        GenericPollingPolicy<
+            apikeys_v2::ApiKeysRetryPolicyOption::Type,
+            apikeys_v2::ApiKeysBackoffPolicyOption::Type>(
+            options.get<apikeys_v2::ApiKeysRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<apikeys_v2::ApiKeysConnectionIdempotencyPolicyOption>()) {
     options.set<apikeys_v2::ApiKeysConnectionIdempotencyPolicyOption>(

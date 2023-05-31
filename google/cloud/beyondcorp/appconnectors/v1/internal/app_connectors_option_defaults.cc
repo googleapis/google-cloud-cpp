@@ -58,11 +58,12 @@ Options AppConnectorsServiceDefaultOptions(Options options) {
   }
   if (!options.has<beyondcorp_appconnectors_v1::
                        AppConnectorsServicePollingPolicyOption>()) {
-    options.set<
-        beyondcorp_appconnectors_v1::AppConnectorsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<beyondcorp_appconnectors_v1::AppConnectorsServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicyOption::Type,
+            beyondcorp_appconnectors_v1::AppConnectorsServiceBackoffPolicyOption::Type>(
+            options.get<beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options
            .has<beyondcorp_appconnectors_v1::

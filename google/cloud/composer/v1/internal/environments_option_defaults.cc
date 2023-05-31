@@ -52,10 +52,12 @@ Options EnvironmentsDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<composer_v1::EnvironmentsPollingPolicyOption>()) {
-    options.set<composer_v1::EnvironmentsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<composer_v1::EnvironmentsPollingPolicyOption>(
+        GenericPollingPolicy<
+            composer_v1::EnvironmentsRetryPolicyOption::Type,
+            composer_v1::EnvironmentsBackoffPolicyOption::Type>(
+            options.get<composer_v1::EnvironmentsRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options
            .has<composer_v1::EnvironmentsConnectionIdempotencyPolicyOption>()) {

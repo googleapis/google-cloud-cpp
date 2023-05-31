@@ -52,10 +52,12 @@ Options WorkstationsDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<workstations_v1::WorkstationsPollingPolicyOption>()) {
-    options.set<workstations_v1::WorkstationsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<workstations_v1::WorkstationsPollingPolicyOption>(
+        GenericPollingPolicy<
+            workstations_v1::WorkstationsRetryPolicyOption::Type,
+            workstations_v1::WorkstationsBackoffPolicyOption::Type>(
+            options.get<workstations_v1::WorkstationsRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           workstations_v1::WorkstationsConnectionIdempotencyPolicyOption>()) {

@@ -56,10 +56,12 @@ Options BareMetalSolutionDefaultOptions(Options options) {
   }
   if (!options
            .has<baremetalsolution_v2::BareMetalSolutionPollingPolicyOption>()) {
-    options.set<baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<baremetalsolution_v2::BareMetalSolutionPollingPolicyOption>(
+        GenericPollingPolicy<
+            baremetalsolution_v2::BareMetalSolutionRetryPolicyOption::Type,
+            baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption::Type>(
+            options.get<baremetalsolution_v2::BareMetalSolutionRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<baremetalsolution_v2::
                        BareMetalSolutionConnectionIdempotencyPolicyOption>()) {

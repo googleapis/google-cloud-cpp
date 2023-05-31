@@ -53,10 +53,12 @@ Options InstanceAdminDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<spanner_admin::InstanceAdminPollingPolicyOption>()) {
-    options.set<spanner_admin::InstanceAdminBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<spanner_admin::InstanceAdminPollingPolicyOption>(
+        GenericPollingPolicy<
+            spanner_admin::InstanceAdminRetryPolicyOption::Type,
+            spanner_admin::InstanceAdminBackoffPolicyOption::Type>(
+            options.get<spanner_admin::InstanceAdminRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           spanner_admin::InstanceAdminConnectionIdempotencyPolicyOption>()) {

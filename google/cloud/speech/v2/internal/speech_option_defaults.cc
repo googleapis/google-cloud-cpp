@@ -51,10 +51,12 @@ Options SpeechDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<speech_v2::SpeechPollingPolicyOption>()) {
-    options.set<speech_v2::SpeechBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<speech_v2::SpeechPollingPolicyOption>(
+        GenericPollingPolicy<
+            speech_v2::SpeechRetryPolicyOption::Type,
+            speech_v2::SpeechBackoffPolicyOption::Type>(
+            options.get<speech_v2::SpeechRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<speech_v2::SpeechConnectionIdempotencyPolicyOption>()) {
     options.set<speech_v2::SpeechConnectionIdempotencyPolicyOption>(

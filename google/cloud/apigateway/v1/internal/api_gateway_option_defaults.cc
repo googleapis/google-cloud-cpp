@@ -53,10 +53,12 @@ Options ApiGatewayServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<apigateway_v1::ApiGatewayServicePollingPolicyOption>()) {
-    options.set<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<apigateway_v1::ApiGatewayServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            apigateway_v1::ApiGatewayServiceRetryPolicyOption::Type,
+            apigateway_v1::ApiGatewayServiceBackoffPolicyOption::Type>(
+            options.get<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<apigateway_v1::
                        ApiGatewayServiceConnectionIdempotencyPolicyOption>()) {

@@ -55,10 +55,12 @@ Options DataMigrationServiceDefaultOptions(Options options) {
   }
   if (!options
            .has<datamigration_v1::DataMigrationServicePollingPolicyOption>()) {
-    options.set<datamigration_v1::DataMigrationServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<datamigration_v1::DataMigrationServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            datamigration_v1::DataMigrationServiceRetryPolicyOption::Type,
+            datamigration_v1::DataMigrationServiceBackoffPolicyOption::Type>(
+            options.get<datamigration_v1::DataMigrationServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options
            .has<datamigration_v1::

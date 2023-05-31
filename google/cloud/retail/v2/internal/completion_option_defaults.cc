@@ -52,10 +52,12 @@ Options CompletionServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<retail_v2::CompletionServicePollingPolicyOption>()) {
-    options.set<retail_v2::CompletionServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<retail_v2::CompletionServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            retail_v2::CompletionServiceRetryPolicyOption::Type,
+            retail_v2::CompletionServiceBackoffPolicyOption::Type>(
+            options.get<retail_v2::CompletionServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           retail_v2::CompletionServiceConnectionIdempotencyPolicyOption>()) {

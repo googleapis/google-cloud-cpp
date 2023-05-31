@@ -56,10 +56,12 @@ Options ClusterControllerDefaultOptions(std::string const& location,
             .clone());
   }
   if (!options.has<dataproc_v1::ClusterControllerPollingPolicyOption>()) {
-    options.set<dataproc_v1::ClusterControllerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<dataproc_v1::ClusterControllerPollingPolicyOption>(
+        GenericPollingPolicy<
+            dataproc_v1::ClusterControllerRetryPolicyOption::Type,
+            dataproc_v1::ClusterControllerBackoffPolicyOption::Type>(
+            options.get<dataproc_v1::ClusterControllerRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           dataproc_v1::ClusterControllerConnectionIdempotencyPolicyOption>()) {

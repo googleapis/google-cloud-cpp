@@ -52,10 +52,12 @@ Options DataplexServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<dataplex_v1::DataplexServicePollingPolicyOption>()) {
-    options.set<dataplex_v1::DataplexServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<dataplex_v1::DataplexServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            dataplex_v1::DataplexServiceRetryPolicyOption::Type,
+            dataplex_v1::DataplexServiceBackoffPolicyOption::Type>(
+            options.get<dataplex_v1::DataplexServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           dataplex_v1::DataplexServiceConnectionIdempotencyPolicyOption>()) {

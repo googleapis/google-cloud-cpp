@@ -55,10 +55,12 @@ Options AttachedClustersDefaultOptions(std::string const& location,
             .clone());
   }
   if (!options.has<gkemulticloud_v1::AttachedClustersPollingPolicyOption>()) {
-    options.set<gkemulticloud_v1::AttachedClustersBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<gkemulticloud_v1::AttachedClustersPollingPolicyOption>(
+        GenericPollingPolicy<
+            gkemulticloud_v1::AttachedClustersRetryPolicyOption::Type,
+            gkemulticloud_v1::AttachedClustersBackoffPolicyOption::Type>(
+            options.get<gkemulticloud_v1::AttachedClustersRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<gkemulticloud_v1::
                        AttachedClustersConnectionIdempotencyPolicyOption>()) {

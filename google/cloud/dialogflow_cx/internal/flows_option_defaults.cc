@@ -54,10 +54,12 @@ Options FlowsDefaultOptions(std::string const& location, Options options) {
             .clone());
   }
   if (!options.has<dialogflow_cx::FlowsPollingPolicyOption>()) {
-    options.set<dialogflow_cx::FlowsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<dialogflow_cx::FlowsPollingPolicyOption>(
+        GenericPollingPolicy<
+            dialogflow_cx::FlowsRetryPolicyOption::Type,
+            dialogflow_cx::FlowsBackoffPolicyOption::Type>(
+            options.get<dialogflow_cx::FlowsRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<dialogflow_cx::FlowsConnectionIdempotencyPolicyOption>()) {
     options.set<dialogflow_cx::FlowsConnectionIdempotencyPolicyOption>(

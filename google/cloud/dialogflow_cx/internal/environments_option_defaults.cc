@@ -56,10 +56,12 @@ Options EnvironmentsDefaultOptions(std::string const& location,
             .clone());
   }
   if (!options.has<dialogflow_cx::EnvironmentsPollingPolicyOption>()) {
-    options.set<dialogflow_cx::EnvironmentsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<dialogflow_cx::EnvironmentsPollingPolicyOption>(
+        GenericPollingPolicy<
+            dialogflow_cx::EnvironmentsRetryPolicyOption::Type,
+            dialogflow_cx::EnvironmentsBackoffPolicyOption::Type>(
+            options.get<dialogflow_cx::EnvironmentsRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           dialogflow_cx::EnvironmentsConnectionIdempotencyPolicyOption>()) {

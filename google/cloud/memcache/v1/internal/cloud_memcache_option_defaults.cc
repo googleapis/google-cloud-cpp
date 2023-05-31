@@ -52,10 +52,12 @@ Options CloudMemcacheDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<memcache_v1::CloudMemcachePollingPolicyOption>()) {
-    options.set<memcache_v1::CloudMemcacheBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<memcache_v1::CloudMemcachePollingPolicyOption>(
+        GenericPollingPolicy<
+            memcache_v1::CloudMemcacheRetryPolicyOption::Type,
+            memcache_v1::CloudMemcacheBackoffPolicyOption::Type>(
+            options.get<memcache_v1::CloudMemcacheRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           memcache_v1::CloudMemcacheConnectionIdempotencyPolicyOption>()) {

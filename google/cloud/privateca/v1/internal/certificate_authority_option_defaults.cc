@@ -57,10 +57,12 @@ Options CertificateAuthorityServiceDefaultOptions(Options options) {
   }
   if (!options.has<
           privateca_v1::CertificateAuthorityServicePollingPolicyOption>()) {
-    options.set<privateca_v1::CertificateAuthorityServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<privateca_v1::CertificateAuthorityServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            privateca_v1::CertificateAuthorityServiceRetryPolicyOption::Type,
+            privateca_v1::CertificateAuthorityServiceBackoffPolicyOption::Type>(
+            options.get<privateca_v1::CertificateAuthorityServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           privateca_v1::

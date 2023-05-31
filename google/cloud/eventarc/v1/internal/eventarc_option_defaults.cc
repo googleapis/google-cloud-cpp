@@ -51,10 +51,12 @@ Options EventarcDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<eventarc_v1::EventarcPollingPolicyOption>()) {
-    options.set<eventarc_v1::EventarcBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<eventarc_v1::EventarcPollingPolicyOption>(
+        GenericPollingPolicy<
+            eventarc_v1::EventarcRetryPolicyOption::Type,
+            eventarc_v1::EventarcBackoffPolicyOption::Type>(
+            options.get<eventarc_v1::EventarcRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<eventarc_v1::EventarcConnectionIdempotencyPolicyOption>()) {
     options.set<eventarc_v1::EventarcConnectionIdempotencyPolicyOption>(

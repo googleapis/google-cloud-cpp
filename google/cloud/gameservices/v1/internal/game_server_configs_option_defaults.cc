@@ -57,10 +57,12 @@ Options GameServerConfigsServiceDefaultOptions(Options options) {
   }
   if (!options.has<
           gameservices_v1::GameServerConfigsServicePollingPolicyOption>()) {
-    options.set<gameservices_v1::GameServerConfigsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<gameservices_v1::GameServerConfigsServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            gameservices_v1::GameServerConfigsServiceRetryPolicyOption::Type,
+            gameservices_v1::GameServerConfigsServiceBackoffPolicyOption::Type>(
+            options.get<gameservices_v1::GameServerConfigsServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           gameservices_v1::

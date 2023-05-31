@@ -51,10 +51,12 @@ Options AutoMlDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<automl_v1::AutoMlPollingPolicyOption>()) {
-    options.set<automl_v1::AutoMlBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<automl_v1::AutoMlPollingPolicyOption>(
+        GenericPollingPolicy<
+            automl_v1::AutoMlRetryPolicyOption::Type,
+            automl_v1::AutoMlBackoffPolicyOption::Type>(
+            options.get<automl_v1::AutoMlRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<automl_v1::AutoMlConnectionIdempotencyPolicyOption>()) {
     options.set<automl_v1::AutoMlConnectionIdempotencyPolicyOption>(

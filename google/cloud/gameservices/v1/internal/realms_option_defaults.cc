@@ -53,10 +53,12 @@ Options RealmsServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<gameservices_v1::RealmsServicePollingPolicyOption>()) {
-    options.set<gameservices_v1::RealmsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<gameservices_v1::RealmsServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            gameservices_v1::RealmsServiceRetryPolicyOption::Type,
+            gameservices_v1::RealmsServiceBackoffPolicyOption::Type>(
+            options.get<gameservices_v1::RealmsServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           gameservices_v1::RealmsServiceConnectionIdempotencyPolicyOption>()) {

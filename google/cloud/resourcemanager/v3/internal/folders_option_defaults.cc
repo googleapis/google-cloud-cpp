@@ -53,10 +53,12 @@ Options FoldersDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<resourcemanager_v3::FoldersPollingPolicyOption>()) {
-    options.set<resourcemanager_v3::FoldersBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<resourcemanager_v3::FoldersPollingPolicyOption>(
+        GenericPollingPolicy<
+            resourcemanager_v3::FoldersRetryPolicyOption::Type,
+            resourcemanager_v3::FoldersBackoffPolicyOption::Type>(
+            options.get<resourcemanager_v3::FoldersRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           resourcemanager_v3::FoldersConnectionIdempotencyPolicyOption>()) {

@@ -52,10 +52,12 @@ Options ConnectorsDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<connectors_v1::ConnectorsPollingPolicyOption>()) {
-    options.set<connectors_v1::ConnectorsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<connectors_v1::ConnectorsPollingPolicyOption>(
+        GenericPollingPolicy<
+            connectors_v1::ConnectorsRetryPolicyOption::Type,
+            connectors_v1::ConnectorsBackoffPolicyOption::Type>(
+            options.get<connectors_v1::ConnectorsRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options
            .has<connectors_v1::ConnectorsConnectionIdempotencyPolicyOption>()) {

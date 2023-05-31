@@ -57,11 +57,12 @@ Options AccessContextManagerDefaultOptions(Options options) {
   }
   if (!options.has<
           accesscontextmanager_v1::AccessContextManagerPollingPolicyOption>()) {
-    options
-        .set<accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption>(
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone());
+    options.set<accesscontextmanager_v1::AccessContextManagerPollingPolicyOption>(
+        GenericPollingPolicy<
+            accesscontextmanager_v1::AccessContextManagerRetryPolicyOption::Type,
+            accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption::Type>(
+            options.get<accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options
            .has<accesscontextmanager_v1::

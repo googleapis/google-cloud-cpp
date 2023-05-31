@@ -53,10 +53,12 @@ Options CloudFunctionsServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<functions_v1::CloudFunctionsServicePollingPolicyOption>()) {
-    options.set<functions_v1::CloudFunctionsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<functions_v1::CloudFunctionsServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            functions_v1::CloudFunctionsServiceRetryPolicyOption::Type,
+            functions_v1::CloudFunctionsServiceBackoffPolicyOption::Type>(
+            options.get<functions_v1::CloudFunctionsServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options
            .has<functions_v1::

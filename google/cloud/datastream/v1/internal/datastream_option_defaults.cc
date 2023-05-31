@@ -52,10 +52,12 @@ Options DatastreamDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<datastream_v1::DatastreamPollingPolicyOption>()) {
-    options.set<datastream_v1::DatastreamBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<datastream_v1::DatastreamPollingPolicyOption>(
+        GenericPollingPolicy<
+            datastream_v1::DatastreamRetryPolicyOption::Type,
+            datastream_v1::DatastreamBackoffPolicyOption::Type>(
+            options.get<datastream_v1::DatastreamRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options
            .has<datastream_v1::DatastreamConnectionIdempotencyPolicyOption>()) {

@@ -53,10 +53,12 @@ Options CloudFilestoreManagerDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<filestore_v1::CloudFilestoreManagerPollingPolicyOption>()) {
-    options.set<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<filestore_v1::CloudFilestoreManagerPollingPolicyOption>(
+        GenericPollingPolicy<
+            filestore_v1::CloudFilestoreManagerRetryPolicyOption::Type,
+            filestore_v1::CloudFilestoreManagerBackoffPolicyOption::Type>(
+            options.get<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options
            .has<filestore_v1::

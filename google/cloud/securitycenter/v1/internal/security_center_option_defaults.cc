@@ -53,10 +53,12 @@ Options SecurityCenterDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<securitycenter_v1::SecurityCenterPollingPolicyOption>()) {
-    options.set<securitycenter_v1::SecurityCenterBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<securitycenter_v1::SecurityCenterPollingPolicyOption>(
+        GenericPollingPolicy<
+            securitycenter_v1::SecurityCenterRetryPolicyOption::Type,
+            securitycenter_v1::SecurityCenterBackoffPolicyOption::Type>(
+            options.get<securitycenter_v1::SecurityCenterRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<securitycenter_v1::
                        SecurityCenterConnectionIdempotencyPolicyOption>()) {

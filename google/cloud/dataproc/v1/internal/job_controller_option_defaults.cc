@@ -56,10 +56,12 @@ Options JobControllerDefaultOptions(std::string const& location,
             .clone());
   }
   if (!options.has<dataproc_v1::JobControllerPollingPolicyOption>()) {
-    options.set<dataproc_v1::JobControllerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<dataproc_v1::JobControllerPollingPolicyOption>(
+        GenericPollingPolicy<
+            dataproc_v1::JobControllerRetryPolicyOption::Type,
+            dataproc_v1::JobControllerBackoffPolicyOption::Type>(
+            options.get<dataproc_v1::JobControllerRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           dataproc_v1::JobControllerConnectionIdempotencyPolicyOption>()) {

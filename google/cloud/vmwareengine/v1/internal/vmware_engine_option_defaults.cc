@@ -53,10 +53,12 @@ Options VmwareEngineDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<vmwareengine_v1::VmwareEnginePollingPolicyOption>()) {
-    options.set<vmwareengine_v1::VmwareEngineBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<vmwareengine_v1::VmwareEnginePollingPolicyOption>(
+        GenericPollingPolicy<
+            vmwareengine_v1::VmwareEngineRetryPolicyOption::Type,
+            vmwareengine_v1::VmwareEngineBackoffPolicyOption::Type>(
+            options.get<vmwareengine_v1::VmwareEngineRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicyOption>()) {

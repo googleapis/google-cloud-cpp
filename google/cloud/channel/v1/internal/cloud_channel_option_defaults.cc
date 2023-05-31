@@ -53,10 +53,12 @@ Options CloudChannelServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<channel_v1::CloudChannelServicePollingPolicyOption>()) {
-    options.set<channel_v1::CloudChannelServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<channel_v1::CloudChannelServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            channel_v1::CloudChannelServiceRetryPolicyOption::Type,
+            channel_v1::CloudChannelServiceBackoffPolicyOption::Type>(
+            options.get<channel_v1::CloudChannelServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           channel_v1::CloudChannelServiceConnectionIdempotencyPolicyOption>()) {

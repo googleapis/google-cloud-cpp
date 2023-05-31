@@ -56,10 +56,12 @@ Options StorageTransferServiceDefaultOptions(Options options) {
   }
   if (!options.has<
           storagetransfer_v1::StorageTransferServicePollingPolicyOption>()) {
-    options.set<storagetransfer_v1::StorageTransferServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<storagetransfer_v1::StorageTransferServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            storagetransfer_v1::StorageTransferServiceRetryPolicyOption::Type,
+            storagetransfer_v1::StorageTransferServiceBackoffPolicyOption::Type>(
+            options.get<storagetransfer_v1::StorageTransferServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           storagetransfer_v1::

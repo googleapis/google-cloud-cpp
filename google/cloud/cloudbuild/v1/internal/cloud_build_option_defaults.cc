@@ -52,10 +52,12 @@ Options CloudBuildDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<cloudbuild_v1::CloudBuildPollingPolicyOption>()) {
-    options.set<cloudbuild_v1::CloudBuildBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<cloudbuild_v1::CloudBuildPollingPolicyOption>(
+        GenericPollingPolicy<
+            cloudbuild_v1::CloudBuildRetryPolicyOption::Type,
+            cloudbuild_v1::CloudBuildBackoffPolicyOption::Type>(
+            options.get<cloudbuild_v1::CloudBuildRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options
            .has<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption>()) {

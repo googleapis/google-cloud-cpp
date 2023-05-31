@@ -52,10 +52,12 @@ Options LineageDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<datacatalog_lineage_v1::LineagePollingPolicyOption>()) {
-    options.set<datacatalog_lineage_v1::LineageBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<datacatalog_lineage_v1::LineagePollingPolicyOption>(
+        GenericPollingPolicy<
+            datacatalog_lineage_v1::LineageRetryPolicyOption::Type,
+            datacatalog_lineage_v1::LineageBackoffPolicyOption::Type>(
+            options.get<datacatalog_lineage_v1::LineageRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           datacatalog_lineage_v1::LineageConnectionIdempotencyPolicyOption>()) {

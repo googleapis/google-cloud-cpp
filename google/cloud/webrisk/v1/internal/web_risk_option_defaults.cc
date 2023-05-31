@@ -52,10 +52,12 @@ Options WebRiskServiceDefaultOptions(Options options) {
             .clone());
   }
   if (!options.has<webrisk_v1::WebRiskServicePollingPolicyOption>()) {
-    options.set<webrisk_v1::WebRiskServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+    options.set<webrisk_v1::WebRiskServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            webrisk_v1::WebRiskServiceRetryPolicyOption::Type,
+            webrisk_v1::WebRiskServiceBackoffPolicyOption::Type>(
+            options.get<webrisk_v1::WebRiskServiceRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
   }
   if (!options.has<
           webrisk_v1::WebRiskServiceConnectionIdempotencyPolicyOption>()) {
