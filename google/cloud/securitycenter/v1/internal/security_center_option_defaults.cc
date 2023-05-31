@@ -57,8 +57,12 @@ Options SecurityCenterDefaultOptions(Options options) {
         GenericPollingPolicy<
             securitycenter_v1::SecurityCenterRetryPolicyOption::Type,
             securitycenter_v1::SecurityCenterBackoffPolicyOption::Type>(
-            options.get<securitycenter_v1::SecurityCenterRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<securitycenter_v1::SecurityCenterRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<securitycenter_v1::
                        SecurityCenterConnectionIdempotencyPolicyOption>()) {

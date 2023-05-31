@@ -57,8 +57,12 @@ Options ApiGatewayServiceDefaultOptions(Options options) {
         GenericPollingPolicy<
             apigateway_v1::ApiGatewayServiceRetryPolicyOption::Type,
             apigateway_v1::ApiGatewayServiceBackoffPolicyOption::Type>(
-            options.get<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<apigateway_v1::
                        ApiGatewayServiceConnectionIdempotencyPolicyOption>()) {

@@ -61,7 +61,10 @@ Options EntityTypesDefaultOptions(std::string const& location,
             dialogflow_es::EntityTypesRetryPolicyOption::Type,
             dialogflow_es::EntityTypesBackoffPolicyOption::Type>(
             options.get<dialogflow_es::EntityTypesRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           dialogflow_es::EntityTypesConnectionIdempotencyPolicyOption>()) {

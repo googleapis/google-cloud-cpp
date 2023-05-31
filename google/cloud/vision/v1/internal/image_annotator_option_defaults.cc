@@ -57,7 +57,10 @@ Options ImageAnnotatorDefaultOptions(Options options) {
             vision_v1::ImageAnnotatorRetryPolicyOption::Type,
             vision_v1::ImageAnnotatorBackoffPolicyOption::Type>(
             options.get<vision_v1::ImageAnnotatorRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption>()) {

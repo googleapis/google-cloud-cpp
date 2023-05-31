@@ -52,11 +52,13 @@ Options CloudRedisDefaultOptions(Options options) {
   }
   if (!options.has<redis_v1::CloudRedisPollingPolicyOption>()) {
     options.set<redis_v1::CloudRedisPollingPolicyOption>(
-        GenericPollingPolicy<
-            redis_v1::CloudRedisRetryPolicyOption::Type,
-            redis_v1::CloudRedisBackoffPolicyOption::Type>(
+        GenericPollingPolicy<redis_v1::CloudRedisRetryPolicyOption::Type,
+                             redis_v1::CloudRedisBackoffPolicyOption::Type>(
             options.get<redis_v1::CloudRedisRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<redis_v1::CloudRedisConnectionIdempotencyPolicyOption>()) {
     options.set<redis_v1::CloudRedisConnectionIdempotencyPolicyOption>(

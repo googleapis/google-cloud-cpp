@@ -57,8 +57,12 @@ Options RepositoryManagerDefaultOptions(Options options) {
         GenericPollingPolicy<
             cloudbuild_v2::RepositoryManagerRetryPolicyOption::Type,
             cloudbuild_v2::RepositoryManagerBackoffPolicyOption::Type>(
-            options.get<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<cloudbuild_v2::
                        RepositoryManagerConnectionIdempotencyPolicyOption>()) {

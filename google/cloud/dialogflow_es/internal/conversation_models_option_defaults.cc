@@ -60,8 +60,12 @@ Options ConversationModelsDefaultOptions(std::string const& location,
         GenericPollingPolicy<
             dialogflow_es::ConversationModelsRetryPolicyOption::Type,
             dialogflow_es::ConversationModelsBackoffPolicyOption::Type>(
-            options.get<dialogflow_es::ConversationModelsRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<dialogflow_es::ConversationModelsRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<dialogflow_es::
                        ConversationModelsConnectionIdempotencyPolicyOption>()) {

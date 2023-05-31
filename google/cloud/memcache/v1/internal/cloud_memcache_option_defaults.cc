@@ -57,7 +57,10 @@ Options CloudMemcacheDefaultOptions(Options options) {
             memcache_v1::CloudMemcacheRetryPolicyOption::Type,
             memcache_v1::CloudMemcacheBackoffPolicyOption::Type>(
             options.get<memcache_v1::CloudMemcacheRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           memcache_v1::CloudMemcacheConnectionIdempotencyPolicyOption>()) {

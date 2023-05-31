@@ -60,8 +60,12 @@ Options BatchControllerDefaultOptions(std::string const& location,
         GenericPollingPolicy<
             dataproc_v1::BatchControllerRetryPolicyOption::Type,
             dataproc_v1::BatchControllerBackoffPolicyOption::Type>(
-            options.get<dataproc_v1::BatchControllerRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<dataproc_v1::BatchControllerRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           dataproc_v1::BatchControllerConnectionIdempotencyPolicyOption>()) {

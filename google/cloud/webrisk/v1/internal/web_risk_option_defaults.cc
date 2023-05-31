@@ -57,7 +57,10 @@ Options WebRiskServiceDefaultOptions(Options options) {
             webrisk_v1::WebRiskServiceRetryPolicyOption::Type,
             webrisk_v1::WebRiskServiceBackoffPolicyOption::Type>(
             options.get<webrisk_v1::WebRiskServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           webrisk_v1::WebRiskServiceConnectionIdempotencyPolicyOption>()) {

@@ -57,8 +57,12 @@ Options CloudFilestoreManagerDefaultOptions(Options options) {
         GenericPollingPolicy<
             filestore_v1::CloudFilestoreManagerRetryPolicyOption::Type,
             filestore_v1::CloudFilestoreManagerBackoffPolicyOption::Type>(
-            options.get<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<filestore_v1::

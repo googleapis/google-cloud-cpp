@@ -57,7 +57,10 @@ Options CloudBuildDefaultOptions(Options options) {
             cloudbuild_v1::CloudBuildRetryPolicyOption::Type,
             cloudbuild_v1::CloudBuildBackoffPolicyOption::Type>(
             options.get<cloudbuild_v1::CloudBuildRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption>()) {

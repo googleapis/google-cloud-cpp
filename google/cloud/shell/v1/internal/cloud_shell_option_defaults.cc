@@ -57,8 +57,12 @@ Options CloudShellServiceDefaultOptions(Options options) {
         GenericPollingPolicy<
             shell_v1::CloudShellServiceRetryPolicyOption::Type,
             shell_v1::CloudShellServiceBackoffPolicyOption::Type>(
-            options.get<shell_v1::CloudShellServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<shell_v1::CloudShellServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           shell_v1::CloudShellServiceConnectionIdempotencyPolicyOption>()) {

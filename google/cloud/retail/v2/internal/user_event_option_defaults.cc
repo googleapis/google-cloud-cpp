@@ -56,8 +56,12 @@ Options UserEventServiceDefaultOptions(Options options) {
         GenericPollingPolicy<
             retail_v2::UserEventServiceRetryPolicyOption::Type,
             retail_v2::UserEventServiceBackoffPolicyOption::Type>(
-            options.get<retail_v2::UserEventServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<retail_v2::UserEventServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           retail_v2::UserEventServiceConnectionIdempotencyPolicyOption>()) {

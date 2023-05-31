@@ -57,8 +57,12 @@ Options EdgeContainerDefaultOptions(Options options) {
         GenericPollingPolicy<
             edgecontainer_v1::EdgeContainerRetryPolicyOption::Type,
             edgecontainer_v1::EdgeContainerBackoffPolicyOption::Type>(
-            options.get<edgecontainer_v1::EdgeContainerRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<edgecontainer_v1::EdgeContainerRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption>()) {

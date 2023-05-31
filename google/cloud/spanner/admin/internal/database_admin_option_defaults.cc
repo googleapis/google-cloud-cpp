@@ -57,8 +57,12 @@ Options DatabaseAdminDefaultOptions(Options options) {
         GenericPollingPolicy<
             spanner_admin::DatabaseAdminRetryPolicyOption::Type,
             spanner_admin::DatabaseAdminBackoffPolicyOption::Type>(
-            options.get<spanner_admin::DatabaseAdminRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<spanner_admin::DatabaseAdminRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>()) {

@@ -60,8 +60,13 @@ Options VideoStitcherServiceDefaultOptions(Options options) {
         GenericPollingPolicy<
             video_stitcher_v1::VideoStitcherServiceRetryPolicyOption::Type,
             video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption::Type>(
-            options.get<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options
+                .get<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<video_stitcher_v1::

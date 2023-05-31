@@ -56,8 +56,12 @@ Options VmMigrationDefaultOptions(Options options) {
         GenericPollingPolicy<
             vmmigration_v1::VmMigrationRetryPolicyOption::Type,
             vmmigration_v1::VmMigrationBackoffPolicyOption::Type>(
-            options.get<vmmigration_v1::VmMigrationRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<vmmigration_v1::VmMigrationRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           vmmigration_v1::VmMigrationConnectionIdempotencyPolicyOption>()) {

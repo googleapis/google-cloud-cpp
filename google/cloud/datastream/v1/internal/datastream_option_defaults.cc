@@ -57,7 +57,10 @@ Options DatastreamDefaultOptions(Options options) {
             datastream_v1::DatastreamRetryPolicyOption::Type,
             datastream_v1::DatastreamBackoffPolicyOption::Type>(
             options.get<datastream_v1::DatastreamRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<datastream_v1::DatastreamConnectionIdempotencyPolicyOption>()) {

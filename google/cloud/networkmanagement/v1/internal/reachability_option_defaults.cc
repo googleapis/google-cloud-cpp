@@ -60,8 +60,14 @@ Options ReachabilityServiceDefaultOptions(Options options) {
         GenericPollingPolicy<
             networkmanagement_v1::ReachabilityServiceRetryPolicyOption::Type,
             networkmanagement_v1::ReachabilityServiceBackoffPolicyOption::Type>(
-            options.get<networkmanagement_v1::ReachabilityServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options
+                .get<networkmanagement_v1::
+                         ReachabilityServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<networkmanagement_v1::

@@ -57,8 +57,12 @@ Options PredictionServiceDefaultOptions(Options options) {
         GenericPollingPolicy<
             automl_v1::PredictionServiceRetryPolicyOption::Type,
             automl_v1::PredictionServiceBackoffPolicyOption::Type>(
-            options.get<automl_v1::PredictionServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<automl_v1::PredictionServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           automl_v1::PredictionServiceConnectionIdempotencyPolicyOption>()) {

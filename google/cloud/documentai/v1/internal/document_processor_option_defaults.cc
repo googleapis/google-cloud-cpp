@@ -64,8 +64,13 @@ Options DocumentProcessorServiceDefaultOptions(std::string const& location,
         GenericPollingPolicy<
             documentai_v1::DocumentProcessorServiceRetryPolicyOption::Type,
             documentai_v1::DocumentProcessorServiceBackoffPolicyOption::Type>(
-            options.get<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options
+                .get<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           documentai_v1::

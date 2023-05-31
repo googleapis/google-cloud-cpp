@@ -60,12 +60,21 @@ Options ClientGatewaysServiceDefaultOptions(Options options) {
   }
   if (!options.has<beyondcorp_clientgateways_v1::
                        ClientGatewaysServicePollingPolicyOption>()) {
-    options.set<beyondcorp_clientgateways_v1::ClientGatewaysServicePollingPolicyOption>(
+    options.set<
+        beyondcorp_clientgateways_v1::ClientGatewaysServicePollingPolicyOption>(
         GenericPollingPolicy<
-            beyondcorp_clientgateways_v1::ClientGatewaysServiceRetryPolicyOption::Type,
-            beyondcorp_clientgateways_v1::ClientGatewaysServiceBackoffPolicyOption::Type>(
-            options.get<beyondcorp_clientgateways_v1::ClientGatewaysServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            beyondcorp_clientgateways_v1::
+                ClientGatewaysServiceRetryPolicyOption::Type,
+            beyondcorp_clientgateways_v1::
+                ClientGatewaysServiceBackoffPolicyOption::Type>(
+            options
+                .get<beyondcorp_clientgateways_v1::
+                         ClientGatewaysServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<beyondcorp_clientgateways_v1::

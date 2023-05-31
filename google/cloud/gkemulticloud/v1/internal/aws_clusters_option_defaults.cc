@@ -59,8 +59,12 @@ Options AwsClustersDefaultOptions(std::string const& location,
         GenericPollingPolicy<
             gkemulticloud_v1::AwsClustersRetryPolicyOption::Type,
             gkemulticloud_v1::AwsClustersBackoffPolicyOption::Type>(
-            options.get<gkemulticloud_v1::AwsClustersRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<gkemulticloud_v1::AwsClustersRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           gkemulticloud_v1::AwsClustersConnectionIdempotencyPolicyOption>()) {

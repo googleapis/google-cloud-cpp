@@ -56,8 +56,12 @@ Options DomainMappingsDefaultOptions(Options options) {
         GenericPollingPolicy<
             appengine_v1::DomainMappingsRetryPolicyOption::Type,
             appengine_v1::DomainMappingsBackoffPolicyOption::Type>(
-            options.get<appengine_v1::DomainMappingsRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<appengine_v1::DomainMappingsRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption>()) {

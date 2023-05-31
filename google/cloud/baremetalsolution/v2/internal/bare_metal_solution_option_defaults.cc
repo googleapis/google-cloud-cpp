@@ -60,8 +60,13 @@ Options BareMetalSolutionDefaultOptions(Options options) {
         GenericPollingPolicy<
             baremetalsolution_v2::BareMetalSolutionRetryPolicyOption::Type,
             baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption::Type>(
-            options.get<baremetalsolution_v2::BareMetalSolutionRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options
+                .get<baremetalsolution_v2::BareMetalSolutionRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<baremetalsolution_v2::
                        BareMetalSolutionConnectionIdempotencyPolicyOption>()) {

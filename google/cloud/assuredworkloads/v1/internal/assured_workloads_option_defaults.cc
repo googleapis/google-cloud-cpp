@@ -57,12 +57,20 @@ Options AssuredWorkloadsServiceDefaultOptions(Options options) {
   }
   if (!options.has<
           assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>()) {
-    options.set<assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>(
+    options.set<
+        assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>(
         GenericPollingPolicy<
             assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption::Type,
-            assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption::Type>(
-            options.get<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption::
+                Type>(
+            options
+                .get<assuredworkloads_v1::
+                         AssuredWorkloadsServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           assuredworkloads_v1::

@@ -52,11 +52,13 @@ Options JobServiceDefaultOptions(Options options) {
   }
   if (!options.has<talent_v4::JobServicePollingPolicyOption>()) {
     options.set<talent_v4::JobServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            talent_v4::JobServiceRetryPolicyOption::Type,
-            talent_v4::JobServiceBackoffPolicyOption::Type>(
+        GenericPollingPolicy<talent_v4::JobServiceRetryPolicyOption::Type,
+                             talent_v4::JobServiceBackoffPolicyOption::Type>(
             options.get<talent_v4::JobServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<talent_v4::JobServiceConnectionIdempotencyPolicyOption>()) {
     options.set<talent_v4::JobServiceConnectionIdempotencyPolicyOption>(

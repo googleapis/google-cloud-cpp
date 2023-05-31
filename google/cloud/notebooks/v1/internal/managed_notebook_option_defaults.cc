@@ -57,8 +57,13 @@ Options ManagedNotebookServiceDefaultOptions(Options options) {
         GenericPollingPolicy<
             notebooks_v1::ManagedNotebookServiceRetryPolicyOption::Type,
             notebooks_v1::ManagedNotebookServiceBackoffPolicyOption::Type>(
-            options.get<notebooks_v1::ManagedNotebookServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options
+                .get<notebooks_v1::ManagedNotebookServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           notebooks_v1::

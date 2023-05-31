@@ -55,11 +55,13 @@ Options TestCasesDefaultOptions(std::string const& location, Options options) {
   }
   if (!options.has<dialogflow_cx::TestCasesPollingPolicyOption>()) {
     options.set<dialogflow_cx::TestCasesPollingPolicyOption>(
-        GenericPollingPolicy<
-            dialogflow_cx::TestCasesRetryPolicyOption::Type,
-            dialogflow_cx::TestCasesBackoffPolicyOption::Type>(
+        GenericPollingPolicy<dialogflow_cx::TestCasesRetryPolicyOption::Type,
+                             dialogflow_cx::TestCasesBackoffPolicyOption::Type>(
             options.get<dialogflow_cx::TestCasesRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<dialogflow_cx::TestCasesConnectionIdempotencyPolicyOption>()) {

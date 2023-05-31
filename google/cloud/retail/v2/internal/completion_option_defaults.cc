@@ -56,8 +56,12 @@ Options CompletionServiceDefaultOptions(Options options) {
         GenericPollingPolicy<
             retail_v2::CompletionServiceRetryPolicyOption::Type,
             retail_v2::CompletionServiceBackoffPolicyOption::Type>(
-            options.get<retail_v2::CompletionServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<retail_v2::CompletionServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           retail_v2::CompletionServiceConnectionIdempotencyPolicyOption>()) {

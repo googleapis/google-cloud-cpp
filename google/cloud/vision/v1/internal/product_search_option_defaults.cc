@@ -52,11 +52,13 @@ Options ProductSearchDefaultOptions(Options options) {
   }
   if (!options.has<vision_v1::ProductSearchPollingPolicyOption>()) {
     options.set<vision_v1::ProductSearchPollingPolicyOption>(
-        GenericPollingPolicy<
-            vision_v1::ProductSearchRetryPolicyOption::Type,
-            vision_v1::ProductSearchBackoffPolicyOption::Type>(
+        GenericPollingPolicy<vision_v1::ProductSearchRetryPolicyOption::Type,
+                             vision_v1::ProductSearchBackoffPolicyOption::Type>(
             options.get<vision_v1::ProductSearchRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<vision_v1::ProductSearchConnectionIdempotencyPolicyOption>()) {

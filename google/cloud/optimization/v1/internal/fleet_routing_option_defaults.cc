@@ -57,8 +57,12 @@ Options FleetRoutingDefaultOptions(Options options) {
         GenericPollingPolicy<
             optimization_v1::FleetRoutingRetryPolicyOption::Type,
             optimization_v1::FleetRoutingBackoffPolicyOption::Type>(
-            options.get<optimization_v1::FleetRoutingRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<optimization_v1::FleetRoutingRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           optimization_v1::FleetRoutingConnectionIdempotencyPolicyOption>()) {

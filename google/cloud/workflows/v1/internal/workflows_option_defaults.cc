@@ -52,11 +52,13 @@ Options WorkflowsDefaultOptions(Options options) {
   }
   if (!options.has<workflows_v1::WorkflowsPollingPolicyOption>()) {
     options.set<workflows_v1::WorkflowsPollingPolicyOption>(
-        GenericPollingPolicy<
-            workflows_v1::WorkflowsRetryPolicyOption::Type,
-            workflows_v1::WorkflowsBackoffPolicyOption::Type>(
+        GenericPollingPolicy<workflows_v1::WorkflowsRetryPolicyOption::Type,
+                             workflows_v1::WorkflowsBackoffPolicyOption::Type>(
             options.get<workflows_v1::WorkflowsRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<workflows_v1::WorkflowsConnectionIdempotencyPolicyOption>()) {

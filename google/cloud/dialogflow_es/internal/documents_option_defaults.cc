@@ -55,11 +55,13 @@ Options DocumentsDefaultOptions(std::string const& location, Options options) {
   }
   if (!options.has<dialogflow_es::DocumentsPollingPolicyOption>()) {
     options.set<dialogflow_es::DocumentsPollingPolicyOption>(
-        GenericPollingPolicy<
-            dialogflow_es::DocumentsRetryPolicyOption::Type,
-            dialogflow_es::DocumentsBackoffPolicyOption::Type>(
+        GenericPollingPolicy<dialogflow_es::DocumentsRetryPolicyOption::Type,
+                             dialogflow_es::DocumentsBackoffPolicyOption::Type>(
             options.get<dialogflow_es::DocumentsRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<dialogflow_es::DocumentsConnectionIdempotencyPolicyOption>()) {

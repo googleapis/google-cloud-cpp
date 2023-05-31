@@ -57,8 +57,13 @@ Options ServiceManagerDefaultOptions(Options options) {
         GenericPollingPolicy<
             servicemanagement_v1::ServiceManagerRetryPolicyOption::Type,
             servicemanagement_v1::ServiceManagerBackoffPolicyOption::Type>(
-            options.get<servicemanagement_v1::ServiceManagerRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options
+                .get<servicemanagement_v1::ServiceManagerRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<servicemanagement_v1::
                        ServiceManagerConnectionIdempotencyPolicyOption>()) {

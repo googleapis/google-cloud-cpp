@@ -60,9 +60,16 @@ Options GameServerClustersServiceDefaultOptions(Options options) {
     options.set<gameservices_v1::GameServerClustersServicePollingPolicyOption>(
         GenericPollingPolicy<
             gameservices_v1::GameServerClustersServiceRetryPolicyOption::Type,
-            gameservices_v1::GameServerClustersServiceBackoffPolicyOption::Type>(
-            options.get<gameservices_v1::GameServerClustersServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            gameservices_v1::GameServerClustersServiceBackoffPolicyOption::
+                Type>(
+            options
+                .get<gameservices_v1::
+                         GameServerClustersServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           gameservices_v1::

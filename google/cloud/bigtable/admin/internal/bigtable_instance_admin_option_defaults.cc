@@ -60,8 +60,13 @@ Options BigtableInstanceAdminDefaultOptions(Options options) {
         GenericPollingPolicy<
             bigtable_admin::BigtableInstanceAdminRetryPolicyOption::Type,
             bigtable_admin::BigtableInstanceAdminBackoffPolicyOption::Type>(
-            options.get<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options
+                .get<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<bigtable_admin::

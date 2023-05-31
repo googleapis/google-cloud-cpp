@@ -52,11 +52,13 @@ Options VersionsDefaultOptions(Options options) {
   }
   if (!options.has<appengine_v1::VersionsPollingPolicyOption>()) {
     options.set<appengine_v1::VersionsPollingPolicyOption>(
-        GenericPollingPolicy<
-            appengine_v1::VersionsRetryPolicyOption::Type,
-            appengine_v1::VersionsBackoffPolicyOption::Type>(
+        GenericPollingPolicy<appengine_v1::VersionsRetryPolicyOption::Type,
+                             appengine_v1::VersionsBackoffPolicyOption::Type>(
             options.get<appengine_v1::VersionsRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<appengine_v1::VersionsConnectionIdempotencyPolicyOption>()) {
     options.set<appengine_v1::VersionsConnectionIdempotencyPolicyOption>(

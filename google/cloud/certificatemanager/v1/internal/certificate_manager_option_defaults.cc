@@ -60,8 +60,14 @@ Options CertificateManagerDefaultOptions(Options options) {
         GenericPollingPolicy<
             certificatemanager_v1::CertificateManagerRetryPolicyOption::Type,
             certificatemanager_v1::CertificateManagerBackoffPolicyOption::Type>(
-            options.get<certificatemanager_v1::CertificateManagerRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options
+                .get<certificatemanager_v1::
+                         CertificateManagerRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<certificatemanager_v1::
                        CertificateManagerConnectionIdempotencyPolicyOption>()) {

@@ -60,8 +60,12 @@ Options ConversationProfilesDefaultOptions(std::string const& location,
         GenericPollingPolicy<
             dialogflow_es::ConversationProfilesRetryPolicyOption::Type,
             dialogflow_es::ConversationProfilesBackoffPolicyOption::Type>(
-            options.get<dialogflow_es::ConversationProfilesRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<dialogflow_es::ConversationProfilesRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<dialogflow_es::

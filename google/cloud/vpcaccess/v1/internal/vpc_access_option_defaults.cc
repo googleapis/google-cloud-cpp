@@ -57,8 +57,12 @@ Options VpcAccessServiceDefaultOptions(Options options) {
         GenericPollingPolicy<
             vpcaccess_v1::VpcAccessServiceRetryPolicyOption::Type,
             vpcaccess_v1::VpcAccessServiceBackoffPolicyOption::Type>(
-            options.get<vpcaccess_v1::VpcAccessServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<vpcaccess_v1::VpcAccessServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           vpcaccess_v1::VpcAccessServiceConnectionIdempotencyPolicyOption>()) {

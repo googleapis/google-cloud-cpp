@@ -57,12 +57,20 @@ Options AppGatewaysServiceDefaultOptions(Options options) {
   }
   if (!options.has<
           beyondcorp_appgateways_v1::AppGatewaysServicePollingPolicyOption>()) {
-    options.set<beyondcorp_appgateways_v1::AppGatewaysServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption::Type,
-            beyondcorp_appgateways_v1::AppGatewaysServiceBackoffPolicyOption::Type>(
-            options.get<beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+    options.set<
+        beyondcorp_appgateways_v1::AppGatewaysServicePollingPolicyOption>(
+        GenericPollingPolicy<beyondcorp_appgateways_v1::
+                                 AppGatewaysServiceRetryPolicyOption::Type,
+                             beyondcorp_appgateways_v1::
+                                 AppGatewaysServiceBackoffPolicyOption::Type>(
+            options
+                .get<beyondcorp_appgateways_v1::
+                         AppGatewaysServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<beyondcorp_appgateways_v1::
                        AppGatewaysServiceConnectionIdempotencyPolicyOption>()) {

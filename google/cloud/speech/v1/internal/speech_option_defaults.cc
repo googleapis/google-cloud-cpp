@@ -52,11 +52,13 @@ Options SpeechDefaultOptions(Options options) {
   }
   if (!options.has<speech_v1::SpeechPollingPolicyOption>()) {
     options.set<speech_v1::SpeechPollingPolicyOption>(
-        GenericPollingPolicy<
-            speech_v1::SpeechRetryPolicyOption::Type,
-            speech_v1::SpeechBackoffPolicyOption::Type>(
+        GenericPollingPolicy<speech_v1::SpeechRetryPolicyOption::Type,
+                             speech_v1::SpeechBackoffPolicyOption::Type>(
             options.get<speech_v1::SpeechRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<speech_v1::SpeechConnectionIdempotencyPolicyOption>()) {
     options.set<speech_v1::SpeechConnectionIdempotencyPolicyOption>(

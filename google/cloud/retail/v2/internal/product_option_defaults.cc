@@ -57,7 +57,10 @@ Options ProductServiceDefaultOptions(Options options) {
             retail_v2::ProductServiceRetryPolicyOption::Type,
             retail_v2::ProductServiceBackoffPolicyOption::Type>(
             options.get<retail_v2::ProductServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<retail_v2::ProductServiceConnectionIdempotencyPolicyOption>()) {

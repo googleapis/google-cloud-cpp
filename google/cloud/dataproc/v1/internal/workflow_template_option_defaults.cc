@@ -60,8 +60,13 @@ Options WorkflowTemplateServiceDefaultOptions(std::string const& location,
         GenericPollingPolicy<
             dataproc_v1::WorkflowTemplateServiceRetryPolicyOption::Type,
             dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption::Type>(
-            options.get<dataproc_v1::WorkflowTemplateServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options
+                .get<dataproc_v1::WorkflowTemplateServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           dataproc_v1::

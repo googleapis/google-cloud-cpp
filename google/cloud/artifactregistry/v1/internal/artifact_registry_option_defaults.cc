@@ -59,8 +59,13 @@ Options ArtifactRegistryDefaultOptions(Options options) {
         GenericPollingPolicy<
             artifactregistry_v1::ArtifactRegistryRetryPolicyOption::Type,
             artifactregistry_v1::ArtifactRegistryBackoffPolicyOption::Type>(
-            options.get<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options
+                .get<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<artifactregistry_v1::
                        ArtifactRegistryConnectionIdempotencyPolicyOption>()) {

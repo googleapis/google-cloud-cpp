@@ -61,8 +61,14 @@ Options GameServerConfigsServiceDefaultOptions(Options options) {
         GenericPollingPolicy<
             gameservices_v1::GameServerConfigsServiceRetryPolicyOption::Type,
             gameservices_v1::GameServerConfigsServiceBackoffPolicyOption::Type>(
-            options.get<gameservices_v1::GameServerConfigsServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options
+                .get<gameservices_v1::
+                         GameServerConfigsServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           gameservices_v1::

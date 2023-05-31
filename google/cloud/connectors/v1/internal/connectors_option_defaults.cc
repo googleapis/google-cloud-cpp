@@ -57,7 +57,10 @@ Options ConnectorsDefaultOptions(Options options) {
             connectors_v1::ConnectorsRetryPolicyOption::Type,
             connectors_v1::ConnectorsBackoffPolicyOption::Type>(
             options.get<connectors_v1::ConnectorsRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<connectors_v1::ConnectorsConnectionIdempotencyPolicyOption>()) {

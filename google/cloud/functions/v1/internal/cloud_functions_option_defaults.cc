@@ -57,8 +57,12 @@ Options CloudFunctionsServiceDefaultOptions(Options options) {
         GenericPollingPolicy<
             functions_v1::CloudFunctionsServiceRetryPolicyOption::Type,
             functions_v1::CloudFunctionsServiceBackoffPolicyOption::Type>(
-            options.get<functions_v1::CloudFunctionsServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<functions_v1::CloudFunctionsServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<functions_v1::

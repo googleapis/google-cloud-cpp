@@ -52,11 +52,13 @@ Options ServicesDefaultOptions(Options options) {
   }
   if (!options.has<run_v2::ServicesPollingPolicyOption>()) {
     options.set<run_v2::ServicesPollingPolicyOption>(
-        GenericPollingPolicy<
-            run_v2::ServicesRetryPolicyOption::Type,
-            run_v2::ServicesBackoffPolicyOption::Type>(
+        GenericPollingPolicy<run_v2::ServicesRetryPolicyOption::Type,
+                             run_v2::ServicesBackoffPolicyOption::Type>(
             options.get<run_v2::ServicesRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<run_v2::ServicesConnectionIdempotencyPolicyOption>()) {
     options.set<run_v2::ServicesConnectionIdempotencyPolicyOption>(

@@ -56,8 +56,12 @@ Options DataplexServiceDefaultOptions(Options options) {
         GenericPollingPolicy<
             dataplex_v1::DataplexServiceRetryPolicyOption::Type,
             dataplex_v1::DataplexServiceBackoffPolicyOption::Type>(
-            options.get<dataplex_v1::DataplexServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<dataplex_v1::DataplexServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           dataplex_v1::DataplexServiceConnectionIdempotencyPolicyOption>()) {

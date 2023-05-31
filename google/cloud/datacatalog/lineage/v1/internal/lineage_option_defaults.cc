@@ -56,8 +56,12 @@ Options LineageDefaultOptions(Options options) {
         GenericPollingPolicy<
             datacatalog_lineage_v1::LineageRetryPolicyOption::Type,
             datacatalog_lineage_v1::LineageBackoffPolicyOption::Type>(
-            options.get<datacatalog_lineage_v1::LineageRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<datacatalog_lineage_v1::LineageRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           datacatalog_lineage_v1::LineageConnectionIdempotencyPolicyOption>()) {

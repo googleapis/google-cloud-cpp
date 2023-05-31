@@ -60,8 +60,12 @@ Options ClusterControllerDefaultOptions(std::string const& location,
         GenericPollingPolicy<
             dataproc_v1::ClusterControllerRetryPolicyOption::Type,
             dataproc_v1::ClusterControllerBackoffPolicyOption::Type>(
-            options.get<dataproc_v1::ClusterControllerRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            options.get<dataproc_v1::ClusterControllerRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<
           dataproc_v1::ClusterControllerConnectionIdempotencyPolicyOption>()) {

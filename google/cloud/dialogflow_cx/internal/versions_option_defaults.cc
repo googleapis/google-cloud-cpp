@@ -55,11 +55,13 @@ Options VersionsDefaultOptions(std::string const& location, Options options) {
   }
   if (!options.has<dialogflow_cx::VersionsPollingPolicyOption>()) {
     options.set<dialogflow_cx::VersionsPollingPolicyOption>(
-        GenericPollingPolicy<
-            dialogflow_cx::VersionsRetryPolicyOption::Type,
-            dialogflow_cx::VersionsBackoffPolicyOption::Type>(
+        GenericPollingPolicy<dialogflow_cx::VersionsRetryPolicyOption::Type,
+                             dialogflow_cx::VersionsBackoffPolicyOption::Type>(
             options.get<dialogflow_cx::VersionsRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling).clone());
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options
            .has<dialogflow_cx::VersionsConnectionIdempotencyPolicyOption>()) {
