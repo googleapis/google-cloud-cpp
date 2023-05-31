@@ -236,17 +236,22 @@ Range MakePaginationRange(Request request, Loader loader, Extractor extractor) {
       {[reader]() mutable { return reader->GetNext(); }});
 }
 
+template <typename Range>
+Range MakeErrorPaginationRange(Status status) {
+  using ValueType = typename Range::value_type::value_type;
+  return MakeStreamRange<ValueType>(
+      [s = std::move(status)]() ->
+      typename StreamReader<ValueType>::result_type { return s; });
+}
+
 /**
  * A convenient function to make a `PaginationRange<T>` that contains a single
  * error indicating "unimplemented".
  */
 template <typename Range>
 Range MakeUnimplementedPaginationRange() {
-  using ValueType = typename Range::value_type::value_type;
-  return MakeStreamRange<ValueType>(
-      []() -> typename StreamReader<ValueType>::result_type {
-        return Status{StatusCode::kUnimplemented, "not implemented"};
-      });
+  return MakeErrorPaginationRange<Range>(
+      Status{StatusCode::kUnimplemented, "not implemented"});
 }
 
 }  // namespace internal
