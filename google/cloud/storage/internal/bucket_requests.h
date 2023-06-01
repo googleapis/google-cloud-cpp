@@ -35,7 +35,7 @@ namespace internal {
  */
 class ListBucketsRequest
     : public GenericRequest<ListBucketsRequest, MaxResults, Prefix, Projection,
-                            UserProject> {
+                            UserProject, OverrideDefaultProject> {
  public:
   ListBucketsRequest() = default;
   explicit ListBucketsRequest(std::string project_id)
@@ -91,8 +91,8 @@ std::ostream& operator<<(std::ostream& os, GetBucketMetadataRequest const& r);
  */
 class CreateBucketRequest
     : public GenericRequest<CreateBucketRequest, PredefinedAcl,
-                            PredefinedDefaultObjectAcl, Projection,
-                            UserProject> {
+                            PredefinedDefaultObjectAcl, Projection, UserProject,
+                            OverrideDefaultProject> {
  public:
   CreateBucketRequest() = default;
   explicit CreateBucketRequest(std::string project_id, BucketMetadata metadata)

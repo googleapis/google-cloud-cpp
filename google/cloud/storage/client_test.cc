@@ -272,7 +272,7 @@ TEST_F(ClientTest, DeprecatedRetryPolicies) {
 
   auto client = storage::Client(mock, LimitedErrorCountRetryPolicy(kNumRetries),
                                 std::move(*mock_b));
-  (void)client.ListBuckets();
+  (void)client.ListBuckets(OverrideDefaultProject("fake-project"));
 }
 
 }  // namespace

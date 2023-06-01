@@ -30,7 +30,8 @@ namespace internal {
  * Requests the Google Cloud Storage service account for a project.
  */
 class GetProjectServiceAccountRequest
-    : public GenericRequest<GetProjectServiceAccountRequest, UserProject> {
+    : public GenericRequest<GetProjectServiceAccountRequest, UserProject,
+                            OverrideDefaultProject> {
  public:
   GetProjectServiceAccountRequest() = default;
   explicit GetProjectServiceAccountRequest(std::string project_id)
