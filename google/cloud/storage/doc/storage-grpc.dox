@@ -5,8 +5,8 @@
 The GCS C++ client library includes an optional plugin to access GCS via gRPC.
 When using GCS from Google Compute Engine (GCE) this plugin can enable higher
 total throughput across large workloads that run on hundreds or thousands of
-VMs.  Note that this feature is not GA. Consult with with your account manager
-to be included in the early access program.
+VMs.  Note that this feature is not GA. Consult with your account manager to be
+included in the early access program.
 
 ## Release Notes
 
@@ -29,7 +29,7 @@ differently from the REST-based implementation.
    not anticipate the behavior change is likely to cause problems. If it does
    cause any issues please [file a bug].
 1. All the `storage::Client::*AccessControl()` functions are emulated. For
-   functions that change state, the emulation uses a [OCC loop]. While this
+   functions that change state, the emulation uses an [OCC loop]. While this
    preserves the semantics of a single RPC (e.g. no other concurrent changes
    are lost), it requires making at least two RPCs. This may increase the cost
    of calling these functions. Our telemetry shows these functions are not used
