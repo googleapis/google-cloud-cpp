@@ -1,7 +1,7 @@
 {
     "api_id": "eventarcpublishing.googleapis.com",
     "api_shortname": "eventarcpublishing",
-    "client_documentation": "https://cloud.google.com/cpp/reference/eventarc/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/eventarc/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/5972217",
     "language": "cpp",

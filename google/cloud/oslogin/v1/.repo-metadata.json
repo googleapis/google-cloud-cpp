@@ -1,7 +1,7 @@
 {
     "api_id": "oslogin.googleapis.com",
     "api_shortname": "oslogin",
-    "client_documentation": "https://cloud.google.com/cpp/reference/oslogin/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/oslogin/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/559755",
     "language": "cpp",

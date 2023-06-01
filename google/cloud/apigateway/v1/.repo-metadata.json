@@ -1,7 +1,7 @@
 {
     "api_id": "apigateway.googleapis.com",
     "api_shortname": "apigateway",
-    "client_documentation": "https://cloud.google.com/cpp/reference/apigateway/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/apigateway/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:961566%20status:open",
     "language": "cpp",

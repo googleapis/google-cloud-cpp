@@ -1,7 +1,7 @@
 {
     "api_id": "texttospeech.googleapis.com",
     "api_shortname": "texttospeech",
-    "client_documentation": "https://cloud.google.com/cpp/reference/texttospeech/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/texttospeech/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/5235428",
     "language": "cpp",

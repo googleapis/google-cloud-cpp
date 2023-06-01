@@ -1,7 +1,7 @@
 {
     "api_id": "datamigration.googleapis.com",
     "api_shortname": "datamigration",
-    "client_documentation": "https://cloud.google.com/cpp/reference/datamigration/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/datamigration/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/6119985",
     "language": "cpp",

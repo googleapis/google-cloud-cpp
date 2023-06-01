@@ -1,7 +1,7 @@
 {
     "api_id": "apikeys.googleapis.com",
     "api_shortname": "apikeys",
-    "client_documentation": "https://cloud.google.com/cpp/reference/apikeys/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/apikeys/latest",
     "distribution_name": "google-cloud-cpp",
     "language": "cpp",
     "library_type": "GAPIC_AUTO",

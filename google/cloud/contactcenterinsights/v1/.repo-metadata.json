@@ -1,7 +1,7 @@
 {
     "api_id": "contactcenterinsights.googleapis.com",
     "api_shortname": "contactcenterinsights",
-    "client_documentation": "https://cloud.google.com/cpp/reference/contactcenterinsights/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/contactcenterinsights/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/6143399",
     "language": "cpp",

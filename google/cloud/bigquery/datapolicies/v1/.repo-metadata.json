@@ -1,7 +1,7 @@
 {
     "api_id": "bigquerydatapolicy.googleapis.com",
     "api_shortname": "bigquerydatapolicy",
-    "client_documentation": "https://cloud.google.com/cpp/reference/bigquery/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/bigquery/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/559654",
     "language": "cpp",

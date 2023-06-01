@@ -1,7 +1,7 @@
 {
     "api_id": "cloudbuild.googleapis.com",
     "api_shortname": "cloudbuild",
-    "client_documentation": "https://cloud.google.com/cpp/reference/cloudbuild/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/cloudbuild/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/5226584",
     "language": "cpp",

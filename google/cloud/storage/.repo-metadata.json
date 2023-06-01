@@ -1,7 +1,7 @@
 {
     "api_id": "storage.googleapis.com",
     "api_shortname": "storage",
-    "client_documentation": "https://cloud.google.com/cpp/reference/storage/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/storage/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/559782",
     "language": "cpp",

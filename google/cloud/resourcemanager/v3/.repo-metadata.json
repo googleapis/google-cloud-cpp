@@ -1,7 +1,7 @@
 {
     "api_id": "cloudresourcemanager.googleapis.com",
     "api_shortname": "cloudresourcemanager",
-    "client_documentation": "https://cloud.google.com/cpp/reference/resourcemanager/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/resourcemanager/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/559757",
     "language": "cpp",

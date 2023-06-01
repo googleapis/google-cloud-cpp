@@ -1,7 +1,7 @@
 {
     "api_id": "tpu.googleapis.com",
     "api_shortname": "tpu",
-    "client_documentation": "https://cloud.google.com/cpp/reference/tpu/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/tpu/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/5308873",
     "language": "cpp",

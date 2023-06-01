@@ -1,7 +1,7 @@
 {
     "api_id": "securitycenter.googleapis.com",
     "api_shortname": "securitycenter",
-    "client_documentation": "https://cloud.google.com/cpp/reference/securitycenter/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/securitycenter/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/6123493",
     "language": "cpp",

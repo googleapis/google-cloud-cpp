@@ -1,7 +1,7 @@
 {
     "api_id": "websecurityscanner.googleapis.com",
     "api_shortname": "websecurityscanner",
-    "client_documentation": "https://cloud.google.com/cpp/reference/websecurityscanner/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/websecurityscanner/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/issues?q=component:187215 status:open",
     "language": "cpp",

@@ -1,7 +1,7 @@
 {
     "api_id": "storagetransfer.googleapis.com",
     "api_shortname": "storagetransfer",
-    "client_documentation": "https://cloud.google.com/cpp/reference/storagetransfer/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/storagetransfer/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/issues?q=status:open%20componentid:187195",
     "language": "cpp",

@@ -1,7 +1,7 @@
 {
     "api_id": "container.googleapis.com",
     "api_shortname": "container",
-    "client_documentation": "https://cloud.google.com/cpp/reference/container/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/container/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/559746",
     "language": "cpp",

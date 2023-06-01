@@ -1,7 +1,7 @@
 {
     "api_id": "apigeeconnect.googleapis.com",
     "api_shortname": "apigeeconnect",
-    "client_documentation": "https://cloud.google.com/cpp/reference/apigeeconnect/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/apigeeconnect/latest",
     "distribution_name": "google-cloud-cpp",
     "language": "cpp",
     "library_type": "GAPIC_AUTO",

@@ -1,7 +1,7 @@
 {
     "api_id": "networkmanagement.googleapis.com",
     "api_shortname": "networkmanagement",
-    "client_documentation": "https://cloud.google.com/cpp/reference/networkmanagement/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/networkmanagement/latest",
     "distribution_name": "google-cloud-cpp",
     "language": "cpp",
     "library_type": "GAPIC_AUTO",

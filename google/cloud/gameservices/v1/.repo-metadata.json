@@ -1,7 +1,7 @@
 {
     "api_id": "gameservices.googleapis.com",
     "api_shortname": "gameservices",
-    "client_documentation": "https://cloud.google.com/cpp/reference/gameservices/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/gameservices/latest",
     "distribution_name": "google-cloud-cpp",
     "language": "cpp",
     "library_type": "GAPIC_AUTO",
