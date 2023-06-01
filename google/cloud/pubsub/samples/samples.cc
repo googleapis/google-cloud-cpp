@@ -30,6 +30,8 @@
 
 namespace {
 
+using ::google::cloud::pubsub::examples::DefaultAvroSchemaDefinition;
+using ::google::cloud::pubsub::examples::DefaultProtoSchemaDefinition;
 using ::google::cloud::pubsub::examples::RandomSchemaId;
 using ::google::cloud::pubsub::examples::RandomSnapshotId;
 using ::google::cloud::pubsub::examples::RandomSubscriptionId;
@@ -780,30 +782,12 @@ void CreateAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
   //! [START pubsub_create_avro_schema] [create-avro-schema]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id) {
-    auto constexpr kDefinition = R"js({
-      "type": "record",
-      "name": "State",
-      "namespace": "utilities",
-      "doc": "A list of states in the United States of America.",
-      "fields": [
-        {
-          "name": "name",
-          "type": "string",
-          "doc": "The common name of the state."
-        },
-        {
-          "name": "post_abbr",
-          "type": "string",
-          "doc": "The postal code abbreviation of the state."
-        }
-      ]
-    })js";
+     std::string const& schema_id, std::string const& schema_definition) {
     google::pubsub::v1::CreateSchemaRequest request;
     request.set_parent(google::cloud::Project(project_id).FullName());
     request.set_schema_id(schema_id);
     request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
-    request.mutable_schema()->set_definition(kDefinition);
+    request.mutable_schema()->set_definition(schema_definition);
     auto schema = client.CreateSchema(request);
     if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The schema already exists\n";
@@ -815,7 +799,7 @@ void CreateAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
               << "\n";
   }
   //! [END pubsub_create_avro_schema] [create-avro-schema]
-  (std::move(client), argv.at(0), argv.at(1));
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CreateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
@@ -823,22 +807,13 @@ void CreateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
   //! [START pubsub_create_proto_schema] [create-protobuf-schema]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id) {
-    auto constexpr kDefinition = R"pfile(
-        syntax = "proto3";
-        package google.cloud.pubsub.samples;
-
-        message State {
-          string name = 1;
-          string post_abbr = 2;
-        }
-        )pfile";
+     std::string const& schema_id, std::string const& schema_definition) {
     google::pubsub::v1::CreateSchemaRequest request;
     request.set_parent(google::cloud::Project(project_id).FullName());
     request.set_schema_id(schema_id);
     request.mutable_schema()->set_type(
         google::pubsub::v1::Schema::PROTOCOL_BUFFER);
-    request.mutable_schema()->set_definition(kDefinition);
+    request.mutable_schema()->set_definition(schema_definition);
     auto schema = client.CreateSchema(request);
     if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The schema already exists\n";
@@ -849,7 +824,7 @@ void CreateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
               << "\n";
   }
   //! [END pubsub_create_proto_schema] [create-protobuf-schema]
-  (std::move(client), argv.at(0), argv.at(1));
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void GetSchema(google::cloud::pubsub::SchemaServiceClient client,
@@ -912,87 +887,45 @@ void ValidateAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
                         std::vector<std::string> const& argv) {
   //! [validate-avro-schema]
   namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id) {
-    auto constexpr kDefinition = R"js({
-      "type": "record",
-      "name": "State",
-      "namespace": "utilities",
-      "doc": "A list of states in the United States of America.",
-      "fields": [
-        {
-          "name": "name",
-          "type": "string",
-          "doc": "The common name of the state."
-        },
-        {
-          "name": "post_abbr",
-          "type": "string",
-          "doc": "The postal code abbreviation of the state."
-        }
-      ]
-    })js";
+  [](pubsub::SchemaServiceClient client, std::string const& project_id,
+     std::string const& schema_definition) {
     google::pubsub::v1::ValidateSchemaRequest request;
     request.set_parent(google::cloud::Project(project_id).FullName());
     request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
-    request.mutable_schema()->set_definition(kDefinition);
+    request.mutable_schema()->set_definition(schema_definition);
     auto schema = client.ValidateSchema(request);
     if (!schema) throw std::move(schema).status();
     std::cout << "Schema is valid\n";
   }
   //! [validate-avro-schema]
-  (std::move(client), argv.at(0));
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void ValidateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
                             std::vector<std::string> const& argv) {
   //! [validate-protobuf-schema]
   namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id) {
-    auto constexpr kDefinition = R"pfile(
-        syntax = "proto3";
-        package google.cloud.pubsub.samples;
-
-        message State {
-          string name = 1;
-          string post_abbr = 2;
-        }
-        )pfile";
+  [](pubsub::SchemaServiceClient client, std::string const& project_id,
+     std::string const& schema_definition) {
     google::pubsub::v1::ValidateSchemaRequest request;
     request.set_parent(google::cloud::Project(project_id).FullName());
     request.mutable_schema()->set_type(
         google::pubsub::v1::Schema::PROTOCOL_BUFFER);
-    request.mutable_schema()->set_definition(kDefinition);
+    request.mutable_schema()->set_definition(schema_definition);
     auto schema = client.ValidateSchema(request);
     if (!schema) throw std::move(schema).status();
     std::cout << "Schema is valid\n";
   }
   //! [validate-protobuf-schema]
-  (std::move(client), argv.at(0));
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void ValidateMessageAvro(google::cloud::pubsub::SchemaServiceClient client,
                          std::vector<std::string> const& argv) {
   //! [validate-message-avro]
   namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id) {
-    auto constexpr kDefinition = R"js({
-      "type": "record",
-      "name": "State",
-      "namespace": "google.cloud.pubsub.samples",
-      "doc": "A list of states in the United States of America.",
-      "fields": [
-        {
-          "name": "name",
-          "type": "string",
-          "doc": "The common name of the state."
-        },
-        {
-          "name": "post_abbr",
-          "type": "string",
-          "doc": "The postal code abbreviation of the state."
-        }
-      ]
-    })js";
+  [](pubsub::SchemaServiceClient client, std::string const& project_id,
+     std::string const& schema_definition) {
     auto constexpr kMessage = R"js({
           "name": "New York",
           "post_abbr": "NY"
@@ -1000,7 +933,7 @@ void ValidateMessageAvro(google::cloud::pubsub::SchemaServiceClient client,
     google::pubsub::v1::ValidateMessageRequest request;
     request.set_parent(google::cloud::Project(project_id).FullName());
     request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
-    request.mutable_schema()->set_definition(kDefinition);
+    request.mutable_schema()->set_definition(schema_definition);
     request.set_message(kMessage);
     request.set_encoding(google::pubsub::v1::JSON);
     auto response = client.ValidateMessage(request);
@@ -1008,33 +941,25 @@ void ValidateMessageAvro(google::cloud::pubsub::SchemaServiceClient client,
     std::cout << "Message is valid\n";
   }
   //! [validate-message-avro]
-  (std::move(client), argv.at(0));
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void ValidateMessageProtobuf(google::cloud::pubsub::SchemaServiceClient client,
                              std::vector<std::string> const& argv) {
   //! [validate-message-protobuf]
   namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id) {
+  [](pubsub::SchemaServiceClient client, std::string const& project_id,
+     std::string const& schema_definition) {
     google::cloud::pubsub::samples::State data;
     data.set_name("New York");
     data.set_post_abbr("NY");
     auto const message = data.SerializeAsString();
-    auto constexpr kDefinition = R"pfile(
-        syntax = "proto3";
-        package google.cloud.pubsub.samples;
-
-        message State {
-          string name = 1;
-          string post_abbr = 2;
-        }
-    )pfile";
 
     google::pubsub::v1::ValidateMessageRequest request;
     request.set_parent(google::cloud::Project(project_id).FullName());
     request.mutable_schema()->set_type(
         google::pubsub::v1::Schema::PROTOCOL_BUFFER);
-    request.mutable_schema()->set_definition(kDefinition);
+    request.mutable_schema()->set_definition(schema_definition);
     request.set_message(message);
     request.set_encoding(google::pubsub::v1::BINARY);
     auto response = client.ValidateMessage(request);
@@ -1042,7 +967,7 @@ void ValidateMessageProtobuf(google::cloud::pubsub::SchemaServiceClient client,
     std::cout << "Schema is valid\n";
   }
   //! [validate-message-protobuf]
-  (std::move(client), argv.at(0));
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void ValidateMessageNamedSchema(
@@ -1965,16 +1890,22 @@ void AutoRunAvro(
   auto schema_admin = google::cloud::pubsub::SchemaServiceClient(
       google::cloud::pubsub::MakeSchemaServiceConnection());
   auto avro_schema_id = RandomSchemaId(generator);
+  auto avro_schema_definition = DefaultAvroSchemaDefinition();
   std::cout << "\nRunning CreateAvroSchema() sample" << std::endl;
-  CreateAvroSchema(schema_admin, {project_id, avro_schema_id});
+  CreateAvroSchema(schema_admin,
+                   {project_id, avro_schema_id, avro_schema_definition});
+
+  std::cout << "\nRunning ValidateAvroSchema() sample" << std::endl;
+  ValidateAvroSchema(schema_admin, {project_id, avro_schema_definition});
+
+  std::cout << "\nRunning ValidateAvroMessage() sample" << std::endl;
+  ValidateMessageAvro(schema_admin, {project_id, avro_schema_definition});
 
   std::cout << "\nRunning GetSchema sample" << std::endl;
   GetSchema(schema_admin, {project_id, avro_schema_id});
+
   std::cout << "\nRunning ListSchemas() sample" << std::endl;
   ListSchemas(schema_admin, {project_id});
-
-  std::cout << "\nRunning ValidateAvroMessage() sample" << std::endl;
-  ValidateMessageAvro(schema_admin, {project_id});
 
   std::cout << "\nRunning CreateTopicWithSchema() sample [avro]" << std::endl;
   auto const avro_topic_id = RandomTopicId(generator);
@@ -2023,16 +1954,18 @@ void AutoRunProtobuf(
     google::cloud::pubsub::SubscriptionAdminClient& subscription_admin_client) {
   auto schema_admin = google::cloud::pubsub::SchemaServiceClient(
       google::cloud::pubsub::MakeSchemaServiceConnection());
+  auto proto_schema_id = RandomSchemaId(generator);
+  auto proto_schema_definition = DefaultProtoSchemaDefinition();
+
+  std::cout << "\nRunning CreateProtobufSchema() sample" << std::endl;
+  CreateProtobufSchema(schema_admin,
+                       {project_id, proto_schema_id, proto_schema_definition});
 
   std::cout << "\nRunning ValidateProtobufSchema() sample" << std::endl;
-  ValidateProtobufSchema(schema_admin, {project_id});
+  ValidateProtobufSchema(schema_admin, {project_id, proto_schema_definition});
 
   std::cout << "\nRunning ValidateProtobufMessage() sample" << std::endl;
-  ValidateMessageProtobuf(schema_admin, {project_id});
-
-  auto proto_schema_id = RandomSchemaId(generator);
-  std::cout << "\nRunning CreateProtobufSchema() sample" << std::endl;
-  CreateProtobufSchema(schema_admin, {project_id, proto_schema_id});
+  ValidateMessageProtobuf(schema_admin, {project_id, proto_schema_definition});
 
   std::cout << "\nRunning ValidateMessageNamed() sample" << std::endl;
   ValidateMessageNamedSchema(schema_admin, {project_id, proto_schema_id});
@@ -2540,23 +2473,29 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           "seek-with-timestamp", {"project-id", "subscription-id", "seconds"},
           SeekWithTimestamp),
 
-      CreateSchemaServiceCommand("create-avro-schema",
-                                 {"project-id", "schema-id"}, CreateAvroSchema),
-      CreateSchemaServiceCommand("create-protobuf-schema",
-                                 {"project-id", "schema-id"},
-                                 CreateProtobufSchema),
+      CreateSchemaServiceCommand(
+          "create-avro-schema",
+          {"project-id", "schema-id", "schema-definition"}, CreateAvroSchema),
+      CreateSchemaServiceCommand(
+          "create-protobuf-schema",
+          {"project-id", "schema-id", "schema-definition"},
+          CreateProtobufSchema),
       CreateSchemaServiceCommand("get-schema", {"project-id", "schema-id"},
                                  GetSchema),
       CreateSchemaServiceCommand("list-schemas", {"project-id"}, ListSchemas),
       CreateSchemaServiceCommand("delete-schema", {"project-id", "schema-id"},
                                  DeleteSchema),
-      CreateSchemaServiceCommand("validate-avro-schema", {"project-id"},
+      CreateSchemaServiceCommand("validate-avro-schema",
+                                 {"project-id", "schema-definition"},
                                  ValidateAvroSchema),
-      CreateSchemaServiceCommand("validate-protobuf-schema", {"project-id"},
+      CreateSchemaServiceCommand("validate-protobuf-schema",
+                                 {"project-id", "schema-definition"},
                                  ValidateProtobufSchema),
-      CreateSchemaServiceCommand("validate-message-avro", {"project-id"},
+      CreateSchemaServiceCommand("validate-message-avro",
+                                 {"project-id", "schema-definition"},
                                  ValidateMessageAvro),
-      CreateSchemaServiceCommand("validate-message-protobuf", {"project-id"},
+      CreateSchemaServiceCommand("validate-message-protobuf",
+                                 {"project-id", "schema-definition"},
                                  ValidateMessageProtobuf),
       CreateSchemaServiceCommand("validate-message-named-schema",
                                  {"project-id", "schema-id"},

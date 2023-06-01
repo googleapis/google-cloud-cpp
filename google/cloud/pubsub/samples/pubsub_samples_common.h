@@ -76,6 +76,10 @@ std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator);
 
 std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator);
 
+std::string DefaultAvroSchemaDefinition();
+
+std::string DefaultProtoSchemaDefinition();
+
 }  // namespace examples
 }  // namespace pubsub
 }  // namespace cloud
