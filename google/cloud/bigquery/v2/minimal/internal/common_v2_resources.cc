@@ -206,7 +206,7 @@ void from_json(nlohmann::json const& j, Value& v) {
         v.value_kind = j.at("value_kind").get<std::vector<Value>>();
         break;
       default:
-        GCP_LOG(ERROR) << "Invalid kind_idex for Value: " << index;
+        GCP_LOG(FATAL) << "Invalid kind_index for Value: " << index;
         break;
     }
   }
