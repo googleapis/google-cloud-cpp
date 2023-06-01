@@ -119,6 +119,8 @@ info, see [#7463] and [#5976].
 
 </details>
 
+## v2.12.0 - TBD
+
 ## v2.11.0 - 2023-06
 
 ### New Libraries
