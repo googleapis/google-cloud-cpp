@@ -32,7 +32,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::CurrentOptions;
-using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
@@ -48,6 +47,13 @@ auto match_binding = [](NativeIamBinding const& b) {
       Property(&NativeIamBinding::members, ElementsAreArray(b.members())),
       Property(&NativeIamBinding::has_condition, b.has_condition()));
 };
+
+Status PermanentError() {
+  // We need an error code different from `kInvalidArgument` as this is used
+  // by `storage_internal::RequestProjectId()`. Some of the tests could be
+  // testing the wrong thing if we used the same value.
+  return Status(StatusCode::kPermissionDenied, "uh-oh");
+}
 
 /**
  * Test the functions in Storage::Client related to 'Buckets: *'.
@@ -70,8 +76,6 @@ TEST_F(BucketTest, ListBucketsNoProject) {
   auto actual = client.ListBuckets(Options{});
   std::vector<StatusOr<BucketMetadata>> list{actual.begin(), actual.end()};
   EXPECT_THAT(list, ElementsAre(StatusIs(StatusCode::kInvalidArgument)));
-  // Ensure the errors are coming from the right source.
-  EXPECT_NE(PermanentError().code(), StatusCode::kInvalidArgument);
 }
 
 TEST_F(BucketTest, ListBucketsProjectFromConnectionOptions) {
@@ -90,7 +94,7 @@ TEST_F(BucketTest, ListBucketsProjectFromConnectionOptions) {
       google::cloud::storage::testing::UndecoratedClientFromMock(mock);
   auto actual = client.ListBuckets(Options{});
   std::vector<StatusOr<BucketMetadata>> list{actual.begin(), actual.end()};
-  EXPECT_THAT(list, ElementsAre(StatusIs(PermanentError().code())));
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
 }
 
 TEST_F(BucketTest, ListBucketsProjectFromEnv) {
@@ -109,7 +113,7 @@ TEST_F(BucketTest, ListBucketsProjectFromEnv) {
       google::cloud::storage::testing::UndecoratedClientFromMock(mock);
   auto actual = client.ListBuckets(Options{});
   std::vector<StatusOr<BucketMetadata>> list{actual.begin(), actual.end()};
-  EXPECT_THAT(list, ElementsAre(StatusIs(PermanentError().code())));
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
 }
 
 TEST_F(BucketTest, ListBucketsProjectFromCallOptions) {
@@ -129,7 +133,7 @@ TEST_F(BucketTest, ListBucketsProjectFromCallOptions) {
   auto actual =
       client.ListBuckets(Options{}.set<ProjectIdOption>("call-project-id"));
   std::vector<StatusOr<BucketMetadata>> list{actual.begin(), actual.end()};
-  EXPECT_THAT(list, ElementsAre(StatusIs(PermanentError().code())));
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
 }
 
 TEST_F(BucketTest, ListBucketsProjectFromOverride) {
@@ -150,7 +154,7 @@ TEST_F(BucketTest, ListBucketsProjectFromOverride) {
       client.ListBuckets(OverrideDefaultProject("override-project-id"),
                          Options{}.set<ProjectIdOption>("call-project-id"));
   std::vector<StatusOr<BucketMetadata>> list{actual.begin(), actual.end()};
-  EXPECT_THAT(list, ElementsAre(StatusIs(PermanentError().code())));
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
 }
 
 TEST_F(BucketTest, ListBucketsForProject) {
@@ -172,7 +176,7 @@ TEST_F(BucketTest, ListBucketsForProject) {
       OverrideDefaultProject("override-project-id"),
       Options{}.set<ProjectIdOption>("call-project-id"));
   std::vector<StatusOr<BucketMetadata>> list{actual.begin(), actual.end()};
-  EXPECT_THAT(list, ElementsAre(StatusIs(PermanentError().code())));
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
 }
 
 TEST_F(BucketTest, CreateBucket) {

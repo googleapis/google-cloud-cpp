@@ -38,11 +38,9 @@ template <typename... RequestOptions>
 StatusOr<std::string> GetOverrideDefaultProjectImpl(
     internal::ErrorInfoBuilder ei, storage::OverrideDefaultProject const& o,
     RequestOptions&&... ro) {
-  if (!o.has_value()) {
-    return GetOverrideDefaultProject(std::move(ei),
-                                     std::forward<RequestOptions>(ro)...);
-  }
-  return o.value();
+  if (o.has_value()) return o.value();
+  return GetOverrideDefaultProject(std::move(ei),
+                                   std::forward<RequestOptions>(ro)...);
 }
 
 template <typename O, typename... RequestOptions>
@@ -65,7 +63,7 @@ StatusOr<std::string> GetOverrideDefaultProject(internal::ErrorInfoBuilder ei,
  * Some RPCs in GCS need a project id, and use the default configured via the
  * `google::cloud::Options` configured in the client. Before we introduced
  * per-call `Options` parameters GCS had "request options" as a variadic
- * list of template arguments. One of request options could be of type
+ * list of template arguments. One of the request options could be of type
  * `OverrideDefaultProject` and override the default. And then we introduced
  * the per-call `Options`.
  *

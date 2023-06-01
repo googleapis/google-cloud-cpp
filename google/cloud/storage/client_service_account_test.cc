@@ -31,13 +31,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::CurrentOptions;
-using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Property;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
+
+Status PermanentError() {
+  // We need an error code different from `kInvalidArgument` as this is used
+  // by `storage_internal::RequestProjectId()`. Some of the tests could be
+  // testing the wrong thing if we used the same value.
+  return Status(StatusCode::kPermissionDenied, "uh-oh");
+}
 
 /**
  * Test the Projects.serviceAccount-related functions in storage::Client.
@@ -131,10 +137,8 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccountProjectFromCallOptions) {
       .WillOnce(Return(PermanentError()));
   auto client =
       google::cloud::storage::testing::UndecoratedClientFromMock(mock);
-  auto actual =
-      client.GetServiceAccount(Options{}
-
-                                   .set<ProjectIdOption>("call-project-id"));
+  auto actual = client.GetServiceAccount(
+      Options{}.set<ProjectIdOption>("call-project-id"));
 }
 
 TEST_F(ServiceAccountTest, GetProjectServiceAccountProjectFromOverride) {
@@ -151,11 +155,9 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccountProjectFromOverride) {
       .WillOnce(Return(PermanentError()));
   auto client =
       google::cloud::storage::testing::UndecoratedClientFromMock(mock);
-  auto actual =
-      client.GetServiceAccount(OverrideDefaultProject("override-project-id"),
-                               Options{}
-
-                                   .set<ProjectIdOption>("call-project-id"));
+  auto actual = client.GetServiceAccount(
+      OverrideDefaultProject("override-project-id"),
+      Options{}.set<ProjectIdOption>("call-project-id"));
 }
 
 TEST_F(ServiceAccountTest, GetProjectServiceAccountTooManyFailures) {
@@ -207,7 +209,7 @@ TEST_F(ServiceAccountTest, ListHmacKeysProjectFromConnectionOptions) {
       google::cloud::storage::testing::UndecoratedClientFromMock(mock);
   auto actual = client.ListHmacKeys(Options{});
   std::vector<StatusOr<HmacKeyMetadata>> list{actual.begin(), actual.end()};
-  EXPECT_THAT(list, ElementsAre(StatusIs(PermanentError().code())));
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
 }
 
 TEST_F(ServiceAccountTest, ListHmacKeysProjectFromEnv) {
@@ -226,7 +228,7 @@ TEST_F(ServiceAccountTest, ListHmacKeysProjectFromEnv) {
       google::cloud::storage::testing::UndecoratedClientFromMock(mock);
   auto actual = client.ListHmacKeys(Options{});
   std::vector<StatusOr<HmacKeyMetadata>> list{actual.begin(), actual.end()};
-  EXPECT_THAT(list, ElementsAre(StatusIs(PermanentError().code())));
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
 }
 
 TEST_F(ServiceAccountTest, ListHmacKeysProjectFromCallOptions) {
@@ -246,7 +248,7 @@ TEST_F(ServiceAccountTest, ListHmacKeysProjectFromCallOptions) {
   auto actual =
       client.ListHmacKeys(Options{}.set<ProjectIdOption>("call-project-id"));
   std::vector<StatusOr<HmacKeyMetadata>> list{actual.begin(), actual.end()};
-  EXPECT_THAT(list, ElementsAre(StatusIs(PermanentError().code())));
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
 }
 
 TEST_F(ServiceAccountTest, ListHmacKeysProjectFromOverride) {
@@ -267,7 +269,7 @@ TEST_F(ServiceAccountTest, ListHmacKeysProjectFromOverride) {
       client.ListHmacKeys(OverrideDefaultProject("override-project-id"),
                           Options{}.set<ProjectIdOption>("call-project-id"));
   std::vector<StatusOr<HmacKeyMetadata>> list{actual.begin(), actual.end()};
-  EXPECT_THAT(list, ElementsAre(StatusIs(PermanentError().code())));
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
 }
 
 TEST_F(ServiceAccountTest, CreateHmacKeyNoProject) {
