@@ -15,6 +15,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
@@ -205,6 +206,7 @@ void from_json(nlohmann::json const& j, Value& v) {
         v.value_kind = j.at("value_kind").get<std::vector<Value>>();
         break;
       default:
+        GCP_LOG(ERROR) << "Invalid kind_idex for Value: " << index;
         break;
     }
   }
@@ -233,15 +235,11 @@ bool operator==(StandardSqlStructType const& lhs,
 }
 
 bool operator==(StandardSqlField const& lhs, StandardSqlField const& rhs) {
-  auto eq_name = (lhs.name == rhs.name);
-  auto eq_type = ((lhs.type == nullptr) && (rhs.type == nullptr));
-  if (eq_type) return eq_name;
-
+  auto const eq_name = (lhs.name == rhs.name);
   if (lhs.type != nullptr && rhs.type != nullptr) {
-    return (*lhs.type == *rhs.type);
+    return eq_name && (*lhs.type == *rhs.type);
   }
-
-  return false;
+  return eq_name && lhs.type == nullptr && rhs.type == nullptr;
 }
 
 bool operator==(StandardSqlDataType const& lhs,
