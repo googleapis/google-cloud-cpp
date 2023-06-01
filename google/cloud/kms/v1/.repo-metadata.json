@@ -1,7 +1,7 @@
 {
     "api_id": "cloudkms.googleapis.com",
     "api_shortname": "cloudkms",
-    "client_documentation": "https://cloud.google.com/cpp/reference/kms/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/kms/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/5264932",
     "language": "cpp",

@@ -1,7 +1,7 @@
 {
     "api_id": "cloudtasks.googleapis.com",
     "api_shortname": "cloudtasks",
-    "client_documentation": "https://cloud.google.com/cpp/reference/tasks/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/tasks/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/5433985",
     "language": "cpp",

@@ -1,7 +1,7 @@
 {
     "api_id": "videointelligence.googleapis.com",
     "api_shortname": "videointelligence",
-    "client_documentation": "https://cloud.google.com/cpp/reference/videointelligence/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/videointelligence/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/5084810",
     "language": "cpp",

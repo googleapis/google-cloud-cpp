@@ -1,7 +1,7 @@
 {
     "api_id": "jobs.googleapis.com",
     "api_shortname": "jobs",
-    "client_documentation": "https://cloud.google.com/cpp/reference/talent/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/talent/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/559664",
     "language": "cpp",

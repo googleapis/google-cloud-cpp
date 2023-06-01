@@ -1,7 +1,7 @@
 {
     "api_id": "cloudshell.googleapis.com",
     "api_shortname": "cloudshell",
-    "client_documentation": "https://cloud.google.com/cpp/reference/shell/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/shell/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/559766",
     "language": "cpp",

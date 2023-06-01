@@ -1,7 +1,7 @@
 {
     "api_id": "pubsub.googleapis.com",
     "api_shortname": "pubsub",
-    "client_documentation": "https://cloud.google.com/cpp/reference/pubsub/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/pubsub/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/559741",
     "language": "cpp",

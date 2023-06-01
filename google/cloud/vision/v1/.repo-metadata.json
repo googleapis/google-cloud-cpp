@@ -1,7 +1,7 @@
 {
     "api_id": "vision.googleapis.com",
     "api_shortname": "vision",
-    "client_documentation": "https://cloud.google.com/cpp/reference/vision/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/vision/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/559765",
     "language": "cpp",

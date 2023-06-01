@@ -1,7 +1,7 @@
 {
     "api_id": "file.googleapis.com",
     "api_shortname": "file",
-    "client_documentation": "https://cloud.google.com/cpp/reference/filestore/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/filestore/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/5302135",
     "language": "cpp",

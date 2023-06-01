@@ -1,7 +1,7 @@
 {
     "api_id": "clouddebugger.googleapis.com",
     "api_shortname": "clouddebugger",
-    "client_documentation": "https://cloud.google.com/cpp/reference/debugger/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/debugger/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/559771",
     "language": "cpp",

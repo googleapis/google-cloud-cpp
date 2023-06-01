@@ -1,7 +1,7 @@
 {
     "api_id": "billingbudgets.googleapis.com",
     "api_shortname": "billingbudgets",
-    "client_documentation": "https://cloud.google.com/cpp/reference/billing/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/billing/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/559770",
     "language": "cpp",

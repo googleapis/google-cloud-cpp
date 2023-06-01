@@ -1,7 +1,7 @@
 {
     "api_id": "artifactregistry.googleapis.com",
     "api_shortname": "artifactregistry",
-    "client_documentation": "https://cloud.google.com/cpp/reference/artifactregistry/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/artifactregistry/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/559742",
     "language": "cpp",

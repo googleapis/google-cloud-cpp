@@ -1,7 +1,7 @@
 {
     "api_id": "kmsinventory.googleapis.com",
     "api_shortname": "kmsinventory",
-    "client_documentation": "https://cloud.google.com/cpp/reference/kms/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/kms/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:190860%20status=open",
     "language": "cpp",

@@ -1,7 +1,7 @@
 {
     "api_id": "automl.googleapis.com",
     "api_shortname": "automl",
-    "client_documentation": "https://cloud.google.com/cpp/reference/automl/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/automl/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:1130925%2B%20status:open",
     "language": "cpp",

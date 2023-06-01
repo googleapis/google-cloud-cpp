@@ -1,7 +1,7 @@
 {
     "api_id": "clouddeploy.googleapis.com",
     "api_shortname": "clouddeploy",
-    "client_documentation": "https://cloud.google.com/cpp/reference/deploy/latest",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/deploy/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/6100813",
     "language": "cpp",
