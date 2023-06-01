@@ -36,6 +36,7 @@ google_cloud_cpp_bigquery_rest_hdrs = [
     "v2/minimal/internal/job.h",
     "v2/minimal/internal/job_client.h",
     "v2/minimal/internal/job_configuration.h",
+    "v2/minimal/internal/job_configuration_query.h",
     "v2/minimal/internal/job_connection.h",
     "v2/minimal/internal/job_idempotency_policy.h",
     "v2/minimal/internal/job_logging.h",

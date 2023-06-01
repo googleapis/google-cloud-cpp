@@ -15,6 +15,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
@@ -79,6 +80,176 @@ void from_json(nlohmann::json const& j, QueryParameterValue& q) {
   if (j.contains("struct_values"))
     j.at("struct_values").get_to(q.struct_values);
 }
+
+void to_json(nlohmann::json& j, StandardSqlField const& f) {
+  if (f.type != nullptr) {
+    j = nlohmann::json{{"name", f.name}, {"type", *f.type}};
+  } else {
+    j = nlohmann::json{{"name", f.name}};
+  }
+}
+
+void from_json(nlohmann::json const& j, StandardSqlField& f) {
+  if (j.contains("name")) j.at("name").get_to(f.name);
+  if (f.type == nullptr) {
+    f.type = std::make_shared<StandardSqlDataType>();
+  }
+  if (j.contains("type")) j.at("type").get_to(*f.type);
+}
+
+void to_json(nlohmann::json& j, StandardSqlStructType const& t) {
+  j = nlohmann::json{{"fields", t.fields}};
+}
+
+void from_json(nlohmann::json const& j, StandardSqlStructType& t) {
+  if (j.contains("fields")) j.at("fields").get_to(t.fields);
+}
+
+void to_json(nlohmann::json& j, StandardSqlDataType const& t) {
+  if (t.sub_type.valueless_by_exception()) {
+    j = nlohmann::json{{"type_kind", t.type_kind}};
+    return;
+  }
+
+  struct Visitor {
+    TypeKind type_kind;
+    nlohmann::json& j;
+
+    void operator()(absl::monostate const&) {
+      j = nlohmann::json{{"type_kind", std::move(type_kind)}};
+    }
+    void operator()(std::shared_ptr<StandardSqlDataType> const& type) {
+      j = nlohmann::json{{"type_kind", std::move(type_kind)},
+                         {"sub_type", *type},
+                         {"sub_type_index", 1}};
+    }
+    void operator()(StandardSqlStructType const& type) {
+      j = nlohmann::json{{"type_kind", std::move(type_kind)},
+                         {"sub_type", type},
+                         {"sub_type_index", 2}};
+    }
+  };
+
+  absl::visit(Visitor{t.type_kind, j}, t.sub_type);
+}
+
+void from_json(nlohmann::json const& j, StandardSqlDataType& t) {
+  if (j.contains("type_kind")) j.at("type_kind").get_to(t.type_kind);
+  if (j.contains("sub_type_index") && j.contains("sub_type")) {
+    auto const index = j.at("sub_type_index").get<int>();
+    switch (index) {
+      case 1:
+        t.sub_type = std::make_shared<StandardSqlDataType>(
+            j.at("sub_type").get<StandardSqlDataType>());
+        break;
+      case 2:
+        t.sub_type = j.at("sub_type").get<StandardSqlStructType>();
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+void to_json(nlohmann::json& j, Value const& v) {
+  if (v.value_kind.valueless_by_exception()) {
+    return;
+  }
+
+  struct Visitor {
+    nlohmann::json& j;
+
+    void operator()(absl::monostate const&) {
+      // Nothing to do.
+    }
+    void operator()(double const& val) {
+      j = nlohmann::json{{"value_kind", val}, {"kind_index", 1}};
+    }
+    void operator()(std::string const& val) {
+      j = nlohmann::json{{"value_kind", val}, {"kind_index", 2}};
+    }
+    void operator()(bool const& val) {
+      j = nlohmann::json{{"value_kind", val}, {"kind_index", 3}};
+    }
+    void operator()(std::shared_ptr<Struct> const& val) {
+      j = nlohmann::json{{"value_kind", *val}, {"kind_index", 4}};
+    }
+    void operator()(std::vector<Value> const& val) {
+      j = nlohmann::json{{"value_kind", val}, {"kind_index", 5}};
+    }
+  };
+
+  absl::visit(Visitor{j}, v.value_kind);
+}
+
+void from_json(nlohmann::json const& j, Value& v) {
+  if (j.contains("kind_index") && j.contains("value_kind")) {
+    auto const index = j.at("kind_index").get<int>();
+    switch (index) {
+      case 0:
+        // Do not set any value
+        break;
+      case 1:
+        v.value_kind = j.at("value_kind").get<double>();
+        break;
+      case 2:
+        v.value_kind = j.at("value_kind").get<std::string>();
+        break;
+      case 3:
+        v.value_kind = j.at("value_kind").get<bool>();
+        break;
+      case 4:
+        v.value_kind =
+            std::make_shared<Struct>(j.at("value_kind").get<Struct>());
+        break;
+      case 5:
+        v.value_kind = j.at("value_kind").get<std::vector<Value>>();
+        break;
+      default:
+        GCP_LOG(FATAL) << "Invalid kind_index for Value: " << index;
+        break;
+    }
+  }
+}
+
+void to_json(nlohmann::json& j, Struct const& s) {
+  j = nlohmann::json{{"fields", s.fields}};
+}
+
+void from_json(nlohmann::json const& j, Struct& s) {
+  if (j.contains("fields")) j.at("fields").get_to(s.fields);
+}
+
+void to_json(nlohmann::json& j, SystemVariables const& s) {
+  j = nlohmann::json{{"types", s.types}, {"values", s.values}};
+}
+
+void from_json(nlohmann::json const& j, SystemVariables& s) {
+  if (j.contains("types")) j.at("types").get_to(s.types);
+  if (j.contains("values")) j.at("values").get_to(s.values);
+}
+
+bool operator==(StandardSqlStructType const& lhs,
+                StandardSqlStructType const& rhs) {
+  return std::equal(lhs.fields.begin(), lhs.fields.end(), rhs.fields.begin());
+}
+
+bool operator==(StandardSqlField const& lhs, StandardSqlField const& rhs) {
+  auto const eq_name = (lhs.name == rhs.name);
+  if (lhs.type != nullptr && rhs.type != nullptr) {
+    return eq_name && (*lhs.type == *rhs.type);
+  }
+  return eq_name && lhs.type == nullptr && rhs.type == nullptr;
+}
+
+bool operator==(StandardSqlDataType const& lhs,
+                StandardSqlDataType const& rhs) {
+  return (lhs.type_kind.value == rhs.type_kind.value);
+}
+
+bool operator==(Value const& lhs, Value const& rhs) {
+  return (lhs.value_kind == rhs.value_kind);
+}
 // NOLINTEND
 
 RoundingMode RoundingMode::UnSpecified() {
@@ -92,6 +263,52 @@ RoundingMode RoundingMode::RoundHalfAwayFromZero() {
 RoundingMode RoundingMode::RoundHalfEven() {
   return RoundingMode{"ROUND_HALF_EVEN"};
 }
+
+KeyResultStatementKind KeyResultStatementKind::UnSpecified() {
+  return KeyResultStatementKind{"KEY_RESULT_STATEMENT_KIND_UNSPECIFIED"};
+}
+
+KeyResultStatementKind KeyResultStatementKind::Last() {
+  return KeyResultStatementKind{"LAST"};
+}
+
+KeyResultStatementKind KeyResultStatementKind::FirstSelect() {
+  return KeyResultStatementKind{"FIRST_SELECT"};
+}
+
+TypeKind TypeKind::UnSpecified() { return TypeKind{"TYPE_KIND_UNSPECIFIED"}; }
+
+TypeKind TypeKind::Int64() { return TypeKind{"INT64"}; }
+
+TypeKind TypeKind::Bool() { return TypeKind{"BOOL"}; }
+
+TypeKind TypeKind::Float64() { return TypeKind{"FLOAT64"}; }
+
+TypeKind TypeKind::String() { return TypeKind{"STRING"}; }
+
+TypeKind TypeKind::Bytes() { return TypeKind{"BYTES"}; }
+
+TypeKind TypeKind::Timestamp() { return TypeKind{"TIMESTAMP"}; }
+
+TypeKind TypeKind::Date() { return TypeKind{"DATE"}; }
+
+TypeKind TypeKind::Time() { return TypeKind{"TIME"}; }
+
+TypeKind TypeKind::DateTime() { return TypeKind{"DATETIME"}; }
+
+TypeKind TypeKind::Interval() { return TypeKind{"INTERVAL"}; }
+
+TypeKind TypeKind::Geography() { return TypeKind{"GEOGRAPHY"}; }
+
+TypeKind TypeKind::Numeric() { return TypeKind{"NUMERIC"}; }
+
+TypeKind TypeKind::BigNumeric() { return TypeKind{"BIGNUMERIC"}; }
+
+TypeKind TypeKind::Json() { return TypeKind{"JSON"}; }
+
+TypeKind TypeKind::Array() { return TypeKind{"ARRAY"}; }
+
+TypeKind TypeKind::Struct() { return TypeKind{"STRUCT"}; }
 
 std::string ErrorProto::DebugString(absl::string_view name,
                                     TracingOptions const& options,

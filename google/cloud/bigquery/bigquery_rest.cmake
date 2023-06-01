@@ -51,6 +51,7 @@ add_library(
     v2/minimal/internal/job_client.cc
     v2/minimal/internal/job_client.h
     v2/minimal/internal/job_configuration.h
+    v2/minimal/internal/job_configuration_query.h
     v2/minimal/internal/job_connection.cc
     v2/minimal/internal/job_connection.h
     v2/minimal/internal/job_idempotency_policy.cc
@@ -198,6 +199,8 @@ function (bigquery_rest_define_tests)
     target_sources(
         bigquery_rest_testing
         INTERFACE
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/common_v2_test_utils.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/common_v2_test_utils.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/metadata_test_utils.cc
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/metadata_test_utils.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_dataset_rest_stub.h
