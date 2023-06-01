@@ -46,6 +46,14 @@ std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,
   return prefix + testing::MakeRandomObjectName(gen);
 }
 
+google::cloud::Options CreateBucketOptions() {
+  // Projects cannot create more than 1 bucket every 2 seconds. We want a
+  // more aggressive backoff than usual when the CreateBucket() operation fails.
+  auto const backoff = ExponentialBackoffPolicy(std::chrono::seconds(4),
+                                                std::chrono::minutes(5), 2.0);
+  return google::cloud::Options{}.set<BackoffPolicyOption>(backoff.clone());
+}
+
 Commands::value_type CreateCommandEntry(
     std::string const& name, std::vector<std::string> const& arg_names,
     ClientCommand const& command) {
