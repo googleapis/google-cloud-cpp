@@ -278,7 +278,8 @@ void RunAll(std::vector<std::string> const& argv) {
       client
           .CreateBucketForProject(
               bucket_name, project_id,
-              gcs::BucketMetadata{}.set_iam_configuration(iam_configuration()))
+              gcs::BucketMetadata{}.set_iam_configuration(iam_configuration()),
+              examples::CreateBucketOptions())
           .value();
   // In GCS a single project cannot create or delete buckets more often than
   // once every two seconds. We will pause until that time before deleting the

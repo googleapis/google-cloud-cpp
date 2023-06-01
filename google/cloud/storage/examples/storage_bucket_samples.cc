@@ -572,7 +572,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const bucket_name = examples::MakeRandomBucketName(generator);
   auto const rpo_bucket_name = examples::MakeRandomBucketName(generator);
   auto const dual_bucket_name = examples::MakeRandomBucketName(generator);
-  auto client = gcs::Client();
+  auto client = gcs::Client(examples::CreateBucketOptions());
 
   // This is the only example that cleans up stale buckets. The examples run in
   // parallel (within a build and across the builds), having multiple examples

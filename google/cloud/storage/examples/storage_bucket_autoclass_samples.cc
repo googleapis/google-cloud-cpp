@@ -99,13 +99,15 @@ void RunAll(std::vector<std::string> const& argv) {
   (void)client
       .CreateBucketForProject(
           bucket_name_enabled, project_id,
-          gcs::BucketMetadata{}.set_autoclass(gcs::BucketAutoclass{true}))
+          gcs::BucketMetadata{}.set_autoclass(gcs::BucketAutoclass{true}),
+          examples::CreateBucketOptions())
       .value();
   if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
   (void)client
       .CreateBucketForProject(
           bucket_name_disabled, project_id,
-          gcs::BucketMetadata{}.set_autoclass(gcs::BucketAutoclass{false}))
+          gcs::BucketMetadata{}.set_autoclass(gcs::BucketAutoclass{false}),
+          examples::CreateBucketOptions())
       .value();
   auto const pause = std::chrono::steady_clock::now() + kBucketPeriod;
 
