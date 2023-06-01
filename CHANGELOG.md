@@ -119,7 +119,7 @@ info, see [#7463] and [#5976].
 
 </details>
 
-## v2.11.0 - TBD
+## v2.11.0 - 2023-06
 
 ### New Libraries
 
@@ -128,10 +128,52 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Cloud Support API](/google/cloud/support/README.md)
 
+The following experimental libraries are now available:
+
+- [Compute Engine API](/google/cloud/compute/README.md)
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- docs(bigtable): async Table APIs are stable ([#11711](https://github.com/googleapis/google-cloud-cpp/pull/11711))
+- doc(bigtable): deprecate DataClient in doxygen ([#11550](https://github.com/googleapis/google-cloud-cpp/pull/11550))
+
+### [Cloud Asset](/google/cloud/asset/README.md)
+
+The library has been re-enabled on Windows. See
+[#11714](https://github.com/googleapis/google-cloud-cpp/issues/11714) for details.
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- docs(spanner): some documentation tweaks ([#11641](https://github.com/googleapis/google-cloud-cpp/pull/11641))
+- feat(spanner): tests and samples for drop-database protection ([#11637](https://github.com/googleapis/google-cloud-cpp/pull/11637))
+- feat(spanner): make `ResultSourceInterface` public ([#11636](https://github.com/googleapis/google-cloud-cpp/pull/11636))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- docs(storage): add GCS+gRPC release notes ([#11760](https://github.com/googleapis/google-cloud-cpp/pull/11760))
+- feat(storage): better error messages in signed URLs ([#11741](https://github.com/googleapis/google-cloud-cpp/pull/11741))
+- feat(storage): offer mock client without decorators ([#11697](https://github.com/googleapis/google-cloud-cpp/pull/11697))
+- docs(GCS+gRPC): fix plugin example ([#11679](https://github.com/googleapis/google-cloud-cpp/pull/11679))
+- feat(storage): lazy allocation for upload buffer ([#11633](https://github.com/googleapis/google-cloud-cpp/pull/11633))
+- fix(GCS+gRPC): remove erroneous dereference of StatusOr value ([#11506](https://github.com/googleapis/google-cloud-cpp/pull/11506))
+
 ### [Storage Transfer Service](/google/cloud/storagetransfer/README.md)
 
 The library has been re-enabled on macOS. See
 [#8785](https://github.com/googleapis/google-cloud-cpp/issues/8785) for details.
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat: use full jitter exp backoff policy in the generator ([#11748](https://github.com/googleapis/google-cloud-cpp/pull/11748))
+- feat: add new constructor for exponential backoff policy  ([#11650](https://github.com/googleapis/google-cloud-cpp/pull/11650))
+- feat: avoid development dependencies with Bazel ([#11724](https://github.com/googleapis/google-cloud-cpp/pull/11724))
+- docs(common): better exception descriptions ([#11705](https://github.com/googleapis/google-cloud-cpp/pull/11705))
+- fix(rest): support rewinds in libcurl ([#11703](https://github.com/googleapis/google-cloud-cpp/pull/11703), [#11709](https://github.com/googleapis/google-cloud-cpp/pull/11709))
+- fix: workaround curl_multi_poll returning an error on EINTR ([#11649](https://github.com/googleapis/google-cloud-cpp/pull/11649))
+- docs(common): improve `StatusOr<>` documentation ([#11631](https://github.com/googleapis/google-cloud-cpp/pull/11631))
+- fix: Correct exponential backoff ranges ([#11529](https://github.com/googleapis/google-cloud-cpp/pull/11529))
+- fix: patch releases do not change the ABI ([#11499](https://github.com/googleapis/google-cloud-cpp/pull/11499))
+- fix(rest): missing user-agent separator ([#11473](https://github.com/googleapis/google-cloud-cpp/pull/11473))
 
 ## v2.10.0 - 2023-05
 
