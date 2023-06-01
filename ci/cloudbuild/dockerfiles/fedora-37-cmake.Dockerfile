@@ -157,7 +157,7 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.2.tar.gz 
 # files. This may be fixed in Fedora:38, but until then it is easier to just
 # install the source code.
 WORKDIR /var/tmp/build/re2
-RUN curl -fsSL https://github.com/google/re2/archive/2023-06-01.tar.gz | \
+RUN curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
