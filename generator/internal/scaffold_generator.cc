@@ -253,7 +253,8 @@ void GenerateMetadata(
     return;
   }
   metadata["client_documentation"] =
-      "https://cloud.google.com/cpp/reference/" + library->second + "/latest";
+      "https://cloud.google.com/cpp/docs/reference/" + library->second +
+      "/latest";
 
   struct MapVars {
     std::string metadata_name;
