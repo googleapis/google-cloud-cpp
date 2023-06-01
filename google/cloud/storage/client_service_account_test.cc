@@ -34,6 +34,7 @@ using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::ElementsAre;
 using ::testing::Property;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
