@@ -128,10 +128,6 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Cloud Support API](/google/cloud/support/README.md)
 
-The following experimental libraries are now available:
-
-- [Compute Engine API](/google/cloud/compute/README.md)
-
 ### [Bigtable](/google/cloud/bigtable/README.md)
 
 - docs(bigtable): async Table APIs are stable ([#11711](https://github.com/googleapis/google-cloud-cpp/pull/11711))
@@ -150,12 +146,10 @@ The library has been re-enabled on Windows. See
 
 ### [Storage](/google/cloud/storage/README.md)
 
-- docs(storage): add GCS+gRPC release notes ([#11760](https://github.com/googleapis/google-cloud-cpp/pull/11760))
+- fix(storage): consistent project id overrides ([#11754](https://github.com/googleapis/google-cloud-cpp/pull/11754))
 - feat(storage): better error messages in signed URLs ([#11741](https://github.com/googleapis/google-cloud-cpp/pull/11741))
 - feat(storage): offer mock client without decorators ([#11697](https://github.com/googleapis/google-cloud-cpp/pull/11697))
-- docs(GCS+gRPC): fix plugin example ([#11679](https://github.com/googleapis/google-cloud-cpp/pull/11679))
 - feat(storage): lazy allocation for upload buffer ([#11633](https://github.com/googleapis/google-cloud-cpp/pull/11633))
-- fix(GCS+gRPC): remove erroneous dereference of StatusOr value ([#11506](https://github.com/googleapis/google-cloud-cpp/pull/11506))
 
 ### [Storage Transfer Service](/google/cloud/storagetransfer/README.md)
 
