@@ -2,17 +2,6 @@
 
 ## FUTURE BREAKING CHANGES:
 
-<details>
-<summary>2023-05-31: remove the Cloud Debugger Library</summary>
-<br>
-
-Sometime after 2023-05-31 the Cloud Debugger service (aka Stackdriver Debugger
-API) will be [shutdown][cloud-debugger-deprecated]. Once the service is shutdown
-the corresponding [library][cloud-debugger-library] cannot be of any use, and we
-plan to remove it without changing the major version number.
-
-</details>
-
 The following breaking changes will be included in our next major release, which
 is scheduled for no sooner than 2023-07.
 
@@ -120,6 +109,12 @@ info, see [#7463] and [#5976].
 </details>
 
 ## v2.12.0 - TBD
+
+### Cloud Debugger
+
+The Cloud Debugger service (aka Stackdriver Debugger API) has been
+[shutdown][cloud-debugger-deprecated]. The corresponding client library has been
+removed.
 
 ## v2.11.0 - 2023-06
 
@@ -3591,7 +3586,6 @@ releases.  The relevant notes are:
 [cloud bigtable admin api]: https://cloud.google.com/bigtable/docs/reference/admin/rpc
 [cloud tasks]: /google/cloud/tasks/README.md
 [cloud-debugger-deprecated]: https://cloud.google.com/debugger/docs/deprecations
-[cloud-debugger-library]: /google/cloud/debugger/README.md
 [github-cpp-common]: https://github.com/googleapis/google-cloud-cpp-common
 [google.pubsub.v1.schemaserviceclient]: https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#google.pubsub.v1.SchemaService
 [guac-dox]: https://googleapis.dev/cpp/google-cloud-common/latest/credentials_8h.html

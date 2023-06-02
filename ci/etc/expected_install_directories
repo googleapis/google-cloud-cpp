@@ -244,11 +244,6 @@
 ./include/google/cloud/datastream/v1
 ./include/google/cloud/datastream/v1/internal
 ./include/google/cloud/datastream/v1/mocks
-./include/google/cloud/debugger
-./include/google/cloud/debugger/mocks
-./include/google/cloud/debugger/v2
-./include/google/cloud/debugger/v2/internal
-./include/google/cloud/debugger/v2/mocks
 ./include/google/cloud/deploy
 ./include/google/cloud/deploy/mocks
 ./include/google/cloud/deploy/v1
@@ -664,8 +659,6 @@
 ./include/google/devtools/cloudbuild
 ./include/google/devtools/cloudbuild/v1
 ./include/google/devtools/cloudbuild/v2
-./include/google/devtools/clouddebugger
-./include/google/devtools/clouddebugger/v2
 ./include/google/devtools/cloudprofiler
 ./include/google/devtools/cloudprofiler/v2
 ./include/google/devtools/cloudtrace
@@ -742,7 +735,6 @@
 ./lib64/cmake/google_cloud_cpp_dataplex
 ./lib64/cmake/google_cloud_cpp_dataproc
 ./lib64/cmake/google_cloud_cpp_datastream
-./lib64/cmake/google_cloud_cpp_debugger
 ./lib64/cmake/google_cloud_cpp_deploy
 ./lib64/cmake/google_cloud_cpp_dialogflow_cx
 ./lib64/cmake/google_cloud_cpp_dialogflow_es
