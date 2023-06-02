@@ -4,10 +4,10 @@ github:
   owner: googleapis
   push:
     branch: ^main$
-name: clang-60-ci
+name: clang-7-0-ci
 substitutions:
-  _BUILD_NAME: clang-60
-  _DISTRO: ubuntu-bionic-install
+  _BUILD_NAME: clang-7.0
+  _DISTRO: ubuntu-20.04-install
   _TRIGGER_TYPE: ci
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
