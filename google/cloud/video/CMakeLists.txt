@@ -16,7 +16,7 @@
 
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Transcoder API C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Transcoder API")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for several Video Services")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
@@ -166,8 +166,8 @@ google_cloud_cpp_install_headers("google_cloud_cpp_video_mocks"
 
 google_cloud_cpp_add_pkgconfig(
     video
-    "The Transcoder API C++ Client Library"
-    "Provides C++ APIs to use the Transcoder API."
+    "The Video Services C++ Client Library"
+    "Provides C++ APIs to use the Live Stream, Transcoder, and Stitcher APIs."
     "google_cloud_cpp_grpc_utils"
     " google_cloud_cpp_common"
     " google_cloud_cpp_video_protos")
