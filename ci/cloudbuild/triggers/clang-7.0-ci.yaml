@@ -4,7 +4,7 @@ github:
   owner: googleapis
   push:
     branch: ^main$
-name: clang-7.0-ci
+name: clang-7-0-ci
 substitutions:
   _BUILD_NAME: clang-7.0
   _DISTRO: ubuntu-20.04-install
