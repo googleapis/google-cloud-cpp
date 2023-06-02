@@ -83,7 +83,6 @@ sections=(
   "IAM,google/cloud/iam"
   "Pub/Sub,google/cloud/pubsub"
   "Spanner,google/cloud/spanner"
-  "Stackdriver Debugger,google/cloud/debugger"
   "Storage,google/cloud/storage"
 )
 
