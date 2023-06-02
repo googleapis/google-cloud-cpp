@@ -22,7 +22,7 @@ source module ci/cloudbuild/builds/lib/features.sh
 source module ci/lib/io.sh
 
 # We run this test in a Docker image that includes the oldest Clang that we
-# support, which happens to be 6.0 currently.
+# support. At this time this is Clang 7.0.
 export CC=clang
 export CXX=clang++
 
