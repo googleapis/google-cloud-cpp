@@ -115,7 +115,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   // The DP example requires running on a GCE instance with DP enabled.
   std::cout << "Running GrpcReadWriteDP() example" << std::endl;
-  GrpcClientWithDPCommand({bucket_name});
+  GrpcClientWithDPCommand({});
 
   std::cout << "Running GrpcClientWithProjectCommand() example" << std::endl;
   GrpcClientWithProjectCommand({project_id});
