@@ -13,13 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/storage/examples/storage_examples_common.h"
-//! [grpc-includes]
+#include "google/cloud/internal/getenv.h"
+//! [grpc-includes] [START storage_grpc_quickstart]
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/options.h"
-//! [grpc-includes]
-#include "google/cloud/internal/getenv.h"
+
+//! [grpc-includes] [END storage_grpc_quickstart]
 
 namespace {
 namespace examples = ::google::cloud::storage::examples;
@@ -28,13 +29,7 @@ namespace examples = ::google::cloud::storage::examples;
 //! [grpc-read-write] [START storage_grpc_quickstart]
 void GrpcReadWrite(std::string const& bucket_name) {
   namespace gcs = ::google::cloud::storage;
-  auto constexpr kText = R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
-elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-)""";
+  auto constexpr kText = R"""(Hello World!)""";
 
   //! [grpc-default-client]
   auto client = google::cloud::storage_experimental::DefaultGrpcClient();
