@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# A minimal WORKSPACE file showing how to use the video services  C++ client
+# A minimal WORKSPACE file showing how to use the video services C++ client
 # library in Bazel-based projects.
 workspace(name = "qs")
 

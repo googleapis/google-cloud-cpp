@@ -16,7 +16,7 @@
 
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Transcoder API C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the several Video Services")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for several Video Services")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
