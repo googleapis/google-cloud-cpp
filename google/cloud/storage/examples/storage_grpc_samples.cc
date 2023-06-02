@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/examples/storage_examples_common.h"
 #include "google/cloud/internal/getenv.h"
+// The final blank line in this section separates the includes from the function
+// in the final rendering.
 //! [grpc-includes] [START storage_grpc_quickstart]
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/options.h"
@@ -87,8 +89,8 @@ void GrpcReadWriteCommand(std::vector<std::string> argv) {
 }
 
 void GrpcClientWithDPCommand(std::vector<std::string> const& argv) {
-  if (argv.empty()) return GrpcClientWithDP();
-  throw examples::Usage("grpc-client-with-dp");
+  if (!argv.empty()) throw examples::Usage("grpc-client-with-dp");
+  return GrpcClientWithDP();
 }
 
 void GrpcClientWithProjectCommand(std::vector<std::string> argv) {
@@ -114,10 +116,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   GrpcReadWriteCommand({bucket_name});
 
   // The DP example requires running on a GCE instance with DP enabled.
-  std::cout << "Running GrpcReadWriteDP() example" << std::endl;
+  std::cout << "Running GrpcClientWithDP() example" << std::endl;
   GrpcClientWithDPCommand({});
 
-  std::cout << "Running GrpcClientWithProjectCommand() example" << std::endl;
+  std::cout << "Running GrpcClientWithProject() example" << std::endl;
   GrpcClientWithProjectCommand({project_id});
 }
 
