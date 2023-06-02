@@ -15,6 +15,9 @@
 #include "google/cloud/storage/examples/storage_examples_common.h"
 //! [grpc-includes]
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/storage/options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/options.h"
 //! [grpc-includes]
 #include "google/cloud/internal/getenv.h"
 
@@ -22,7 +25,7 @@ namespace {
 namespace examples = ::google::cloud::storage::examples;
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-//! [grpc-read-write]
+//! [grpc-read-write] [START storage_grpc_quickstart]
 void GrpcReadWrite(std::string const& bucket_name) {
   namespace gcs = ::google::cloud::storage;
   auto constexpr kText = R"""(Lorem ipsum dolor sit amet, consectetur adipiscing
@@ -50,19 +53,19 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             << "\nThe original hashes    are: crc32c=" << object->crc32c()
             << ",md5=" << object->md5_hash() << "\n";
 }
-//! [grpc-read-write]
-#else
-void GrpcReadWrite(std::string const&) {}
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+//! [grpc-read-write] [END storage_grpc_quickstart]
 
-void GrpcReadWriteCommand(std::vector<std::string> argv) {
-  if (argv.size() != 1 || argv[0] == "--help") {
-    throw examples::Usage("grpc-read-write <bucket-name>");
-  }
-  GrpcReadWrite(argv[0]);
+//! [grpc-with-dp] [START storage_grpc_quickstart_dp]
+void GrpcClientWithDP() {
+  namespace g = ::google::cloud;
+
+  auto client = google::cloud::storage_experimental::DefaultGrpcClient(
+      g::Options{}.set<g::EndpointOption>(
+          "google-c2p:///storage.googleapis.com"));
+  // Use `client` as usual.
 }
+//! [grpc-with-dp] [END storage_grpc_quickstart_dp]
 
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 //! [grpc-client-with-project]
 void GrpcClientWithProject(std::string project_id) {
   namespace gcs = ::google::cloud::storage;
@@ -72,9 +75,26 @@ void GrpcClientWithProject(std::string project_id) {
   std::cout << "Successfully created a gcs::Client configured to use gRPC\n";
 }
 //! [grpc-client-with-project]
+
 #else
+
+void GrpcReadWrite(std::string const&) {}
+void GrpcClientWithDP() {}
 void GrpcClientWithProject(std::string const&) {}
+
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+
+void GrpcReadWriteCommand(std::vector<std::string> argv) {
+  if (argv.size() != 1 || argv[0] == "--help") {
+    throw examples::Usage("grpc-read-write <bucket-name>");
+  }
+  GrpcReadWrite(argv[0]);
+}
+
+void GrpcClientWithDPCommand(std::vector<std::string> const& argv) {
+  if (argv.empty()) return GrpcClientWithDP();
+  throw examples::Usage("grpc-client-with-dp");
+}
 
 void GrpcClientWithProjectCommand(std::vector<std::string> argv) {
   if (argv.size() != 1 || argv[0] == "--help") {
@@ -98,7 +118,11 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Running GrpcReadWrite() example" << std::endl;
   GrpcReadWriteCommand({bucket_name});
 
-  std::cout << "Running GrpcReadWrite() example" << std::endl;
+  // The DP example requires running on a GCE instance with DP enabled.
+  std::cout << "Running GrpcReadWriteDP() example" << std::endl;
+  GrpcClientWithDPCommand({bucket_name});
+
+  std::cout << "Running GrpcClientWithProjectCommand() example" << std::endl;
   GrpcClientWithProjectCommand({project_id});
 }
 
@@ -107,6 +131,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {
   examples::Example example({
       {"grpc-read-write", GrpcReadWriteCommand},
+      {"grpc-client-with-dp", GrpcClientWithDPCommand},
       {"grpc-client-with-project", GrpcClientWithProjectCommand},
       {"auto", AutoRun},
   });
