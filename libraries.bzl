@@ -59,7 +59,6 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "dataplex",
     "dataproc",
     "datastream",
-    "debugger",
     "deploy",
     "dialogflow_cx",
     "dialogflow_es",
