@@ -18,5 +18,6 @@
 
 opentelemetry_unit_tests = [
     "internal/recordable_test.cc",
+    "resource_detector_test.cc",
     "trace_exporter_test.cc",
 ]
