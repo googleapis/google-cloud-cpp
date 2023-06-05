@@ -162,7 +162,7 @@ target_link_libraries(
 
 # Generate protobuf code and library
 if (COMMAND protobuf_generate)
-    set(protobuf_PROTOC_EXE $<TARGET_FILE:protobuf::protoc>)
+    set(protobuf_PROTOC_EXE ${Protobuf_PROTOC_EXECUTABLE})
     add_library(google_cloud_cpp_generator_config)
     protobuf_generate(LANGUAGE cpp TARGET google_cloud_cpp_generator_config
                       PROTOS generator_config.proto)
