@@ -203,7 +203,7 @@ function (google_cloud_cpp_generate_grpcpp SRCS)
         if (NOT Protobuf_PROTOC_EXECUTABLE)
             set(Protobuf_PROTOC_EXECUTABLE $<TARGET_FILE:protobuf::protoc>)
         endif ()
-        if (NOT DEFINED _gRPC_CPP_PLUGIN_EXECUTABLE)
+        if (NOT _gRPC_CPP_PLUGIN_EXECUTABLE)
             set(_gRPC_CPP_PLUGIN_EXECUTABLE
                 $<TARGET_FILE:grpc::grpc_cpp_plugin>)
         endif ()
