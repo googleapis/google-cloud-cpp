@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
+#include <fstream>
 #include <sstream>
 
 namespace google {
@@ -159,39 +160,17 @@ std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator) {
                                                        "cloud-cpp-samples");
 }
 
-std::string DefaultAvroSchemaDefinition() {
-  auto constexpr kDefinition = R"js({
-      "type": "record",
-      "name": "State",
-      "namespace": "utilities",
-      "doc": "A list of states in the United States of America.",
-      "fields": [
-        {
-          "name": "name",
-          "type": "string",
-          "doc": "The common name of the state."
-        },
-        {
-          "name": "post_abbr",
-          "type": "string",
-          "doc": "The postal code abbreviation of the state."
-        }
-      ]
-    })js";
-  return kDefinition;
-}
+StatusOr<std::string> ReadFile(std::string const& path) {
+  std::ifstream ifs(path);
+  if (!ifs.is_open()) {
+    return google::cloud::Status{google::cloud::StatusCode::kNotFound,
+                                 "can't find file: " + path};
+  }
 
-std::string DefaultProtoSchemaDefinition() {
-  auto constexpr kDefinition = R"pfile(
-        syntax = "proto3";
-        package google.cloud.pubsub.samples;
-
-        message State {
-          string name = 1;
-          string post_abbr = 2;
-        }
-        )pfile";
-  return kDefinition;
+  std::stringstream buffer;
+  buffer << ifs.rdbuf();
+  ifs.close();
+  return buffer.str();
 }
 
 }  // namespace examples

@@ -76,9 +76,7 @@ std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator);
 
 std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator);
 
-std::string DefaultAvroSchemaDefinition();
-
-std::string DefaultProtoSchemaDefinition();
+StatusOr<std::string> ReadFile(std::string const& path);
 
 }  // namespace examples
 }  // namespace pubsub
