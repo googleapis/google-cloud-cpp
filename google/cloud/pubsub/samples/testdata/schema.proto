@@ -1,0 +1,7 @@
+syntax = "proto3";
+package google.cloud.pubsub.samples;
+
+message State {
+  string name = 1;
+  string post_abbr = 2;
+}
