@@ -205,7 +205,7 @@ function (google_cloud_cpp_generate_grpcpp SRCS)
         endif ()
         if (NOT _gRPC_CPP_PLUGIN_EXECUTABLE)
             set(_gRPC_CPP_PLUGIN_EXECUTABLE
-                $<TARGET_FILE:grpc::grpc_cpp_plugin>)
+                $<TARGET_FILE:gRPC::grpc_cpp_plugin>)
         endif ()
         add_custom_command(
             OUTPUT "${grpc_pb_cc}" "${grpc_pb_h}"
