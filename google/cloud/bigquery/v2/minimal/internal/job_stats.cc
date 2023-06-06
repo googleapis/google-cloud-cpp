@@ -82,6 +82,7 @@ void from_json(nlohmann::json const& j, JobStatistics& s) {
     j.at("data_masking_applied").get_to(s.data_masking_applied);
   if (j.contains("completion_ratio"))
     j.at("completion_ratio").get_to(s.completion_ratio);
+  // TODO(#11786): Refactor initialization of chrono fields.
   if (j.contains("start_time")) {
     std::int64_t millis;
     j.at("start_time").get_to(millis);
@@ -123,7 +124,7 @@ bool operator==(ScriptStackFrame const& lhs, ScriptStackFrame const& rhs) {
 }
 
 bool operator==(ScriptStatistics const& lhs, ScriptStatistics const& rhs) {
-  bool eq = lhs.evaluation_kind == rhs.evaluation_kind;
+  auto const eq = lhs.evaluation_kind == rhs.evaluation_kind;
   return eq && (std::equal(lhs.stack_frames.begin(), lhs.stack_frames.end(),
                            rhs.stack_frames.begin()));
 }

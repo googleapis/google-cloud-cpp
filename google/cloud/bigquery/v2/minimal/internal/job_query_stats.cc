@@ -351,6 +351,7 @@ void from_json(nlohmann::json const& j, PerformanceInsights& p) {
     j.at("stage_performance_change_insights")
         .get_to(p.stage_performance_change_insights);
 }
+
 void to_json(nlohmann::json& j, JobQueryStatistics const& q) {
   j = nlohmann::json{
       {"estimated_bytes_processed", q.estimated_bytes_processed},
