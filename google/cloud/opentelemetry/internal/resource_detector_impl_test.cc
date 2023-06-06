@@ -97,7 +97,7 @@ TEST(ResourceDetector, RetriesTransientConnectionError) {
   testing_util::ScopedLog log;
   auto constexpr kNumRetries = 3;
 
-  auto factory = [](Options const&) {
+  auto factory = [=](Options const&) {
     auto mock = std::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Get(_, expect_query()))
         .Times(kNumRetries + 1)
