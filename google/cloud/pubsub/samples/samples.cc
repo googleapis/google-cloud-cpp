@@ -1932,6 +1932,7 @@ void AutoRunAvro(
 
   std::cout << "\nRunning ValidateAvroSchema() sample" << std::endl;
   ValidateAvroSchema(schema_admin, {project_id, kAvroSchemaDefinitionFile});
+
   std::cout << "\nRunning ValidateMessageAvro() sample" << std::endl;
   ValidateMessageAvro(
       schema_admin, {project_id, kAvroSchemaDefinitionFile, kAvroMessageFile});
