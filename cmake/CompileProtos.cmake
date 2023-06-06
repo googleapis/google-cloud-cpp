@@ -203,15 +203,11 @@ function (google_cloud_cpp_generate_grpcpp SRCS)
         if (NOT Protobuf_PROTOC_EXECUTABLE)
             set(Protobuf_PROTOC_EXECUTABLE $<TARGET_FILE:protobuf::protoc>)
         endif ()
-        if (NOT _gRPC_CPP_PLUGIN_EXECUTABLE)
-            set(_gRPC_CPP_PLUGIN_EXECUTABLE
-                $<TARGET_FILE:gRPC::grpc_cpp_plugin>)
-        endif ()
         add_custom_command(
             OUTPUT "${grpc_pb_cc}" "${grpc_pb_h}"
             COMMAND
                 ${Protobuf_PROTOC_EXECUTABLE} ARGS
-                --plugin=protoc-gen-grpc=${_gRPC_CPP_PLUGIN_EXECUTABLE}
+                --plugin=protoc-gen-grpc=${GOOGLE_CLOUD_CPP_GRPC_PLUGIN_EXECUTABLE}
                 "--grpc_out=${CMAKE_CURRENT_BINARY_DIR}"
                 "--cpp_out=${CMAKE_CURRENT_BINARY_DIR}" ${protobuf_include_path}
                 "${file_path}"

@@ -41,6 +41,18 @@ a [GitHub Discussion]. With that said:
   opposed to gRPC over HTTP/2) in some libraries.
 - `experimental-opentelemetry` enables support for [OpenTelemetry].
 
+### Override Protobuf compiler and gRPC's plugin
+
+`google-cloud-cpp` uses the protobuf compiler and gRPC's plugin to generate
+code from the Protobuf API definitions. By default it finds these tools using
+the targets exported by `find_package(Protobuf CONFIG)` and
+`find_package(gRPC CONFIG)`.  These defaults do not work when cross-compiling,
+as the packages will point to the tools for the **target** environment, and
+they may not run in the host environment, where the build is running.
+
+You can override these tools using `-DProtobuf_PROTOC_EXECUTABLE=/path/...` and
+`-DGOOGLE_CLOUD_CPP_GRPC_PLUGIN_EXECUTABLE=/other-path/...`.
+
 ### Disabling C++ Exceptions
 
 `google-cloud-cpp` does not throw exceptions to signal errors. Though in some

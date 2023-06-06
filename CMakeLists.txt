@@ -182,6 +182,23 @@ add_custom_target(all-docfx)
 find_package(absl CONFIG REQUIRED)
 if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC})
     find_package(gRPC REQUIRED QUIET)
+    # `Protobuf_PROTOC_EXECUTABLE` is pretty standard. It has been in use by
+    # CMake's FindProtobuf module for years, and it is defined by Protobuf's
+    # CMake configuration files. There is no obvious analog for the gRPC plugin.
+    # gRPC only exports the targets (e.g. `gRPC::grpc_cpp_plugin`) when
+    # applicable. We define our own variable.
+    set(GOOGLE_CLOUD_CPP_GRPC_PLUGIN_EXECUTABLE
+        $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+        CACHE
+            STRING
+            [==[Override gRPC's protoc plugin location.
+`google-cloud-cpp` uses the gRPC's protoc plugin to generate gRPC stub code.
+One may need to override the default location when cross-compiling, as the gRPC
+package will point to the target environment and the plugin won't run on the
+host environment.
+]==])
+    mark_as_advanced(GOOGLE_CLOUD_CPP_GRPC_PLUGIN_EXECUTABLE)
+
     set(GOOGLE_CLOUD_CPP_FIND_DEPENDENCY_PROTOBUF
         "find_dependency(Protobuf CONFIG)")
     find_package(Protobuf CONFIG QUIET)
