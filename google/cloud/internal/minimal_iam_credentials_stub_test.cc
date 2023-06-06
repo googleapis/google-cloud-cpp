@@ -40,7 +40,6 @@ using ::google::iam::credentials::v1::GenerateAccessTokenRequest;
 using ::google::iam::credentials::v1::GenerateAccessTokenResponse;
 using ::google::iam::credentials::v1::SignBlobRequest;
 using ::google::iam::credentials::v1::SignBlobResponse;
-using ::testing::_;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -198,6 +197,7 @@ using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::_;
 using ::testing::IsEmpty;
 
 auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
