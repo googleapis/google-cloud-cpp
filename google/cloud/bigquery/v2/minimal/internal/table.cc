@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/table.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 
@@ -115,43 +116,30 @@ std::string ListFormatTable::DebugString(absl::string_view name,
 }
 
 void to_json(nlohmann::json& j, CloneDefinition const& c) {
-  j = nlohmann::json{
-      {"base_table_reference", c.base_table_reference},
-      {"clone_time", std::chrono::duration_cast<std::chrono::milliseconds>(
-                         c.clone_time.time_since_epoch())
-                         .count()}};
+  j = nlohmann::json{{"base_table_reference", c.base_table_reference}};
+  ToJsonTimepoint(c.clone_time, j, "clone_time");
 }
 
 void from_json(nlohmann::json const& j, CloneDefinition& c) {
   if (j.contains("base_table_reference"))
     j.at("base_table_reference").get_to(c.base_table_reference);
-  if (j.contains("clone_time")) {
-    std::int64_t millis;
-    j.at("clone_time").get_to(millis);
-    c.clone_time = std::chrono::time_point<std::chrono::system_clock>(
-        std::chrono::milliseconds(millis));
-  }
+  FromJsonTimepoint(c.clone_time, j, "clone_time");
 }
 
 void to_json(nlohmann::json& j, ListFormatTable const& t) {
-  j = nlohmann::json{
-      {"kind", t.kind},
-      {"id", t.id},
-      {"friendly_name", t.friendly_name},
-      {"type", t.type},
-      {"table_reference", t.table_reference},
-      {"time_partitioning", t.time_partitioning},
-      {"range_partitioning", t.range_partitioning},
-      {"clustering", t.clustering},
-      {"hive_partitioning_options", t.hive_partitioning_options},
-      {"view", t.view},
-      {"creation_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(t.creation_time)
-           .count()},
-      {"expiration_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(t.expiration_time)
-           .count()},
-      {"labels", t.labels}};
+  j = nlohmann::json{{"kind", t.kind},
+                     {"id", t.id},
+                     {"friendly_name", t.friendly_name},
+                     {"type", t.type},
+                     {"table_reference", t.table_reference},
+                     {"time_partitioning", t.time_partitioning},
+                     {"range_partitioning", t.range_partitioning},
+                     {"clustering", t.clustering},
+                     {"hive_partitioning_options", t.hive_partitioning_options},
+                     {"view", t.view},
+                     {"labels", t.labels}};
+  ToJsonMilliseconds(t.creation_time, j, "creation_time");
+  ToJsonMilliseconds(t.expiration_time, j, "expiration_time");
 }
 
 void from_json(nlohmann::json const& j, ListFormatTable& t) {
@@ -173,16 +161,9 @@ void from_json(nlohmann::json const& j, ListFormatTable& t) {
   if (j.contains("labels")) j.at("labels").get_to(t.labels);
   if (j.contains("friendly_name"))
     j.at("friendly_name").get_to(t.friendly_name);
-  if (j.contains("creation_time")) {
-    std::int64_t millis;
-    j.at("creation_time").get_to(millis);
-    t.creation_time = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("expiration_time")) {
-    std::int64_t millis;
-    j.at("expiration_time").get_to(millis);
-    t.expiration_time = std::chrono::milliseconds(millis);
-  }
+
+  FromJsonMilliseconds(t.creation_time, j, "creation_time");
+  FromJsonMilliseconds(t.expiration_time, j, "expiration_time");
 }
 
 void to_json(nlohmann::json& j, Table const& t) {
@@ -199,16 +180,6 @@ void to_json(nlohmann::json& j, Table const& t) {
       {"max_staleness", t.max_staleness},
       {"require_partition_filter", t.require_partition_filter},
       {"case_insensitive", t.case_insensitive},
-      {"creation_time", std::chrono::duration_cast<std::chrono::milliseconds>(
-                            t.creation_time.time_since_epoch())
-                            .count()},
-      {"expiration_time", std::chrono::duration_cast<std::chrono::milliseconds>(
-                              t.expiration_time.time_since_epoch())
-                              .count()},
-      {"last_modified_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           t.last_modified_time.time_since_epoch())
-           .count()},
       {"num_time_travel_physical_bytes", t.num_time_travel_physical_bytes},
       {"num_total_logical_bytes", t.num_total_logical_bytes},
       {"num_active_logical_bytes", t.num_active_logical_bytes},
@@ -233,6 +204,10 @@ void to_json(nlohmann::json& j, Table const& t) {
       {"view", t.view},
       {"materialized_view", t.materialized_view},
       {"materialized_view_status", t.materialized_view_status}};
+
+  ToJsonTimepoint(t.last_modified_time, j, "last_modified_time");
+  ToJsonTimepoint(t.expiration_time, j, "expiration_time");
+  ToJsonTimepoint(t.creation_time, j, "creation_time");
 }
 
 void from_json(nlohmann::json const& j, Table& t) {
@@ -253,24 +228,6 @@ void from_json(nlohmann::json const& j, Table& t) {
     j.at("require_partition_filter").get_to(t.require_partition_filter);
   if (j.contains("case_insensitive"))
     j.at("case_insensitive").get_to(t.case_insensitive);
-  if (j.contains("creation_time")) {
-    std::int64_t millis;
-    j.at("creation_time").get_to(millis);
-    t.creation_time = std::chrono::time_point<std::chrono::system_clock>(
-        std::chrono::milliseconds(millis));
-  }
-  if (j.contains("expiration_time")) {
-    std::int64_t millis;
-    j.at("expiration_time").get_to(millis);
-    t.expiration_time = std::chrono::time_point<std::chrono::system_clock>(
-        std::chrono::milliseconds(millis));
-  }
-  if (j.contains("last_modified_time")) {
-    std::int64_t millis;
-    j.at("last_modified_time").get_to(millis);
-    t.last_modified_time = std::chrono::time_point<std::chrono::system_clock>(
-        std::chrono::milliseconds(millis));
-  }
   if (j.contains("num_time_travel_physical_bytes"))
     j.at("num_time_travel_physical_bytes")
         .get_to(t.num_time_travel_physical_bytes);
@@ -314,6 +271,10 @@ void from_json(nlohmann::json const& j, Table& t) {
     j.at("materialized_view").get_to(t.materialized_view);
   if (j.contains("materialized_view_status"))
     j.at("materialized_view_status").get_to(t.materialized_view_status);
+
+  FromJsonTimepoint(t.last_modified_time, j, "last_modified_time");
+  FromJsonTimepoint(t.expiration_time, j, "expiration_time");
+  FromJsonTimepoint(t.creation_time, j, "creation_time");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
