@@ -54,6 +54,7 @@ struct TableReference {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableReference, project_id,
                                                 dataset_id, table_id);
+bool operator==(TableReference const& lhs, TableReference const& rhs);
 
 struct DatasetReference {
   std::string dataset_id;
@@ -65,6 +66,20 @@ struct DatasetReference {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DatasetReference, project_id,
                                                 dataset_id);
+bool operator==(DatasetReference const& lhs, DatasetReference const& rhs);
+
+struct RoutineReference {
+  std::string project_id;
+  std::string dataset_id;
+  std::string routine_id;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RoutineReference, dataset_id,
+                                                project_id, routine_id);
+bool operator==(RoutineReference const& lhs, RoutineReference const& rhs);
 
 struct RoundingMode {
   static RoundingMode UnSpecified();
@@ -309,6 +324,7 @@ struct QueryParameter {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(QueryParameter, name,
                                                 parameter_type,
                                                 parameter_value);
+bool operator==(QueryParameter const& lhs, QueryParameter const& rhs);
 // NOLINTEND
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

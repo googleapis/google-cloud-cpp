@@ -347,6 +347,26 @@ std::string TableReference::DebugString(absl::string_view name,
       .Build();
 }
 
+bool operator==(TableReference const& lhs, TableReference const& rhs) {
+  return (lhs.dataset_id == rhs.dataset_id &&
+          lhs.project_id == rhs.project_id && lhs.table_id == rhs.table_id);
+}
+
+bool operator==(DatasetReference const& lhs, DatasetReference const& rhs) {
+  return (lhs.dataset_id == rhs.dataset_id && lhs.project_id == rhs.project_id);
+}
+
+bool operator==(RoutineReference const& lhs, RoutineReference const& rhs) {
+  return (lhs.dataset_id == rhs.dataset_id &&
+          lhs.project_id == rhs.project_id && lhs.routine_id == rhs.routine_id);
+}
+
+bool operator==(QueryParameter const& lhs, QueryParameter const& rhs) {
+  return (lhs.name == rhs.name &&
+          lhs.parameter_type.type == rhs.parameter_type.type &&
+          lhs.parameter_value.value == rhs.parameter_value.value);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
