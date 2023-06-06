@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_RESOURCE_DETECTOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_RESOURCE_DETECTOR_H
 
-#include "google/cloud/internal/rest_client.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <opentelemetry/sdk/resource/resource_detector.h>
@@ -32,17 +31,6 @@ MakeResourceDetector(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel
-namespace otel_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-using HttpClientFactory =
-    std::function<std::unique_ptr<rest_internal::RestClient>(Options const&)>;
-
-std::unique_ptr<opentelemetry::sdk::resource::ResourceDetector>
-MakeResourceDetector(HttpClientFactory factory, Options options = {});
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace otel_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -34,6 +34,8 @@ add_library(
     configure_basic_tracing.h
     internal/recordable.cc
     internal/recordable.h
+    internal/resource_detector_impl.cc
+    internal/resource_detector_impl.h
     resource_detector.cc
     resource_detector.h
     trace_exporter.cc
@@ -116,7 +118,7 @@ add_subdirectory(samples)
 
 set(opentelemetry_unit_tests
     # cmake-format: sort
-    internal/recordable_test.cc resource_detector_test.cc
+    internal/recordable_test.cc internal/resource_detector_impl_test.cc
     trace_exporter_test.cc)
 
 export_list_to_bazel("opentelemetry_unit_tests.bzl" "opentelemetry_unit_tests"
