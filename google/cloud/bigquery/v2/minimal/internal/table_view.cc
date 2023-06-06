@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/table_view.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 
@@ -91,15 +92,10 @@ void to_json(nlohmann::json& j, MaterializedViewDefinition const& m) {
       {"query", m.query},
       {"max_staleness", m.max_staleness},
       {"allow_non_incremental_definition", m.allow_non_incremental_definition},
-      {"enable_refresh", m.enable_refresh},
-      {"refresh_interval",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           m.refresh_interval_time)
-           .count()},
-      {"last_refresh_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           m.last_refresh_time.time_since_epoch())
-           .count()}};
+      {"enable_refresh", m.enable_refresh}};
+
+  ToJsonMilliseconds(m.refresh_interval_time, j, "refresh_interval");
+  ToJsonTimepoint(m.last_refresh_time, j, "last_refresh_time");
 }
 void from_json(nlohmann::json const& j, MaterializedViewDefinition& m) {
   if (j.contains("query")) j.at("query").get_to(m.query);
@@ -110,35 +106,19 @@ void from_json(nlohmann::json const& j, MaterializedViewDefinition& m) {
         .get_to(m.allow_non_incremental_definition);
   if (j.contains("enable_refresh"))
     j.at("enable_refresh").get_to(m.enable_refresh);
-  if (j.contains("refresh_interval")) {
-    std::int64_t millis;
-    j.at("refresh_interval").get_to(millis);
-    m.refresh_interval_time = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("last_refresh_time")) {
-    std::int64_t millis;
-    j.at("last_refresh_time").get_to(millis);
-    m.last_refresh_time = std::chrono::time_point<std::chrono::system_clock>(
-        std::chrono::milliseconds(millis));
-  }
+
+  FromJsonMilliseconds(m.refresh_interval_time, j, "refresh_interval");
+  FromJsonTimepoint(m.last_refresh_time, j, "last_refresh_time");
 }
 
 void to_json(nlohmann::json& j, MaterializedViewStatus const& m) {
-  j = nlohmann::json{{"refresh_watermark",
-                      std::chrono::duration_cast<std::chrono::milliseconds>(
-                          m.refresh_watermark.time_since_epoch())
-                          .count()},
-                     {"last_refresh_status", m.last_refresh_status}};
+  j = nlohmann::json{{"last_refresh_status", m.last_refresh_status}};
+  ToJsonTimepoint(m.refresh_watermark, j, "refresh_watermark");
 }
 void from_json(nlohmann::json const& j, MaterializedViewStatus& m) {
   if (j.contains("last_refresh_status"))
     j.at("last_refresh_status").get_to(m.last_refresh_status);
-  if (j.contains("refresh_watermark")) {
-    std::int64_t millis;
-    j.at("refresh_watermark").get_to(millis);
-    m.refresh_watermark = std::chrono::time_point<std::chrono::system_clock>(
-        std::chrono::milliseconds(millis));
-  }
+  FromJsonTimepoint(m.refresh_watermark, j, "refresh_watermark");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
