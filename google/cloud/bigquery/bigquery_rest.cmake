@@ -62,6 +62,8 @@ add_library(
     v2/minimal/internal/job_metadata.h
     v2/minimal/internal/job_options.cc
     v2/minimal/internal/job_options.h
+    v2/minimal/internal/job_query_stats.cc
+    v2/minimal/internal/job_query_stats.h
     v2/minimal/internal/job_request.cc
     v2/minimal/internal/job_request.h
     v2/minimal/internal/job_response.cc
@@ -73,6 +75,8 @@ add_library(
     v2/minimal/internal/job_rest_stub_factory.cc
     v2/minimal/internal/job_rest_stub_factory.h
     v2/minimal/internal/job_retry_policy.h
+    v2/minimal/internal/job_stats.cc
+    v2/minimal/internal/job_stats.h
     v2/minimal/internal/log_wrapper.h
     v2/minimal/internal/project.cc
     v2/minimal/internal/project.h
@@ -201,6 +205,8 @@ function (bigquery_rest_define_tests)
         INTERFACE
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/common_v2_test_utils.cc
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/common_v2_test_utils.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/job_test_utils.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/job_test_utils.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/metadata_test_utils.cc
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/metadata_test_utils.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_dataset_rest_stub.h
@@ -248,9 +254,11 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_logging_test.cc
         v2/minimal/internal/job_metadata_test.cc
         v2/minimal/internal/job_options_test.cc
+        v2/minimal/internal/job_query_stats_test.cc
         v2/minimal/internal/job_request_test.cc
         v2/minimal/internal/job_response_test.cc
         v2/minimal/internal/job_rest_stub_test.cc
+        v2/minimal/internal/job_stats_test.cc
         v2/minimal/internal/job_test.cc
         v2/minimal/internal/project_client_test.cc
         v2/minimal/internal/project_connection_test.cc

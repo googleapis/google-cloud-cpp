@@ -18,6 +18,7 @@
 
 bigquery_rest_testing_hdrs = [
     "v2/minimal/testing/common_v2_test_utils.h",
+    "v2/minimal/testing/job_test_utils.h",
     "v2/minimal/testing/metadata_test_utils.h",
     "v2/minimal/testing/mock_dataset_rest_stub.h",
     "v2/minimal/testing/mock_job_rest_stub.h",
@@ -29,6 +30,7 @@ bigquery_rest_testing_hdrs = [
 
 bigquery_rest_testing_srcs = [
     "v2/minimal/testing/common_v2_test_utils.cc",
+    "v2/minimal/testing/job_test_utils.cc",
     "v2/minimal/testing/metadata_test_utils.cc",
     "v2/minimal/testing/project_test_utils.cc",
     "v2/minimal/testing/table_test_utils.cc",

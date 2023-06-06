@@ -70,18 +70,6 @@ struct LinkedDatasetSource {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(LinkedDatasetSource,
                                                 source_dataset);
 
-struct RoutineReference {
-  std::string project_id;
-  std::string dataset_id;
-  std::string routine_id;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RoutineReference, dataset_id,
-                                                project_id, routine_id);
-
 struct DatasetAccessEntry {
   DatasetReference dataset;
   std::vector<TargetType> target_types;
