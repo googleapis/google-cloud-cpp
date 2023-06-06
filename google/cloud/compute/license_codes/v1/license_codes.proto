@@ -1,0 +1,79 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.cloud.cpp.compute.license_codes.v1;
+
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/cloud/compute/v1/internal/common.proto";
+
+// Service for the licenseCodes resource.
+// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes
+service LicenseCodes {
+  option (google.api.default_host) = "compute.googleapis.com";
+  option (google.api.oauth_scopes) =
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
+
+  // Return a specified license code. License codes are mirrored across all
+  // projects that have permissions to read the License Code. *Caution* This
+  // resource is intended for use only by third-party partners who are creating
+  // Cloud Marketplace images.
+  rpc GetLicenseCodes(GetLicenseCodesRequest)
+      returns (google.cloud.cpp.compute.v1.LicenseCode) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project=project}/global/licenseCodes/{license_code=license_code}"
+    };
+    option (google.api.method_signature) = "project,license_code";
+  }
+
+  // Returns permissions that a caller has on the specified resource. *Caution*
+  // This resource is intended for use only by third-party partners who are
+  // creating Cloud Marketplace images.
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project=project}/global/licenseCodes/{resource=resource}/testIamPermissions"
+      body: "test_permissions_request_resource"
+    };
+    option (google.api.method_signature) =
+        "project,resource,test_permissions_request_resource";
+  }
+}
+
+// Request message for GetLicenseCodes.
+message GetLicenseCodesRequest {
+  // Number corresponding to the License code resource to return.
+  string license_code = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for TestIamPermissions.
+message TestIamPermissionsRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Name or id of the resource for this request.
+  string resource = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The TestPermissionsRequest for this request.
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 3 [json_name = "__json_request_body"];
+}
