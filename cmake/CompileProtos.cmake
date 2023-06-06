@@ -98,14 +98,17 @@ function (google_cloud_cpp_generate_proto SRCS)
         set(pb_h "${CMAKE_CURRENT_BINARY_DIR}/${D}/${file_stem}.pb.h")
         list(APPEND ${SRCS} "${pb_cc}" "${pb_h}")
 
+        if (NOT Protobuf_PROTOC_EXECUTABLE)
+            set(Protobuf_PROTOC_EXECUTABLE $<TARGET_FILE:protobuf::protoc>)
+        endif ()
         if (${_opt_LOCAL_INCLUDE})
             add_custom_command(
                 OUTPUT "${pb_cc}" "${pb_h}"
                 COMMAND
-                    $<TARGET_FILE:protobuf::protoc> ARGS --cpp_out
+                    ${Protobuf_PROTOC_EXECUTABLE} ARGS --cpp_out
                     "${CMAKE_CURRENT_BINARY_DIR}/${D}" ${protobuf_include_path}
                     "${file_name}"
-                DEPENDS "${file_path}" protobuf::protoc
+                DEPENDS "${file_path}"
                 WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${D}"
                 COMMENT "Running C++ protocol buffer compiler on ${file_path}"
                 VERBATIM)
@@ -113,10 +116,10 @@ function (google_cloud_cpp_generate_proto SRCS)
             add_custom_command(
                 OUTPUT "${pb_cc}" "${pb_h}"
                 COMMAND
-                    $<TARGET_FILE:protobuf::protoc> ARGS --cpp_out
+                    ${Protobuf_PROTOC_EXECUTABLE} ARGS --cpp_out
                     "${CMAKE_CURRENT_BINARY_DIR}" ${protobuf_include_path}
                     "${file_path}"
-                DEPENDS "${file_path}" protobuf::protoc
+                DEPENDS "${file_path}"
                 COMMENT "Running C++ protocol buffer compiler on ${file_path}"
                 VERBATIM)
         endif ()
@@ -197,15 +200,18 @@ function (google_cloud_cpp_generate_grpcpp SRCS)
             "${CMAKE_CURRENT_BINARY_DIR}/${D}/${file_stem}.grpc.pb.cc")
         set(grpc_pb_h "${CMAKE_CURRENT_BINARY_DIR}/${D}/${file_stem}.grpc.pb.h")
         list(APPEND ${SRCS} "${grpc_pb_cc}" "${grpc_pb_h}")
+        if (NOT Protobuf_PROTOC_EXECUTABLE)
+            set(Protobuf_PROTOC_EXECUTABLE $<TARGET_FILE:protobuf::protoc>)
+        endif ()
         add_custom_command(
             OUTPUT "${grpc_pb_cc}" "${grpc_pb_h}"
             COMMAND
-                $<TARGET_FILE:protobuf::protoc> ARGS
-                --plugin=protoc-gen-grpc=$<TARGET_FILE:gRPC::grpc_cpp_plugin>
+                ${Protobuf_PROTOC_EXECUTABLE} ARGS
+                --plugin=protoc-gen-grpc=${GOOGLE_CLOUD_CPP_GRPC_PLUGIN_EXECUTABLE}
                 "--grpc_out=${CMAKE_CURRENT_BINARY_DIR}"
                 "--cpp_out=${CMAKE_CURRENT_BINARY_DIR}" ${protobuf_include_path}
                 "${file_path}"
-            DEPENDS "${file_path}" protobuf::protoc gRPC::grpc_cpp_plugin
+            DEPENDS "${file_path}"
             COMMENT "Running gRPC C++ protocol buffer compiler on ${file_path}"
             VERBATIM)
     endforeach ()

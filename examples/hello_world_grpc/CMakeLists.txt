@@ -33,7 +33,7 @@ add_custom_command(
            "${CMAKE_CURRENT_BINARY_DIR}/hello_world.pb.cc"
            "${CMAKE_CURRENT_BINARY_DIR}/hello_world.pb.h"
     COMMAND
-        $<TARGET_FILE:protobuf::protoc> ARGS
+        ${Protobuf_PROTOC_EXECUTABLE} ARGS
         --plugin=protoc-gen-grpc=$<TARGET_FILE:gRPC::grpc_cpp_plugin>
         "--grpc_out=${CMAKE_CURRENT_BINARY_DIR}"
         "--cpp_out=${CMAKE_CURRENT_BINARY_DIR}"
