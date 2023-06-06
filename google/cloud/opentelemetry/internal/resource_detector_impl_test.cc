@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/opentelemetry/resource_detector.h"
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "google/cloud/opentelemetry/internal/resource_detector_impl.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/compute_engine_util.h"
 #include "google/cloud/internal/make_status.h"
@@ -24,7 +25,6 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/sdk/resource/resource.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
 
 namespace google {
@@ -47,6 +47,7 @@ using ::testing::IsSupersetOf;
 using ::testing::Pair;
 using ::testing::Property;
 using ::testing::Return;
+using ms = std::chrono::milliseconds;
 
 auto expect_query = [] {
   auto const expected_path =
@@ -59,11 +60,26 @@ auto expect_query = [] {
                         Contains(Pair("recursive", "true"))));
 };
 
-otel_internal::HttpClientFactory MakeFactory(char const* payload) {
-  return [=](Options const&) {
+std::multimap<std::string, std::string> ExpectedHeaders() {
+  return {{"content-type", "application/json"}, {"metadata-flavor", "google"}};
+}
+
+std::unique_ptr<opentelemetry::sdk::resource::ResourceDetector>
+MakeTestDetector(otel_internal::HttpClientFactory factory) {
+  return otel_internal::MakeResourceDetector(
+      std::move(factory),
+      internal::LimitedErrorCountRetryPolicy<otel_internal::StatusTraits>(0)
+          .clone(),
+      ExponentialBackoffPolicy(ms(0), ms(0), 2.0).clone(), Options{});
+}
+
+std::unique_ptr<opentelemetry::sdk::resource::ResourceDetector>
+MakeTestDetector(char const* payload) {
+  auto factory = [=](Options const&) {
     auto response = std::make_unique<MockRestResponse>();
     EXPECT_CALL(*response, StatusCode)
         .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+    EXPECT_CALL(*response, Headers).WillOnce(Return(ExpectedHeaders()));
     EXPECT_CALL(std::move(*response), ExtractPayload)
         .WillOnce(
             Return(ByMove(MakeMockHttpPayloadSuccess(std::string{payload}))));
@@ -74,20 +90,30 @@ otel_internal::HttpClientFactory MakeFactory(char const* payload) {
             std::move(response)))));
     return mock;
   };
+  return MakeTestDetector(std::move(factory));
 }
 
-TEST(ResourceDetector, NotOnGcp) {
+TEST(ResourceDetector, RetriesTransientConnectionError) {
   testing_util::ScopedLog log;
+  auto constexpr kNumRetries = 3;
 
   auto factory = [](Options const&) {
     auto mock = std::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Get(_, expect_query()))
-        .WillOnce(Return(internal::UnavailableError(
-            "PerformWork() - CURL error [6]=Couldn't resolve host name")));
+        .Times(kNumRetries + 1)
+        .WillRepeatedly(
+            []() -> StatusOr<std::unique_ptr<rest_internal::RestResponse>> {
+              return internal::UnavailableError("try again");
+            });
     return mock;
   };
 
-  auto detector = otel_internal::MakeResourceDetector(factory);
+  auto detector = otel_internal::MakeResourceDetector(
+      std::move(factory),
+      internal::LimitedErrorCountRetryPolicy<otel_internal::StatusTraits>(
+          kNumRetries)
+          .clone(),
+      ExponentialBackoffPolicy(ms(0), ms(0), 2.0).clone(), Options{});
   auto resource = detector->Detect();
   auto const& attributes = resource.GetAttributes();
 
@@ -95,11 +121,13 @@ TEST(ResourceDetector, NotOnGcp) {
       attributes,
       Not(Contains(SpanAttribute<std::string>(sc::kCloudProvider, "gcp"))));
 
-  EXPECT_THAT(log.ExtractLines(),
-              Not(Contains(HasSubstr("Could not query the metadata server"))));
+  EXPECT_THAT(
+      log.ExtractLines(),
+      Contains(AllOf(HasSubstr("Could not query the metadata server"),
+                     HasSubstr("UNAVAILABLE"), HasSubstr("try again"))));
 }
 
-TEST(ResourceDetector, ConnectionError) {
+TEST(ResourceDetector, PermanentConnectionError) {
   testing_util::ScopedLog log;
 
   auto factory = [](Options const&) {
@@ -109,7 +137,7 @@ TEST(ResourceDetector, ConnectionError) {
     return mock;
   };
 
-  auto detector = otel_internal::MakeResourceDetector(factory);
+  auto detector = MakeTestDetector(factory);
   auto resource = detector->Detect();
   auto const& attributes = resource.GetAttributes();
 
@@ -139,7 +167,7 @@ TEST(ResourceDetector, HttpError) {
     return mock;
   };
 
-  auto detector = otel_internal::MakeResourceDetector(factory);
+  auto detector = MakeTestDetector(factory);
   auto resource = detector->Detect();
   auto const& attributes = resource.GetAttributes();
 
@@ -152,6 +180,45 @@ TEST(ResourceDetector, HttpError) {
                              HasSubstr("PERMISSION_DENIED"))));
 }
 
+TEST(ResourceDetector, ValidatesHeaders) {
+  for (auto const& bad_headers :
+       std::vector<std::multimap<std::string, std::string>>{
+           {},
+           {{"content-type", "application/json"}},
+           {{"metadata-flavor", "google"}},
+           {{"content-type", "wrong"}, {"metadata-flavor", "google"}},
+           {{"content-type", "application/json"}, {"metadata-flavor", "wrong"}},
+       }) {
+    testing_util::ScopedLog log;
+
+    auto factory = [&bad_headers](Options const&) {
+      auto response = std::make_unique<MockRestResponse>();
+      EXPECT_CALL(*response, StatusCode)
+          .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+      EXPECT_CALL(*response, Headers).WillRepeatedly(Return(bad_headers));
+
+      auto mock = std::make_unique<MockRestClient>();
+      EXPECT_CALL(*mock, Get(_, expect_query()))
+          .WillOnce(Return(ByMove(std::unique_ptr<rest_internal::RestResponse>(
+              std::move(response)))));
+      return mock;
+    };
+
+    auto detector = MakeTestDetector(factory);
+    auto resource = detector->Detect();
+    auto const& attributes = resource.GetAttributes();
+
+    EXPECT_THAT(
+        attributes,
+        Not(Contains(SpanAttribute<std::string>(sc::kCloudProvider, "gcp"))));
+
+    EXPECT_THAT(
+        log.ExtractLines(),
+        Contains(AllOf(HasSubstr("Could not query the metadata server"),
+                       HasSubstr("NOT_FOUND"), HasSubstr("response headers"))));
+  }
+}
+
 TEST(ResourceDetector, PayloadReadError) {
   testing_util::ScopedLog log;
 
@@ -159,6 +226,7 @@ TEST(ResourceDetector, PayloadReadError) {
     auto response = std::make_unique<MockRestResponse>();
     EXPECT_CALL(*response, StatusCode)
         .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+    EXPECT_CALL(*response, Headers).WillOnce(Return(ExpectedHeaders()));
     EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([] {
       auto payload = std::make_unique<MockHttpPayload>();
       EXPECT_CALL(*payload, Read)
@@ -173,7 +241,7 @@ TEST(ResourceDetector, PayloadReadError) {
     return mock;
   };
 
-  auto detector = otel_internal::MakeResourceDetector(factory);
+  auto detector = MakeTestDetector(factory);
   auto resource = detector->Detect();
   auto const& attributes = resource.GetAttributes();
 
@@ -190,19 +258,25 @@ TEST(ResourceDetector, HandlesBadJson) {
   auto constexpr kMissingKeysJson = R"json({})json";
   auto constexpr kMalformedJson = R"json({{})json";
   auto constexpr kWrongTypeJson = R"json({
-  "instance": []
+  "instance": [],
+  "project": {
+    "projectId": "test-project"
+  }
 })json";
   auto constexpr kWrongStructureJson = R"json({
   "instance": {
     "machineType": {
       "unexpected": 5
     }
+  },
+  "project": {
+    "projectId": "test-project"
   }
 })json";
 
   for (auto const* payload : {kMissingKeysJson, kMalformedJson, kWrongTypeJson,
                               kWrongStructureJson}) {
-    auto detector = otel_internal::MakeResourceDetector(MakeFactory(payload));
+    auto detector = MakeTestDetector(payload);
     (void)detector->Detect();
   }
 }
@@ -221,7 +295,8 @@ TEST(ResourceDetector, GkeRegion) {
     "projectId": "test-project"
   }
 })json";
-  auto detector = otel_internal::MakeResourceDetector(MakeFactory(kPayload));
+
+  auto detector = MakeTestDetector(kPayload);
   auto resource = detector->Detect();
   auto const& attributes = resource.GetAttributes();
 
@@ -252,7 +327,8 @@ TEST(ResourceDetector, GkeZone) {
     "projectId": "test-project"
   }
 })json";
-  auto detector = otel_internal::MakeResourceDetector(MakeFactory(kPayload));
+
+  auto detector = MakeTestDetector(kPayload);
   auto resource = detector->Detect();
   auto const& attributes = resource.GetAttributes();
 
@@ -283,7 +359,8 @@ TEST(ResourceDetector, CloudFunctions) {
     "projectId": "test-project"
   }
 })json";
-  auto detector = otel_internal::MakeResourceDetector(MakeFactory(kPayload));
+
+  auto detector = MakeTestDetector(kPayload);
   auto resource = detector->Detect();
   auto const& attributes = resource.GetAttributes();
 
@@ -313,7 +390,8 @@ TEST(ResourceDetector, CloudRun) {
     "projectId": "test-project"
   }
 })json";
-  auto detector = otel_internal::MakeResourceDetector(MakeFactory(kPayload));
+
+  auto detector = MakeTestDetector(kPayload);
   auto resource = detector->Detect();
   auto const& attributes = resource.GetAttributes();
 
@@ -344,7 +422,8 @@ TEST(ResourceDetector, Gae) {
     "projectId": "test-project"
   }
 })json";
-  auto detector = otel_internal::MakeResourceDetector(MakeFactory(kPayload));
+
+  auto detector = MakeTestDetector(kPayload);
   auto resource = detector->Detect();
   auto const& attributes = resource.GetAttributes();
 
@@ -379,7 +458,8 @@ TEST(ResourceDetector, Gce) {
     "projectId": "test-project"
   }
 })json";
-  auto detector = otel_internal::MakeResourceDetector(MakeFactory(kPayload));
+
+  auto detector = MakeTestDetector(kPayload);
   auto resource = detector->Detect();
   auto const& attributes = resource.GetAttributes();
 
@@ -398,8 +478,32 @@ TEST(ResourceDetector, Gce) {
       }));
 }
 
+TEST(ResourceDetector, CachesAttributes) {
+  testing_util::ScopedEnvironment e1("KUBERNETES_SERVICE_HOST", absl::nullopt);
+  testing_util::ScopedEnvironment e2("FUNCTION_TARGET", absl::nullopt);
+  testing_util::ScopedEnvironment e3("K_CONFIGURATION", absl::nullopt);
+  testing_util::ScopedEnvironment e4("GAE_SERVICE", absl::nullopt);
+  auto constexpr kPayload = R"json({
+  "instance": {
+    "id": 1020304050607080900,
+    "machineType": "projects/1234567890/machineTypes/c2d-standard-16",
+    "name": "test-instance",
+    "zone": "projects/1234567890/zones/us-central1-a"
+  },
+  "project": {
+    "projectId": "test-project"
+  }
+})json";
+
+  // Note that this detector expects exactly one RestClient::Get() call.
+  auto detector = MakeTestDetector(kPayload);
+  (void)detector->Detect();
+  (void)detector->Detect();
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel
 }  // namespace cloud
 }  // namespace google
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
