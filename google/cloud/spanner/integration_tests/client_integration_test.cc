@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/mutations.h"
@@ -81,6 +82,15 @@ class PgClientIntegrationTest
     if (UsingEmulator()) return;
     auto commit_result = client_->Commit(
         Mutations{MakeDeleteMutation("Singers", KeySet::All())});
+    ASSERT_STATUS_OK(commit_result);
+  }
+
+  static void InsertTwoSingers() {
+    auto commit_result = client_->Commit(Mutations{
+        InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
+            .EmplaceRow(1, "test-fname-1", "test-lname-1")
+            .EmplaceRow(2, "test-fname-2", "test-lname-2")
+            .Build()});
     ASSERT_STATUS_OK(commit_result);
   }
 
@@ -939,6 +949,84 @@ TEST_F(PgClientIntegrationTest, DatabaseDialect) {
     if (!row) break;
     EXPECT_EQ("POSTGRESQL", std::get<0>(*row));
   }
+}
+
+/// @test Verify use of database role to read data.
+TEST_F(ClientIntegrationTest, FineGrainedAccessControl) {
+  if (UsingEmulator()) GTEST_SKIP();
+  ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
+
+  spanner_admin::DatabaseAdminClient admin_client(
+      spanner_admin::MakeDatabaseAdminConnection());
+
+  std::vector<std::string> statements = {
+      "CREATE ROLE Reader",
+      "GRANT SELECT ON TABLE Singers TO ROLE Reader",
+  };
+  auto metadata =
+      admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
+          .get();
+  ASSERT_STATUS_OK(metadata);
+
+  // Connect to the database using the Reader role.
+  auto client = Client(MakeConnection(
+      GetDatabase(),
+      google::cloud::Options{}.set<SessionCreatorRoleOption>("Reader")));
+  auto rows = client.ExecuteQuery(
+      SqlStatement("SELECT SingerId, FirstName, LastName FROM Singers"));
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    EXPECT_STATUS_OK(row);
+    if (!row) break;
+  }
+
+  statements = {
+      "REVOKE SELECT ON TABLE Singers FROM ROLE Reader",
+      "DROP ROLE Reader",
+  };
+  metadata =
+      admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
+          .get();
+  ASSERT_STATUS_OK(metadata);
+}
+
+/// @test Verify use of database role to read data.
+TEST_F(PgClientIntegrationTest, FineGrainedAccessControl) {
+  if (UsingEmulator()) GTEST_SKIP();
+  ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
+
+  spanner_admin::DatabaseAdminClient admin_client(
+      spanner_admin::MakeDatabaseAdminConnection());
+
+  std::vector<std::string> statements = {
+      "CREATE ROLE Reader",
+      "GRANT SELECT ON TABLE Singers TO Reader",
+  };
+  auto metadata =
+      admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
+          .get();
+  ASSERT_STATUS_OK(metadata);
+
+  // Connect to the database using the Reader role.
+  auto client = Client(MakeConnection(
+      GetDatabase(),
+      google::cloud::Options{}.set<SessionCreatorRoleOption>("Reader")));
+  auto rows = client.ExecuteQuery(
+      SqlStatement("SELECT SingerId, FirstName, LastName FROM Singers"));
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    EXPECT_STATUS_OK(row);
+    if (!row) break;
+  }
+
+  statements = {
+      "REVOKE SELECT ON TABLE Singers FROM Reader",
+      "DROP ROLE Reader",
+  };
+  metadata =
+      admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
+          .get();
+  ASSERT_STATUS_OK(metadata);
 }
 
 /// @test Verify version_retention_period is returned in information schema.
