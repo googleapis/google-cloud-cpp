@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/benchmarks/throughput_options.h"
 #include "google/cloud/storage/options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/time.h"
@@ -347,10 +348,20 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
        [&options](std::string const& val) {
          options.grpc_options.set<EndpointOption>(val);
        }},
+      {"--gprc-authority-hostname",
+       "sets the ALTS call host for gRPC-based benchmarks",
+       [&options](std::string const& val) {
+         options.grpc_options.set<AuthorityOption>(val);
+       }},
       {"--direct-path-endpoint",
        "sets the endpoint for gRPC+DirectPath-based benchmarks",
        [&options](std::string const& val) {
          options.direct_path_options.set<EndpointOption>(val);
+       }},
+      {"--direct-path-authority-hostname",
+       "sets the ALTS call host for gRPC+DirectPath-based benchmarks",
+       [&options](std::string const& val) {
+         options.direct_path_options.set<AuthorityOption>(val);
        }},
       {"--transfer-stall-timeout",
        "configure `storage::TransferStallTimeoutOption`: the maximum time"
