@@ -81,8 +81,12 @@ google_cloud_cpp_proto_library(
 foreach (fname ${pubsub_client_integration_samples})
     google_cloud_cpp_add_executable(target "pubsub" "${fname}")
     add_test(NAME ${target} COMMAND ${target})
-    set_tests_properties(${target} PROPERTIES ENVIRONMENT GOOGLE_CLOUD_CPP_PUBSUB_TESTDATA=${CMAKE_CURRENT_SOURCE_DIR}/testdata/)
-    set_target_properties(${target} PROPERTIES ENVIRONMENT GOOGLE_CLOUD_CPP_PUBSUB_TESTDATA=${CMAKE_CURRENT_SOURCE_DIR}/testdata/)
+    set_tests_properties(
+        ${target}
+        PROPERTIES
+            ENVIRONMENT
+            GOOGLE_CLOUD_CPP_PUBSUB_TESTDATA=${CMAKE_CURRENT_SOURCE_DIR}/testdata/
+    )
     target_link_libraries(
         ${target} PRIVATE pubsub_samples_protos pubsub_samples_common
                           google_cloud_cpp_testing google-cloud-cpp::pubsub)
