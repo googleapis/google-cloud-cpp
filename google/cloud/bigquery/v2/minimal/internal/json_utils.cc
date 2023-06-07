@@ -54,8 +54,8 @@ void FromJson(std::chrono::system_clock::time_point& field,
   if (l == j.end()) return;
   std::int64_t m;
   l->get_to(m);
-  field = std::chrono::time_point<std::chrono::system_clock>(
-      std::chrono::milliseconds(m));
+  field =
+      std::chrono::system_clock::from_time_t(0) + std::chrono::milliseconds(m);
 }
 
 void ToJson(std::chrono::system_clock::time_point const& field,
