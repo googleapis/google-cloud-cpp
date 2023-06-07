@@ -22,7 +22,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::bigquery_v2_minimal_testing::AssertJobQueryStatsEquals;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeJobQueryStats;
 
 TEST(JobQueryStatsTest, JobQueryStatsToFromJson) {
@@ -128,7 +127,7 @@ TEST(JobQueryStatsTest, JobQueryStatsToFromJson) {
   JobQueryStatistics actual;
   from_json(actual_json, actual);
 
-  AssertJobQueryStatsEquals(expected, actual);
+  bigquery_v2_minimal_testing::AssertEquals(expected, actual);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

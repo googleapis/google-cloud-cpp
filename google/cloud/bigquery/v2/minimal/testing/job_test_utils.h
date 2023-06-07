@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_TESTING_JOB_TEST_UTILS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_TESTING_JOB_TEST_UTILS_H
 
+#include "google/cloud/bigquery/v2/minimal/internal/job.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_query_stats.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_stats.h"
 
@@ -24,13 +25,20 @@ namespace bigquery_v2_minimal_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 bigquery_v2_minimal_internal::JobQueryStatistics MakeJobQueryStats();
-void AssertJobQueryStatsEquals(
-    bigquery_v2_minimal_internal::JobQueryStatistics& expected,
-    bigquery_v2_minimal_internal::JobQueryStatistics& actual);
+void AssertEquals(bigquery_v2_minimal_internal::JobQueryStatistics& expected,
+                  bigquery_v2_minimal_internal::JobQueryStatistics& actual);
 
 bigquery_v2_minimal_internal::JobStatistics MakeJobStats();
-void AssertJobStatsEquals(bigquery_v2_minimal_internal::JobStatistics& expected,
-                          bigquery_v2_minimal_internal::JobStatistics& actual);
+void AssertEquals(bigquery_v2_minimal_internal::JobStatistics& expected,
+                  bigquery_v2_minimal_internal::JobStatistics& actual);
+
+bigquery_v2_minimal_internal::Job MakeJob();
+void AssertEquals(bigquery_v2_minimal_internal::Job& expected,
+                  bigquery_v2_minimal_internal::Job& actual);
+
+bigquery_v2_minimal_internal::ListFormatJob MakeListFormatJob();
+void AssertEquals(bigquery_v2_minimal_internal::ListFormatJob& expected,
+                  bigquery_v2_minimal_internal::ListFormatJob& actual);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_testing

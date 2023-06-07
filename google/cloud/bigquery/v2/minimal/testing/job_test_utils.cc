@@ -31,8 +31,10 @@ using ::google::cloud::bigquery_v2_minimal_internal::ExplainQueryStage;
 using ::google::cloud::bigquery_v2_minimal_internal::IndexedUnusedReasonCode;
 using ::google::cloud::bigquery_v2_minimal_internal::IndexUnusedReason;
 using ::google::cloud::bigquery_v2_minimal_internal::IndexUsageMode;
+using ::google::cloud::bigquery_v2_minimal_internal::Job;
 using ::google::cloud::bigquery_v2_minimal_internal::JobQueryStatistics;
 using ::google::cloud::bigquery_v2_minimal_internal::JobStatistics;
+using ::google::cloud::bigquery_v2_minimal_internal::ListFormatJob;
 using ::google::cloud::bigquery_v2_minimal_internal::MaterializedView;
 using ::google::cloud::bigquery_v2_minimal_internal::MaterializedViewStatistics;
 using ::google::cloud::bigquery_v2_minimal_internal::MetadataCacheStatistics;
@@ -296,7 +298,64 @@ JobStatistics MakeJobStats() {
   return stats;
 }
 
-void AssertJobStatsEquals(JobStatistics& expected, JobStatistics& actual) {
+Job MakeJob() {
+  Job job;
+  job.etag = "etag";
+  job.id = "1";
+  job.kind = "Job";
+  job.reference.project_id = "1";
+  job.reference.job_id = "2";
+  job.status.state = "DONE";
+  job.configuration.job_type = "QUERY";
+  job.configuration.query_config.query = "select 1;";
+  job.statistics = MakeJobStats();
+
+  return job;
+}
+
+ListFormatJob MakeListFormatJob() {
+  ListFormatJob job;
+  job.id = "1";
+  job.kind = "Job";
+  job.reference.project_id = "1";
+  job.reference.job_id = "2";
+  job.state = "DONE";
+  job.status.state = "DONE";
+  job.configuration.job_type = "QUERY";
+  job.configuration.query_config.query = "select 1;";
+  job.statistics = MakeJobStats();
+
+  return job;
+}
+
+void AssertEquals(Job& expected, Job& actual) {
+  EXPECT_EQ(expected.etag, actual.etag);
+  EXPECT_EQ(expected.id, actual.id);
+  EXPECT_EQ(expected.kind, actual.kind);
+  EXPECT_EQ(expected.reference.project_id, actual.reference.project_id);
+  EXPECT_EQ(expected.reference.job_id, actual.reference.job_id);
+  EXPECT_EQ(expected.status.state, actual.status.state);
+  EXPECT_EQ(expected.configuration.job_type, actual.configuration.job_type);
+  EXPECT_EQ(expected.configuration.query_config.query,
+            actual.configuration.query_config.query);
+
+  AssertEquals(expected.statistics, actual.statistics);
+}
+
+void AssertEquals(ListFormatJob& expected, ListFormatJob& actual) {
+  EXPECT_EQ(expected.id, actual.id);
+  EXPECT_EQ(expected.kind, actual.kind);
+  EXPECT_EQ(expected.reference.project_id, actual.reference.project_id);
+  EXPECT_EQ(expected.reference.job_id, actual.reference.job_id);
+  EXPECT_EQ(expected.status.state, actual.status.state);
+  EXPECT_EQ(expected.configuration.job_type, actual.configuration.job_type);
+  EXPECT_EQ(expected.configuration.query_config.query,
+            actual.configuration.query_config.query);
+
+  AssertEquals(expected.statistics, actual.statistics);
+}
+
+void AssertEquals(JobStatistics& expected, JobStatistics& actual) {
   EXPECT_EQ(expected.creation_time, actual.creation_time);
   EXPECT_EQ(expected.start_time, actual.start_time);
   EXPECT_EQ(expected.end_time, actual.end_time);
@@ -323,12 +382,11 @@ void AssertJobStatsEquals(JobStatistics& expected, JobStatistics& actual) {
                          actual.quota_deferments.begin()));
 
   EXPECT_EQ(expected.script_statistics, actual.script_statistics);
-  AssertJobQueryStatsEquals(expected.job_query_stats, actual.job_query_stats);
+  AssertEquals(expected.job_query_stats, actual.job_query_stats);
 }
 
-void AssertJobQueryStatsEquals(
-    bigquery_v2_minimal_internal::JobQueryStatistics& expected,
-    bigquery_v2_minimal_internal::JobQueryStatistics& actual) {
+void AssertEquals(bigquery_v2_minimal_internal::JobQueryStatistics& expected,
+                  bigquery_v2_minimal_internal::JobQueryStatistics& actual) {
   EXPECT_EQ(expected.estimated_bytes_processed,
             actual.estimated_bytes_processed);
   EXPECT_EQ(expected.total_partitions_processed,
