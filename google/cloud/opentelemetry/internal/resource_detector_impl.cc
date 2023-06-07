@@ -20,6 +20,7 @@
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/log.h"
 #include "absl/strings/ascii.h"
+#include "absl/strings/match.h"
 #include <nlohmann/json.hpp>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
@@ -53,13 +54,13 @@ std::string FindRecursive(nlohmann::json json, std::deque<std::string> keys) {
 }
 
 bool ValidateHeaders(std::multimap<std::string, std::string> const& headers) {
-  auto expect = [&headers](char const* key, char const* value) {
-    auto type = headers.find(key);
-    return type != headers.end() &&
-           absl::AsciiStrToLower(type->second) == value;
-  };
-  return expect("content-type", "application/json") &&
-         expect("metadata-flavor", "google");
+  auto header = headers.find("content-type");
+  if (header == headers.end()) return false;
+  if (!absl::StartsWith(header->second, "application/json")) return false;
+
+  header = headers.find("metadata-flavor");
+  if (header == headers.end()) return false;
+  return absl::AsciiStrToLower(header->second) == "google";
 }
 
 bool ValidateJson(nlohmann::json const& json) {
@@ -84,22 +85,22 @@ class Parser {
   // `attributes_` member.
   void ProcessMetadataAndEnv() {
     SetAttribute(sc::kCloudProvider, "gcp");
-    SetAttribute(sc::kCloudAccountId, MD({"project", "projectId"}));
+    SetAttribute(sc::kCloudAccountId, Metadata({"project", "projectId"}));
 
     if (internal::GetEnv("KUBERNETES_SERVICE_HOST")) return Gke();
     if (internal::GetEnv("FUNCTION_TARGET")) return CloudFunctions();
     if (internal::GetEnv("K_CONFIGURATION")) return CloudRun();
     if (internal::GetEnv("GAE_SERVICE")) return Gae();
-    if (!MD({"instance", "machineType"}).empty()) return Gce();
+    if (!Metadata({"instance", "machineType"}).empty()) return Gce();
   }
 
   void Gke() {
     SetAttribute(sc::kCloudPlatform, "gcp_kubernetes_engine");
     SetAttribute(sc::kK8sClusterName,
-                 MD({"instance", "attributes", "cluster-name"}));
-    SetAttribute(sc::kHostId, MD({"instance", "id"}));
+                 Metadata({"instance", "attributes", "cluster-name"}));
+    SetAttribute(sc::kHostId, Metadata({"instance", "id"}));
     auto cluster_location =
-        Tail(MD({"instance", "attributes", "cluster-location"}));
+        Tail(Metadata({"instance", "attributes", "cluster-location"}));
 
     // The cluster location is either a region (us-west1) or a zone (us-west1-a)
     auto hyphen_count =
@@ -115,14 +116,14 @@ class Parser {
     SetAttribute(sc::kCloudPlatform, "gcp_cloud_functions");
     SetEnvAttribute(sc::kFaasName, "K_SERVICE");
     SetEnvAttribute(sc::kFaasVersion, "K_REVISION");
-    SetAttribute(sc::kFaasInstance, MD({"instance", "id"}));
+    SetAttribute(sc::kFaasInstance, Metadata({"instance", "id"}));
   }
 
   void CloudRun() {
     SetAttribute(sc::kCloudPlatform, "gcp_cloud_run");
     SetEnvAttribute(sc::kFaasName, "K_SERVICE");
     SetEnvAttribute(sc::kFaasVersion, "K_REVISION");
-    SetAttribute(sc::kFaasInstance, MD({"instance", "id"}));
+    SetAttribute(sc::kFaasInstance, Metadata({"instance", "id"}));
   }
 
   void Gae() {
@@ -131,7 +132,7 @@ class Parser {
     SetEnvAttribute(sc::kFaasVersion, "GAE_VERSION");
     SetEnvAttribute(sc::kFaasInstance, "GAE_INSTANCE");
 
-    auto zone = Tail(MD({"instance", "zone"}));
+    auto zone = Tail(Metadata({"instance", "zone"}));
     SetAttribute(sc::kCloudAvailabilityZone, zone);
     auto const pos = zone.rfind('-');
     SetAttribute(sc::kCloudRegion, zone.substr(0, pos));
@@ -139,17 +140,17 @@ class Parser {
 
   void Gce() {
     SetAttribute(sc::kCloudPlatform, "gcp_compute_engine");
-    SetAttribute(sc::kHostType, Tail(MD({"instance", "machineType"})));
-    SetAttribute(sc::kHostId, MD({"instance", "id"}));
-    SetAttribute(sc::kHostName, MD({"instance", "name"}));
+    SetAttribute(sc::kHostType, Tail(Metadata({"instance", "machineType"})));
+    SetAttribute(sc::kHostId, Metadata({"instance", "id"}));
+    SetAttribute(sc::kHostName, Metadata({"instance", "name"}));
 
-    auto zone = Tail(MD({"instance", "zone"}));
+    auto zone = Tail(Metadata({"instance", "zone"}));
     SetAttribute(sc::kCloudAvailabilityZone, zone);
     auto const pos = zone.rfind('-');
     SetAttribute(sc::kCloudRegion, zone.substr(0, pos));
   }
 
-  std::string MD(std::deque<std::string> keys) {
+  std::string Metadata(std::deque<std::string> keys) {
     return FindRecursive(metadata_, std::move(keys));
   }
 

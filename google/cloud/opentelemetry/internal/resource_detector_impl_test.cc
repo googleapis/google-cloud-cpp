@@ -61,7 +61,8 @@ auto expect_query = [] {
 };
 
 std::multimap<std::string, std::string> ExpectedHeaders() {
-  return {{"content-type", "application/json"}, {"metadata-flavor", "google"}};
+  return {{"content-type", "application/json; charset=utf-8"},
+          {"metadata-flavor", "google"}};
 }
 
 std::unique_ptr<opentelemetry::sdk::resource::ResourceDetector>
