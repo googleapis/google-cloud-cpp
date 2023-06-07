@@ -19,11 +19,15 @@
 google_cloud_cpp_opentelemetry_hdrs = [
     "configure_basic_tracing.h",
     "internal/recordable.h",
+    "internal/resource_detector_impl.h",
+    "resource_detector.h",
     "trace_exporter.h",
 ]
 
 google_cloud_cpp_opentelemetry_srcs = [
     "configure_basic_tracing.cc",
     "internal/recordable.cc",
+    "internal/resource_detector_impl.cc",
+    "resource_detector.cc",
     "trace_exporter.cc",
 ]
