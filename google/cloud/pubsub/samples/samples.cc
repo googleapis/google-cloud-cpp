@@ -26,6 +26,7 @@
 #include <google/cloud/pubsub/samples/samples.pb.h>
 #include <google/protobuf/text_format.h>
 #include <condition_variable>
+#include <iostream>
 #include <mutex>
 #include <string>
 #include <tuple>
@@ -1914,28 +1915,28 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
 }
 
 void AutoRunAvro(
-    std::string const& project_id,
+    std::string const& project_id, std::string const& testdata_directory,
     google::cloud::internal::DefaultPRNG& generator,
     google::cloud::pubsub::TopicAdminClient& topic_admin_client,
     google::cloud::pubsub::SubscriptionAdminClient& subscription_admin_client) {
   auto schema_admin = google::cloud::pubsub::SchemaServiceClient(
       google::cloud::pubsub::MakeSchemaServiceConnection());
   auto avro_schema_id = RandomSchemaId(generator);
-  auto constexpr kAvroSchemaDefinitionFile =
-      "./google/cloud/pubsub/samples/testdata/schema.avsc";
-  auto constexpr kAvroMessageFile =
-      "./google/cloud/pubsub/samples/testdata/valid_message.avsc";
+  auto const avro_schema_definition_file =
+      absl::StrCat(testdata_directory, "schema.avsc");
+  auto const avro_message_file =
+      absl::StrCat(testdata_directory, "valid_message.avsc");
 
   std::cout << "\nRunning CreateAvroSchema() sample" << std::endl;
   CreateAvroSchema(schema_admin,
-                   {project_id, avro_schema_id, kAvroSchemaDefinitionFile});
+                   {project_id, avro_schema_id, avro_schema_definition_file});
 
   std::cout << "\nRunning ValidateAvroSchema() sample" << std::endl;
-  ValidateAvroSchema(schema_admin, {project_id, kAvroSchemaDefinitionFile});
+  ValidateAvroSchema(schema_admin, {project_id, avro_schema_definition_file});
 
   std::cout << "\nRunning ValidateMessageAvro() sample" << std::endl;
-  ValidateMessageAvro(
-      schema_admin, {project_id, kAvroSchemaDefinitionFile, kAvroMessageFile});
+  ValidateMessageAvro(schema_admin, {project_id, avro_schema_definition_file,
+                                     avro_message_file});
 
   std::cout << "\nRunning GetSchema sample" << std::endl;
   GetSchema(schema_admin, {project_id, avro_schema_id});
@@ -1984,33 +1985,34 @@ void AutoRunAvro(
 }
 
 void AutoRunProtobuf(
-    std::string const& project_id,
+    std::string const& project_id, std::string const& testdata_directory,
     google::cloud::internal::DefaultPRNG& generator,
     google::cloud::pubsub::TopicAdminClient& topic_admin_client,
     google::cloud::pubsub::SubscriptionAdminClient& subscription_admin_client) {
   auto schema_admin = google::cloud::pubsub::SchemaServiceClient(
       google::cloud::pubsub::MakeSchemaServiceConnection());
   auto proto_schema_id = RandomSchemaId(generator);
-  auto constexpr kProtoSchemaDefinitionFile =
-      "./google/cloud/pubsub/samples/testdata/schema.proto";
-  auto constexpr kProtoMessageFile =
-      "./google/cloud/pubsub/samples/testdata/valid_message.textproto";
+  auto const proto_schema_definition_file =
+      absl::StrCat(testdata_directory, "schema.proto");
+  auto const proto_message_file =
+      absl::StrCat(testdata_directory, "valid_message.textproto");
 
   std::cout << "\nRunning CreateProtobufSchema() sample" << std::endl;
-  CreateProtobufSchema(
-      schema_admin, {project_id, proto_schema_id, kProtoSchemaDefinitionFile});
+  CreateProtobufSchema(schema_admin, {project_id, proto_schema_id,
+                                      proto_schema_definition_file});
 
   std::cout << "\nRunning ValidateProtobufSchema() sample" << std::endl;
   ValidateProtobufSchema(schema_admin,
-                         {project_id, kProtoSchemaDefinitionFile});
+                         {project_id, proto_schema_definition_file});
 
   std::cout << "\nRunning ValidateMessageProtobuf() sample" << std::endl;
-  ValidateMessageProtobuf(schema_admin, {project_id, kProtoSchemaDefinitionFile,
-                                         kProtoMessageFile});
+  ValidateMessageProtobuf(
+      schema_admin,
+      {project_id, proto_schema_definition_file, proto_message_file});
 
   std::cout << "\nRunning ValidateMessageNamedSchema() sample" << std::endl;
   ValidateMessageNamedSchema(schema_admin,
-                             {project_id, proto_schema_id, kProtoMessageFile});
+                             {project_id, proto_schema_id, proto_message_file});
 
   std::cout << "\nRunning CreateTopicWithSchema() sample [proto]" << std::endl;
   auto const proto_topic_id = RandomTopicId(generator);
@@ -2060,11 +2062,15 @@ void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
-  examples::CheckEnvironmentVariablesAreSet({
-      "GOOGLE_CLOUD_PROJECT",
-  });
+  examples::CheckEnvironmentVariablesAreSet({"GOOGLE_CLOUD_PROJECT"});
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
+
+  // For CMake builds, use the environment variable. For Bazel builds, use the
+  // relative path to the file.
+  auto const testdata_directory =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_PUBSUB_TESTDATA")
+          .value_or("./google/cloud/pubsub/samples/testdata/");
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto const topic_id = RandomTopicId(generator);
@@ -2251,12 +2257,12 @@ void AutoRun(std::vector<std::string> const& argv) {
                     {project_id, subscription_id, "2"});
 
   ignore_emulator_failures([&] {
-    AutoRunAvro(project_id, generator, topic_admin_client,
+    AutoRunAvro(project_id, testdata_directory, generator, topic_admin_client,
                 subscription_admin_client);
   });
   ignore_emulator_failures([&] {
-    AutoRunProtobuf(project_id, generator, topic_admin_client,
-                    subscription_admin_client);
+    AutoRunProtobuf(project_id, testdata_directory, generator,
+                    topic_admin_client, subscription_admin_client);
   });
 
   auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
