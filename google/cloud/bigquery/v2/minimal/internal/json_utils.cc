@@ -61,7 +61,7 @@ void FromJson(std::chrono::system_clock::time_point& field,
 void ToJson(std::chrono::system_clock::time_point const& field,
             nlohmann::json& j, char const* name) {
   j[name] = std::chrono::duration_cast<std::chrono::milliseconds>(
-                field.time_since_epoch())
+                field - std::chrono::system_clock::from_time_t(0))
                 .count();
 }
 
