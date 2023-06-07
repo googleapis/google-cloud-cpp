@@ -209,7 +209,7 @@ TEST_F(ScaffoldGenerator, Readme) {
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr(R"""(
 [cloud-service-docs]: https://cloud.google.com/test
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-test/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/test/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/test
 )"""));
   EXPECT_THAT(actual, Not(HasSubstr("$construction$")));
