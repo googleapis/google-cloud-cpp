@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * @deprecated Use the options [`Options`](@ref google::cloud::Options) class
  * and set (as needed) [`EndpointOption`](@ref google::cloud::EndpointOption),
- * [`UserAgentProductsOption`](@ref googl::cloud::UserAgentProductsOption),
+ * [`UserAgentProductsOption`](@ref google::cloud::UserAgentProductsOption),
  * and [`GrpcNumChannelsOption`](@ref google::cloud::GrpcNumChannelsOption).
  *
- * [`ConnectionOptions<T>`]: @ref google::cloud::ConnectionOptions<T>
+ * [`ConnectionOptions<T>`]: @ref google::cloud::ConnectionOptions
  */
 struct ConnectionOptionsTraits {
   static std::string default_endpoint();

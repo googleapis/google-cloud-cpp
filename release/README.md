@@ -98,16 +98,10 @@ The `publish-docs` build should start automatically when you create the release
 branch. This build will upload the docs for the new release to the following
 URLs:
 
-- https://googleapis.dev/cpp/google-cloud-bigquery/latest/
-- https://googleapis.dev/cpp/google-cloud-bigtable/latest/
-- https://googleapis.dev/cpp/google-cloud-iam/latest/
-- https://googleapis.dev/cpp/google-cloud-pubsub/latest/
-- https://googleapis.dev/cpp/google-cloud-spanner/latest/
-- https://googleapis.dev/cpp/google-cloud-storage/latest/
-- https://googleapis.dev/cpp/google-cloud-common/latest/
+- https://cloud.google.com/cpp/docs/reference/
 
-It can take up to an hour after the build finishes for the new docs to show up
-at the above URLs. You can watch the status of the build at
+It can take up to a day after the build finishes for the new docs to show up
+at the above URL. You can watch the status of the build at
 https://console.cloud.google.com/cloud-build/builds;region=us-east1?project=cloud-cpp-testing-resources&query=tags%3D%22publish-docs%22
 
 ## Bump the version number in `main`

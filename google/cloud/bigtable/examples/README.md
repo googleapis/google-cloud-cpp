@@ -148,10 +148,10 @@ $ ./table_admin_iam_policy_snippets get-iam-policy <project-id> <instance-id> <t
 [cbt-doc-backups]: https://cloud.google.com/bigtable/docs/backups
 [cbt-doc-filters]: https://cloud.google.com/bigtable/docs/filters
 [cbt-doc-quickstart]: https://cloud.google.com/bigtable/docs/quickstart-cbt
-[doxygen-grpc]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-samples-grpc-credentials.html
-[doxygen-hello-world]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-hello-world.html
-[doxygen-instance-admin]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-hello-instance-admin.html
-[doxygen-table-admin]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-hello-table-admin.html
+[doxygen-grpc]: https://cloud.google.com/cpp/docs/reference/bigtable/latest/bigtable-samples-grpc-credentials
+[doxygen-hello-world]: https://cloud.google.com/cpp/docs/reference/bigtable/latest/bigtable-hello-world
+[doxygen-instance-admin]: https://cloud.google.com/cpp/docs/reference/bigtable/latest/bigtable-hello-instance-admin
+[doxygen-table-admin]: https://cloud.google.com/cpp/docs/reference/bigtable/latest/bigtable-hello-table-admin
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [hello-world-code]: bigtable_hello_world.cc
 [instance-admin-code]: bigtable_hello_instance_admin.cc
