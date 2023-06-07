@@ -43,16 +43,16 @@ function sed_edit() {
         ;;
     esac
   done
+  local tmp
+  tmp="$(mktemp /tmp/checkers.XXXXXX.tmp)"
   for file in "${files[@]}"; do
-    local tmp="${file}.tmp"
     sed "${expressions[@]}" "${file}" >"${tmp}"
-    if cmp -s "${file}" "${tmp}"; then
-      rm -f "${tmp}"
-    else
+    if ! cmp -s "${file}" "${tmp}"; then
       chmod --reference="${file}" "${tmp}"
-      mv -f "${tmp}" "${file}"
+      cp -f "${tmp}" "${file}"
     fi
   done
+  rm -f "${tmp}"
 }
 export -f sed_edit
 
@@ -133,7 +133,7 @@ time {
   # Adds a trailing newline if one doesn't already exist
   expressions+=("-e" "'\$a\'")
   git_files -z | grep -zv '\.gz$' | grep -zv 'googleapis.patch$' | grep -zv '\.png$' |
-    (xargs -r -P "$(nproc)" -n 50 -0 grep -ZPL "\b[D]O NOT EDIT\b" || true) |
+    (xargs -r -0 grep -ZPL "\b[D]O NOT EDIT\b" || true) |
     xargs -r -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
