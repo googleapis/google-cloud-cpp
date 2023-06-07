@@ -77,6 +77,8 @@ add_library(
     v2/minimal/internal/job_retry_policy.h
     v2/minimal/internal/job_stats.cc
     v2/minimal/internal/job_stats.h
+    v2/minimal/internal/json_utils.cc
+    v2/minimal/internal/json_utils.h
     v2/minimal/internal/log_wrapper.h
     v2/minimal/internal/project.cc
     v2/minimal/internal/project.h
@@ -260,6 +262,7 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_rest_stub_test.cc
         v2/minimal/internal/job_stats_test.cc
         v2/minimal/internal/job_test.cc
+        v2/minimal/internal/json_utils_test.cc
         v2/minimal/internal/project_client_test.cc
         v2/minimal/internal/project_connection_test.cc
         v2/minimal/internal/project_idempotency_policy_test.cc

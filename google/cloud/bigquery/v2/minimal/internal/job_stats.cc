@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_stats.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 
 namespace google {
 namespace cloud {
@@ -40,26 +41,16 @@ void to_json(nlohmann::json& j, JobStatistics const& s) {
       {"reservation_id", s.reservation_id},
       {"row_level_security_applied", s.row_level_security_applied},
       {"data_masking_applied", s.data_masking_applied},
-      {"start_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(s.start_time)
-           .count()},
-      {"end_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(s.end_time)
-           .count()},
-      {"creation_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(s.creation_time)
-           .count()},
-      {"total_slot_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(s.total_slot_time)
-           .count()},
-      {"final_execution_duration",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           s.final_execution_duration)
-           .count()},
       {"completion_ratio", s.completion_ratio},
       {"quota_deferments", s.quota_deferments},
       {"script_statistics", s.script_statistics},
       {"job_query_stats", s.job_query_stats}};
+
+  ToJson(s.start_time, j, "start_time");
+  ToJson(s.end_time, j, "end_time");
+  ToJson(s.creation_time, j, "creation_time");
+  ToJson(s.total_slot_time, j, "total_slot_time");
+  ToJson(s.final_execution_duration, j, "final_execution_duration");
 }
 
 void from_json(nlohmann::json const& j, JobStatistics& s) {
@@ -82,38 +73,18 @@ void from_json(nlohmann::json const& j, JobStatistics& s) {
     j.at("data_masking_applied").get_to(s.data_masking_applied);
   if (j.contains("completion_ratio"))
     j.at("completion_ratio").get_to(s.completion_ratio);
-  // TODO(#11786): Refactor initialization of chrono fields.
-  if (j.contains("start_time")) {
-    std::int64_t millis;
-    j.at("start_time").get_to(millis);
-    s.start_time = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("end_time")) {
-    std::int64_t millis;
-    j.at("end_time").get_to(millis);
-    s.end_time = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("creation_time")) {
-    std::int64_t millis;
-    j.at("creation_time").get_to(millis);
-    s.creation_time = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("total_slot_time")) {
-    std::int64_t millis;
-    j.at("total_slot_time").get_to(millis);
-    s.total_slot_time = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("final_execution_duration")) {
-    std::int64_t millis;
-    j.at("final_execution_duration").get_to(millis);
-    s.final_execution_duration = std::chrono::milliseconds(millis);
-  }
   if (j.contains("quota_deferments"))
     j.at("quota_deferments").get_to(s.quota_deferments);
   if (j.contains("script_statistics"))
     j.at("script_statistics").get_to(s.script_statistics);
   if (j.contains("job_query_stats"))
     j.at("job_query_stats").get_to(s.job_query_stats);
+
+  FromJson(s.start_time, j, "start_time");
+  FromJson(s.end_time, j, "end_time");
+  FromJson(s.creation_time, j, "creation_time");
+  FromJson(s.total_slot_time, j, "total_slot_time");
+  FromJson(s.final_execution_duration, j, "final_execution_duration");
 }
 
 bool operator==(ScriptStackFrame const& lhs, ScriptStackFrame const& rhs) {

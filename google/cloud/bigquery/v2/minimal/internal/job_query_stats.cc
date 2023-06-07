@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_query_stats.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 
 namespace google {
 namespace cloud {
@@ -148,47 +149,6 @@ void to_json(nlohmann::json& j, ExplainQueryStage const& q) {
       {"parallel_inputs", q.parallel_inputs},
       {"completed_parallel_inputs", q.completed_parallel_inputs},
       {"input_stages", q.input_stages},
-      {"start_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(q.start_time)
-           .count()},
-      {"end_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(q.end_time)
-           .count()},
-      {"slot_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(q.slot_time)
-           .count()},
-      {"wait_avg_time_spent",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           q.wait_avg_time_spent)
-           .count()},
-      {"wait_max_time_spent",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           q.wait_max_time_spent)
-           .count()},
-      {"read_avg_time_spent",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           q.read_avg_time_spent)
-           .count()},
-      {"read_max_time_spent",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           q.read_max_time_spent)
-           .count()},
-      {"write_avg_time_spent",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           q.write_avg_time_spent)
-           .count()},
-      {"write_max_time_spent",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           q.write_max_time_spent)
-           .count()},
-      {"compute_avg_time_spent",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           q.compute_avg_time_spent)
-           .count()},
-      {"compute_max_time_spent",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           q.compute_max_time_spent)
-           .count()},
       {"wait_ratio_avg", q.wait_ratio_avg},
       {"wait_ratio_max", q.wait_ratio_max},
       {"read_ratio_avg", q.read_ratio_avg},
@@ -200,6 +160,18 @@ void to_json(nlohmann::json& j, ExplainQueryStage const& q) {
 
       {"steps", q.steps},
       {"compute_mode", q.compute_mode}};
+
+  ToJson(q.start_time, j, "start_time");
+  ToJson(q.end_time, j, "end_time");
+  ToJson(q.slot_time, j, "slot_time");
+  ToJson(q.wait_avg_time_spent, j, "wait_avg_time_spent");
+  ToJson(q.wait_max_time_spent, j, "wait_max_time_spent");
+  ToJson(q.read_avg_time_spent, j, "read_avg_time_spent");
+  ToJson(q.read_max_time_spent, j, "read_max_time_spent");
+  ToJson(q.write_avg_time_spent, j, "write_avg_time_spent");
+  ToJson(q.write_max_time_spent, j, "write_max_time_spent");
+  ToJson(q.compute_avg_time_spent, j, "compute_avg_time_spent");
+  ToJson(q.compute_max_time_spent, j, "compute_max_time_spent");
 }
 
 void from_json(nlohmann::json const& j, ExplainQueryStage& q) {
@@ -218,61 +190,6 @@ void from_json(nlohmann::json const& j, ExplainQueryStage& q) {
   if (j.contains("completed_parallel_inputs"))
     j.at("completed_parallel_inputs").get_to(q.completed_parallel_inputs);
   if (j.contains("input_stages")) j.at("input_stages").get_to(q.input_stages);
-  if (j.contains("start_time")) {
-    std::int64_t millis;
-    j.at("start_time").get_to(millis);
-    q.start_time = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("end_time")) {
-    std::int64_t millis;
-    j.at("end_time").get_to(millis);
-    q.end_time = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("slot_time")) {
-    std::int64_t millis;
-    j.at("slot_time").get_to(millis);
-    q.slot_time = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("wait_avg_time_spent")) {
-    std::int64_t millis;
-    j.at("wait_avg_time_spent").get_to(millis);
-    q.wait_avg_time_spent = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("wait_max_time_spent")) {
-    std::int64_t millis;
-    j.at("wait_max_time_spent").get_to(millis);
-    q.wait_max_time_spent = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("read_avg_time_spent")) {
-    std::int64_t millis;
-    j.at("read_avg_time_spent").get_to(millis);
-    q.read_avg_time_spent = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("read_max_time_spent")) {
-    std::int64_t millis;
-    j.at("read_max_time_spent").get_to(millis);
-    q.read_max_time_spent = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("write_avg_time_spent")) {
-    std::int64_t millis;
-    j.at("write_avg_time_spent").get_to(millis);
-    q.write_avg_time_spent = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("write_max_time_spent")) {
-    std::int64_t millis;
-    j.at("write_max_time_spent").get_to(millis);
-    q.write_max_time_spent = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("compute_avg_time_spent")) {
-    std::int64_t millis;
-    j.at("compute_avg_time_spent").get_to(millis);
-    q.compute_avg_time_spent = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("compute_max_time_spent")) {
-    std::int64_t millis;
-    j.at("compute_max_time_spent").get_to(millis);
-    q.compute_max_time_spent = std::chrono::milliseconds(millis);
-  }
   if (j.contains("wait_ratio_avg"))
     j.at("wait_ratio_avg").get_to(q.wait_ratio_avg);
   if (j.contains("wait_ratio_max"))
@@ -291,33 +208,31 @@ void from_json(nlohmann::json const& j, ExplainQueryStage& q) {
     j.at("write_ratio_max").get_to(q.write_ratio_max);
   if (j.contains("steps")) j.at("steps").get_to(q.steps);
   if (j.contains("compute_mode")) j.at("compute_mode").get_to(q.compute_mode);
+
+  FromJson(q.start_time, j, "start_time");
+  FromJson(q.end_time, j, "end_time");
+  FromJson(q.slot_time, j, "slot_time");
+  FromJson(q.wait_avg_time_spent, j, "wait_avg_time_spent");
+  FromJson(q.wait_max_time_spent, j, "wait_max_time_spent");
+  FromJson(q.read_avg_time_spent, j, "read_avg_time_spent");
+  FromJson(q.read_max_time_spent, j, "read_max_time_spent");
+  FromJson(q.write_avg_time_spent, j, "write_avg_time_spent");
+  FromJson(q.write_max_time_spent, j, "write_max_time_spent");
+  FromJson(q.compute_avg_time_spent, j, "compute_avg_time_spent");
+  FromJson(q.compute_max_time_spent, j, "compute_max_time_spent");
 }
 
 void to_json(nlohmann::json& j, QueryTimelineSample const& q) {
-  j = nlohmann::json{
-      {"elapsed_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(q.elapsed_time)
-           .count()},
-      {"total_slot_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(q.total_slot_time)
-           .count()},
-      {"pending_units", q.pending_units},
-      {"completed_units", q.completed_units},
-      {"active_units", q.active_units},
-      {"estimated_runnable_units", q.estimated_runnable_units}};
+  j = nlohmann::json{{"pending_units", q.pending_units},
+                     {"completed_units", q.completed_units},
+                     {"active_units", q.active_units},
+                     {"estimated_runnable_units", q.estimated_runnable_units}};
+
+  ToJson(q.elapsed_time, j, "elapsed_time");
+  ToJson(q.total_slot_time, j, "total_slot_time");
 }
 
 void from_json(nlohmann::json const& j, QueryTimelineSample& q) {
-  if (j.contains("elapsed_time")) {
-    std::int64_t millis;
-    j.at("elapsed_time").get_to(millis);
-    q.elapsed_time = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("total_slot_time")) {
-    std::int64_t millis;
-    j.at("total_slot_time").get_to(millis);
-    q.total_slot_time = std::chrono::milliseconds(millis);
-  }
   if (j.contains("pending_units"))
     j.at("pending_units").get_to(q.pending_units);
   if (j.contains("completed_units"))
@@ -325,31 +240,29 @@ void from_json(nlohmann::json const& j, QueryTimelineSample& q) {
   if (j.contains("active_units")) j.at("active_units").get_to(q.active_units);
   if (j.contains("estimated_runnable_units"))
     j.at("estimated_runnable_units").get_to(q.estimated_runnable_units);
+
+  FromJson(q.elapsed_time, j, "elapsed_time");
+  FromJson(q.total_slot_time, j, "total_slot_time");
 }
 
 void to_json(nlohmann::json& j, PerformanceInsights const& p) {
-  j = nlohmann::json{{"avg_previous_execution_time",
-                      std::chrono::duration_cast<std::chrono::milliseconds>(
-                          p.avg_previous_execution_time)
-                          .count()},
-                     {"stage_performance_standalone_insights",
+  j = nlohmann::json{{"stage_performance_standalone_insights",
                       p.stage_performance_standalone_insights},
                      {"stage_performance_change_insights",
                       p.stage_performance_change_insights}};
+
+  ToJson(p.avg_previous_execution_time, j, "avg_previous_execution_time");
 }
 
 void from_json(nlohmann::json const& j, PerformanceInsights& p) {
-  if (j.contains("avg_previous_execution_time")) {
-    std::int64_t millis;
-    j.at("avg_previous_execution_time").get_to(millis);
-    p.avg_previous_execution_time = std::chrono::milliseconds(millis);
-  }
   if (j.contains("stage_performance_standalone_insights"))
     j.at("stage_performance_standalone_insights")
         .get_to(p.stage_performance_standalone_insights);
   if (j.contains("stage_performance_change_insights"))
     j.at("stage_performance_change_insights")
         .get_to(p.stage_performance_change_insights);
+
+  FromJson(p.avg_previous_execution_time, j, "avg_previous_execution_time");
 }
 
 void to_json(nlohmann::json& j, JobQueryStatistics const& q) {
@@ -366,9 +279,6 @@ void to_json(nlohmann::json& j, JobQueryStatistics const& q) {
       {"total_bytes_processed_accuracy", q.total_bytes_processed_accuracy},
       {"statement_type", q.statement_type},
       {"ddl_operation_performed", q.ddl_operation_performed},
-      {"total_slot_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(q.total_slot_time)
-           .count()},
       {"cache_hit", q.cache_hit},
       {"query_plan", q.query_plan},
       {"timeline", q.timeline},
@@ -389,6 +299,8 @@ void to_json(nlohmann::json& j, JobQueryStatistics const& q) {
       {"performance_insights", q.performance_insights},
       {"materialized_view_statistics", q.materialized_view_statistics},
       {"metadata_cache_statistics", q.metadata_cache_statistics}};
+
+  ToJson(q.total_slot_time, j, "total_slot_time");
 }
 
 void from_json(nlohmann::json const& j, JobQueryStatistics& q) {
@@ -415,11 +327,6 @@ void from_json(nlohmann::json const& j, JobQueryStatistics& q) {
     j.at("statement_type").get_to(q.statement_type);
   if (j.contains("ddl_operation_performed"))
     j.at("ddl_operation_performed").get_to(q.ddl_operation_performed);
-  if (j.contains("total_slot_time")) {
-    std::int64_t millis;
-    j.at("total_slot_time").get_to(millis);
-    q.total_slot_time = std::chrono::milliseconds(millis);
-  }
   if (j.contains("cache_hit")) j.at("cache_hit").get_to(q.cache_hit);
   if (j.contains("query_plan")) j.at("query_plan").get_to(q.query_plan);
   if (j.contains("timeline")) j.at("timeline").get_to(q.timeline);
@@ -455,6 +362,8 @@ void from_json(nlohmann::json const& j, JobQueryStatistics& q) {
     j.at("materialized_view_statistics").get_to(q.materialized_view_statistics);
   if (j.contains("metadata_cache_statistics"))
     j.at("metadata_cache_statistics").get_to(q.metadata_cache_statistics);
+
+  FromJson(q.total_slot_time, j, "total_slot_time");
 }
 
 bool operator==(MaterializedView const& lhs, MaterializedView const& rhs) {

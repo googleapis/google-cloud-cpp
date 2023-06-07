@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/dataset.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 
@@ -54,24 +55,6 @@ void to_json(nlohmann::json& j, Dataset const& d) {
       {"default_collation", d.default_collation},
       {"published", d.published},
       {"is_case_insensitive", d.is_case_insensitive},
-      {"default_table_expiration",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           d.default_table_expiration)
-           .count()},
-      {"default_partition_expiration",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           d.default_partition_expiration)
-           .count()},
-      {"creation_time", std::chrono::duration_cast<std::chrono::milliseconds>(
-                            d.creation_time.time_since_epoch())
-                            .count()},
-      {"last_modified_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           d.last_modified_time.time_since_epoch())
-           .count()},
-      {"max_time_travel",
-       std::chrono::duration_cast<std::chrono::hours>(d.max_time_travel)
-           .count()},
       {"labels", d.labels},
       {"access", d.access},
       {"tags", d.tags},
@@ -81,6 +64,12 @@ void to_json(nlohmann::json& j, Dataset const& d) {
       {"external_dataset_reference", d.external_dataset_reference},
       {"default_rounding_mode", d.default_rounding_mode},
       {"storage_billing_model", d.storage_billing_model}};
+
+  ToJson(d.default_table_expiration, j, "default_table_expiration");
+  ToJson(d.default_partition_expiration, j, "default_partition_expiration");
+  ToJson(d.creation_time, j, "creation_time");
+  ToJson(d.last_modified_time, j, "last_modified_time");
+  ToJson(d.max_time_travel, j, "max_time_travel");
 }
 
 void from_json(nlohmann::json const& j, Dataset& d) {
@@ -98,33 +87,6 @@ void from_json(nlohmann::json const& j, Dataset& d) {
   if (j.contains("published")) j.at("published").get_to(d.published);
   if (j.contains("is_case_insensitive"))
     j.at("is_case_insensitive").get_to(d.is_case_insensitive);
-  if (j.contains("default_table_expiration")) {
-    std::int64_t millis;
-    j.at("default_table_expiration").get_to(millis);
-    d.default_table_expiration = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("default_partition_expiration")) {
-    std::int64_t millis;
-    j.at("default_partition_expiration").get_to(millis);
-    d.default_partition_expiration = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("creation_time")) {
-    std::int64_t millis;
-    j.at("creation_time").get_to(millis);
-    d.creation_time = std::chrono::time_point<std::chrono::system_clock>(
-        std::chrono::milliseconds(millis));
-  }
-  if (j.contains("last_modified_time")) {
-    std::int64_t millis;
-    j.at("last_modified_time").get_to(millis);
-    d.last_modified_time = std::chrono::time_point<std::chrono::system_clock>(
-        std::chrono::milliseconds(millis));
-  }
-  if (j.contains("max_time_travel")) {
-    std::int64_t hours;
-    j.at("max_time_travel").get_to(hours);
-    d.max_time_travel = std::chrono::hours(hours);
-  }
   if (j.contains("labels")) j.at("labels").get_to(d.labels);
   if (j.contains("access")) j.at("access").get_to(d.access);
   if (j.contains("tags")) j.at("tags").get_to(d.tags);
@@ -138,6 +100,12 @@ void from_json(nlohmann::json const& j, Dataset& d) {
     j.at("default_rounding_mode").get_to(d.default_rounding_mode);
   if (j.contains("storage_billing_model"))
     j.at("storage_billing_model").get_to(d.storage_billing_model);
+
+  FromJson(d.default_table_expiration, j, "default_table_expiration");
+  FromJson(d.default_partition_expiration, j, "default_partition_expiration");
+  FromJson(d.creation_time, j, "creation_time");
+  FromJson(d.last_modified_time, j, "last_modified_time");
+  FromJson(d.max_time_travel, j, "max_time_travel");
 }
 
 std::string LinkedDatasetSource::DebugString(absl::string_view name,
