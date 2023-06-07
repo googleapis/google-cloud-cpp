@@ -94,6 +94,16 @@ Idempotency VmwareEngineConnectionIdempotencyPolicy::ListSubnets(
   return Idempotency::kIdempotent;
 }
 
+Idempotency VmwareEngineConnectionIdempotencyPolicy::GetSubnet(
+    google::cloud::vmwareengine::v1::GetSubnetRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::UpdateSubnet(
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency VmwareEngineConnectionIdempotencyPolicy::ListNodeTypes(
     google::cloud::vmwareengine::v1::ListNodeTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -187,6 +197,38 @@ Idempotency VmwareEngineConnectionIdempotencyPolicy::GetVmwareEngineNetwork(
 Idempotency VmwareEngineConnectionIdempotencyPolicy::ListVmwareEngineNetworks(
     google::cloud::vmwareengine::v1::
         ListVmwareEngineNetworksRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::CreatePrivateConnection(
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::GetPrivateConnection(
+    google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::ListPrivateConnections(
+    google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::UpdatePrivateConnection(
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VmwareEngineConnectionIdempotencyPolicy::DeletePrivateConnection(
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+VmwareEngineConnectionIdempotencyPolicy::ListPrivateConnectionPeeringRoutes(
+    google::cloud::vmwareengine::v1::
+        ListPrivateConnectionPeeringRoutesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

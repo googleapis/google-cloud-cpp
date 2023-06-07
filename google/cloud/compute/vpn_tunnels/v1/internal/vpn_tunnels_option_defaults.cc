@@ -46,8 +46,9 @@ Options VpnTunnelsDefaultOptions(Options options) {
   }
   if (!options.has<compute_vpn_tunnels_v1::VpnTunnelsBackoffPolicyOption>()) {
     options.set<compute_vpn_tunnels_v1::VpnTunnelsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_vpn_tunnels_v1::VpnTunnelsPollingPolicyOption>()) {
@@ -57,9 +58,9 @@ Options VpnTunnelsDefaultOptions(Options options) {
             compute_vpn_tunnels_v1::VpnTunnelsBackoffPolicyOption::Type>(
             options.get<compute_vpn_tunnels_v1::VpnTunnelsRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<compute_vpn_tunnels_v1::VpnTunnelsBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<compute_vpn_tunnels_v1::

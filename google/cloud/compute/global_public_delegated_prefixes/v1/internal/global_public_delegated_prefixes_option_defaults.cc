@@ -54,8 +54,9 @@ Options GlobalPublicDelegatedPrefixesDefaultOptions(Options options) {
                        GlobalPublicDelegatedPrefixesBackoffPolicyOption>()) {
     options.set<compute_global_public_delegated_prefixes_v1::
                     GlobalPublicDelegatedPrefixesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_global_public_delegated_prefixes_v1::
@@ -71,10 +72,9 @@ Options GlobalPublicDelegatedPrefixesDefaultOptions(Options options) {
                 .get<compute_global_public_delegated_prefixes_v1::
                          GlobalPublicDelegatedPrefixesRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<compute_global_public_delegated_prefixes_v1::
-                         GlobalPublicDelegatedPrefixesBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

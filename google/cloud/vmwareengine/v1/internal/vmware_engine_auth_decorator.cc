@@ -209,6 +209,33 @@ VmwareEngineAuth::ListSubnets(
   return child_->ListSubnets(context, request);
 }
 
+StatusOr<google::cloud::vmwareengine::v1::Subnet> VmwareEngineAuth::GetSubnet(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetSubnetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetSubnet(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineAuth::AsyncUpdateSubnet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateSubnet(cq, *std::move(context), request);
+      });
+}
+
 StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
 VmwareEngineAuth::ListNodeTypes(
     grpc::ClientContext& context,
@@ -492,6 +519,100 @@ VmwareEngineAuth::ListVmwareEngineNetworks(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListVmwareEngineNetworks(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineAuth::AsyncCreatePrivateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreatePrivateConnection(cq, *std::move(context),
+                                                   request);
+      });
+}
+
+StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
+VmwareEngineAuth::GetPrivateConnection(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetPrivateConnection(context, request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse>
+VmwareEngineAuth::ListPrivateConnections(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListPrivateConnections(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineAuth::AsyncUpdatePrivateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdatePrivateConnection(cq, *std::move(context),
+                                                   request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineAuth::AsyncDeletePrivateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeletePrivateConnection(cq, *std::move(context),
+                                                   request);
+      });
+}
+
+StatusOr<
+    google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesResponse>
+VmwareEngineAuth::ListPrivateConnectionPeeringRoutes(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::
+        ListPrivateConnectionPeeringRoutesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListPrivateConnectionPeeringRoutes(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

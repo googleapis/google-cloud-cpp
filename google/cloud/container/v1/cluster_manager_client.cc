@@ -487,6 +487,14 @@ ClusterManagerClient::ListUsableSubnetworks(
   return connection_->ListUsableSubnetworks(std::move(request));
 }
 
+StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+ClusterManagerClient::CheckAutopilotCompatibility(
+    google::container::v1::CheckAutopilotCompatibilityRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CheckAutopilotCompatibility(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1
 }  // namespace cloud

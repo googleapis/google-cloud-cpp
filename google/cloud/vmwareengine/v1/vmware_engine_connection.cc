@@ -128,6 +128,20 @@ VmwareEngineConnection::ListSubnets(
       StreamRange<google::cloud::vmwareengine::v1::Subnet>>();
 }
 
+StatusOr<google::cloud::vmwareengine::v1::Subnet>
+VmwareEngineConnection::GetSubnet(
+    google::cloud::vmwareengine::v1::GetSubnetRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
+VmwareEngineConnection::UpdateSubnet(
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::Subnet>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::vmwareengine::v1::NodeType>
 VmwareEngineConnection::ListNodeTypes(
     google::cloud::vmwareengine::v1::
@@ -266,6 +280,52 @@ VmwareEngineConnection::ListVmwareEngineNetworks(
         ListVmwareEngineNetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>();
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineConnection::CreatePrivateConnection(
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
+VmwareEngineConnection::GetPrivateConnection(
+    google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
+VmwareEngineConnection::ListPrivateConnections(
+    google::cloud::vmwareengine::v1::
+        ListPrivateConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>>();
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineConnection::UpdatePrivateConnection(
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnection::DeletePrivateConnection(
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+VmwareEngineConnection::ListPrivateConnectionPeeringRoutes(
+    google::cloud::vmwareengine::v1::
+        ListPrivateConnectionPeeringRoutesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>>();
 }
 
 std::shared_ptr<VmwareEngineConnection> MakeVmwareEngineConnection(

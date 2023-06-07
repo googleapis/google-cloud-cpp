@@ -46,8 +46,9 @@ Options SubnetworksDefaultOptions(Options options) {
   }
   if (!options.has<compute_subnetworks_v1::SubnetworksBackoffPolicyOption>()) {
     options.set<compute_subnetworks_v1::SubnetworksBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_subnetworks_v1::SubnetworksPollingPolicyOption>()) {
@@ -57,9 +58,9 @@ Options SubnetworksDefaultOptions(Options options) {
             compute_subnetworks_v1::SubnetworksBackoffPolicyOption::Type>(
             options.get<compute_subnetworks_v1::SubnetworksRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<compute_subnetworks_v1::SubnetworksBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<compute_subnetworks_v1::

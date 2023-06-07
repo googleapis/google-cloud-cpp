@@ -48,8 +48,9 @@ Options BackendBucketsDefaultOptions(Options options) {
   if (!options.has<
           compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>()) {
     options.set<compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<
@@ -58,14 +59,14 @@ Options BackendBucketsDefaultOptions(Options options) {
         GenericPollingPolicy<
             compute_backend_buckets_v1::BackendBucketsRetryPolicyOption::Type,
             compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption::
-                Type>(options
-                          .get<compute_backend_buckets_v1::
-                                   BackendBucketsRetryPolicyOption>()
-                          ->clone(),
-                      options
-                          .get<compute_backend_buckets_v1::
-                                   BackendBucketsBackoffPolicyOption>()
-                          ->clone())
+                Type>(
+            options
+                .get<compute_backend_buckets_v1::
+                         BackendBucketsRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<compute_backend_buckets_v1::

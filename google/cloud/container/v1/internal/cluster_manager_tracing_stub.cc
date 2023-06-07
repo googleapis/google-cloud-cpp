@@ -421,6 +421,18 @@ ClusterManagerTracingStub::ListUsableSubnetworks(
                            child_->ListUsableSubnetworks(context, request));
 }
 
+StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+ClusterManagerTracingStub::CheckAutopilotCompatibility(
+    grpc::ClientContext& context,
+    google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
+                                     "CheckAutopilotCompatibility");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->CheckAutopilotCompatibility(context, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<ClusterManagerStub> MakeClusterManagerTracingStub(

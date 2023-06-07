@@ -53,8 +53,9 @@ Options RegionBackendServicesDefaultOptions(Options options) {
                        RegionBackendServicesBackoffPolicyOption>()) {
     options.set<compute_region_backend_services_v1::
                     RegionBackendServicesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_region_backend_services_v1::
@@ -70,10 +71,9 @@ Options RegionBackendServicesDefaultOptions(Options options) {
                 .get<compute_region_backend_services_v1::
                          RegionBackendServicesRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<compute_region_backend_services_v1::
-                         RegionBackendServicesBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

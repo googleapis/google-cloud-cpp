@@ -424,6 +424,19 @@ ClusterManagerLogging::ListUsableSubnetworks(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+ClusterManagerLogging::CheckAutopilotCompatibility(
+    grpc::ClientContext& context,
+    google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::container::v1::CheckAutopilotCompatibilityRequest const&
+                 request) {
+        return child_->CheckAutopilotCompatibility(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1_internal
 }  // namespace cloud

@@ -167,6 +167,12 @@ class ClusterManagerStub {
   ListUsableSubnetworks(
       grpc::ClientContext& context,
       google::container::v1::ListUsableSubnetworksRequest const& request) = 0;
+
+  virtual StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+  CheckAutopilotCompatibility(
+      grpc::ClientContext& context,
+      google::container::v1::CheckAutopilotCompatibilityRequest const&
+          request) = 0;
 };
 
 class DefaultClusterManagerStub : public ClusterManagerStub {
@@ -314,6 +320,12 @@ class DefaultClusterManagerStub : public ClusterManagerStub {
   ListUsableSubnetworks(
       grpc::ClientContext& client_context,
       google::container::v1::ListUsableSubnetworksRequest const& request)
+      override;
+
+  StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+  CheckAutopilotCompatibility(
+      grpc::ClientContext& client_context,
+      google::container::v1::CheckAutopilotCompatibilityRequest const& request)
       override;
 
  private:

@@ -53,8 +53,9 @@ Options PublicDelegatedPrefixesDefaultOptions(Options options) {
                        PublicDelegatedPrefixesBackoffPolicyOption>()) {
     options.set<compute_public_delegated_prefixes_v1::
                     PublicDelegatedPrefixesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_public_delegated_prefixes_v1::
@@ -70,10 +71,9 @@ Options PublicDelegatedPrefixesDefaultOptions(Options options) {
                 .get<compute_public_delegated_prefixes_v1::
                          PublicDelegatedPrefixesRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<compute_public_delegated_prefixes_v1::
-                         PublicDelegatedPrefixesBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

@@ -163,6 +163,10 @@ class ClusterManagerConnection {
   virtual StreamRange<google::container::v1::UsableSubnetwork>
   ListUsableSubnetworks(
       google::container::v1::ListUsableSubnetworksRequest request);
+
+  virtual StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+  CheckAutopilotCompatibility(
+      google::container::v1::CheckAutopilotCompatibilityRequest const& request);
 };
 
 /**

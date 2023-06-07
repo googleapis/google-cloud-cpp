@@ -492,6 +492,20 @@ ClusterManagerConnectionImpl::ListUsableSubnetworks(
       });
 }
 
+StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+ClusterManagerConnectionImpl::CheckAutopilotCompatibility(
+    google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CheckAutopilotCompatibility(request),
+      [this](grpc::ClientContext& context,
+             google::container::v1::CheckAutopilotCompatibilityRequest const&
+                 request) {
+        return stub_->CheckAutopilotCompatibility(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1_internal
 }  // namespace cloud

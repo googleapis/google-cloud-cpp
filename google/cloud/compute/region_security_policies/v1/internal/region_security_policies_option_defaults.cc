@@ -53,8 +53,9 @@ Options RegionSecurityPoliciesDefaultOptions(Options options) {
                        RegionSecurityPoliciesBackoffPolicyOption>()) {
     options.set<compute_region_security_policies_v1::
                     RegionSecurityPoliciesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_region_security_policies_v1::
@@ -70,10 +71,9 @@ Options RegionSecurityPoliciesDefaultOptions(Options options) {
                 .get<compute_region_security_policies_v1::
                          RegionSecurityPoliciesRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<compute_region_security_policies_v1::
-                         RegionSecurityPoliciesBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

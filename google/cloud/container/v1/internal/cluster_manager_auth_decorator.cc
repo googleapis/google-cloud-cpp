@@ -307,6 +307,15 @@ ClusterManagerAuth::ListUsableSubnetworks(
   return child_->ListUsableSubnetworks(context, request);
 }
 
+StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+ClusterManagerAuth::CheckAutopilotCompatibility(
+    grpc::ClientContext& context,
+    google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CheckAutopilotCompatibility(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1_internal
 }  // namespace cloud

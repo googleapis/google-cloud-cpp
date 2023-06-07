@@ -48,8 +48,9 @@ Options MachineImagesDefaultOptions(Options options) {
   if (!options.has<
           compute_machine_images_v1::MachineImagesBackoffPolicyOption>()) {
     options.set<compute_machine_images_v1::MachineImagesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<
@@ -62,10 +63,9 @@ Options MachineImagesDefaultOptions(Options options) {
                 .get<
                     compute_machine_images_v1::MachineImagesRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<compute_machine_images_v1::
-                         MachineImagesBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<compute_machine_images_v1::

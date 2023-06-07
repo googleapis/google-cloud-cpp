@@ -49,8 +49,9 @@ Options ForwardingRulesDefaultOptions(Options options) {
           compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption>()) {
     options
         .set<compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption>(
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
                 .clone());
   }
   if (!options.has<
@@ -60,14 +61,14 @@ Options ForwardingRulesDefaultOptions(Options options) {
         GenericPollingPolicy<
             compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption::Type,
             compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption::
-                Type>(options
-                          .get<compute_forwarding_rules_v1::
-                                   ForwardingRulesRetryPolicyOption>()
-                          ->clone(),
-                      options
-                          .get<compute_forwarding_rules_v1::
-                                   ForwardingRulesBackoffPolicyOption>()
-                          ->clone())
+                Type>(
+            options
+                .get<compute_forwarding_rules_v1::
+                         ForwardingRulesRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<compute_forwarding_rules_v1::

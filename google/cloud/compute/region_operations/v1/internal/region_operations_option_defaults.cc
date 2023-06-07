@@ -50,8 +50,9 @@ Options RegionOperationsDefaultOptions(Options options) {
                        RegionOperationsBackoffPolicyOption>()) {
     options
         .set<compute_region_operations_v1::RegionOperationsBackoffPolicyOption>(
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
                 .clone());
   }
   if (!options.has<compute_region_operations_v1::

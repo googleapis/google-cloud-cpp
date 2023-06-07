@@ -45,8 +45,9 @@ Options ZonesDefaultOptions(Options options) {
   }
   if (!options.has<compute_zones_v1::ZonesBackoffPolicyOption>()) {
     options.set<compute_zones_v1::ZonesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options

@@ -136,6 +136,9 @@ class ClusterManagerConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListUsableSubnetworks(
       google::container::v1::ListUsableSubnetworksRequest request);
+
+  virtual google::cloud::Idempotency CheckAutopilotCompatibility(
+      google::container::v1::CheckAutopilotCompatibilityRequest const& request);
 };
 
 std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy>
