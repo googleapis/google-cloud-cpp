@@ -58,5 +58,5 @@ int main(int argc, char* argv[]) try {
 
 [cloud-service]: https://cloud.google.com/composer
 [cloud-service-docs]: https://cloud.google.com/composer/docs
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-composer/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/composer/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/composer

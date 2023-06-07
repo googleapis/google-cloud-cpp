@@ -56,5 +56,5 @@ int main(int argc, char* argv[]) try {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-service-docs]: https://cloud.google.com/access-approval
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-accessapproval/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/accessapproval/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/accessapproval

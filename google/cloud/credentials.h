@@ -46,7 +46,7 @@ class CredentialsVisitor;
  *
  * [IAM overview]: https://cloud.google.com/iam/docs/overview
  * [IAM Service]: https://cloud.google.com/iam/docs
- * [C++ IAM client library]: https://googleapis.dev/cpp/google-cloud-iam/latest/
+ * [C++ IAM client library]: https://cloud.google.com/cpp/docs/reference/iam/latest/
  *
  * @ingroup guac
  */

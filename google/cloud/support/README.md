@@ -55,5 +55,5 @@ int main(int argc, char* argv[]) try {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-service-docs]: http://cloud/support/docs/reference/support-api
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-support/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/support/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/support

@@ -58,5 +58,5 @@ int main(int argc, char* argv[]) try {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-iam-docs]: https://cloud.google.com/iam/docs/
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-iam/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/iam/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/iam

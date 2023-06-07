@@ -85,5 +85,5 @@ int main(int argc, char* argv[]) try {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-service-docs]: https://cloud.google.com/trace
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-trace/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/trace/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/trace

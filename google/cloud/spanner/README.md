@@ -73,6 +73,6 @@ int main(int argc, char* argv[]) {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-spanner-docs]: https://cloud.google.com/spanner/docs/
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-spanner/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/spanner/latest/
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/spanner

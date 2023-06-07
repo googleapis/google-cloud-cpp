@@ -61,5 +61,5 @@ int main(int argc, char* argv[]) try {
 
 [cloud-service]: https://cloud.google.com/service-usage
 [cloud-service-docs]: https://cloud.google.com/service-usage/docs
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-serviceusage/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/serviceusage/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/serviceusage
