@@ -1922,10 +1922,8 @@ void AutoRunAvro(
   auto schema_admin = google::cloud::pubsub::SchemaServiceClient(
       google::cloud::pubsub::MakeSchemaServiceConnection());
   auto avro_schema_id = RandomSchemaId(generator);
-  auto const avro_schema_definition_file =
-      absl::StrCat(testdata_directory, "schema.avsc");
-  auto const avro_message_file =
-      absl::StrCat(testdata_directory, "valid_message.avsc");
+  auto avro_schema_definition_file = testdata_directory + "schema.avsc";
+  auto avro_message_file = testdata_directory + "valid_message.avsc";
 
   std::cout << "\nRunning CreateAvroSchema() sample" << std::endl;
   CreateAvroSchema(schema_admin,
@@ -1992,10 +1990,8 @@ void AutoRunProtobuf(
   auto schema_admin = google::cloud::pubsub::SchemaServiceClient(
       google::cloud::pubsub::MakeSchemaServiceConnection());
   auto proto_schema_id = RandomSchemaId(generator);
-  auto const proto_schema_definition_file =
-      absl::StrCat(testdata_directory, "schema.proto");
-  auto const proto_message_file =
-      absl::StrCat(testdata_directory, "valid_message.textproto");
+  auto proto_schema_definition_file = testdata_directory + "schema.proto";
+  auto proto_message_file = testdata_directory + "valid_message.textproto";
 
   std::cout << "\nRunning CreateProtobufSchema() sample" << std::endl;
   CreateProtobufSchema(schema_admin, {project_id, proto_schema_id,
