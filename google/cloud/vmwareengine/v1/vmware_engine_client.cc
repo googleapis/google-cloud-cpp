@@ -239,6 +239,40 @@ VmwareEngineClient::ListSubnets(
   return connection_->ListSubnets(std::move(request));
 }
 
+StatusOr<google::cloud::vmwareengine::v1::Subnet> VmwareEngineClient::GetSubnet(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::GetSubnetRequest request;
+  request.set_name(name);
+  return connection_->GetSubnet(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::Subnet> VmwareEngineClient::GetSubnet(
+    google::cloud::vmwareengine::v1::GetSubnetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetSubnet(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
+VmwareEngineClient::UpdateSubnet(
+    google::cloud::vmwareengine::v1::Subnet const& subnet,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::UpdateSubnetRequest request;
+  *request.mutable_subnet() = subnet;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateSubnet(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
+VmwareEngineClient::UpdateSubnet(
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSubnet(request);
+}
+
 StreamRange<google::cloud::vmwareengine::v1::NodeType>
 VmwareEngineClient::ListNodeTypes(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -580,6 +614,121 @@ VmwareEngineClient::ListVmwareEngineNetworks(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListVmwareEngineNetworks(std::move(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineClient::CreatePrivateConnection(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::PrivateConnection const&
+        private_connection,
+    std::string const& private_connection_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest request;
+  request.set_parent(parent);
+  *request.mutable_private_connection() = private_connection;
+  request.set_private_connection_id(private_connection_id);
+  return connection_->CreatePrivateConnection(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineClient::CreatePrivateConnection(
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePrivateConnection(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
+VmwareEngineClient::GetPrivateConnection(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::GetPrivateConnectionRequest request;
+  request.set_name(name);
+  return connection_->GetPrivateConnection(request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
+VmwareEngineClient::GetPrivateConnection(
+    google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetPrivateConnection(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
+VmwareEngineClient::ListPrivateConnections(std::string const& parent,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListPrivateConnections(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
+VmwareEngineClient::ListPrivateConnections(
+    google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListPrivateConnections(std::move(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineClient::UpdatePrivateConnection(
+    google::cloud::vmwareengine::v1::PrivateConnection const&
+        private_connection,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest request;
+  *request.mutable_private_connection() = private_connection;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdatePrivateConnection(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineClient::UpdatePrivateConnection(
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePrivateConnection(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineClient::DeletePrivateConnection(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest request;
+  request.set_name(name);
+  return connection_->DeletePrivateConnection(request);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineClient::DeletePrivateConnection(
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePrivateConnection(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+VmwareEngineClient::ListPrivateConnectionPeeringRoutes(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
+      request;
+  request.set_parent(parent);
+  return connection_->ListPrivateConnectionPeeringRoutes(request);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+VmwareEngineClient::ListPrivateConnectionPeeringRoutes(
+    google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListPrivateConnectionPeeringRoutes(std::move(request));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -50,8 +50,9 @@ Options FirewallPoliciesDefaultOptions(Options options) {
                        FirewallPoliciesBackoffPolicyOption>()) {
     options
         .set<compute_firewall_policies_v1::FirewallPoliciesBackoffPolicyOption>(
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
                 .clone());
   }
   if (!options.has<compute_firewall_policies_v1::
@@ -66,10 +67,10 @@ Options FirewallPoliciesDefaultOptions(Options options) {
                     .get<compute_firewall_policies_v1::
                              FirewallPoliciesRetryPolicyOption>()
                     ->clone(),
-                options
-                    .get<compute_firewall_policies_v1::
-                             FirewallPoliciesBackoffPolicyOption>()
-                    ->clone())
+                ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                         std::chrono::minutes(5),
+                                         kBackoffScaling)
+                    .clone())
                 .clone());
   }
   if (!options.has<compute_firewall_policies_v1::

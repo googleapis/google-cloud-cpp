@@ -47,8 +47,9 @@ Options ReservationsDefaultOptions(Options options) {
   if (!options
            .has<compute_reservations_v1::ReservationsBackoffPolicyOption>()) {
     options.set<compute_reservations_v1::ReservationsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options
@@ -60,9 +61,9 @@ Options ReservationsDefaultOptions(Options options) {
             options
                 .get<compute_reservations_v1::ReservationsRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<compute_reservations_v1::ReservationsBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<compute_reservations_v1::

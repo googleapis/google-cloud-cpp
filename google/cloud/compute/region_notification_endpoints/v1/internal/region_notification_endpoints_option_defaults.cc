@@ -54,8 +54,9 @@ Options RegionNotificationEndpointsDefaultOptions(Options options) {
                        RegionNotificationEndpointsBackoffPolicyOption>()) {
     options.set<compute_region_notification_endpoints_v1::
                     RegionNotificationEndpointsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_region_notification_endpoints_v1::
@@ -71,10 +72,9 @@ Options RegionNotificationEndpointsDefaultOptions(Options options) {
                 .get<compute_region_notification_endpoints_v1::
                          RegionNotificationEndpointsRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<compute_region_notification_endpoints_v1::
-                         RegionNotificationEndpointsBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

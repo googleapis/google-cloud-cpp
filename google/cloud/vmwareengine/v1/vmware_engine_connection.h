@@ -116,6 +116,13 @@ class VmwareEngineConnection {
   virtual StreamRange<google::cloud::vmwareengine::v1::Subnet> ListSubnets(
       google::cloud::vmwareengine::v1::ListSubnetsRequest request);
 
+  virtual StatusOr<google::cloud::vmwareengine::v1::Subnet> GetSubnet(
+      google::cloud::vmwareengine::v1::GetSubnetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
+  UpdateSubnet(
+      google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request);
+
   virtual StreamRange<google::cloud::vmwareengine::v1::NodeType> ListNodeTypes(
       google::cloud::vmwareengine::v1::ListNodeTypesRequest request);
 
@@ -202,6 +209,35 @@ class VmwareEngineConnection {
   virtual StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
   ListVmwareEngineNetworks(
       google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+  CreatePrivateConnection(
+      google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
+  GetPrivateConnection(
+      google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
+  ListPrivateConnections(
+      google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+  UpdatePrivateConnection(
+      google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeletePrivateConnection(
+      google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+  ListPrivateConnectionPeeringRoutes(
+      google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
+          request);
 };
 
 /**

@@ -138,6 +138,23 @@ VmwareEngineMetadata::ListSubnets(
   return child_->ListSubnets(context, request);
 }
 
+StatusOr<google::cloud::vmwareengine::v1::Subnet>
+VmwareEngineMetadata::GetSubnet(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetSubnetRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetSubnet(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineMetadata::AsyncUpdateSubnet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
+  SetMetadata(*context, "subnet.name=" + request.subnet().name());
+  return child_->AsyncUpdateSubnet(cq, std::move(context), request);
+}
+
 StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
 VmwareEngineMetadata::ListNodeTypes(
     grpc::ClientContext& context,
@@ -317,6 +334,65 @@ VmwareEngineMetadata::ListVmwareEngineNetworks(
         request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListVmwareEngineNetworks(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineMetadata::AsyncCreatePrivateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+        request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncCreatePrivateConnection(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
+VmwareEngineMetadata::GetPrivateConnection(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetPrivateConnection(context, request);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse>
+VmwareEngineMetadata::ListPrivateConnections(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListPrivateConnections(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineMetadata::AsyncUpdatePrivateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+        request) {
+  SetMetadata(*context,
+              "private_connection.name=" + request.private_connection().name());
+  return child_->AsyncUpdatePrivateConnection(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineMetadata::AsyncDeletePrivateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeletePrivateConnection(cq, std::move(context), request);
+}
+
+StatusOr<
+    google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesResponse>
+VmwareEngineMetadata::ListPrivateConnectionPeeringRoutes(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::
+        ListPrivateConnectionPeeringRoutesRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListPrivateConnectionPeeringRoutes(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

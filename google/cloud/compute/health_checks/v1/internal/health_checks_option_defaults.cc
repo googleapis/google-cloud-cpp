@@ -47,8 +47,9 @@ Options HealthChecksDefaultOptions(Options options) {
   if (!options
            .has<compute_health_checks_v1::HealthChecksBackoffPolicyOption>()) {
     options.set<compute_health_checks_v1::HealthChecksBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options
@@ -60,10 +61,9 @@ Options HealthChecksDefaultOptions(Options options) {
             options
                 .get<compute_health_checks_v1::HealthChecksRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<
-                    compute_health_checks_v1::HealthChecksBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<compute_health_checks_v1::

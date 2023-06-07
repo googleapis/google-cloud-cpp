@@ -49,8 +49,9 @@ Options GlobalAddressesDefaultOptions(Options options) {
           compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>()) {
     options
         .set<compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>(
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
                 .clone());
   }
   if (!options.has<
@@ -60,14 +61,14 @@ Options GlobalAddressesDefaultOptions(Options options) {
         GenericPollingPolicy<
             compute_global_addresses_v1::GlobalAddressesRetryPolicyOption::Type,
             compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption::
-                Type>(options
-                          .get<compute_global_addresses_v1::
-                                   GlobalAddressesRetryPolicyOption>()
-                          ->clone(),
-                      options
-                          .get<compute_global_addresses_v1::
-                                   GlobalAddressesBackoffPolicyOption>()
-                          ->clone())
+                Type>(
+            options
+                .get<compute_global_addresses_v1::
+                         GlobalAddressesRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<compute_global_addresses_v1::

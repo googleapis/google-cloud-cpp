@@ -51,8 +51,9 @@ Options RegionAutoscalersDefaultOptions(Options options) {
                        RegionAutoscalersBackoffPolicyOption>()) {
     options.set<
         compute_region_autoscalers_v1::RegionAutoscalersBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_region_autoscalers_v1::
@@ -67,10 +68,9 @@ Options RegionAutoscalersDefaultOptions(Options options) {
                 .get<compute_region_autoscalers_v1::
                          RegionAutoscalersRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<compute_region_autoscalers_v1::
-                         RegionAutoscalersBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<compute_region_autoscalers_v1::

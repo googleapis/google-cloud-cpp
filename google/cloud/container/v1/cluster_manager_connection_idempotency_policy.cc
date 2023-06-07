@@ -199,6 +199,12 @@ Idempotency ClusterManagerConnectionIdempotencyPolicy::ListUsableSubnetworks(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+ClusterManagerConnectionIdempotencyPolicy::CheckAutopilotCompatibility(
+    google::container::v1::CheckAutopilotCompatibilityRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy>
 MakeDefaultClusterManagerConnectionIdempotencyPolicy() {
   return std::make_unique<ClusterManagerConnectionIdempotencyPolicy>();

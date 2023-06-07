@@ -51,8 +51,9 @@ Options TargetVpnGatewaysDefaultOptions(Options options) {
                        TargetVpnGatewaysBackoffPolicyOption>()) {
     options.set<
         compute_target_vpn_gateways_v1::TargetVpnGatewaysBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_target_vpn_gateways_v1::
@@ -67,10 +68,9 @@ Options TargetVpnGatewaysDefaultOptions(Options options) {
                 .get<compute_target_vpn_gateways_v1::
                          TargetVpnGatewaysRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<compute_target_vpn_gateways_v1::
-                         TargetVpnGatewaysBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<compute_target_vpn_gateways_v1::

@@ -290,6 +290,14 @@ ClusterManagerMetadata::ListUsableSubnetworks(
   return child_->ListUsableSubnetworks(context, request);
 }
 
+StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+ClusterManagerMetadata::CheckAutopilotCompatibility(
+    grpc::ClientContext& context,
+    google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->CheckAutopilotCompatibility(context, request);
+}
+
 void ClusterManagerMetadata::SetMetadata(grpc::ClientContext& context,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

@@ -46,8 +46,9 @@ Options FirewallsDefaultOptions(Options options) {
   }
   if (!options.has<compute_firewalls_v1::FirewallsBackoffPolicyOption>()) {
     options.set<compute_firewalls_v1::FirewallsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_firewalls_v1::FirewallsPollingPolicyOption>()) {
@@ -57,8 +58,9 @@ Options FirewallsDefaultOptions(Options options) {
             compute_firewalls_v1::FirewallsBackoffPolicyOption::Type>(
             options.get<compute_firewalls_v1::FirewallsRetryPolicyOption>()
                 ->clone(),
-            options.get<compute_firewalls_v1::FirewallsBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

@@ -45,8 +45,9 @@ Options DisksDefaultOptions(Options options) {
   }
   if (!options.has<compute_disks_v1::DisksBackoffPolicyOption>()) {
     options.set<compute_disks_v1::DisksBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_disks_v1::DisksPollingPolicyOption>()) {
@@ -54,7 +55,9 @@ Options DisksDefaultOptions(Options options) {
         GenericPollingPolicy<compute_disks_v1::DisksRetryPolicyOption::Type,
                              compute_disks_v1::DisksBackoffPolicyOption::Type>(
             options.get<compute_disks_v1::DisksRetryPolicyOption>()->clone(),
-            options.get<compute_disks_v1::DisksBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

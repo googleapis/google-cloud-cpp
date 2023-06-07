@@ -78,6 +78,12 @@ class VmwareEngineConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListSubnets(
       google::cloud::vmwareengine::v1::ListSubnetsRequest request);
 
+  virtual google::cloud::Idempotency GetSubnet(
+      google::cloud::vmwareengine::v1::GetSubnetRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateSubnet(
+      google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request);
+
   virtual google::cloud::Idempotency ListNodeTypes(
       google::cloud::vmwareengine::v1::ListNodeTypesRequest request);
 
@@ -147,6 +153,29 @@ class VmwareEngineConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListVmwareEngineNetworks(
       google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest request);
+
+  virtual google::cloud::Idempotency CreatePrivateConnection(
+      google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetPrivateConnection(
+      google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListPrivateConnections(
+      google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request);
+
+  virtual google::cloud::Idempotency UpdatePrivateConnection(
+      google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeletePrivateConnection(
+      google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListPrivateConnectionPeeringRoutes(
+      google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
+          request);
 };
 
 std::unique_ptr<VmwareEngineConnectionIdempotencyPolicy>

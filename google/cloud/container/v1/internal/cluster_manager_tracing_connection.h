@@ -145,6 +145,11 @@ class ClusterManagerTracingConnection
   StreamRange<google::container::v1::UsableSubnetwork> ListUsableSubnetworks(
       google::container::v1::ListUsableSubnetworksRequest request) override;
 
+  StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+  CheckAutopilotCompatibility(
+      google::container::v1::CheckAutopilotCompatibilityRequest const& request)
+      override;
+
  private:
   std::shared_ptr<container_v1::ClusterManagerConnection> child_;
 };

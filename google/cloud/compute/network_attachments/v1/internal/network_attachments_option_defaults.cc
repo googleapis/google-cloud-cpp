@@ -51,8 +51,9 @@ Options NetworkAttachmentsDefaultOptions(Options options) {
                        NetworkAttachmentsBackoffPolicyOption>()) {
     options.set<
         compute_network_attachments_v1::NetworkAttachmentsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_network_attachments_v1::
@@ -67,10 +68,9 @@ Options NetworkAttachmentsDefaultOptions(Options options) {
                 .get<compute_network_attachments_v1::
                          NetworkAttachmentsRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<compute_network_attachments_v1::
-                         NetworkAttachmentsBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<compute_network_attachments_v1::

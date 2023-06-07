@@ -46,8 +46,9 @@ Options ImagesDefaultOptions(Options options) {
   }
   if (!options.has<compute_images_v1::ImagesBackoffPolicyOption>()) {
     options.set<compute_images_v1::ImagesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_images_v1::ImagesPollingPolicyOption>()) {
@@ -56,8 +57,9 @@ Options ImagesDefaultOptions(Options options) {
             compute_images_v1::ImagesRetryPolicyOption::Type,
             compute_images_v1::ImagesBackoffPolicyOption::Type>(
             options.get<compute_images_v1::ImagesRetryPolicyOption>()->clone(),
-            options.get<compute_images_v1::ImagesBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

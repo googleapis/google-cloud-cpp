@@ -49,8 +49,9 @@ Options SslCertificatesDefaultOptions(Options options) {
           compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption>()) {
     options
         .set<compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption>(
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
                 .clone());
   }
   if (!options.has<
@@ -60,14 +61,14 @@ Options SslCertificatesDefaultOptions(Options options) {
         GenericPollingPolicy<
             compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption::Type,
             compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption::
-                Type>(options
-                          .get<compute_ssl_certificates_v1::
-                                   SslCertificatesRetryPolicyOption>()
-                          ->clone(),
-                      options
-                          .get<compute_ssl_certificates_v1::
-                                   SslCertificatesBackoffPolicyOption>()
-                          ->clone())
+                Type>(
+            options
+                .get<compute_ssl_certificates_v1::
+                         SslCertificatesRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<compute_ssl_certificates_v1::

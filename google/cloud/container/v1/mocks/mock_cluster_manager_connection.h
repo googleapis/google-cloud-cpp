@@ -189,6 +189,13 @@ class MockClusterManagerConnection
               ListUsableSubnetworks,
               (google::container::v1::ListUsableSubnetworksRequest request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>,
+      CheckAutopilotCompatibility,
+      (google::container::v1::CheckAutopilotCompatibilityRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

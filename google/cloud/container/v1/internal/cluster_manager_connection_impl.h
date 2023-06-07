@@ -154,6 +154,11 @@ class ClusterManagerConnectionImpl
   StreamRange<google::container::v1::UsableSubnetwork> ListUsableSubnetworks(
       google::container::v1::ListUsableSubnetworksRequest request) override;
 
+  StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+  CheckAutopilotCompatibility(
+      google::container::v1::CheckAutopilotCompatibilityRequest const& request)
+      override;
+
  private:
   std::unique_ptr<container_v1::ClusterManagerRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

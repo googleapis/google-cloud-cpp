@@ -51,8 +51,9 @@ Options ImageFamilyViewsDefaultOptions(Options options) {
                        ImageFamilyViewsBackoffPolicyOption>()) {
     options.set<
         compute_image_family_views_v1::ImageFamilyViewsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<compute_image_family_views_v1::
