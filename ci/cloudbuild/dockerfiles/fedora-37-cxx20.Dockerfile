@@ -88,13 +88,12 @@ RUN curl -fsSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
-# TODO(#9508) - use CMAKE_CXX_STANDARD=20 here too, using 17 is a work around.
 # Download and compile Google microbenchmark support library:
 WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-        -DCMAKE_CXX_STANDARD=17 \
+        -DCMAKE_CXX_STANDARD=20 \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -DBENCHMARK_ENABLE_TESTING=OFF \
