@@ -46,11 +46,11 @@ void to_json(nlohmann::json& j, JobStatistics const& s) {
       {"script_statistics", s.script_statistics},
       {"job_query_stats", s.job_query_stats}};
 
-  ToJsonMilliseconds(s.start_time, j, "start_time");
-  ToJsonMilliseconds(s.end_time, j, "end_time");
-  ToJsonMilliseconds(s.creation_time, j, "creation_time");
-  ToJsonMilliseconds(s.total_slot_time, j, "total_slot_time");
-  ToJsonMilliseconds(s.final_execution_duration, j, "final_execution_duration");
+  ToJson(s.start_time, j, "start_time");
+  ToJson(s.end_time, j, "end_time");
+  ToJson(s.creation_time, j, "creation_time");
+  ToJson(s.total_slot_time, j, "total_slot_time");
+  ToJson(s.final_execution_duration, j, "final_execution_duration");
 }
 
 void from_json(nlohmann::json const& j, JobStatistics& s) {
@@ -80,12 +80,11 @@ void from_json(nlohmann::json const& j, JobStatistics& s) {
   if (j.contains("job_query_stats"))
     j.at("job_query_stats").get_to(s.job_query_stats);
 
-  FromJsonMilliseconds(s.start_time, j, "start_time");
-  FromJsonMilliseconds(s.end_time, j, "end_time");
-  FromJsonMilliseconds(s.creation_time, j, "creation_time");
-  FromJsonMilliseconds(s.total_slot_time, j, "total_slot_time");
-  FromJsonMilliseconds(s.final_execution_duration, j,
-                       "final_execution_duration");
+  FromJson(s.start_time, j, "start_time");
+  FromJson(s.end_time, j, "end_time");
+  FromJson(s.creation_time, j, "creation_time");
+  FromJson(s.total_slot_time, j, "total_slot_time");
+  FromJson(s.final_execution_duration, j, "final_execution_duration");
 }
 
 bool operator==(ScriptStackFrame const& lhs, ScriptStackFrame const& rhs) {

@@ -24,23 +24,23 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-void FromJsonMilliseconds(std::chrono::milliseconds& field,
-                          nlohmann::json const& j, char const* name);
+void FromJson(std::chrono::milliseconds& field, nlohmann::json const& j,
+              char const* name);
 
-void ToJsonMilliseconds(std::chrono::milliseconds const& field,
-                        nlohmann::json& j, char const* name);
+void ToJson(std::chrono::milliseconds const& field, nlohmann::json& j,
+            char const* name);
 
-void FromJsonTimepoint(std::chrono::system_clock::time_point& field,
-                       nlohmann::json const& j, char const* name);
+void FromJson(std::chrono::system_clock::time_point& field,
+              nlohmann::json const& j, char const* name);
 
-void ToJsonTimepoint(std::chrono::system_clock::time_point const& field,
-                     nlohmann::json& j, char const* name);
+void ToJson(std::chrono::system_clock::time_point const& field,
+            nlohmann::json& j, char const* name);
 
-void FromJsonHours(std::chrono::hours& field, nlohmann::json const& j,
-                   char const* name);
+void FromJson(std::chrono::hours& field, nlohmann::json const& j,
+              char const* name);
 
-void ToJsonHours(std::chrono::hours const& field, nlohmann::json& j,
-                 char const* name);
+void ToJson(std::chrono::hours const& field, nlohmann::json& j,
+            char const* name);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

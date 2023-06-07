@@ -65,12 +65,11 @@ void to_json(nlohmann::json& j, Dataset const& d) {
       {"default_rounding_mode", d.default_rounding_mode},
       {"storage_billing_model", d.storage_billing_model}};
 
-  ToJsonMilliseconds(d.default_table_expiration, j, "default_table_expiration");
-  ToJsonMilliseconds(d.default_partition_expiration, j,
-                     "default_partition_expiration");
-  ToJsonTimepoint(d.creation_time, j, "creation_time");
-  ToJsonTimepoint(d.last_modified_time, j, "last_modified_time");
-  ToJsonHours(d.max_time_travel, j, "max_time_travel");
+  ToJson(d.default_table_expiration, j, "default_table_expiration");
+  ToJson(d.default_partition_expiration, j, "default_partition_expiration");
+  ToJson(d.creation_time, j, "creation_time");
+  ToJson(d.last_modified_time, j, "last_modified_time");
+  ToJson(d.max_time_travel, j, "max_time_travel");
 }
 
 void from_json(nlohmann::json const& j, Dataset& d) {
@@ -102,13 +101,11 @@ void from_json(nlohmann::json const& j, Dataset& d) {
   if (j.contains("storage_billing_model"))
     j.at("storage_billing_model").get_to(d.storage_billing_model);
 
-  FromJsonMilliseconds(d.default_table_expiration, j,
-                       "default_table_expiration");
-  FromJsonMilliseconds(d.default_partition_expiration, j,
-                       "default_partition_expiration");
-  FromJsonTimepoint(d.creation_time, j, "creation_time");
-  FromJsonTimepoint(d.last_modified_time, j, "last_modified_time");
-  FromJsonHours(d.max_time_travel, j, "max_time_travel");
+  FromJson(d.default_table_expiration, j, "default_table_expiration");
+  FromJson(d.default_partition_expiration, j, "default_partition_expiration");
+  FromJson(d.creation_time, j, "creation_time");
+  FromJson(d.last_modified_time, j, "last_modified_time");
+  FromJson(d.max_time_travel, j, "max_time_travel");
 }
 
 std::string LinkedDatasetSource::DebugString(absl::string_view name,

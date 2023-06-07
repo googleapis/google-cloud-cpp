@@ -28,7 +28,7 @@ TEST(JsonUtilsTest, FromJsonMilliseconds) {
   EXPECT_TRUE(json.is_object());
 
   std::chrono::milliseconds field;
-  FromJsonMilliseconds(field, json, name);
+  FromJson(field, json, name);
 
   EXPECT_EQ(field, std::chrono::milliseconds(10));
 }
@@ -41,7 +41,7 @@ TEST(JsonUtilsTest, ToJsonMilliseconds) {
 
   auto field = std::chrono::milliseconds{10};
   nlohmann::json actual_json;
-  ToJsonMilliseconds(field, actual_json, name);
+  ToJson(field, actual_json, name);
 
   EXPECT_EQ(expected_json, actual_json);
 }
@@ -53,7 +53,7 @@ TEST(JsonUtilsTest, FromJsonHours) {
   EXPECT_TRUE(json.is_object());
 
   std::chrono::hours field;
-  FromJsonHours(field, json, name);
+  FromJson(field, json, name);
 
   EXPECT_EQ(field, std::chrono::hours(10));
 }
@@ -66,7 +66,7 @@ TEST(JsonUtilsTest, ToJsonHours) {
 
   auto field = std::chrono::hours{10};
   nlohmann::json actual_json;
-  ToJsonHours(field, actual_json, name);
+  ToJson(field, actual_json, name);
 
   EXPECT_EQ(expected_json, actual_json);
 }
@@ -78,7 +78,7 @@ TEST(JsonUtilsTest, FromJsonTimepoint) {
   EXPECT_TRUE(json.is_object());
 
   std::chrono::system_clock::time_point field;
-  FromJsonTimepoint(field, json, name);
+  FromJson(field, json, name);
 
   EXPECT_EQ(field, std::chrono::system_clock::time_point{
                        std::chrono::milliseconds(10)});
@@ -93,7 +93,7 @@ TEST(JsonUtilsTest, ToJsonTimepoint) {
   auto field =
       std::chrono::system_clock::time_point{std::chrono::milliseconds(10)};
   nlohmann::json actual_json;
-  ToJsonTimepoint(field, actual_json, name);
+  ToJson(field, actual_json, name);
 
   EXPECT_EQ(expected_json, actual_json);
 }

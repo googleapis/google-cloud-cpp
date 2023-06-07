@@ -117,13 +117,13 @@ std::string ListFormatTable::DebugString(absl::string_view name,
 
 void to_json(nlohmann::json& j, CloneDefinition const& c) {
   j = nlohmann::json{{"base_table_reference", c.base_table_reference}};
-  ToJsonTimepoint(c.clone_time, j, "clone_time");
+  ToJson(c.clone_time, j, "clone_time");
 }
 
 void from_json(nlohmann::json const& j, CloneDefinition& c) {
   if (j.contains("base_table_reference"))
     j.at("base_table_reference").get_to(c.base_table_reference);
-  FromJsonTimepoint(c.clone_time, j, "clone_time");
+  FromJson(c.clone_time, j, "clone_time");
 }
 
 void to_json(nlohmann::json& j, ListFormatTable const& t) {
@@ -138,8 +138,8 @@ void to_json(nlohmann::json& j, ListFormatTable const& t) {
                      {"hive_partitioning_options", t.hive_partitioning_options},
                      {"view", t.view},
                      {"labels", t.labels}};
-  ToJsonMilliseconds(t.creation_time, j, "creation_time");
-  ToJsonMilliseconds(t.expiration_time, j, "expiration_time");
+  ToJson(t.creation_time, j, "creation_time");
+  ToJson(t.expiration_time, j, "expiration_time");
 }
 
 void from_json(nlohmann::json const& j, ListFormatTable& t) {
@@ -162,8 +162,8 @@ void from_json(nlohmann::json const& j, ListFormatTable& t) {
   if (j.contains("friendly_name"))
     j.at("friendly_name").get_to(t.friendly_name);
 
-  FromJsonMilliseconds(t.creation_time, j, "creation_time");
-  FromJsonMilliseconds(t.expiration_time, j, "expiration_time");
+  FromJson(t.creation_time, j, "creation_time");
+  FromJson(t.expiration_time, j, "expiration_time");
 }
 
 void to_json(nlohmann::json& j, Table const& t) {
@@ -205,9 +205,9 @@ void to_json(nlohmann::json& j, Table const& t) {
       {"materialized_view", t.materialized_view},
       {"materialized_view_status", t.materialized_view_status}};
 
-  ToJsonTimepoint(t.last_modified_time, j, "last_modified_time");
-  ToJsonTimepoint(t.expiration_time, j, "expiration_time");
-  ToJsonTimepoint(t.creation_time, j, "creation_time");
+  ToJson(t.last_modified_time, j, "last_modified_time");
+  ToJson(t.expiration_time, j, "expiration_time");
+  ToJson(t.creation_time, j, "creation_time");
 }
 
 void from_json(nlohmann::json const& j, Table& t) {
@@ -272,9 +272,9 @@ void from_json(nlohmann::json const& j, Table& t) {
   if (j.contains("materialized_view_status"))
     j.at("materialized_view_status").get_to(t.materialized_view_status);
 
-  FromJsonTimepoint(t.last_modified_time, j, "last_modified_time");
-  FromJsonTimepoint(t.expiration_time, j, "expiration_time");
-  FromJsonTimepoint(t.creation_time, j, "creation_time");
+  FromJson(t.last_modified_time, j, "last_modified_time");
+  FromJson(t.expiration_time, j, "expiration_time");
+  FromJson(t.creation_time, j, "creation_time");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

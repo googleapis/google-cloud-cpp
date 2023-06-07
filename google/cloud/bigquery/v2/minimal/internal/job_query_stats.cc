@@ -161,17 +161,17 @@ void to_json(nlohmann::json& j, ExplainQueryStage const& q) {
       {"steps", q.steps},
       {"compute_mode", q.compute_mode}};
 
-  ToJsonMilliseconds(q.start_time, j, "start_time");
-  ToJsonMilliseconds(q.end_time, j, "end_time");
-  ToJsonMilliseconds(q.slot_time, j, "slot_time");
-  ToJsonMilliseconds(q.wait_avg_time_spent, j, "wait_avg_time_spent");
-  ToJsonMilliseconds(q.wait_max_time_spent, j, "wait_max_time_spent");
-  ToJsonMilliseconds(q.read_avg_time_spent, j, "read_avg_time_spent");
-  ToJsonMilliseconds(q.read_max_time_spent, j, "read_max_time_spent");
-  ToJsonMilliseconds(q.write_avg_time_spent, j, "write_avg_time_spent");
-  ToJsonMilliseconds(q.write_max_time_spent, j, "write_max_time_spent");
-  ToJsonMilliseconds(q.compute_avg_time_spent, j, "compute_avg_time_spent");
-  ToJsonMilliseconds(q.compute_max_time_spent, j, "compute_max_time_spent");
+  ToJson(q.start_time, j, "start_time");
+  ToJson(q.end_time, j, "end_time");
+  ToJson(q.slot_time, j, "slot_time");
+  ToJson(q.wait_avg_time_spent, j, "wait_avg_time_spent");
+  ToJson(q.wait_max_time_spent, j, "wait_max_time_spent");
+  ToJson(q.read_avg_time_spent, j, "read_avg_time_spent");
+  ToJson(q.read_max_time_spent, j, "read_max_time_spent");
+  ToJson(q.write_avg_time_spent, j, "write_avg_time_spent");
+  ToJson(q.write_max_time_spent, j, "write_max_time_spent");
+  ToJson(q.compute_avg_time_spent, j, "compute_avg_time_spent");
+  ToJson(q.compute_max_time_spent, j, "compute_max_time_spent");
 }
 
 void from_json(nlohmann::json const& j, ExplainQueryStage& q) {
@@ -209,17 +209,17 @@ void from_json(nlohmann::json const& j, ExplainQueryStage& q) {
   if (j.contains("steps")) j.at("steps").get_to(q.steps);
   if (j.contains("compute_mode")) j.at("compute_mode").get_to(q.compute_mode);
 
-  FromJsonMilliseconds(q.start_time, j, "start_time");
-  FromJsonMilliseconds(q.end_time, j, "end_time");
-  FromJsonMilliseconds(q.slot_time, j, "slot_time");
-  FromJsonMilliseconds(q.wait_avg_time_spent, j, "wait_avg_time_spent");
-  FromJsonMilliseconds(q.wait_max_time_spent, j, "wait_max_time_spent");
-  FromJsonMilliseconds(q.read_avg_time_spent, j, "read_avg_time_spent");
-  FromJsonMilliseconds(q.read_max_time_spent, j, "read_max_time_spent");
-  FromJsonMilliseconds(q.write_avg_time_spent, j, "write_avg_time_spent");
-  FromJsonMilliseconds(q.write_max_time_spent, j, "write_max_time_spent");
-  FromJsonMilliseconds(q.compute_avg_time_spent, j, "compute_avg_time_spent");
-  FromJsonMilliseconds(q.compute_max_time_spent, j, "compute_max_time_spent");
+  FromJson(q.start_time, j, "start_time");
+  FromJson(q.end_time, j, "end_time");
+  FromJson(q.slot_time, j, "slot_time");
+  FromJson(q.wait_avg_time_spent, j, "wait_avg_time_spent");
+  FromJson(q.wait_max_time_spent, j, "wait_max_time_spent");
+  FromJson(q.read_avg_time_spent, j, "read_avg_time_spent");
+  FromJson(q.read_max_time_spent, j, "read_max_time_spent");
+  FromJson(q.write_avg_time_spent, j, "write_avg_time_spent");
+  FromJson(q.write_max_time_spent, j, "write_max_time_spent");
+  FromJson(q.compute_avg_time_spent, j, "compute_avg_time_spent");
+  FromJson(q.compute_max_time_spent, j, "compute_max_time_spent");
 }
 
 void to_json(nlohmann::json& j, QueryTimelineSample const& q) {
@@ -228,8 +228,8 @@ void to_json(nlohmann::json& j, QueryTimelineSample const& q) {
                      {"active_units", q.active_units},
                      {"estimated_runnable_units", q.estimated_runnable_units}};
 
-  ToJsonMilliseconds(q.elapsed_time, j, "elapsed_time");
-  ToJsonMilliseconds(q.total_slot_time, j, "total_slot_time");
+  ToJson(q.elapsed_time, j, "elapsed_time");
+  ToJson(q.total_slot_time, j, "total_slot_time");
 }
 
 void from_json(nlohmann::json const& j, QueryTimelineSample& q) {
@@ -241,8 +241,8 @@ void from_json(nlohmann::json const& j, QueryTimelineSample& q) {
   if (j.contains("estimated_runnable_units"))
     j.at("estimated_runnable_units").get_to(q.estimated_runnable_units);
 
-  FromJsonMilliseconds(q.elapsed_time, j, "elapsed_time");
-  FromJsonMilliseconds(q.total_slot_time, j, "total_slot_time");
+  FromJson(q.elapsed_time, j, "elapsed_time");
+  FromJson(q.total_slot_time, j, "total_slot_time");
 }
 
 void to_json(nlohmann::json& j, PerformanceInsights const& p) {
@@ -251,8 +251,7 @@ void to_json(nlohmann::json& j, PerformanceInsights const& p) {
                      {"stage_performance_change_insights",
                       p.stage_performance_change_insights}};
 
-  ToJsonMilliseconds(p.avg_previous_execution_time, j,
-                     "avg_previous_execution_time");
+  ToJson(p.avg_previous_execution_time, j, "avg_previous_execution_time");
 }
 
 void from_json(nlohmann::json const& j, PerformanceInsights& p) {
@@ -263,8 +262,7 @@ void from_json(nlohmann::json const& j, PerformanceInsights& p) {
     j.at("stage_performance_change_insights")
         .get_to(p.stage_performance_change_insights);
 
-  FromJsonMilliseconds(p.avg_previous_execution_time, j,
-                       "avg_previous_execution_time");
+  FromJson(p.avg_previous_execution_time, j, "avg_previous_execution_time");
 }
 
 void to_json(nlohmann::json& j, JobQueryStatistics const& q) {
@@ -302,7 +300,7 @@ void to_json(nlohmann::json& j, JobQueryStatistics const& q) {
       {"materialized_view_statistics", q.materialized_view_statistics},
       {"metadata_cache_statistics", q.metadata_cache_statistics}};
 
-  ToJsonMilliseconds(q.total_slot_time, j, "total_slot_time");
+  ToJson(q.total_slot_time, j, "total_slot_time");
 }
 
 void from_json(nlohmann::json const& j, JobQueryStatistics& q) {
@@ -365,7 +363,7 @@ void from_json(nlohmann::json const& j, JobQueryStatistics& q) {
   if (j.contains("metadata_cache_statistics"))
     j.at("metadata_cache_statistics").get_to(q.metadata_cache_statistics);
 
-  FromJsonMilliseconds(q.total_slot_time, j, "total_slot_time");
+  FromJson(q.total_slot_time, j, "total_slot_time");
 }
 
 bool operator==(MaterializedView const& lhs, MaterializedView const& rhs) {

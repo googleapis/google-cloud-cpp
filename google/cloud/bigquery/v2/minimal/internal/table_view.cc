@@ -94,8 +94,8 @@ void to_json(nlohmann::json& j, MaterializedViewDefinition const& m) {
       {"allow_non_incremental_definition", m.allow_non_incremental_definition},
       {"enable_refresh", m.enable_refresh}};
 
-  ToJsonMilliseconds(m.refresh_interval_time, j, "refresh_interval");
-  ToJsonTimepoint(m.last_refresh_time, j, "last_refresh_time");
+  ToJson(m.refresh_interval_time, j, "refresh_interval");
+  ToJson(m.last_refresh_time, j, "last_refresh_time");
 }
 void from_json(nlohmann::json const& j, MaterializedViewDefinition& m) {
   if (j.contains("query")) j.at("query").get_to(m.query);
@@ -107,18 +107,18 @@ void from_json(nlohmann::json const& j, MaterializedViewDefinition& m) {
   if (j.contains("enable_refresh"))
     j.at("enable_refresh").get_to(m.enable_refresh);
 
-  FromJsonMilliseconds(m.refresh_interval_time, j, "refresh_interval");
-  FromJsonTimepoint(m.last_refresh_time, j, "last_refresh_time");
+  FromJson(m.refresh_interval_time, j, "refresh_interval");
+  FromJson(m.last_refresh_time, j, "last_refresh_time");
 }
 
 void to_json(nlohmann::json& j, MaterializedViewStatus const& m) {
   j = nlohmann::json{{"last_refresh_status", m.last_refresh_status}};
-  ToJsonTimepoint(m.refresh_watermark, j, "refresh_watermark");
+  ToJson(m.refresh_watermark, j, "refresh_watermark");
 }
 void from_json(nlohmann::json const& j, MaterializedViewStatus& m) {
   if (j.contains("last_refresh_status"))
     j.at("last_refresh_status").get_to(m.last_refresh_status);
-  FromJsonTimepoint(m.refresh_watermark, j, "refresh_watermark");
+  FromJson(m.refresh_watermark, j, "refresh_watermark");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

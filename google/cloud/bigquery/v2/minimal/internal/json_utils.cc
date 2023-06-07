@@ -19,8 +19,8 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-void FromJsonMilliseconds(std::chrono::milliseconds& field,
-                          nlohmann::json const& j, char const* name) {
+void FromJson(std::chrono::milliseconds& field, nlohmann::json const& j,
+              char const* name) {
   auto const l = j.find(name);
   if (l == j.end()) return;
   std::int64_t m;
@@ -28,14 +28,14 @@ void FromJsonMilliseconds(std::chrono::milliseconds& field,
   field = std::chrono::milliseconds(m);
 }
 
-void ToJsonMilliseconds(std::chrono::milliseconds const& field,
-                        nlohmann::json& j, char const* name) {
+void ToJson(std::chrono::milliseconds const& field, nlohmann::json& j,
+            char const* name) {
   j[name] =
       std::chrono::duration_cast<std::chrono::milliseconds>(field).count();
 }
 
-void FromJsonHours(std::chrono::hours& field, nlohmann::json const& j,
-                   char const* name) {
+void FromJson(std::chrono::hours& field, nlohmann::json const& j,
+              char const* name) {
   auto const l = j.find(name);
   if (l == j.end()) return;
   std::int64_t m;
@@ -43,13 +43,13 @@ void FromJsonHours(std::chrono::hours& field, nlohmann::json const& j,
   field = std::chrono::hours(m);
 }
 
-void ToJsonHours(std::chrono::hours const& field, nlohmann::json& j,
-                 char const* name) {
+void ToJson(std::chrono::hours const& field, nlohmann::json& j,
+            char const* name) {
   j[name] = std::chrono::duration_cast<std::chrono::hours>(field).count();
 }
 
-void FromJsonTimepoint(std::chrono::system_clock::time_point& field,
-                       nlohmann::json const& j, char const* name) {
+void FromJson(std::chrono::system_clock::time_point& field,
+              nlohmann::json const& j, char const* name) {
   auto const l = j.find(name);
   if (l == j.end()) return;
   std::int64_t m;
@@ -58,8 +58,8 @@ void FromJsonTimepoint(std::chrono::system_clock::time_point& field,
       std::chrono::milliseconds(m));
 }
 
-void ToJsonTimepoint(std::chrono::system_clock::time_point const& field,
-                     nlohmann::json& j, char const* name) {
+void ToJson(std::chrono::system_clock::time_point const& field,
+            nlohmann::json& j, char const* name) {
   j[name] = std::chrono::duration_cast<std::chrono::milliseconds>(
                 field.time_since_epoch())
                 .count();
