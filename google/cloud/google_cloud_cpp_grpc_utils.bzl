@@ -36,6 +36,7 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/async_read_write_stream_auth.h",
     "internal/async_read_write_stream_impl.h",
     "internal/async_read_write_stream_logging.h",
+    "internal/async_read_write_stream_tracing.h",
     "internal/async_retry_loop.h",
     "internal/async_retry_unary_rpc.h",
     "internal/async_rpc_details.h",
