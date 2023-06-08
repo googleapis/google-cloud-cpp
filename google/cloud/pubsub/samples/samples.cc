@@ -786,14 +786,13 @@ void CreateAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_id, std::string const& schema_definition_file) {
-    auto definition = ReadFile(schema_definition_file);
-    if (!definition) throw std::move(definition).status();
+    std::string const definition = ReadFile(schema_definition_file);
 
     google::pubsub::v1::CreateSchemaRequest request;
     request.set_parent(google::cloud::Project(project_id).FullName());
     request.set_schema_id(schema_id);
     request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
-    request.mutable_schema()->set_definition(definition.value());
+    request.mutable_schema()->set_definition(definition);
     auto schema = client.CreateSchema(request);
     if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The schema already exists\n";
@@ -814,15 +813,14 @@ void CreateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_id, std::string const& schema_definition_file) {
-    auto definition = ReadFile(schema_definition_file);
-    if (!definition) throw std::move(definition).status();
+    std::string const definition = ReadFile(schema_definition_file);
 
     google::pubsub::v1::CreateSchemaRequest request;
     request.set_parent(google::cloud::Project(project_id).FullName());
     request.set_schema_id(schema_id);
     request.mutable_schema()->set_type(
         google::pubsub::v1::Schema::PROTOCOL_BUFFER);
-    request.mutable_schema()->set_definition(definition.value());
+    request.mutable_schema()->set_definition(definition);
     auto schema = client.CreateSchema(request);
     if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The schema already exists\n";
@@ -898,13 +896,12 @@ void ValidateAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_definition_file) {
-    auto definition = ReadFile(schema_definition_file);
-    if (!definition) throw std::move(definition).status();
+    std::string const definition = ReadFile(schema_definition_file);
 
     google::pubsub::v1::ValidateSchemaRequest request;
     request.set_parent(google::cloud::Project(project_id).FullName());
     request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
-    request.mutable_schema()->set_definition(definition.value());
+    request.mutable_schema()->set_definition(definition);
     auto schema = client.ValidateSchema(request);
     if (!schema) throw std::move(schema).status();
     std::cout << "Schema is valid\n";
@@ -919,14 +916,13 @@ void ValidateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_definition_file) {
-    auto definition = ReadFile(schema_definition_file);
-    if (!definition) throw std::move(definition).status();
+    std::string const definition = ReadFile(schema_definition_file);
 
     google::pubsub::v1::ValidateSchemaRequest request;
     request.set_parent(google::cloud::Project(project_id).FullName());
     request.mutable_schema()->set_type(
         google::pubsub::v1::Schema::PROTOCOL_BUFFER);
-    request.mutable_schema()->set_definition(definition.value());
+    request.mutable_schema()->set_definition(definition);
     auto schema = client.ValidateSchema(request);
     if (!schema) throw std::move(schema).status();
     std::cout << "Schema is valid\n";
@@ -942,17 +938,14 @@ void ValidateMessageAvro(google::cloud::pubsub::SchemaServiceClient client,
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_definition_file,
      std::string const& message_file) {
-    auto definition = ReadFile(schema_definition_file);
-    if (!definition) throw std::move(definition).status();
-
+    std::string const definition = ReadFile(schema_definition_file);
     auto message = ReadFile(message_file);
-    if (!message) throw std::move(message).status();
 
     google::pubsub::v1::ValidateMessageRequest request;
     request.set_parent(google::cloud::Project(project_id).FullName());
     request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
-    request.mutable_schema()->set_definition(definition.value());
-    request.set_message(message.value());
+    request.mutable_schema()->set_definition(definition);
+    request.set_message(message);
     request.set_encoding(google::pubsub::v1::JSON);
     auto response = client.ValidateMessage(request);
     if (!response) throw std::move(response).status();
@@ -966,27 +959,26 @@ void ValidateMessageProtobuf(google::cloud::pubsub::SchemaServiceClient client,
                              std::vector<std::string> const& argv) {
   //! [validate-message-protobuf]
   namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_definition_file,
-     std::string const& message_file) {
-    auto definition = ReadFile(schema_definition_file);
-    if (!definition) throw std::move(definition).status();
-
-    auto message_file_contents = ReadFile(message_file);
-    if (!message_file_contents) throw std::move(message_file_contents).status();
+  [](pubsub::SchemaServiceClient client, std::string const& project_id) {
     google::cloud::pubsub::samples::State data;
-    if (!google::protobuf::TextFormat::ParseFromString(
-            message_file_contents.value(), &data)) {
-      throw google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                  "can't parse textproto"};
-    }
+    data.set_name("New York");
+    data.set_post_abbr("NY");
     auto const message = data.SerializeAsString();
+    auto constexpr kDefinition = R"pfile(
+        syntax = "proto3";
+        package google.cloud.pubsub.samples;
+
+        message State {
+          string name = 1;
+          string post_abbr = 2;
+        }
+    )pfile";
 
     google::pubsub::v1::ValidateMessageRequest request;
     request.set_parent(google::cloud::Project(project_id).FullName());
     request.mutable_schema()->set_type(
         google::pubsub::v1::Schema::PROTOCOL_BUFFER);
-    request.mutable_schema()->set_definition(definition.value());
+    request.mutable_schema()->set_definition(kDefinition);
     request.set_message(message);
     request.set_encoding(google::pubsub::v1::BINARY);
     auto response = client.ValidateMessage(request);
@@ -994,7 +986,7 @@ void ValidateMessageProtobuf(google::cloud::pubsub::SchemaServiceClient client,
     std::cout << "Message is valid\n";
   }
   //! [validate-message-protobuf]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+  (std::move(client), argv.at(0));
 }
 
 void ValidateMessageNamedSchema(
@@ -1003,15 +995,10 @@ void ValidateMessageNamedSchema(
   //! [validate-message-named-schema]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id, std::string const& message_file) {
-    auto message_file_contents = ReadFile(message_file);
-    if (!message_file_contents) throw std::move(message_file_contents).status();
+     std::string const& schema_id) {
     google::cloud::pubsub::samples::State data;
-    if (!google::protobuf::TextFormat::ParseFromString(
-            message_file_contents.value(), &data)) {
-      throw google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                                  "can't parse textproto"};
-    }
+    data.set_name("New York");
+    data.set_post_abbr("NY");
     auto const message = data.SerializeAsString();
 
     auto const schema = pubsub::Schema(project_id, schema_id);
@@ -1025,7 +1012,7 @@ void ValidateMessageNamedSchema(
     std::cout << "Message is valid for schema " << schema << "\n";
   }
   //! [validate-message-named-schema]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void CreateTopicWithSchema(google::cloud::pubsub::TopicAdminClient client,
@@ -1991,7 +1978,6 @@ void AutoRunProtobuf(
       google::cloud::pubsub::MakeSchemaServiceConnection());
   auto proto_schema_id = RandomSchemaId(generator);
   auto proto_schema_definition_file = testdata_directory + "schema.proto";
-  auto proto_message_file = testdata_directory + "valid_message.textproto";
 
   std::cout << "\nRunning CreateProtobufSchema() sample" << std::endl;
   CreateProtobufSchema(schema_admin, {project_id, proto_schema_id,
@@ -2002,13 +1988,10 @@ void AutoRunProtobuf(
                          {project_id, proto_schema_definition_file});
 
   std::cout << "\nRunning ValidateMessageProtobuf() sample" << std::endl;
-  ValidateMessageProtobuf(
-      schema_admin,
-      {project_id, proto_schema_definition_file, proto_message_file});
+  ValidateMessageProtobuf(schema_admin, {project_id});
 
   std::cout << "\nRunning ValidateMessageNamedSchema() sample" << std::endl;
-  ValidateMessageNamedSchema(schema_admin,
-                             {project_id, proto_schema_id, proto_message_file});
+  ValidateMessageNamedSchema(schema_admin, {project_id, proto_schema_id});
 
   std::cout << "\nRunning CreateTopicWithSchema() sample [proto]" << std::endl;
   auto const proto_topic_id = RandomTopicId(generator);
@@ -2540,12 +2523,10 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           "validate-message-avro",
           {"project-id", "schema-definition-file", "message-file"},
           ValidateMessageAvro),
-      CreateSchemaServiceCommand(
-          "validate-message-protobuf",
-          {"project-id", "schema-definition-file", "message-file"},
-          ValidateMessageProtobuf),
+      CreateSchemaServiceCommand("validate-message-protobuf", {"project-id"},
+                                 ValidateMessageProtobuf),
       CreateSchemaServiceCommand("validate-message-named-schema",
-                                 {"project-id", "schema-id", "message-file"},
+                                 {"project-id", "schema-id"},
                                  ValidateMessageNamedSchema),
 
       CreateTopicAdminCommand(
