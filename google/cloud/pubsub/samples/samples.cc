@@ -869,6 +869,21 @@ void ListSchemas(google::cloud::pubsub::SchemaServiceClient client,
   (std::move(client), argv.at(0));
 }
 
+void ListSchemaRevisions(google::cloud::pubsub::SchemaServiceClient client,
+                         std::vector<std::string> const& argv) {
+  //! [START pubsub_list_schema_revisions] [list-schema-revisions]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SchemaServiceClient client, std::string const& project_id) {
+    auto const parent = google::cloud::Project(project_id).FullName();
+    for (auto& s : client.ListSchemaRevisions(parent)) {
+      if (!s) throw std::move(s).status();
+      std::cout << "Schema revision: " << s->DebugString() << "\n";
+    }
+  }
+  //! [END pubsub_list_schema_revisions] [list-schema-revisions]
+  (std::move(client), argv.at(0));
+}
+
 void DeleteSchema(google::cloud::pubsub::SchemaServiceClient client,
                   std::vector<std::string> const& argv) {
   //! [START pubsub_delete_schema] [delete-schema]
@@ -1972,7 +1987,8 @@ void AutoRunAvro(
 
   std::cout << "\nRunning ListSchemas() sample" << std::endl;
   ListSchemas(schema_admin, {project_id});
-
+  std::cout << "\nRunning ListSchemaRevisions() sample" << std::endl;
+  ListSchemaRevisions(schema_admin, {project_id});
   std::cout << "\nRunning ValidateAvroMessage() sample" << std::endl;
   ValidateMessageAvro(schema_admin, {project_id});
 
@@ -2568,6 +2584,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSchemaServiceCommand("get-schema", {"project-id", "schema-id"},
                                  GetSchema),
       CreateSchemaServiceCommand("list-schemas", {"project-id"}, ListSchemas),
+      CreateSchemaServiceCommand("list-schema-revisions", {"project-id"},
+                                 ListSchemaRevisions),
       CreateSchemaServiceCommand("delete-schema", {"project-id", "schema-id"},
                                  DeleteSchema),
       CreateSchemaServiceCommand("validate-avro-schema",
