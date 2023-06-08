@@ -30,8 +30,9 @@ void FromJson(std::chrono::milliseconds& field, nlohmann::json const& j,
 
 void ToJson(std::chrono::milliseconds const& field, nlohmann::json& j,
             char const* name) {
-  j[name] =
+  std::int64_t t =
       std::chrono::duration_cast<std::chrono::milliseconds>(field).count();
+  j[name] = t;
 }
 
 void FromJson(std::chrono::hours& field, nlohmann::json const& j,
@@ -45,7 +46,9 @@ void FromJson(std::chrono::hours& field, nlohmann::json const& j,
 
 void ToJson(std::chrono::hours const& field, nlohmann::json& j,
             char const* name) {
-  j[name] = std::chrono::duration_cast<std::chrono::hours>(field).count();
+  std::int64_t t =
+      std::chrono::duration_cast<std::chrono::hours>(field).count();
+  j[name] = t;
 }
 
 void FromJson(std::chrono::system_clock::time_point& field,
@@ -60,9 +63,10 @@ void FromJson(std::chrono::system_clock::time_point& field,
 
 void ToJson(std::chrono::system_clock::time_point const& field,
             nlohmann::json& j, char const* name) {
-  j[name] = std::chrono::duration_cast<std::chrono::milliseconds>(
-                field - std::chrono::system_clock::from_time_t(0))
-                .count();
+  std::int64_t t = std::chrono::duration_cast<std::chrono::milliseconds>(
+                       field - std::chrono::system_clock::from_time_t(0))
+                       .count();
+  j[name] = t;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
