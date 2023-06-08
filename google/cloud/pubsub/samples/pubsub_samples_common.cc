@@ -160,17 +160,11 @@ std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator) {
                                                        "cloud-cpp-samples");
 }
 
-StatusOr<std::string> ReadFile(std::string const& path) {
+std::string ReadFile(std::string const& path) {
   std::ifstream ifs(path);
-  if (!ifs.is_open()) {
-    return google::cloud::Status{google::cloud::StatusCode::kNotFound,
-                                 "can't find file: " + path};
-  }
-
-  std::stringstream buffer;
-  buffer << ifs.rdbuf();
-  ifs.close();
-  return buffer.str();
+  if (!ifs.is_open()) throw std::runtime_error("Cannot open file: " + path);
+  ifs.exceptions(std::ios::badbit);
+  return std::string{std::istreambuf_iterator<char>{ifs.rdbuf()}, {}};
 }
 
 }  // namespace examples
