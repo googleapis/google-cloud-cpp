@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CompanyServiceMetadata : public CompanyServiceStub {
  public:
   ~CompanyServiceMetadata() override = default;
-  explicit CompanyServiceMetadata(std::shared_ptr<CompanyServiceStub> child);
+  explicit CompanyServiceMetadata(
+      std::shared_ptr<CompanyServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
       grpc::ClientContext& context,
@@ -60,6 +63,7 @@ class CompanyServiceMetadata : public CompanyServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CompanyServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

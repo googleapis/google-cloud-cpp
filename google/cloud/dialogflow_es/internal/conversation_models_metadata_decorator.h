@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ class ConversationModelsMetadata : public ConversationModelsStub {
  public:
   ~ConversationModelsMetadata() override = default;
   explicit ConversationModelsMetadata(
-      std::shared_ptr<ConversationModelsStub> child);
+      std::shared_ptr<ConversationModelsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConversationModel(
       google::cloud::CompletionQueue& cq,
@@ -109,6 +111,7 @@ class ConversationModelsMetadata : public ConversationModelsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ConversationModelsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

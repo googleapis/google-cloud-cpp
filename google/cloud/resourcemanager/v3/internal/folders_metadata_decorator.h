@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FoldersMetadata : public FoldersStub {
  public:
   ~FoldersMetadata() override = default;
-  explicit FoldersMetadata(std::shared_ptr<FoldersStub> child);
+  explicit FoldersMetadata(
+      std::shared_ptr<FoldersStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       grpc::ClientContext& context,
@@ -108,6 +111,7 @@ class FoldersMetadata : public FoldersStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<FoldersStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

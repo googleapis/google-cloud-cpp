@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ class CloudFilestoreManagerMetadata : public CloudFilestoreManagerStub {
  public:
   ~CloudFilestoreManagerMetadata() override = default;
   explicit CloudFilestoreManagerMetadata(
-      std::shared_ptr<CloudFilestoreManagerStub> child);
+      std::shared_ptr<CloudFilestoreManagerStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::filestore::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,
@@ -138,6 +140,7 @@ class CloudFilestoreManagerMetadata : public CloudFilestoreManagerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudFilestoreManagerStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

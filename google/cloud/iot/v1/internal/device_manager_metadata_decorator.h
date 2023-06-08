@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DeviceManagerMetadata : public DeviceManagerStub {
  public:
   ~DeviceManagerMetadata() override = default;
-  explicit DeviceManagerMetadata(std::shared_ptr<DeviceManagerStub> child);
+  explicit DeviceManagerMetadata(
+      std::shared_ptr<DeviceManagerStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::iot::v1::DeviceRegistry> CreateDeviceRegistry(
       grpc::ClientContext& context,
@@ -128,6 +131,7 @@ class DeviceManagerMetadata : public DeviceManagerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DeviceManagerStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

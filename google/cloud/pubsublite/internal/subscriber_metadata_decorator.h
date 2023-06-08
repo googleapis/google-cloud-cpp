@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ class SubscriberServiceMetadata : public SubscriberServiceStub {
  public:
   ~SubscriberServiceMetadata() override = default;
   explicit SubscriberServiceMetadata(
-      std::shared_ptr<SubscriberServiceStub> child);
+      std::shared_ptr<SubscriberServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::SubscribeRequest,
@@ -47,6 +49,7 @@ class SubscriberServiceMetadata : public SubscriberServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SubscriberServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

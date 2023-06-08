@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class HubServiceMetadata : public HubServiceStub {
  public:
   ~HubServiceMetadata() override = default;
-  explicit HubServiceMetadata(std::shared_ptr<HubServiceStub> child);
+  explicit HubServiceMetadata(
+      std::shared_ptr<HubServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse> ListHubs(
       grpc::ClientContext& context,
@@ -107,6 +110,7 @@ class HubServiceMetadata : public HubServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<HubServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

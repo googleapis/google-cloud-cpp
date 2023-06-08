@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ class GameServerConfigsServiceMetadata : public GameServerConfigsServiceStub {
  public:
   ~GameServerConfigsServiceMetadata() override = default;
   explicit GameServerConfigsServiceMetadata(
-      std::shared_ptr<GameServerConfigsServiceStub> child);
+      std::shared_ptr<GameServerConfigsServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse>
   ListGameServerConfigs(
@@ -75,6 +77,7 @@ class GameServerConfigsServiceMetadata : public GameServerConfigsServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<GameServerConfigsServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

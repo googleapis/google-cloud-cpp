@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ class PublisherServiceMetadata : public PublisherServiceStub {
  public:
   ~PublisherServiceMetadata() override = default;
   explicit PublisherServiceMetadata(
-      std::shared_ptr<PublisherServiceStub> child);
+      std::shared_ptr<PublisherServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PublishRequest,
@@ -47,6 +49,7 @@ class PublisherServiceMetadata : public PublisherServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<PublisherServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

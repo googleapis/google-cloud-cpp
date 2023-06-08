@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AccessApprovalMetadata : public AccessApprovalStub {
  public:
   ~AccessApprovalMetadata() override = default;
-  explicit AccessApprovalMetadata(std::shared_ptr<AccessApprovalStub> child);
+  explicit AccessApprovalMetadata(
+      std::shared_ptr<AccessApprovalStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::accessapproval::v1::ListApprovalRequestsResponse>
   ListApprovalRequests(
@@ -93,6 +96,7 @@ class AccessApprovalMetadata : public AccessApprovalStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AccessApprovalStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IntentsMetadata : public IntentsStub {
  public:
   ~IntentsMetadata() override = default;
-  explicit IntentsMetadata(std::shared_ptr<IntentsStub> child);
+  explicit IntentsMetadata(
+      std::shared_ptr<IntentsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse> ListIntents(
       grpc::ClientContext& context,
@@ -86,6 +89,7 @@ class IntentsMetadata : public IntentsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<IntentsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

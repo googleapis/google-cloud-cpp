@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ class KeyDashboardServiceMetadata : public KeyDashboardServiceStub {
  public:
   ~KeyDashboardServiceMetadata() override = default;
   explicit KeyDashboardServiceMetadata(
-      std::shared_ptr<KeyDashboardServiceStub> child);
+      std::shared_ptr<KeyDashboardServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
   ListCryptoKeys(grpc::ClientContext& context,
@@ -46,6 +48,7 @@ class KeyDashboardServiceMetadata : public KeyDashboardServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<KeyDashboardServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

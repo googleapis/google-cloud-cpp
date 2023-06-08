@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ContentServiceMetadata : public ContentServiceStub {
  public:
   ~ContentServiceMetadata() override = default;
-  explicit ContentServiceMetadata(std::shared_ptr<ContentServiceStub> child);
+  explicit ContentServiceMetadata(
+      std::shared_ptr<ContentServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
       grpc::ClientContext& context,
@@ -74,6 +77,7 @@ class ContentServiceMetadata : public ContentServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ContentServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

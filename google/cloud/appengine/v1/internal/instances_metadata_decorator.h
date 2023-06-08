@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InstancesMetadata : public InstancesStub {
  public:
   ~InstancesMetadata() override = default;
-  explicit InstancesMetadata(std::shared_ptr<InstancesStub> child);
+  explicit InstancesMetadata(
+      std::shared_ptr<InstancesStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::appengine::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,
@@ -69,6 +72,7 @@ class InstancesMetadata : public InstancesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<InstancesStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

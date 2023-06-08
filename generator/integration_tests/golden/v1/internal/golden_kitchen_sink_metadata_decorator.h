@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
  public:
   ~GoldenKitchenSinkMetadata() override = default;
-  explicit GoldenKitchenSinkMetadata(std::shared_ptr<GoldenKitchenSinkStub> child);
+  explicit GoldenKitchenSinkMetadata(
+      std::shared_ptr<GoldenKitchenSinkStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
       grpc::ClientContext& context,
@@ -106,6 +109,7 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<GoldenKitchenSinkStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

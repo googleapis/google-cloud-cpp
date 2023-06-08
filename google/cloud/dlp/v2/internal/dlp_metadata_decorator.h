@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DlpServiceMetadata : public DlpServiceStub {
  public:
   ~DlpServiceMetadata() override = default;
-  explicit DlpServiceMetadata(std::shared_ptr<DlpServiceStub> child);
+  explicit DlpServiceMetadata(
+      std::shared_ptr<DlpServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::privacy::dlp::v2::InspectContentResponse> InspectContent(
       grpc::ClientContext& context,
@@ -205,6 +208,7 @@ class DlpServiceMetadata : public DlpServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DlpServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

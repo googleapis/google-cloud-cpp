@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DeploymentsMetadata : public DeploymentsStub {
  public:
   ~DeploymentsMetadata() override = default;
-  explicit DeploymentsMetadata(std::shared_ptr<DeploymentsStub> child);
+  explicit DeploymentsMetadata(
+      std::shared_ptr<DeploymentsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
   ListDeployments(
@@ -51,6 +54,7 @@ class DeploymentsMetadata : public DeploymentsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DeploymentsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudMemcacheMetadata : public CloudMemcacheStub {
  public:
   ~CloudMemcacheMetadata() override = default;
-  explicit CloudMemcacheMetadata(std::shared_ptr<CloudMemcacheStub> child);
+  explicit CloudMemcacheMetadata(
+      std::shared_ptr<CloudMemcacheStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::memcache::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,
@@ -96,6 +99,7 @@ class CloudMemcacheMetadata : public CloudMemcacheStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudMemcacheStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

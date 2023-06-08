@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ImageVersionsMetadata : public ImageVersionsStub {
  public:
   ~ImageVersionsMetadata() override = default;
-  explicit ImageVersionsMetadata(std::shared_ptr<ImageVersionsStub> child);
+  explicit ImageVersionsMetadata(
+      std::shared_ptr<ImageVersionsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ListImageVersionsResponse>
@@ -46,6 +49,7 @@ class ImageVersionsMetadata : public ImageVersionsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ImageVersionsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

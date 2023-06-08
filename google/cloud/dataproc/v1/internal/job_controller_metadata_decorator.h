@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class JobControllerMetadata : public JobControllerStub {
  public:
   ~JobControllerMetadata() override = default;
-  explicit JobControllerMetadata(std::shared_ptr<JobControllerStub> child);
+  explicit JobControllerMetadata(
+      std::shared_ptr<JobControllerStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
       grpc::ClientContext& context,
@@ -80,6 +83,7 @@ class JobControllerMetadata : public JobControllerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<JobControllerStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

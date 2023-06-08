@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IAMCredentialsMetadata : public IAMCredentialsStub {
  public:
   ~IAMCredentialsMetadata() override = default;
-  explicit IAMCredentialsMetadata(std::shared_ptr<IAMCredentialsStub> child);
+  explicit IAMCredentialsMetadata(
+      std::shared_ptr<IAMCredentialsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
@@ -59,6 +62,7 @@ class IAMCredentialsMetadata : public IAMCredentialsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<IAMCredentialsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class VersionsMetadata : public VersionsStub {
  public:
   ~VersionsMetadata() override = default;
-  explicit VersionsMetadata(std::shared_ptr<VersionsStub> child);
+  explicit VersionsMetadata(
+      std::shared_ptr<VersionsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::appengine::v1::ListVersionsResponse> ListVersions(
       grpc::ClientContext& context,
@@ -74,6 +77,7 @@ class VersionsMetadata : public VersionsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<VersionsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

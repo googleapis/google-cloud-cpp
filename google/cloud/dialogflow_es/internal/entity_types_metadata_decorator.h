@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EntityTypesMetadata : public EntityTypesStub {
  public:
   ~EntityTypesMetadata() override = default;
-  explicit EntityTypesMetadata(std::shared_ptr<EntityTypesStub> child);
+  explicit EntityTypesMetadata(
+      std::shared_ptr<EntityTypesStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::ListEntityTypesResponse>
   ListEntityTypes(grpc::ClientContext& context,
@@ -106,6 +109,7 @@ class EntityTypesMetadata : public EntityTypesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<EntityTypesStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

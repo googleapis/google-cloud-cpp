@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AlloyDBAdminMetadata : public AlloyDBAdminStub {
  public:
   ~AlloyDBAdminMetadata() override = default;
-  explicit AlloyDBAdminMetadata(std::shared_ptr<AlloyDBAdminStub> child);
+  explicit AlloyDBAdminMetadata(
+      std::shared_ptr<AlloyDBAdminStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::alloydb::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,
@@ -153,6 +156,7 @@ class AlloyDBAdminMetadata : public AlloyDBAdminStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AlloyDBAdminStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

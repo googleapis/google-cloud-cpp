@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ class PolicyTagManagerSerializationMetadata
  public:
   ~PolicyTagManagerSerializationMetadata() override = default;
   explicit PolicyTagManagerSerializationMetadata(
-      std::shared_ptr<PolicyTagManagerSerializationStub> child);
+      std::shared_ptr<PolicyTagManagerSerializationStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
       grpc::ClientContext& context,
@@ -59,6 +61,7 @@ class PolicyTagManagerSerializationMetadata
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<PolicyTagManagerSerializationStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ class ContactCenterInsightsMetadata : public ContactCenterInsightsStub {
  public:
   ~ContactCenterInsightsMetadata() override = default;
   explicit ContactCenterInsightsMetadata(
-      std::shared_ptr<ContactCenterInsightsStub> child);
+      std::shared_ptr<ContactCenterInsightsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   CreateConversation(
@@ -264,6 +266,7 @@ class ContactCenterInsightsMetadata : public ContactCenterInsightsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ContactCenterInsightsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

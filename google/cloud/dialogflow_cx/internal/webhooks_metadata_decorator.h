@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WebhooksMetadata : public WebhooksStub {
  public:
   ~WebhooksMetadata() override = default;
-  explicit WebhooksMetadata(std::shared_ptr<WebhooksStub> child);
+  explicit WebhooksMetadata(
+      std::shared_ptr<WebhooksStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
   ListWebhooks(grpc::ClientContext& context,
@@ -65,6 +68,7 @@ class WebhooksMetadata : public WebhooksStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<WebhooksStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

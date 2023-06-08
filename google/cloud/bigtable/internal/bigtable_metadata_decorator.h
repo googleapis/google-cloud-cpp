@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BigtableMetadata : public BigtableStub {
  public:
   ~BigtableMetadata() override = default;
-  explicit BigtableMetadata(std::shared_ptr<BigtableStub> child);
+  explicit BigtableMetadata(
+      std::shared_ptr<BigtableStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::ReadRowsResponse>>
@@ -109,6 +112,7 @@ class BigtableMetadata : public BigtableStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<BigtableStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IAMPolicyMetadata : public IAMPolicyStub {
  public:
   ~IAMPolicyMetadata() override = default;
-  explicit IAMPolicyMetadata(std::shared_ptr<IAMPolicyStub> child);
+  explicit IAMPolicyMetadata(
+      std::shared_ptr<IAMPolicyStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext& context,
@@ -52,6 +55,7 @@ class IAMPolicyMetadata : public IAMPolicyStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<IAMPolicyStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

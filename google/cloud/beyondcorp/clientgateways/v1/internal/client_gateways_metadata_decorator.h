@@ -25,6 +25,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +36,8 @@ class ClientGatewaysServiceMetadata : public ClientGatewaysServiceStub {
  public:
   ~ClientGatewaysServiceMetadata() override = default;
   explicit ClientGatewaysServiceMetadata(
-      std::shared_ptr<ClientGatewaysServiceStub> child);
+      std::shared_ptr<ClientGatewaysServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<
       google::cloud::beyondcorp::clientgateways::v1::ListClientGatewaysResponse>
@@ -76,6 +78,7 @@ class ClientGatewaysServiceMetadata : public ClientGatewaysServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ClientGatewaysServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

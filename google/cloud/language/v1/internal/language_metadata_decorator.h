@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LanguageServiceMetadata : public LanguageServiceStub {
  public:
   ~LanguageServiceMetadata() override = default;
-  explicit LanguageServiceMetadata(std::shared_ptr<LanguageServiceStub> child);
+  explicit LanguageServiceMetadata(
+      std::shared_ptr<LanguageServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(grpc::ClientContext& context,
@@ -73,6 +76,7 @@ class LanguageServiceMetadata : public LanguageServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<LanguageServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

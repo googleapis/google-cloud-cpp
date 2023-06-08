@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ParticipantsMetadata : public ParticipantsStub {
  public:
   ~ParticipantsMetadata() override = default;
-  explicit ParticipantsMetadata(std::shared_ptr<ParticipantsStub> child);
+  explicit ParticipantsMetadata(
+      std::shared_ptr<ParticipantsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
       grpc::ClientContext& context,
@@ -89,6 +92,7 @@ class ParticipantsMetadata : public ParticipantsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ParticipantsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

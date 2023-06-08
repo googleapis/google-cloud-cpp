@@ -25,6 +25,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +36,8 @@ class AppConnectionsServiceMetadata : public AppConnectionsServiceStub {
  public:
   ~AppConnectionsServiceMetadata() override = default;
   explicit AppConnectionsServiceMetadata(
-      std::shared_ptr<AppConnectionsServiceStub> child);
+      std::shared_ptr<AppConnectionsServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<
       google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse>
@@ -89,6 +91,7 @@ class AppConnectionsServiceMetadata : public AppConnectionsServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AppConnectionsServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

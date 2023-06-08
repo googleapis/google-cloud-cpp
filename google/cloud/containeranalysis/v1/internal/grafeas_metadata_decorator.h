@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GrafeasMetadata : public GrafeasStub {
  public:
   ~GrafeasMetadata() override = default;
-  explicit GrafeasMetadata(std::shared_ptr<GrafeasStub> child);
+  explicit GrafeasMetadata(
+      std::shared_ptr<GrafeasStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<grafeas::v1::Occurrence> GetOccurrence(
       grpc::ClientContext& context,
@@ -95,6 +98,7 @@ class GrafeasMetadata : public GrafeasStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<GrafeasStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

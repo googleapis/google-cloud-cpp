@@ -28,8 +28,11 @@ namespace cloud {
 namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ProjectsMetadata::ProjectsMetadata(std::shared_ptr<ProjectsStub> child)
+ProjectsMetadata::ProjectsMetadata(
+    std::shared_ptr<ProjectsStub> child,
+    std::unordered_map<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -149,6 +152,9 @@ void ProjectsMetadata::SetMetadata(grpc::ClientContext& context,
 
 void ProjectsMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",

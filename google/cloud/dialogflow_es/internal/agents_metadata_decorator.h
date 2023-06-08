@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AgentsMetadata : public AgentsStub {
  public:
   ~AgentsMetadata() override = default;
-  explicit AgentsMetadata(std::shared_ptr<AgentsStub> child);
+  explicit AgentsMetadata(
+      std::shared_ptr<AgentsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
       grpc::ClientContext& context,
@@ -96,6 +99,7 @@ class AgentsMetadata : public AgentsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AgentsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ class StorageTransferServiceMetadata : public StorageTransferServiceStub {
  public:
   ~StorageTransferServiceMetadata() override = default;
   explicit StorageTransferServiceMetadata(
-      std::shared_ptr<StorageTransferServiceStub> child);
+      std::shared_ptr<StorageTransferServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
   GetGoogleServiceAccount(
@@ -123,6 +125,7 @@ class StorageTransferServiceMetadata : public StorageTransferServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<StorageTransferServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

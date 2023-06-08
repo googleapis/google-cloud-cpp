@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LookupServiceMetadata : public LookupServiceStub {
  public:
   ~LookupServiceMetadata() override = default;
-  explicit LookupServiceMetadata(std::shared_ptr<LookupServiceStub> child);
+  explicit LookupServiceMetadata(
+      std::shared_ptr<LookupServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(
@@ -46,6 +49,7 @@ class LookupServiceMetadata : public LookupServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<LookupServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ class UptimeCheckServiceMetadata : public UptimeCheckServiceStub {
  public:
   ~UptimeCheckServiceMetadata() override = default;
   explicit UptimeCheckServiceMetadata(
-      std::shared_ptr<UptimeCheckServiceStub> child);
+      std::shared_ptr<UptimeCheckServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
   ListUptimeCheckConfigs(
@@ -72,6 +74,7 @@ class UptimeCheckServiceMetadata : public UptimeCheckServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<UptimeCheckServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

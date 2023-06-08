@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ class ValidationHelperV1Metadata : public ValidationHelperV1Stub {
  public:
   ~ValidationHelperV1Metadata() override = default;
   explicit ValidationHelperV1Metadata(
-      std::shared_ptr<ValidationHelperV1Stub> child);
+      std::shared_ptr<ValidationHelperV1Stub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::binaryauthorization::v1::
                ValidateAttestationOccurrenceResponse>
@@ -48,6 +50,7 @@ class ValidationHelperV1Metadata : public ValidationHelperV1Stub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ValidationHelperV1Stub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

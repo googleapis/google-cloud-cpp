@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IAMMetadata : public IAMStub {
  public:
   ~IAMMetadata() override = default;
-  explicit IAMMetadata(std::shared_ptr<IAMStub> child);
+  explicit IAMMetadata(
+      std::shared_ptr<IAMStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
   ListServiceAccounts(grpc::ClientContext& context,
@@ -173,6 +176,7 @@ class IAMMetadata : public IAMStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<IAMStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BudgetServiceMetadata : public BudgetServiceStub {
  public:
   ~BudgetServiceMetadata() override = default;
-  explicit BudgetServiceMetadata(std::shared_ptr<BudgetServiceStub> child);
+  explicit BudgetServiceMetadata(
+      std::shared_ptr<BudgetServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
       grpc::ClientContext& context,
@@ -65,6 +68,7 @@ class BudgetServiceMetadata : public BudgetServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<BudgetServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

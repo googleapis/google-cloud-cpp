@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PoliciesMetadata : public PoliciesStub {
  public:
   ~PoliciesMetadata() override = default;
-  explicit PoliciesMetadata(std::shared_ptr<PoliciesStub> child);
+  explicit PoliciesMetadata(
+      std::shared_ptr<PoliciesStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::iam::v2::ListPoliciesResponse> ListPolicies(
       grpc::ClientContext& context,
@@ -74,6 +77,7 @@ class PoliciesMetadata : public PoliciesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<PoliciesStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudRedisMetadata : public CloudRedisStub {
  public:
   ~CloudRedisMetadata() override = default;
-  explicit CloudRedisMetadata(std::shared_ptr<CloudRedisStub> child);
+  explicit CloudRedisMetadata(
+      std::shared_ptr<CloudRedisStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::redis::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,
@@ -106,6 +109,7 @@ class CloudRedisMetadata : public CloudRedisStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudRedisStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

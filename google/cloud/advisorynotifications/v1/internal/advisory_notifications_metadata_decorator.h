@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ class AdvisoryNotificationsServiceMetadata
  public:
   ~AdvisoryNotificationsServiceMetadata() override = default;
   explicit AdvisoryNotificationsServiceMetadata(
-      std::shared_ptr<AdvisoryNotificationsServiceStub> child);
+      std::shared_ptr<AdvisoryNotificationsServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
   ListNotifications(
@@ -54,6 +56,7 @@ class AdvisoryNotificationsServiceMetadata
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AdvisoryNotificationsServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

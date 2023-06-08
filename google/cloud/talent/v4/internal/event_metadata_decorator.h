@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EventServiceMetadata : public EventServiceStub {
  public:
   ~EventServiceMetadata() override = default;
-  explicit EventServiceMetadata(std::shared_ptr<EventServiceStub> child);
+  explicit EventServiceMetadata(
+      std::shared_ptr<EventServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       grpc::ClientContext& context,
@@ -45,6 +48,7 @@ class EventServiceMetadata : public EventServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<EventServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

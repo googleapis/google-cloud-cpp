@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AdminServiceMetadata : public AdminServiceStub {
  public:
   ~AdminServiceMetadata() override = default;
-  explicit AdminServiceMetadata(std::shared_ptr<AdminServiceStub> child);
+  explicit AdminServiceMetadata(
+      std::shared_ptr<AdminServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
       grpc::ClientContext& context,
@@ -154,6 +157,7 @@ class AdminServiceMetadata : public AdminServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AdminServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

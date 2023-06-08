@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ApiKeysMetadata : public ApiKeysStub {
  public:
   ~ApiKeysMetadata() override = default;
-  explicit ApiKeysMetadata(std::shared_ptr<ApiKeysStub> child);
+  explicit ApiKeysMetadata(
+      std::shared_ptr<ApiKeysStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateKey(
       google::cloud::CompletionQueue& cq,
@@ -87,6 +90,7 @@ class ApiKeysMetadata : public ApiKeysStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ApiKeysStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

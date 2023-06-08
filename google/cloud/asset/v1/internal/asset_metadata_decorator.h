@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AssetServiceMetadata : public AssetServiceStub {
  public:
   ~AssetServiceMetadata() override = default;
-  explicit AssetServiceMetadata(std::shared_ptr<AssetServiceStub> child);
+  explicit AssetServiceMetadata(
+      std::shared_ptr<AssetServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportAssets(
       google::cloud::CompletionQueue& cq,
@@ -164,6 +167,7 @@ class AssetServiceMetadata : public AssetServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AssetServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

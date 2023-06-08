@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BigQueryWriteMetadata : public BigQueryWriteStub {
  public:
   ~BigQueryWriteMetadata() override = default;
-  explicit BigQueryWriteMetadata(std::shared_ptr<BigQueryWriteStub> child);
+  explicit BigQueryWriteMetadata(
+      std::shared_ptr<BigQueryWriteStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
       grpc::ClientContext& context,
@@ -74,6 +77,7 @@ class BigQueryWriteMetadata : public BigQueryWriteStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<BigQueryWriteStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FulfillmentsMetadata : public FulfillmentsStub {
  public:
   ~FulfillmentsMetadata() override = default;
-  explicit FulfillmentsMetadata(std::shared_ptr<FulfillmentsStub> child);
+  explicit FulfillmentsMetadata(
+      std::shared_ptr<FulfillmentsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
       grpc::ClientContext& context,
@@ -50,6 +53,7 @@ class FulfillmentsMetadata : public FulfillmentsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<FulfillmentsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

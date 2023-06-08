@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ class AnalyticsHubServiceMetadata : public AnalyticsHubServiceStub {
  public:
   ~AnalyticsHubServiceMetadata() override = default;
   explicit AnalyticsHubServiceMetadata(
-      std::shared_ptr<AnalyticsHubServiceStub> child);
+      std::shared_ptr<AnalyticsHubServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse>
   ListDataExchanges(
@@ -118,6 +120,7 @@ class AnalyticsHubServiceMetadata : public AnalyticsHubServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AnalyticsHubServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

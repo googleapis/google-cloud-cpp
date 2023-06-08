@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ class TranslationServiceMetadata : public TranslationServiceStub {
  public:
   ~TranslationServiceMetadata() override = default;
   explicit TranslationServiceMetadata(
-      std::shared_ptr<TranslationServiceStub> child);
+      std::shared_ptr<TranslationServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
       grpc::ClientContext& context,
@@ -108,6 +110,7 @@ class TranslationServiceMetadata : public TranslationServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TranslationServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ class DataTransferServiceMetadata : public DataTransferServiceStub {
  public:
   ~DataTransferServiceMetadata() override = default;
   explicit DataTransferServiceMetadata(
-      std::shared_ptr<DataTransferServiceStub> child);
+      std::shared_ptr<DataTransferServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
       grpc::ClientContext& context,
@@ -126,6 +128,7 @@ class DataTransferServiceMetadata : public DataTransferServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DataTransferServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

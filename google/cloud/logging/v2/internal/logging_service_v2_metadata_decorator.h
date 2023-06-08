@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ class LoggingServiceV2Metadata : public LoggingServiceV2Stub {
  public:
   ~LoggingServiceV2Metadata() override = default;
   explicit LoggingServiceV2Metadata(
-      std::shared_ptr<LoggingServiceV2Stub> child);
+      std::shared_ptr<LoggingServiceV2Stub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   Status DeleteLog(
       grpc::ClientContext& context,
@@ -75,6 +77,7 @@ class LoggingServiceV2Metadata : public LoggingServiceV2Stub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<LoggingServiceV2Stub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProductServiceMetadata : public ProductServiceStub {
  public:
   ~ProductServiceMetadata() override = default;
-  explicit ProductServiceMetadata(std::shared_ptr<ProductServiceStub> child);
+  explicit ProductServiceMetadata(
+      std::shared_ptr<ProductServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::retail::v2::Product> CreateProduct(
       grpc::ClientContext& context,
@@ -105,6 +108,7 @@ class ProductServiceMetadata : public ProductServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ProductServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

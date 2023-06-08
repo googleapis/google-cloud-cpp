@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TextToSpeechMetadata : public TextToSpeechStub {
  public:
   ~TextToSpeechMetadata() override = default;
-  explicit TextToSpeechMetadata(std::shared_ptr<TextToSpeechStub> child);
+  explicit TextToSpeechMetadata(
+      std::shared_ptr<TextToSpeechStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
       grpc::ClientContext& context,
@@ -51,6 +54,7 @@ class TextToSpeechMetadata : public TextToSpeechStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TextToSpeechStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

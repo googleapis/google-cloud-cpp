@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GkeHubMetadata : public GkeHubStub {
  public:
   ~GkeHubMetadata() override = default;
-  explicit GkeHubMetadata(std::shared_ptr<GkeHubStub> child);
+  explicit GkeHubMetadata(
+      std::shared_ptr<GkeHubStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> ListMemberships(
       grpc::ClientContext& context,
@@ -107,6 +110,7 @@ class GkeHubMetadata : public GkeHubStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<GkeHubStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

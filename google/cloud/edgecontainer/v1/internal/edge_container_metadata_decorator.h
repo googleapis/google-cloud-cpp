@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EdgeContainerMetadata : public EdgeContainerStub {
  public:
   ~EdgeContainerMetadata() override = default;
-  explicit EdgeContainerMetadata(std::shared_ptr<EdgeContainerStub> child);
+  explicit EdgeContainerMetadata(
+      std::shared_ptr<EdgeContainerStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::edgecontainer::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,
@@ -146,6 +149,7 @@ class EdgeContainerMetadata : public EdgeContainerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<EdgeContainerStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

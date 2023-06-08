@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ class CertificateManagerMetadata : public CertificateManagerStub {
  public:
   ~CertificateManagerMetadata() override = default;
   explicit CertificateManagerMetadata(
-      std::shared_ptr<CertificateManagerStub> child);
+      std::shared_ptr<CertificateManagerStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::certificatemanager::v1::ListCertificatesResponse>
   ListCertificates(
@@ -202,6 +204,7 @@ class CertificateManagerMetadata : public CertificateManagerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CertificateManagerStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

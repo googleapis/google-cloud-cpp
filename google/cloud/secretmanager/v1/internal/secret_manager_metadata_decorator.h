@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ class SecretManagerServiceMetadata : public SecretManagerServiceStub {
  public:
   ~SecretManagerServiceMetadata() override = default;
   explicit SecretManagerServiceMetadata(
-      std::shared_ptr<SecretManagerServiceStub> child);
+      std::shared_ptr<SecretManagerServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse> ListSecrets(
       grpc::ClientContext& context,
@@ -117,6 +119,7 @@ class SecretManagerServiceMetadata : public SecretManagerServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SecretManagerServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

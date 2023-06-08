@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ class PolicyTagManagerMetadata : public PolicyTagManagerStub {
  public:
   ~PolicyTagManagerMetadata() override = default;
   explicit PolicyTagManagerMetadata(
-      std::shared_ptr<PolicyTagManagerStub> child);
+      std::shared_ptr<PolicyTagManagerStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> CreateTaxonomy(
       grpc::ClientContext& context,
@@ -103,6 +105,7 @@ class PolicyTagManagerMetadata : public PolicyTagManagerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<PolicyTagManagerStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

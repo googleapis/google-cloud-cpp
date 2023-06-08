@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DatabaseAdminMetadata : public DatabaseAdminStub {
  public:
   ~DatabaseAdminMetadata() override = default;
-  explicit DatabaseAdminMetadata(std::shared_ptr<DatabaseAdminStub> child);
+  explicit DatabaseAdminMetadata(
+      std::shared_ptr<DatabaseAdminStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
   ListDatabases(
@@ -159,6 +162,7 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DatabaseAdminStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ class BigtableTableAdminMetadata : public BigtableTableAdminStub {
  public:
   ~BigtableTableAdminMetadata() override = default;
   explicit BigtableTableAdminMetadata(
-      std::shared_ptr<BigtableTableAdminStub> child);
+      std::shared_ptr<BigtableTableAdminStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::bigtable::admin::v2::Table> CreateTable(
       grpc::ClientContext& context,
@@ -144,6 +146,7 @@ class BigtableTableAdminMetadata : public BigtableTableAdminStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<BigtableTableAdminStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SpeechMetadata : public SpeechStub {
  public:
   ~SpeechMetadata() override = default;
-  explicit SpeechMetadata(std::shared_ptr<SpeechStub> child);
+  explicit SpeechMetadata(
+      std::shared_ptr<SpeechStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRecognizer(
       google::cloud::CompletionQueue& cq,
@@ -173,6 +176,7 @@ class SpeechMetadata : public SpeechStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SpeechStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

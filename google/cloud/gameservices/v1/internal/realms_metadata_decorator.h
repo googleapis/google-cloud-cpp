@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RealmsServiceMetadata : public RealmsServiceStub {
  public:
   ~RealmsServiceMetadata() override = default;
-  explicit RealmsServiceMetadata(std::shared_ptr<RealmsServiceStub> child);
+  explicit RealmsServiceMetadata(
+      std::shared_ptr<RealmsServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::gaming::v1::ListRealmsResponse> ListRealms(
       grpc::ClientContext& context,
@@ -79,6 +82,7 @@ class RealmsServiceMetadata : public RealmsServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<RealmsServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

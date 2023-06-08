@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ class ServiceControllerMetadata : public ServiceControllerStub {
  public:
   ~ServiceControllerMetadata() override = default;
   explicit ServiceControllerMetadata(
-      std::shared_ptr<ServiceControllerStub> child);
+      std::shared_ptr<ServiceControllerStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::api::servicecontrol::v1::CheckResponse> Check(
       grpc::ClientContext& context,
@@ -49,6 +51,7 @@ class ServiceControllerMetadata : public ServiceControllerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ServiceControllerStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

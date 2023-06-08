@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProjectsMetadata : public ProjectsStub {
  public:
   ~ProjectsMetadata() override = default;
-  explicit ProjectsMetadata(std::shared_ptr<ProjectsStub> child);
+  explicit ProjectsMetadata(
+      std::shared_ptr<ProjectsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
       grpc::ClientContext& context,
@@ -109,6 +112,7 @@ class ProjectsMetadata : public ProjectsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ProjectsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

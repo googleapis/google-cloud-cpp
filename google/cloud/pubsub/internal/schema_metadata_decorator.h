@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SchemaServiceMetadata : public SchemaServiceStub {
  public:
   ~SchemaServiceMetadata() override = default;
-  explicit SchemaServiceMetadata(std::shared_ptr<SchemaServiceStub> child);
+  explicit SchemaServiceMetadata(
+      std::shared_ptr<SchemaServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
       grpc::ClientContext& context,
@@ -80,6 +83,7 @@ class SchemaServiceMetadata : public SchemaServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SchemaServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IamCheckerMetadata : public IamCheckerStub {
  public:
   ~IamCheckerMetadata() override = default;
-  explicit IamCheckerMetadata(std::shared_ptr<IamCheckerStub> child);
+  explicit IamCheckerMetadata(
+      std::shared_ptr<IamCheckerStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<
       google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
@@ -47,6 +50,7 @@ class IamCheckerMetadata : public IamCheckerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<IamCheckerStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

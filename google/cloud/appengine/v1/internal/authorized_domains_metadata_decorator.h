@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ class AuthorizedDomainsMetadata : public AuthorizedDomainsStub {
  public:
   ~AuthorizedDomainsMetadata() override = default;
   explicit AuthorizedDomainsMetadata(
-      std::shared_ptr<AuthorizedDomainsStub> child);
+      std::shared_ptr<AuthorizedDomainsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
   ListAuthorizedDomains(
@@ -47,6 +49,7 @@ class AuthorizedDomainsMetadata : public AuthorizedDomainsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AuthorizedDomainsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

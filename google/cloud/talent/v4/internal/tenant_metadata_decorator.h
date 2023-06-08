@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TenantServiceMetadata : public TenantServiceStub {
  public:
   ~TenantServiceMetadata() override = default;
-  explicit TenantServiceMetadata(std::shared_ptr<TenantServiceStub> child);
+  explicit TenantServiceMetadata(
+      std::shared_ptr<TenantServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       grpc::ClientContext& context,
@@ -60,6 +63,7 @@ class TenantServiceMetadata : public TenantServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TenantServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

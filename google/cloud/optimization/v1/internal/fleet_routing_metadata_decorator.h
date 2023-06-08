@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FleetRoutingMetadata : public FleetRoutingStub {
  public:
   ~FleetRoutingMetadata() override = default;
-  explicit FleetRoutingMetadata(std::shared_ptr<FleetRoutingStub> child);
+  explicit FleetRoutingMetadata(
+      std::shared_ptr<FleetRoutingStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
   OptimizeTours(grpc::ClientContext& context,
@@ -62,6 +65,7 @@ class FleetRoutingMetadata : public FleetRoutingStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<FleetRoutingStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

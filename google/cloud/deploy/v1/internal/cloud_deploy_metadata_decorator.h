@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudDeployMetadata : public CloudDeployStub {
  public:
   ~CloudDeployMetadata() override = default;
-  explicit CloudDeployMetadata(std::shared_ptr<CloudDeployStub> child);
+  explicit CloudDeployMetadata(
+      std::shared_ptr<CloudDeployStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse>
   ListDeliveryPipelines(
@@ -170,6 +173,7 @@ class CloudDeployMetadata : public CloudDeployStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudDeployStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

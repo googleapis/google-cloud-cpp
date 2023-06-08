@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ class BigtableInstanceAdminMetadata : public BigtableInstanceAdminStub {
  public:
   ~BigtableInstanceAdminMetadata() override = default;
   explicit BigtableInstanceAdminMetadata(
-      std::shared_ptr<BigtableInstanceAdminStub> child);
+      std::shared_ptr<BigtableInstanceAdminStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
@@ -154,6 +156,7 @@ class BigtableInstanceAdminMetadata : public BigtableInstanceAdminStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<BigtableInstanceAdminStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

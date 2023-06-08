@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WorkstationsMetadata : public WorkstationsStub {
  public:
   ~WorkstationsMetadata() override = default;
-  explicit WorkstationsMetadata(std::shared_ptr<WorkstationsStub> child);
+  explicit WorkstationsMetadata(
+      std::shared_ptr<WorkstationsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::workstations::v1::WorkstationCluster>
   GetWorkstationCluster(
@@ -174,6 +177,7 @@ class WorkstationsMetadata : public WorkstationsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<WorkstationsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

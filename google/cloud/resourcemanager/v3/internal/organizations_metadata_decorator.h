@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class OrganizationsMetadata : public OrganizationsStub {
  public:
   ~OrganizationsMetadata() override = default;
-  explicit OrganizationsMetadata(std::shared_ptr<OrganizationsStub> child);
+  explicit OrganizationsMetadata(
+      std::shared_ptr<OrganizationsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
       grpc::ClientContext& context,
@@ -63,6 +66,7 @@ class OrganizationsMetadata : public OrganizationsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<OrganizationsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

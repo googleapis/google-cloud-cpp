@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TraceServiceMetadata : public TraceServiceStub {
  public:
   ~TraceServiceMetadata() override = default;
-  explicit TraceServiceMetadata(std::shared_ptr<TraceServiceStub> child);
+  explicit TraceServiceMetadata(
+      std::shared_ptr<TraceServiceStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   Status BatchWriteSpans(
       grpc::ClientContext& context,
@@ -49,6 +52,7 @@ class TraceServiceMetadata : public TraceServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TraceServiceStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

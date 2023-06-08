@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudSchedulerMetadata : public CloudSchedulerStub {
  public:
   ~CloudSchedulerMetadata() override = default;
-  explicit CloudSchedulerMetadata(std::shared_ptr<CloudSchedulerStub> child);
+  explicit CloudSchedulerMetadata(
+      std::shared_ptr<CloudSchedulerStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::scheduler::v1::ListJobsResponse> ListJobs(
       grpc::ClientContext& context,
@@ -72,6 +75,7 @@ class CloudSchedulerMetadata : public CloudSchedulerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudSchedulerStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

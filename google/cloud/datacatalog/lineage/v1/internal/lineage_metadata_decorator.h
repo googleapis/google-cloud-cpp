@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LineageMetadata : public LineageStub {
  public:
   ~LineageMetadata() override = default;
-  explicit LineageMetadata(std::shared_ptr<LineageStub> child);
+  explicit LineageMetadata(
+      std::shared_ptr<LineageStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
       grpc::ClientContext& context,
@@ -139,6 +142,7 @@ class LineageMetadata : public LineageStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<LineageStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

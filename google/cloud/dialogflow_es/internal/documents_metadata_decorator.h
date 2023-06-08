@@ -24,6 +24,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DocumentsMetadata : public DocumentsStub {
  public:
   ~DocumentsMetadata() override = default;
-  explicit DocumentsMetadata(std::shared_ptr<DocumentsStub> child);
+  explicit DocumentsMetadata(
+      std::shared_ptr<DocumentsStub> child,
+      std::unordered_map<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse> ListDocuments(
       grpc::ClientContext& context,
@@ -97,6 +100,7 @@ class DocumentsMetadata : public DocumentsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DocumentsStub> child_;
+  std::unordered_map<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 
