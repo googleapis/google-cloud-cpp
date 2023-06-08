@@ -1058,6 +1058,34 @@ void CommitAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void CommitProtoSchema(google::cloud::pubsub::SchemaServiceClient client,
+                       std::vector<std::string> const& argv) {
+  //! [START pubsub_commit_proto_schema] [commit-proto-schema]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SchemaServiceClient client, std::string const& project_id,
+     std::string const& schema_id, std::string const& schema_definition_file) {
+    std::string const definition = ReadFile(schema_definition_file);
+
+    google::pubsub::v1::CommitSchemaRequest request;
+    request.set_name(
+        google::cloud::pubsub::Schema(project_id, schema_id).FullName());
+    request.mutable_schema()->set_type(
+        google::pubsub::v1::Schema::PROTOCOL_BUFFER);
+    request.mutable_schema()->set_definition(definition);
+    auto schema = client.CommitSchema(request);
+    if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The schema already exists\n";
+      return;
+    }
+    if (!schema) throw std::move(schema).status();
+
+    std::cout << "Schema successfully committed: " << schema->DebugString()
+              << "\n";
+  }
+  //! [END pubsub_commit_proto_schema] [commit-proto-schema]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
 void PublishAvroRecords(google::cloud::pubsub::Publisher publisher,
                         std::vector<std::string> const&) {
   //! [START pubsub_publish_avro_records]
@@ -2019,6 +2047,9 @@ void AutoRunProtobuf(
   ValidateMessageNamedSchema(schema_admin,
                              {project_id, proto_schema_id, proto_message_file});
 
+  std::cout << "\nRunning CommitProtoSchema() sample" << std::endl;
+  CommitProtoSchema(schema_admin, {project_id, proto_definition_file});
+
   std::cout << "\nRunning CreateTopicWithSchema() sample [proto]" << std::endl;
   auto const proto_topic_id = RandomTopicId(generator);
   CreateTopicWithSchema(topic_admin_client, {project_id, proto_topic_id,
@@ -2557,8 +2588,11 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                                  {"project-id", "schema-id", "message-file"},
                                  ValidateMessageNamedSchema),
       CreateSchemaServiceCommand("commit-avro-schema",
-                                 {"project-id", "avro-defintion-file"},
+                                 {"project-id", "schema-defintion-file"},
                                  CommitAvroSchema),
+      CreateSchemaServiceCommand("commit-proto-schema",
+                                 {"project-id", "schema-defintion-file"},
+                                 CommitProtoSchema),
 
       CreateTopicAdminCommand(
           "create-topic-with-schema",
