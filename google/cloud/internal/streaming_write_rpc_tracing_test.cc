@@ -92,9 +92,9 @@ TEST(StreamingWriteRpcTracingTest, Write) {
   auto span = MakeSpan("span");
   TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
                       span);
-  stream.Write(100, grpc::WriteOptions{});
-  stream.Write(200, grpc::WriteOptions{});
-  stream.Write(300, grpc::WriteOptions{}.set_last_message());
+  EXPECT_TRUE(stream.Write(100, grpc::WriteOptions{}));
+  EXPECT_FALSE(stream.Write(200, grpc::WriteOptions{}));
+  EXPECT_TRUE(stream.Write(300, grpc::WriteOptions{}.set_last_message()));
   stream.Close();
 
   auto spans = span_catcher->GetSpans();

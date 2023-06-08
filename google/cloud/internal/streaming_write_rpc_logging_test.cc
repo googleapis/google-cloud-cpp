@@ -72,7 +72,7 @@ TEST_F(StreamingWriteRpcLoggingTest, Write) {
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
   google::protobuf::Timestamp request;
   request.set_seconds(123456);
-  stream.Write(request, grpc::WriteOptions{});
+  EXPECT_TRUE(stream.Write(request, grpc::WriteOptions{}));
   auto const lines = log_.ExtractLines();
   EXPECT_THAT(lines, Contains(AllOf(HasSubstr("Write"), HasSubstr("test-id"),
                                     HasSubstr("1970-01-02T10:17:36Z"))));
