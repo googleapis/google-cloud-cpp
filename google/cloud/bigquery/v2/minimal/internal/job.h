@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_H
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_configuration.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_stats.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
@@ -58,6 +59,7 @@ struct Job {
   JobStatus status;
   JobReference reference;
   JobConfiguration configuration;
+  JobStatistics statistics;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
@@ -74,6 +76,7 @@ struct ListFormatJob {
   JobReference reference;
   JobConfiguration configuration;
   JobStatus status;
+  JobStatistics statistics;
 
   ErrorProto error_result;
 
@@ -88,12 +91,12 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobReference, project_id,
                                                 job_id, location);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Job, kind, etag, id, self_link,
                                                 user_email, status, reference,
-                                                configuration);
+                                                configuration, statistics);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ListFormatJob, id, kind,
                                                 user_email, state,
                                                 principal_subject, reference,
                                                 configuration, status,
-                                                error_result);
+                                                statistics, error_result);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
