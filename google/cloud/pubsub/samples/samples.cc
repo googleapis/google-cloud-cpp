@@ -913,6 +913,27 @@ void GetSchema(google::cloud::pubsub::SchemaServiceClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void GetSchemaRevision(google::cloud::pubsub::SchemaServiceClient client,
+                       std::vector<std::string> const& argv) {
+  //! [START pubsub_get_schema_revision] [get-schema-revision]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SchemaServiceClient client, std::string const& project_id,
+     std::string const& schema_id, std::string const& revision_id) {
+    google::pubsub::v1::GetSchemaRequest request;
+    std::string const schema_id_with_revision = schema_id + "@" + revision_id;
+    request.set_name(
+        pubsub::Schema(project_id, schema_id_with_revision).FullName());
+    request.set_view(google::pubsub::v1::FULL);
+    auto schema = client.GetSchema(request);
+    if (!schema) throw std::move(schema).status();
+
+    std::cout << "The schema revision exists and its metadata is: "
+              << schema->DebugString() << "\n";
+  }
+  //! [END pubsub_get_schema_revision] [get-schema-revision]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void ListSchemas(google::cloud::pubsub::SchemaServiceClient client,
                  std::vector<std::string> const& argv) {
   //! [START pubsub_list_schemas] [list-schemas]
@@ -1996,6 +2017,9 @@ void AutoRunAvro(
   std::cout << "\nRunning GetSchema sample" << std::endl;
   GetSchema(schema_admin, {project_id, avro_schema_id});
 
+  std::cout << "\nRunning GetSchemaRevision sample" << std::endl;
+  GetSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
+
   std::cout << "\nRunning ListSchemas() sample" << std::endl;
   ListSchemas(schema_admin, {project_id});
 
@@ -2601,6 +2625,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           CommitProtobufSchema),
       CreateSchemaServiceCommand("get-schema", {"project-id", "schema-id"},
                                  GetSchema),
+      CreateSchemaServiceCommand(
+          "get-schema", {"project-id", "schema-id", "revision-id"}, GetSchemaRevision),
       CreateSchemaServiceCommand("list-schemas", {"project-id"}, ListSchemas),
       CreateSchemaServiceCommand("list-schema-revisions",
                                  {"project-id", "schema-id"},
