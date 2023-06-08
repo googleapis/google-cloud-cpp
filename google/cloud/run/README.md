@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) try {
 
 [cloud-service-docs]: https://cloud.google.com/run/docs
 [cloud-service-root]: https://cloud.google.com/run
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-run/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/run/latest/
 [functions-framework]: https://github.com/GoogleCloudPlatform/functions-framework-cpp
 [hello-world]: https://github.com/GoogleCloudPlatform/cpp-samples/tree/main/cloud-run-hello-world
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/run

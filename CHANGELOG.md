@@ -3582,14 +3582,14 @@ releases.  The relevant notes are:
 [architecture design]: /ARCHITECTURE.md#the-client-classes
 [architecture-connection]: /ARCHITECTURE.md#the-connection-classes
 [bq-analytics-hub]: https://cloud.google.com/bigquery/docs/analytics-hub-introduction
-[cbt-dataclient-migration]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/migrating-from-dataclient.html
+[cbt-dataclient-migration]: https://cloud.google.com/cpp/docs/reference/bigtable/latest/migrating-from-dataclient
 [cloud bigtable admin api]: https://cloud.google.com/bigtable/docs/reference/admin/rpc
 [cloud tasks]: /google/cloud/tasks/README.md
 [cloud-debugger-deprecated]: https://cloud.google.com/debugger/docs/deprecations
 [github-cpp-common]: https://github.com/googleapis/google-cloud-cpp-common
 [google.pubsub.v1.schemaserviceclient]: https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#google.pubsub.v1.SchemaService
-[guac-dox]: https://googleapis.dev/cpp/google-cloud-common/latest/credentials_8h.html
-[howto-mock-data-api]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-mocking.html
+[guac-dox]: https://cloud.google.com/cpp/docs/reference/common/latest/group__guac
+[howto-mock-data-api]: https://cloud.google.com/cpp/docs/reference/bigtable/latest/bigtable-mocking
 [iam-conditions-link]: https://cloud.google.com/iam/docs/conditions-overview
 [iam-policy-link]: https://cloud.google.com/iam/docs/manage-access-other-resources
 [issue-2567]: https://github.com/googleapis/google-cloud-cpp/issues/2567
@@ -3600,6 +3600,6 @@ releases.  The relevant notes are:
 [pub/sub lite]: /google/cloud/pubsublite/README.md
 [resource-types-with-policies]: https://cloud.google.com/iam/docs/resource-types-with-policies
 [secret manager]: /google/cloud/secretmanager/README.md
-[storage-dox-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/
-[storage-mocking-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/storage-mocking.html
+[storage-dox-link]: https://cloud.google.com/cpp/docs/reference/storage/latest/
+[storage-mocking-link]: https://cloud.google.com/cpp/docs/reference/storage/latest/storage-mocking
 [vcpkg-github]: https://github.com/microsoft/vcpkg

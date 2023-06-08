@@ -40,7 +40,7 @@ file="README.md"
     description="$(sed -n '1 s/# \(.*\) C++ Client Library/\1/p' "google/cloud/${library}/README.md")"
     printf -- '- [%s](google/cloud/%s/README.md)\n' "${description}" "${library}"
     printf -- '  [[quickstart]](google/cloud/%s/quickstart/README.md)\n' "${library}"
-    printf -- '  [[reference]](https://googleapis.dev/cpp/google-cloud-%s/latest)\n' "${library}"
+    printf -- '  [[reference]](https://cloud.google.com/cpp/docs/reference/%s/latest)\n' "${library}"
   done
   sed -n '/<!-- inject-GA-libraries-end -->/,$p' "${file}"
 ) | sponge "${file}"

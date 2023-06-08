@@ -74,6 +74,6 @@ int main(int argc, char* argv[]) try {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-pubsub-docs]: https://cloud.google.com/pubsub/docs/
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-pubsub/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/pubsub/latest/
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/pubsub

@@ -60,5 +60,5 @@ int main(int argc, char* argv[]) try {
 
 [cloud-service]: https://cloud.google.com/recommender
 [cloud-service-docs]: https://cloud.google.com/recommender/docs
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-recommender/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/recommender/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/recommender

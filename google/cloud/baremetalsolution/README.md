@@ -58,5 +58,5 @@ int main(int argc, char* argv[]) try {
 
 [cloud-service-docs]: https://cloud.google.com/bare-metal/docs
 [cloud-service-root]: https://cloud.google.com/bare-metal
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-baremetalsolution/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/baremetalsolution/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/baremetalsolution

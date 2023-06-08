@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-video/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/video/latest/
 [livestream-service-docs]: https://cloud.google.com/livestream
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/video
 [stitcher-service-docs]: https://cloud.google.com/video-stitcher

@@ -58,6 +58,6 @@ int main(int argc, char* argv[]) try {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-service-docs]: https://cloud.google.com/notebooks
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-notebooks/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/notebooks/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/notebooks
 [vertex ai workbench]: https://cloud.google.com/vertex-ai-workbench

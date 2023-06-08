@@ -90,5 +90,5 @@ int main(int argc, char* argv[]) try {
 
 [cloud-service]: https://cloud.google.com/video-intelligence
 [cloud-service-docs]: https://cloud.google.com/video-intelligence/docs
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-videointelligence/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/videointelligence/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/videointelligence

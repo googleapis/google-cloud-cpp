@@ -151,5 +151,5 @@ int main(int argc, char* argv[]) try {
 <!-- inject-quickstart-end -->
 
 [cloud-bigtable-docs]: https://cloud.google.com/bigtable/docs/
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/bigtable/latest/
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md

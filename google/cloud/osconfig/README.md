@@ -57,5 +57,5 @@ int main(int argc, char* argv[]) try {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-service-docs]: https://cloud.google.com/compute/docs/os-configuration-management
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-osconfig/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/osconfig/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/osconfig
