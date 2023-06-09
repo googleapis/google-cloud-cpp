@@ -275,8 +275,7 @@ index c4ce00489..1858b48dc 100755
 ## Commit these changes
 
 ```shell
-git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
-   "google/cloud/${library}" .
+git commit -m"Manually update READMEs, quickstart, and top-level stuff" .
 ```
 
 [#10237]: https://github.com/googleapis/google-cloud-cpp/issues/10237
