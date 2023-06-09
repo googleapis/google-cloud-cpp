@@ -56,6 +56,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/timeseriesinsights
+[cloud-service-docs]: https://cloud.google.com/timeseries-insights
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/timeseriesinsights/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/timeseriesinsights

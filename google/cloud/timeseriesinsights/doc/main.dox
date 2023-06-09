@@ -49,7 +49,7 @@ can override the default policies.
 - @ref timeseriesinsights-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/timeseriesinsights
+[cloud-service-docs]: https://cloud.google.com/timeseries-insights
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */
