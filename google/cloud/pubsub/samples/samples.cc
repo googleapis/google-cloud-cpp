@@ -2079,6 +2079,9 @@ void AutoRunAvro(
   std::cout << "\nRunning DeleteSchemaRevision sample" << std::endl;
   DeleteSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
 
+  // std::cout << "\nRunning RollbackSchema sample" << std::endl;
+  // RollbackSchema(schema_admin, {project_id, avro_schema_id, revision_id});
+
   std::cout << "\nRunning ListSchemas() sample" << std::endl;
   ListSchemas(schema_admin, {project_id});
 
