@@ -41,6 +41,10 @@ using namespace nlohmann::literals;  // NOLINT
 struct ExplainQueryStep {
   std::string kind;
   std::vector<std::string> substeps;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ExplainQueryStep, kind,
                                                 substeps);
@@ -56,6 +60,10 @@ struct ComputeMode {
   static ComputeMode BIEngine();
 
   std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ComputeMode, value);
 inline bool operator==(ComputeMode const& lhs, ComputeMode const& rhs) {
@@ -105,6 +113,10 @@ struct ExplainQueryStage {
 
   std::vector<ExplainQueryStep> steps;
   ComputeMode compute_mode;
+
+  std::string DebugString(absl::string_view eq_name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 void to_json(nlohmann::json& j, ExplainQueryStage const& q);
 void from_json(nlohmann::json const& j, ExplainQueryStage& q);
@@ -123,6 +135,10 @@ struct QueryTimelineSample {
   std::int64_t completed_units;
   std::int64_t active_units;
   std::int64_t estimated_runnable_units;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 void to_json(nlohmann::json& j, QueryTimelineSample const& q);
 void from_json(nlohmann::json const& j, QueryTimelineSample& q);
@@ -137,6 +153,10 @@ struct DmlStats {
   std::int64_t inserted_row_count;
   std::int64_t deleted_row_count;
   std::int64_t updated_row_count;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DmlStats, inserted_row_count,
                                                 deleted_row_count,
@@ -153,6 +173,10 @@ struct RowAccessPolicyReference {
   std::string dataset_id;
   std::string table_id;
   std::string policy_id;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RowAccessPolicyReference,
                                                 project_id, dataset_id,
@@ -171,6 +195,10 @@ struct IndexUsageMode {
   static IndexUsageMode FullyUsed();
 
   std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(IndexUsageMode, value);
 inline bool operator==(IndexUsageMode const& lhs, IndexUsageMode const& rhs) {
@@ -203,6 +231,10 @@ struct IndexedUnusedReasonCode {
   static IndexedUnusedReasonCode OtherReason();
 
   std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(IndexedUnusedReasonCode, value);
 inline bool operator==(IndexedUnusedReasonCode const& lhs,
@@ -221,6 +253,10 @@ struct IndexUnusedReason {
 
   TableReference base_table;
   IndexedUnusedReasonCode code;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(IndexUnusedReason, message,
                                                 index_name, base_table, code);
@@ -234,6 +270,10 @@ bool operator==(IndexUnusedReason const& lhs, IndexUnusedReason const& rhs);
 struct SearchStatistics {
   IndexUsageMode index_usage_mode;
   std::vector<IndexUnusedReason> index_unused_reasons;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(SearchStatistics,
                                                 index_usage_mode,
@@ -246,6 +286,10 @@ bool operator==(SearchStatistics const& lhs, SearchStatistics const& rhs);
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#inputdatachange
 struct InputDataChange {
   std::float_t records_read_diff_percentage;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(InputDataChange,
                                                 records_read_diff_percentage);
@@ -258,6 +302,10 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(InputDataChange,
 struct StagePerformanceChangeInsight {
   std::int64_t stage_id;
   InputDataChange input_data_change;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(StagePerformanceChangeInsight,
                                                 stage_id, input_data_change);
@@ -270,6 +318,10 @@ struct StagePerformanceStandaloneInsight {
   std::int64_t stage_id;
   bool slot_contention;
   bool insufficient_shuffle_quota;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
     StagePerformanceStandaloneInsight, stage_id, slot_contention,
@@ -285,6 +337,10 @@ struct PerformanceInsights {
 
   StagePerformanceStandaloneInsight stage_performance_standalone_insights;
   StagePerformanceChangeInsight stage_performance_change_insights;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 void to_json(nlohmann::json& j, PerformanceInsights const& p);
 void from_json(nlohmann::json const& j, PerformanceInsights& p);
@@ -307,6 +363,10 @@ struct RejectedReason {
   static RejectedReason OutOfTimeTravelWindow();
 
   std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RejectedReason, value);
 
@@ -320,6 +380,10 @@ struct MaterializedView {
 
   RejectedReason rejected_reason;
   TableReference table_reference;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(MaterializedView, chosen,
                                                 estimated_bytes_saved,
@@ -333,6 +397,10 @@ bool operator==(MaterializedView const& lhs, MaterializedView const& rhs);
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#materializedviewstatistics
 struct MaterializedViewStatistics {
   std::vector<MaterializedView> materialized_view;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(MaterializedViewStatistics,
                                                 materialized_view);
@@ -347,6 +415,10 @@ struct MetadataCacheUnusedReason {
   static MetadataCacheUnusedReason OtherReason();
 
   std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(MetadataCacheUnusedReason,
                                                 value);
@@ -361,6 +433,10 @@ struct TableMetadataCacheUsage {
 
   TableReference table_reference;
   MetadataCacheUnusedReason unused_reason;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableMetadataCacheUsage,
                                                 explanation, table_reference,
@@ -374,6 +450,10 @@ bool operator==(TableMetadataCacheUsage const& lhs,
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#metadatacachestatistics.
 struct MetadataCacheStatistics {
   std::vector<TableMetadataCacheUsage> table_metadata_cache_usage;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(MetadataCacheStatistics,
                                                 table_metadata_cache_usage);
@@ -420,6 +500,10 @@ struct JobQueryStatistics {
   PerformanceInsights performance_insights;
   MaterializedViewStatistics materialized_view_statistics;
   MetadataCacheStatistics metadata_cache_statistics;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 void to_json(nlohmann::json& j, JobQueryStatistics const& q);
 void from_json(nlohmann::json const& j, JobQueryStatistics& q);

@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_query_stats.h"
 #include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
+#include "google/cloud/internal/debug_string.h"
+#include "google/cloud/internal/format_time_point.h"
 
 namespace google {
 namespace cloud {
@@ -477,6 +479,257 @@ bool operator==(RowAccessPolicyReference const& lhs,
                 RowAccessPolicyReference const& rhs) {
   return lhs.dataset_id == rhs.dataset_id && lhs.project_id == rhs.project_id &&
          lhs.table_id == rhs.table_id && lhs.policy_id == rhs.policy_id;
+}
+
+std::string ExplainQueryStep::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("kind", kind)
+      .Field("substeps", substeps)
+      .Build();
+}
+
+std::string ComputeMode::DebugString(absl::string_view name,
+                                     TracingOptions const& options,
+                                     int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string ExplainQueryStage::DebugString(absl::string_view eq_name,
+                                           TracingOptions const& options,
+                                           int indent) const {
+  return internal::DebugFormatter(eq_name, options, indent)
+      .StringField("name", name)
+      .StringField("status", status)
+      .Field("id", id)
+      .Field("shuffle_output_bytes", shuffle_output_bytes)
+      .Field("shuffle_output_bytes_spilled", shuffle_output_bytes_spilled)
+      .Field("records_read", records_read)
+      .Field("records_written", records_written)
+      .Field("parallel_inputs", parallel_inputs)
+      .Field("completed_parallel_inputs", completed_parallel_inputs)
+      .Field("start_time", start_time)
+      .Field("end_time", end_time)
+      .Field("slot_time", slot_time)
+      .Field("wait_avg_time_spent", wait_avg_time_spent)
+      .Field("wait_max_time_spent", wait_max_time_spent)
+      .Field("read_avg_time_spent", read_avg_time_spent)
+      .Field("read_max_time_spent", read_max_time_spent)
+      .Field("write_avg_time_spent", write_avg_time_spent)
+      .Field("write_max_time_spent", write_max_time_spent)
+      .Field("compute_avg_time_spent", compute_avg_time_spent)
+      .Field("compute_max_time_spent", compute_max_time_spent)
+      .Field("wait_ratio_avg", wait_ratio_avg)
+      .Field("wait_ratio_max", wait_ratio_max)
+      .Field("read_ratio_avg", read_ratio_avg)
+      .Field("read_ratio_max", read_ratio_max)
+      .Field("compute_ratio_avg", compute_ratio_avg)
+      .Field("compute_ratio_max", compute_ratio_max)
+      .Field("write_ratio_avg", write_ratio_avg)
+      .Field("write_ratio_max", write_ratio_max)
+      .Field("steps", steps)
+      .SubMessage("compute_mode", compute_mode)
+      .Build();
+}
+
+std::string QueryTimelineSample::DebugString(absl::string_view name,
+                                             TracingOptions const& options,
+                                             int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("elapsed_time", elapsed_time)
+      .Field("total_slot_time", total_slot_time)
+      .Field("pending_units", pending_units)
+      .Field("completed_units", completed_units)
+      .Field("active_units", active_units)
+      .Field("estimated_runnable_units", estimated_runnable_units)
+      .Build();
+}
+
+std::string DmlStats::DebugString(absl::string_view name,
+                                  TracingOptions const& options,
+                                  int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("inserted_row_count", inserted_row_count)
+      .Field("deleted_row_count", deleted_row_count)
+      .Field("updated_row_count", updated_row_count)
+      .Build();
+}
+
+std::string RowAccessPolicyReference::DebugString(absl::string_view name,
+                                                  TracingOptions const& options,
+                                                  int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id)
+      .StringField("dataset_id", dataset_id)
+      .StringField("table_id", table_id)
+      .StringField("policy_id", policy_id)
+      .Build();
+}
+
+std::string IndexUsageMode::DebugString(absl::string_view name,
+                                        TracingOptions const& options,
+                                        int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string IndexedUnusedReasonCode::DebugString(absl::string_view name,
+                                                 TracingOptions const& options,
+                                                 int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string IndexUnusedReason::DebugString(absl::string_view name,
+                                           TracingOptions const& options,
+                                           int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("message", message)
+      .StringField("index_name", index_name)
+      .SubMessage("base_table", base_table)
+      .SubMessage("code", code)
+      .Build();
+}
+
+std::string SearchStatistics::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("index_unused_reasons", index_unused_reasons)
+      .SubMessage("index_usage_mode", index_usage_mode)
+      .Build();
+}
+
+std::string InputDataChange::DebugString(absl::string_view name,
+                                         TracingOptions const& options,
+                                         int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("records_read_diff_percentage", records_read_diff_percentage)
+      .Build();
+}
+
+std::string StagePerformanceChangeInsight::DebugString(
+    absl::string_view name, TracingOptions const& options, int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("stage_id", stage_id)
+      .SubMessage("input_data_change", input_data_change)
+      .Build();
+}
+
+std::string StagePerformanceStandaloneInsight::DebugString(
+    absl::string_view name, TracingOptions const& options, int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("stage_id", stage_id)
+      .Field("slot_contention", slot_contention)
+      .Field("insufficient_shuffle_quota", insufficient_shuffle_quota)
+      .Build();
+}
+
+std::string PerformanceInsights::DebugString(absl::string_view name,
+                                             TracingOptions const& options,
+                                             int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("avg_previous_execution_time", avg_previous_execution_time)
+      .SubMessage("stage_performance_standalone_insights",
+                  stage_performance_standalone_insights)
+      .SubMessage("stage_performance_change_insights",
+                  stage_performance_change_insights)
+      .Build();
+}
+
+std::string RejectedReason::DebugString(absl::string_view name,
+                                        TracingOptions const& options,
+                                        int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string MaterializedView::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("chosen", chosen)
+      .Field("estimated_bytes_saved", estimated_bytes_saved)
+      .SubMessage("rejected_reason", rejected_reason)
+      .SubMessage("table_reference", table_reference)
+      .Build();
+}
+
+std::string MaterializedViewStatistics::DebugString(
+    absl::string_view name, TracingOptions const& options, int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("materialized_view", materialized_view)
+      .Build();
+}
+
+std::string MetadataCacheUnusedReason::DebugString(
+    absl::string_view name, TracingOptions const& options, int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string TableMetadataCacheUsage::DebugString(absl::string_view name,
+                                                 TracingOptions const& options,
+                                                 int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("explanation", explanation)
+      .SubMessage("unused_reason", unused_reason)
+      .SubMessage("table_reference", table_reference)
+      .Build();
+}
+
+std::string MetadataCacheStatistics::DebugString(absl::string_view name,
+                                                 TracingOptions const& options,
+                                                 int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("table_metadata_cache_usage", table_metadata_cache_usage)
+      .Build();
+}
+
+std::string JobQueryStatistics::DebugString(absl::string_view name,
+                                            TracingOptions const& options,
+                                            int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("estimated_bytes_processed", estimated_bytes_processed)
+      .Field("total_partitions_processed", total_partitions_processed)
+      .Field("total_bytes_processed", total_bytes_processed)
+      .Field("total_bytes_billed", total_bytes_billed)
+      .Field("billing_tier", billing_tier)
+      .Field("num_dml_affected_rows", num_dml_affected_rows)
+      .Field("ddl_affected_row_access_policy_count",
+             ddl_affected_row_access_policy_count)
+      .StringField("total_bytes_processed_accuracy",
+                   total_bytes_processed_accuracy)
+      .StringField("statement_type", statement_type)
+      .StringField("ddl_operation_performed", ddl_operation_performed)
+      .Field("total_slot_time", total_slot_time)
+      .Field("cache_hit", cache_hit)
+      .Field("query_plan", query_plan)
+      .Field("timeline", timeline)
+      .Field("referenced_tables", referenced_tables)
+      .Field("referenced_routines", referenced_routines)
+      .SubMessage("schema", schema)
+      .SubMessage("dml_stats", dml_stats)
+      .SubMessage("ddl_target_table", ddl_target_table)
+      .SubMessage("ddl_destination_table", ddl_destination_table)
+      .SubMessage("ddl_target_row_access_policy", ddl_target_row_access_policy)
+      .SubMessage("ddl_target_routine", ddl_target_routine)
+      .SubMessage("ddl_target_dataset", ddl_target_dataset)
+      .SubMessage("dcl_target_table", dcl_target_table)
+      .SubMessage("dcl_target_view", dcl_target_view)
+      .SubMessage("dcl_target_dataset", dcl_target_dataset)
+      .SubMessage("search_statistics", search_statistics)
+      .SubMessage("performance_insights", performance_insights)
+      .SubMessage("materialized_view_statistics", materialized_view_statistics)
+      .SubMessage("metadata_cache_statistics", metadata_cache_statistics)
+      .Build();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
