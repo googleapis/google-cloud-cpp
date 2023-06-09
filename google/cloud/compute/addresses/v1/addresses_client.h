@@ -106,8 +106,8 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L98}
-  /// [google.cloud.cpp.compute.v1.AddressAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L569}
+  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L103}
+  /// [google.cloud.cpp.compute.v1.AddressAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L574}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
@@ -137,8 +137,8 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L98}
-  /// [google.cloud.cpp.compute.v1.AddressAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L569}
+  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L103}
+  /// [google.cloud.cpp.compute.v1.AddressAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L574}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
@@ -173,7 +173,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L172}
+  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L177}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddresses(
@@ -210,7 +210,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L172}
+  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L177}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddresses(
@@ -239,8 +239,8 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L202}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
+  /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L207}
+  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L442}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
@@ -271,8 +271,8 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L202}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
+  /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L207}
+  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L442}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
@@ -308,7 +308,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L214}
+  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L219}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddresses(
@@ -347,7 +347,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L214}
+  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L219}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddresses(
@@ -384,8 +384,8 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L245}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
+  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L250}
+  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L442}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
@@ -424,8 +424,8 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L245}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
+  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L250}
+  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L442}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
@@ -461,7 +461,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L313}
+  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L318}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -502,7 +502,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L313}
+  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L318}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(

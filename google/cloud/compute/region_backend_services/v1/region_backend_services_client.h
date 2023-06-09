@@ -120,7 +120,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L141}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L146}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -159,7 +159,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L141}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L146}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -189,8 +189,8 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L201}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L206}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2342}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendService>
@@ -223,8 +223,8 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L201}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L206}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2342}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendService>
@@ -255,8 +255,8 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L171}
-  /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3003}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L176}
+  /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3008}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
@@ -290,8 +290,8 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L171}
-  /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3003}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L176}
+  /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3008}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
@@ -321,8 +321,8 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L186}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L191}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18680}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -354,8 +354,8 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L186}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L191}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18680}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -392,7 +392,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L213}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L218}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -434,7 +434,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L213}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L218}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -473,8 +473,8 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.ListRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L244}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.ListRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L249}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2342}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
@@ -515,8 +515,8 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.ListRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L244}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.ListRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L249}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2342}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
@@ -556,7 +556,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L312}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L317}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -600,7 +600,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L312}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L317}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -632,8 +632,8 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L346}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L351}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18680}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -668,8 +668,8 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L346}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L351}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18680}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -707,7 +707,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L363}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -750,7 +750,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L363}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

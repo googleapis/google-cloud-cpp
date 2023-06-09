@@ -108,8 +108,8 @@ class RegionDiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disk_types.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L53}
-  /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4812}
+  /// [google.cloud.cpp.compute.region_disk_types.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L58}
+  /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4817}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskTypes(
@@ -140,8 +140,8 @@ class RegionDiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disk_types.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L53}
-  /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4812}
+  /// [google.cloud.cpp.compute.region_disk_types.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L58}
+  /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4817}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskTypes(
@@ -178,8 +178,8 @@ class RegionDiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disk_types.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L65}
-  /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4812}
+  /// [google.cloud.cpp.compute.region_disk_types.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L70}
+  /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4817}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::DiskType> ListRegionDiskTypes(
@@ -218,8 +218,8 @@ class RegionDiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disk_types.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L65}
-  /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4812}
+  /// [google.cloud.cpp.compute.region_disk_types.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L70}
+  /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4817}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::DiskType> ListRegionDiskTypes(

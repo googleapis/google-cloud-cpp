@@ -119,7 +119,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.DeleteRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L90}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.DeleteRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L95}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -158,7 +158,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.DeleteRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L90}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.DeleteRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L95}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -188,8 +188,8 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.GetRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L120}
-  /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26579}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.GetRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L125}
+  /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26584}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
@@ -222,8 +222,8 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.GetRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L120}
-  /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26579}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.GetRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L125}
+  /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26584}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
@@ -260,7 +260,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.InsertRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L132}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.InsertRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L137}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -301,7 +301,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.InsertRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L132}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.InsertRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L137}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -340,8 +340,8 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.ListRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L163}
-  /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26579}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.ListRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L168}
+  /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26584}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
@@ -382,8 +382,8 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.ListRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L163}
-  /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26579}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.ListRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L168}
+  /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26584}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
@@ -420,7 +420,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.SetUrlMapRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L231}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.SetUrlMapRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L236}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
@@ -460,7 +460,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.SetUrlMapRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L231}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.SetUrlMapRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L236}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(

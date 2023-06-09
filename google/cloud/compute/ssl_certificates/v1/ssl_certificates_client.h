@@ -109,8 +109,8 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.AggregatedListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L87}
-  /// [google.cloud.cpp.compute.v1.SslCertificateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24874}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.AggregatedListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L92}
+  /// [google.cloud.cpp.compute.v1.SslCertificateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24879}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
@@ -141,8 +141,8 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.AggregatedListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L87}
-  /// [google.cloud.cpp.compute.v1.SslCertificateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24874}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.AggregatedListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L92}
+  /// [google.cloud.cpp.compute.v1.SslCertificateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24879}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
@@ -177,7 +177,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.DeleteSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L161}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.DeleteSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L166}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -214,7 +214,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.DeleteSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L161}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.DeleteSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L166}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -242,8 +242,8 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.GetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L185}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24810}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.GetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L190}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24815}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificates(
@@ -274,8 +274,8 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.GetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L185}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24810}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.GetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L190}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24815}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificates(
@@ -310,7 +310,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.InsertSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L194}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.InsertSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -350,7 +350,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.InsertSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L194}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.InsertSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -387,8 +387,8 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.ListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L219}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24810}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.ListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L224}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24815}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
@@ -428,8 +428,8 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.ListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L219}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24810}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.ListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L224}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24815}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>

@@ -108,8 +108,8 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.AggregatedListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L112}
-  /// [google.cloud.cpp.compute.v1.PacketMirroringAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18128}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.AggregatedListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L117}
+  /// [google.cloud.cpp.compute.v1.PacketMirroringAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18133}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
@@ -139,8 +139,8 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.AggregatedListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L112}
-  /// [google.cloud.cpp.compute.v1.PacketMirroringAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18128}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.AggregatedListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L117}
+  /// [google.cloud.cpp.compute.v1.PacketMirroringAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18133}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
@@ -176,7 +176,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L186}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L191}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -214,7 +214,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L186}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L191}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -243,8 +243,8 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L216}
-  /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18064}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L221}
+  /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18069}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
@@ -275,8 +275,8 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L216}
-  /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18064}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L221}
+  /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18069}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
@@ -312,7 +312,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L228}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L233}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -352,7 +352,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L228}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L233}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -390,8 +390,8 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.ListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L259}
-  /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18064}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.ListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L264}
+  /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18069}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
@@ -432,8 +432,8 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.ListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L259}
-  /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18064}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.ListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L264}
+  /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18069}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
@@ -471,7 +471,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L327}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L332}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -513,7 +513,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L327}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L332}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -543,8 +543,8 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L361}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L366}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28944}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -579,8 +579,8 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L361}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L366}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28944}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
