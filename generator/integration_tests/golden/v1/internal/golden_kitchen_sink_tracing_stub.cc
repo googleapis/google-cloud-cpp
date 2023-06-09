@@ -18,6 +18,7 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_tracing_stub.h"
 #include "google/cloud/internal/async_streaming_read_rpc_tracing.h"
+#include "google/cloud/internal/async_streaming_write_rpc_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/streaming_read_rpc_tracing.h"
 #include "google/cloud/internal/streaming_write_rpc_tracing.h"
@@ -170,12 +171,18 @@ GoldenKitchenSinkTracingStub::AsyncStreamingRead(
       std::move(context), std::move(stream), std::move(span));
 }
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
-    google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
+std::unique_ptr<
+    internal::AsyncStreamingWriteRpc<google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
 GoldenKitchenSinkTracingStub::AsyncStreamingWrite(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context) {
-  return child_->AsyncStreamingWrite(cq, std::move(context));
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "StreamingWrite");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->AsyncStreamingWrite(cq, context);
+  return std::make_unique<
+      internal::AsyncStreamingWriteRpcTracing<google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
