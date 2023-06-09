@@ -17,6 +17,7 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_tracing_stub.h"
+#include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
@@ -43,13 +44,20 @@ BigQueryWriteTracingStub::CreateWriteStream(
                            child_->CreateWriteStream(context, request));
 }
 
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::bigquery::storage::v1::AppendRowsRequest,
     google::cloud::bigquery::storage::v1::AppendRowsResponse>>
 BigQueryWriteTracingStub::AsyncAppendRows(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return child_->AsyncAppendRows(cq, std::move(context));
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.storage.v1.BigQueryWrite", "AppendRows");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->AsyncAppendRows(cq, context);
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::cloud::bigquery::storage::v1::AppendRowsRequest,
+      google::cloud::bigquery::storage::v1::AppendRowsResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>

@@ -17,6 +17,7 @@
 // source: google/logging/v2/logging.proto
 
 #include "google/cloud/logging/v2/internal/logging_service_v2_tracing_stub.h"
+#include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
@@ -89,13 +90,20 @@ LoggingServiceV2TracingStub::ListLogs(
   return internal::EndSpan(context, *span, child_->ListLogs(context, request));
 }
 
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::logging::v2::TailLogEntriesRequest,
-    google::logging::v2::TailLogEntriesResponse>>
+std::unique_ptr<
+    AsyncStreamingReadWriteRpc<google::logging::v2::TailLogEntriesRequest,
+                               google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2TracingStub::AsyncTailLogEntries(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return child_->AsyncTailLogEntries(cq, std::move(context));
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+  auto span = internal::MakeSpanGrpc("google.logging.v2.LoggingServiceV2",
+                                     "TailLogEntries");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->AsyncTailLogEntries(cq, context);
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::logging::v2::TailLogEntriesRequest,
+      google::logging::v2::TailLogEntriesResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>

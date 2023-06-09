@@ -17,6 +17,7 @@
 // source: google/cloud/speech/v1/cloud_speech.proto
 
 #include "google/cloud/speech/v1/internal/speech_tracing_stub.h"
+#include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
@@ -55,13 +56,20 @@ SpeechTracingStub::AsyncLongRunningRecognize(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::speech::v1::StreamingRecognizeRequest,
     google::cloud::speech::v1::StreamingRecognizeResponse>>
 SpeechTracingStub::AsyncStreamingRecognize(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return child_->AsyncStreamingRecognize(cq, std::move(context));
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Speech",
+                                     "StreamingRecognize");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->AsyncStreamingRecognize(cq, context);
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::cloud::speech::v1::StreamingRecognizeRequest,
+      google::cloud::speech::v1::StreamingRecognizeResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 future<StatusOr<google::longrunning::Operation>>

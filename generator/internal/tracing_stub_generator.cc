@@ -106,6 +106,9 @@ Status TracingStubGenerator::GenerateCc() {
        HasAsynchronousStreamingWriteMethod()
            ? "google/cloud/internal/async_streaming_write_rpc_tracing.h"
            : "",
+       HasBidirStreamingMethod()
+           ? "google/cloud/internal/async_read_write_stream_tracing.h"
+           : "",
        HasStreamingReadMethod()
            ? "google/cloud/internal/streaming_read_rpc_tracing.h"
            : "",
@@ -147,13 +150,19 @@ $tracing_stub_class_name$::$method_name$(
     }
     if (IsBidirStreaming(method)) {
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+std::unique_ptr<AsyncStreamingReadWriteRpc<
     $request_type$,
     $response_type$>>
 $tracing_stub_class_name$::Async$method_name$(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return child_->Async$method_name$(cq, std::move(context));
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->Async$method_name$(cq, context);
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      $request_type$,
+      $response_type$>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 )""");
       continue;
