@@ -35,6 +35,8 @@
 
 namespace {
 
+using ::google::cloud::pubsub::examples::
+    CommitSchemaRevisionsForRollbackSchemaTesting;
 using ::google::cloud::pubsub::examples::CommitSchemaWithRevisionsForTesting;
 using ::google::cloud::pubsub::examples::RandomSchemaId;
 using ::google::cloud::pubsub::examples::RandomSnapshotId;
@@ -2157,6 +2159,9 @@ void AutoRunAvro(
 
   // std::cout << "\nRunning RollbackSchema sample" << std::endl;
   // RollbackSchema(schema_admin, {project_id, avro_schema_id, revision_id});
+
+  std::cout << "\nRunning DeleteSchemaRevision sample" << std::endl;
+  DeleteSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
 
   std::cout << "\nRunning ListSchemas() sample" << std::endl;
   ListSchemas(schema_admin, {project_id});
