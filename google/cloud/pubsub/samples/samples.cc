@@ -835,6 +835,65 @@ void CreateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void CommitAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
+                      std::vector<std::string> const& argv) {
+  //! [START pubsub_commit_avro_schema] [commit-avro-schema]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SchemaServiceClient client, std::string const& project_id,
+     std::string const& schema_id, std::string const& schema_definition_file) {
+    std::string const definition = ReadFile(schema_definition_file);
+
+    google::pubsub::v1::CommitSchemaRequest request;
+    std::string const name =
+        google::cloud::pubsub::Schema(project_id, schema_id).FullName();
+    request.set_name(name);
+    request.mutable_schema()->set_name(name);
+    request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
+    request.mutable_schema()->set_definition(definition);
+    auto schema = client.CommitSchema(request);
+    if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The schema revision already exists\n";
+      return;
+    }
+    if (!schema) throw std::move(schema).status();
+
+    std::cout << "Schema revision successfully committed: "
+              << schema->DebugString() << "\n";
+  }
+  //! [END pubsub_commit_avro_schema] [commit-avro-schema]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
+void CommitProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
+                          std::vector<std::string> const& argv) {
+  //! [START pubsub_commit_proto_schema] [commit-protobuf-schema]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SchemaServiceClient client, std::string const& project_id,
+     std::string const& schema_id, std::string const& schema_definition_file) {
+    std::string const definition = ReadFile(schema_definition_file);
+
+    google::pubsub::v1::CommitSchemaRequest request;
+    std::string const name =
+        google::cloud::pubsub::Schema(project_id, schema_id).FullName();
+    request.set_name(name);
+    request.mutable_schema()->set_name(name);
+    request.mutable_schema()->set_type(
+        google::pubsub::v1::Schema::PROTOCOL_BUFFER);
+    request.mutable_schema()->set_definition(definition);
+    auto schema = client.CommitSchema(request);
+    if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The schema revision already exists\n";
+      return;
+    }
+    if (!schema) throw std::move(schema).status();
+
+    std::cout << "Schema revision successfully committed: "
+              << schema->DebugString() << "\n";
+  }
+  //! [END pubsub_commit_proto_schema] [commit-protobuf-schema]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
 void GetSchema(google::cloud::pubsub::SchemaServiceClient client,
                std::vector<std::string> const& argv) {
   //! [START pubsub_get_schema] [get-schema]
@@ -873,15 +932,16 @@ void ListSchemaRevisions(google::cloud::pubsub::SchemaServiceClient client,
                          std::vector<std::string> const& argv) {
   //! [START pubsub_list_schema_revisions] [list-schema-revisions]
   namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id) {
-    auto const parent = google::cloud::Project(project_id).FullName();
+  [](pubsub::SchemaServiceClient client, std::string const& project_id,
+     std::string const& schema_id) {
+    auto const parent = pubsub::Schema(project_id, schema_id).FullName();
     for (auto& s : client.ListSchemaRevisions(parent)) {
       if (!s) throw std::move(s).status();
       std::cout << "Schema revision: " << s->DebugString() << "\n";
     }
   }
   //! [END pubsub_list_schema_revisions] [list-schema-revisions]
-  (std::move(client), argv.at(0));
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void DeleteSchema(google::cloud::pubsub::SchemaServiceClient client,
@@ -1044,61 +1104,6 @@ void CreateTopicWithSchema(google::cloud::pubsub::TopicAdminClient client,
   }
   //! [END pubsub_create_topic_with_schema]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
-}
-
-void CommitAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
-                      std::vector<std::string> const& argv) {
-  //! [START pubsub_commit_avro_schema] [commit-avro-schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id, std::string const& schema_definition_file) {
-    std::string const definition = ReadFile(schema_definition_file);
-
-    google::pubsub::v1::CommitSchemaRequest request;
-    request.set_name(
-        google::cloud::pubsub::Schema(project_id, schema_id).FullName());
-    request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
-    request.mutable_schema()->set_definition(definition);
-    auto schema = client.CommitSchema(request);
-    if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The schema already exists\n";
-      return;
-    }
-    if (!schema) throw std::move(schema).status();
-
-    std::cout << "Schema successfully committed: " << schema->DebugString()
-              << "\n";
-  }
-  //! [END pubsub_commit_avro_schema] [commit-avro-schema]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void CommitProtoSchema(google::cloud::pubsub::SchemaServiceClient client,
-                       std::vector<std::string> const& argv) {
-  //! [START pubsub_commit_proto_schema] [commit-proto-schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id, std::string const& schema_definition_file) {
-    std::string const definition = ReadFile(schema_definition_file);
-
-    google::pubsub::v1::CommitSchemaRequest request;
-    request.set_name(
-        google::cloud::pubsub::Schema(project_id, schema_id).FullName());
-    request.mutable_schema()->set_type(
-        google::pubsub::v1::Schema::PROTOCOL_BUFFER);
-    request.mutable_schema()->set_definition(definition);
-    auto schema = client.CommitSchema(request);
-    if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The schema already exists\n";
-      return;
-    }
-    if (!schema) throw std::move(schema).status();
-
-    std::cout << "Schema successfully committed: " << schema->DebugString()
-              << "\n";
-  }
-  //! [END pubsub_commit_proto_schema] [commit-proto-schema]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void PublishAvroRecords(google::cloud::pubsub::Publisher publisher,
@@ -1969,11 +1974,17 @@ void AutoRunAvro(
       google::cloud::pubsub::MakeSchemaServiceConnection());
   auto avro_schema_id = RandomSchemaId(generator);
   auto avro_schema_definition_file = testdata_directory + "schema.avsc";
+  auto avro_revised_schema_definition_file =
+      testdata_directory + "revised_schema.avsc";
   auto avro_message_file = testdata_directory + "valid_message.avsc";
 
   std::cout << "\nRunning CreateAvroSchema() sample" << std::endl;
   CreateAvroSchema(schema_admin,
                    {project_id, avro_schema_id, avro_schema_definition_file});
+
+  std::cout << "\nRunning CommitAvroSchema() sample" << std::endl;
+  CommitAvroSchema(schema_admin, {project_id, avro_schema_id,
+                                  avro_revised_schema_definition_file});
 
   std::cout << "\nRunning ValidateAvroSchema() sample" << std::endl;
   ValidateAvroSchema(schema_admin, {project_id, avro_schema_definition_file});
@@ -1987,13 +1998,12 @@ void AutoRunAvro(
 
   std::cout << "\nRunning ListSchemas() sample" << std::endl;
   ListSchemas(schema_admin, {project_id});
+
   std::cout << "\nRunning ListSchemaRevisions() sample" << std::endl;
-  ListSchemaRevisions(schema_admin, {project_id});
+  ListSchemaRevisions(schema_admin, {project_id, avro_schema_id});
+
   std::cout << "\nRunning ValidateAvroMessage() sample" << std::endl;
   ValidateMessageAvro(schema_admin, {project_id});
-
-  std::cout << "\nRunning CommitAvroSchema() sample" << std::endl;
-  CommitAvroSchema(schema_admin, {project_id, avro_definition_file});
 
   std::cout << "\nRunning CreateTopicWithSchema() sample [avro]" << std::endl;
   auto const avro_topic_id = RandomTopicId(generator);
@@ -2044,11 +2054,17 @@ void AutoRunProtobuf(
       google::cloud::pubsub::MakeSchemaServiceConnection());
   auto proto_schema_id = RandomSchemaId(generator);
   auto proto_schema_definition_file = testdata_directory + "schema.proto";
+  auto proto_revised_schema_definition_file =
+      testdata_directory + "revised_schema.proto";
   auto proto_message_file = testdata_directory + "valid_message.pb";
 
   std::cout << "\nRunning CreateProtobufSchema() sample" << std::endl;
   CreateProtobufSchema(schema_admin, {project_id, proto_schema_id,
                                       proto_schema_definition_file});
+
+  std::cout << "\nRunning CommitProtobufSchema() sample" << std::endl;
+  CommitProtobufSchema(schema_admin, {project_id, proto_schema_id,
+                                      proto_revised_schema_definition_file});
 
   std::cout << "\nRunning ValidateProtobufSchema() sample" << std::endl;
   ValidateProtobufSchema(schema_admin,
@@ -2062,9 +2078,6 @@ void AutoRunProtobuf(
   std::cout << "\nRunning ValidateMessageNamedSchema() sample" << std::endl;
   ValidateMessageNamedSchema(schema_admin,
                              {project_id, proto_schema_id, proto_message_file});
-
-  std::cout << "\nRunning CommitProtoSchema() sample" << std::endl;
-  CommitProtoSchema(schema_admin, {project_id, proto_definition_file});
 
   std::cout << "\nRunning CreateTopicWithSchema() sample [proto]" << std::endl;
   auto const proto_topic_id = RandomTopicId(generator);
@@ -2581,10 +2594,19 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           "create-protobuf-schema",
           {"project-id", "schema-id", "schema-definition-file"},
           CreateProtobufSchema),
+      CreateSchemaServiceCommand(
+          "commit-avro-schema",
+          {"project-id", "schema-id", "schema-defintion-file"},
+          CommitAvroSchema),
+      CreateSchemaServiceCommand(
+          "commit-protobuf-schema",
+          {"project-id", "schema-id", "schema-defintion-file"},
+          CommitProtobufSchema),
       CreateSchemaServiceCommand("get-schema", {"project-id", "schema-id"},
                                  GetSchema),
       CreateSchemaServiceCommand("list-schemas", {"project-id"}, ListSchemas),
-      CreateSchemaServiceCommand("list-schema-revisions", {"project-id"},
+      CreateSchemaServiceCommand("list-schema-revisions",
+                                 {"project-id", "schema-id"},
                                  ListSchemaRevisions),
       CreateSchemaServiceCommand("delete-schema", {"project-id", "schema-id"},
                                  DeleteSchema),
@@ -2605,13 +2627,6 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSchemaServiceCommand("validate-message-named-schema",
                                  {"project-id", "schema-id", "message-file"},
                                  ValidateMessageNamedSchema),
-      CreateSchemaServiceCommand("commit-avro-schema",
-                                 {"project-id", "schema-defintion-file"},
-                                 CommitAvroSchema),
-      CreateSchemaServiceCommand("commit-proto-schema",
-                                 {"project-id", "schema-defintion-file"},
-                                 CommitProtoSchema),
-
       CreateTopicAdminCommand(
           "create-topic-with-schema",
           {"project-id", "topic-id", "schema-id", "encoding"},
