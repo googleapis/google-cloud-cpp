@@ -21,9 +21,9 @@
 
 #include "google/cloud/kms/v1/internal/ekm_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class EkmServiceMetadata : public EkmServiceStub {
   ~EkmServiceMetadata() override = default;
   explicit EkmServiceMetadata(
       std::shared_ptr<EkmServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
   ListEkmConnections(grpc::ClientContext& context,
@@ -75,7 +75,7 @@ class EkmServiceMetadata : public EkmServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<EkmServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -22,9 +22,9 @@
 #include "google/cloud/speech/v1/internal/speech_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class SpeechMetadata : public SpeechStub {
   ~SpeechMetadata() override = default;
   explicit SpeechMetadata(
       std::shared_ptr<SpeechStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
       grpc::ClientContext& context,
@@ -71,7 +71,7 @@ class SpeechMetadata : public SpeechStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SpeechStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,9 +21,9 @@
 
 #include "google/cloud/osconfig/v1/internal/os_config_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class OsConfigServiceMetadata : public OsConfigServiceStub {
   ~OsConfigServiceMetadata() override = default;
   explicit OsConfigServiceMetadata(
       std::shared_ptr<OsConfigServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::osconfig::v1::PatchJob> ExecutePatchJob(
       grpc::ClientContext& context,
@@ -104,7 +104,7 @@ class OsConfigServiceMetadata : public OsConfigServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<OsConfigServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,9 +21,9 @@
 
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class PublisherMetadata : public PublisherStub {
   ~PublisherMetadata() override = default;
   explicit PublisherMetadata(
       std::shared_ptr<PublisherStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       grpc::ClientContext& context,
@@ -86,7 +86,7 @@ class PublisherMetadata : public PublisherStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<PublisherStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

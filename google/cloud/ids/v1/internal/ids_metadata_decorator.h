@@ -22,9 +22,9 @@
 #include "google/cloud/ids/v1/internal/ids_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class IDSMetadata : public IDSStub {
   ~IDSMetadata() override = default;
   explicit IDSMetadata(
       std::shared_ptr<IDSStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::ids::v1::ListEndpointsResponse> ListEndpoints(
       grpc::ClientContext& context,
@@ -72,7 +72,7 @@ class IDSMetadata : public IDSStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<IDSStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

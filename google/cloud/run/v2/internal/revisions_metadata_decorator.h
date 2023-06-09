@@ -22,9 +22,9 @@
 #include "google/cloud/run/v2/internal/revisions_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class RevisionsMetadata : public RevisionsStub {
   ~RevisionsMetadata() override = default;
   explicit RevisionsMetadata(
       std::shared_ptr<RevisionsStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
       grpc::ClientContext& context,
@@ -67,7 +67,7 @@ class RevisionsMetadata : public RevisionsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<RevisionsStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

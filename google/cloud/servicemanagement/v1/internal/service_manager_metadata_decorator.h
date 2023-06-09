@@ -22,9 +22,9 @@
 #include "google/cloud/servicemanagement/v1/internal/service_manager_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class ServiceManagerMetadata : public ServiceManagerStub {
   ~ServiceManagerMetadata() override = default;
   explicit ServiceManagerMetadata(
       std::shared_ptr<ServiceManagerStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::api::servicemanagement::v1::ListServicesResponse>
   ListServices(grpc::ClientContext& context,
@@ -127,7 +127,7 @@ class ServiceManagerMetadata : public ServiceManagerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ServiceManagerStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

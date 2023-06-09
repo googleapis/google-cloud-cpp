@@ -21,9 +21,9 @@
 
 #include "google/cloud/oslogin/v1/internal/os_login_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class OsLoginServiceMetadata : public OsLoginServiceStub {
   ~OsLoginServiceMetadata() override = default;
   explicit OsLoginServiceMetadata(
       std::shared_ptr<OsLoginServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
       grpc::ClientContext& context,
@@ -79,7 +79,7 @@ class OsLoginServiceMetadata : public OsLoginServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<OsLoginServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

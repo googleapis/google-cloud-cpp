@@ -21,9 +21,9 @@
 
 #include "google/cloud/support/v2/internal/case_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class CaseServiceMetadata : public CaseServiceStub {
   ~CaseServiceMetadata() override = default;
   explicit CaseServiceMetadata(
       std::shared_ptr<CaseServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::support::v2::Case> GetCase(
       grpc::ClientContext& context,
@@ -77,7 +77,7 @@ class CaseServiceMetadata : public CaseServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CaseServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

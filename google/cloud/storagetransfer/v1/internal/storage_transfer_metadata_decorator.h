@@ -22,9 +22,9 @@
 #include "google/cloud/storagetransfer/v1/internal/storage_transfer_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class StorageTransferServiceMetadata : public StorageTransferServiceStub {
   ~StorageTransferServiceMetadata() override = default;
   explicit StorageTransferServiceMetadata(
       std::shared_ptr<StorageTransferServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
   GetGoogleServiceAccount(
@@ -125,7 +125,7 @@ class StorageTransferServiceMetadata : public StorageTransferServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<StorageTransferServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

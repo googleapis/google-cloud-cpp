@@ -22,9 +22,9 @@
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class VmwareEngineMetadata : public VmwareEngineStub {
   ~VmwareEngineMetadata() override = default;
   explicit VmwareEngineMetadata(
       std::shared_ptr<VmwareEngineStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse>
   ListPrivateClouds(
@@ -282,7 +282,7 @@ class VmwareEngineMetadata : public VmwareEngineStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<VmwareEngineStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

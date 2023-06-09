@@ -21,9 +21,9 @@
 
 #include "google/cloud/monitoring/v3/internal/alert_policy_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class AlertPolicyServiceMetadata : public AlertPolicyServiceStub {
   ~AlertPolicyServiceMetadata() override = default;
   explicit AlertPolicyServiceMetadata(
       std::shared_ptr<AlertPolicyServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::monitoring::v3::ListAlertPoliciesResponse> ListAlertPolicies(
       grpc::ClientContext& context,
@@ -63,7 +63,7 @@ class AlertPolicyServiceMetadata : public AlertPolicyServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AlertPolicyServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

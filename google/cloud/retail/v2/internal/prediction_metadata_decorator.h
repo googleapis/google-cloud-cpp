@@ -21,9 +21,9 @@
 
 #include "google/cloud/retail/v2/internal/prediction_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class PredictionServiceMetadata : public PredictionServiceStub {
   ~PredictionServiceMetadata() override = default;
   explicit PredictionServiceMetadata(
       std::shared_ptr<PredictionServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
       grpc::ClientContext& context,
@@ -47,7 +47,7 @@ class PredictionServiceMetadata : public PredictionServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<PredictionServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -22,9 +22,9 @@
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
   ~BareMetalSolutionMetadata() override = default;
   explicit BareMetalSolutionMetadata(
       std::shared_ptr<BareMetalSolutionStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::baremetalsolution::v2::ListInstancesResponse>
   ListInstances(
@@ -166,7 +166,7 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<BareMetalSolutionStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

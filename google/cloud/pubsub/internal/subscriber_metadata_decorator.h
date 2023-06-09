@@ -21,9 +21,9 @@
 
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class SubscriberMetadata : public SubscriberStub {
   ~SubscriberMetadata() override = default;
   explicit SubscriberMetadata(
       std::shared_ptr<SubscriberStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
       grpc::ClientContext& context,
@@ -111,7 +111,7 @@ class SubscriberMetadata : public SubscriberStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SubscriberStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

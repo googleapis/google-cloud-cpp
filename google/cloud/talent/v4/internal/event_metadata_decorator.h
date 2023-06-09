@@ -21,9 +21,9 @@
 
 #include "google/cloud/talent/v4/internal/event_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class EventServiceMetadata : public EventServiceStub {
   ~EventServiceMetadata() override = default;
   explicit EventServiceMetadata(
       std::shared_ptr<EventServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       grpc::ClientContext& context,
@@ -48,7 +48,7 @@ class EventServiceMetadata : public EventServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<EventServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

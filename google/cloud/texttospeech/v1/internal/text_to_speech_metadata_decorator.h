@@ -21,9 +21,9 @@
 
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class TextToSpeechMetadata : public TextToSpeechStub {
   ~TextToSpeechMetadata() override = default;
   explicit TextToSpeechMetadata(
       std::shared_ptr<TextToSpeechStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
       grpc::ClientContext& context,
@@ -54,7 +54,7 @@ class TextToSpeechMetadata : public TextToSpeechStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TextToSpeechStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

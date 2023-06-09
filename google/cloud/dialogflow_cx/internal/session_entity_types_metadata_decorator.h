@@ -21,9 +21,9 @@
 
 #include "google/cloud/dialogflow_cx/internal/session_entity_types_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class SessionEntityTypesMetadata : public SessionEntityTypesStub {
   ~SessionEntityTypesMetadata() override = default;
   explicit SessionEntityTypesMetadata(
       std::shared_ptr<SessionEntityTypesStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse>
   ListSessionEntityTypes(
@@ -72,7 +72,7 @@ class SessionEntityTypesMetadata : public SessionEntityTypesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SessionEntityTypesStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

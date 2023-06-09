@@ -21,9 +21,9 @@
 
 #include "google/cloud/dialogflow_es/internal/sessions_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class SessionsMetadata : public SessionsStub {
   ~SessionsMetadata() override = default;
   explicit SessionsMetadata(
       std::shared_ptr<SessionsStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
       grpc::ClientContext& context,
@@ -55,7 +55,7 @@ class SessionsMetadata : public SessionsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SessionsStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

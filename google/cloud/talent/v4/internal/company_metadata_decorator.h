@@ -21,9 +21,9 @@
 
 #include "google/cloud/talent/v4/internal/company_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class CompanyServiceMetadata : public CompanyServiceStub {
   ~CompanyServiceMetadata() override = default;
   explicit CompanyServiceMetadata(
       std::shared_ptr<CompanyServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
       grpc::ClientContext& context,
@@ -63,7 +63,7 @@ class CompanyServiceMetadata : public CompanyServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CompanyServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

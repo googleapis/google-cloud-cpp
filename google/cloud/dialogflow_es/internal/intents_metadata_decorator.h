@@ -22,9 +22,9 @@
 #include "google/cloud/dialogflow_es/internal/intents_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class IntentsMetadata : public IntentsStub {
   ~IntentsMetadata() override = default;
   explicit IntentsMetadata(
       std::shared_ptr<IntentsStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse> ListIntents(
       grpc::ClientContext& context,
@@ -89,7 +89,7 @@ class IntentsMetadata : public IntentsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<IntentsStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

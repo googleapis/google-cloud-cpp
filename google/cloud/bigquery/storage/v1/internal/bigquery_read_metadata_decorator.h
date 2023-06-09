@@ -21,9 +21,9 @@
 
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class BigQueryReadMetadata : public BigQueryReadStub {
   ~BigQueryReadMetadata() override = default;
   explicit BigQueryReadMetadata(
       std::shared_ptr<BigQueryReadStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       grpc::ClientContext& context,
@@ -60,7 +60,7 @@ class BigQueryReadMetadata : public BigQueryReadStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<BigQueryReadStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,9 +21,9 @@
 
 #include "google/cloud/dialogflow_es/internal/answer_records_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class AnswerRecordsMetadata : public AnswerRecordsStub {
   ~AnswerRecordsMetadata() override = default;
   explicit AnswerRecordsMetadata(
       std::shared_ptr<AnswerRecordsStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
   ListAnswerRecords(
@@ -54,7 +54,7 @@ class AnswerRecordsMetadata : public AnswerRecordsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AnswerRecordsStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

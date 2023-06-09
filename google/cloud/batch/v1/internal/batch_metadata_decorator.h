@@ -22,9 +22,9 @@
 #include "google/cloud/batch/v1/internal/batch_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class BatchServiceMetadata : public BatchServiceStub {
   ~BatchServiceMetadata() override = default;
   explicit BatchServiceMetadata(
       std::shared_ptr<BatchServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::batch::v1::Job> CreateJob(
       grpc::ClientContext& context,
@@ -79,7 +79,7 @@ class BatchServiceMetadata : public BatchServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<BatchServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

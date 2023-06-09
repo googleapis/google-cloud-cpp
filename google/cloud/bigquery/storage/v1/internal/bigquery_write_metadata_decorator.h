@@ -21,9 +21,9 @@
 
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class BigQueryWriteMetadata : public BigQueryWriteStub {
   ~BigQueryWriteMetadata() override = default;
   explicit BigQueryWriteMetadata(
       std::shared_ptr<BigQueryWriteStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
       grpc::ClientContext& context,
@@ -77,7 +77,7 @@ class BigQueryWriteMetadata : public BigQueryWriteStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<BigQueryWriteStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

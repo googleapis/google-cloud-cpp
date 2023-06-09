@@ -21,9 +21,9 @@
 
 #include "google/cloud/support/v2/internal/comment_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class CommentServiceMetadata : public CommentServiceStub {
   ~CommentServiceMetadata() override = default;
   explicit CommentServiceMetadata(
       std::shared_ptr<CommentServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::support::v2::ListCommentsResponse> ListComments(
       grpc::ClientContext& context,
@@ -51,7 +51,7 @@ class CommentServiceMetadata : public CommentServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CommentServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

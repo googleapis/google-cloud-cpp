@@ -21,9 +21,9 @@
 
 #include "google/cloud/dialogflow_cx/internal/experiments_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class ExperimentsMetadata : public ExperimentsStub {
   ~ExperimentsMetadata() override = default;
   explicit ExperimentsMetadata(
       std::shared_ptr<ExperimentsStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse>
   ListExperiments(
@@ -79,7 +79,7 @@ class ExperimentsMetadata : public ExperimentsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ExperimentsStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

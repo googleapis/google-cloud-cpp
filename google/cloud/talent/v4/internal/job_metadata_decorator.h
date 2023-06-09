@@ -22,9 +22,9 @@
 #include "google/cloud/talent/v4/internal/job_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class JobServiceMetadata : public JobServiceStub {
   ~JobServiceMetadata() override = default;
   explicit JobServiceMetadata(
       std::shared_ptr<JobServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::talent::v4::Job> CreateJob(
       grpc::ClientContext& context,
@@ -100,7 +100,7 @@ class JobServiceMetadata : public JobServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<JobServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

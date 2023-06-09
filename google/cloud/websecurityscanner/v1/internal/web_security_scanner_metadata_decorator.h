@@ -21,9 +21,9 @@
 
 #include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class WebSecurityScannerMetadata : public WebSecurityScannerStub {
   ~WebSecurityScannerMetadata() override = default;
   explicit WebSecurityScannerMetadata(
       std::shared_ptr<WebSecurityScannerStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> CreateScanConfig(
       grpc::ClientContext& context,
@@ -111,7 +111,7 @@ class WebSecurityScannerMetadata : public WebSecurityScannerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<WebSecurityScannerStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

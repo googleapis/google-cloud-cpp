@@ -21,9 +21,9 @@
 
 #include "google/cloud/monitoring/v3/internal/metric_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class MetricServiceMetadata : public MetricServiceStub {
   ~MetricServiceMetadata() override = default;
   explicit MetricServiceMetadata(
       std::shared_ptr<MetricServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
   ListMonitoredResourceDescriptors(
@@ -93,7 +93,7 @@ class MetricServiceMetadata : public MetricServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<MetricServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -22,9 +22,9 @@
 #include "google/cloud/connectors/v1/internal/connectors_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class ConnectorsMetadata : public ConnectorsStub {
   ~ConnectorsMetadata() override = default;
   explicit ConnectorsMetadata(
       std::shared_ptr<ConnectorsStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
   ListConnections(grpc::ClientContext& context,
@@ -148,7 +148,7 @@ class ConnectorsMetadata : public ConnectorsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ConnectorsStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

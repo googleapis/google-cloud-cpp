@@ -21,9 +21,9 @@
 
 #include "google/cloud/dialogflow_cx/internal/webhooks_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class WebhooksMetadata : public WebhooksStub {
   ~WebhooksMetadata() override = default;
   explicit WebhooksMetadata(
       std::shared_ptr<WebhooksStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
   ListWebhooks(grpc::ClientContext& context,
@@ -68,7 +68,7 @@ class WebhooksMetadata : public WebhooksStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<WebhooksStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

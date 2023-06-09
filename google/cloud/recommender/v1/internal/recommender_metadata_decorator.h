@@ -21,9 +21,9 @@
 
 #include "google/cloud/recommender/v1/internal/recommender_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class RecommenderMetadata : public RecommenderStub {
   ~RecommenderMetadata() override = default;
   explicit RecommenderMetadata(
       std::shared_ptr<RecommenderStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::recommender::v1::ListInsightsResponse> ListInsights(
       grpc::ClientContext& context,
@@ -111,7 +111,7 @@ class RecommenderMetadata : public RecommenderStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<RecommenderStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

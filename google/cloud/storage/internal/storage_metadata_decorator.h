@@ -21,9 +21,9 @@
 
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class StorageMetadata : public StorageStub {
   ~StorageMetadata() override = default;
   explicit StorageMetadata(
       std::shared_ptr<StorageStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   Status DeleteBucket(
       grpc::ClientContext& context,
@@ -208,7 +208,7 @@ class StorageMetadata : public StorageStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<StorageStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,9 +21,9 @@
 
 #include "google/cloud/composer/v1/internal/image_versions_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class ImageVersionsMetadata : public ImageVersionsStub {
   ~ImageVersionsMetadata() override = default;
   explicit ImageVersionsMetadata(
       std::shared_ptr<ImageVersionsStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ListImageVersionsResponse>
@@ -49,7 +49,7 @@ class ImageVersionsMetadata : public ImageVersionsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ImageVersionsStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

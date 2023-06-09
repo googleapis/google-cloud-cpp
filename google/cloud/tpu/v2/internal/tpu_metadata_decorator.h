@@ -22,9 +22,9 @@
 #include "google/cloud/tpu/v2/internal/tpu_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class TpuMetadata : public TpuStub {
   ~TpuMetadata() override = default;
   explicit TpuMetadata(
       std::shared_ptr<TpuStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::tpu::v2::ListNodesResponse> ListNodes(
       grpc::ClientContext& context,
@@ -118,7 +118,7 @@ class TpuMetadata : public TpuStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TpuStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

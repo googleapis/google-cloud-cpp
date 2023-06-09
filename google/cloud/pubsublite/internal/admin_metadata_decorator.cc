@@ -30,7 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AdminServiceMetadata::AdminServiceMetadata(
     std::shared_ptr<AdminServiceStub> child,
-    std::unordered_map<std::string, std::string> fixed_metadata)
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
@@ -220,10 +220,10 @@ void AdminServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void AdminServiceMetadata::SetMetadata(grpc::ClientContext& context) {
-  context.AddMetadata("x-goog-api-client", api_client_header_);
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
+  context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata("x-goog-user-project",

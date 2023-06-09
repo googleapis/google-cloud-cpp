@@ -21,9 +21,9 @@
 
 #include "google/cloud/retail/v2/internal/search_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class SearchServiceMetadata : public SearchServiceStub {
   ~SearchServiceMetadata() override = default;
   explicit SearchServiceMetadata(
       std::shared_ptr<SearchServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::retail::v2::SearchResponse> Search(
       grpc::ClientContext& context,
@@ -47,7 +47,7 @@ class SearchServiceMetadata : public SearchServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SearchServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

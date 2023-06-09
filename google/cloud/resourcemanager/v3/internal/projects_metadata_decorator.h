@@ -22,9 +22,9 @@
 #include "google/cloud/resourcemanager/v3/internal/projects_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class ProjectsMetadata : public ProjectsStub {
   ~ProjectsMetadata() override = default;
   explicit ProjectsMetadata(
       std::shared_ptr<ProjectsStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
       grpc::ClientContext& context,
@@ -112,7 +112,7 @@ class ProjectsMetadata : public ProjectsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ProjectsStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,9 +21,9 @@
 
 #include "google/cloud/appengine/v1/internal/authorized_domains_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class AuthorizedDomainsMetadata : public AuthorizedDomainsStub {
   ~AuthorizedDomainsMetadata() override = default;
   explicit AuthorizedDomainsMetadata(
       std::shared_ptr<AuthorizedDomainsStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
   ListAuthorizedDomains(
@@ -49,7 +49,7 @@ class AuthorizedDomainsMetadata : public AuthorizedDomainsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AuthorizedDomainsStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

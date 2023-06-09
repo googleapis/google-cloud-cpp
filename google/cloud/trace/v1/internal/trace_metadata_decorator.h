@@ -21,9 +21,9 @@
 
 #include "google/cloud/trace/v1/internal/trace_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class TraceServiceMetadata : public TraceServiceStub {
   ~TraceServiceMetadata() override = default;
   explicit TraceServiceMetadata(
       std::shared_ptr<TraceServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse> ListTraces(
       grpc::ClientContext& context,
@@ -57,7 +57,7 @@ class TraceServiceMetadata : public TraceServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TraceServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

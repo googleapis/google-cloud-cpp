@@ -22,9 +22,9 @@
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class AppGatewaysServiceMetadata : public AppGatewaysServiceStub {
   ~AppGatewaysServiceMetadata() override = default;
   explicit AppGatewaysServiceMetadata(
       std::shared_ptr<AppGatewaysServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
   ListAppGateways(
@@ -78,7 +78,7 @@ class AppGatewaysServiceMetadata : public AppGatewaysServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AppGatewaysServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

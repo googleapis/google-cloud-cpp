@@ -21,9 +21,9 @@
 
 #include "google/cloud/appengine/v1/internal/authorized_certificates_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class AuthorizedCertificatesMetadata : public AuthorizedCertificatesStub {
   ~AuthorizedCertificatesMetadata() override = default;
   explicit AuthorizedCertificatesMetadata(
       std::shared_ptr<AuthorizedCertificatesStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
   ListAuthorizedCertificates(
@@ -72,7 +72,7 @@ class AuthorizedCertificatesMetadata : public AuthorizedCertificatesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AuthorizedCertificatesStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

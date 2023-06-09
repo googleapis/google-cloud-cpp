@@ -21,9 +21,9 @@
 
 #include "google/cloud/servicecontrol/v1/internal/quota_controller_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class QuotaControllerMetadata : public QuotaControllerStub {
   ~QuotaControllerMetadata() override = default;
   explicit QuotaControllerMetadata(
       std::shared_ptr<QuotaControllerStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
   AllocateQuota(grpc::ClientContext& context,
@@ -48,7 +48,7 @@ class QuotaControllerMetadata : public QuotaControllerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<QuotaControllerStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

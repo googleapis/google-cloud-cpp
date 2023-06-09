@@ -21,9 +21,9 @@
 
 #include "google/cloud/monitoring/v3/internal/query_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class QueryServiceMetadata : public QueryServiceStub {
   ~QueryServiceMetadata() override = default;
   explicit QueryServiceMetadata(
       std::shared_ptr<QueryServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::monitoring::v3::QueryTimeSeriesResponse> QueryTimeSeries(
       grpc::ClientContext& context,
@@ -47,7 +47,7 @@ class QueryServiceMetadata : public QueryServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<QueryServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

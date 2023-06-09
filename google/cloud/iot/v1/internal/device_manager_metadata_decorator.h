@@ -21,9 +21,9 @@
 
 #include "google/cloud/iot/v1/internal/device_manager_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class DeviceManagerMetadata : public DeviceManagerStub {
   ~DeviceManagerMetadata() override = default;
   explicit DeviceManagerMetadata(
       std::shared_ptr<DeviceManagerStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::iot::v1::DeviceRegistry> CreateDeviceRegistry(
       grpc::ClientContext& context,
@@ -131,7 +131,7 @@ class DeviceManagerMetadata : public DeviceManagerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DeviceManagerStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

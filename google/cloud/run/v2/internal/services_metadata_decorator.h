@@ -22,9 +22,9 @@
 #include "google/cloud/run/v2/internal/services_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class ServicesMetadata : public ServicesStub {
   ~ServicesMetadata() override = default;
   explicit ServicesMetadata(
       std::shared_ptr<ServicesStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateService(
       google::cloud::CompletionQueue& cq,
@@ -89,7 +89,7 @@ class ServicesMetadata : public ServicesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ServicesStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

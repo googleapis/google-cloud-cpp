@@ -21,9 +21,9 @@
 
 #include "google/cloud/bigquery/migration/v2/internal/migration_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class MigrationServiceMetadata : public MigrationServiceStub {
   ~MigrationServiceMetadata() override = default;
   explicit MigrationServiceMetadata(
       std::shared_ptr<MigrationServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
   CreateMigrationWorkflow(
@@ -85,7 +85,7 @@ class MigrationServiceMetadata : public MigrationServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<MigrationServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

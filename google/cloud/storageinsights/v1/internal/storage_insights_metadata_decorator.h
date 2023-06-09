@@ -21,9 +21,9 @@
 
 #include "google/cloud/storageinsights/v1/internal/storage_insights_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class StorageInsightsMetadata : public StorageInsightsStub {
   ~StorageInsightsMetadata() override = default;
   explicit StorageInsightsMetadata(
       std::shared_ptr<StorageInsightsStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
   ListReportConfigs(
@@ -80,7 +80,7 @@ class StorageInsightsMetadata : public StorageInsightsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<StorageInsightsStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

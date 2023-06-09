@@ -22,9 +22,9 @@
 #include "google/cloud/dialogflow_cx/internal/test_cases_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class TestCasesMetadata : public TestCasesStub {
   ~TestCasesMetadata() override = default;
   explicit TestCasesMetadata(
       std::shared_ptr<TestCasesStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
   ListTestCases(grpc::ClientContext& context,
@@ -120,7 +120,7 @@ class TestCasesMetadata : public TestCasesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TestCasesStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

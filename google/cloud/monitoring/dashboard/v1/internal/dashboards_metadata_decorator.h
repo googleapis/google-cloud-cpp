@@ -21,9 +21,9 @@
 
 #include "google/cloud/monitoring/dashboard/v1/internal/dashboards_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class DashboardsServiceMetadata : public DashboardsServiceStub {
   ~DashboardsServiceMetadata() override = default;
   explicit DashboardsServiceMetadata(
       std::shared_ptr<DashboardsServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
       grpc::ClientContext& context,
@@ -68,7 +68,7 @@ class DashboardsServiceMetadata : public DashboardsServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DashboardsServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

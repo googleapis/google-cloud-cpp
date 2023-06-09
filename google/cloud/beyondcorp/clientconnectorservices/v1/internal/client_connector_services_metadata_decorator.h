@@ -23,9 +23,9 @@
 #include "google/cloud/beyondcorp/clientconnectorservices/v1/internal/client_connector_services_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -38,7 +38,7 @@ class ClientConnectorServicesServiceMetadata
   ~ClientConnectorServicesServiceMetadata() override = default;
   explicit ClientConnectorServicesServiceMetadata(
       std::shared_ptr<ClientConnectorServicesServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
                ListClientConnectorServicesResponse>
@@ -91,7 +91,7 @@ class ClientConnectorServicesServiceMetadata
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ClientConnectorServicesServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,9 +21,9 @@
 
 #include "google/cloud/profiler/v2/internal/profiler_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class ProfilerServiceMetadata : public ProfilerServiceStub {
   ~ProfilerServiceMetadata() override = default;
   explicit ProfilerServiceMetadata(
       std::shared_ptr<ProfilerServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
       grpc::ClientContext& context,
@@ -58,7 +58,7 @@ class ProfilerServiceMetadata : public ProfilerServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ProfilerServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

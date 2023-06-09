@@ -21,9 +21,9 @@
 
 #include "google/cloud/workflows/executions/v1/internal/executions_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class ExecutionsMetadata : public ExecutionsStub {
   ~ExecutionsMetadata() override = default;
   explicit ExecutionsMetadata(
       std::shared_ptr<ExecutionsStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
   ListExecutions(
@@ -64,7 +64,7 @@ class ExecutionsMetadata : public ExecutionsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ExecutionsStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

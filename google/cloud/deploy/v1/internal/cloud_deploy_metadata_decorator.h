@@ -22,9 +22,9 @@
 #include "google/cloud/deploy/v1/internal/cloud_deploy_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class CloudDeployMetadata : public CloudDeployStub {
   ~CloudDeployMetadata() override = default;
   explicit CloudDeployMetadata(
       std::shared_ptr<CloudDeployStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse>
   ListDeliveryPipelines(
@@ -173,7 +173,7 @@ class CloudDeployMetadata : public CloudDeployStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudDeployStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

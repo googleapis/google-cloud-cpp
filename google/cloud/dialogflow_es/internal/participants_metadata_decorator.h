@@ -21,9 +21,9 @@
 
 #include "google/cloud/dialogflow_es/internal/participants_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class ParticipantsMetadata : public ParticipantsStub {
   ~ParticipantsMetadata() override = default;
   explicit ParticipantsMetadata(
       std::shared_ptr<ParticipantsStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
       grpc::ClientContext& context,
@@ -92,7 +92,7 @@ class ParticipantsMetadata : public ParticipantsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ParticipantsStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

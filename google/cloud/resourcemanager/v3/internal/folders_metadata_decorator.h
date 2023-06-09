@@ -22,9 +22,9 @@
 #include "google/cloud/resourcemanager/v3/internal/folders_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class FoldersMetadata : public FoldersStub {
   ~FoldersMetadata() override = default;
   explicit FoldersMetadata(
       std::shared_ptr<FoldersStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       grpc::ClientContext& context,
@@ -111,7 +111,7 @@ class FoldersMetadata : public FoldersStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<FoldersStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

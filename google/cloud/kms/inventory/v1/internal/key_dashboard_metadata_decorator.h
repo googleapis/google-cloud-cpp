@@ -21,9 +21,9 @@
 
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class KeyDashboardServiceMetadata : public KeyDashboardServiceStub {
   ~KeyDashboardServiceMetadata() override = default;
   explicit KeyDashboardServiceMetadata(
       std::shared_ptr<KeyDashboardServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
   ListCryptoKeys(grpc::ClientContext& context,
@@ -48,7 +48,7 @@ class KeyDashboardServiceMetadata : public KeyDashboardServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<KeyDashboardServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

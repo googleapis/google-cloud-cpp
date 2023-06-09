@@ -22,9 +22,9 @@
 #include "google/cloud/edgecontainer/v1/internal/edge_container_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class EdgeContainerMetadata : public EdgeContainerStub {
   ~EdgeContainerMetadata() override = default;
   explicit EdgeContainerMetadata(
       std::shared_ptr<EdgeContainerStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::edgecontainer::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,
@@ -149,7 +149,7 @@ class EdgeContainerMetadata : public EdgeContainerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<EdgeContainerStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -22,9 +22,9 @@
 #include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class InstanceAdminMetadata : public InstanceAdminStub {
   ~InstanceAdminMetadata() override = default;
   explicit InstanceAdminMetadata(
       std::shared_ptr<InstanceAdminStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
   ListInstanceConfigs(
@@ -130,7 +130,7 @@ class InstanceAdminMetadata : public InstanceAdminStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<InstanceAdminStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -22,9 +22,9 @@
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class CloudBuildMetadata : public CloudBuildStub {
   ~CloudBuildMetadata() override = default;
   explicit CloudBuildMetadata(
       std::shared_ptr<CloudBuildStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBuild(
       google::cloud::CompletionQueue& cq,
@@ -154,7 +154,7 @@ class CloudBuildMetadata : public CloudBuildStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudBuildStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

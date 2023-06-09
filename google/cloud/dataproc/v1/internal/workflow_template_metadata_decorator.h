@@ -22,9 +22,9 @@
 #include "google/cloud/dataproc/v1/internal/workflow_template_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class WorkflowTemplateServiceMetadata : public WorkflowTemplateServiceStub {
   ~WorkflowTemplateServiceMetadata() override = default;
   explicit WorkflowTemplateServiceMetadata(
       std::shared_ptr<WorkflowTemplateServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   CreateWorkflowTemplate(
@@ -96,7 +96,7 @@ class WorkflowTemplateServiceMetadata : public WorkflowTemplateServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<WorkflowTemplateServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

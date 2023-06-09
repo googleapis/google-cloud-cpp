@@ -22,9 +22,9 @@
 #include "google/cloud/managedidentities/v1/internal/managed_identities_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class ManagedIdentitiesServiceMetadata : public ManagedIdentitiesServiceStub {
   ~ManagedIdentitiesServiceMetadata() override = default;
   explicit ManagedIdentitiesServiceMetadata(
       std::shared_ptr<ManagedIdentitiesServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMicrosoftAdDomain(
       google::cloud::CompletionQueue& cq,
@@ -112,7 +112,7 @@ class ManagedIdentitiesServiceMetadata : public ManagedIdentitiesServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ManagedIdentitiesServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

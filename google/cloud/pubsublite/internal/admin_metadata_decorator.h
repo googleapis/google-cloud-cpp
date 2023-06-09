@@ -22,9 +22,9 @@
 #include "google/cloud/pubsublite/internal/admin_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class AdminServiceMetadata : public AdminServiceStub {
   ~AdminServiceMetadata() override = default;
   explicit AdminServiceMetadata(
       std::shared_ptr<AdminServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
       grpc::ClientContext& context,
@@ -157,7 +157,7 @@ class AdminServiceMetadata : public AdminServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AdminServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

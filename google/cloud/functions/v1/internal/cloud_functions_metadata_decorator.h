@@ -22,9 +22,9 @@
 #include "google/cloud/functions/v1/internal/cloud_functions_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class CloudFunctionsServiceMetadata : public CloudFunctionsServiceStub {
   ~CloudFunctionsServiceMetadata() override = default;
   explicit CloudFunctionsServiceMetadata(
       std::shared_ptr<CloudFunctionsServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::functions::v1::ListFunctionsResponse> ListFunctions(
       grpc::ClientContext& context,
@@ -110,7 +110,7 @@ class CloudFunctionsServiceMetadata : public CloudFunctionsServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudFunctionsServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

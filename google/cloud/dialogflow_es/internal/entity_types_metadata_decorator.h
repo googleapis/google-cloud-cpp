@@ -22,9 +22,9 @@
 #include "google/cloud/dialogflow_es/internal/entity_types_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class EntityTypesMetadata : public EntityTypesStub {
   ~EntityTypesMetadata() override = default;
   explicit EntityTypesMetadata(
       std::shared_ptr<EntityTypesStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::ListEntityTypesResponse>
   ListEntityTypes(grpc::ClientContext& context,
@@ -109,7 +109,7 @@ class EntityTypesMetadata : public EntityTypesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<EntityTypesStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

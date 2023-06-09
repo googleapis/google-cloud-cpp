@@ -21,9 +21,9 @@
 
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class ConfidentialComputingMetadata : public ConfidentialComputingStub {
   ~ConfidentialComputingMetadata() override = default;
   explicit ConfidentialComputingMetadata(
       std::shared_ptr<ConfidentialComputingStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
       grpc::ClientContext& context,
@@ -54,7 +54,7 @@ class ConfidentialComputingMetadata : public ConfidentialComputingStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ConfidentialComputingStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

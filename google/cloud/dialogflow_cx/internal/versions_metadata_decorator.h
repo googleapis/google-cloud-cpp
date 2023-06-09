@@ -22,9 +22,9 @@
 #include "google/cloud/dialogflow_cx/internal/versions_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class VersionsMetadata : public VersionsStub {
   ~VersionsMetadata() override = default;
   explicit VersionsMetadata(
       std::shared_ptr<VersionsStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListVersionsResponse>
   ListVersions(grpc::ClientContext& context,
@@ -92,7 +92,7 @@ class VersionsMetadata : public VersionsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<VersionsStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

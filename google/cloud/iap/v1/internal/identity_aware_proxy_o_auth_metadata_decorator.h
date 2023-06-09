@@ -21,9 +21,9 @@
 
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class IdentityAwareProxyOAuthServiceMetadata
   ~IdentityAwareProxyOAuthServiceMetadata() override = default;
   explicit IdentityAwareProxyOAuthServiceMetadata(
       std::shared_ptr<IdentityAwareProxyOAuthServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::iap::v1::ListBrandsResponse> ListBrands(
       grpc::ClientContext& context,
@@ -85,7 +85,7 @@ class IdentityAwareProxyOAuthServiceMetadata
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<IdentityAwareProxyOAuthServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

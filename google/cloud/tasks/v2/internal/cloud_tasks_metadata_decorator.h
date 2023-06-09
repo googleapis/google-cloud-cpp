@@ -21,9 +21,9 @@
 
 #include "google/cloud/tasks/v2/internal/cloud_tasks_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class CloudTasksMetadata : public CloudTasksStub {
   ~CloudTasksMetadata() override = default;
   explicit CloudTasksMetadata(
       std::shared_ptr<CloudTasksStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::tasks::v2::ListQueuesResponse> ListQueues(
       grpc::ClientContext& context,
@@ -107,7 +107,7 @@ class CloudTasksMetadata : public CloudTasksStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudTasksStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,9 +21,9 @@
 
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class ResourceSettingsServiceMetadata : public ResourceSettingsServiceStub {
   ~ResourceSettingsServiceMetadata() override = default;
   explicit ResourceSettingsServiceMetadata(
       std::shared_ptr<ResourceSettingsServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
   ListSettings(grpc::ClientContext& context,
@@ -58,7 +58,7 @@ class ResourceSettingsServiceMetadata : public ResourceSettingsServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ResourceSettingsServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

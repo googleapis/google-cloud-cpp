@@ -22,9 +22,9 @@
 #include "google/cloud/datamigration/v1/internal/data_migration_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ class DataMigrationServiceMetadata : public DataMigrationServiceStub {
   ~DataMigrationServiceMetadata() override = default;
   explicit DataMigrationServiceMetadata(
       std::shared_ptr<DataMigrationServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::clouddms::v1::ListMigrationJobsResponse>
   ListMigrationJobs(grpc::ClientContext& context,
@@ -272,7 +272,7 @@ class DataMigrationServiceMetadata : public DataMigrationServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DataMigrationServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,9 +21,9 @@
 
 #include "google/cloud/video/transcoder/v1/internal/transcoder_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class TranscoderServiceMetadata : public TranscoderServiceStub {
   ~TranscoderServiceMetadata() override = default;
   explicit TranscoderServiceMetadata(
       std::shared_ptr<TranscoderServiceStub> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
       grpc::ClientContext& context,
@@ -83,7 +83,7 @@ class TranscoderServiceMetadata : public TranscoderServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TranscoderServiceStub> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 
