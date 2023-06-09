@@ -13,6 +13,12 @@
       "name": "post_abbr",
       "type": "string",
       "doc": "The postal code abbreviation of the state."
+    },
+    {
+      "name": "capital",
+      "type": "string",
+      "doc": "The capital of the state.",
+      "default": "NONE"
     }
   ]
 }
