@@ -2155,6 +2155,9 @@ void AutoRunAvro(
   DeleteTopic(topic_admin_client, {project_id, avro_revision_topic_id});
   DeleteSchema(schema_admin, {project_id, avro_revision_schema_id});
 
+  // std::cout << "\nRunning RollbackSchema sample" << std::endl;
+  // RollbackSchema(schema_admin, {project_id, avro_schema_id, revision_id});
+
   std::cout << "\nRunning ListSchemas() sample" << std::endl;
   ListSchemas(schema_admin, {project_id});
 
