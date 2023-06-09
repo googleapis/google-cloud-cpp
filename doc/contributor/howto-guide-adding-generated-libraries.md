@@ -184,6 +184,17 @@ Otherwise, if you are generating an experimental library, add it to
 `GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES` and note in a comment when the library
 was generated.
 
+## Add the API baseline
+
+For new GA libraries you need to create the API baseline.  You can leave this
+running while you work on tweaks to the quickstart and documentation.
+
+```shell
+env GOOGLE_CLOUD_CPP_CHECK_API=${library} ci/cloudbuild/build.sh -t check-api-pr
+git add ci/abi-dumps
+git commit -m"Add API baseline" ci/abi-dumps/
+```
+
 ## Update the quickstart
 
 The generated quickstart will need some editing. Use a simple operation, maybe
@@ -212,6 +223,13 @@ were written by a robot:
 The Cloud documentation links (`cloud.google.com/*/docs/*`) in these files are
 not always valid. Find the correct urls and update the links.
 
+## Review the metadata file
+
+Newer services provide all the data needed to generate this file correctly,
+but with older services we need to edit a few places:
+
+- `google/cloud/${library}/**/.repo-metadata.json`
+
 ## Edit the top-level CHANGELOG file
 
 Announce the new library in the CHANGELOG for the next release.
@@ -220,15 +238,6 @@ Announce the new library in the CHANGELOG for the next release.
 
 ```shell
 ci/cloudbuild/build.sh -t checkers-pr
-```
-
-## Add the API baseline
-
-For new GA libraries you need to create the API baseline.
-
-```
-env GOOGLE_CLOUD_CPP_CHECK_API=${library} ci/cloudbuild/build.sh -t check-api-pr
-git commit -m"Add API baseline" ci/abi-dumps/
 ```
 
 ## Verify everything compiles
@@ -267,7 +276,7 @@ index c4ce00489..1858b48dc 100755
 
 ```shell
 git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
-   "google/cloud/${library}" CHANGELOG.md ci cmake README.md
+   "google/cloud/${library}" .
 ```
 
 [#10237]: https://github.com/googleapis/google-cloud-cpp/issues/10237
