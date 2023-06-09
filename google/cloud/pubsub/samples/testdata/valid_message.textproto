@@ -1,0 +1,5 @@
+# proto-file: google/cloud/pubsub/samples/samples.proto
+# proto-message: google.cloud.pubsub.samples.State
+
+name: "New York"
+post_abbr: "NY"

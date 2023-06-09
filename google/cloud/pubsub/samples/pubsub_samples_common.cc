@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
+#include <fstream>
 #include <sstream>
 
 namespace google {
@@ -157,6 +158,13 @@ std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator) {
 std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator) {
   return google::cloud::pubsub_testing::RandomSchemaId(generator,
                                                        "cloud-cpp-samples");
+}
+
+std::string ReadFile(std::string const& path) {
+  std::ifstream ifs(path);
+  if (!ifs.is_open()) throw std::runtime_error("Cannot open file: " + path);
+  ifs.exceptions(std::ios::badbit);
+  return std::string{std::istreambuf_iterator<char>{ifs.rdbuf()}, {}};
 }
 
 }  // namespace examples
