@@ -609,7 +609,8 @@ std::string InputDataChange::DebugString(absl::string_view name,
                                          TracingOptions const& options,
                                          int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .Field("records_read_diff_percentage", records_read_diff_percentage)
+      .Field("records_read_diff_percentage",
+             static_cast<double>(records_read_diff_percentage))
       .Build();
 }
 
