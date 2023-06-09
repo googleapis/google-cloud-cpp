@@ -1,0 +1,14 @@
+{
+    "api_id": "aiplatform.googleapis.com",
+    "api_shortname": "EDIT HERE: missing data",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/aiplatform/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "EDIT HERE: missing data",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Vertex AI API",
+    "product_documentation": "https://cloud.google.com/ai-platform/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}
