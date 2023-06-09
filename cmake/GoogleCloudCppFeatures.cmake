@@ -123,6 +123,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "talent"
     "tasks"
     "texttospeech"
+    "timeseriesinsights"
     "tpu"
     "trace"
     "translate"

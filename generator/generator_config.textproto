@@ -2806,6 +2806,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Timeseries Insights
+service {
+  service_proto_path: "google/cloud/timeseriesinsights/v1/timeseries_insights.proto"
+  product_path: "google/cloud/timeseriesinsights/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # TPU
 service {
   service_proto_path: "google/cloud/tpu/v1/cloud_tpu.proto"
