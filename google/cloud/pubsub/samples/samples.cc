@@ -810,7 +810,7 @@ void CreateAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
 
 void CreateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
                           std::vector<std::string> const& argv) {
-  //! [START pubsub_create_proto_schema]
+  //! [START pubsub_create_proto_schema] [create-protobuf-schema]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_id, std::string const& schema_definition_file) {
@@ -831,7 +831,7 @@ void CreateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
     std::cout << "Schema successfully created: " << schema->DebugString()
               << "\n";
   }
-  //! [END pubsub_create_proto_schema]
+  //! [END pubsub_create_proto_schema] [create-protobuf-schema]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
@@ -866,7 +866,7 @@ void CommitAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
 
 void CommitProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
                           std::vector<std::string> const& argv) {
-  //! [START pubsub_commit_proto_schema] [commit-protobuf-schema]
+  //! [START pubsub_commit_proto_schema]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_id, std::string const& schema_definition_file) {
@@ -890,7 +890,7 @@ void CommitProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
     std::cout << "Schema revision successfully committed: "
               << schema->DebugString() << "\n";
   }
-  //! [END pubsub_commit_proto_schema] [commit-protobuf-schema]
+  //! [END pubsub_commit_proto_schema]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
