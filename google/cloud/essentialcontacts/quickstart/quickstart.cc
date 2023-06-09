@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/essentialcontacts/ EDIT HERE .h"
+#include "google/cloud/essentialcontacts/v1/essential_contacts_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,11 +23,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace essentialcontacts = ::google::cloud::essentialcontacts;
-  auto client = essentialcontacts::Client(essentialcontacts::MakeConnection());
+  namespace essentialcontacts = ::google::cloud::essentialcontacts_v1;
+  auto client = essentialcontacts::EssentialContactsServiceClient(
+      essentialcontacts::MakeEssentialContactsServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.ListContacts(project.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

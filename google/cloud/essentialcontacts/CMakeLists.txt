@@ -124,9 +124,7 @@ if (BUILD_TESTING)
         NAME essentialcontacts_quickstart
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:essentialcontacts_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+            $<TARGET_FILE:essentialcontacts_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(essentialcontacts_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()

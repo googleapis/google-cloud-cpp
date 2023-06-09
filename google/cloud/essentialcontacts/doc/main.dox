@@ -2,8 +2,11 @@
 
 @mainpage Essential Contacts API C++ Client Library
 
-An idiomatic C++ client library for the [Essential Contacts API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+Many Google Cloud services, such as Cloud Billing, send out notifications to
+share important information with Google Cloud users. By default, these
+notifications are sent to members with certain Identity and Access Management
+(IAM) roles. With the [Essential Contacts API][cloud-service-docs], you can
+customize who receives notifications by providing your own list of contacts.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).

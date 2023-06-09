@@ -1,7 +1,10 @@
 # Essential Contacts API C++ Client Library
 
-This directory contains an idiomatic C++ client library for the
-[Essential Contacts API][cloud-service-docs], a service to \<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+Many Google Cloud services, such as Cloud Billing, send out notifications to
+share important information with Google Cloud users. By default, these
+notifications are sent to members with certain Identity and Access Management
+(IAM) roles. With the [Essential Contacts API][cloud-service-docs], you can
+customize who receives notifications by providing your own list of contacts.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,7 +19,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/essentialcontacts/ EDIT HERE .h"
+#include "google/cloud/essentialcontacts/v1/essential_contacts_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -26,11 +29,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace essentialcontacts = ::google::cloud::essentialcontacts;
-  auto client = essentialcontacts::Client(essentialcontacts::MakeConnection());
+  namespace essentialcontacts = ::google::cloud::essentialcontacts_v1;
+  auto client = essentialcontacts::EssentialContactsServiceClient(
+      essentialcontacts::MakeEssentialContactsServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.ListContacts(project.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
