@@ -27,6 +27,8 @@ struct DiscoveryDocumentProperties {
   std::string default_hostname;
   std::string product_name;
   std::string version;
+  std::string revision;
+  std::string discovery_doc_url;
   std::set<std::string> operation_services;
 };
 

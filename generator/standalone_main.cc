@@ -208,7 +208,8 @@ google::cloud::Status GenerateProtosForRestProducts(
     if (!doc) return std::move(doc).status();
     auto status =
         google::cloud::generator_internal::GenerateProtosFromDiscoveryDoc(
-            *doc, generator_args.protobuf_proto_path,
+            *doc, p.discovery_document_url(),
+            generator_args.protobuf_proto_path,
             generator_args.googleapis_proto_path, generator_args.output_path,
             std::set<std::string>(p.operation_services().begin(),
                                   p.operation_services().end()));

@@ -80,7 +80,8 @@ StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url);
 
 // Emit protos generated from the discovery_doc.
 Status GenerateProtosFromDiscoveryDoc(
-    nlohmann::json const& discovery_doc, std::string const& protobuf_proto_path,
+    nlohmann::json const& discovery_doc, std::string const& discovery_doc_url,
+    std::string const& protobuf_proto_path,
     std::string const& googleapis_proto_path, std::string const& output_path,
     std::set<std::string> operation_services = {});
 
