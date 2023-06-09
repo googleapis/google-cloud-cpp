@@ -126,7 +126,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
-       "memory", "string", "unordered_map"});
+       "map", "memory", "string"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -138,7 +138,7 @@ class $metadata_class_name$ : public $stub_class_name$ {
   ~$metadata_class_name$() override = default;
   explicit $metadata_class_name$(
       std::shared_ptr<$stub_class_name$> child,
-      std::unordered_map<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata = {});
 )""");
 
   HeaderPrintPublicMethods();
@@ -150,7 +150,7 @@ class $metadata_class_name$ : public $stub_class_name$ {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<$stub_class_name$> child_;
-  std::unordered_map<std::string, std::string> fixed_metadata_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 )""");
@@ -190,7 +190,7 @@ Status MetadataDecoratorGenerator::GenerateCc() {
   CcPrint(R"""(
 $metadata_class_name$::$metadata_class_name$(
     std::shared_ptr<$stub_class_name$> child,
-    std::unordered_map<std::string, std::string> fixed_metadata)
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
@@ -367,10 +367,10 @@ void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,
 }
 
 void $metadata_class_name$::SetMetadata(grpc::ClientContext& context) {
-  context.AddMetadata("x-goog-api-client", api_client_header_);
   for (auto const& kv : fixed_metadata_) {
     context.AddMetadata(kv.first, kv.second);
   }
+  context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     context.AddMetadata(

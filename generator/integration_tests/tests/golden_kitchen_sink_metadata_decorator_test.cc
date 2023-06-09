@@ -76,8 +76,8 @@ class MetadataDecoratorTest : public ::testing::Test {
 
 /// Verify the x-goog-user-project metadata is set.
 TEST_F(MetadataDecoratorTest, UserProject) {
-  // We do this for a single RPC, we are using some knowledge of the
-  // implementation to assert that this is enough.
+  // We use knowledge of the implementation to assert that testing a single RPC
+  // is sufficient.
   EXPECT_CALL(*mock_, GenerateAccessToken)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
@@ -468,8 +468,8 @@ TEST_F(MetadataDecoratorTest, ExplicitRoutingNestedField) {
 }
 
 TEST_F(MetadataDecoratorTest, FixedMetadata) {
-  // We do this for a single RPC, we are using some knowledge of the
-  // implementation to assert that this is enough.
+  // We use knowledge of the implementation to assert that testing a single RPC
+  // is sufficient.
   EXPECT_CALL(*mock_, GenerateAccessToken)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
