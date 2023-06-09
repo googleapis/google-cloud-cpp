@@ -110,6 +110,13 @@ info, see [#7463] and [#5976].
 
 ## v2.12.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries.  Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Timeseries Insights](/google/cloud/timeseriesinsights/README.md)
+
 ### Cloud Debugger
 
 The Cloud Debugger service (aka Stackdriver Debugger API) has been

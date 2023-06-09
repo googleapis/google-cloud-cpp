@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/timeseriesinsights/ EDIT HERE .h"
+#include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,12 +23,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace timeseriesinsights = ::google::cloud::timeseriesinsights;
-  auto client =
-      timeseriesinsights::Client(timeseriesinsights::MakeConnection());
+  namespace timeseriesinsights = ::google::cloud::timeseriesinsights_v1;
+  auto client = timeseriesinsights::TimeseriesInsightsControllerClient(
+      timeseriesinsights::MakeTimeseriesInsightsControllerConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.ListDataSets(project.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

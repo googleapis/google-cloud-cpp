@@ -126,9 +126,7 @@ if (BUILD_TESTING)
         NAME timeseriesinsights_quickstart
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:timeseriesinsights_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+            $<TARGET_FILE:timeseriesinsights_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(timeseriesinsights_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()

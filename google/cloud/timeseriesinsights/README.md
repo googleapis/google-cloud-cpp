@@ -1,7 +1,11 @@
 # Timeseries Insights API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Timeseries Insights API][cloud-service-docs], a service to Provides a Timeseries Insights service which operates over time series data. Users can perform time series spike, trend, and anomaly detection. With a straightforward API and easy to understand results, the service makes it simple to gather insights from large amounts of time series data (e.g. monitoring datasets) and integrate these insights in their applications.
+[Timeseries Insights API][cloud-service-docs], with this API users can perform
+time series spike, trend, and anomaly detection. With a straightforward API and
+easy to understand results, the service makes it simple to gather insights from
+large amounts of time series data (e.g. monitoring datasets) and integrate these
+insights in their applications.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,7 +20,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/timeseriesinsights/ EDIT HERE .h"
+#include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -26,12 +30,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace timeseriesinsights = ::google::cloud::timeseriesinsights;
-  auto client =
-      timeseriesinsights::Client(timeseriesinsights::MakeConnection());
+  namespace timeseriesinsights = ::google::cloud::timeseriesinsights_v1;
+  auto client = timeseriesinsights::TimeseriesInsightsControllerClient(
+      timeseriesinsights::MakeTimeseriesInsightsControllerConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.ListDataSets(project.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
