@@ -17,6 +17,7 @@
 // source: google/cloud/pubsublite/v1/subscriber.proto
 
 #include "google/cloud/pubsublite/internal/subscriber_tracing_stub.h"
+#include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
@@ -30,13 +31,20 @@ SubscriberServiceTracingStub::SubscriberServiceTracingStub(
     std::shared_ptr<SubscriberServiceStub> child)
     : child_(std::move(child)) {}
 
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::SubscribeRequest,
     google::cloud::pubsublite::v1::SubscribeResponse>>
 SubscriberServiceTracingStub::AsyncSubscribe(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return child_->AsyncSubscribe(cq, std::move(context));
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.SubscriberService", "Subscribe");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->AsyncSubscribe(cq, context);
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::cloud::pubsublite::v1::SubscribeRequest,
+      google::cloud::pubsublite::v1::SubscribeResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

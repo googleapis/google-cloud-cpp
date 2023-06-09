@@ -17,6 +17,7 @@
 // source: google/cloud/pubsublite/v1/publisher.proto
 
 #include "google/cloud/pubsublite/internal/publisher_tracing_stub.h"
+#include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
@@ -30,13 +31,20 @@ PublisherServiceTracingStub::PublisherServiceTracingStub(
     std::shared_ptr<PublisherServiceStub> child)
     : child_(std::move(child)) {}
 
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::cloud::pubsublite::v1::PublishRequest,
-    google::cloud::pubsublite::v1::PublishResponse>>
+std::unique_ptr<
+    AsyncStreamingReadWriteRpc<google::cloud::pubsublite::v1::PublishRequest,
+                               google::cloud::pubsublite::v1::PublishResponse>>
 PublisherServiceTracingStub::AsyncPublish(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return child_->AsyncPublish(cq, std::move(context));
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.PublisherService", "Publish");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->AsyncPublish(cq, context);
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::cloud::pubsublite::v1::PublishRequest,
+      google::cloud::pubsublite::v1::PublishResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
