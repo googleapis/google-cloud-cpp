@@ -925,6 +925,10 @@
 ./include/google/cloud/texttospeech/v1
 ./include/google/cloud/texttospeech/v1/internal
 ./include/google/cloud/texttospeech/v1/mocks
+./include/google/cloud/timeseriesinsights
+./include/google/cloud/timeseriesinsights/v1
+./include/google/cloud/timeseriesinsights/v1/internal
+./include/google/cloud/timeseriesinsights/v1/mocks
 ./include/google/cloud/tpu
 ./include/google/cloud/tpu/mocks
 ./include/google/cloud/tpu/v1
@@ -1149,6 +1153,7 @@
 ./lib64/cmake/google_cloud_cpp_talent
 ./lib64/cmake/google_cloud_cpp_tasks
 ./lib64/cmake/google_cloud_cpp_texttospeech
+./lib64/cmake/google_cloud_cpp_timeseriesinsights
 ./lib64/cmake/google_cloud_cpp_tpu
 ./lib64/cmake/google_cloud_cpp_trace
 ./lib64/cmake/google_cloud_cpp_translate
