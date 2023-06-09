@@ -22,6 +22,7 @@
 #include "google/cloud/appengine/v1/internal/instances_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InstancesMetadata : public InstancesStub {
  public:
   ~InstancesMetadata() override = default;
-  explicit InstancesMetadata(std::shared_ptr<InstancesStub> child);
+  explicit InstancesMetadata(
+      std::shared_ptr<InstancesStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::appengine::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,
@@ -69,6 +72,7 @@ class InstancesMetadata : public InstancesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<InstancesStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

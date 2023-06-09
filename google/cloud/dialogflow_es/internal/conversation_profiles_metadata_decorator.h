@@ -22,6 +22,7 @@
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class ConversationProfilesMetadata : public ConversationProfilesStub {
  public:
   ~ConversationProfilesMetadata() override = default;
   explicit ConversationProfilesMetadata(
-      std::shared_ptr<ConversationProfilesStub> child);
+      std::shared_ptr<ConversationProfilesStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::ListConversationProfilesResponse>
   ListConversationProfiles(
@@ -95,6 +97,7 @@ class ConversationProfilesMetadata : public ConversationProfilesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ConversationProfilesStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

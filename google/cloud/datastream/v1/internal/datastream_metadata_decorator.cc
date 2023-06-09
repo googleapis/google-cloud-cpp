@@ -28,8 +28,11 @@ namespace cloud {
 namespace datastream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DatastreamMetadata::DatastreamMetadata(std::shared_ptr<DatastreamStub> child)
+DatastreamMetadata::DatastreamMetadata(
+    std::shared_ptr<DatastreamStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -274,6 +277,9 @@ void DatastreamMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void DatastreamMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

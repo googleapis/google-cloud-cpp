@@ -22,6 +22,7 @@
 #include "google/cloud/eventarc/v1/internal/eventarc_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EventarcMetadata : public EventarcStub {
  public:
   ~EventarcMetadata() override = default;
-  explicit EventarcMetadata(std::shared_ptr<EventarcStub> child);
+  explicit EventarcMetadata(
+      std::shared_ptr<EventarcStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
       grpc::ClientContext& context,
@@ -147,6 +150,7 @@ class EventarcMetadata : public EventarcStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<EventarcStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

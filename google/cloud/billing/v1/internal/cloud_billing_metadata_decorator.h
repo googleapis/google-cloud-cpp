@@ -21,6 +21,7 @@
 
 #include "google/cloud/billing/v1/internal/cloud_billing_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudBillingMetadata : public CloudBillingStub {
  public:
   ~CloudBillingMetadata() override = default;
-  explicit CloudBillingMetadata(std::shared_ptr<CloudBillingStub> child);
+  explicit CloudBillingMetadata(
+      std::shared_ptr<CloudBillingStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
       grpc::ClientContext& context,
@@ -91,6 +94,7 @@ class CloudBillingMetadata : public CloudBillingStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudBillingStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

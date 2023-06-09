@@ -21,6 +21,7 @@
 
 #include "google/cloud/bigquery/datatransfer/v1/internal/data_transfer_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ class DataTransferServiceMetadata : public DataTransferServiceStub {
  public:
   ~DataTransferServiceMetadata() override = default;
   explicit DataTransferServiceMetadata(
-      std::shared_ptr<DataTransferServiceStub> child);
+      std::shared_ptr<DataTransferServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
       grpc::ClientContext& context,
@@ -126,6 +128,7 @@ class DataTransferServiceMetadata : public DataTransferServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DataTransferServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

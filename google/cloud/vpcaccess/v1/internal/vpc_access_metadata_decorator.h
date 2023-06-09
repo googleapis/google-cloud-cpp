@@ -22,6 +22,7 @@
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class VpcAccessServiceMetadata : public VpcAccessServiceStub {
  public:
   ~VpcAccessServiceMetadata() override = default;
   explicit VpcAccessServiceMetadata(
-      std::shared_ptr<VpcAccessServiceStub> child);
+      std::shared_ptr<VpcAccessServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnector(
       google::cloud::CompletionQueue& cq,
@@ -74,6 +76,7 @@ class VpcAccessServiceMetadata : public VpcAccessServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<VpcAccessServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

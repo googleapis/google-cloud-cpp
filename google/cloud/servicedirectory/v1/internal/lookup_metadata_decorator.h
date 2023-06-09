@@ -21,6 +21,7 @@
 
 #include "google/cloud/servicedirectory/v1/internal/lookup_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LookupServiceMetadata : public LookupServiceStub {
  public:
   ~LookupServiceMetadata() override = default;
-  explicit LookupServiceMetadata(std::shared_ptr<LookupServiceStub> child);
+  explicit LookupServiceMetadata(
+      std::shared_ptr<LookupServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(
@@ -46,6 +49,7 @@ class LookupServiceMetadata : public LookupServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<LookupServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

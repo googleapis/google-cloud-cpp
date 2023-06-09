@@ -21,6 +21,7 @@
 
 #include "google/cloud/monitoring/v3/internal/notification_channel_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class NotificationChannelServiceMetadata
  public:
   ~NotificationChannelServiceMetadata() override = default;
   explicit NotificationChannelServiceMetadata(
-      std::shared_ptr<NotificationChannelServiceStub> child);
+      std::shared_ptr<NotificationChannelServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::monitoring::v3::ListNotificationChannelDescriptorsResponse>
   ListNotificationChannelDescriptors(
@@ -102,6 +104,7 @@ class NotificationChannelServiceMetadata
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<NotificationChannelServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

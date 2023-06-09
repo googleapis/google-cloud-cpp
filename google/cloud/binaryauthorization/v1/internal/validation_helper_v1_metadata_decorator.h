@@ -21,6 +21,7 @@
 
 #include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ class ValidationHelperV1Metadata : public ValidationHelperV1Stub {
  public:
   ~ValidationHelperV1Metadata() override = default;
   explicit ValidationHelperV1Metadata(
-      std::shared_ptr<ValidationHelperV1Stub> child);
+      std::shared_ptr<ValidationHelperV1Stub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::binaryauthorization::v1::
                ValidateAttestationOccurrenceResponse>
@@ -48,6 +50,7 @@ class ValidationHelperV1Metadata : public ValidationHelperV1Stub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ValidationHelperV1Stub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

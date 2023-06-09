@@ -22,6 +22,7 @@
 #include "google/cloud/dialogflow_cx/internal/test_cases_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TestCasesMetadata : public TestCasesStub {
  public:
   ~TestCasesMetadata() override = default;
-  explicit TestCasesMetadata(std::shared_ptr<TestCasesStub> child);
+  explicit TestCasesMetadata(
+      std::shared_ptr<TestCasesStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
   ListTestCases(grpc::ClientContext& context,
@@ -117,6 +120,7 @@ class TestCasesMetadata : public TestCasesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TestCasesStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

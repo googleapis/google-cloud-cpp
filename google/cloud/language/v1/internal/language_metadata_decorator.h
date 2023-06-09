@@ -21,6 +21,7 @@
 
 #include "google/cloud/language/v1/internal/language_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LanguageServiceMetadata : public LanguageServiceStub {
  public:
   ~LanguageServiceMetadata() override = default;
-  explicit LanguageServiceMetadata(std::shared_ptr<LanguageServiceStub> child);
+  explicit LanguageServiceMetadata(
+      std::shared_ptr<LanguageServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(grpc::ClientContext& context,
@@ -73,6 +76,7 @@ class LanguageServiceMetadata : public LanguageServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<LanguageServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

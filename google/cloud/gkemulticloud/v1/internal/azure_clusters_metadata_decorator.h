@@ -22,6 +22,7 @@
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AzureClustersMetadata : public AzureClustersStub {
  public:
   ~AzureClustersMetadata() override = default;
-  explicit AzureClustersMetadata(std::shared_ptr<AzureClustersStub> child);
+  explicit AzureClustersMetadata(
+      std::shared_ptr<AzureClustersStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAzureClient(
       google::cloud::CompletionQueue& cq,
@@ -144,6 +147,7 @@ class AzureClustersMetadata : public AzureClustersStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AzureClustersStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

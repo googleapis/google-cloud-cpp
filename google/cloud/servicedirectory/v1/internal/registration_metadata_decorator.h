@@ -21,6 +21,7 @@
 
 #include "google/cloud/servicedirectory/v1/internal/registration_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ class RegistrationServiceMetadata : public RegistrationServiceStub {
  public:
   ~RegistrationServiceMetadata() override = default;
   explicit RegistrationServiceMetadata(
-      std::shared_ptr<RegistrationServiceStub> child);
+      std::shared_ptr<RegistrationServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
       grpc::ClientContext& context,
@@ -129,6 +131,7 @@ class RegistrationServiceMetadata : public RegistrationServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<RegistrationServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

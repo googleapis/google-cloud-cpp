@@ -22,6 +22,7 @@
 #include "google/cloud/datacatalog/v1/internal/data_catalog_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DataCatalogMetadata : public DataCatalogStub {
  public:
   ~DataCatalogMetadata() override = default;
-  explicit DataCatalogMetadata(std::shared_ptr<DataCatalogStub> child);
+  explicit DataCatalogMetadata(
+      std::shared_ptr<DataCatalogStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse> SearchCatalog(
       grpc::ClientContext& context,
@@ -217,6 +220,7 @@ class DataCatalogMetadata : public DataCatalogStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DataCatalogStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,6 +21,7 @@
 
 #include "google/cloud/billing/v1/internal/cloud_catalog_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudCatalogMetadata : public CloudCatalogStub {
  public:
   ~CloudCatalogMetadata() override = default;
-  explicit CloudCatalogMetadata(std::shared_ptr<CloudCatalogStub> child);
+  explicit CloudCatalogMetadata(
+      std::shared_ptr<CloudCatalogStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::billing::v1::ListServicesResponse> ListServices(
       grpc::ClientContext& context,
@@ -48,6 +51,7 @@ class CloudCatalogMetadata : public CloudCatalogStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudCatalogStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

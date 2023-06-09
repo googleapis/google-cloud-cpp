@@ -22,6 +22,7 @@
 #include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InstanceAdminMetadata : public InstanceAdminStub {
  public:
   ~InstanceAdminMetadata() override = default;
-  explicit InstanceAdminMetadata(std::shared_ptr<InstanceAdminStub> child);
+  explicit InstanceAdminMetadata(
+      std::shared_ptr<InstanceAdminStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
   ListInstanceConfigs(
@@ -127,6 +130,7 @@ class InstanceAdminMetadata : public InstanceAdminStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<InstanceAdminStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

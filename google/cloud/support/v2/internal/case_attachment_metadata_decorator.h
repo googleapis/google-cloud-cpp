@@ -21,6 +21,7 @@
 
 #include "google/cloud/support/v2/internal/case_attachment_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ class CaseAttachmentServiceMetadata : public CaseAttachmentServiceStub {
  public:
   ~CaseAttachmentServiceMetadata() override = default;
   explicit CaseAttachmentServiceMetadata(
-      std::shared_ptr<CaseAttachmentServiceStub> child);
+      std::shared_ptr<CaseAttachmentServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::support::v2::ListAttachmentsResponse> ListAttachments(
       grpc::ClientContext& context,
@@ -46,6 +48,7 @@ class CaseAttachmentServiceMetadata : public CaseAttachmentServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CaseAttachmentServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

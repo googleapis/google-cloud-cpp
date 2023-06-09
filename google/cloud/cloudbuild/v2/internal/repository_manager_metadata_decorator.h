@@ -22,6 +22,7 @@
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class RepositoryManagerMetadata : public RepositoryManagerStub {
  public:
   ~RepositoryManagerMetadata() override = default;
   explicit RepositoryManagerMetadata(
-      std::shared_ptr<RepositoryManagerStub> child);
+      std::shared_ptr<RepositoryManagerStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnection(
       google::cloud::CompletionQueue& cq,
@@ -127,6 +129,7 @@ class RepositoryManagerMetadata : public RepositoryManagerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<RepositoryManagerStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

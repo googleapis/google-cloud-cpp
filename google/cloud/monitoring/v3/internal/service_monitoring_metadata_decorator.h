@@ -21,6 +21,7 @@
 
 #include "google/cloud/monitoring/v3/internal/service_monitoring_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ class ServiceMonitoringServiceMetadata : public ServiceMonitoringServiceStub {
  public:
   ~ServiceMonitoringServiceMetadata() override = default;
   explicit ServiceMonitoringServiceMetadata(
-      std::shared_ptr<ServiceMonitoringServiceStub> child);
+      std::shared_ptr<ServiceMonitoringServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::monitoring::v3::Service> CreateService(
       grpc::ClientContext& context,
@@ -90,6 +92,7 @@ class ServiceMonitoringServiceMetadata : public ServiceMonitoringServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ServiceMonitoringServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

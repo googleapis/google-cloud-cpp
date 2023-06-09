@@ -22,6 +22,7 @@
 #include "google/cloud/dataplex/v1/internal/dataplex_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DataplexServiceMetadata : public DataplexServiceStub {
  public:
   ~DataplexServiceMetadata() override = default;
-  explicit DataplexServiceMetadata(std::shared_ptr<DataplexServiceStub> child);
+  explicit DataplexServiceMetadata(
+      std::shared_ptr<DataplexServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateLake(
       google::cloud::CompletionQueue& cq,
@@ -206,6 +209,7 @@ class DataplexServiceMetadata : public DataplexServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DataplexServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

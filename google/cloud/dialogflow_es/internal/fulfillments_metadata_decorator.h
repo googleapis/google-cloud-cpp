@@ -21,6 +21,7 @@
 
 #include "google/cloud/dialogflow_es/internal/fulfillments_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FulfillmentsMetadata : public FulfillmentsStub {
  public:
   ~FulfillmentsMetadata() override = default;
-  explicit FulfillmentsMetadata(std::shared_ptr<FulfillmentsStub> child);
+  explicit FulfillmentsMetadata(
+      std::shared_ptr<FulfillmentsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
       grpc::ClientContext& context,
@@ -50,6 +53,7 @@ class FulfillmentsMetadata : public FulfillmentsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<FulfillmentsStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,6 +21,7 @@
 
 #include "google/cloud/talent/v4/internal/completion_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CompletionMetadata : public CompletionStub {
  public:
   ~CompletionMetadata() override = default;
-  explicit CompletionMetadata(std::shared_ptr<CompletionStub> child);
+  explicit CompletionMetadata(
+      std::shared_ptr<CompletionStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
       grpc::ClientContext& context,
@@ -44,6 +47,7 @@ class CompletionMetadata : public CompletionStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CompletionStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

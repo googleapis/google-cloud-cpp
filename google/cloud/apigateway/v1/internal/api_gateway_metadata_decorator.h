@@ -22,6 +22,7 @@
 #include "google/cloud/apigateway/v1/internal/api_gateway_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class ApiGatewayServiceMetadata : public ApiGatewayServiceStub {
  public:
   ~ApiGatewayServiceMetadata() override = default;
   explicit ApiGatewayServiceMetadata(
-      std::shared_ptr<ApiGatewayServiceStub> child);
+      std::shared_ptr<ApiGatewayServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse> ListGateways(
       grpc::ClientContext& context,
@@ -130,6 +132,7 @@ class ApiGatewayServiceMetadata : public ApiGatewayServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ApiGatewayServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

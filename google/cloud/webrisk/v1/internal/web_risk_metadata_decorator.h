@@ -22,6 +22,7 @@
 #include "google/cloud/webrisk/v1/internal/web_risk_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WebRiskServiceMetadata : public WebRiskServiceStub {
  public:
   ~WebRiskServiceMetadata() override = default;
-  explicit WebRiskServiceMetadata(std::shared_ptr<WebRiskServiceStub> child);
+  explicit WebRiskServiceMetadata(
+      std::shared_ptr<WebRiskServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
@@ -75,6 +78,7 @@ class WebRiskServiceMetadata : public WebRiskServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<WebRiskServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

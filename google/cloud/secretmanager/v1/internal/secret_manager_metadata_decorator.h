@@ -21,6 +21,7 @@
 
 #include "google/cloud/secretmanager/v1/internal/secret_manager_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ class SecretManagerServiceMetadata : public SecretManagerServiceStub {
  public:
   ~SecretManagerServiceMetadata() override = default;
   explicit SecretManagerServiceMetadata(
-      std::shared_ptr<SecretManagerServiceStub> child);
+      std::shared_ptr<SecretManagerServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse> ListSecrets(
       grpc::ClientContext& context,
@@ -117,6 +119,7 @@ class SecretManagerServiceMetadata : public SecretManagerServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SecretManagerServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

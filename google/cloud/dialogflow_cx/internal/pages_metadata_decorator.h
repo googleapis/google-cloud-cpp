@@ -21,6 +21,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/pages_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PagesMetadata : public PagesStub {
  public:
   ~PagesMetadata() override = default;
-  explicit PagesMetadata(std::shared_ptr<PagesStub> child);
+  explicit PagesMetadata(
+      std::shared_ptr<PagesStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse> ListPages(
       grpc::ClientContext& context,
@@ -64,6 +67,7 @@ class PagesMetadata : public PagesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<PagesStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

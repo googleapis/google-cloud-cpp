@@ -21,6 +21,7 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
  public:
   ~GoldenKitchenSinkMetadata() override = default;
-  explicit GoldenKitchenSinkMetadata(std::shared_ptr<GoldenKitchenSinkStub> child);
+  explicit GoldenKitchenSinkMetadata(
+      std::shared_ptr<GoldenKitchenSinkStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
       grpc::ClientContext& context,
@@ -106,6 +109,7 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<GoldenKitchenSinkStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

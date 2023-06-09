@@ -22,6 +22,7 @@
 #include "google/cloud/assuredworkloads/v1/internal/assured_workloads_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class AssuredWorkloadsServiceMetadata : public AssuredWorkloadsServiceStub {
  public:
   ~AssuredWorkloadsServiceMetadata() override = default;
   explicit AssuredWorkloadsServiceMetadata(
-      std::shared_ptr<AssuredWorkloadsServiceStub> child);
+      std::shared_ptr<AssuredWorkloadsServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkload(
       google::cloud::CompletionQueue& cq,
@@ -102,6 +104,7 @@ class AssuredWorkloadsServiceMetadata : public AssuredWorkloadsServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AssuredWorkloadsServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

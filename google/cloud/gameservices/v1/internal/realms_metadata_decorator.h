@@ -22,6 +22,7 @@
 #include "google/cloud/gameservices/v1/internal/realms_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RealmsServiceMetadata : public RealmsServiceStub {
  public:
   ~RealmsServiceMetadata() override = default;
-  explicit RealmsServiceMetadata(std::shared_ptr<RealmsServiceStub> child);
+  explicit RealmsServiceMetadata(
+      std::shared_ptr<RealmsServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::gaming::v1::ListRealmsResponse> ListRealms(
       grpc::ClientContext& context,
@@ -79,6 +82,7 @@ class RealmsServiceMetadata : public RealmsServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<RealmsServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

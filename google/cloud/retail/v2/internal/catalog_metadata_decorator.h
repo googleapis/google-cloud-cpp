@@ -21,6 +21,7 @@
 
 #include "google/cloud/retail/v2/internal/catalog_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CatalogServiceMetadata : public CatalogServiceStub {
  public:
   ~CatalogServiceMetadata() override = default;
-  explicit CatalogServiceMetadata(std::shared_ptr<CatalogServiceStub> child);
+  explicit CatalogServiceMetadata(
+      std::shared_ptr<CatalogServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::retail::v2::ListCatalogsResponse> ListCatalogs(
       grpc::ClientContext& context,
@@ -93,6 +96,7 @@ class CatalogServiceMetadata : public CatalogServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CatalogServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

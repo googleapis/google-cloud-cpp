@@ -21,6 +21,7 @@
 
 #include "google/cloud/kms/v1/internal/ekm_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EkmServiceMetadata : public EkmServiceStub {
  public:
   ~EkmServiceMetadata() override = default;
-  explicit EkmServiceMetadata(std::shared_ptr<EkmServiceStub> child);
+  explicit EkmServiceMetadata(
+      std::shared_ptr<EkmServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
   ListEkmConnections(grpc::ClientContext& context,
@@ -72,6 +75,7 @@ class EkmServiceMetadata : public EkmServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<EkmServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

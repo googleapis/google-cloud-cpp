@@ -22,6 +22,7 @@
 #include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class AccessContextManagerMetadata : public AccessContextManagerStub {
  public:
   ~AccessContextManagerMetadata() override = default;
   explicit AccessContextManagerMetadata(
-      std::shared_ptr<AccessContextManagerStub> child);
+      std::shared_ptr<AccessContextManagerStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<
       google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse>
@@ -207,6 +209,7 @@ class AccessContextManagerMetadata : public AccessContextManagerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AccessContextManagerStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

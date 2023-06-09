@@ -22,6 +22,7 @@
 #include "google/cloud/securitycenter/v1/internal/security_center_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SecurityCenterMetadata : public SecurityCenterStub {
  public:
   ~SecurityCenterMetadata() override = default;
-  explicit SecurityCenterMetadata(std::shared_ptr<SecurityCenterStub> child);
+  explicit SecurityCenterMetadata(
+      std::shared_ptr<SecurityCenterStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncBulkMuteFindings(
       google::cloud::CompletionQueue& cq,
@@ -304,6 +307,7 @@ class SecurityCenterMetadata : public SecurityCenterStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SecurityCenterStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

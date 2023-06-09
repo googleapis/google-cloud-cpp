@@ -21,6 +21,7 @@
 
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ class AgentEndpointServiceMetadata : public AgentEndpointServiceStub {
  public:
   ~AgentEndpointServiceMetadata() override = default;
   explicit AgentEndpointServiceMetadata(
-      std::shared_ptr<AgentEndpointServiceStub> child);
+      std::shared_ptr<AgentEndpointServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::osconfig::agentendpoint::v1::
@@ -79,6 +81,7 @@ class AgentEndpointServiceMetadata : public AgentEndpointServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AgentEndpointServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,6 +21,7 @@
 
 #include "google/cloud/iam/admin/v1/internal/iam_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IAMMetadata : public IAMStub {
  public:
   ~IAMMetadata() override = default;
-  explicit IAMMetadata(std::shared_ptr<IAMStub> child);
+  explicit IAMMetadata(
+      std::shared_ptr<IAMStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
   ListServiceAccounts(grpc::ClientContext& context,
@@ -173,6 +176,7 @@ class IAMMetadata : public IAMStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<IAMStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

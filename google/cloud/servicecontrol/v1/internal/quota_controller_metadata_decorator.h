@@ -21,6 +21,7 @@
 
 #include "google/cloud/servicecontrol/v1/internal/quota_controller_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class QuotaControllerMetadata : public QuotaControllerStub {
  public:
   ~QuotaControllerMetadata() override = default;
-  explicit QuotaControllerMetadata(std::shared_ptr<QuotaControllerStub> child);
+  explicit QuotaControllerMetadata(
+      std::shared_ptr<QuotaControllerStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
   AllocateQuota(grpc::ClientContext& context,
@@ -45,6 +48,7 @@ class QuotaControllerMetadata : public QuotaControllerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<QuotaControllerStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

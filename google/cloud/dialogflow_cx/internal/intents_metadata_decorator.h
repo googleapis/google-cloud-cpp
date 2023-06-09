@@ -21,6 +21,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/intents_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IntentsMetadata : public IntentsStub {
  public:
   ~IntentsMetadata() override = default;
-  explicit IntentsMetadata(std::shared_ptr<IntentsStub> child);
+  explicit IntentsMetadata(
+      std::shared_ptr<IntentsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListIntentsResponse> ListIntents(
       grpc::ClientContext& context,
@@ -65,6 +68,7 @@ class IntentsMetadata : public IntentsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<IntentsStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,6 +21,7 @@
 
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class KnowledgeBasesMetadata : public KnowledgeBasesStub {
  public:
   ~KnowledgeBasesMetadata() override = default;
-  explicit KnowledgeBasesMetadata(std::shared_ptr<KnowledgeBasesStub> child);
+  explicit KnowledgeBasesMetadata(
+      std::shared_ptr<KnowledgeBasesStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
   ListKnowledgeBases(
@@ -66,6 +69,7 @@ class KnowledgeBasesMetadata : public KnowledgeBasesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<KnowledgeBasesStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

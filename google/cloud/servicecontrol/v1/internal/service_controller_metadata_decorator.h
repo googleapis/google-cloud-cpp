@@ -21,6 +21,7 @@
 
 #include "google/cloud/servicecontrol/v1/internal/service_controller_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ class ServiceControllerMetadata : public ServiceControllerStub {
  public:
   ~ServiceControllerMetadata() override = default;
   explicit ServiceControllerMetadata(
-      std::shared_ptr<ServiceControllerStub> child);
+      std::shared_ptr<ServiceControllerStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::api::servicecontrol::v1::CheckResponse> Check(
       grpc::ClientContext& context,
@@ -49,6 +51,7 @@ class ServiceControllerMetadata : public ServiceControllerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ServiceControllerStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

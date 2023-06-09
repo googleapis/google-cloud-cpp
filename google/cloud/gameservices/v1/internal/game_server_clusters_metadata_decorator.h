@@ -22,6 +22,7 @@
 #include "google/cloud/gameservices/v1/internal/game_server_clusters_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class GameServerClustersServiceMetadata : public GameServerClustersServiceStub {
  public:
   ~GameServerClustersServiceMetadata() override = default;
   explicit GameServerClustersServiceMetadata(
-      std::shared_ptr<GameServerClustersServiceStub> child);
+      std::shared_ptr<GameServerClustersServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::gaming::v1::ListGameServerClustersResponse>
   ListGameServerClusters(
@@ -99,6 +101,7 @@ class GameServerClustersServiceMetadata : public GameServerClustersServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<GameServerClustersServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

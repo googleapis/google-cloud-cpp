@@ -22,6 +22,7 @@
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudBuildMetadata : public CloudBuildStub {
  public:
   ~CloudBuildMetadata() override = default;
-  explicit CloudBuildMetadata(std::shared_ptr<CloudBuildStub> child);
+  explicit CloudBuildMetadata(
+      std::shared_ptr<CloudBuildStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBuild(
       google::cloud::CompletionQueue& cq,
@@ -151,6 +154,7 @@ class CloudBuildMetadata : public CloudBuildStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudBuildStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,6 +21,7 @@
 
 #include "google/cloud/monitoring/v3/internal/uptime_check_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ class UptimeCheckServiceMetadata : public UptimeCheckServiceStub {
  public:
   ~UptimeCheckServiceMetadata() override = default;
   explicit UptimeCheckServiceMetadata(
-      std::shared_ptr<UptimeCheckServiceStub> child);
+      std::shared_ptr<UptimeCheckServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
   ListUptimeCheckConfigs(
@@ -72,6 +74,7 @@ class UptimeCheckServiceMetadata : public UptimeCheckServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<UptimeCheckServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

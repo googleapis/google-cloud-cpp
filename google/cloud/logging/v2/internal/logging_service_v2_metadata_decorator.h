@@ -21,6 +21,7 @@
 
 #include "google/cloud/logging/v2/internal/logging_service_v2_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ class LoggingServiceV2Metadata : public LoggingServiceV2Stub {
  public:
   ~LoggingServiceV2Metadata() override = default;
   explicit LoggingServiceV2Metadata(
-      std::shared_ptr<LoggingServiceV2Stub> child);
+      std::shared_ptr<LoggingServiceV2Stub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   Status DeleteLog(
       grpc::ClientContext& context,
@@ -75,6 +77,7 @@ class LoggingServiceV2Metadata : public LoggingServiceV2Stub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<LoggingServiceV2Stub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

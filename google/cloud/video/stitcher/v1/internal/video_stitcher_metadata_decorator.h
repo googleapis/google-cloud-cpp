@@ -22,6 +22,7 @@
 #include "google/cloud/video/stitcher/v1/internal/video_stitcher_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class VideoStitcherServiceMetadata : public VideoStitcherServiceStub {
  public:
   ~VideoStitcherServiceMetadata() override = default;
   explicit VideoStitcherServiceMetadata(
-      std::shared_ptr<VideoStitcherServiceStub> child);
+      std::shared_ptr<VideoStitcherServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCdnKey(
       google::cloud::CompletionQueue& cq,
@@ -187,6 +189,7 @@ class VideoStitcherServiceMetadata : public VideoStitcherServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<VideoStitcherServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

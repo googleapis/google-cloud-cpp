@@ -21,6 +21,7 @@
 
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SystemPolicyV1Metadata : public SystemPolicyV1Stub {
  public:
   ~SystemPolicyV1Metadata() override = default;
-  explicit SystemPolicyV1Metadata(std::shared_ptr<SystemPolicyV1Stub> child);
+  explicit SystemPolicyV1Metadata(
+      std::shared_ptr<SystemPolicyV1Stub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
       grpc::ClientContext& context,
@@ -45,6 +48,7 @@ class SystemPolicyV1Metadata : public SystemPolicyV1Stub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SystemPolicyV1Stub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

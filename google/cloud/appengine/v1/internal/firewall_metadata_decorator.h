@@ -21,6 +21,7 @@
 
 #include "google/cloud/appengine/v1/internal/firewall_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FirewallMetadata : public FirewallStub {
  public:
   ~FirewallMetadata() override = default;
-  explicit FirewallMetadata(std::shared_ptr<FirewallStub> child);
+  explicit FirewallMetadata(
+      std::shared_ptr<FirewallStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::appengine::v1::ListIngressRulesResponse> ListIngressRules(
       grpc::ClientContext& context,
@@ -66,6 +69,7 @@ class FirewallMetadata : public FirewallStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<FirewallStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -21,6 +21,7 @@
 
 #include "google/cloud/tasks/v2/internal/cloud_tasks_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudTasksMetadata : public CloudTasksStub {
  public:
   ~CloudTasksMetadata() override = default;
-  explicit CloudTasksMetadata(std::shared_ptr<CloudTasksStub> child);
+  explicit CloudTasksMetadata(
+      std::shared_ptr<CloudTasksStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::tasks::v2::ListQueuesResponse> ListQueues(
       grpc::ClientContext& context,
@@ -104,6 +107,7 @@ class CloudTasksMetadata : public CloudTasksStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudTasksStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

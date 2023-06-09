@@ -22,6 +22,7 @@
 #include "google/cloud/channel/v1/internal/cloud_channel_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class CloudChannelServiceMetadata : public CloudChannelServiceStub {
  public:
   ~CloudChannelServiceMetadata() override = default;
   explicit CloudChannelServiceMetadata(
-      std::shared_ptr<CloudChannelServiceStub> child);
+      std::shared_ptr<CloudChannelServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::channel::v1::ListCustomersResponse> ListCustomers(
       grpc::ClientContext& context,
@@ -307,6 +309,7 @@ class CloudChannelServiceMetadata : public CloudChannelServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudChannelServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

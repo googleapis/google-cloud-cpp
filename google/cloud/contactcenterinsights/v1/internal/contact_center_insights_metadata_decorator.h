@@ -22,6 +22,7 @@
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class ContactCenterInsightsMetadata : public ContactCenterInsightsStub {
  public:
   ~ContactCenterInsightsMetadata() override = default;
   explicit ContactCenterInsightsMetadata(
-      std::shared_ptr<ContactCenterInsightsStub> child);
+      std::shared_ptr<ContactCenterInsightsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   CreateConversation(
@@ -264,6 +266,7 @@ class ContactCenterInsightsMetadata : public ContactCenterInsightsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ContactCenterInsightsStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -22,6 +22,7 @@
 #include "google/cloud/translate/v3/internal/translation_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class TranslationServiceMetadata : public TranslationServiceStub {
  public:
   ~TranslationServiceMetadata() override = default;
   explicit TranslationServiceMetadata(
-      std::shared_ptr<TranslationServiceStub> child);
+      std::shared_ptr<TranslationServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
       grpc::ClientContext& context,
@@ -108,6 +110,7 @@ class TranslationServiceMetadata : public TranslationServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TranslationServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

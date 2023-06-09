@@ -39,6 +39,7 @@ using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::test::admin::database::v1::Request;
 using ::google::test::admin::database::v1::Response;
 using ::testing::_;
+using ::testing::AllOf;
 using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::Not;
@@ -75,8 +76,8 @@ class MetadataDecoratorTest : public ::testing::Test {
 
 /// Verify the x-goog-user-project metadata is set.
 TEST_F(MetadataDecoratorTest, UserProject) {
-  // We do this for a single RPC, we are using some knowledge of the
-  // implementation to assert that this is enough.
+  // We use knowledge of the implementation to assert that testing a single RPC
+  // is sufficient.
   EXPECT_CALL(*mock_, GenerateAccessToken)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
@@ -464,6 +465,28 @@ TEST_F(MetadataDecoratorTest, ExplicitRoutingNestedField) {
   // extract its metadata).
   (void)stub.ExplicitRouting2(context1, request);
   (void)stub.ExplicitRouting2(context2, request);
+}
+
+TEST_F(MetadataDecoratorTest, FixedMetadata) {
+  // We use knowledge of the implementation to assert that testing a single RPC
+  // is sufficient.
+  EXPECT_CALL(*mock_, GenerateAccessToken)
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::
+                           GenerateAccessTokenRequest const&) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata,
+                    AllOf(Contains(Pair("test-key-1", "test-value-1")),
+                          Contains(Pair("test-key-2", "test-value-2"))));
+        return TransientError();
+      });
+
+  GoldenKitchenSinkMetadata stub(
+      mock_, {{"test-key-1", "test-value-1"}, {"test-key-2", "test-value-2"}});
+  grpc::ClientContext context;
+  google::test::admin::database::v1::GenerateAccessTokenRequest request;
+  auto status = stub.GenerateAccessToken(context, request);
+  EXPECT_EQ(TransientError(), status.status());
 }
 
 }  // namespace

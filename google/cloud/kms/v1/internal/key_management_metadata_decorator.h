@@ -21,6 +21,7 @@
 
 #include "google/cloud/kms/v1/internal/key_management_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ class KeyManagementServiceMetadata : public KeyManagementServiceStub {
  public:
   ~KeyManagementServiceMetadata() override = default;
   explicit KeyManagementServiceMetadata(
-      std::shared_ptr<KeyManagementServiceStub> child);
+      std::shared_ptr<KeyManagementServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::kms::v1::ListKeyRingsResponse> ListKeyRings(
       grpc::ClientContext& context,
@@ -155,6 +157,7 @@ class KeyManagementServiceMetadata : public KeyManagementServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<KeyManagementServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

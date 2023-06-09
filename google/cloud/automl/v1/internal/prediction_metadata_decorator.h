@@ -22,6 +22,7 @@
 #include "google/cloud/automl/v1/internal/prediction_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class PredictionServiceMetadata : public PredictionServiceStub {
  public:
   ~PredictionServiceMetadata() override = default;
   explicit PredictionServiceMetadata(
-      std::shared_ptr<PredictionServiceStub> child);
+      std::shared_ptr<PredictionServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
       grpc::ClientContext& context,
@@ -61,6 +63,7 @@ class PredictionServiceMetadata : public PredictionServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<PredictionServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

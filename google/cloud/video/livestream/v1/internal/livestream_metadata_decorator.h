@@ -22,6 +22,7 @@
 #include "google/cloud/video/livestream/v1/internal/livestream_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class LivestreamServiceMetadata : public LivestreamServiceStub {
  public:
   ~LivestreamServiceMetadata() override = default;
   explicit LivestreamServiceMetadata(
-      std::shared_ptr<LivestreamServiceStub> child);
+      std::shared_ptr<LivestreamServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateChannel(
       google::cloud::CompletionQueue& cq,
@@ -140,6 +142,7 @@ class LivestreamServiceMetadata : public LivestreamServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<LivestreamServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

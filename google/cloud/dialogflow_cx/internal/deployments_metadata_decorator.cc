@@ -28,8 +28,11 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DeploymentsMetadata::DeploymentsMetadata(std::shared_ptr<DeploymentsStub> child)
+DeploymentsMetadata::DeploymentsMetadata(
+    std::shared_ptr<DeploymentsStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -56,6 +59,9 @@ void DeploymentsMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void DeploymentsMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

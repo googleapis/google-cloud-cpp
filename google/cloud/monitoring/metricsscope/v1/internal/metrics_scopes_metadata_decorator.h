@@ -22,6 +22,7 @@
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MetricsScopesMetadata : public MetricsScopesStub {
  public:
   ~MetricsScopesMetadata() override = default;
-  explicit MetricsScopesMetadata(std::shared_ptr<MetricsScopesStub> child);
+  explicit MetricsScopesMetadata(
+      std::shared_ptr<MetricsScopesStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
       grpc::ClientContext& context,
@@ -75,6 +78,7 @@ class MetricsScopesMetadata : public MetricsScopesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<MetricsScopesStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

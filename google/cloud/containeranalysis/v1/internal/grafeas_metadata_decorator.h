@@ -21,6 +21,7 @@
 
 #include "google/cloud/containeranalysis/v1/internal/grafeas_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GrafeasMetadata : public GrafeasStub {
  public:
   ~GrafeasMetadata() override = default;
-  explicit GrafeasMetadata(std::shared_ptr<GrafeasStub> child);
+  explicit GrafeasMetadata(
+      std::shared_ptr<GrafeasStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<grafeas::v1::Occurrence> GetOccurrence(
       grpc::ClientContext& context,
@@ -95,6 +98,7 @@ class GrafeasMetadata : public GrafeasStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<GrafeasStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

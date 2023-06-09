@@ -22,6 +22,7 @@
 #include "google/cloud/retail/v2/internal/user_event_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,7 +35,8 @@ class UserEventServiceMetadata : public UserEventServiceStub {
  public:
   ~UserEventServiceMetadata() override = default;
   explicit UserEventServiceMetadata(
-      std::shared_ptr<UserEventServiceStub> child);
+      std::shared_ptr<UserEventServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
       grpc::ClientContext& context,
@@ -79,6 +81,7 @@ class UserEventServiceMetadata : public UserEventServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<UserEventServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

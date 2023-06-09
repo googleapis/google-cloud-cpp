@@ -21,6 +21,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/changelogs_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ChangelogsMetadata : public ChangelogsStub {
  public:
   ~ChangelogsMetadata() override = default;
-  explicit ChangelogsMetadata(std::shared_ptr<ChangelogsStub> child);
+  explicit ChangelogsMetadata(
+      std::shared_ptr<ChangelogsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata = {});
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListChangelogsResponse>
   ListChangelogs(grpc::ClientContext& context,
@@ -50,6 +53,7 @@ class ChangelogsMetadata : public ChangelogsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ChangelogsStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 
