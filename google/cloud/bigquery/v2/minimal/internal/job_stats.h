@@ -86,11 +86,12 @@ bool operator==(ScriptStatistics const& lhs, ScriptStatistics const& rhs);
 // For more details, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#JobStatistics
 struct JobStatistics {
-  std::chrono::milliseconds creation_time;
-  std::chrono::milliseconds start_time;
-  std::chrono::milliseconds end_time;
-  std::chrono::milliseconds total_slot_time;
-  std::chrono::milliseconds final_execution_duration;
+  std::chrono::milliseconds creation_time = std::chrono::milliseconds(0);
+  std::chrono::milliseconds start_time = std::chrono::milliseconds(0);
+  std::chrono::milliseconds end_time = std::chrono::milliseconds(0);
+  std::chrono::milliseconds total_slot_time = std::chrono::milliseconds(0);
+  std::chrono::milliseconds final_execution_duration =
+      std::chrono::milliseconds(0);
 
   std::int64_t total_bytes_processed;
   std::int64_t num_child_jobs;

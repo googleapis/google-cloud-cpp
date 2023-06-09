@@ -80,17 +80,19 @@ struct ExplainQueryStage {
   std::int64_t completed_parallel_inputs;
   std::vector<std::int64_t> input_stages;
 
-  std::chrono::milliseconds start_time;
-  std::chrono::milliseconds end_time;
-  std::chrono::milliseconds slot_time;
-  std::chrono::milliseconds wait_avg_time_spent;
-  std::chrono::milliseconds wait_max_time_spent;
-  std::chrono::milliseconds read_avg_time_spent;
-  std::chrono::milliseconds read_max_time_spent;
-  std::chrono::milliseconds write_avg_time_spent;
-  std::chrono::milliseconds write_max_time_spent;
-  std::chrono::milliseconds compute_avg_time_spent;
-  std::chrono::milliseconds compute_max_time_spent;
+  std::chrono::milliseconds start_time = std::chrono::milliseconds(0);
+  std::chrono::milliseconds end_time = std::chrono::milliseconds(0);
+  std::chrono::milliseconds slot_time = std::chrono::milliseconds(0);
+  std::chrono::milliseconds wait_avg_time_spent = std::chrono::milliseconds(0);
+  std::chrono::milliseconds wait_max_time_spent = std::chrono::milliseconds(0);
+  std::chrono::milliseconds read_avg_time_spent = std::chrono::milliseconds(0);
+  std::chrono::milliseconds read_max_time_spent = std::chrono::milliseconds(0);
+  std::chrono::milliseconds write_avg_time_spent = std::chrono::milliseconds(0);
+  std::chrono::milliseconds write_max_time_spent = std::chrono::milliseconds(0);
+  std::chrono::milliseconds compute_avg_time_spent =
+      std::chrono::milliseconds(0);
+  std::chrono::milliseconds compute_max_time_spent =
+      std::chrono::milliseconds(0);
 
   double wait_ratio_avg;
   double wait_ratio_max;
@@ -114,8 +116,8 @@ bool operator==(ExplainQueryStage const& lhs, ExplainQueryStage const& rhs);
 // For more details on field members, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#querytimelinesample.
 struct QueryTimelineSample {
-  std::chrono::milliseconds elapsed_time;
-  std::chrono::milliseconds total_slot_time;
+  std::chrono::milliseconds elapsed_time = std::chrono::milliseconds(0);
+  std::chrono::milliseconds total_slot_time = std::chrono::milliseconds(0);
 
   std::int64_t pending_units;
   std::int64_t completed_units;
@@ -278,7 +280,8 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
 // For more details on field members, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#performanceinsights.
 struct PerformanceInsights {
-  std::chrono::milliseconds avg_previous_execution_time;
+  std::chrono::milliseconds avg_previous_execution_time =
+      std::chrono::milliseconds(0);
 
   StagePerformanceStandaloneInsight stage_performance_standalone_insights;
   StagePerformanceChangeInsight stage_performance_change_insights;
@@ -393,7 +396,7 @@ struct JobQueryStatistics {
   std::string statement_type;
   std::string ddl_operation_performed;
 
-  std::chrono::milliseconds total_slot_time;
+  std::chrono::milliseconds total_slot_time = std::chrono::milliseconds(0);
   bool cache_hit;
 
   std::vector<ExplainQueryStage> query_plan;

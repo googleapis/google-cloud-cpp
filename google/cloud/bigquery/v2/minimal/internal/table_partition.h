@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_TABLE_PARTITION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_TABLE_PARTITION_H
 
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
@@ -33,7 +34,7 @@ using namespace nlohmann::literals;  // NOLINT
 
 struct TimePartitioning {
   std::string type;
-  std::chrono::milliseconds expiration_time;
+  std::chrono::milliseconds expiration_time = std::chrono::milliseconds(0);
   std::string field;
 
   std::string DebugString(absl::string_view name,
@@ -73,22 +74,16 @@ struct Clustering {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Clustering, fields);
 
 inline void to_json(nlohmann::json& j, TimePartitioning const& t) {
-  j = nlohmann::json{
-      {"type", t.type},
-      {"field", t.field},
-      {"expiration_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(t.expiration_time)
-           .count()}};
+  j = nlohmann::json{{"type", t.type}, {"field", t.field}};
+
+  ToJson(t.expiration_time, j, "expiration_time");
 }
 
 inline void from_json(nlohmann::json const& j, TimePartitioning& t) {
   if (j.contains("type")) j.at("type").get_to(t.type);
   if (j.contains("field")) j.at("field").get_to(t.field);
-  if (j.contains("expiration_time")) {
-    std::int64_t millis;
-    j.at("expiration_time").get_to(millis);
-    t.expiration_time = std::chrono::milliseconds(millis);
-  }
+
+  FromJson(t.expiration_time, j, "expiration_time");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

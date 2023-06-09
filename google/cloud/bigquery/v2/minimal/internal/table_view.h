@@ -67,7 +67,8 @@ struct MaterializedViewDefinition {
   bool allow_non_incremental_definition = false;
   bool enable_refresh = false;
 
-  std::chrono::milliseconds refresh_interval_time;
+  std::chrono::milliseconds refresh_interval_time =
+      std::chrono::milliseconds(0);
   std::chrono::system_clock::time_point last_refresh_time;
 
   std::string DebugString(absl::string_view name,
