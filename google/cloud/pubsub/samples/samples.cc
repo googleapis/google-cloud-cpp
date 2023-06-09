@@ -906,7 +906,8 @@ void GetSchema(google::cloud::pubsub::SchemaServiceClient client,
     auto schema = client.GetSchema(request);
     if (!schema) throw std::move(schema).status();
 
-    std::cout << "The schema exists and its metadata is: "
+    std::cout << "The schema exists and its metadata is:"
+              << "\n"
               << schema->DebugString() << "\n";
   }
   //! [END pubsub_get_schema] [get-schema]
@@ -915,7 +916,7 @@ void GetSchema(google::cloud::pubsub::SchemaServiceClient client,
 
 void GetSchemaRevision(google::cloud::pubsub::SchemaServiceClient client,
                        std::vector<std::string> const& argv) {
-  //! [START pubsub_get_schema_revision] [get-schema-revision]
+  //! [START pubsub_get_schema_revision]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_id, std::string const& revision_id) {
@@ -927,11 +928,11 @@ void GetSchemaRevision(google::cloud::pubsub::SchemaServiceClient client,
     auto schema = client.GetSchema(request);
     if (!schema) throw std::move(schema).status();
 
-    std::cout << "The schema revision exists and its metadata is: "
+    std::cout << "The schema revision exists and its metadata is: \n"
               << schema->DebugString() << "\n";
   }
-  //! [END pubsub_get_schema_revision] [get-schema-revision]
-  (std::move(client), argv.at(0), argv.at(1));
+  //! [END pubsub_get_schema_revision]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void ListSchemas(google::cloud::pubsub::SchemaServiceClient client,
@@ -2017,8 +2018,8 @@ void AutoRunAvro(
   std::cout << "\nRunning GetSchema sample" << std::endl;
   GetSchema(schema_admin, {project_id, avro_schema_id});
 
-  std::cout << "\nRunning GetSchemaRevision sample" << std::endl;
-  GetSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
+  // std::cout << "\nRunning GetSchemaRevision sample" << std::endl;
+  // GetSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
 
   std::cout << "\nRunning ListSchemas() sample" << std::endl;
   ListSchemas(schema_admin, {project_id});
@@ -2625,8 +2626,9 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           CommitProtobufSchema),
       CreateSchemaServiceCommand("get-schema", {"project-id", "schema-id"},
                                  GetSchema),
-      CreateSchemaServiceCommand(
-          "get-schema", {"project-id", "schema-id", "revision-id"}, GetSchemaRevision),
+      CreateSchemaServiceCommand("get-schema-revision",
+                                 {"project-id", "schema-id", "revision-id"},
+                                 GetSchemaRevision),
       CreateSchemaServiceCommand("list-schemas", {"project-id"}, ListSchemas),
       CreateSchemaServiceCommand("list-schema-revisions",
                                  {"project-id", "schema-id"},
