@@ -167,6 +167,27 @@ std::string ReadFile(std::string const& path) {
   return std::string{std::istreambuf_iterator<char>{ifs.rdbuf()}, {}};
 }
 
+std::string CommitSchemaRevisionsForRollbackSchemaTesting(
+    google::cloud::pubsub::SchemaServiceClient& schema_admin,
+    std::string const& project_id, std::string const& schema_id,
+    std::string const& file) {
+  std::string const definition = ReadFile(file);
+
+  google::pubsub::v1::CommitSchemaRequest request;
+  std::string const name =
+      google::cloud::pubsub::Schema(project_id, schema_id).FullName();
+  request.set_name(name);
+  request.mutable_schema()->set_name(name);
+  request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
+  request.mutable_schema()->set_definition(definition);
+  auto schema = schema_admin.CommitSchema(request);
+  if (!schema) throw std::move(schema).status();
+  std::string first_revision_id = schema.value().revision_id();
+  schema = schema_admin.CommitSchema(request);
+  if (!schema) throw std::move(schema).status();
+  return first_revision_id;
+}
+
 }  // namespace examples
 }  // namespace pubsub
 }  // namespace cloud

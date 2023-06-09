@@ -35,6 +35,8 @@
 
 namespace {
 
+using ::google::cloud::pubsub::examples::
+    CommitSchemaRevisionsForRollbackSchemaTesting;
 using ::google::cloud::pubsub::examples::RandomSchemaId;
 using ::google::cloud::pubsub::examples::RandomSnapshotId;
 using ::google::cloud::pubsub::examples::RandomSubscriptionId;
@@ -2062,11 +2064,20 @@ void AutoRunAvro(
   std::cout << "\nRunning GetSchema sample" << std::endl;
   GetSchema(schema_admin, {project_id, avro_schema_id});
 
-  // std::cout << "\nRunning GetSchemaRevision sample" << std::endl;
-  // GetSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
+  // For testing RollbackSchema, create 2 new schema revisions and rollback to
+  // the first one. The DeleteSchema call will remove all revisions of the
+  // schema.
+  std::string revision_id = CommitSchemaRevisionsForRollbackSchemaTesting(
+      schema_admin, project_id, avro_schema_id,
+      avro_revised_schema_definition_file);
+  std::cout << "\nRunning GetSchemaRevision sample" << std::endl;
+  GetSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
 
-  // std::cout << "\nRunning RollbackSchema sample" << std::endl;
-  // RollbackSchema(schema_admin, {project_id, avro_schema_id, revision_id});
+  std::cout << "\nRunning RollbackSchema sample" << std::endl;
+  RollbackSchema(schema_admin, {project_id, avro_schema_id, revision_id});
+
+  std::cout << "\nRunning DeleteSchemaRevision sample" << std::endl;
+  DeleteSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
 
   std::cout << "\nRunning ListSchemas() sample" << std::endl;
   ListSchemas(schema_admin, {project_id});
