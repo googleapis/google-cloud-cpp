@@ -47,7 +47,6 @@ using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::google::test::admin::database::v1::Request;
 using ::google::test::admin::database::v1::Response;
 using ::testing::_;
-using ::testing::ByMove;
 using ::testing::IsEmpty;
 using ::testing::Not;
 using ::testing::VariantWith;
