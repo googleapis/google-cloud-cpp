@@ -11,71 +11,71 @@ environment variables are convenient when troubleshooting problems.
 <!-- inject-endpoint-env-vars-start -->
 
 - `GOOGLE_CLOUD_CPP_DATASET_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeDatasetServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_ENDPOINT_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeEndpointServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_FEATURESTORE_ONLINE_SERVING_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeFeaturestoreOnlineServingServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_FEATURESTORE_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeFeaturestoreServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_INDEX_ENDPOINT_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeIndexEndpointServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_INDEX_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeIndexServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_JOB_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeJobServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_MATCH_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeMatchServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_METADATA_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeMetadataServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_MIGRATION_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeMigrationServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_MODEL_GARDEN_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeModelGardenServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_MODEL_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeModelServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_PIPELINE_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakePipelineServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_PREDICTION_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakePredictionServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_SPECIALIST_POOL_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeSpecialistPoolServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_TENSORBOARD_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeTensorboardServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_VIZIER_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "aiplatform.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-aiplatform.googleapis.com")
   used by `MakeVizierServiceConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->

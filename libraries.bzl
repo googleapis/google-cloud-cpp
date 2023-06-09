@@ -30,6 +30,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "accessapproval",
     "accesscontextmanager",
     "advisorynotifications",
+    "aiplatform",
     "alloydb",
     "apigateway",
     "apigeeconnect",

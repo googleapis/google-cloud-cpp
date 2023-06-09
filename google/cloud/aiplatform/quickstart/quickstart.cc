@@ -13,21 +13,23 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/aiplatform/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/aiplatform/v1/endpoint_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
-  namespace aiplatform = ::google::cloud::aiplatform;
-  auto client = aiplatform::Client(aiplatform::MakeConnection());
+  namespace aiplatform = ::google::cloud::aiplatform_v1;
+  auto const location = std::string{argv[2]};
+  auto client = aiplatform::EndpointServiceClient(
+      aiplatform::MakeEndpointServiceConnection(location));
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + location;
+  for (auto r : client.ListEndpoints(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
