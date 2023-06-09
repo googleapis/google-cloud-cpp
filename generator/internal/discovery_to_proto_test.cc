@@ -870,7 +870,8 @@ TEST(CreateFilesFromResourcesTest, NonEmptyResources) {
       "foos",
       DiscoveryResource("foos", "google.cloud.cpp.product_name.foos.version",
                         resource_json));
-  DiscoveryDocumentProperties props{"", "", "product_name", "version", {}};
+  DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
+                                    "", {}};
   auto result = CreateFilesFromResources(resources, props, "tmp");
   ASSERT_THAT(result, SizeIs(1));
   EXPECT_THAT(result.front().resource_name(), Eq("foos"));
@@ -882,7 +883,8 @@ TEST(CreateFilesFromResourcesTest, NonEmptyResources) {
 
 TEST(CreateFilesFromResourcesTest, EmptyResources) {
   std::map<std::string, DiscoveryResource> resources;
-  DiscoveryDocumentProperties props{"", "", "product_name", "version", {}};
+  DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
+                                    "", {}};
   auto result = CreateFilesFromResources(resources, props, "tmp");
   EXPECT_THAT(result, IsEmpty());
 }
@@ -944,7 +946,8 @@ TEST(AssignResourcesAndTypesToFilesTest,
   ASSERT_TRUE(operation_type_json.is_object());
   types.emplace("Operation",
                 DiscoveryTypeVertex("Operation", "", operation_type_json));
-  DiscoveryDocumentProperties props{"", "", "product_name", "version", {}};
+  DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
+                                    "", {}};
   auto result =
       AssignResourcesAndTypesToFiles(resources, types, props, "output_path");
   ASSERT_THAT(result.size(), Eq(2));
@@ -1003,7 +1006,7 @@ TEST(GenerateProtosFromDiscoveryDocTest, MissingDocumentProperty) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "");
+  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "");
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Missing one or more document properties")));
@@ -1019,7 +1022,7 @@ TEST(GenerateProtosFromDiscoveryDocTest, ExtractTypesFromSchemaFailure) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "");
+  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "");
   EXPECT_THAT(
       result,
       StatusIs(
@@ -1043,7 +1046,7 @@ TEST(GenerateProtosFromDiscoveryDocTest, EmptyResourcesFailure) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "");
+  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "");
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("No resources found in Discovery Document")));
@@ -1077,7 +1080,7 @@ TEST(GenerateProtosFromDiscoveryDocTest, ProcessRequestResponseFailure) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "");
+  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "");
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Response name=baz not found in types")));
