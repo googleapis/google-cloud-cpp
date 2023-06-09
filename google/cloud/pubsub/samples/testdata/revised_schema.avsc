@@ -17,7 +17,7 @@
     {
       "name": "capital",
       "type": "string",
-      "doc": "The capital of the state.",  
+      "doc": "The capital of the state.",
       "default": "NONE"
     }
   ]

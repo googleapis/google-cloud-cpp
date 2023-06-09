@@ -2002,9 +2002,6 @@ void AutoRunAvro(
   std::cout << "\nRunning ListSchemaRevisions() sample" << std::endl;
   ListSchemaRevisions(schema_admin, {project_id, avro_schema_id});
 
-  std::cout << "\nRunning ValidateAvroMessage() sample" << std::endl;
-  ValidateMessageAvro(schema_admin, {project_id});
-
   std::cout << "\nRunning CreateTopicWithSchema() sample [avro]" << std::endl;
   auto const avro_topic_id = RandomTopicId(generator);
   CreateTopicWithSchema(topic_admin_client,
@@ -2596,11 +2593,11 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           CreateProtobufSchema),
       CreateSchemaServiceCommand(
           "commit-avro-schema",
-          {"project-id", "schema-id", "schema-defintion-file"},
+          {"project-id", "schema-id", "schema-definition-file"},
           CommitAvroSchema),
       CreateSchemaServiceCommand(
           "commit-protobuf-schema",
-          {"project-id", "schema-id", "schema-defintion-file"},
+          {"project-id", "schema-id", "schema-definition-file"},
           CommitProtobufSchema),
       CreateSchemaServiceCommand("get-schema", {"project-id", "schema-id"},
                                  GetSchema),
@@ -2627,6 +2624,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSchemaServiceCommand("validate-message-named-schema",
                                  {"project-id", "schema-id", "message-file"},
                                  ValidateMessageNamedSchema),
+
       CreateTopicAdminCommand(
           "create-topic-with-schema",
           {"project-id", "topic-id", "schema-id", "encoding"},
