@@ -28,76 +28,6 @@ namespace google {
 namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace {
-
-/**
- * DefaultSpannerStub - a stub that calls Spanner's gRPC interface.
- */
-class DefaultSpannerStub : public SpannerStub {
- public:
-  explicit DefaultSpannerStub(
-      std::unique_ptr<google::spanner::v1::Spanner::StubInterface> grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
-
-  DefaultSpannerStub(DefaultSpannerStub const&) = delete;
-  DefaultSpannerStub& operator=(DefaultSpannerStub const&) = delete;
-
-  StatusOr<google::spanner::v1::Session> CreateSession(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::CreateSessionRequest const& request) override;
-  StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
-  BatchCreateSessions(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::BatchCreateSessionsRequest const& request) override;
-  future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
-  AsyncBatchCreateSessions(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::spanner::v1::BatchCreateSessionsRequest const& request) override;
-  Status DeleteSession(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::DeleteSessionRequest const& request) override;
-  future<Status> AsyncDeleteSession(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::spanner::v1::DeleteSessionRequest const& request) override;
-  StatusOr<google::spanner::v1::ResultSet> ExecuteSql(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::ExecuteSqlRequest const& request) override;
-  future<StatusOr<google::spanner::v1::ResultSet>> AsyncExecuteSql(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::spanner::v1::ExecuteSqlRequest const& request) override;
-  std::unique_ptr<
-      grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
-  ExecuteStreamingSql(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::ExecuteSqlRequest const& request) override;
-  StatusOr<google::spanner::v1::ExecuteBatchDmlResponse> ExecuteBatchDml(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::ExecuteBatchDmlRequest const& request) override;
-  std::unique_ptr<
-      grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
-  StreamingRead(grpc::ClientContext& client_context,
-                google::spanner::v1::ReadRequest const& request) override;
-  StatusOr<google::spanner::v1::Transaction> BeginTransaction(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::BeginTransactionRequest const& request) override;
-  StatusOr<google::spanner::v1::CommitResponse> Commit(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::CommitRequest const& request) override;
-  Status Rollback(grpc::ClientContext& client_context,
-                  google::spanner::v1::RollbackRequest const& request) override;
-  StatusOr<google::spanner::v1::PartitionResponse> PartitionQuery(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::PartitionQueryRequest const& request) override;
-  StatusOr<google::spanner::v1::PartitionResponse> PartitionRead(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::PartitionReadRequest const& request) override;
-
- private:
-  std::unique_ptr<google::spanner::v1::Spanner::StubInterface> grpc_stub_;
-};
 
 StatusOr<google::spanner::v1::Session> DefaultSpannerStub::CreateSession(
     grpc::ClientContext& client_context,
@@ -282,36 +212,6 @@ DefaultSpannerStub::PartitionRead(
     return google::cloud::MakeStatusFromRpcError(grpc_status);
   }
   return response;
-}
-
-}  // namespace
-
-std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
-    spanner::Database const& db,
-    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
-    Options const& opts, int channel_id) {
-  grpc::ChannelArguments channel_arguments =
-      internal::MakeChannelArguments(opts);
-  // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use
-  // its value here to allow compiling against older versions.
-  channel_arguments.SetInt("grpc.channel_id", channel_id);
-
-  auto channel =
-      auth->CreateChannel(opts.get<EndpointOption>(), channel_arguments);
-  auto spanner_grpc_stub = google::spanner::v1::Spanner::NewStub(channel);
-  std::shared_ptr<SpannerStub> stub =
-      std::make_shared<DefaultSpannerStub>(std::move(spanner_grpc_stub));
-
-  if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<SpannerAuth>(std::move(auth), std::move(stub));
-  }
-  stub = std::make_shared<MetadataSpannerStub>(std::move(stub), db.FullName());
-  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
-    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<LoggingSpannerStub>(
-        std::move(stub), opts.get<GrpcTracingOptionsOption>());
-  }
-  return stub;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

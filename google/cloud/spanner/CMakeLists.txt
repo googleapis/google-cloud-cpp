@@ -159,6 +159,8 @@ add_library(
     internal/spanner_auth.h
     internal/spanner_stub.cc
     internal/spanner_stub.h
+    internal/spanner_stub_factory.cc
+    internal/spanner_stub_factory.h
     internal/status_utils.cc
     internal/status_utils.h
     internal/transaction_impl.cc
@@ -402,7 +404,7 @@ function (spanner_client_define_tests)
         internal/route_to_leader_test.cc
         internal/session_pool_test.cc
         internal/spanner_auth_test.cc
-        internal/spanner_stub_test.cc
+        internal/spanner_stub_factory_test.cc
         internal/status_utils_test.cc
         internal/transaction_impl_test.cc
         internal/tuple_utils_test.cc

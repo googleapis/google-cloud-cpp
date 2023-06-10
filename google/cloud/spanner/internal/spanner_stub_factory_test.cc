@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/internal/spanner_stub_factory.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"

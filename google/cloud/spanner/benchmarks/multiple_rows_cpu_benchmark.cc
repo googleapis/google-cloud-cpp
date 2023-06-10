@@ -18,7 +18,7 @@
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/route_to_leader.h"
 #include "google/cloud/spanner/internal/session_pool.h"
-#include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/internal/spanner_stub_factory.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/grpc_error_delegate.h"
