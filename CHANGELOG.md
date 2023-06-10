@@ -115,6 +115,7 @@ info, see [#7463] and [#5976].
 We are happy to announce the following GA libraries.  Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
+- [Essential Contacts](/google/cloud/essentialcontacts/README.md)
 - [Timeseries Insights](/google/cloud/timeseriesinsights/README.md)
 
 ### Cloud Debugger

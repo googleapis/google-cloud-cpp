@@ -65,6 +65,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "dlp",
     "documentai",
     "edgecontainer",
+    "essentialcontacts",
     "eventarc",
     "filestore",
     "functions",

@@ -630,6 +630,10 @@
 ./include/google/cloud/edgecontainer/v1
 ./include/google/cloud/edgecontainer/v1/internal
 ./include/google/cloud/edgecontainer/v1/mocks
+./include/google/cloud/essentialcontacts
+./include/google/cloud/essentialcontacts/v1
+./include/google/cloud/essentialcontacts/v1/internal
+./include/google/cloud/essentialcontacts/v1/mocks
 ./include/google/cloud/eventarc
 ./include/google/cloud/eventarc/mocks
 ./include/google/cloud/eventarc/publishing
@@ -1101,6 +1105,7 @@
 ./lib64/cmake/google_cloud_cpp_dlp
 ./lib64/cmake/google_cloud_cpp_documentai
 ./lib64/cmake/google_cloud_cpp_edgecontainer
+./lib64/cmake/google_cloud_cpp_essentialcontacts
 ./lib64/cmake/google_cloud_cpp_eventarc
 ./lib64/cmake/google_cloud_cpp_filestore
 ./lib64/cmake/google_cloud_cpp_functions

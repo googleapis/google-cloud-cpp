@@ -108,6 +108,7 @@ declare -A -r LIBRARIES=(
   ["dlp"]="@com_google_googleapis//google/privacy/dlp/v2:dlp_cc_grpc"
   ["documentai"]="@com_google_googleapis//google/cloud/documentai/v1:documentai_cc_grpc"
   ["edgecontainer"]="@com_google_googleapis//google/cloud/edgecontainer/v1:edgecontainer_cc_grpc"
+  ["essentialcontacts"]="@com_google_googleapis//google/cloud/essentialcontacts/v1:essentialcontacts_cc_grpc"
   ["eventarc"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/eventarc/v1:eventarc_cc_grpc" \
