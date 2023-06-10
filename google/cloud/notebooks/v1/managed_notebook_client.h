@@ -309,24 +309,9 @@ class ManagedNotebookServiceClient {
   ///  the field to update. For example, to change the software configuration
   ///  kernels, the `update_mask` parameter would be
   ///  specified as `software_config.kernels`,
-  ///  and the `PATCH` request body would specify the new value, as follows:
-  ///  @n
-  ///      {
-  ///        "software_config":{
-  ///          "kernels": [{
-  ///             'repository':
-  ///             'gcr.io/deeplearning-platform-release/pytorch-gpu', 'tag':
-  ///             'latest' }],
-  ///          }
-  ///      }
-  ///  @n
-  ///  Currently, only the following fields can be updated:
-  ///  - `software_config.kernels`
-  ///  - `software_config.post_startup_script`
-  ///  - `software_config.custom_gpu_driver_path`
-  ///  - `software_config.idle_shutdown`
-  ///  - `software_config.idle_shutdown_timeout`
-  ///  - `software_config.disable_terminal`
+  ///  and the `PATCH` request body would specify the new value.
+  ///     @n
+  ///     For more information, see [UpdateRuntimeRequest][google.cloud.notebooks.v1.UpdateRuntimeRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO

@@ -793,34 +793,8 @@ class DataCatalogClient {
   ///
   /// @param entry  Required. Updates for the entry. The `name` field must be set.
   /// @param update_mask  Names of fields whose values to overwrite on an entry.
-  ///  @n
-  ///  If this parameter is absent or empty, all modifiable fields
-  ///  are overwritten. If such fields are non-required and omitted in the
-  ///  request body, their values are emptied.
-  ///  @n
-  ///  You can modify only the fields listed below.
-  ///  @n
-  ///  For entries with type `DATA_STREAM`:
-  ///  @n
-  ///  * `schema`
-  ///  @n
-  ///  For entries with type `FILESET`:
-  ///  @n
-  ///  * `schema`
-  ///  * `display_name`
-  ///  * `description`
-  ///  * `gcs_fileset_spec`
-  ///  * `gcs_fileset_spec.file_patterns`
-  ///  @n
-  ///  For entries with `user_specified_type`:
-  ///  @n
-  ///  * `schema`
-  ///  * `display_name`
-  ///  * `description`
-  ///  * `user_specified_type`
-  ///  * `user_specified_system`
-  ///  * `linked_resource`
-  ///  * `source_system_timestamps`
+  ///     @n
+  ///     For more information, see [UpdateEntryRequest][google.cloud.datacatalog.v1.UpdateEntryRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

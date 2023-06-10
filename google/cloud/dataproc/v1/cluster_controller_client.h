@@ -186,53 +186,9 @@ class ClusterControllerClient {
   ///  the field to update. For example, to change the number of workers
   ///  in a cluster to 5, the `update_mask` parameter would be
   ///  specified as `config.worker_config.num_instances`,
-  ///  and the `PATCH` request body would specify the new value, as follows:
-  ///  @n
-  ///      {
-  ///        "config":{
-  ///          "workerConfig":{
-  ///            "numInstances":"5"
-  ///          }
-  ///        }
-  ///      }
-  ///  Similarly, to change the number of preemptible workers in a cluster to 5,
-  ///  the `update_mask` parameter would be
-  ///  `config.secondary_worker_config.num_instances`, and the `PATCH` request
-  ///  body would be set as follows:
-  ///  @n
-  ///      {
-  ///        "config":{
-  ///          "secondaryWorkerConfig":{
-  ///            "numInstances":"5"
-  ///          }
-  ///        }
-  ///      }
-  ///  <strong>Note:</strong> Currently, only the following fields can be updated:
-  ///  @n
-  ///   <table>
-  ///   <!--<tbody>-->
-  ///   <tr>
-  ///   <td><strong>Mask</strong></td>
-  ///   <td><strong>Purpose</strong></td>
-  ///   </tr>
-  ///   <tr>
-  ///   <td><strong><em>labels</em></strong></td>
-  ///   <td>Update labels</td>
-  ///   </tr>
-  ///   <tr>
-  ///   <td><strong><em>config.worker_config.num_instances</em></strong></td>
-  ///   <td>Resize primary worker group</td>
-  ///   </tr>
-  ///   <tr>
-  ///   <td><strong><em>config.secondary_worker_config.num_instances</em></strong></td>
-  ///   <td>Resize secondary worker group</td>
-  ///   </tr>
-  ///   <tr>
-  ///   <td>config.autoscaling_config.policy_uri</td><td>Use, stop using, or
-  ///   change autoscaling policies</td>
-  ///   </tr>
-  ///   <!--</tbody>-->
-  ///   </table>
+  ///  and the `PATCH` request body would specify the new value.
+  ///     @n
+  ///     For more information, see [UpdateClusterRequest][google.cloud.dataproc.v1.UpdateClusterRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO

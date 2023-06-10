@@ -579,54 +579,8 @@ class AssetServiceClient {
   ///  query](https://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query)
   ///  for more information. If not specified or empty, it will search all the
   ///  resources within the specified `scope`.
-  ///  @n
-  ///  Examples:
-  ///  @n
-  ///  * `name:Important` to find Google Cloud resources whose name contains
-  ///    "Important" as a word.
-  ///  * `name=Important` to find the Google Cloud resource whose name is exactly
-  ///    "Important".
-  ///  * `displayName:Impor*` to find Google Cloud resources whose display name
-  ///    contains "Impor" as a prefix of any word in the field.
-  ///  * `location:us-west*` to find Google Cloud resources whose location
-  ///    contains both "us" and "west" as prefixes.
-  ///  * `labels:prod` to find Google Cloud resources whose labels contain "prod"
-  ///    as a key or value.
-  ///  * `labels.env:prod` to find Google Cloud resources that have a label "env"
-  ///    and its value is "prod".
-  ///  * `labels.env:*` to find Google Cloud resources that have a label "env".
-  ///  * `kmsKey:key` to find Google Cloud resources encrypted with a
-  ///    customer-managed encryption key whose name contains "key" as a word. This
-  ///    field is deprecated. Please use the `kmsKeys` field to retrieve Cloud KMS
-  ///    key information.
-  ///  * `kmsKeys:key` to find Google Cloud resources encrypted with
-  ///    customer-managed encryption keys whose name contains the word "key".
-  ///  * `relationships:instance-group-1` to find Google Cloud resources that have
-  ///    relationships with "instance-group-1" in the related resource name.
-  ///  * `relationships:INSTANCE_TO_INSTANCEGROUP` to find Compute Engine
-  ///    instances that have relationships of type "INSTANCE_TO_INSTANCEGROUP".
-  ///  * `relationships.INSTANCE_TO_INSTANCEGROUP:instance-group-1` to find
-  ///    Compute Engine instances that have relationships with "instance-group-1"
-  ///    in the Compute Engine instance group resource name, for relationship type
-  ///    "INSTANCE_TO_INSTANCEGROUP".
-  ///  * `state:ACTIVE` to find Google Cloud resources whose state contains
-  ///    "ACTIVE" as a word.
-  ///  * `NOT state:ACTIVE` to find Google Cloud resources whose state doesn't
-  ///    contain "ACTIVE" as a word.
-  ///  * `createTime<1609459200` to find Google Cloud resources that were created
-  ///    before "2021-01-01 00:00:00 UTC". 1609459200 is the epoch timestamp of
-  ///    "2021-01-01 00:00:00 UTC" in seconds.
-  ///  * `updateTime>1609459200` to find Google Cloud resources that were updated
-  ///    after "2021-01-01 00:00:00 UTC". 1609459200 is the epoch timestamp of
-  ///    "2021-01-01 00:00:00 UTC" in seconds.
-  ///  * `Important` to find Google Cloud resources that contain "Important" as a
-  ///    word in any of the searchable fields.
-  ///  * `Impor*` to find Google Cloud resources that contain "Impor" as a prefix
-  ///    of any word in any of the searchable fields.
-  ///  * `Important location:(us-west1 OR global)` to find Google Cloud
-  ///    resources that contain "Important" as a word in any of the searchable
-  ///    fields and are also located in the "us-west1" region or the "global"
-  ///    location.
+  ///     @n
+  ///     For more information, see [SearchAllResourcesRequest][google.cloud.asset.v1.SearchAllResourcesRequest].
   /// @param asset_types  Optional. A list of asset types that this request searches for. If empty,
   ///  it will search all the [searchable asset
   ///  types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
@@ -746,39 +700,8 @@ class AssetServiceClient {
   ///  contain the bindings that match your query. To learn more about the IAM
   ///  policy structure, see the [IAM policy
   ///  documentation](https://cloud.google.com/iam/help/allow-policies/structure).
-  ///  @n
-  ///  Examples:
-  ///  @n
-  ///  * `policy:amy@gmail.com` to find IAM policy bindings that specify user
-  ///    "amy@gmail.com".
-  ///  * `policy:roles/compute.admin` to find IAM policy bindings that specify
-  ///    the Compute Admin role.
-  ///  * `policy:comp*` to find IAM policy bindings that contain "comp" as a
-  ///    prefix of any word in the binding.
-  ///  * `policy.role.permissions:storage.buckets.update` to find IAM policy
-  ///    bindings that specify a role containing "storage.buckets.update"
-  ///    permission. Note that if callers don't have `iam.roles.get` access to a
-  ///    role's included permissions, policy bindings that specify this role will
-  ///    be dropped from the search results.
-  ///  * `policy.role.permissions:upd*` to find IAM policy bindings that specify a
-  ///    role containing "upd" as a prefix of any word in the role permission.
-  ///    Note that if callers don't have `iam.roles.get` access to a role's
-  ///    included permissions, policy bindings that specify this role will be
-  ///    dropped from the search results.
-  ///  * `resource:organizations/123456` to find IAM policy bindings
-  ///    that are set on "organizations/123456".
-  ///  * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to
-  ///    find IAM policy bindings that are set on the project named "myproject".
-  ///  * `Important` to find IAM policy bindings that contain "Important" as a
-  ///    word in any of the searchable fields (except for the included
-  ///    permissions).
-  ///  * `resource:(instance1 OR instance2) policy:amy` to find
-  ///    IAM policy bindings that are set on resources "instance1" or
-  ///    "instance2" and also specify user "amy".
-  ///  * `roles:roles/compute.admin` to find IAM policy bindings that specify the
-  ///    Compute Admin role.
-  ///  * `memberTypes:user` to find IAM policy bindings that contain the
-  ///    principal type "user".
+  ///     @n
+  ///     For more information, see [SearchAllIamPoliciesRequest][google.cloud.asset.v1.SearchAllIamPoliciesRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)

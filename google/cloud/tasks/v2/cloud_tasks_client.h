@@ -1152,38 +1152,8 @@ class CloudTasksClient {
   ///  @n
   ///  The queue must already exist.
   /// @param task  Required. The task to add.
-  ///  @n
-  ///  Task names have the following format:
-  ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`.
-  ///  The user can optionally specify a task [name][google.cloud.tasks.v2.Task.name]. If a
-  ///  name is not specified then the system will generate a random
-  ///  unique task id, which will be set in the task returned in the
-  ///  [response][google.cloud.tasks.v2.Task.name].
-  ///  @n
-  ///  If [schedule_time][google.cloud.tasks.v2.Task.schedule_time] is not set or is in the
-  ///  past then Cloud Tasks will set it to the current time.
-  ///  @n
-  ///  Task De-duplication:
-  ///  @n
-  ///  Explicitly specifying a task ID enables task de-duplication.  If
-  ///  a task's ID is identical to that of an existing task or a task
-  ///  that was deleted or executed recently then the call will fail
-  ///  with [ALREADY_EXISTS][google.rpc.Code.ALREADY_EXISTS].
-  ///  If the task's queue was created using Cloud Tasks, then another task with
-  ///  the same name can't be created for ~1hour after the original task was
-  ///  deleted or executed. If the task's queue was created using queue.yaml or
-  ///  queue.xml, then another task with the same name can't be created
-  ///  for ~9days after the original task was deleted or executed.
-  ///  @n
-  ///  Because there is an extra lookup cost to identify duplicate task
-  ///  names, these [CreateTask][google.cloud.tasks.v2.CloudTasks.CreateTask] calls have significantly
-  ///  increased latency. Using hashed strings for the task id or for
-  ///  the prefix of the task id is recommended. Choosing task ids that
-  ///  are sequential or have sequential prefixes, for example using a
-  ///  timestamp, causes an increase in latency and error rates in all
-  ///  task commands. The infrastructure relies on an approximately
-  ///  uniform distribution of task ids to store and serve tasks
-  ///  efficiently.
+  ///     @n
+  ///     For more information, see [CreateTaskRequest][google.cloud.tasks.v2.CreateTaskRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
