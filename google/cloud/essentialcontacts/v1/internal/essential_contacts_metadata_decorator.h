@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EssentialContactsServiceMetadata : public EssentialContactsServiceStub {
  public:
   ~EssentialContactsServiceMetadata() override = default;
-  explicit EssentialContactsServiceMetadata(
+  EssentialContactsServiceMetadata(
       std::shared_ptr<EssentialContactsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
       grpc::ClientContext& context,
