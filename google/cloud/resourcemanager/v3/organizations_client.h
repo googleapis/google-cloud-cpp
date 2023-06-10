@@ -157,7 +157,6 @@ class OrganizationsClient {
   /// @param query  Optional. An optional query string used to filter the Organizations to
   ///  return in the response. Query rules are case-insensitive.
   ///  @n
-  ///
   ///  ```
   ///  | Field            | Description                                |
   ///  |------------------|--------------------------------------------|

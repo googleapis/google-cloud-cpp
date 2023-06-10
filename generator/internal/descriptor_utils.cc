@@ -396,6 +396,17 @@ ParameterCommentSubstitution substitutions[] = {
     {R"""(`{cluster} = '-'`)""", R"""(``{cluster} = '-'``)"""},
     {R"""(`projects/<Project ID or '-'>`)""",
      R"""(``projects/<Project ID or '-'>``)"""},
+
+    // Some comments include multiple newlines in a row. We need to preserve
+    // these because they are paragraph separators. When used in `@param`
+    // commands we need to represent them as `@n` or they do more than separate
+    // the paragraph. The would terminate the `@param` comment.
+    // No comments use more than three newlines in a row at the moment.
+    {"\n\n\n", "\n @n\n"},
+    {"\n\n", "\n @n\n"},
+
+    // Finally, the next line after a newline needs to start as a comment.
+    {"\n", "\n  /// "},
 };
 
 std::string FormatApiMethodSignatureParameters(
@@ -415,12 +426,6 @@ std::string FormatApiMethodSignatureParameters(
     for (auto& sub : substitutions) {
       sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &comment);
     }
-    absl::StrReplaceAll(
-        {
-            {"\n\n", "\n  ///  @n\n  /// "},
-            {"\n", "\n  /// "},
-        },
-        &comment);
     absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
                           FieldName(parameter_descriptor), std::move(comment));
   }

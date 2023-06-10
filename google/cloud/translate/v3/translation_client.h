@@ -161,7 +161,6 @@ class TranslationServiceClient {
   ///  - General (built-in) models:
   ///    `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,
   ///  @n
-  ///
   ///  For global (non-regionalized) requests, use `location-id` `global`.
   ///  For example,
   ///  `projects/{project-number-or-id}/locations/global/models/general/nmt`.
@@ -345,7 +344,6 @@ class TranslationServiceClient {
   ///  - General (built-in) models:
   ///    `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,
   ///  @n
-  ///
   ///  Returns languages supported by the specified model.
   ///  If missing, we get supported languages of Google general NMT model.
   /// @param display_language_code  Optional. The language to use to return localized, human readable names

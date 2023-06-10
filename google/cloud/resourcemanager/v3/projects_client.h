@@ -275,7 +275,6 @@ class ProjectsClient {
   ///  @n
   ///  Some examples queries:
   ///  @n
-  ///
   ///  - **`name:how*`**: The project's name starts with "how".
   ///  - **`name:Howl`**: The project's name is `Howl` or `howl`.
   ///  - **`name:HOWL`**: Equivalent to above.

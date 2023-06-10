@@ -284,7 +284,6 @@ class PredictionServiceClient {
   ///    makes predictions for a text snippet, it will only produce results
   ///    that have at least this confidence score. The default is 0.5.
   ///  @n
-  ///
   ///  AutoML Vision Classification
   ///  @n
   ///  `score_threshold`

@@ -96,7 +96,6 @@ class PoliciesClient {
   ///  to list. Format:
   ///  `policies/{attachment_point}/denypolicies`
   ///  @n
-  ///
   ///  The attachment point is identified by its URL-encoded full resource name,
   ///  which means that the forward-slash character, `/`, must be written as
   ///  `%2F`. For example,
@@ -185,7 +184,6 @@ class PoliciesClient {
   /// @param name  Required. The resource name of the policy to retrieve. Format:
   ///  `policies/{attachment_point}/denypolicies/{policy_id}`
   ///  @n
-  ///
   ///  Use the URL-encoded full resource name, which means that the forward-slash
   ///  character, `/`, must be written as `%2F`. For example,
   ///  `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
@@ -251,7 +249,6 @@ class PoliciesClient {
   /// @param parent  Required. The resource that the policy is attached to, along with the kind of policy
   ///  to create. Format: `policies/{attachment_point}/denypolicies`
   ///  @n
-  ///
   ///  The attachment point is identified by its URL-encoded full resource name,
   ///  which means that the forward-slash character, `/`, must be written as
   ///  `%2F`. For example,
@@ -384,7 +381,6 @@ class PoliciesClient {
   /// @param name  Required. The resource name of the policy to delete. Format:
   ///  `policies/{attachment_point}/denypolicies/{policy_id}`
   ///  @n
-  ///
   ///  Use the URL-encoded full resource name, which means that the forward-slash
   ///  character, `/`, must be written as `%2F`. For example,
   ///  `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
