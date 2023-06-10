@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class QuotaControllerMetadata : public QuotaControllerStub {
  public:
   ~QuotaControllerMetadata() override = default;
-  explicit QuotaControllerMetadata(
+  QuotaControllerMetadata(
       std::shared_ptr<QuotaControllerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
   AllocateQuota(grpc::ClientContext& context,

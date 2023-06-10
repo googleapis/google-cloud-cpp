@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CaseServiceMetadata : public CaseServiceStub {
  public:
   ~CaseServiceMetadata() override = default;
-  explicit CaseServiceMetadata(
-      std::shared_ptr<CaseServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  CaseServiceMetadata(std::shared_ptr<CaseServiceStub> child,
+                      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::support::v2::Case> GetCase(
       grpc::ClientContext& context,

@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FoldersMetadata : public FoldersStub {
  public:
   ~FoldersMetadata() override = default;
-  explicit FoldersMetadata(
-      std::shared_ptr<FoldersStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  FoldersMetadata(std::shared_ptr<FoldersStub> child,
+                  std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       grpc::ClientContext& context,

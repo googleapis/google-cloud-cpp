@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TraceServiceMetadata : public TraceServiceStub {
  public:
   ~TraceServiceMetadata() override = default;
-  explicit TraceServiceMetadata(
-      std::shared_ptr<TraceServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  TraceServiceMetadata(std::shared_ptr<TraceServiceStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   Status BatchWriteSpans(
       grpc::ClientContext& context,

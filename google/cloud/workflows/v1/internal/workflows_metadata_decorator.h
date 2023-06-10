@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WorkflowsMetadata : public WorkflowsStub {
  public:
   ~WorkflowsMetadata() override = default;
-  explicit WorkflowsMetadata(
-      std::shared_ptr<WorkflowsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  WorkflowsMetadata(std::shared_ptr<WorkflowsStub> child,
+                    std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse> ListWorkflows(
       grpc::ClientContext& context,

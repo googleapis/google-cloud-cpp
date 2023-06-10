@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SearchServiceMetadata : public SearchServiceStub {
  public:
   ~SearchServiceMetadata() override = default;
-  explicit SearchServiceMetadata(
-      std::shared_ptr<SearchServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  SearchServiceMetadata(std::shared_ptr<SearchServiceStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::retail::v2::SearchResponse> Search(
       grpc::ClientContext& context,

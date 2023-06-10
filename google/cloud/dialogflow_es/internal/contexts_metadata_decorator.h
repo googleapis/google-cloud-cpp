@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ContextsMetadata : public ContextsStub {
  public:
   ~ContextsMetadata() override = default;
-  explicit ContextsMetadata(
-      std::shared_ptr<ContextsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  ContextsMetadata(std::shared_ptr<ContextsStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::v2::ListContextsResponse> ListContexts(
       grpc::ClientContext& context,

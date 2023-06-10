@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CursorServiceMetadata : public CursorServiceStub {
  public:
   ~CursorServiceMetadata() override = default;
-  explicit CursorServiceMetadata(
-      std::shared_ptr<CursorServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  CursorServiceMetadata(std::shared_ptr<CursorServiceStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,

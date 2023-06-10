@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DataMigrationServiceMetadata : public DataMigrationServiceStub {
  public:
   ~DataMigrationServiceMetadata() override = default;
-  explicit DataMigrationServiceMetadata(
+  DataMigrationServiceMetadata(
       std::shared_ptr<DataMigrationServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::clouddms::v1::ListMigrationJobsResponse>
   ListMigrationJobs(grpc::ClientContext& context,

@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ConnectorsMetadata : public ConnectorsStub {
  public:
   ~ConnectorsMetadata() override = default;
-  explicit ConnectorsMetadata(
-      std::shared_ptr<ConnectorsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  ConnectorsMetadata(std::shared_ptr<ConnectorsStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
   ListConnections(grpc::ClientContext& context,

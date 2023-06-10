@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BigtableInstanceAdminMetadata : public BigtableInstanceAdminStub {
  public:
   ~BigtableInstanceAdminMetadata() override = default;
-  explicit BigtableInstanceAdminMetadata(
+  BigtableInstanceAdminMetadata(
       std::shared_ptr<BigtableInstanceAdminStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,

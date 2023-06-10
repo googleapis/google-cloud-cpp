@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DatastreamMetadata : public DatastreamStub {
  public:
   ~DatastreamMetadata() override = default;
-  explicit DatastreamMetadata(
-      std::shared_ptr<DatastreamStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  DatastreamMetadata(std::shared_ptr<DatastreamStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::datastream::v1::ListConnectionProfilesResponse>
   ListConnectionProfiles(

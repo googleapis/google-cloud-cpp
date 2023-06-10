@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CertificateManagerMetadata : public CertificateManagerStub {
  public:
   ~CertificateManagerMetadata() override = default;
-  explicit CertificateManagerMetadata(
+  CertificateManagerMetadata(
       std::shared_ptr<CertificateManagerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::certificatemanager::v1::ListCertificatesResponse>
   ListCertificates(

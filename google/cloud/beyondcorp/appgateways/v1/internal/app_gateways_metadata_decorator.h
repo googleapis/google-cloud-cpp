@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AppGatewaysServiceMetadata : public AppGatewaysServiceStub {
  public:
   ~AppGatewaysServiceMetadata() override = default;
-  explicit AppGatewaysServiceMetadata(
+  AppGatewaysServiceMetadata(
       std::shared_ptr<AppGatewaysServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
   ListAppGateways(

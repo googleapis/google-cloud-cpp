@@ -34,9 +34,9 @@ class IdentityAwareProxyAdminServiceMetadata
     : public IdentityAwareProxyAdminServiceStub {
  public:
   ~IdentityAwareProxyAdminServiceMetadata() override = default;
-  explicit IdentityAwareProxyAdminServiceMetadata(
+  IdentityAwareProxyAdminServiceMetadata(
       std::shared_ptr<IdentityAwareProxyAdminServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext& context,

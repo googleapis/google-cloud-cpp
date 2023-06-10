@@ -52,7 +52,8 @@ std::shared_ptr<StorageInsightsStub> CreateDefaultStorageInsightsStub(
     stub =
         std::make_shared<StorageInsightsAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<StorageInsightsMetadata>(std::move(stub));
+  stub = std::make_shared<StorageInsightsMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<StorageInsightsLogging>(

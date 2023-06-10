@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ClusterControllerMetadata : public ClusterControllerStub {
  public:
   ~ClusterControllerMetadata() override = default;
-  explicit ClusterControllerMetadata(
+  ClusterControllerMetadata(
       std::shared_ptr<ClusterControllerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCluster(
       google::cloud::CompletionQueue& cq,

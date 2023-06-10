@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IAMCredentialsMetadata : public IAMCredentialsStub {
  public:
   ~IAMCredentialsMetadata() override = default;
-  explicit IAMCredentialsMetadata(
+  IAMCredentialsMetadata(
       std::shared_ptr<IAMCredentialsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(

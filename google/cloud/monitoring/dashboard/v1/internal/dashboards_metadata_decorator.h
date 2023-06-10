@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DashboardsServiceMetadata : public DashboardsServiceStub {
  public:
   ~DashboardsServiceMetadata() override = default;
-  explicit DashboardsServiceMetadata(
+  DashboardsServiceMetadata(
       std::shared_ptr<DashboardsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
       grpc::ClientContext& context,

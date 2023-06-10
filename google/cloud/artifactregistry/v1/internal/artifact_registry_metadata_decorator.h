@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ArtifactRegistryMetadata : public ArtifactRegistryStub {
  public:
   ~ArtifactRegistryMetadata() override = default;
-  explicit ArtifactRegistryMetadata(
+  ArtifactRegistryMetadata(
       std::shared_ptr<ArtifactRegistryStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse>
   ListDockerImages(

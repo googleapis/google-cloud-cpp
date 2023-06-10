@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PredictionServiceMetadata : public PredictionServiceStub {
  public:
   ~PredictionServiceMetadata() override = default;
-  explicit PredictionServiceMetadata(
+  PredictionServiceMetadata(
       std::shared_ptr<PredictionServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
       grpc::ClientContext& context,

@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AutoMlMetadata : public AutoMlStub {
  public:
   ~AutoMlMetadata() override = default;
-  explicit AutoMlMetadata(
-      std::shared_ptr<AutoMlStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  AutoMlMetadata(std::shared_ptr<AutoMlStub> child,
+                 std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDataset(
       google::cloud::CompletionQueue& cq,

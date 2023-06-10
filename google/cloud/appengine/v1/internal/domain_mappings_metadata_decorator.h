@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DomainMappingsMetadata : public DomainMappingsStub {
  public:
   ~DomainMappingsMetadata() override = default;
-  explicit DomainMappingsMetadata(
+  DomainMappingsMetadata(
       std::shared_ptr<DomainMappingsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::appengine::v1::ListDomainMappingsResponse>
   ListDomainMappings(

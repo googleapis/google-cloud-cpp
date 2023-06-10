@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class KeyManagementServiceMetadata : public KeyManagementServiceStub {
  public:
   ~KeyManagementServiceMetadata() override = default;
-  explicit KeyManagementServiceMetadata(
+  KeyManagementServiceMetadata(
       std::shared_ptr<KeyManagementServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::kms::v1::ListKeyRingsResponse> ListKeyRings(
       grpc::ClientContext& context,

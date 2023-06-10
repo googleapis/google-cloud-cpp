@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PublisherServiceMetadata : public PublisherServiceStub {
  public:
   ~PublisherServiceMetadata() override = default;
-  explicit PublisherServiceMetadata(
+  PublisherServiceMetadata(
       std::shared_ptr<PublisherServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PublishRequest,

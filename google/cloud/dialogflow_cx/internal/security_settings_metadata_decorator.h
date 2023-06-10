@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SecuritySettingsServiceMetadata : public SecuritySettingsServiceStub {
  public:
   ~SecuritySettingsServiceMetadata() override = default;
-  explicit SecuritySettingsServiceMetadata(
+  SecuritySettingsServiceMetadata(
       std::shared_ptr<SecuritySettingsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   CreateSecuritySettings(

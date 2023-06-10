@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EnvironmentsMetadata : public EnvironmentsStub {
  public:
   ~EnvironmentsMetadata() override = default;
-  explicit EnvironmentsMetadata(
-      std::shared_ptr<EnvironmentsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  EnvironmentsMetadata(std::shared_ptr<EnvironmentsStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEnvironment(
       google::cloud::CompletionQueue& cq,

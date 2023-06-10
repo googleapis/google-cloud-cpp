@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ContentServiceMetadata : public ContentServiceStub {
  public:
   ~ContentServiceMetadata() override = default;
-  explicit ContentServiceMetadata(
+  ContentServiceMetadata(
       std::shared_ptr<ContentServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
       grpc::ClientContext& context,

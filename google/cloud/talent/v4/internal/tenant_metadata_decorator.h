@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TenantServiceMetadata : public TenantServiceStub {
  public:
   ~TenantServiceMetadata() override = default;
-  explicit TenantServiceMetadata(
-      std::shared_ptr<TenantServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  TenantServiceMetadata(std::shared_ptr<TenantServiceStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       grpc::ClientContext& context,

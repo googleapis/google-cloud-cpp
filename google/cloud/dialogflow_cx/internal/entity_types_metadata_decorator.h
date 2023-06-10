@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EntityTypesMetadata : public EntityTypesStub {
  public:
   ~EntityTypesMetadata() override = default;
-  explicit EntityTypesMetadata(
-      std::shared_ptr<EntityTypesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  EntityTypesMetadata(std::shared_ptr<EntityTypesStub> child,
+                      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
   ListEntityTypes(

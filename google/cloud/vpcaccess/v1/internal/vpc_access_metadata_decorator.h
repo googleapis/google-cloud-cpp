@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class VpcAccessServiceMetadata : public VpcAccessServiceStub {
  public:
   ~VpcAccessServiceMetadata() override = default;
-  explicit VpcAccessServiceMetadata(
+  VpcAccessServiceMetadata(
       std::shared_ptr<VpcAccessServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnector(
       google::cloud::CompletionQueue& cq,

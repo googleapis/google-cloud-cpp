@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CompletionServiceMetadata : public CompletionServiceStub {
  public:
   ~CompletionServiceMetadata() override = default;
-  explicit CompletionServiceMetadata(
+  CompletionServiceMetadata(
       std::shared_ptr<CompletionServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
       grpc::ClientContext& context,

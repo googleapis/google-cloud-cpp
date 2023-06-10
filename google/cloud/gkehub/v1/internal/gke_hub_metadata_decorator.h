@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GkeHubMetadata : public GkeHubStub {
  public:
   ~GkeHubMetadata() override = default;
-  explicit GkeHubMetadata(
-      std::shared_ptr<GkeHubStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  GkeHubMetadata(std::shared_ptr<GkeHubStub> child,
+                 std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> ListMemberships(
       grpc::ClientContext& context,

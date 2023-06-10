@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class StorageInsightsMetadata : public StorageInsightsStub {
  public:
   ~StorageInsightsMetadata() override = default;
-  explicit StorageInsightsMetadata(
+  StorageInsightsMetadata(
       std::shared_ptr<StorageInsightsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
   ListReportConfigs(

@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TextToSpeechMetadata : public TextToSpeechStub {
  public:
   ~TextToSpeechMetadata() override = default;
-  explicit TextToSpeechMetadata(
-      std::shared_ptr<TextToSpeechStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  TextToSpeechMetadata(std::shared_ptr<TextToSpeechStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
       grpc::ClientContext& context,

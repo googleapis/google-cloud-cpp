@@ -50,7 +50,8 @@ std::shared_ptr<CloudBillingStub> CreateDefaultCloudBillingStub(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<CloudBillingAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<CloudBillingMetadata>(std::move(stub));
+  stub = std::make_shared<CloudBillingMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CloudBillingLogging>(

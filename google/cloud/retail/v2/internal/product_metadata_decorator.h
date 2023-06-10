@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProductServiceMetadata : public ProductServiceStub {
  public:
   ~ProductServiceMetadata() override = default;
-  explicit ProductServiceMetadata(
+  ProductServiceMetadata(
       std::shared_ptr<ProductServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::retail::v2::Product> CreateProduct(
       grpc::ClientContext& context,

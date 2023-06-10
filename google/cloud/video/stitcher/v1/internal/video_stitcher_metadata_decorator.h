@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class VideoStitcherServiceMetadata : public VideoStitcherServiceStub {
  public:
   ~VideoStitcherServiceMetadata() override = default;
-  explicit VideoStitcherServiceMetadata(
+  VideoStitcherServiceMetadata(
       std::shared_ptr<VideoStitcherServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCdnKey(
       google::cloud::CompletionQueue& cq,

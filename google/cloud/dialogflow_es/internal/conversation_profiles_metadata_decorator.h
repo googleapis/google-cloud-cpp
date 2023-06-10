@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ConversationProfilesMetadata : public ConversationProfilesStub {
  public:
   ~ConversationProfilesMetadata() override = default;
-  explicit ConversationProfilesMetadata(
+  ConversationProfilesMetadata(
       std::shared_ptr<ConversationProfilesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::v2::ListConversationProfilesResponse>
   ListConversationProfiles(

@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GoldenThingAdminMetadata : public GoldenThingAdminStub {
  public:
   ~GoldenThingAdminMetadata() override = default;
-  explicit GoldenThingAdminMetadata(
+  GoldenThingAdminMetadata(
       std::shared_ptr<GoldenThingAdminStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::test::admin::database::v1::ListDatabasesResponse> ListDatabases(
       grpc::ClientContext& context,

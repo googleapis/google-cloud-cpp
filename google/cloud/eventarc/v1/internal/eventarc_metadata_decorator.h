@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EventarcMetadata : public EventarcStub {
  public:
   ~EventarcMetadata() override = default;
-  explicit EventarcMetadata(
-      std::shared_ptr<EventarcStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  EventarcMetadata(std::shared_ptr<EventarcStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
       grpc::ClientContext& context,

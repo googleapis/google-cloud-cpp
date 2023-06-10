@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EventServiceMetadata : public EventServiceStub {
  public:
   ~EventServiceMetadata() override = default;
-  explicit EventServiceMetadata(
-      std::shared_ptr<EventServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  EventServiceMetadata(std::shared_ptr<EventServiceStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       grpc::ClientContext& context,

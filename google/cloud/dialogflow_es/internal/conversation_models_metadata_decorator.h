@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ConversationModelsMetadata : public ConversationModelsStub {
  public:
   ~ConversationModelsMetadata() override = default;
-  explicit ConversationModelsMetadata(
+  ConversationModelsMetadata(
       std::shared_ptr<ConversationModelsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConversationModel(
       google::cloud::CompletionQueue& cq,

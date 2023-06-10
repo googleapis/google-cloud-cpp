@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class VersionsMetadata : public VersionsStub {
  public:
   ~VersionsMetadata() override = default;
-  explicit VersionsMetadata(
-      std::shared_ptr<VersionsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  VersionsMetadata(std::shared_ptr<VersionsStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::v2::ListVersionsResponse> ListVersions(
       grpc::ClientContext& context,

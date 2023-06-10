@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class VmMigrationMetadata : public VmMigrationStub {
  public:
   ~VmMigrationMetadata() override = default;
-  explicit VmMigrationMetadata(
-      std::shared_ptr<VmMigrationStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  VmMigrationMetadata(std::shared_ptr<VmMigrationStub> child,
+                      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::vmmigration::v1::ListSourcesResponse> ListSources(
       grpc::ClientContext& context,

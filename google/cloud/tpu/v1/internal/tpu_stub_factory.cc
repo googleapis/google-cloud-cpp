@@ -50,7 +50,8 @@ std::shared_ptr<TpuStub> CreateDefaultTpuStub(google::cloud::CompletionQueue cq,
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<TpuAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<TpuMetadata>(std::move(stub));
+  stub = std::make_shared<TpuMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<TpuLogging>(std::move(stub),

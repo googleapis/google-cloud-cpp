@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TestCasesMetadata : public TestCasesStub {
  public:
   ~TestCasesMetadata() override = default;
-  explicit TestCasesMetadata(
-      std::shared_ptr<TestCasesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  TestCasesMetadata(std::shared_ptr<TestCasesStub> child,
+                    std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
   ListTestCases(grpc::ClientContext& context,

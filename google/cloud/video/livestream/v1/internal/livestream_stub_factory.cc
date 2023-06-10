@@ -53,7 +53,8 @@ std::shared_ptr<LivestreamServiceStub> CreateDefaultLivestreamServiceStub(
     stub = std::make_shared<LivestreamServiceAuth>(std::move(auth),
                                                    std::move(stub));
   }
-  stub = std::make_shared<LivestreamServiceMetadata>(std::move(stub));
+  stub = std::make_shared<LivestreamServiceMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<LivestreamServiceLogging>(

@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class OrganizationsMetadata : public OrganizationsStub {
  public:
   ~OrganizationsMetadata() override = default;
-  explicit OrganizationsMetadata(
-      std::shared_ptr<OrganizationsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  OrganizationsMetadata(std::shared_ptr<OrganizationsStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
       grpc::ClientContext& context,

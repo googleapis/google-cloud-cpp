@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AttachedClustersMetadata : public AttachedClustersStub {
  public:
   ~AttachedClustersMetadata() override = default;
-  explicit AttachedClustersMetadata(
+  AttachedClustersMetadata(
       std::shared_ptr<AttachedClustersStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAttachedCluster(
       google::cloud::CompletionQueue& cq,

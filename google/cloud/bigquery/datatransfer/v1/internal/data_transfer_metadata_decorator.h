@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DataTransferServiceMetadata : public DataTransferServiceStub {
  public:
   ~DataTransferServiceMetadata() override = default;
-  explicit DataTransferServiceMetadata(
+  DataTransferServiceMetadata(
       std::shared_ptr<DataTransferServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
       grpc::ClientContext& context,

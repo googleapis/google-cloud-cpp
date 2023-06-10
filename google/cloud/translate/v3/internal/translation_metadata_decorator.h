@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TranslationServiceMetadata : public TranslationServiceStub {
  public:
   ~TranslationServiceMetadata() override = default;
-  explicit TranslationServiceMetadata(
+  TranslationServiceMetadata(
       std::shared_ptr<TranslationServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
       grpc::ClientContext& context,

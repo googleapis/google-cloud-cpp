@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FirewallMetadata : public FirewallStub {
  public:
   ~FirewallMetadata() override = default;
-  explicit FirewallMetadata(
-      std::shared_ptr<FirewallStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  FirewallMetadata(std::shared_ptr<FirewallStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::appengine::v1::ListIngressRulesResponse> ListIngressRules(
       grpc::ClientContext& context,

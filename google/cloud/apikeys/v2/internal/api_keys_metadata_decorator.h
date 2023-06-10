@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ApiKeysMetadata : public ApiKeysStub {
  public:
   ~ApiKeysMetadata() override = default;
-  explicit ApiKeysMetadata(
-      std::shared_ptr<ApiKeysStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  ApiKeysMetadata(std::shared_ptr<ApiKeysStub> child,
+                  std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateKey(
       google::cloud::CompletionQueue& cq,

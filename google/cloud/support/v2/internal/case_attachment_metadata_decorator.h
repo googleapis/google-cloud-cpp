@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CaseAttachmentServiceMetadata : public CaseAttachmentServiceStub {
  public:
   ~CaseAttachmentServiceMetadata() override = default;
-  explicit CaseAttachmentServiceMetadata(
+  CaseAttachmentServiceMetadata(
       std::shared_ptr<CaseAttachmentServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::support::v2::ListAttachmentsResponse> ListAttachments(
       grpc::ClientContext& context,

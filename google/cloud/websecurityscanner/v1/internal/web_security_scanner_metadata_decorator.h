@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WebSecurityScannerMetadata : public WebSecurityScannerStub {
  public:
   ~WebSecurityScannerMetadata() override = default;
-  explicit WebSecurityScannerMetadata(
+  WebSecurityScannerMetadata(
       std::shared_ptr<WebSecurityScannerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> CreateScanConfig(
       grpc::ClientContext& context,

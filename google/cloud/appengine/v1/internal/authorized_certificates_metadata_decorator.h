@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AuthorizedCertificatesMetadata : public AuthorizedCertificatesStub {
  public:
   ~AuthorizedCertificatesMetadata() override = default;
-  explicit AuthorizedCertificatesMetadata(
+  AuthorizedCertificatesMetadata(
       std::shared_ptr<AuthorizedCertificatesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
   ListAuthorizedCertificates(

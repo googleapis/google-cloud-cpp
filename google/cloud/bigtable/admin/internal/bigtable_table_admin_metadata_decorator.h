@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BigtableTableAdminMetadata : public BigtableTableAdminStub {
  public:
   ~BigtableTableAdminMetadata() override = default;
-  explicit BigtableTableAdminMetadata(
+  BigtableTableAdminMetadata(
       std::shared_ptr<BigtableTableAdminStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::bigtable::admin::v2::Table> CreateTable(
       grpc::ClientContext& context,

@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AnalyticsHubServiceMetadata : public AnalyticsHubServiceStub {
  public:
   ~AnalyticsHubServiceMetadata() override = default;
-  explicit AnalyticsHubServiceMetadata(
+  AnalyticsHubServiceMetadata(
       std::shared_ptr<AnalyticsHubServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse>
   ListDataExchanges(

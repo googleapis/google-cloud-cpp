@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AssuredWorkloadsServiceMetadata : public AssuredWorkloadsServiceStub {
  public:
   ~AssuredWorkloadsServiceMetadata() override = default;
-  explicit AssuredWorkloadsServiceMetadata(
+  AssuredWorkloadsServiceMetadata(
       std::shared_ptr<AssuredWorkloadsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkload(
       google::cloud::CompletionQueue& cq,

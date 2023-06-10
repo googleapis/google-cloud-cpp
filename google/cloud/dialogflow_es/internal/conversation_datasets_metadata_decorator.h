@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ConversationDatasetsMetadata : public ConversationDatasetsStub {
  public:
   ~ConversationDatasetsMetadata() override = default;
-  explicit ConversationDatasetsMetadata(
+  ConversationDatasetsMetadata(
       std::shared_ptr<ConversationDatasetsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncCreateConversationDataset(

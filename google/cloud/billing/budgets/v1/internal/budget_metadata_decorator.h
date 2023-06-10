@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BudgetServiceMetadata : public BudgetServiceStub {
  public:
   ~BudgetServiceMetadata() override = default;
-  explicit BudgetServiceMetadata(
-      std::shared_ptr<BudgetServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  BudgetServiceMetadata(std::shared_ptr<BudgetServiceStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
       grpc::ClientContext& context,

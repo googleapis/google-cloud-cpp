@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TpuMetadata : public TpuStub {
  public:
   ~TpuMetadata() override = default;
-  explicit TpuMetadata(
-      std::shared_ptr<TpuStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  TpuMetadata(std::shared_ptr<TpuStub> child,
+              std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::tpu::v2::ListNodesResponse> ListNodes(
       grpc::ClientContext& context,

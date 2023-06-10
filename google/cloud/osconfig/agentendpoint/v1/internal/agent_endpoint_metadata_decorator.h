@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AgentEndpointServiceMetadata : public AgentEndpointServiceStub {
  public:
   ~AgentEndpointServiceMetadata() override = default;
-  explicit AgentEndpointServiceMetadata(
+  AgentEndpointServiceMetadata(
       std::shared_ptr<AgentEndpointServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::osconfig::agentendpoint::v1::

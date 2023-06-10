@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LivestreamServiceMetadata : public LivestreamServiceStub {
  public:
   ~LivestreamServiceMetadata() override = default;
-  explicit LivestreamServiceMetadata(
+  LivestreamServiceMetadata(
       std::shared_ptr<LivestreamServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateChannel(
       google::cloud::CompletionQueue& cq,

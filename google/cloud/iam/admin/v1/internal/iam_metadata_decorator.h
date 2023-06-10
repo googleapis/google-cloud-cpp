@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IAMMetadata : public IAMStub {
  public:
   ~IAMMetadata() override = default;
-  explicit IAMMetadata(
-      std::shared_ptr<IAMStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  IAMMetadata(std::shared_ptr<IAMStub> child,
+              std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
   ListServiceAccounts(grpc::ClientContext& context,

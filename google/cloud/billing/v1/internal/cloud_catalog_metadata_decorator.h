@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudCatalogMetadata : public CloudCatalogStub {
  public:
   ~CloudCatalogMetadata() override = default;
-  explicit CloudCatalogMetadata(
-      std::shared_ptr<CloudCatalogStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  CloudCatalogMetadata(std::shared_ptr<CloudCatalogStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::billing::v1::ListServicesResponse> ListServices(
       grpc::ClientContext& context,

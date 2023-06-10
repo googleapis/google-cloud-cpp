@@ -50,7 +50,8 @@ std::shared_ptr<InstancesStub> CreateDefaultInstancesStub(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<InstancesAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<InstancesMetadata>(std::move(stub));
+  stub = std::make_shared<InstancesMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<InstancesLogging>(

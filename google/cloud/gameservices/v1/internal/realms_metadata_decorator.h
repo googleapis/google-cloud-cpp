@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RealmsServiceMetadata : public RealmsServiceStub {
  public:
   ~RealmsServiceMetadata() override = default;
-  explicit RealmsServiceMetadata(
-      std::shared_ptr<RealmsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  RealmsServiceMetadata(std::shared_ptr<RealmsServiceStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::gaming::v1::ListRealmsResponse> ListRealms(
       grpc::ClientContext& context,

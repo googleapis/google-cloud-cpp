@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RepositoryManagerMetadata : public RepositoryManagerStub {
  public:
   ~RepositoryManagerMetadata() override = default;
-  explicit RepositoryManagerMetadata(
+  RepositoryManagerMetadata(
       std::shared_ptr<RepositoryManagerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnection(
       google::cloud::CompletionQueue& cq,

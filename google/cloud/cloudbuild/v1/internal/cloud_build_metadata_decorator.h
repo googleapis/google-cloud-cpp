@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudBuildMetadata : public CloudBuildStub {
  public:
   ~CloudBuildMetadata() override = default;
-  explicit CloudBuildMetadata(
-      std::shared_ptr<CloudBuildStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  CloudBuildMetadata(std::shared_ptr<CloudBuildStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBuild(
       google::cloud::CompletionQueue& cq,

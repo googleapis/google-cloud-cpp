@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProjectsMetadata : public ProjectsStub {
  public:
   ~ProjectsMetadata() override = default;
-  explicit ProjectsMetadata(
-      std::shared_ptr<ProjectsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  ProjectsMetadata(std::shared_ptr<ProjectsStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
       grpc::ClientContext& context,

@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SessionEntityTypesMetadata : public SessionEntityTypesStub {
  public:
   ~SessionEntityTypesMetadata() override = default;
-  explicit SessionEntityTypesMetadata(
+  SessionEntityTypesMetadata(
       std::shared_ptr<SessionEntityTypesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse>
   ListSessionEntityTypes(

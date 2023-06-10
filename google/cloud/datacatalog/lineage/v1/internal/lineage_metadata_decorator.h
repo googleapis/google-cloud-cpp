@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LineageMetadata : public LineageStub {
  public:
   ~LineageMetadata() override = default;
-  explicit LineageMetadata(
-      std::shared_ptr<LineageStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  LineageMetadata(std::shared_ptr<LineageStub> child,
+                  std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
       grpc::ClientContext& context,

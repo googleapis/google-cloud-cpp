@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AssetServiceMetadata : public AssetServiceStub {
  public:
   ~AssetServiceMetadata() override = default;
-  explicit AssetServiceMetadata(
-      std::shared_ptr<AssetServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  AssetServiceMetadata(std::shared_ptr<AssetServiceStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportAssets(
       google::cloud::CompletionQueue& cq,

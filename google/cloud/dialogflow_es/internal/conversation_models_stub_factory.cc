@@ -53,7 +53,8 @@ std::shared_ptr<ConversationModelsStub> CreateDefaultConversationModelsStub(
     stub = std::make_shared<ConversationModelsAuth>(std::move(auth),
                                                     std::move(stub));
   }
-  stub = std::make_shared<ConversationModelsMetadata>(std::move(stub));
+  stub = std::make_shared<ConversationModelsMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ConversationModelsLogging>(

@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MigrationServiceMetadata : public MigrationServiceStub {
  public:
   ~MigrationServiceMetadata() override = default;
-  explicit MigrationServiceMetadata(
+  MigrationServiceMetadata(
       std::shared_ptr<MigrationServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
   CreateMigrationWorkflow(

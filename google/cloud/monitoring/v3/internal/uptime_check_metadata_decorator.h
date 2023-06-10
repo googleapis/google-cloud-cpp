@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class UptimeCheckServiceMetadata : public UptimeCheckServiceStub {
  public:
   ~UptimeCheckServiceMetadata() override = default;
-  explicit UptimeCheckServiceMetadata(
+  UptimeCheckServiceMetadata(
       std::shared_ptr<UptimeCheckServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
   ListUptimeCheckConfigs(

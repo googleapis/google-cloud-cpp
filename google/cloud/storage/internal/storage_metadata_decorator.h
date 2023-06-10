@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class StorageMetadata : public StorageStub {
  public:
   ~StorageMetadata() override = default;
-  explicit StorageMetadata(
-      std::shared_ptr<StorageStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  StorageMetadata(std::shared_ptr<StorageStub> child,
+                  std::multimap<std::string, std::string> fixed_metadata);
 
   Status DeleteBucket(
       grpc::ClientContext& context,

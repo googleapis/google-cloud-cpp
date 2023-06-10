@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PoliciesMetadata : public PoliciesStub {
  public:
   ~PoliciesMetadata() override = default;
-  explicit PoliciesMetadata(
-      std::shared_ptr<PoliciesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  PoliciesMetadata(std::shared_ptr<PoliciesStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::iam::v2::ListPoliciesResponse> ListPolicies(
       grpc::ClientContext& context,

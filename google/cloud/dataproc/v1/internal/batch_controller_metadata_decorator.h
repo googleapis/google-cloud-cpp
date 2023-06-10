@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BatchControllerMetadata : public BatchControllerStub {
  public:
   ~BatchControllerMetadata() override = default;
-  explicit BatchControllerMetadata(
+  BatchControllerMetadata(
       std::shared_ptr<BatchControllerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBatch(
       google::cloud::CompletionQueue& cq,

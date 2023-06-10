@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class KnowledgeBasesMetadata : public KnowledgeBasesStub {
  public:
   ~KnowledgeBasesMetadata() override = default;
-  explicit KnowledgeBasesMetadata(
+  KnowledgeBasesMetadata(
       std::shared_ptr<KnowledgeBasesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
   ListKnowledgeBases(

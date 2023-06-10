@@ -34,9 +34,9 @@ class IdentityAwareProxyOAuthServiceMetadata
     : public IdentityAwareProxyOAuthServiceStub {
  public:
   ~IdentityAwareProxyOAuthServiceMetadata() override = default;
-  explicit IdentityAwareProxyOAuthServiceMetadata(
+  IdentityAwareProxyOAuthServiceMetadata(
       std::shared_ptr<IdentityAwareProxyOAuthServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::iap::v1::ListBrandsResponse> ListBrands(
       grpc::ClientContext& context,

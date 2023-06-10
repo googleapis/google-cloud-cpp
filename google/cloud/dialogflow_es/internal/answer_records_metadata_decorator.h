@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AnswerRecordsMetadata : public AnswerRecordsStub {
  public:
   ~AnswerRecordsMetadata() override = default;
-  explicit AnswerRecordsMetadata(
-      std::shared_ptr<AnswerRecordsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  AnswerRecordsMetadata(std::shared_ptr<AnswerRecordsStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
   ListAnswerRecords(

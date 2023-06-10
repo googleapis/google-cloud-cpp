@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AwsClustersMetadata : public AwsClustersStub {
  public:
   ~AwsClustersMetadata() override = default;
-  explicit AwsClustersMetadata(
-      std::shared_ptr<AwsClustersStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  AwsClustersMetadata(std::shared_ptr<AwsClustersStub> child,
+                      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAwsCluster(
       google::cloud::CompletionQueue& cq,

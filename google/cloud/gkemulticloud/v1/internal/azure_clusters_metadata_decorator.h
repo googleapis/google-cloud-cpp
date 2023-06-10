@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AzureClustersMetadata : public AzureClustersStub {
  public:
   ~AzureClustersMetadata() override = default;
-  explicit AzureClustersMetadata(
-      std::shared_ptr<AzureClustersStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  AzureClustersMetadata(std::shared_ptr<AzureClustersStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAzureClient(
       google::cloud::CompletionQueue& cq,

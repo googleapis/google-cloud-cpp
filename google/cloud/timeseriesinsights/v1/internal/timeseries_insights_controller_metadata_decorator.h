@@ -34,9 +34,9 @@ class TimeseriesInsightsControllerMetadata
     : public TimeseriesInsightsControllerStub {
  public:
   ~TimeseriesInsightsControllerMetadata() override = default;
-  explicit TimeseriesInsightsControllerMetadata(
+  TimeseriesInsightsControllerMetadata(
       std::shared_ptr<TimeseriesInsightsControllerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse>
   ListDataSets(grpc::ClientContext& context,

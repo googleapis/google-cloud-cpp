@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RevisionsMetadata : public RevisionsStub {
  public:
   ~RevisionsMetadata() override = default;
-  explicit RevisionsMetadata(
-      std::shared_ptr<RevisionsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  RevisionsMetadata(std::shared_ptr<RevisionsStub> child,
+                    std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
       grpc::ClientContext& context,

@@ -34,9 +34,9 @@ class AdvisoryNotificationsServiceMetadata
     : public AdvisoryNotificationsServiceStub {
  public:
   ~AdvisoryNotificationsServiceMetadata() override = default;
-  explicit AdvisoryNotificationsServiceMetadata(
+  AdvisoryNotificationsServiceMetadata(
       std::shared_ptr<AdvisoryNotificationsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
   ListNotifications(

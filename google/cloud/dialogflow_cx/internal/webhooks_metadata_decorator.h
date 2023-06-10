@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WebhooksMetadata : public WebhooksStub {
  public:
   ~WebhooksMetadata() override = default;
-  explicit WebhooksMetadata(
-      std::shared_ptr<WebhooksStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  WebhooksMetadata(std::shared_ptr<WebhooksStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
   ListWebhooks(grpc::ClientContext& context,

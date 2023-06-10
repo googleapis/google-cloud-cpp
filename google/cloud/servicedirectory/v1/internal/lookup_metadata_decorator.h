@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LookupServiceMetadata : public LookupServiceStub {
  public:
   ~LookupServiceMetadata() override = default;
-  explicit LookupServiceMetadata(
-      std::shared_ptr<LookupServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  LookupServiceMetadata(std::shared_ptr<LookupServiceStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(

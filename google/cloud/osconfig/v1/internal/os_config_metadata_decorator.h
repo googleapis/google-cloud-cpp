@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class OsConfigServiceMetadata : public OsConfigServiceStub {
  public:
   ~OsConfigServiceMetadata() override = default;
-  explicit OsConfigServiceMetadata(
+  OsConfigServiceMetadata(
       std::shared_ptr<OsConfigServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::osconfig::v1::PatchJob> ExecutePatchJob(
       grpc::ClientContext& context,

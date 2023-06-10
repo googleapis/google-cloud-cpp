@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class VmwareEngineMetadata : public VmwareEngineStub {
  public:
   ~VmwareEngineMetadata() override = default;
-  explicit VmwareEngineMetadata(
-      std::shared_ptr<VmwareEngineStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  VmwareEngineMetadata(std::shared_ptr<VmwareEngineStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse>
   ListPrivateClouds(

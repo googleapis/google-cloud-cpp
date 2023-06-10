@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class VideoIntelligenceServiceMetadata : public VideoIntelligenceServiceStub {
  public:
   ~VideoIntelligenceServiceMetadata() override = default;
-  explicit VideoIntelligenceServiceMetadata(
+  VideoIntelligenceServiceMetadata(
       std::shared_ptr<VideoIntelligenceServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncAnnotateVideo(
       google::cloud::CompletionQueue& cq,

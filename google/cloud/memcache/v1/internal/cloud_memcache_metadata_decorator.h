@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudMemcacheMetadata : public CloudMemcacheStub {
  public:
   ~CloudMemcacheMetadata() override = default;
-  explicit CloudMemcacheMetadata(
-      std::shared_ptr<CloudMemcacheStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  CloudMemcacheMetadata(std::shared_ptr<CloudMemcacheStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::memcache::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,

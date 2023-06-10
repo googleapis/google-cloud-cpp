@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ServicesMetadata : public ServicesStub {
  public:
   ~ServicesMetadata() override = default;
-  explicit ServicesMetadata(
-      std::shared_ptr<ServicesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  ServicesMetadata(std::shared_ptr<ServicesStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateService(
       google::cloud::CompletionQueue& cq,

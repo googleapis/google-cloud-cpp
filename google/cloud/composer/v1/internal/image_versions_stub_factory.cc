@@ -51,7 +51,8 @@ std::shared_ptr<ImageVersionsStub> CreateDefaultImageVersionsStub(
     stub =
         std::make_shared<ImageVersionsAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<ImageVersionsMetadata>(std::move(stub));
+  stub = std::make_shared<ImageVersionsMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ImageVersionsLogging>(
