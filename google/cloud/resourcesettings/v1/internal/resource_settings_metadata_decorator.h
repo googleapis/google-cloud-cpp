@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ResourceSettingsServiceMetadata : public ResourceSettingsServiceStub {
  public:
   ~ResourceSettingsServiceMetadata() override = default;
-  explicit ResourceSettingsServiceMetadata(
+  ResourceSettingsServiceMetadata(
       std::shared_ptr<ResourceSettingsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
   ListSettings(grpc::ClientContext& context,

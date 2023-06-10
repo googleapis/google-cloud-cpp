@@ -49,7 +49,8 @@ std::shared_ptr<GrafeasStub> CreateDefaultGrafeasStub(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<GrafeasAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<GrafeasMetadata>(std::move(stub));
+  stub = std::make_shared<GrafeasMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<GrafeasLogging>(

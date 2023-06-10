@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class OrgPolicyMetadata : public OrgPolicyStub {
  public:
   ~OrgPolicyMetadata() override = default;
-  explicit OrgPolicyMetadata(
-      std::shared_ptr<OrgPolicyStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  OrgPolicyMetadata(std::shared_ptr<OrgPolicyStub> child,
+                    std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
   ListConstraints(grpc::ClientContext& context,

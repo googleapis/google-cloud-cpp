@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DatabaseAdminMetadata : public DatabaseAdminStub {
  public:
   ~DatabaseAdminMetadata() override = default;
-  explicit DatabaseAdminMetadata(
-      std::shared_ptr<DatabaseAdminStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  DatabaseAdminMetadata(std::shared_ptr<DatabaseAdminStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
   ListDatabases(

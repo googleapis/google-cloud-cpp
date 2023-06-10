@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudDeployMetadata : public CloudDeployStub {
  public:
   ~CloudDeployMetadata() override = default;
-  explicit CloudDeployMetadata(
-      std::shared_ptr<CloudDeployStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  CloudDeployMetadata(std::shared_ptr<CloudDeployStub> child,
+                      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse>
   ListDeliveryPipelines(

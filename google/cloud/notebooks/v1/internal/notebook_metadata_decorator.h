@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class NotebookServiceMetadata : public NotebookServiceStub {
  public:
   ~NotebookServiceMetadata() override = default;
-  explicit NotebookServiceMetadata(
+  NotebookServiceMetadata(
       std::shared_ptr<NotebookServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::notebooks::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,

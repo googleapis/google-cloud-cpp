@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class KeyDashboardServiceMetadata : public KeyDashboardServiceStub {
  public:
   ~KeyDashboardServiceMetadata() override = default;
-  explicit KeyDashboardServiceMetadata(
+  KeyDashboardServiceMetadata(
       std::shared_ptr<KeyDashboardServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
   ListCryptoKeys(grpc::ClientContext& context,

@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MetadataServiceMetadata : public MetadataServiceStub {
  public:
   ~MetadataServiceMetadata() override = default;
-  explicit MetadataServiceMetadata(
+  MetadataServiceMetadata(
       std::shared_ptr<MetadataServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dataplex::v1::Entity> CreateEntity(
       grpc::ClientContext& context,

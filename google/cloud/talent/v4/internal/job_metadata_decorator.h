@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class JobServiceMetadata : public JobServiceStub {
  public:
   ~JobServiceMetadata() override = default;
-  explicit JobServiceMetadata(
-      std::shared_ptr<JobServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  JobServiceMetadata(std::shared_ptr<JobServiceStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::talent::v4::Job> CreateJob(
       grpc::ClientContext& context,

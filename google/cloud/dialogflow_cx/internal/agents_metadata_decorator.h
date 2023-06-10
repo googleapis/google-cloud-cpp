@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AgentsMetadata : public AgentsStub {
  public:
   ~AgentsMetadata() override = default;
-  explicit AgentsMetadata(
-      std::shared_ptr<AgentsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  AgentsMetadata(std::shared_ptr<AgentsStub> child,
+                 std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse> ListAgents(
       grpc::ClientContext& context,

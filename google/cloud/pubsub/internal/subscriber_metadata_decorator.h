@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SubscriberMetadata : public SubscriberStub {
  public:
   ~SubscriberMetadata() override = default;
-  explicit SubscriberMetadata(
-      std::shared_ptr<SubscriberStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  SubscriberMetadata(std::shared_ptr<SubscriberStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
       grpc::ClientContext& context,

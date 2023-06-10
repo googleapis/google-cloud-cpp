@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SpeechMetadata : public SpeechStub {
  public:
   ~SpeechMetadata() override = default;
-  explicit SpeechMetadata(
-      std::shared_ptr<SpeechStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  SpeechMetadata(std::shared_ptr<SpeechStub> child,
+                 std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
       grpc::ClientContext& context,

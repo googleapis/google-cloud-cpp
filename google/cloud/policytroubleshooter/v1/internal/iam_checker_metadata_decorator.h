@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IamCheckerMetadata : public IamCheckerStub {
  public:
   ~IamCheckerMetadata() override = default;
-  explicit IamCheckerMetadata(
-      std::shared_ptr<IamCheckerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  IamCheckerMetadata(std::shared_ptr<IamCheckerStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<
       google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>

@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ServiceMonitoringServiceMetadata : public ServiceMonitoringServiceStub {
  public:
   ~ServiceMonitoringServiceMetadata() override = default;
-  explicit ServiceMonitoringServiceMetadata(
+  ServiceMonitoringServiceMetadata(
       std::shared_ptr<ServiceMonitoringServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::monitoring::v3::Service> CreateService(
       grpc::ClientContext& context,

@@ -50,7 +50,8 @@ std::shared_ptr<AutoMlStub> CreateDefaultAutoMlStub(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<AutoMlAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<AutoMlMetadata>(std::move(stub));
+  stub = std::make_shared<AutoMlMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<AutoMlLogging>(

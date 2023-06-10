@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ChangelogsMetadata : public ChangelogsStub {
  public:
   ~ChangelogsMetadata() override = default;
-  explicit ChangelogsMetadata(
-      std::shared_ptr<ChangelogsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  ChangelogsMetadata(std::shared_ptr<ChangelogsStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListChangelogsResponse>
   ListChangelogs(grpc::ClientContext& context,

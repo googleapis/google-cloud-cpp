@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FleetRoutingMetadata : public FleetRoutingStub {
  public:
   ~FleetRoutingMetadata() override = default;
-  explicit FleetRoutingMetadata(
-      std::shared_ptr<FleetRoutingStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  FleetRoutingMetadata(std::shared_ptr<FleetRoutingStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
   OptimizeTours(grpc::ClientContext& context,

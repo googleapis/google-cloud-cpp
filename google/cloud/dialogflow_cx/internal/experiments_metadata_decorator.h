@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ExperimentsMetadata : public ExperimentsStub {
  public:
   ~ExperimentsMetadata() override = default;
-  explicit ExperimentsMetadata(
-      std::shared_ptr<ExperimentsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  ExperimentsMetadata(std::shared_ptr<ExperimentsStub> child,
+                      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse>
   ListExperiments(

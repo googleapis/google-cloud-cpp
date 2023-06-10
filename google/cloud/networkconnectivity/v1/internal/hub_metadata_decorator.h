@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class HubServiceMetadata : public HubServiceStub {
  public:
   ~HubServiceMetadata() override = default;
-  explicit HubServiceMetadata(
-      std::shared_ptr<HubServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  HubServiceMetadata(std::shared_ptr<HubServiceStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse> ListHubs(
       grpc::ClientContext& context,

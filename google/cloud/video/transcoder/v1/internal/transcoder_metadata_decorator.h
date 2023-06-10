@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TranscoderServiceMetadata : public TranscoderServiceStub {
  public:
   ~TranscoderServiceMetadata() override = default;
-  explicit TranscoderServiceMetadata(
+  TranscoderServiceMetadata(
       std::shared_ptr<TranscoderServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
       grpc::ClientContext& context,

@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AlertPolicyServiceMetadata : public AlertPolicyServiceStub {
  public:
   ~AlertPolicyServiceMetadata() override = default;
-  explicit AlertPolicyServiceMetadata(
+  AlertPolicyServiceMetadata(
       std::shared_ptr<AlertPolicyServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::monitoring::v3::ListAlertPoliciesResponse> ListAlertPolicies(
       grpc::ClientContext& context,

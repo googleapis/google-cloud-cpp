@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class StorageTransferServiceMetadata : public StorageTransferServiceStub {
  public:
   ~StorageTransferServiceMetadata() override = default;
-  explicit StorageTransferServiceMetadata(
+  StorageTransferServiceMetadata(
       std::shared_ptr<StorageTransferServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
   GetGoogleServiceAccount(

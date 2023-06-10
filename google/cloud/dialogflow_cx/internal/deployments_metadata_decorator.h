@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DeploymentsMetadata : public DeploymentsStub {
  public:
   ~DeploymentsMetadata() override = default;
-  explicit DeploymentsMetadata(
-      std::shared_ptr<DeploymentsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  DeploymentsMetadata(std::shared_ptr<DeploymentsStub> child,
+                      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
   ListDeployments(

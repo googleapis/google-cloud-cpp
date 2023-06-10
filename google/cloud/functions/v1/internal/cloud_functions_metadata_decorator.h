@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudFunctionsServiceMetadata : public CloudFunctionsServiceStub {
  public:
   ~CloudFunctionsServiceMetadata() override = default;
-  explicit CloudFunctionsServiceMetadata(
+  CloudFunctionsServiceMetadata(
       std::shared_ptr<CloudFunctionsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::functions::v1::ListFunctionsResponse> ListFunctions(
       grpc::ClientContext& context,

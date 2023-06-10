@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AccessContextManagerMetadata : public AccessContextManagerStub {
  public:
   ~AccessContextManagerMetadata() override = default;
-  explicit AccessContextManagerMetadata(
+  AccessContextManagerMetadata(
       std::shared_ptr<AccessContextManagerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<
       google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse>

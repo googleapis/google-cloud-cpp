@@ -79,7 +79,8 @@ std::shared_ptr<BigtableStub> CreateDecoratedStubs(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<BigtableAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<BigtableMetadata>(std::move(stub));
+  stub = std::make_shared<BigtableMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (google::cloud::internal::Contains(options.get<TracingComponentsOption>(),
                                         "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";

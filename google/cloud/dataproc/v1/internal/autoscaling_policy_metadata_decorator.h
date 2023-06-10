@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AutoscalingPolicyServiceMetadata : public AutoscalingPolicyServiceStub {
  public:
   ~AutoscalingPolicyServiceMetadata() override = default;
-  explicit AutoscalingPolicyServiceMetadata(
+  AutoscalingPolicyServiceMetadata(
       std::shared_ptr<AutoscalingPolicyServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   CreateAutoscalingPolicy(

@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MetricsScopesMetadata : public MetricsScopesStub {
  public:
   ~MetricsScopesMetadata() override = default;
-  explicit MetricsScopesMetadata(
-      std::shared_ptr<MetricsScopesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  MetricsScopesMetadata(std::shared_ptr<MetricsScopesStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
       grpc::ClientContext& context,

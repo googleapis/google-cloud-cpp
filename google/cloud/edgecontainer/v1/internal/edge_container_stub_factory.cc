@@ -53,7 +53,8 @@ std::shared_ptr<EdgeContainerStub> CreateDefaultEdgeContainerStub(
     stub =
         std::make_shared<EdgeContainerAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<EdgeContainerMetadata>(std::move(stub));
+  stub = std::make_shared<EdgeContainerMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<EdgeContainerLogging>(

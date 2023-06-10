@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProductSearchMetadata : public ProductSearchStub {
  public:
   ~ProductSearchMetadata() override = default;
-  explicit ProductSearchMetadata(
-      std::shared_ptr<ProductSearchStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  ProductSearchMetadata(std::shared_ptr<ProductSearchStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
       grpc::ClientContext& context,

@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WorkflowTemplateServiceMetadata : public WorkflowTemplateServiceStub {
  public:
   ~WorkflowTemplateServiceMetadata() override = default;
-  explicit WorkflowTemplateServiceMetadata(
+  WorkflowTemplateServiceMetadata(
       std::shared_ptr<WorkflowTemplateServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   CreateWorkflowTemplate(

@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WebRiskServiceMetadata : public WebRiskServiceStub {
  public:
   ~WebRiskServiceMetadata() override = default;
-  explicit WebRiskServiceMetadata(
+  WebRiskServiceMetadata(
       std::shared_ptr<WebRiskServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(

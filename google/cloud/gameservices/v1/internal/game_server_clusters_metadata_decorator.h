@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GameServerClustersServiceMetadata : public GameServerClustersServiceStub {
  public:
   ~GameServerClustersServiceMetadata() override = default;
-  explicit GameServerClustersServiceMetadata(
+  GameServerClustersServiceMetadata(
       std::shared_ptr<GameServerClustersServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::gaming::v1::ListGameServerClustersResponse>
   ListGameServerClusters(

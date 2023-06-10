@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ConfidentialComputingMetadata : public ConfidentialComputingStub {
  public:
   ~ConfidentialComputingMetadata() override = default;
-  explicit ConfidentialComputingMetadata(
+  ConfidentialComputingMetadata(
       std::shared_ptr<ConfidentialComputingStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
       grpc::ClientContext& context,

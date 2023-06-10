@@ -36,9 +36,9 @@ class ClientConnectorServicesServiceMetadata
     : public ClientConnectorServicesServiceStub {
  public:
   ~ClientConnectorServicesServiceMetadata() override = default;
-  explicit ClientConnectorServicesServiceMetadata(
+  ClientConnectorServicesServiceMetadata(
       std::shared_ptr<ClientConnectorServicesServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
                ListClientConnectorServicesResponse>

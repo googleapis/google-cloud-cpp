@@ -35,9 +35,9 @@ class CertificateAuthorityServiceMetadata
     : public CertificateAuthorityServiceStub {
  public:
   ~CertificateAuthorityServiceMetadata() override = default;
-  explicit CertificateAuthorityServiceMetadata(
+  CertificateAuthorityServiceMetadata(
       std::shared_ptr<CertificateAuthorityServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   CreateCertificate(

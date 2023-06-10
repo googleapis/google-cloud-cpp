@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudRedisMetadata : public CloudRedisStub {
  public:
   ~CloudRedisMetadata() override = default;
-  explicit CloudRedisMetadata(
-      std::shared_ptr<CloudRedisStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  CloudRedisMetadata(std::shared_ptr<CloudRedisStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::redis::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,

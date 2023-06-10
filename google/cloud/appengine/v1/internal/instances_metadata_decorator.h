@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InstancesMetadata : public InstancesStub {
  public:
   ~InstancesMetadata() override = default;
-  explicit InstancesMetadata(
-      std::shared_ptr<InstancesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  InstancesMetadata(std::shared_ptr<InstancesStub> child,
+                    std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::appengine::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,

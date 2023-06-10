@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ImageVersionsMetadata : public ImageVersionsStub {
  public:
   ~ImageVersionsMetadata() override = default;
-  explicit ImageVersionsMetadata(
-      std::shared_ptr<ImageVersionsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  ImageVersionsMetadata(std::shared_ptr<ImageVersionsStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ListImageVersionsResponse>

@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ServiceControllerMetadata : public ServiceControllerStub {
  public:
   ~ServiceControllerMetadata() override = default;
-  explicit ServiceControllerMetadata(
+  ServiceControllerMetadata(
       std::shared_ptr<ServiceControllerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::api::servicecontrol::v2::CheckResponse> Check(
       grpc::ClientContext& context,

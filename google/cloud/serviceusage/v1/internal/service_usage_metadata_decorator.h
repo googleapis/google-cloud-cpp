@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ServiceUsageMetadata : public ServiceUsageStub {
  public:
   ~ServiceUsageMetadata() override = default;
-  explicit ServiceUsageMetadata(
-      std::shared_ptr<ServiceUsageStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  ServiceUsageMetadata(std::shared_ptr<ServiceUsageStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncEnableService(
       google::cloud::CompletionQueue& cq,

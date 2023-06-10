@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DlpServiceMetadata : public DlpServiceStub {
  public:
   ~DlpServiceMetadata() override = default;
-  explicit DlpServiceMetadata(
-      std::shared_ptr<DlpServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  DlpServiceMetadata(std::shared_ptr<DlpServiceStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::privacy::dlp::v2::InspectContentResponse> InspectContent(
       grpc::ClientContext& context,

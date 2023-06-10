@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PolicyTagManagerMetadata : public PolicyTagManagerStub {
  public:
   ~PolicyTagManagerMetadata() override = default;
-  explicit PolicyTagManagerMetadata(
+  PolicyTagManagerMetadata(
       std::shared_ptr<PolicyTagManagerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> CreateTaxonomy(
       grpc::ClientContext& context,

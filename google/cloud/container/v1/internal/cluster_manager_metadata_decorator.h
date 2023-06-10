@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ClusterManagerMetadata : public ClusterManagerStub {
  public:
   ~ClusterManagerMetadata() override = default;
-  explicit ClusterManagerMetadata(
+  ClusterManagerMetadata(
       std::shared_ptr<ClusterManagerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,

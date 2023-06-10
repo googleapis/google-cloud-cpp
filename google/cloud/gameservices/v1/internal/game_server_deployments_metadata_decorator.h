@@ -35,9 +35,9 @@ class GameServerDeploymentsServiceMetadata
     : public GameServerDeploymentsServiceStub {
  public:
   ~GameServerDeploymentsServiceMetadata() override = default;
-  explicit GameServerDeploymentsServiceMetadata(
+  GameServerDeploymentsServiceMetadata(
       std::shared_ptr<GameServerDeploymentsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::gaming::v1::ListGameServerDeploymentsResponse>
   ListGameServerDeployments(

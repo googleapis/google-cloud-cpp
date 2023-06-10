@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GroupServiceMetadata : public GroupServiceStub {
  public:
   ~GroupServiceMetadata() override = default;
-  explicit GroupServiceMetadata(
-      std::shared_ptr<GroupServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  GroupServiceMetadata(std::shared_ptr<GroupServiceStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::monitoring::v3::ListGroupsResponse> ListGroups(
       grpc::ClientContext& context,

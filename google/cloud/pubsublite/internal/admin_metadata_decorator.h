@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AdminServiceMetadata : public AdminServiceStub {
  public:
   ~AdminServiceMetadata() override = default;
-  explicit AdminServiceMetadata(
-      std::shared_ptr<AdminServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  AdminServiceMetadata(std::shared_ptr<AdminServiceStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
       grpc::ClientContext& context,

@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudChannelServiceMetadata : public CloudChannelServiceStub {
  public:
   ~CloudChannelServiceMetadata() override = default;
-  explicit CloudChannelServiceMetadata(
+  CloudChannelServiceMetadata(
       std::shared_ptr<CloudChannelServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::channel::v1::ListCustomersResponse> ListCustomers(
       grpc::ClientContext& context,

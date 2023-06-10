@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SessionsMetadata : public SessionsStub {
  public:
   ~SessionsMetadata() override = default;
-  explicit SessionsMetadata(
-      std::shared_ptr<SessionsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  SessionsMetadata(std::shared_ptr<SessionsStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
       grpc::ClientContext& context,

@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ReachabilityServiceMetadata : public ReachabilityServiceStub {
  public:
   ~ReachabilityServiceMetadata() override = default;
-  explicit ReachabilityServiceMetadata(
+  ReachabilityServiceMetadata(
       std::shared_ptr<ReachabilityServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
   ListConnectivityTests(

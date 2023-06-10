@@ -53,7 +53,8 @@ std::shared_ptr<RepositoryManagerStub> CreateDefaultRepositoryManagerStub(
     stub = std::make_shared<RepositoryManagerAuth>(std::move(auth),
                                                    std::move(stub));
   }
-  stub = std::make_shared<RepositoryManagerMetadata>(std::move(stub));
+  stub = std::make_shared<RepositoryManagerMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<RepositoryManagerLogging>(

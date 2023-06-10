@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SecretManagerServiceMetadata : public SecretManagerServiceStub {
  public:
   ~SecretManagerServiceMetadata() override = default;
-  explicit SecretManagerServiceMetadata(
+  SecretManagerServiceMetadata(
       std::shared_ptr<SecretManagerServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse> ListSecrets(
       grpc::ClientContext& context,

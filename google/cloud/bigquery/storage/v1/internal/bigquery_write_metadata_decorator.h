@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BigQueryWriteMetadata : public BigQueryWriteStub {
  public:
   ~BigQueryWriteMetadata() override = default;
-  explicit BigQueryWriteMetadata(
-      std::shared_ptr<BigQueryWriteStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  BigQueryWriteMetadata(std::shared_ptr<BigQueryWriteStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
       grpc::ClientContext& context,

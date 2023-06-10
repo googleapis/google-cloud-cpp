@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WorkstationsMetadata : public WorkstationsStub {
  public:
   ~WorkstationsMetadata() override = default;
-  explicit WorkstationsMetadata(
-      std::shared_ptr<WorkstationsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  WorkstationsMetadata(std::shared_ptr<WorkstationsStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::workstations::v1::WorkstationCluster>
   GetWorkstationCluster(

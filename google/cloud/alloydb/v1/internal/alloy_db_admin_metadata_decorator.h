@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AlloyDBAdminMetadata : public AlloyDBAdminStub {
  public:
   ~AlloyDBAdminMetadata() override = default;
-  explicit AlloyDBAdminMetadata(
-      std::shared_ptr<AlloyDBAdminStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  AlloyDBAdminMetadata(std::shared_ptr<AlloyDBAdminStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::alloydb::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,

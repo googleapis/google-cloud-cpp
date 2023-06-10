@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MetricServiceMetadata : public MetricServiceStub {
  public:
   ~MetricServiceMetadata() override = default;
-  explicit MetricServiceMetadata(
-      std::shared_ptr<MetricServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  MetricServiceMetadata(std::shared_ptr<MetricServiceStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
   ListMonitoredResourceDescriptors(

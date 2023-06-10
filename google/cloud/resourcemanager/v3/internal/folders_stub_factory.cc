@@ -51,7 +51,8 @@ std::shared_ptr<FoldersStub> CreateDefaultFoldersStub(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<FoldersAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<FoldersMetadata>(std::move(stub));
+  stub = std::make_shared<FoldersMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<FoldersLogging>(

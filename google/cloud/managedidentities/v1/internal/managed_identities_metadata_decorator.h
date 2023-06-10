@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ManagedIdentitiesServiceMetadata : public ManagedIdentitiesServiceStub {
  public:
   ~ManagedIdentitiesServiceMetadata() override = default;
-  explicit ManagedIdentitiesServiceMetadata(
+  ManagedIdentitiesServiceMetadata(
       std::shared_ptr<ManagedIdentitiesServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMicrosoftAdDomain(
       google::cloud::CompletionQueue& cq,

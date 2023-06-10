@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EdgeContainerMetadata : public EdgeContainerStub {
  public:
   ~EdgeContainerMetadata() override = default;
-  explicit EdgeContainerMetadata(
-      std::shared_ptr<EdgeContainerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  EdgeContainerMetadata(std::shared_ptr<EdgeContainerStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::edgecontainer::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,

@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DataplexServiceMetadata : public DataplexServiceStub {
  public:
   ~DataplexServiceMetadata() override = default;
-  explicit DataplexServiceMetadata(
+  DataplexServiceMetadata(
       std::shared_ptr<DataplexServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateLake(
       google::cloud::CompletionQueue& cq,

@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ManagedNotebookServiceMetadata : public ManagedNotebookServiceStub {
  public:
   ~ManagedNotebookServiceMetadata() override = default;
-  explicit ManagedNotebookServiceMetadata(
+  ManagedNotebookServiceMetadata(
       std::shared_ptr<ManagedNotebookServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse> ListRuntimes(
       grpc::ClientContext& context,

@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProfilerServiceMetadata : public ProfilerServiceStub {
  public:
   ~ProfilerServiceMetadata() override = default;
-  explicit ProfilerServiceMetadata(
+  ProfilerServiceMetadata(
       std::shared_ptr<ProfilerServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
       grpc::ClientContext& context,

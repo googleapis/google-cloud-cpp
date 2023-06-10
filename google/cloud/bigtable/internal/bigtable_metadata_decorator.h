@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BigtableMetadata : public BigtableStub {
  public:
   ~BigtableMetadata() override = default;
-  explicit BigtableMetadata(
-      std::shared_ptr<BigtableStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  BigtableMetadata(std::shared_ptr<BigtableStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata);
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::ReadRowsResponse>>

@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class JobControllerMetadata : public JobControllerStub {
  public:
   ~JobControllerMetadata() override = default;
-  explicit JobControllerMetadata(
-      std::shared_ptr<JobControllerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  JobControllerMetadata(std::shared_ptr<JobControllerStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
       grpc::ClientContext& context,

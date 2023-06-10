@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudShellServiceMetadata : public CloudShellServiceStub {
  public:
   ~CloudShellServiceMetadata() override = default;
-  explicit CloudShellServiceMetadata(
+  CloudShellServiceMetadata(
       std::shared_ptr<CloudShellServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       grpc::ClientContext& context,

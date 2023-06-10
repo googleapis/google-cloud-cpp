@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BatchServiceMetadata : public BatchServiceStub {
  public:
   ~BatchServiceMetadata() override = default;
-  explicit BatchServiceMetadata(
-      std::shared_ptr<BatchServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  BatchServiceMetadata(std::shared_ptr<BatchServiceStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::batch::v1::Job> CreateJob(
       grpc::ClientContext& context,

@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DocumentsMetadata : public DocumentsStub {
  public:
   ~DocumentsMetadata() override = default;
-  explicit DocumentsMetadata(
-      std::shared_ptr<DocumentsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  DocumentsMetadata(std::shared_ptr<DocumentsStub> child,
+                    std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse> ListDocuments(
       grpc::ClientContext& context,

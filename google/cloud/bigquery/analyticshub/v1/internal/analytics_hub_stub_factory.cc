@@ -53,7 +53,8 @@ std::shared_ptr<AnalyticsHubServiceStub> CreateDefaultAnalyticsHubServiceStub(
     stub = std::make_shared<AnalyticsHubServiceAuth>(std::move(auth),
                                                      std::move(stub));
   }
-  stub = std::make_shared<AnalyticsHubServiceMetadata>(std::move(stub));
+  stub = std::make_shared<AnalyticsHubServiceMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<AnalyticsHubServiceLogging>(

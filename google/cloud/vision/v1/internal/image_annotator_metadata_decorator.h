@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ImageAnnotatorMetadata : public ImageAnnotatorStub {
  public:
   ~ImageAnnotatorMetadata() override = default;
-  explicit ImageAnnotatorMetadata(
+  ImageAnnotatorMetadata(
       std::shared_ptr<ImageAnnotatorStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
   BatchAnnotateImages(

@@ -34,9 +34,9 @@ class BinauthzManagementServiceV1Metadata
     : public BinauthzManagementServiceV1Stub {
  public:
   ~BinauthzManagementServiceV1Metadata() override = default;
-  explicit BinauthzManagementServiceV1Metadata(
+  BinauthzManagementServiceV1Metadata(
       std::shared_ptr<BinauthzManagementServiceV1Stub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
       grpc::ClientContext& context,

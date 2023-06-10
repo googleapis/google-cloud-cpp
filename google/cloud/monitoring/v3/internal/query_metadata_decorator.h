@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class QueryServiceMetadata : public QueryServiceStub {
  public:
   ~QueryServiceMetadata() override = default;
-  explicit QueryServiceMetadata(
-      std::shared_ptr<QueryServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  QueryServiceMetadata(std::shared_ptr<QueryServiceStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::monitoring::v3::QueryTimeSeriesResponse> QueryTimeSeries(
       grpc::ClientContext& context,

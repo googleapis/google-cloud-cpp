@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ConnectionServiceMetadata : public ConnectionServiceStub {
  public:
   ~ConnectionServiceMetadata() override = default;
-  explicit ConnectionServiceMetadata(
+  ConnectionServiceMetadata(
       std::shared_ptr<ConnectionServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
   CreateConnection(

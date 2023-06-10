@@ -53,7 +53,8 @@ std::shared_ptr<CloudMemcacheStub> CreateDefaultCloudMemcacheStub(
     stub =
         std::make_shared<CloudMemcacheAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<CloudMemcacheMetadata>(std::move(stub));
+  stub = std::make_shared<CloudMemcacheMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CloudMemcacheLogging>(

@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IDSMetadata : public IDSStub {
  public:
   ~IDSMetadata() override = default;
-  explicit IDSMetadata(
-      std::shared_ptr<IDSStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  IDSMetadata(std::shared_ptr<IDSStub> child,
+              std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::ids::v1::ListEndpointsResponse> ListEndpoints(
       grpc::ClientContext& context,

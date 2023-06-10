@@ -34,7 +34,8 @@ std::shared_ptr<pubsub_internal::PublisherStub> DecoratePublisherStub(
     stub = std::make_shared<pubsub_internal::PublisherAuth>(std::move(auth),
                                                             std::move(stub));
   }
-  stub = std::make_shared<pubsub_internal::PublisherMetadata>(std::move(stub));
+  stub = std::make_shared<pubsub_internal::PublisherMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::PublisherLogging>(

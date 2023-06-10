@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AuthorizedDomainsMetadata : public AuthorizedDomainsStub {
  public:
   ~AuthorizedDomainsMetadata() override = default;
-  explicit AuthorizedDomainsMetadata(
+  AuthorizedDomainsMetadata(
       std::shared_ptr<AuthorizedDomainsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
   ListAuthorizedDomains(

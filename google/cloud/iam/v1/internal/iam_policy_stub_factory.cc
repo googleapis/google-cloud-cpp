@@ -49,7 +49,8 @@ std::shared_ptr<IAMPolicyStub> CreateDefaultIAMPolicyStub(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<IAMPolicyAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<IAMPolicyMetadata>(std::move(stub));
+  stub = std::make_shared<IAMPolicyMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<IAMPolicyLogging>(

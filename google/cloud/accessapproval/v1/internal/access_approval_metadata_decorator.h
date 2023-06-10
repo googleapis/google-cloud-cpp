@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AccessApprovalMetadata : public AccessApprovalStub {
  public:
   ~AccessApprovalMetadata() override = default;
-  explicit AccessApprovalMetadata(
+  AccessApprovalMetadata(
       std::shared_ptr<AccessApprovalStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::accessapproval::v1::ListApprovalRequestsResponse>
   ListApprovalRequests(

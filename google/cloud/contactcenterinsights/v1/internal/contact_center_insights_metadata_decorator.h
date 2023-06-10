@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ContactCenterInsightsMetadata : public ContactCenterInsightsStub {
  public:
   ~ContactCenterInsightsMetadata() override = default;
-  explicit ContactCenterInsightsMetadata(
+  ContactCenterInsightsMetadata(
       std::shared_ptr<ContactCenterInsightsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   CreateConversation(

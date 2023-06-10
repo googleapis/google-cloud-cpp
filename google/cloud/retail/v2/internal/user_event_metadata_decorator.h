@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class UserEventServiceMetadata : public UserEventServiceStub {
  public:
   ~UserEventServiceMetadata() override = default;
-  explicit UserEventServiceMetadata(
+  UserEventServiceMetadata(
       std::shared_ptr<UserEventServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
       grpc::ClientContext& context,

@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegistrationServiceMetadata : public RegistrationServiceStub {
  public:
   ~RegistrationServiceMetadata() override = default;
-  explicit RegistrationServiceMetadata(
+  RegistrationServiceMetadata(
       std::shared_ptr<RegistrationServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
       grpc::ClientContext& context,

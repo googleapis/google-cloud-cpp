@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RecommenderMetadata : public RecommenderStub {
  public:
   ~RecommenderMetadata() override = default;
-  explicit RecommenderMetadata(
-      std::shared_ptr<RecommenderStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  RecommenderMetadata(std::shared_ptr<RecommenderStub> child,
+                      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::recommender::v1::ListInsightsResponse> ListInsights(
       grpc::ClientContext& context,

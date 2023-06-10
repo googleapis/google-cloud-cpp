@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ParticipantsMetadata : public ParticipantsStub {
  public:
   ~ParticipantsMetadata() override = default;
-  explicit ParticipantsMetadata(
-      std::shared_ptr<ParticipantsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  ParticipantsMetadata(std::shared_ptr<ParticipantsStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
       grpc::ClientContext& context,

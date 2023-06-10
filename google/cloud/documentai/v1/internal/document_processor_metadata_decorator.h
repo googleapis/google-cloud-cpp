@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DocumentProcessorServiceMetadata : public DocumentProcessorServiceStub {
  public:
   ~DocumentProcessorServiceMetadata() override = default;
-  explicit DocumentProcessorServiceMetadata(
+  DocumentProcessorServiceMetadata(
       std::shared_ptr<DocumentProcessorServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
       grpc::ClientContext& context,

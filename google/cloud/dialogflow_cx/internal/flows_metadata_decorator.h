@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FlowsMetadata : public FlowsStub {
  public:
   ~FlowsMetadata() override = default;
-  explicit FlowsMetadata(
-      std::shared_ptr<FlowsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  FlowsMetadata(std::shared_ptr<FlowsStub> child,
+                std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> CreateFlow(
       grpc::ClientContext& context,

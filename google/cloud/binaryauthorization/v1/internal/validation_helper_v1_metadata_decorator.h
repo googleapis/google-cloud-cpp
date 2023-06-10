@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ValidationHelperV1Metadata : public ValidationHelperV1Stub {
  public:
   ~ValidationHelperV1Metadata() override = default;
-  explicit ValidationHelperV1Metadata(
+  ValidationHelperV1Metadata(
       std::shared_ptr<ValidationHelperV1Stub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::binaryauthorization::v1::
                ValidateAttestationOccurrenceResponse>

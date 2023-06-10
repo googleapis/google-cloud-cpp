@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ApplicationsMetadata : public ApplicationsStub {
  public:
   ~ApplicationsMetadata() override = default;
-  explicit ApplicationsMetadata(
-      std::shared_ptr<ApplicationsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  ApplicationsMetadata(std::shared_ptr<ApplicationsStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::appengine::v1::Application> GetApplication(
       grpc::ClientContext& context,

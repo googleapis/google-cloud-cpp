@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LoggingServiceV2Metadata : public LoggingServiceV2Stub {
  public:
   ~LoggingServiceV2Metadata() override = default;
-  explicit LoggingServiceV2Metadata(
+  LoggingServiceV2Metadata(
       std::shared_ptr<LoggingServiceV2Stub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   Status DeleteLog(
       grpc::ClientContext& context,

@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PublisherMetadata : public PublisherStub {
  public:
   ~PublisherMetadata() override = default;
-  explicit PublisherMetadata(
-      std::shared_ptr<PublisherStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  PublisherMetadata(std::shared_ptr<PublisherStub> child,
+                    std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       grpc::ClientContext& context,

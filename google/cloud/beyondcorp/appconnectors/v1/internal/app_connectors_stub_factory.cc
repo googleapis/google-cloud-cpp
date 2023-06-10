@@ -53,7 +53,8 @@ std::shared_ptr<AppConnectorsServiceStub> CreateDefaultAppConnectorsServiceStub(
     stub = std::make_shared<AppConnectorsServiceAuth>(std::move(auth),
                                                       std::move(stub));
   }
-  stub = std::make_shared<AppConnectorsServiceMetadata>(std::move(stub));
+  stub = std::make_shared<AppConnectorsServiceMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<AppConnectorsServiceLogging>(

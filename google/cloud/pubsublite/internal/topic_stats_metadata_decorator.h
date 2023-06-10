@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TopicStatsServiceMetadata : public TopicStatsServiceStub {
  public:
   ~TopicStatsServiceMetadata() override = default;
-  explicit TopicStatsServiceMetadata(
+  TopicStatsServiceMetadata(
       std::shared_ptr<TopicStatsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
   ComputeMessageStats(

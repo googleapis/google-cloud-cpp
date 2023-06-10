@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TransitionRouteGroupsMetadata : public TransitionRouteGroupsStub {
  public:
   ~TransitionRouteGroupsMetadata() override = default;
-  explicit TransitionRouteGroupsMetadata(
+  TransitionRouteGroupsMetadata(
       std::shared_ptr<TransitionRouteGroupsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse>
   ListTransitionRouteGroups(

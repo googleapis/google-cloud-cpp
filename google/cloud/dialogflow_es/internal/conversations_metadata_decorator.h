@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ConversationsMetadata : public ConversationsStub {
  public:
   ~ConversationsMetadata() override = default;
-  explicit ConversationsMetadata(
-      std::shared_ptr<ConversationsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  ConversationsMetadata(std::shared_ptr<ConversationsStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::v2::Conversation> CreateConversation(
       grpc::ClientContext& context,

@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ServiceManagerMetadata : public ServiceManagerStub {
  public:
   ~ServiceManagerMetadata() override = default;
-  explicit ServiceManagerMetadata(
+  ServiceManagerMetadata(
       std::shared_ptr<ServiceManagerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::api::servicemanagement::v1::ListServicesResponse>
   ListServices(grpc::ClientContext& context,

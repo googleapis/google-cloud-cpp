@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AppConnectorsServiceMetadata : public AppConnectorsServiceStub {
  public:
   ~AppConnectorsServiceMetadata() override = default;
-  explicit AppConnectorsServiceMetadata(
+  AppConnectorsServiceMetadata(
       std::shared_ptr<AppConnectorsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<
       google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse>

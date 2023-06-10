@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InstanceAdminMetadata : public InstanceAdminStub {
  public:
   ~InstanceAdminMetadata() override = default;
-  explicit InstanceAdminMetadata(
-      std::shared_ptr<InstanceAdminStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  InstanceAdminMetadata(std::shared_ptr<InstanceAdminStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
   ListInstanceConfigs(

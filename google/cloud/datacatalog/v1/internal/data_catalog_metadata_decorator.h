@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DataCatalogMetadata : public DataCatalogStub {
  public:
   ~DataCatalogMetadata() override = default;
-  explicit DataCatalogMetadata(
-      std::shared_ptr<DataCatalogStub> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+  DataCatalogMetadata(std::shared_ptr<DataCatalogStub> child,
+                      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse> SearchCatalog(
       grpc::ClientContext& context,
