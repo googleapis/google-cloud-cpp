@@ -119,7 +119,8 @@ CreateDefault$stub_class_name$(
     stub = std::make_shared<$auth_class_name$>(
         std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<$metadata_class_name$>(std::move(stub));
+  stub = std::make_shared<$metadata_class_name$>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(
       options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";

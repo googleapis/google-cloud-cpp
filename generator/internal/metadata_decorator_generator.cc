@@ -136,9 +136,9 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
 class $metadata_class_name$ : public $stub_class_name$ {
  public:
   ~$metadata_class_name$() override = default;
-  explicit $metadata_class_name$(
+  $metadata_class_name$(
       std::shared_ptr<$stub_class_name$> child,
-      std::multimap<std::string, std::string> fixed_metadata = {});
+      std::multimap<std::string, std::string> fixed_metadata);
 )""");
 
   HeaderPrintPublicMethods();

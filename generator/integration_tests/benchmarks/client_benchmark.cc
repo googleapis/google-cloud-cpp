@@ -189,7 +189,8 @@ BENCHMARK(BM_ClientRoundTripStubOnly);
 void BM_ClientRoundTripMetadata(benchmark::State& state) {
   auto options = Options{};
   std::shared_ptr<GoldenKitchenSinkStub> stub = std::make_shared<TestStub>();
-  stub = std::make_shared<GoldenKitchenSinkMetadata>(std::move(stub));
+  stub = std::make_shared<GoldenKitchenSinkMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   auto conn = MakeTestConnection(std::move(stub), std::move(options));
   auto client = GoldenKitchenSinkClient(std::move(conn));
 

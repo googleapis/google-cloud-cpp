@@ -265,7 +265,8 @@ std::shared_ptr<pubsub_internal::SubscriberStub> DecorateSubscriptionAdminStub(
     stub = std::make_shared<pubsub_internal::SubscriberAuth>(std::move(auth),
                                                              std::move(stub));
   }
-  stub = std::make_shared<pubsub_internal::SubscriberMetadata>(std::move(stub));
+  stub = std::make_shared<pubsub_internal::SubscriberMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   auto const& tracing = opts.get<TracingComponentsOption>();
   if (internal::Contains(tracing, "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";

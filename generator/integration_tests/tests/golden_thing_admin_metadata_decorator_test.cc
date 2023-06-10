@@ -71,7 +71,7 @@ TEST_F(MetadataDecoratorTest, GetDatabase) {
             return TransientError();
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
@@ -93,7 +93,7 @@ TEST_F(MetadataDecoratorTest, ListDatabases) {
             return TransientError();
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
@@ -114,7 +114,7 @@ TEST_F(MetadataDecoratorTest, CreateDatabase) {
             return LongrunningTransientError();
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   CompletionQueue cq;
   google::test::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
@@ -137,7 +137,7 @@ TEST_F(MetadataDecoratorTest, UpdateDatabaseDdl) {
             return LongrunningTransientError();
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   CompletionQueue cq;
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(
@@ -160,7 +160,7 @@ TEST_F(MetadataDecoratorTest, DropDatabase) {
             return TransientError();
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
@@ -182,7 +182,7 @@ TEST_F(MetadataDecoratorTest, GetDatabaseDdl) {
             return TransientError();
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::GetDatabaseDdlRequest request;
   request.set_database(
@@ -202,7 +202,7 @@ TEST_F(MetadataDecoratorTest, SetIamPolicy) {
         return TransientError();
       });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(
@@ -222,7 +222,7 @@ TEST_F(MetadataDecoratorTest, GetIamPolicy) {
         return TransientError();
       });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(
@@ -243,7 +243,7 @@ TEST_F(MetadataDecoratorTest, TestIamPermissions) {
             return TransientError();
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(
@@ -265,7 +265,7 @@ TEST_F(MetadataDecoratorTest, CreateBackup) {
             return LongrunningTransientError();
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   CompletionQueue cq;
   google::test::admin::database::v1::CreateBackupRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
@@ -286,7 +286,7 @@ TEST_F(MetadataDecoratorTest, GetBackup) {
         return TransientError();
       });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::GetBackupRequest request;
   request.set_name(
@@ -308,7 +308,7 @@ TEST_F(MetadataDecoratorTest, UpdateBackup) {
             return TransientError();
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(
@@ -330,7 +330,7 @@ TEST_F(MetadataDecoratorTest, DeleteBackup) {
             return TransientError();
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::DeleteBackupRequest request;
   request.set_name(
@@ -352,7 +352,7 @@ TEST_F(MetadataDecoratorTest, ListBackups) {
             return TransientError();
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
@@ -372,7 +372,7 @@ TEST_F(MetadataDecoratorTest, RestoreDatabase) {
         return LongrunningTransientError();
       });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   CompletionQueue cq;
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
@@ -393,7 +393,7 @@ TEST_F(MetadataDecoratorTest, ListDatabaseOperations) {
         return TransientError();
       });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
@@ -413,7 +413,7 @@ TEST_F(MetadataDecoratorTest, ListBackupOperations) {
         return TransientError();
       });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
@@ -436,7 +436,7 @@ TEST_F(MetadataDecoratorTest, AsyncGetDatabase) {
                     TransientError()));
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   CompletionQueue cq;
   google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
@@ -459,7 +459,7 @@ TEST_F(MetadataDecoratorTest, AsyncDropDatabase) {
             return make_ready_future(TransientError());
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   CompletionQueue cq;
   google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
@@ -483,7 +483,7 @@ TEST_F(MetadataDecoratorTest, LongRunningWithoutRouting) {
             return LongrunningTransientError();
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   CompletionQueue cq;
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
@@ -502,7 +502,7 @@ TEST_F(MetadataDecoratorTest, GetOperation) {
         return LongrunningTransientError();
       });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   CompletionQueue cq;
   google::longrunning::GetOperationRequest request;
   request.set_name("operations/my_operation");
@@ -522,7 +522,7 @@ TEST_F(MetadataDecoratorTest, CancelOperation) {
             return make_ready_future(TransientError());
           });
 
-  GoldenThingAdminMetadata stub(mock_);
+  GoldenThingAdminMetadata stub(mock_, {});
   CompletionQueue cq;
   google::longrunning::CancelOperationRequest request;
   request.set_name("operations/my_operation");

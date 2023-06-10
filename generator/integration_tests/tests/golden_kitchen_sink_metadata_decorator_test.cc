@@ -95,7 +95,7 @@ TEST_F(MetadataDecoratorTest, UserProject) {
         return TransientError();
       });
 
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
   // First try without any UserProjectOption
   {
     internal::OptionsSpan span(Options{});
@@ -127,7 +127,7 @@ TEST_F(MetadataDecoratorTest, GenerateAccessToken) {
         return TransientError();
       });
 
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::GenerateAccessTokenRequest request;
   request.set_name("projects/-/serviceAccounts/foo@bar.com");
@@ -147,7 +147,7 @@ TEST_F(MetadataDecoratorTest, GenerateIdToken) {
         return TransientError();
       });
 
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::GenerateIdTokenRequest request;
   request.set_name("projects/-/serviceAccounts/foo@bar.com");
@@ -167,7 +167,7 @@ TEST_F(MetadataDecoratorTest, WriteLogEntries) {
         return TransientError();
       });
 
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::WriteLogEntriesRequest request;
   auto status = stub.WriteLogEntries(context, request);
@@ -185,7 +185,7 @@ TEST_F(MetadataDecoratorTest, ListLogs) {
         return TransientError();
       });
 
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::ListLogsRequest request;
   request.set_parent("projects/my_project");
@@ -205,7 +205,7 @@ TEST_F(MetadataDecoratorTest, ListServiceAccountKeys) {
         return TransientError();
       });
 
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
   grpc::ClientContext context;
   google::test::admin::database::v1::ListServiceAccountKeysRequest request;
   request.set_name("projects/my-project/serviceAccounts/foo@bar.com");
@@ -225,7 +225,7 @@ TEST_F(MetadataDecoratorTest, StreamingRead) {
             request);
         return mock_response;
       });
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
   auto response =
       stub.StreamingRead(std::make_shared<grpc::ClientContext>(), Request{});
   EXPECT_THAT(absl::get<Status>(response->Read()), Not(IsOk()));
@@ -246,7 +246,7 @@ TEST_F(MetadataDecoratorTest, StreamingWrite) {
     return stream;
   });
 
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
   auto stream = stub.StreamingWrite(std::make_shared<grpc::ClientContext>());
   EXPECT_TRUE(stream->Write(Request{}, grpc::WriteOptions()));
   EXPECT_FALSE(stream->Write(Request{}, grpc::WriteOptions()));
@@ -268,7 +268,7 @@ TEST_F(MetadataDecoratorTest, AsyncStreamingRead) {
         return std::make_unique<ErrorStream>(
             Status(StatusCode::kAborted, "uh-oh"));
       });
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
 
   google::cloud::CompletionQueue cq;
   auto stream = stub.AsyncStreamingRead(
@@ -293,7 +293,7 @@ TEST_F(MetadataDecoratorTest, AsyncStreamingWrite) {
         return std::make_unique<ErrorStream>(
             Status(StatusCode::kAborted, "uh-oh"));
       });
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
 
   google::cloud::CompletionQueue cq;
   auto stream =
@@ -348,7 +348,7 @@ TEST_F(MetadataDecoratorTest, ExplicitRouting) {
         return Status();
       });
 
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
   grpc::ClientContext context1;
   grpc::ClientContext context2;
   // We make the same call twice. In the first call, we use `IsContextMDValid`
@@ -380,7 +380,7 @@ TEST_F(MetadataDecoratorTest, ExplicitRoutingDoesNotSendEmptyParams) {
         return Status();
       });
 
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
   grpc::ClientContext context1;
   grpc::ClientContext context2;
   google::test::admin::database::v1::ExplicitRoutingRequest request;
@@ -415,7 +415,7 @@ TEST_F(MetadataDecoratorTest, ExplicitRoutingNoRegexNeeded) {
         return Status();
       });
 
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
   grpc::ClientContext context1;
   grpc::ClientContext context2;
   // Note that the `app_profile_id` field is not set.
@@ -452,7 +452,7 @@ TEST_F(MetadataDecoratorTest, ExplicitRoutingNestedField) {
         return Status();
       });
 
-  GoldenKitchenSinkMetadata stub(mock_);
+  GoldenKitchenSinkMetadata stub(mock_, {});
   grpc::ClientContext context1;
   grpc::ClientContext context2;
   google::test::admin::database::v1::ExplicitRoutingRequest request;
