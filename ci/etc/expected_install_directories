@@ -887,6 +887,7 @@
 ./include/google/cloud/spanner/admin
 ./include/google/cloud/spanner/admin/internal
 ./include/google/cloud/spanner/admin/mocks
+./include/google/cloud/spanner/internal
 ./include/google/cloud/speech
 ./include/google/cloud/speech/mocks
 ./include/google/cloud/speech/v1
@@ -1059,6 +1060,7 @@
 ./include/google/spanner/admin/database/v1
 ./include/google/spanner/admin/instance
 ./include/google/spanner/admin/instance/v1
+./include/google/spanner/v1
 ./include/google/storage
 ./include/google/storage/v2
 ./include/google/storagetransfer
