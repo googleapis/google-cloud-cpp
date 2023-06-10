@@ -151,8 +151,18 @@ add_library(
     internal/session.h
     internal/session_pool.cc
     internal/session_pool.h
+    internal/spanner_auth_decorator.cc
+    internal/spanner_auth_decorator.h
+    internal/spanner_logging_decorator.cc
+    internal/spanner_logging_decorator.h
+    internal/spanner_metadata_decorator.cc
+    internal/spanner_metadata_decorator.h
+    internal/spanner_stub.cc
+    internal/spanner_stub.h
     internal/spanner_stub_factory.cc
     internal/spanner_stub_factory.h
+    internal/spanner_tracing_stub.cc
+    internal/spanner_tracing_stub.h
     internal/status_utils.cc
     internal/status_utils.h
     internal/transaction_impl.cc

@@ -67,9 +67,10 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
 
   MOCK_METHOD(
       std::unique_ptr<
-          grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>,
+          internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>,
       ExecuteStreamingSql,
-      (grpc::ClientContext&, google::spanner::v1::ExecuteSqlRequest const&),
+      (std::shared_ptr<grpc::ClientContext>,
+       google::spanner::v1::ExecuteSqlRequest const&),
       (override));
 
   MOCK_METHOD(StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>,
@@ -78,14 +79,12 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
                google::spanner::v1::ExecuteBatchDmlRequest const&),
               (override));
 
-  MOCK_METHOD(StatusOr<google::spanner::v1::ResultSet>, Read,
-              (grpc::ClientContext&, google::spanner::v1::ReadRequest const&));
-
   MOCK_METHOD(
       std::unique_ptr<
-          grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>,
+          internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>,
       StreamingRead,
-      (grpc::ClientContext&, google::spanner::v1::ReadRequest const&),
+      (std::shared_ptr<grpc::ClientContext>,
+       google::spanner::v1::ReadRequest const&),
       (override));
 
   MOCK_METHOD(StatusOr<google::spanner::v1::Transaction>, BeginTransaction,

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/spanner_stub_factory.h"
-#include "google/cloud/spanner/internal/logging_spanner_stub.h"
-#include "google/cloud/spanner/internal/metadata_spanner_stub.h"
-#include "google/cloud/spanner/internal/spanner_auth.h"
+#include "google/cloud/spanner/internal/spanner_auth_decorator.h"
+#include "google/cloud/spanner/internal/spanner_logging_decorator.h"
+#include "google/cloud/spanner/internal/spanner_metadata_decorator.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/grpc_options.h"
@@ -47,11 +47,14 @@ std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<SpannerAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<MetadataSpannerStub>(std::move(stub), db.FullName());
+  stub = std::make_shared<SpannerMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{
+                           {"google-cloud-resource-prefix", db.FullName()}});
   if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<LoggingSpannerStub>(
-        std::move(stub), opts.get<GrpcTracingOptionsOption>());
+    stub = std::make_shared<SpannerLogging>(
+        std::move(stub), opts.get<GrpcTracingOptionsOption>(),
+        opts.get<TracingComponentsOption>());
   }
   return stub;
 }
