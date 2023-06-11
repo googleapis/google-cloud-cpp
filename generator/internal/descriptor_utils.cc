@@ -399,9 +399,9 @@ ParameterCommentSubstitution substitutions[] = {
 
     // Some comments include multiple newlines in a row. We need to preserve
     // these because they are paragraph separators. When used in `@param`
-    // commands we need to represent them as `@n` or they do more than separate
-    // the paragraph. The would terminate the `@param` comment.
-    // No comments use more than three newlines in a row at the moment.
+    // commands we need to represent them as `@n` or they do would terminate the
+    // `@param` comment. No comments use more than three newlines in a row at
+    // the moment.
     {"\n\n\n", "\n @n\n"},
     {"\n\n", "\n @n\n"},
 
