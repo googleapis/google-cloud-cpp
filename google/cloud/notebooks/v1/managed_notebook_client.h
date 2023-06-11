@@ -320,7 +320,6 @@ class ManagedNotebookServiceClient {
   ///          }
   ///      }
   ///  @n
-  ///
   ///  Currently, only the following fields can be updated:
   ///  - `software_config.kernels`
   ///  - `software_config.post_startup_script`
