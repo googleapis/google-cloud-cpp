@@ -111,7 +111,7 @@ TEST(CreateDefaultSpannerStub, TracingEnabled) {
 TEST(CreateDefaultSpannerStub, TracingDisabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
   auto propagator = testing_util::InstallMockPropagator();
-  EXPECT_CALL(*propagator, Inject);
+  EXPECT_CALL(*propagator, Inject).Times(0);
 
   auto opts = DisableTracing(
       Options{}
