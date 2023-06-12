@@ -310,8 +310,8 @@ class ManagedNotebookServiceClient {
   ///  kernels, the `update_mask` parameter would be
   ///  specified as `software_config.kernels`,
   ///  and the `PATCH` request body would specify the new value.
-  ///     @n
-  ///     For more information, see [UpdateRuntimeRequest][google.cloud.notebooks.v1.UpdateRuntimeRequest].
+  ///  @n
+  ///  For more information, see [UpdateRuntimeRequest][google.cloud.notebooks.v1.UpdateRuntimeRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO

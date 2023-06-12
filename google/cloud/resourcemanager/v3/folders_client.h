@@ -261,8 +261,8 @@ class FoldersClient {
   /// @param query  Optional. Search criteria used to select the folders to return.
   ///  If no search criteria is specified then all accessible folders will be
   ///  returned.
-  ///     @n
-  ///     For more information, see [SearchFoldersRequest][google.cloud.resourcemanager.v3.SearchFoldersRequest].
+  ///  @n
+  ///  For more information, see [SearchFoldersRequest][google.cloud.resourcemanager.v3.SearchFoldersRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)

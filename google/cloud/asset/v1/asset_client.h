@@ -579,8 +579,8 @@ class AssetServiceClient {
   ///  query](https://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query)
   ///  for more information. If not specified or empty, it will search all the
   ///  resources within the specified `scope`.
-  ///     @n
-  ///     For more information, see [SearchAllResourcesRequest][google.cloud.asset.v1.SearchAllResourcesRequest].
+  ///  @n
+  ///  For more information, see [SearchAllResourcesRequest][google.cloud.asset.v1.SearchAllResourcesRequest].
   /// @param asset_types  Optional. A list of asset types that this request searches for. If empty,
   ///  it will search all the [searchable asset
   ///  types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
@@ -700,8 +700,8 @@ class AssetServiceClient {
   ///  contain the bindings that match your query. To learn more about the IAM
   ///  policy structure, see the [IAM policy
   ///  documentation](https://cloud.google.com/iam/help/allow-policies/structure).
-  ///     @n
-  ///     For more information, see [SearchAllIamPoliciesRequest][google.cloud.asset.v1.SearchAllIamPoliciesRequest].
+  ///  @n
+  ///  For more information, see [SearchAllIamPoliciesRequest][google.cloud.asset.v1.SearchAllIamPoliciesRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)

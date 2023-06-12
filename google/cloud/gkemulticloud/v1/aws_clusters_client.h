@@ -199,8 +199,8 @@ class AwsClustersClient {
   ///  resource to update.
   /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
   ///  this field.
-  ///     @n
-  ///     For more information, see [UpdateAwsClusterRequest][google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest].
+  ///  @n
+  ///  For more information, see [UpdateAwsClusterRequest][google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -671,8 +671,8 @@ class AwsClustersClient {
   ///  resource to update.
   /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
   ///  this field.
-  ///     @n
-  ///     For more information, see [UpdateAwsNodePoolRequest][google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest].
+  ///  @n
+  ///  For more information, see [UpdateAwsNodePoolRequest][google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO

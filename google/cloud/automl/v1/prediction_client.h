@@ -134,8 +134,8 @@ class PredictionServiceClient {
   ///  problem type that the model was trained to solve.
   /// @param params  Additional domain-specific parameters, any string must be up to 25000
   ///  characters long.
-  ///     @n
-  ///     For more information, see [PredictRequest][google.cloud.automl.v1.PredictRequest].
+  ///  @n
+  ///  For more information, see [PredictRequest][google.cloud.automl.v1.PredictRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -250,8 +250,8 @@ class PredictionServiceClient {
   ///  be written.
   /// @param params  Additional domain-specific parameters for the predictions, any string must
   ///  be up to 25000 characters long.
-  ///     @n
-  ///     For more information, see [BatchPredictRequest][google.cloud.automl.v1.BatchPredictRequest].
+  ///  @n
+  ///  For more information, see [BatchPredictRequest][google.cloud.automl.v1.BatchPredictRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO

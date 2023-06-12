@@ -318,8 +318,8 @@ class EnvironmentsClient {
   ///  numpy, the `updateMask` parameter would include the following two
   ///  `paths` values: "config.softwareConfig.pypiPackages.scikit-learn" and
   ///  "config.softwareConfig.pypiPackages.numpy".
-  ///     @n
-  ///     For more information, see [UpdateEnvironmentRequest][google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest].
+  ///  @n
+  ///  For more information, see [UpdateEnvironmentRequest][google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO

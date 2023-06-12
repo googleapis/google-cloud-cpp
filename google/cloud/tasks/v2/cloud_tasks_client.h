@@ -1152,8 +1152,8 @@ class CloudTasksClient {
   ///  @n
   ///  The queue must already exist.
   /// @param task  Required. The task to add.
-  ///     @n
-  ///     For more information, see [CreateTaskRequest][google.cloud.tasks.v2.CreateTaskRequest].
+  ///  @n
+  ///  For more information, see [CreateTaskRequest][google.cloud.tasks.v2.CreateTaskRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

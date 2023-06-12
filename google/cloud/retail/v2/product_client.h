@@ -569,8 +569,8 @@ class ProductServiceClient {
   /// they are obsolete.
   ///
   /// @param inventory  Required. The inventory information to update.
-  ///     @n
-  ///     For more information, see [SetInventoryRequest][google.cloud.retail.v2.SetInventoryRequest].
+  ///  @n
+  ///  For more information, see [SetInventoryRequest][google.cloud.retail.v2.SetInventoryRequest].
   /// @param set_mask  Indicates which inventory fields in the provided
   ///  [Product][google.cloud.retail.v2.Product] to update.
   ///  @n

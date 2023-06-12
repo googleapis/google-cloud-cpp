@@ -198,8 +198,8 @@ class LoggingServiceV2Client {
   ///  `log_name`, `resource`, and `labels` fields are copied into those log
   ///  entries in this list that do not include values for their corresponding
   ///  fields.
-  ///     @n
-  ///     For more information, see [WriteLogEntriesRequest][google.logging.v2.WriteLogEntriesRequest].
+  ///  @n
+  ///  For more information, see [WriteLogEntriesRequest][google.logging.v2.WriteLogEntriesRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -566,8 +566,8 @@ class LoggingServiceV2Client {
   ///  `log_name`, `resource`, and `labels` fields are copied into those log
   ///  entries in this list that do not include values for their corresponding
   ///  fields.
-  ///     @n
-  ///     For more information, see [WriteLogEntriesRequest][google.logging.v2.WriteLogEntriesRequest].
+  ///  @n
+  ///  For more information, see [WriteLogEntriesRequest][google.logging.v2.WriteLogEntriesRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

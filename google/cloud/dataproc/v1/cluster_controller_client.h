@@ -187,8 +187,8 @@ class ClusterControllerClient {
   ///  in a cluster to 5, the `update_mask` parameter would be
   ///  specified as `config.worker_config.num_instances`,
   ///  and the `PATCH` request body would specify the new value.
-  ///     @n
-  ///     For more information, see [UpdateClusterRequest][google.cloud.dataproc.v1.UpdateClusterRequest].
+  ///  @n
+  ///  For more information, see [UpdateClusterRequest][google.cloud.dataproc.v1.UpdateClusterRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO

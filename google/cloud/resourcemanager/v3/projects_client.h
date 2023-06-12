@@ -258,8 +258,8 @@ class ProjectsClient {
   ///  `resourcemanager.projects.get` permission to. If multiple fields are
   ///  included in the query, then it will return results that match any of the
   ///  fields.
-  ///     @n
-  ///     For more information, see [SearchProjectsRequest][google.cloud.resourcemanager.v3.SearchProjectsRequest].
+  ///  @n
+  ///  For more information, see [SearchProjectsRequest][google.cloud.resourcemanager.v3.SearchProjectsRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)

@@ -600,8 +600,8 @@ class JobServiceClient {
   ///  The format is "projects/{project_id}/tenants/{tenant_id}". For example,
   ///  "projects/foo/tenants/bar".
   /// @param filter  Required. The filter string specifies the jobs to be enumerated.
-  ///     @n
-  ///     For more information, see [ListJobsRequest][google.cloud.talent.v4.ListJobsRequest].
+  ///  @n
+  ///  For more information, see [ListJobsRequest][google.cloud.talent.v4.ListJobsRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
