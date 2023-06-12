@@ -35,8 +35,7 @@
 
 namespace {
 
-using ::google::cloud::pubsub::examples::
-    CommitSchemaRevisionsForRollbackSchemaTesting;
+using ::google::cloud::pubsub::examples::CommitSchemaWithRevisionsForTesting;
 using ::google::cloud::pubsub::examples::RandomSchemaId;
 using ::google::cloud::pubsub::examples::RandomSnapshotId;
 using ::google::cloud::pubsub::examples::RandomSubscriptionId;
@@ -1198,6 +1197,11 @@ void CreateTopicWithSchemaRevisions(
     if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The topic already exists\n";
       return;
+    } else if (topic.status().code() ==
+               google::cloud::StatusCode::kInvalidArgument) {
+      std::cout
+          << "The first revision id must be older than the last revision id.\n";
+      return;
     }
     if (!topic) throw std::move(topic).status();
 
@@ -1221,6 +1225,12 @@ void UpdateTopicSchema(google::cloud::pubsub::TopicAdminClient client,
             pubsub::Topic(std::move(project_id), std::move(topic_id)))
             .set_first_revision_id(first_revision_id)
             .set_last_revision_id(last_revision_id));
+
+    if (topic.status().code() == google::cloud::StatusCode::kInvalidArgument) {
+      std::cout
+          << "The first revision id must be older than the last revision id.\n";
+      return;
+    }
 
     if (!topic) throw std::move(topic).status();
 
@@ -2121,19 +2131,40 @@ void AutoRunAvro(
   std::cout << "\nRunning GetSchema sample" << std::endl;
   GetSchema(schema_admin, {project_id, avro_schema_id});
 
-  // For testing RollbackSchema, create 2 new schema revisions and rollback to
-  // the first one. The DeleteSchema call will remove all revisions of the
-  // schema.
-  std::string revision_id = CommitSchemaRevisionsForRollbackSchemaTesting(
-      schema_admin, project_id, avro_schema_id, avro_schema_id);
+  // For testing commands that require a revision id.
+  auto avro_revision_schema_id = RandomSchemaId(generator);
+  auto const avro_revision_topic_id = RandomTopicId(generator);
+  auto const revision_ids = CommitSchemaWithRevisionsForTesting(
+      schema_admin, project_id, avro_revision_schema_id,
+      avro_schema_definition_file, avro_revised_schema_definition_file, "AVRO");
+  auto const first_revision_id = revision_ids.first;
+  auto const last_revision_id = revision_ids.second;
+  std::cout << "\nRunning CreateTopicWithSchemaRevisions sample [avro]"
+            << std::endl;
+  CreateTopicWithSchemaRevisions(
+      topic_admin_client,
+      {project_id, avro_revision_topic_id, avro_revision_schema_id, "JSON",
+       first_revision_id, last_revision_id});
+  UpdateTopicSchema(topic_admin_client, {project_id, avro_revision_topic_id,
+                                         first_revision_id, first_revision_id});
+
   std::cout << "\nRunning GetSchemaRevision sample" << std::endl;
-  GetSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
+  GetSchemaRevision(schema_admin,
+                    {project_id, avro_revision_schema_id, first_revision_id});
 
   std::cout << "\nRunning RollbackSchema sample" << std::endl;
-  RollbackSchema(schema_admin, {project_id, avro_schema_id, revision_id});
+  RollbackSchema(schema_admin,
+                 {project_id, avro_revision_schema_id, first_revision_id});
 
   std::cout << "\nRunning DeleteSchemaRevision sample" << std::endl;
-  DeleteSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
+  DeleteSchemaRevision(
+      schema_admin, {project_id, avro_revision_schema_id, first_revision_id});
+
+  std::cout
+      << "\nCleaning up the topic and schema created for testing revisions"
+      << std::endl;
+  DeleteTopic(topic_admin_client, {project_id, avro_revision_topic_id});
+  DeleteSchema(schema_admin, {project_id, avro_revision_schema_id});
 
   std::cout << "\nRunning ListSchemas() sample" << std::endl;
   ListSchemas(schema_admin, {project_id});
@@ -2214,6 +2245,30 @@ void AutoRunProtobuf(
   std::cout << "\nRunning ValidateMessageNamedSchema() sample" << std::endl;
   ValidateMessageNamedSchema(schema_admin,
                              {project_id, proto_schema_id, proto_message_file});
+
+  // For testing commands that require a revision id.
+  auto proto_revision_schema_id = RandomSchemaId(generator);
+  auto const proto_revision_topic_id = RandomTopicId(generator);
+  auto const revision_ids = CommitSchemaWithRevisionsForTesting(
+      schema_admin, project_id, proto_revision_schema_id,
+      proto_schema_definition_file, proto_revised_schema_definition_file,
+      "PROTO");
+  auto const first_revision_id = revision_ids.first;
+  auto const last_revision_id = revision_ids.second;
+  std::cout << "\nRunning CreateTopicWithSchemaRevisions sample [proto]"
+            << std::endl;
+  CreateTopicWithSchemaRevisions(
+      topic_admin_client,
+      {project_id, proto_revision_topic_id, proto_revision_schema_id, "BINARY",
+       first_revision_id, last_revision_id});
+  UpdateTopicSchema(topic_admin_client, {project_id, proto_revision_topic_id,
+                                         first_revision_id, first_revision_id});
+
+  std::cout
+      << "\nCleaning up the topic and schema created for testing revisions"
+      << std::endl;
+  DeleteTopic(topic_admin_client, {project_id, proto_revision_topic_id});
+  DeleteSchema(schema_admin, {project_id, proto_revision_schema_id});
 
   std::cout << "\nRunning CreateTopicWithSchema() sample [proto]" << std::endl;
   auto const proto_topic_id = RandomTopicId(generator);

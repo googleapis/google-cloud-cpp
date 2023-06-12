@@ -78,11 +78,12 @@ std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator);
 
 std::string ReadFile(std::string const& path);
 
-// Commit two new schema revision and return the first revision id.
-std::string CommitSchemaRevisionsForRollbackSchemaTesting(
-    google::cloud::pubsub::SchemaServiceClient& schema_admin,
+// Commit a schema with a revision and return the first and last revision id.
+std::pair<std::string, std::string> CommitSchemaWithRevisionsForTesting(
+    google::cloud::pubsub::SchemaServiceClient& client,
     std::string const& project_id, std::string const& schema_id,
-    std::string const& file);
+    std::string const& schema_file, std::string const& revised_schema_file,
+    std::string const& type);
 
 }  // namespace examples
 }  // namespace pubsub
