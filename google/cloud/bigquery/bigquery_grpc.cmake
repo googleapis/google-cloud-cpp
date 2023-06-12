@@ -19,6 +19,7 @@ unset(source_globs)
 set(service_dirs
     ""
     "analyticshub/v1/"
+    "biglake/v1/"
     "connection/v1/"
     "datapolicies/v1/"
     "datatransfer/v1/"
