@@ -1174,6 +1174,41 @@ void CreateTopicWithSchema(google::cloud::pubsub::TopicAdminClient client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
+void CreateTopicWithSchemaRevisions(
+    google::cloud::pubsub::TopicAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [START pubsub_create_topic_with_schema_revisions]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::TopicAdminClient client, std::string project_id,
+     std::string topic_id, std::string schema_id, std::string const& encoding,
+     std::string const& first_revision_id,
+     std::string const& last_revision_id) {
+    auto const& schema = pubsub::Schema(project_id, std::move(schema_id));
+    auto topic = client.CreateTopic(
+        pubsub::TopicBuilder(
+            pubsub::Topic(std::move(project_id), std::move(topic_id)))
+            .set_schema(schema)
+            .set_encoding(encoding == "JSON" ? google::pubsub::v1::JSON
+                                             : google::pubsub::v1::BINARY)
+            .set_first_revision_id(first_revision_id)
+            .set_last_revision_id(last_revision_id));
+
+    // Note that kAlreadyExists is a possible error when the
+    // library retries.
+    if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The topic already exists\n";
+      return;
+    }
+    if (!topic) throw std::move(topic).status();
+
+    std::cout << "The topic was successfully created: " << topic->DebugString()
+              << "\n";
+  }
+  //! [END pubsub_create_topic_with_schema_revisions]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
+   argv.at(4), argv.at(5));
+}
+
 void PublishAvroRecords(google::cloud::pubsub::Publisher publisher,
                         std::vector<std::string> const&) {
   //! [START pubsub_publish_avro_records]
@@ -2068,8 +2103,7 @@ void AutoRunAvro(
   // the first one. The DeleteSchema call will remove all revisions of the
   // schema.
   std::string revision_id = CommitSchemaRevisionsForRollbackSchemaTesting(
-      schema_admin, project_id, avro_schema_id,
-      avro_revised_schema_definition_file);
+      schema_admin, project_id, avro_schema_id, avro_schema_id);
   std::cout << "\nRunning GetSchemaRevision sample" << std::endl;
   GetSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
 
@@ -2721,6 +2755,11 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           "create-topic-with-schema",
           {"project-id", "topic-id", "schema-id", "encoding"},
           CreateTopicWithSchema),
+      CreateTopicAdminCommand(
+          "create-topic-with-schema-revisions",
+          {"project-id", "topic-id", "schema-id", "encoding",
+           "first-revision-id", "last-revision-id"},
+          CreateTopicWithSchemaRevisions),
       CreatePublisherCommand("publish-avro-records", {}, PublishAvroRecords),
       CreateSubscriberCommand("subscribe-avro-records", {},
                               SubscribeAvroRecords),
