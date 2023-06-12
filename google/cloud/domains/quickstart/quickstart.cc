@@ -13,8 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/domains/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/domains/v1/domains_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -23,11 +22,11 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace domains = ::google::cloud::domains;
-  auto client = domains::Client(domains::MakeConnection());
+  namespace domains = ::google::cloud::domains_v1;
+  auto client = domains::DomainsClient(domains::MakeDomainsConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
+  for (auto r : client.ListRegistrations(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
