@@ -98,6 +98,7 @@ declare -A -r LIBRARIES=(
   ["contactcenterinsights"]="@com_google_googleapis//google/cloud/contactcenterinsights/v1:contactcenterinsights_cc_grpc"
   ["container"]="@com_google_googleapis//google/container/v1:container_cc_grpc"
   ["containeranalysis"]="@com_google_googleapis//google/devtools/containeranalysis/v1:containeranalysis_cc_grpc"
+  ["contentwarehouse"]="@com_google_googleapis//google/cloud/contentwarehouse/v1:contentwarehouse_cc_grpc"
   ["datacatalog"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/datacatalog/v1:datacatalog_cc_grpc" \
