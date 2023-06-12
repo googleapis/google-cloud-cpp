@@ -1,0 +1,25 @@
+/*!
+@page domains-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `domains_v1::DomainsClient`:
+
+@snippet domains_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page domains_v1::DomainsClient-endpoint-snippet Override domains_v1::DomainsClient Endpoint Configuration
+
+@snippet google/cloud/domains/v1/samples/domains_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

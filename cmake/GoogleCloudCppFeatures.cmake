@@ -72,6 +72,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "dialogflow_es"
     "dlp"
     "documentai"
+    "domains"
     "edgecontainer"
     "essentialcontacts"
     "eventarc"
