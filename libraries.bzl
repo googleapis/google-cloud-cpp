@@ -55,6 +55,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "contactcenterinsights",
     "container",
     "containeranalysis",
+    "contentwarehouse",
     "datacatalog",
     "datamigration",
     "dataplex",

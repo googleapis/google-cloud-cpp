@@ -295,13 +295,16 @@ function (google_cloud_cpp_load_protodeps var file)
         "google-cloud-cpp::cloud_oslogin_common_common_protos"
         "google-cloud-cpp::cloud_recommender_v1_recommender_protos"
         "google-cloud-cpp::identity_accesscontextmanager_type_type_protos")
-    # Replace "google-cloud-cpp::$1" with "google-cloud-cpp:$2" in deps.
+    # Replace "google-cloud-cpp::$1" with "google-cloud-cpp:$2" in deps. The
+    # most common reason to need one of these is a dependency between the protos
+    # in one library vs. the protos in a second library. The AIPs frown upon
+    # such dependencies, but they do happen.
     set(target_substitutions
         "grafeas_v1_grafeas_protos\;grafeas_protos"
         "identity_accesscontextmanager_v1_accesscontextmanager_protos\;accesscontextmanager_protos"
         "cloud_osconfig_v1_osconfig_protos\;osconfig_protos"
         "devtools_source_v1_source_protos\;devtools_source_v1_source_context_protos"
-    )
+        "cloud_documentai_v1_documentai_protos\;documentai_protos")
 
     foreach (line IN LISTS contents)
         if ("${line}" STREQUAL "")

@@ -124,9 +124,9 @@ if (BUILD_TESTING)
         NAME contentwarehouse_quickstart
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:contentwarehouse_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+            $<TARGET_FILE:contentwarehouse_quickstart>
+            GOOGLE_CLOUD_CPP_TEST_PROJECT_NUMBER
+            GOOGLE_CLOUD_CPP_CONTENTWAREHOUSE_TEST_LOCATION_ID)
     set_tests_properties(contentwarehouse_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
@@ -180,7 +180,8 @@ google_cloud_cpp_add_pkgconfig(
     "Provides C++ APIs to use the Document AI Warehouse API."
     "google_cloud_cpp_grpc_utils"
     " google_cloud_cpp_common"
-    " google_cloud_cpp_contentwarehouse_protos")
+    " google_cloud_cpp_contentwarehouse_protos"
+    " google_cloud_cpp_documentai_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

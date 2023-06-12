@@ -2,11 +2,13 @@
 
 @mainpage Document AI Warehouse API C++ Client Library
 
-An idiomatic C++ client library for the [Document AI Warehouse API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+An idiomatic C++ client library for the
+[Document AI Warehouse API][cloud-service-docs], an integrated, cloud-based
+platform to store, search, organize, govern and analyze documents and their
+structured metadata.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 @tableofcontents{HTML:2}
 
@@ -54,7 +56,7 @@ can override the default policies.
 - @ref contentwarehouse-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/contentwarehouse
+[cloud-service-docs]: https://cloud.google.com/document-warehouse/
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

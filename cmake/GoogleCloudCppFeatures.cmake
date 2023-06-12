@@ -63,6 +63,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "contactcenterinsights"
     "container"
     "containeranalysis"
+    "contentwarehouse"
     "datacatalog"
     "datamigration"
     "dataplex"
@@ -168,6 +169,9 @@ function (google_cloud_cpp_enable_deps)
     endif ()
     if (containeranalysis IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 grafeas)
+    endif ()
+    if (contentwarehouse IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 documentai)
     endif ()
     if (pubsublite IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 pubsub)
