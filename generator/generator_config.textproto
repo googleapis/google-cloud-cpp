@@ -2201,6 +2201,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Network Services (aka Traffic Director)
+service {
+  service_proto_path: "google/cloud/networkservices/v1/network_services.proto"
+  product_path: "google/cloud/networkservices/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Notebooks
 service {
   service_proto_path: "google/cloud/notebooks/v1/managed_service.proto"
