@@ -1209,6 +1209,28 @@ void CreateTopicWithSchemaRevisions(
    argv.at(4), argv.at(5));
 }
 
+void UpdateTopicSchema(google::cloud::pubsub::TopicAdminClient client,
+                       std::vector<std::string> const& argv) {
+  //! [START pubsub_update_topic_schema]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::TopicAdminClient client, std::string project_id,
+     std::string topic_id, std::string const& first_revision_id,
+     std::string const& last_revision_id) {
+    auto topic = client.UpdateTopic(
+        pubsub::TopicBuilder(
+            pubsub::Topic(std::move(project_id), std::move(topic_id)))
+            .set_first_revision_id(first_revision_id)
+            .set_last_revision_id(last_revision_id));
+
+    if (!topic) throw std::move(topic).status();
+
+    std::cout << "The topic was successfully updated: " << topic->DebugString()
+              << "\n";
+  }
+  //! [END pubsub_update_topic_schema]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
 void PublishAvroRecords(google::cloud::pubsub::Publisher publisher,
                         std::vector<std::string> const&) {
   //! [START pubsub_publish_avro_records]
@@ -2760,6 +2782,10 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           {"project-id", "topic-id", "schema-id", "encoding",
            "first-revision-id", "last-revision-id"},
           CreateTopicWithSchemaRevisions),
+      CreateTopicAdminCommand(
+          "update-topic-schema",
+          {"project-id", "topic-id", "first-revision-id", "last-revision-id"},
+          UpdateTopicSchema),
       CreatePublisherCommand("publish-avro-records", {}, PublishAvroRecords),
       CreateSubscriberCommand("subscribe-avro-records", {},
                               SubscribeAvroRecords),
