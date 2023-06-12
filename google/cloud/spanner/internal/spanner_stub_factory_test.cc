@@ -70,12 +70,12 @@ TEST(DecorateSpannerStub, Metadata) {
   auto const db = spanner::Database("foo", "bar", "baz");
   EXPECT_CALL(*mock, CreateSession)
       .WillOnce([&db](grpc::ClientContext& context,
-                   google::spanner::v1::CreateSessionRequest const&) {
-          testing_util::ValidateMetadataFixture fixture;
-          auto metadata = fixture.GetMetadata(context);
-          EXPECT_THAT(metadata, Contains(Pair("google-cloud-resource-prefix",
-                                              db.FullName())));
-          return internal::AbortedError("fail");
+                      google::spanner::v1::CreateSessionRequest const&) {
+        testing_util::ValidateMetadataFixture fixture;
+        auto metadata = fixture.GetMetadata(context);
+        EXPECT_THAT(metadata, Contains(Pair("google-cloud-resource-prefix",
+                                            db.FullName())));
+        return internal::AbortedError("fail");
       });
   auto opts =
       Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
