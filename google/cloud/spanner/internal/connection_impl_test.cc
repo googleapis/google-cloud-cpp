@@ -21,7 +21,10 @@
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/spanner/testing/status_utils.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/non_constructible.h"
+#include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -62,7 +65,6 @@ namespace {
 
 using ::google::cloud::spanner_testing::HasSessionAndTransaction;
 using ::google::cloud::spanner_testing::SessionNotFoundError;
-using ::google::cloud::spanner_testing::SessionNotFoundRpcError;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -72,7 +74,6 @@ using ::testing::_;
 using ::testing::AllOf;
 using ::testing::AtLeast;
 using ::testing::ByMove;
-using ::testing::DoAll;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
@@ -84,7 +85,6 @@ using ::testing::Pair;
 using ::testing::Property;
 using ::testing::Return;
 using ::testing::Sequence;
-using ::testing::SetArgPointee;
 using ::testing::StartsWith;
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedPointwise;
@@ -283,38 +283,35 @@ std::shared_ptr<ConnectionImpl> MakeConnectionImpl(
                                           std::move(stubs), std::move(opts));
 }
 
-class MockGrpcReader : public ::grpc::ClientReaderInterface<
-                           google::spanner::v1::PartialResultSet> {
+class MockStream
+    : public internal::StreamingReadRpc<google::spanner::v1::PartialResultSet> {
  public:
-  MOCK_METHOD(bool, Read, (google::spanner::v1::PartialResultSet*), (override));
-  MOCK_METHOD(bool, NextMessageSize, (std::uint32_t*), (override));
-  MOCK_METHOD(grpc::Status, Finish, (), (override));
-  MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD((absl::variant<Status, google::spanner::v1::PartialResultSet>),
+              Read, (), (override));
+  MOCK_METHOD(internal::StreamingRpcMetadata, GetRequestMetadata, (),
+              (const, override));
 };
 
-// Creates a MockGrpcReader that yields the specified `PartialResultSet`
+// Creates a MockStream that yields the specified `PartialResultSet`
 // `responses` (which can be given in proto or text format) in sequence,
 // and then yields the specified `status` (default OK).
-std::unique_ptr<MockGrpcReader> MakeReader(
+std::unique_ptr<MockStream> MakeReader(
     std::vector<google::spanner::v1::PartialResultSet> responses,
-    grpc::Status status = grpc::Status()) {
-  auto reader = std::make_unique<MockGrpcReader>();
+    Status status = Status()) {
+  auto reader = std::make_unique<MockStream>();
   Sequence s;
   for (auto& response : responses) {
     EXPECT_CALL(*reader, Read)
         .InSequence(s)
-        .WillOnce(DoAll(SetArgPointee<0>(std::move(response)), Return(true)));
+        .WillOnce(Return(std::move(response)));
   }
-  EXPECT_CALL(*reader, Read).InSequence(s).WillOnce(Return(false));
-  EXPECT_CALL(*reader, Finish())
-      .InSequence(s)
-      .WillOnce(Return(std::move(status)));
+  EXPECT_CALL(*reader, Read).InSequence(s).WillOnce(Return(std::move(status)));
   return reader;
 }
 
-std::unique_ptr<MockGrpcReader> MakeReader(
-    std::vector<std::string> const& responses,
-    grpc::Status status = grpc::Status()) {
+std::unique_ptr<MockStream> MakeReader(
+    std::vector<std::string> const& responses, Status status = Status()) {
   std::vector<google::spanner::v1::PartialResultSet> response_protos;
   response_protos.resize(responses.size());
   for (std::size_t i = 0; i < responses.size(); ++i) {
@@ -325,9 +322,9 @@ std::unique_ptr<MockGrpcReader> MakeReader(
   return MakeReader(std::move(response_protos), std::move(status));
 }
 
-std::unique_ptr<MockGrpcReader> MakeReader(
+std::unique_ptr<MockStream> MakeReader(
     std::initializer_list<internal::NonConstructible>,
-    grpc::Status status = grpc::Status()) {
+    Status status = Status()) {
   return MakeReader(std::vector<google::spanner::v1::PartialResultSet>{},
                     std::move(status));
 }
@@ -360,8 +357,8 @@ TEST(ConnectionImplTest, ReadStreamingReadFailure) {
                               "placeholder_database_id");
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  grpc::Status finish_status(grpc::StatusCode::PERMISSION_DENIED,
-                             "uh-oh in GrpcReader::Finish");
+  auto finish_status =
+      internal::PermissionDeniedError("uh-oh in GrpcReader::Finish");
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
@@ -384,7 +381,7 @@ TEST(ConnectionImplTest, ReadSuccess) {
                               "placeholder_database_id");
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  grpc::Status retry_status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  auto retry_status = internal::UnavailableError("try-again");
   std::vector<std::string> responses = {
       R"pb(
         metadata: {
@@ -417,14 +414,14 @@ TEST(ConnectionImplTest, ReadSuccess) {
       StreamingRead(
           _, HasPriority(google::spanner::v1::RequestOptions::PRIORITY_LOW)))
       .WillOnce(
-          [&retry_status](grpc::ClientContext&,
+          [&retry_status](std::shared_ptr<grpc::ClientContext> const&,
                           google::spanner::v1::ReadRequest const& request) {
             // The beginning of the row stream, but immediately fail.
             EXPECT_THAT(request.resume_token(), IsEmpty());
             return MakeReader({}, retry_status);
           })
       .WillOnce([&responses, &retry_status](
-                    grpc::ClientContext&,
+                    std::shared_ptr<grpc::ClientContext> const&,
                     google::spanner::v1::ReadRequest const& request) {
         // Restart from the beginning, but return the metadata and first
         // row before failing again.
@@ -432,14 +429,14 @@ TEST(ConnectionImplTest, ReadSuccess) {
         return MakeReader({responses[0]}, retry_status);
       })
       .WillOnce([&responses, &retry_status](
-                    grpc::ClientContext&,
+                    std::shared_ptr<grpc::ClientContext> const&,
                     google::spanner::v1::ReadRequest const& request) {
         // Restart from the second row, but only return part of it before
         // failing once more.
         EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
         return MakeReader({responses[1]}, retry_status);
       })
-      .WillOnce([&responses](grpc::ClientContext&,
+      .WillOnce([&responses](std::shared_ptr<grpc::ClientContext> const&,
                              google::spanner::v1::ReadRequest const& request) {
         // Restart from the second row, but now deliver it all in two chunks.
         EXPECT_THAT(request.resume_token(), Eq("restart-row-2"));
@@ -471,8 +468,8 @@ TEST(ConnectionImplTest, ReadPermanentFailure) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce(Return(ByMove(
-          MakeReader({}, {grpc::StatusCode::PERMISSION_DENIED, "uh-oh"}))));
+      .WillOnce(Return(
+          ByMove(MakeReader({}, internal::PermissionDeniedError("uh-oh")))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
@@ -497,7 +494,7 @@ TEST(ConnectionImplTest, ReadTooManyTransientFailures) {
       .Times(AtLeast(2))
       // This won't compile without `Unused` despite what the gMock docs say.
       .WillRepeatedly([](Unused, Unused) {
-        return MakeReader({}, {grpc::StatusCode::UNAVAILABLE, "try-again"});
+        return MakeReader({}, internal::UnavailableError("try-again"));
       });
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -542,8 +539,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  grpc::Status grpc_status(grpc::StatusCode::UNAVAILABLE, "uh-oh");
-  auto failing_reader = MakeReader({}, grpc_status);
+  auto status = internal::UnavailableError("uh-oh");
+  auto failing_reader = MakeReader({}, status);
   auto constexpr kText = R"pb(
     metadata: {
       transaction: { id: "ABCDEF00" }
@@ -600,8 +597,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  grpc::Status grpc_status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
-  auto failing_reader = MakeReader({}, grpc_status);
+  auto status = internal::PermissionDeniedError("uh-oh");
+  auto failing_reader = MakeReader({}, status);
   auto constexpr kText = R"pb(
     metadata: {
       row_type: {
@@ -661,9 +658,9 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  grpc::Status grpc_status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
-  auto reader1 = MakeReader({}, grpc_status);
-  auto reader2 = MakeReader({}, grpc_status);
+  auto status = internal::PermissionDeniedError("uh-oh");
+  auto reader1 = MakeReader({}, status);
+  auto reader2 = MakeReader({}, status);
 
   // n.b. these calls are explicitly sequenced because using the scoped
   // `InSequence` object causes gMock to get confused by the reader calls.
@@ -723,8 +720,8 @@ TEST(ConnectionImplTest, ExecuteQueryStreamingReadFailure) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(
-          Return(ByMove(MakeReader({}, {grpc::StatusCode::PERMISSION_DENIED,
-                                        "uh-oh in GrpcReader::Finish"}))));
+          Return(ByMove(MakeReader({}, internal::PermissionDeniedError(
+                                           "uh-oh in GrpcReader::Finish")))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -906,7 +903,7 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
     values: { string_value: "1999" }
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&,
                     google::spanner::v1::ExecuteSqlRequest const& request) {
         EXPECT_EQ(request.params().fields().at("value").string_value(), "998");
         EXPECT_EQ(request.param_types().at("value").code(),
@@ -916,7 +913,7 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
                       TYPE_ANNOTATION_CODE_UNSPECIFIED);
         return MakeReader({kResponseNumeric});
       })
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&,
                     google::spanner::v1::ExecuteSqlRequest const& request) {
         EXPECT_EQ(request.params().fields().at("value").string_value(), "999");
         EXPECT_EQ(request.param_types().at("value").code(),
@@ -925,7 +922,7 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
                   google::spanner::v1::TypeAnnotationCode::PG_NUMERIC);
         return MakeReader({kResponsePgNumeric});
       })
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](std::shared_ptr<grpc::ClientContext> const&,
                     google::spanner::v1::ExecuteSqlRequest const& request) {
         EXPECT_EQ(request.params().fields().at("value").string_value(), "NaN");
         EXPECT_EQ(request.param_types().at("value").code(),
@@ -1117,18 +1114,17 @@ TEST(ConnectionImplTest, QueryOptions) {
             .set_request_priority(tc.options.request_priority())
             .set_transaction_tag("tag")};
 
-    // We wrap MockGrpcReader in NiceMock, because we don't really care how
+    // We wrap MockStream in NiceMock, because we don't really care how
     // it's called in this test (aside from needing to return a transaction in
     // the first call), and we want to minimize gMock's "uninteresting mock
     // function call" warnings.
-    auto grpc_reader = std::make_unique<NiceMock<MockGrpcReader>>();
+    auto stream = std::make_unique<NiceMock<MockStream>>();
     auto constexpr kResponseText = R"pb(
       metadata: { transaction: { id: "2468ACE" } }
     )pb";
     google::spanner::v1::PartialResultSet response;
     ASSERT_TRUE(TextFormat::ParseFromString(kResponseText, &response));
-    EXPECT_CALL(*grpc_reader, Read)
-        .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
+    EXPECT_CALL(*stream, Read).WillOnce(Return(response));
     {
       InSequence seq;
 
@@ -1186,13 +1182,12 @@ TEST(ConnectionImplTest, QueryOptions) {
           .WillOnce(Return(MakeSessionsResponse({"session-name"})))
           .RetiresOnSaturation();
       EXPECT_CALL(*mock, ExecuteStreamingSql(_, execute_sql_request_matcher))
-          .WillOnce(Return(ByMove(std::move(grpc_reader))))
+          .WillOnce(Return(ByMove(std::move(stream))))
           .RetiresOnSaturation();
 
       // ProfileQuery().
       EXPECT_CALL(*mock, ExecuteStreamingSql(_, execute_sql_request_matcher))
-          .WillOnce(
-              Return(ByMove(std::make_unique<NiceMock<MockGrpcReader>>())))
+          .WillOnce(Return(ByMove(std::make_unique<NiceMock<MockStream>>())))
           .RetiresOnSaturation();
 
       // ExecutePartitionedDml().
@@ -1204,8 +1199,7 @@ TEST(ConnectionImplTest, QueryOptions) {
           .RetiresOnSaturation();
       EXPECT_CALL(*mock,
                   ExecuteStreamingSql(_, untagged_execute_sql_request_matcher))
-          .WillOnce(
-              Return(ByMove(std::make_unique<NiceMock<MockGrpcReader>>())))
+          .WillOnce(Return(ByMove(std::make_unique<NiceMock<MockStream>>())))
           .RetiresOnSaturation();
 
       // ExecuteDml(), ProfileDml(), AnalyzeSql().
@@ -1220,8 +1214,7 @@ TEST(ConnectionImplTest, QueryOptions) {
 
       // Read().
       EXPECT_CALL(*mock, StreamingRead(_, read_request_matcher))
-          .WillOnce(
-              Return(ByMove(std::make_unique<NiceMock<MockGrpcReader>>())))
+          .WillOnce(Return(ByMove(std::make_unique<NiceMock<MockStream>>())))
           .RetiresOnSaturation();
 
       // Commit().
@@ -1496,8 +1489,8 @@ TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
                               "placeholder_database_id");
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  grpc::Status finish_status(grpc::StatusCode::PERMISSION_DENIED,
-                             "uh-oh in GrpcReader::Finish");
+  auto finish_status =
+      internal::PermissionDeniedError("uh-oh in GrpcReader::Finish");
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
@@ -1943,9 +1936,9 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql(
                          _, AllOf(HasRequestTag("tag"), HasTransactionTag(""))))
-      .WillOnce(Return(
-          ByMove(MakeReader({}, {grpc::StatusCode::UNAVAILABLE,
-                                 "try-again in ExecutePartitionedDml"}))))
+      .WillOnce(Return(ByMove(MakeReader(
+          {},
+          internal::UnavailableError("try-again in ExecutePartitionedDml")))))
       .WillOnce(Return(ByMove(MakeReader({kTextResponse}))));
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -1988,7 +1981,7 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeletePermanentFailure) {
   // This tests that other `kInternal` errors are treated as permanent.
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(
-          MakeReader({}, {grpc::StatusCode::INTERNAL, "permanent failure"}))));
+          MakeReader({}, internal::InternalError("permanent failure")))));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
@@ -2011,8 +2004,8 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
       .Times(AtLeast(2))
       // This won't compile without `Unused` despite what the gMock docs say.
       .WillRepeatedly([](Unused, Unused) {
-        return MakeReader({}, {grpc::StatusCode::UNAVAILABLE,
-                               "try-again in ExecutePartitionedDml"});
+        return MakeReader({}, internal::UnavailableError(
+                                  "try-again in ExecutePartitionedDml"));
       });
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -2042,11 +2035,11 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlRetryableInternalErrors) {
   )pb";
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader(
-          {}, {grpc::StatusCode::INTERNAL,
-               "Received unexpected EOS on DATA frame from server"}))))
+          {}, internal::InternalError(
+                  "Received unexpected EOS on DATA frame from server")))))
       .WillOnce(Return(ByMove(MakeReader(
-          {}, {grpc::StatusCode::INTERNAL,
-               "HTTP/2 error code: INTERNAL_ERROR\nReceived Rst Stream"}))))
+          {}, internal::InternalError(
+                  "HTTP/2 error code: INTERNAL_ERROR\nReceived Rst Stream")))))
       .WillOnce(Return(ByMove(MakeReader({kTextResponse}))));
 
   auto conn = MakeConnectionImpl(db, mock);
@@ -2505,7 +2498,7 @@ TEST(ConnectionImplTest, ReadPartition) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, BeginTransaction).Times(0);
   EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
                    google::spanner::v1::ReadRequest const& request) {
         EXPECT_EQ("test-session-name", request.session());
         EXPECT_EQ("Table", request.table());
@@ -2660,7 +2653,7 @@ TEST(ConnectionImplTest, QueryPartition) {
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   EXPECT_CALL(*mock, BeginTransaction).Times(0);
   EXPECT_CALL(*mock, ExecuteStreamingSql)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](std::shared_ptr<grpc::ClientContext> const&,
                    google::spanner::v1::ExecuteSqlRequest const& request) {
         EXPECT_EQ("test-session-name", request.session());
         EXPECT_EQ("SELECT * FROM Table", request.sql());
@@ -2860,7 +2853,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
       .WillOnce(Return(MakeSessionsResponse({"session-2"})));
 
   constexpr int kNumResponses = 4;
-  std::array<std::unique_ptr<MockGrpcReader>, kNumResponses> readers;
+  std::array<std::unique_ptr<MockStream>, kNumResponses> readers;
   for (int i = 0; i < kNumResponses; ++i) {
     auto constexpr kText = R"pb(
       metadata: {
@@ -2989,7 +2982,7 @@ TEST(ConnectionImplTest, ReadSessionNotFound) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  auto finish_status = SessionNotFoundRpcError("test-session-name");
+  auto finish_status = SessionNotFoundError("test-session-name");
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
@@ -3030,7 +3023,7 @@ TEST(ConnectionImplTest, ExecuteQuerySessionNotFound) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  auto finish_status = SessionNotFoundRpcError("test-session-name");
+  auto finish_status = SessionNotFoundError("test-session-name");
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 
@@ -3050,7 +3043,7 @@ TEST(ConnectionImplTest, ProfileQuerySessionNotFound) {
   auto db = spanner::Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  auto finish_status = SessionNotFoundRpcError("test-session-name");
+  auto finish_status = SessionNotFoundError("test-session-name");
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce(Return(ByMove(MakeReader({}, finish_status))));
 

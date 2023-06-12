@@ -110,8 +110,8 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L60}
-  /// [google.cloud.cpp.compute.v1.LicenseCode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13102}
+  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L65}
+  /// [google.cloud.cpp.compute.v1.LicenseCode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13107}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
@@ -145,8 +145,8 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L60}
-  /// [google.cloud.cpp.compute.v1.LicenseCode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13102}
+  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L65}
+  /// [google.cloud.cpp.compute.v1.LicenseCode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13107}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
@@ -177,8 +177,8 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L69}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
+  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L74}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28944}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -214,8 +214,8 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L69}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
+  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L74}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28944}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

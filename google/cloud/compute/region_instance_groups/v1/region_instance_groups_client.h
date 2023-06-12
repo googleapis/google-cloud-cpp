@@ -112,8 +112,8 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L81}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9457}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L86}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9462}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -144,8 +144,8 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L81}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9457}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L86}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9462}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -183,8 +183,8 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L170}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9457}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L175}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9462}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -225,8 +225,8 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L170}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9457}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L175}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9462}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -269,8 +269,8 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L93}
-  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11605}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L98}
+  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11610}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
@@ -317,8 +317,8 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L93}
-  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11605}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L98}
+  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11610}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
@@ -354,7 +354,7 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.SetNamedPortsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L238}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.SetNamedPortsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L243}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
@@ -395,7 +395,7 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.SetNamedPortsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L238}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.SetNamedPortsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L243}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(

@@ -32,6 +32,10 @@
 ./include/google/cloud/advisorynotifications/v1
 ./include/google/cloud/advisorynotifications/v1/internal
 ./include/google/cloud/advisorynotifications/v1/mocks
+./include/google/cloud/aiplatform
+./include/google/cloud/aiplatform/v1
+./include/google/cloud/aiplatform/v1/internal
+./include/google/cloud/aiplatform/v1/mocks
 ./include/google/cloud/alloydb
 ./include/google/cloud/alloydb/v1
 ./include/google/cloud/alloydb/v1/internal
@@ -625,6 +629,10 @@
 ./include/google/cloud/documentai/v1
 ./include/google/cloud/documentai/v1/internal
 ./include/google/cloud/documentai/v1/mocks
+./include/google/cloud/domains
+./include/google/cloud/domains/v1
+./include/google/cloud/domains/v1/internal
+./include/google/cloud/domains/v1/mocks
 ./include/google/cloud/edgecontainer
 ./include/google/cloud/edgecontainer/mocks
 ./include/google/cloud/edgecontainer/v1
@@ -891,6 +899,7 @@
 ./include/google/cloud/spanner/admin
 ./include/google/cloud/spanner/admin/internal
 ./include/google/cloud/spanner/admin/mocks
+./include/google/cloud/spanner/internal
 ./include/google/cloud/speech
 ./include/google/cloud/speech/mocks
 ./include/google/cloud/speech/v1
@@ -1063,6 +1072,7 @@
 ./include/google/spanner/admin/database/v1
 ./include/google/spanner/admin/instance
 ./include/google/spanner/admin/instance/v1
+./include/google/spanner/v1
 ./include/google/storage
 ./include/google/storage/v2
 ./include/google/storagetransfer
@@ -1072,6 +1082,7 @@
 ./lib64/cmake/google_cloud_cpp_accessapproval
 ./lib64/cmake/google_cloud_cpp_accesscontextmanager
 ./lib64/cmake/google_cloud_cpp_advisorynotifications
+./lib64/cmake/google_cloud_cpp_aiplatform
 ./lib64/cmake/google_cloud_cpp_alloydb
 ./lib64/cmake/google_cloud_cpp_apigateway
 ./lib64/cmake/google_cloud_cpp_apigeeconnect
@@ -1108,6 +1119,7 @@
 ./lib64/cmake/google_cloud_cpp_dialogflow_es
 ./lib64/cmake/google_cloud_cpp_dlp
 ./lib64/cmake/google_cloud_cpp_documentai
+./lib64/cmake/google_cloud_cpp_domains
 ./lib64/cmake/google_cloud_cpp_edgecontainer
 ./lib64/cmake/google_cloud_cpp_essentialcontacts
 ./lib64/cmake/google_cloud_cpp_eventarc

@@ -1,0 +1,151 @@
+/*!
+@page aiplatform-override-authentication How to Override the Authentication Credentials
+
+Unless otherwise configured, the client libraries use
+[Application Default Credentials] to authenticate with Google Cloud Services.
+While this works for most applications, in some cases you may need to override
+this default. You can do so by providing the
+[UnifiedCredentialsOption](@ref google::cloud::UnifiedCredentialsOption)
+The following example shows how to explicitly load a service account key file:
+
+<!-- inject-service-account-snippet-start -->
+@snippet dataset_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c aiplatform_v1::DatasetServiceClient](@ref aiplatform_v1::DatasetServiceClient-service-account-snippet)
+- [\c aiplatform_v1::EndpointServiceClient](@ref aiplatform_v1::EndpointServiceClient-service-account-snippet)
+- [\c aiplatform_v1::FeaturestoreServiceClient](@ref aiplatform_v1::FeaturestoreServiceClient-service-account-snippet)
+- [\c aiplatform_v1::FeaturestoreOnlineServingServiceClient](@ref aiplatform_v1::FeaturestoreOnlineServingServiceClient-service-account-snippet)
+- [\c aiplatform_v1::IndexServiceClient](@ref aiplatform_v1::IndexServiceClient-service-account-snippet)
+- [\c aiplatform_v1::IndexEndpointServiceClient](@ref aiplatform_v1::IndexEndpointServiceClient-service-account-snippet)
+- [\c aiplatform_v1::JobServiceClient](@ref aiplatform_v1::JobServiceClient-service-account-snippet)
+- [\c aiplatform_v1::MatchServiceClient](@ref aiplatform_v1::MatchServiceClient-service-account-snippet)
+- [\c aiplatform_v1::MetadataServiceClient](@ref aiplatform_v1::MetadataServiceClient-service-account-snippet)
+- [\c aiplatform_v1::MigrationServiceClient](@ref aiplatform_v1::MigrationServiceClient-service-account-snippet)
+- [\c aiplatform_v1::ModelServiceClient](@ref aiplatform_v1::ModelServiceClient-service-account-snippet)
+- [\c aiplatform_v1::ModelGardenServiceClient](@ref aiplatform_v1::ModelGardenServiceClient-service-account-snippet)
+- [\c aiplatform_v1::PipelineServiceClient](@ref aiplatform_v1::PipelineServiceClient-service-account-snippet)
+- [\c aiplatform_v1::PredictionServiceClient](@ref aiplatform_v1::PredictionServiceClient-service-account-snippet)
+- [\c aiplatform_v1::SpecialistPoolServiceClient](@ref aiplatform_v1::SpecialistPoolServiceClient-service-account-snippet)
+- [\c aiplatform_v1::TensorboardServiceClient](@ref aiplatform_v1::TensorboardServiceClient-service-account-snippet)
+- [\c aiplatform_v1::VizierServiceClient](@ref aiplatform_v1::VizierServiceClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
+*/
+
+// <!-- inject-authentication-pages-start -->
+
+/*! @page aiplatform_v1::DatasetServiceClient-service-account-snippet Override aiplatform_v1::DatasetServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/dataset_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::EndpointServiceClient-service-account-snippet Override aiplatform_v1::EndpointServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/endpoint_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::FeaturestoreServiceClient-service-account-snippet Override aiplatform_v1::FeaturestoreServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/featurestore_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::FeaturestoreOnlineServingServiceClient-service-account-snippet Override aiplatform_v1::FeaturestoreOnlineServingServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/featurestore_online_serving_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::IndexServiceClient-service-account-snippet Override aiplatform_v1::IndexServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/index_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::IndexEndpointServiceClient-service-account-snippet Override aiplatform_v1::IndexEndpointServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/index_endpoint_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::JobServiceClient-service-account-snippet Override aiplatform_v1::JobServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/job_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::MatchServiceClient-service-account-snippet Override aiplatform_v1::MatchServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/match_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::MetadataServiceClient-service-account-snippet Override aiplatform_v1::MetadataServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/metadata_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::MigrationServiceClient-service-account-snippet Override aiplatform_v1::MigrationServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/migration_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::ModelServiceClient-service-account-snippet Override aiplatform_v1::ModelServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/model_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::ModelGardenServiceClient-service-account-snippet Override aiplatform_v1::ModelGardenServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/model_garden_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::PipelineServiceClient-service-account-snippet Override aiplatform_v1::PipelineServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/pipeline_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::PredictionServiceClient-service-account-snippet Override aiplatform_v1::PredictionServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/prediction_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::SpecialistPoolServiceClient-service-account-snippet Override aiplatform_v1::SpecialistPoolServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/specialist_pool_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::TensorboardServiceClient-service-account-snippet Override aiplatform_v1::TensorboardServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/tensorboard_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::VizierServiceClient-service-account-snippet Override aiplatform_v1::VizierServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/vizier_client_samples.cc with-service-account
+
+*/
+// <!-- inject-authentication-pages-end -->

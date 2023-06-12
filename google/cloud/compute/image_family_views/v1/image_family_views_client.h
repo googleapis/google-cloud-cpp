@@ -109,8 +109,8 @@ class ImageFamilyViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L45}
-  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8973}
+  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L50}
+  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8978}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
@@ -142,8 +142,8 @@ class ImageFamilyViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L45}
-  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8973}
+  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L50}
+  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8978}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>

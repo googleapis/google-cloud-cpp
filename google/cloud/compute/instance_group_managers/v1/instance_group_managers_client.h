@@ -132,7 +132,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.AbandonInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L356}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.AbandonInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L361}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AbandonInstances(
@@ -184,7 +184,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.AbandonInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L356}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.AbandonInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L361}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AbandonInstances(
@@ -211,8 +211,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L392}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagerAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9910}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L397}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagerAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9915}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>
@@ -243,8 +243,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L392}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagerAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9910}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L397}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagerAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9915}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>
@@ -283,7 +283,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ApplyUpdatesToInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L466}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ApplyUpdatesToInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L471}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -326,7 +326,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ApplyUpdatesToInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L466}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ApplyUpdatesToInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L471}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -368,7 +368,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.CreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L490}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.CreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L495}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateInstances(
@@ -414,7 +414,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.CreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L490}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.CreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L495}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateInstances(
@@ -451,7 +451,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L526}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L531}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -492,7 +492,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L526}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L531}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -539,7 +539,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L556}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
@@ -590,7 +590,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L556}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
@@ -628,7 +628,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L592}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L597}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -671,7 +671,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L592}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L597}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -701,8 +701,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L617}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9734}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L622}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9739}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -734,8 +734,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L617}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9734}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L622}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9739}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -778,7 +778,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.InsertInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L629}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.InsertInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L634}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -825,7 +825,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.InsertInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L629}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.InsertInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L634}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -864,8 +864,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L734}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9734}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L739}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9739}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -906,8 +906,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L734}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9734}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L739}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9739}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -950,8 +950,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L660}
-  /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11052}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L665}
+  /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11057}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceManagedByIgmError>
@@ -992,8 +992,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L660}
-  /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11052}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L665}
+  /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11057}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceManagedByIgmError>
@@ -1029,8 +1029,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L802}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L10381}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L807}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L10386}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::
@@ -1070,8 +1070,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L802}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L10381}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L807}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L10386}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::
@@ -1112,8 +1112,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L873}
-  /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18607}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L878}
+  /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18612}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PerInstanceConfig>
@@ -1155,8 +1155,8 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L873}
-  /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18607}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L878}
+  /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18612}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PerInstanceConfig>
@@ -1201,7 +1201,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L945}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L950}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1251,7 +1251,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L945}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L950}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1291,7 +1291,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L979}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L984}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1335,7 +1335,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L979}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L984}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1380,7 +1380,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.RecreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1016}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.RecreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1021}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1431,7 +1431,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.RecreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1016}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.RecreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1021}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1483,7 +1483,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1052}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1057}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -1535,7 +1535,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1052}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1057}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -1574,7 +1574,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetInstanceTemplateRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1087}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetInstanceTemplateRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1092}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1619,7 +1619,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetInstanceTemplateRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1087}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetInstanceTemplateRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1092}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1660,7 +1660,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1123}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1128}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTargetPools(
@@ -1706,7 +1706,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1123}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1128}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTargetPools(
@@ -1745,7 +1745,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.UpdatePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1159}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.UpdatePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1164}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1789,7 +1789,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.UpdatePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1159}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.UpdatePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1164}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

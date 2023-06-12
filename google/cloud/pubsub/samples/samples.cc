@@ -35,6 +35,8 @@
 
 namespace {
 
+using ::google::cloud::pubsub::examples::
+    CommitSchemaRevisionsForRollbackSchemaTesting;
 using ::google::cloud::pubsub::examples::RandomSchemaId;
 using ::google::cloud::pubsub::examples::RandomSnapshotId;
 using ::google::cloud::pubsub::examples::RandomSubscriptionId;
@@ -837,7 +839,7 @@ void CreateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
 
 void CommitAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
                       std::vector<std::string> const& argv) {
-  //! [START pubsub_commit_avro_schema] [commit-avro-schema]
+  //! [START pubsub_commit_avro_schema]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_id, std::string const& schema_definition_file) {
@@ -860,13 +862,13 @@ void CommitAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
     std::cout << "Schema revision successfully committed: "
               << schema->DebugString() << "\n";
   }
-  //! [END pubsub_commit_avro_schema] [commit-avro-schema]
+  //! [END pubsub_commit_avro_schema]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CommitProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
                           std::vector<std::string> const& argv) {
-  //! [START pubsub_commit_proto_schema] [commit-protobuf-schema]
+  //! [START pubsub_commit_proto_schema]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_id, std::string const& schema_definition_file) {
@@ -890,7 +892,7 @@ void CommitProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
     std::cout << "Schema revision successfully committed: "
               << schema->DebugString() << "\n";
   }
-  //! [END pubsub_commit_proto_schema] [commit-protobuf-schema]
+  //! [END pubsub_commit_proto_schema]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
@@ -906,11 +908,35 @@ void GetSchema(google::cloud::pubsub::SchemaServiceClient client,
     auto schema = client.GetSchema(request);
     if (!schema) throw std::move(schema).status();
 
-    std::cout << "The schema exists and its metadata is: "
+    std::cout << "The schema exists and its metadata is:"
+              << "\n"
               << schema->DebugString() << "\n";
   }
   //! [END pubsub_get_schema] [get-schema]
   (std::move(client), argv.at(0), argv.at(1));
+}
+
+void GetSchemaRevision(google::cloud::pubsub::SchemaServiceClient client,
+                       std::vector<std::string> const& argv) {
+  //! [START pubsub_get_schema_revision]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SchemaServiceClient client, std::string const& project_id,
+     std::string const& schema_id, std::string const& revision_id) {
+    std::string const schema_id_with_revision = schema_id + "@" + revision_id;
+
+    google::pubsub::v1::GetSchemaRequest request;
+    request.set_name(
+        pubsub::Schema(project_id, schema_id_with_revision).FullName());
+    request.set_view(google::pubsub::v1::FULL);
+    auto schema = client.GetSchema(request);
+    if (!schema) throw std::move(schema).status();
+
+    std::cout << "The schema revision exists and its metadata is:"
+              << "\n"
+              << schema->DebugString() << "\n";
+  }
+  //! [END pubsub_get_schema_revision]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void ListSchemas(google::cloud::pubsub::SchemaServiceClient client,
@@ -930,7 +956,7 @@ void ListSchemas(google::cloud::pubsub::SchemaServiceClient client,
 
 void ListSchemaRevisions(google::cloud::pubsub::SchemaServiceClient client,
                          std::vector<std::string> const& argv) {
-  //! [START pubsub_list_schema_revisions] [list-schema-revisions]
+  //! [START pubsub_list_schema_revisions]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_id) {
@@ -940,7 +966,7 @@ void ListSchemaRevisions(google::cloud::pubsub::SchemaServiceClient client,
       std::cout << "Schema revision: " << s->DebugString() << "\n";
     }
   }
-  //! [END pubsub_list_schema_revisions] [list-schema-revisions]
+  //! [END pubsub_list_schema_revisions]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -964,6 +990,48 @@ void DeleteSchema(google::cloud::pubsub::SchemaServiceClient client,
   }
   //! [END pubsub_delete_schema] [delete-schema]
   (std::move(client), argv.at(0), argv.at(1));
+}
+
+void DeleteSchemaRevision(google::cloud::pubsub::SchemaServiceClient client,
+                          std::vector<std::string> const& argv) {
+  //! [START pubsub_delete_schema_revision]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SchemaServiceClient client, std::string const& project_id,
+     std::string const& schema_id, std::string const& revision_id) {
+    std::string const schema_id_with_revision = schema_id + "@" + revision_id;
+
+    google::pubsub::v1::DeleteSchemaRevisionRequest request;
+    request.set_name(
+        pubsub::Schema(project_id, schema_id_with_revision).FullName());
+    auto schema = client.DeleteSchemaRevision(request);
+    if (!schema) throw std::move(schema).status();
+
+    std::cout << "Deleted schema. Its metadata is:"
+              << "\n"
+              << schema->DebugString() << "\n";
+  }
+  //! [END pubsub_delete_schema_revision]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
+void RollbackSchema(google::cloud::pubsub::SchemaServiceClient client,
+                    std::vector<std::string> const& argv) {
+  //! [START pubsub_rollback_schema]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SchemaServiceClient client, std::string const& project_id,
+     std::string const& schema_id, std::string const& revision_id) {
+    google::pubsub::v1::RollbackSchemaRequest request;
+    request.set_name(pubsub::Schema(project_id, schema_id).FullName());
+    request.set_revision_id(revision_id);
+    auto schema = client.RollbackSchema(request);
+    if (!schema) throw std::move(schema).status();
+
+    std::cout << "Rolledback schema. Created a new schema and its metadata is:"
+              << "\n"
+              << schema->DebugString() << "\n";
+  }
+  //! [END pubsub_rollback_schema]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void ValidateAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
@@ -1996,6 +2064,21 @@ void AutoRunAvro(
   std::cout << "\nRunning GetSchema sample" << std::endl;
   GetSchema(schema_admin, {project_id, avro_schema_id});
 
+  // For testing RollbackSchema, create 2 new schema revisions and rollback to
+  // the first one. The DeleteSchema call will remove all revisions of the
+  // schema.
+  std::string revision_id = CommitSchemaRevisionsForRollbackSchemaTesting(
+      schema_admin, project_id, avro_schema_id,
+      avro_revised_schema_definition_file);
+  std::cout << "\nRunning GetSchemaRevision sample" << std::endl;
+  GetSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
+
+  std::cout << "\nRunning RollbackSchema sample" << std::endl;
+  RollbackSchema(schema_admin, {project_id, avro_schema_id, revision_id});
+
+  std::cout << "\nRunning DeleteSchemaRevision sample" << std::endl;
+  DeleteSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
+
   std::cout << "\nRunning ListSchemas() sample" << std::endl;
   ListSchemas(schema_admin, {project_id});
 
@@ -2601,12 +2684,21 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           CommitProtobufSchema),
       CreateSchemaServiceCommand("get-schema", {"project-id", "schema-id"},
                                  GetSchema),
+      CreateSchemaServiceCommand("get-schema-revision",
+                                 {"project-id", "schema-id", "revision-id"},
+                                 GetSchemaRevision),
       CreateSchemaServiceCommand("list-schemas", {"project-id"}, ListSchemas),
       CreateSchemaServiceCommand("list-schema-revisions",
                                  {"project-id", "schema-id"},
                                  ListSchemaRevisions),
       CreateSchemaServiceCommand("delete-schema", {"project-id", "schema-id"},
                                  DeleteSchema),
+      CreateSchemaServiceCommand("delete-schema-revision",
+                                 {"project-id", "schema-id", "revision-id"},
+                                 DeleteSchemaRevision),
+      CreateSchemaServiceCommand("rollback-schema",
+                                 {"project-id", "schema-id", "revision-id"},
+                                 RollbackSchema),
       CreateSchemaServiceCommand("validate-avro-schema",
                                  {"project-id", "schema-definition-file"},
                                  ValidateAvroSchema),

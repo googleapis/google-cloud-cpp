@@ -1,6 +1,7 @@
 accessapproval
 accesscontextmanager
 advisorynotifications
+aiplatform
 alloydb
 apigateway
 apigeeconnect
@@ -36,6 +37,7 @@ dialogflow_cx
 dialogflow_es
 dlp
 documentai
+domains
 edgecontainer
 essentialcontacts
 eventarc

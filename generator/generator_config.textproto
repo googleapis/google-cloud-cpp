@@ -40,6 +40,143 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# AI Platform
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/featurestore_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/match_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/pipeline_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/featurestore_online_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/metadata_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/index_endpoint_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/model_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/vizier_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/dataset_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/index_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/tensorboard_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/prediction_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/model_garden_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/specialist_pool_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/migration_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/endpoint_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/job_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
 # Alloy DB
 service {
   service_proto_path: "google/cloud/alloydb/v1/service.proto"
@@ -282,7 +419,7 @@ service {
     "ReadModifyWriteRow",
     "ReadRows",
     "SampleRowKeys"
-  ],
+  ]
   omit_repo_metadata: true
 }
 
@@ -1832,6 +1969,14 @@ service {
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
+# Cloud Domains
+service {
+  service_proto_path: "google/cloud/domains/v1/domains.proto"
+  product_path: "google/cloud/domains/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Edge Container
 service {
   service_proto_path: "google/cloud/edgecontainer/v1/service.proto"
@@ -2571,6 +2716,26 @@ service {
 }
 
 # Spanner
+service {
+  service_proto_path: "google/spanner/v1/spanner.proto"
+  product_path: "google/cloud/spanner"
+  initial_copyright_year: "2023"
+  omit_client: true
+  omit_connection: true
+  omit_stub_factory: true
+  omitted_rpcs: [
+    "GetSession",
+    "ListSessions",
+    "Read"
+  ]
+  gen_async_rpcs: [
+    "BatchCreateSessions",
+    "DeleteSession",
+    "ExecuteSql"
+  ]
+  omit_repo_metadata: true
+}
+
 service {
   service_proto_path: "google/spanner/admin/database/v1/spanner_database_admin.proto"
   product_path: "google/cloud/spanner/admin"
