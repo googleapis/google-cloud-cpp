@@ -186,7 +186,7 @@ std::pair<std::string, std::string> CommitSchemaWithRevisionsForTesting(
   create_request.mutable_schema()->set_definition(initial_definition);
   auto schema = client.CreateSchema(create_request);
   if (!schema) throw std::move(schema).status();
-  std::string const first_revision_id = schema.value().revision_id();
+  auto first_revision_id = schema->revision_id();
 
   google::pubsub::v1::CommitSchemaRequest commit_request;
   std::string const name =
@@ -197,9 +197,9 @@ std::pair<std::string, std::string> CommitSchemaWithRevisionsForTesting(
   commit_request.mutable_schema()->set_definition(revised_definition);
   schema = client.CommitSchema(commit_request);
   if (!schema) throw std::move(schema).status();
-  std::string const last_revision_id = schema.value().revision_id();
+  auto last_revision_id = schema->revision_id();
 
-  return {first_revision_id, last_revision_id};
+  return {std::move(first_revision_id), std::move(last_revision_id)};
 }
 
 }  // namespace examples

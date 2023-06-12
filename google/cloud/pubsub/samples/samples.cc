@@ -1197,11 +1197,6 @@ void CreateTopicWithSchemaRevisions(
     if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
       std::cout << "The topic already exists\n";
       return;
-    } else if (topic.status().code() ==
-               google::cloud::StatusCode::kInvalidArgument) {
-      std::cout
-          << "The first revision id must be older than the last revision id.\n";
-      return;
     }
     if (!topic) throw std::move(topic).status();
 
@@ -1225,12 +1220,6 @@ void UpdateTopicSchema(google::cloud::pubsub::TopicAdminClient client,
             pubsub::Topic(std::move(project_id), std::move(topic_id)))
             .set_first_revision_id(first_revision_id)
             .set_last_revision_id(last_revision_id));
-
-    if (topic.status().code() == google::cloud::StatusCode::kInvalidArgument) {
-      std::cout
-          << "The first revision id must be older than the last revision id.\n";
-      return;
-    }
 
     if (!topic) throw std::move(topic).status();
 

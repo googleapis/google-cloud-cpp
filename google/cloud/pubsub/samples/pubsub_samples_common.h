@@ -78,7 +78,7 @@ std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator);
 
 std::string ReadFile(std::string const& path);
 
-// Commit a schema with a revision and return the first and last revision id.
+// Commit a schema with a revision and return the first and last revision ids.
 std::pair<std::string, std::string> CommitSchemaWithRevisionsForTesting(
     google::cloud::pubsub::SchemaServiceClient& client,
     std::string const& project_id, std::string const& schema_id,
