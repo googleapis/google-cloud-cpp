@@ -20,6 +20,8 @@ extend-exclude = [
     "google/cloud/managedidentities/v1/managed_identities_client.h",
     "google/cloud/monitoring/v3/uptime_check_client.h",
     "google/cloud/resourcemanager/v3/projects_client.h",
+    # The tool complains about `FIELDs` :shrug:
+    "/google/cloud/aiplatform/v1/featurestore_client.h",
     # Files with binary blobs in base64 format. These are usually invalidated
     # keyfiles (or private keys) and contain character sequences that almost
     # look like words.

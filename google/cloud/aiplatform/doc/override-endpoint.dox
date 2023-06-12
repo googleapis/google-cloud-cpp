@@ -1,0 +1,141 @@
+/*!
+@page aiplatform-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `aiplatform_v1::DatasetServiceClient`:
+
+@snippet dataset_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c aiplatform_v1::DatasetServiceClient](@ref aiplatform_v1::DatasetServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::EndpointServiceClient](@ref aiplatform_v1::EndpointServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::FeaturestoreServiceClient](@ref aiplatform_v1::FeaturestoreServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::FeaturestoreOnlineServingServiceClient](@ref aiplatform_v1::FeaturestoreOnlineServingServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::IndexServiceClient](@ref aiplatform_v1::IndexServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::IndexEndpointServiceClient](@ref aiplatform_v1::IndexEndpointServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::JobServiceClient](@ref aiplatform_v1::JobServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::MatchServiceClient](@ref aiplatform_v1::MatchServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::MetadataServiceClient](@ref aiplatform_v1::MetadataServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::MigrationServiceClient](@ref aiplatform_v1::MigrationServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::ModelServiceClient](@ref aiplatform_v1::ModelServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::ModelGardenServiceClient](@ref aiplatform_v1::ModelGardenServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::PipelineServiceClient](@ref aiplatform_v1::PipelineServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::PredictionServiceClient](@ref aiplatform_v1::PredictionServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::SpecialistPoolServiceClient](@ref aiplatform_v1::SpecialistPoolServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::TensorboardServiceClient](@ref aiplatform_v1::TensorboardServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::VizierServiceClient](@ref aiplatform_v1::VizierServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page aiplatform_v1::DatasetServiceClient-endpoint-snippet Override aiplatform_v1::DatasetServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/dataset_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::EndpointServiceClient-endpoint-snippet Override aiplatform_v1::EndpointServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/endpoint_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::FeaturestoreServiceClient-endpoint-snippet Override aiplatform_v1::FeaturestoreServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/featurestore_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::FeaturestoreOnlineServingServiceClient-endpoint-snippet Override aiplatform_v1::FeaturestoreOnlineServingServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/featurestore_online_serving_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::IndexServiceClient-endpoint-snippet Override aiplatform_v1::IndexServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/index_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::IndexEndpointServiceClient-endpoint-snippet Override aiplatform_v1::IndexEndpointServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/index_endpoint_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::JobServiceClient-endpoint-snippet Override aiplatform_v1::JobServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/job_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::MatchServiceClient-endpoint-snippet Override aiplatform_v1::MatchServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/match_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::MetadataServiceClient-endpoint-snippet Override aiplatform_v1::MetadataServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/metadata_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::MigrationServiceClient-endpoint-snippet Override aiplatform_v1::MigrationServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/migration_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::ModelServiceClient-endpoint-snippet Override aiplatform_v1::ModelServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/model_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::ModelGardenServiceClient-endpoint-snippet Override aiplatform_v1::ModelGardenServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/model_garden_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::PipelineServiceClient-endpoint-snippet Override aiplatform_v1::PipelineServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/pipeline_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::PredictionServiceClient-endpoint-snippet Override aiplatform_v1::PredictionServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/prediction_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::SpecialistPoolServiceClient-endpoint-snippet Override aiplatform_v1::SpecialistPoolServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/specialist_pool_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::TensorboardServiceClient-endpoint-snippet Override aiplatform_v1::TensorboardServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/tensorboard_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::VizierServiceClient-endpoint-snippet Override aiplatform_v1::VizierServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/vizier_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

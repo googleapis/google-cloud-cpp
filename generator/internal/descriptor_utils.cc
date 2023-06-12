@@ -405,6 +405,10 @@ ParameterCommentSubstitution substitutions[] = {
     {"fields. Some eligible fields are:", "fields."},
     {" The allowable fields to\n update are:", ""},
 
+    // This appears in aiplatform/v1/featurestore_service.proto
+    {R"""(`projects/{project}/locations/{location}'`)""",
+     R"""(`projects/{project}/locations/{location}`)"""},
+
     // Some comments include multiple newlines in a row. We need to preserve
     // these because they are paragraph separators. When used in `@param`
     // commands we need to represent them as `@n` or they do would terminate the

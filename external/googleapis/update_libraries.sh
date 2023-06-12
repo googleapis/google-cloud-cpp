@@ -23,6 +23,15 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/identity/accesscontextmanager/v1:accesscontextmanager_cc_grpc"
   )"
   ["advisorynotifications"]="@com_google_googleapis//google/cloud/advisorynotifications/v1:advisorynotifications_cc_grpc"
+  ["aiplatform"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/aiplatform/logging:logging_cc_grpc" \
+      "@com_google_googleapis//google/cloud/aiplatform/v1:aiplatform_cc_grpc" \
+      "@com_google_googleapis//google/cloud/aiplatform/v1/schema/predict/instance:instance_cc_grpc" \
+      "@com_google_googleapis//google/cloud/aiplatform/v1/schema/predict/params:params_cc_grpc" \
+      "@com_google_googleapis//google/cloud/aiplatform/v1/schema/predict/prediction:prediction_cc_grpc" \
+      "@com_google_googleapis//google/cloud/aiplatform/v1/schema/trainingjob/definition:definition_cc_grpc"
+  )"
   ["alloydb"]="@com_google_googleapis//google/cloud/alloydb/v1:alloydb_cc_grpc"
   ["apigateway"]="@com_google_googleapis//google/cloud/apigateway/v1:apigateway_cc_grpc"
   ["apigeeconnect"]="@com_google_googleapis//google/cloud/apigeeconnect/v1:apigeeconnect_cc_grpc"

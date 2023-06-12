@@ -54,6 +54,15 @@ mapfile -t actual_dirs < <(env -C "${INSTALL_PREFIX}" find -type d)
 # We maintain those here as a hard-coded list.
 mapfile -t expected_dirs < <(cat ci/etc/expected_install_directories)
 expected_dirs+=(
+  # no RPC services in several subdirectories of google/cloud/aiplatform
+  ./include/google/cloud/aiplatform/logging
+  ./include/google/cloud/aiplatform/v1/schema
+  ./include/google/cloud/aiplatform/v1/schema/predict
+  ./include/google/cloud/aiplatform/v1/schema/predict/instance
+  ./include/google/cloud/aiplatform/v1/schema/predict/params
+  ./include/google/cloud/aiplatform/v1/schema/predict/prediction
+  ./include/google/cloud/aiplatform/v1/schema/trainingjob
+  ./include/google/cloud/aiplatform/v1/schema/trainingjob/definition
   # no RPC services in google/cloud/appengine/legacy
   ./include/google/appengine/legacy
   # no RPC services in google/cloud/appengine/logging

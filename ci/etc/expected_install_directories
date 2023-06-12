@@ -32,6 +32,10 @@
 ./include/google/cloud/advisorynotifications/v1
 ./include/google/cloud/advisorynotifications/v1/internal
 ./include/google/cloud/advisorynotifications/v1/mocks
+./include/google/cloud/aiplatform
+./include/google/cloud/aiplatform/v1
+./include/google/cloud/aiplatform/v1/internal
+./include/google/cloud/aiplatform/v1/mocks
 ./include/google/cloud/alloydb
 ./include/google/cloud/alloydb/v1
 ./include/google/cloud/alloydb/v1/internal
@@ -1074,6 +1078,7 @@
 ./lib64/cmake/google_cloud_cpp_accessapproval
 ./lib64/cmake/google_cloud_cpp_accesscontextmanager
 ./lib64/cmake/google_cloud_cpp_advisorynotifications
+./lib64/cmake/google_cloud_cpp_aiplatform
 ./lib64/cmake/google_cloud_cpp_alloydb
 ./lib64/cmake/google_cloud_cpp_apigateway
 ./lib64/cmake/google_cloud_cpp_apigeeconnect
