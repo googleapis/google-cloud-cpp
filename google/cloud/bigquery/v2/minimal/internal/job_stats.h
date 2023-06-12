@@ -43,6 +43,10 @@ struct EvaluationKind {
   static EvaluationKind Expression();
 
   std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(EvaluationKind, value);
 inline bool operator==(EvaluationKind const& lhs, EvaluationKind const& rhs) {
@@ -60,6 +64,10 @@ struct ScriptStackFrame {
   std::int32_t end_column;
   std::string procedure_id;
   std::string text;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ScriptStackFrame, start_line,
                                                 start_column, end_line,
@@ -74,6 +82,10 @@ bool operator==(ScriptStackFrame const& lhs, ScriptStackFrame const& rhs);
 struct ScriptStatistics {
   EvaluationKind evaluation_kind;
   std::vector<ScriptStackFrame> stack_frames;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ScriptStatistics,
                                                 evaluation_kind, stack_frames);
@@ -105,11 +117,15 @@ struct JobStatistics {
   bool row_level_security_applied;
   bool data_masking_applied;
 
-  std::double_t completion_ratio;
+  double completion_ratio;
   std::vector<std::string> quota_deferments;
 
   ScriptStatistics script_statistics;
   JobQueryStatistics job_query_stats;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 void to_json(nlohmann::json& j, JobStatistics const& s);
 void from_json(nlohmann::json const& j, JobStatistics& s);

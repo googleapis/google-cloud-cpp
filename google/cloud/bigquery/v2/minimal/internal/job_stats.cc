@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_stats.h"
 #include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
+#include "google/cloud/internal/debug_string.h"
 
 namespace google {
 namespace cloud {
@@ -98,6 +99,61 @@ bool operator==(ScriptStatistics const& lhs, ScriptStatistics const& rhs) {
   auto const eq = lhs.evaluation_kind == rhs.evaluation_kind;
   return eq && (std::equal(lhs.stack_frames.begin(), lhs.stack_frames.end(),
                            rhs.stack_frames.begin()));
+}
+
+std::string EvaluationKind::DebugString(absl::string_view name,
+                                        TracingOptions const& options,
+                                        int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string ScriptStackFrame::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("start_line", start_line)
+      .Field("start_column", start_column)
+      .Field("end_line", end_line)
+      .Field("end_column", end_column)
+      .StringField("procedure_id", procedure_id)
+      .StringField("text", text)
+      .Build();
+}
+
+std::string ScriptStatistics::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("stack_frames", stack_frames)
+      .SubMessage("evaluation_kind", evaluation_kind)
+      .Build();
+}
+
+std::string JobStatistics::DebugString(absl::string_view name,
+                                       TracingOptions const& options,
+                                       int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("creation_time", creation_time)
+      .Field("start_time", start_time)
+      .Field("end_time", end_time)
+      .Field("total_slot_time", total_slot_time)
+      .Field("final_execution_duration", final_execution_duration)
+      .Field("total_bytes_processed", total_bytes_processed)
+      .Field("num_child_jobs", num_child_jobs)
+      .Field("total_modified_partitions", total_modified_partitions)
+      .Field("row_level_security_applied", row_level_security_applied)
+      .Field("data_masking_applied", data_masking_applied)
+      .Field("completion_ratio", completion_ratio)
+      .Field("quota_deferments", quota_deferments)
+      .StringField("parent_job_id", parent_job_id)
+      .StringField("session_id", session_id)
+      .StringField("transaction_id", transaction_id)
+      .StringField("reservation_id", reservation_id)
+      .SubMessage("script_statistics", script_statistics)
+      .SubMessage("job_query_stats", job_query_stats)
+      .Build();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
