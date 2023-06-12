@@ -839,7 +839,7 @@ void CreateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
 
 void CommitAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
                       std::vector<std::string> const& argv) {
-  //! [START pubsub_commit_avro_schema] [commit-avro-schema]
+  //! [START pubsub_commit_avro_schema]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_id, std::string const& schema_definition_file) {
@@ -862,13 +862,13 @@ void CommitAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
     std::cout << "Schema revision successfully committed: "
               << schema->DebugString() << "\n";
   }
-  //! [END pubsub_commit_avro_schema] [commit-avro-schema]
+  //! [END pubsub_commit_avro_schema]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CommitProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
                           std::vector<std::string> const& argv) {
-  //! [START pubsub_commit_proto_schema] [commit-protobuf-schema]
+  //! [START pubsub_commit_proto_schema]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_id, std::string const& schema_definition_file) {
@@ -892,7 +892,7 @@ void CommitProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
     std::cout << "Schema revision successfully committed: "
               << schema->DebugString() << "\n";
   }
-  //! [END pubsub_commit_proto_schema] [commit-protobuf-schema]
+  //! [END pubsub_commit_proto_schema]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
@@ -956,7 +956,7 @@ void ListSchemas(google::cloud::pubsub::SchemaServiceClient client,
 
 void ListSchemaRevisions(google::cloud::pubsub::SchemaServiceClient client,
                          std::vector<std::string> const& argv) {
-  //! [START pubsub_list_schema_revisions] [list-schema-revisions]
+  //! [START pubsub_list_schema_revisions]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaServiceClient client, std::string const& project_id,
      std::string const& schema_id) {
@@ -966,7 +966,7 @@ void ListSchemaRevisions(google::cloud::pubsub::SchemaServiceClient client,
       std::cout << "Schema revision: " << s->DebugString() << "\n";
     }
   }
-  //! [END pubsub_list_schema_revisions] [list-schema-revisions]
+  //! [END pubsub_list_schema_revisions]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
