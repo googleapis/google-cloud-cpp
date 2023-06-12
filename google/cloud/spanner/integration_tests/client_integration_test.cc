@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>

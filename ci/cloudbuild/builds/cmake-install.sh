@@ -97,7 +97,6 @@ expected_dirs+=(
   # no gRPC services in google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging/v1
-  ./include/google/cloud/spanner/internal
   ./include/google/cloud/spanner/mocks
   ./include/google/cloud/storage/oauth2
   ./include/google/cloud/storage/testing
@@ -114,7 +113,6 @@ expected_dirs+=(
   ./include/google/longrunning
   ./include/google/rpc
   ./include/google/rpc/context
-  ./include/google/spanner/v1
   ./include/google/type
   ./include/grafeas
   ./include/grafeas/v1

@@ -282,7 +282,7 @@ service {
     "ReadModifyWriteRow",
     "ReadRows",
     "SampleRowKeys"
-  ],
+  ]
   omit_repo_metadata: true
 }
 
@@ -2563,6 +2563,26 @@ service {
 }
 
 # Spanner
+service {
+  service_proto_path: "google/spanner/v1/spanner.proto"
+  product_path: "google/cloud/spanner"
+  initial_copyright_year: "2023"
+  omit_client: true
+  omit_connection: true
+  omit_stub_factory: true
+  omitted_rpcs: [
+    "GetSession",
+    "ListSessions",
+    "Read"
+  ]
+  gen_async_rpcs: [
+    "BatchCreateSessions",
+    "DeleteSession",
+    "ExecuteSql"
+  ]
+  omit_repo_metadata: true
+}
+
 service {
   service_proto_path: "google/spanner/admin/database/v1/spanner_database_admin.proto"
   product_path: "google/cloud/spanner/admin"

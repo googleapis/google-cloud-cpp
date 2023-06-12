@@ -138,12 +138,8 @@ add_library(
     internal/instance_admin_stub.h
     internal/logging_result_set_reader.cc
     internal/logging_result_set_reader.h
-    internal/logging_spanner_stub.cc
-    internal/logging_spanner_stub.h
     internal/merge_chunk.cc
     internal/merge_chunk.h
-    internal/metadata_spanner_stub.cc
-    internal/metadata_spanner_stub.h
     internal/partial_result_set_reader.h
     internal/partial_result_set_resume.cc
     internal/partial_result_set_resume.h
@@ -155,12 +151,18 @@ add_library(
     internal/session.h
     internal/session_pool.cc
     internal/session_pool.h
-    internal/spanner_auth.cc
-    internal/spanner_auth.h
+    internal/spanner_auth_decorator.cc
+    internal/spanner_auth_decorator.h
+    internal/spanner_logging_decorator.cc
+    internal/spanner_logging_decorator.h
+    internal/spanner_metadata_decorator.cc
+    internal/spanner_metadata_decorator.h
     internal/spanner_stub.cc
     internal/spanner_stub.h
     internal/spanner_stub_factory.cc
     internal/spanner_stub_factory.h
+    internal/spanner_tracing_stub.cc
+    internal/spanner_tracing_stub.h
     internal/status_utils.cc
     internal/status_utils.h
     internal/transaction_impl.cc
@@ -396,14 +398,11 @@ function (spanner_client_define_tests)
         internal/instance_admin_logging_test.cc
         internal/instance_admin_metadata_test.cc
         internal/logging_result_set_reader_test.cc
-        internal/logging_spanner_stub_test.cc
         internal/merge_chunk_test.cc
-        internal/metadata_spanner_stub_test.cc
         internal/partial_result_set_resume_test.cc
         internal/partial_result_set_source_test.cc
         internal/route_to_leader_test.cc
         internal/session_pool_test.cc
-        internal/spanner_auth_test.cc
         internal/spanner_stub_factory_test.cc
         internal/status_utils_test.cc
         internal/transaction_impl_test.cc
