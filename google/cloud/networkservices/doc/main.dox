@@ -1,0 +1,51 @@
+/*!
+
+@mainpage Network Services API C++ Client Library
+
+An idiomatic C++ client library for the [Network Services API][cloud-service-docs], a service
+to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/networkservices/quickstart/` directory,
+which should give you a taste of the Network Services API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`networkservices_v1::NetworkServicesClient`](@ref google::cloud::networkservices_v1::NetworkServicesClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`networkservices_v1::NetworkServicesClient`](@ref google::cloud::networkservices_v1::NetworkServicesClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
+## Retry, Backoff, and Idempotency Policies.
+
+The library automatically retries requests that fail with transient errors, and
+uses [exponential backoff] to backoff between retries. Application developers
+can override the default policies.
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref networkservices-override-endpoint - describes how to override the default
+  endpoint.
+- @ref networkservices-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref networkservices-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/networkservices
+[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+
+*/
