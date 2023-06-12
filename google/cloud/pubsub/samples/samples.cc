@@ -35,6 +35,7 @@
 
 namespace {
 
+using ::google::cloud::pubsub::examples::CleanupSchemas;
 using ::google::cloud::pubsub::examples::
     CommitSchemaRevisionsForRollbackSchemaTesting;
 using ::google::cloud::pubsub::examples::
@@ -2066,7 +2067,7 @@ void AutoRunAvro(
   std::cout << "\nRunning GetSchema sample" << std::endl;
   GetSchema(schema_admin, {project_id, avro_schema_id});
 
-  // For testing RollbackSchema, create 2 new schema revisions and rollback to
+  // To test RollbackSchema, create 2 new schema revisions and rollback to
   // the first one. The DeleteSchema call will remove all revisions of the
   // schema.
   std::string revision_id = CommitSchemaRevisionsForRollbackSchemaTesting(
@@ -2131,6 +2132,8 @@ void AutoRunAvro(
 
   std::cout << "\nRunning DeleteSchema() sample [avro]" << std::endl;
   DeleteSchema(schema_admin, {project_id, avro_schema_id});
+
+  CleanupSchemas(schema_admin, project_id, absl::Now());
 }
 
 void AutoRunProtobuf(
