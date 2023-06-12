@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/project.h"
 #include <fstream>
 #include <sstream>
@@ -207,14 +208,13 @@ void CleanupSchemas(google::cloud::pubsub::SchemaServiceClient& schema_admin,
   auto const parent = google::cloud::Project(project_id).FullName();
   for (auto& schema : schema_admin.ListSchemas(parent)) {
     if (!schema) continue;
-    absl::Time schema_create_time =
-        absl::FromUnixSeconds((*schema).revision_create_time().seconds()) +
-        absl::Nanoseconds((*schema).revision_create_time().nanos());
+    auto const schema_create_time =
+        google::cloud::internal::ToAbslTime(schema->revision_create_time());
 
     if (schema_create_time < time_now - absl::Hours(48)) {
       google::pubsub::v1::DeleteSchemaRequest request;
-      request.set_name((*schema).name());
-      schema_admin.DeleteSchema(request);
+      request.set_name(schema->name());
+      (void)schema_admin.DeleteSchema(request);
     }
   }
 }
