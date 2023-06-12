@@ -391,7 +391,6 @@ ParameterCommentSubstitution substitutions[] = {
     {R"""( The included patch
  environment would specify the scikit-learn version as follows:)""",
      ""},
-
     {R"""( The elements of the repeated paths field can only include these
  fields from [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]:)""",
      ""},
@@ -401,10 +400,8 @@ ParameterCommentSubstitution substitutions[] = {
     {R"""( For more information, see the
  [LogEntry][google.logging.v2.LogEntry] type.)""",
      ""},
-
     {R"""(and the `PATCH` request body would specify the new value, as follows:)""",
      R"""(and the `PATCH` request body would specify the new value.)"""},
-
     {"fields. Some eligible fields are:", "fields."},
     {" The allowable fields to\n update are:", ""},
 
@@ -423,8 +420,8 @@ ParameterCommentSubstitution substitutions[] = {
 // Very long parameters need different formatting.
 auto constexpr kShortParamFormat = "  /// @param %s %s\n";
 auto constexpr kLongParamFormat = R"""(  /// @param %s %s
-  ///     @n
-  ///     For more information, see [%s][%s].
+  ///  @n
+  ///  For more information, see [%s][%s].
 )""";
 
 std::string FormattedCommentsForParameter(
