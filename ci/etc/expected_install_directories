@@ -117,6 +117,10 @@
 ./include/google/cloud/bigquery/analyticshub/v1
 ./include/google/cloud/bigquery/analyticshub/v1/internal
 ./include/google/cloud/bigquery/analyticshub/v1/mocks
+./include/google/cloud/bigquery/biglake
+./include/google/cloud/bigquery/biglake/v1
+./include/google/cloud/bigquery/biglake/v1/internal
+./include/google/cloud/bigquery/biglake/v1/mocks
 ./include/google/cloud/bigquery/connection
 ./include/google/cloud/bigquery/connection/v1
 ./include/google/cloud/bigquery/connection/v1/internal
