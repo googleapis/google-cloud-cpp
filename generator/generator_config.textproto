@@ -1832,6 +1832,14 @@ service {
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
+# Cloud Domains
+service {
+  service_proto_path: "google/cloud/domains/v1/domains.proto"
+  product_path: "google/cloud/domains/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Edge Container
 service {
   service_proto_path: "google/cloud/edgecontainer/v1/service.proto"
