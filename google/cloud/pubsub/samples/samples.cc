@@ -38,7 +38,6 @@ namespace {
 using ::google::cloud::pubsub::examples::CleanupSchemas;
 using ::google::cloud::pubsub::examples::
     CommitSchemaRevisionsForRollbackSchemaTesting;
-using ::google::cloud::pubsub::examples::CommitSchemaWithRevisionsForTesting;
 using ::google::cloud::pubsub::examples::RandomSchemaId;
 using ::google::cloud::pubsub::examples::RandomSnapshotId;
 using ::google::cloud::pubsub::examples::RandomSubscriptionId;
@@ -2147,19 +2146,6 @@ void AutoRunAvro(
   std::cout << "\nRunning RollbackSchema sample" << std::endl;
   RollbackSchema(schema_admin,
                  {project_id, avro_revision_schema_id, first_revision_id});
-
-  std::cout << "\nRunning DeleteSchemaRevision sample" << std::endl;
-  DeleteSchemaRevision(
-      schema_admin, {project_id, avro_revision_schema_id, first_revision_id});
-
-  std::cout
-      << "\nCleaning up the topic and schema created for testing revisions"
-      << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, avro_revision_topic_id});
-  DeleteSchema(schema_admin, {project_id, avro_revision_schema_id});
-
-  // std::cout << "\nRunning RollbackSchema sample" << std::endl;
-  // RollbackSchema(schema_admin, {project_id, avro_schema_id, revision_id});
 
   std::cout << "\nRunning DeleteSchemaRevision sample" << std::endl;
   DeleteSchemaRevision(schema_admin, {project_id, avro_schema_id, revision_id});
