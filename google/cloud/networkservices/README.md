@@ -1,7 +1,8 @@
 # Network Services API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Network Services API][cloud-service-docs], a service to \<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Network Services API][cloud-service-docs]. This is part of Traffic Director:
+Google Cloud's fully managed application networking platform and service mesh.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,8 +17,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/networkservices/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/networkservices/v1/network_services_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -26,11 +26,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace networkservices = ::google::cloud::networkservices;
-  auto client = networkservices::Client(networkservices::MakeConnection());
+  namespace networkservices = ::google::cloud::networkservices_v1;
+  auto client = networkservices::NetworkServicesClient(
+      networkservices::MakeNetworkServicesConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
+  for (auto r : client.ListEndpointPolicies(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
@@ -51,6 +52,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/networkservices
+[cloud-service-docs]: https://cloud.google.com/traffic-director/docs/service-routing-overview
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/networkservices/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/networkservices

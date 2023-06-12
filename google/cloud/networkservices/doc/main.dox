@@ -2,8 +2,9 @@
 
 @mainpage Network Services API C++ Client Library
 
-An idiomatic C++ client library for the [Network Services API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+This directory contains an idiomatic C++ client library for the
+[Network Services API][cloud-service-docs]. This is part of Traffic Director:
+Google Cloud's fully managed application networking platform and service mesh.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -45,7 +46,7 @@ can override the default policies.
 - @ref networkservices-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/networkservices
+[cloud-service-docs]: https://cloud.google.com/traffic-director/docs/service-routing-overview
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

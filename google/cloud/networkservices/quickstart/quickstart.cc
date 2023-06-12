@@ -13,8 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/networkservices/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/networkservices/v1/network_services_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -23,11 +22,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace networkservices = ::google::cloud::networkservices;
-  auto client = networkservices::Client(networkservices::MakeConnection());
+  namespace networkservices = ::google::cloud::networkservices_v1;
+  auto client = networkservices::NetworkServicesClient(
+      networkservices::MakeNetworkServicesConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
+  for (auto r : client.ListEndpointPolicies(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
