@@ -16,10 +16,12 @@
 #include "google/cloud/spanner/internal/spanner_auth_decorator.h"
 #include "google/cloud/spanner/internal/spanner_logging_decorator.h"
 #include "google/cloud/spanner/internal/spanner_metadata_decorator.h"
+#include "google/cloud/spanner/internal/spanner_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include <grpcpp/grpcpp.h>
 
@@ -55,6 +57,9 @@ std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
     stub = std::make_shared<SpannerLogging>(
         std::move(stub), opts.get<GrpcTracingOptionsOption>(),
         opts.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(opts)) {
+    stub = MakeSpannerTracingStub(std::move(stub));
   }
   return stub;
 }

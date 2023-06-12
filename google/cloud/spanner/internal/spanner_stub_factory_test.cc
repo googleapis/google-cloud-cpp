@@ -17,6 +17,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/log.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -33,7 +34,7 @@ using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 
-TEST(SpannerStub, CreateDefaultStub) {
+TEST(CreateDefaultSpannerStub, Basic) {
   auto opts = spanner_internal::DefaultOptions();
   auto auth =
       internal::CreateAuthenticationStrategy(opts.get<GrpcCredentialOption>());
@@ -43,7 +44,7 @@ TEST(SpannerStub, CreateDefaultStub) {
   EXPECT_NE(stub, nullptr);
 }
 
-TEST(SpannerStub, CreateDefaultStubWithLogging) {
+TEST(CreateDefaultSpannerStub, WithLogging) {
   testing_util::ScopedLog log;
 
   auto opts = Options{}
@@ -69,6 +70,72 @@ TEST(SpannerStub, CreateDefaultStubWithLogging) {
   EXPECT_THAT(log.ExtractLines(),
               Contains(HasSubstr(session.status().message())));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::ElementsAre;
+using ::testing::IsEmpty;
+
+TEST(CreateDefaultSpannerStub, TracingEnabled) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  auto propagator = testing_util::InstallMockPropagator();
+  EXPECT_CALL(*propagator, Inject);
+
+  auto opts = EnableTracing(
+      Options{}
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<EndpointOption>("localhost:1"));
+  auto auth =
+      internal::CreateAuthenticationStrategy(opts.get<GrpcCredentialOption>());
+  auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
+                                       std::move(auth), std::move(opts),
+                                       /*channel_id=*/0);
+  EXPECT_NE(stub, nullptr);
+
+  grpc::ClientContext context;
+  context.set_deadline(std::chrono::system_clock::now() +
+                       std::chrono::milliseconds(5));
+  auto session =
+      stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
+  EXPECT_THAT(session, StatusIs(AnyOf(StatusCode::kUnavailable,
+                                      StatusCode::kInvalidArgument,
+                                      StatusCode::kDeadlineExceeded)));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(SpanNamed("google.spanner.v1.Spanner/CreateSession")));
+}
+
+TEST(CreateDefaultSpannerStub, TracingDisabled) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  auto propagator = testing_util::InstallMockPropagator();
+  EXPECT_CALL(*propagator, Inject).Times(0);
+
+  auto opts = DisableTracing(
+      Options{}
+          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+          .set<EndpointOption>("localhost:1"));
+  auto auth =
+      internal::CreateAuthenticationStrategy(opts.get<GrpcCredentialOption>());
+  auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
+                                       std::move(auth), std::move(opts),
+                                       /*channel_id=*/0);
+  EXPECT_NE(stub, nullptr);
+
+  grpc::ClientContext context;
+  context.set_deadline(std::chrono::system_clock::now() +
+                       std::chrono::milliseconds(5));
+  auto session =
+      stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
+  EXPECT_THAT(session, StatusIs(AnyOf(StatusCode::kUnavailable,
+                                      StatusCode::kInvalidArgument,
+                                      StatusCode::kDeadlineExceeded)));
+
+  EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
