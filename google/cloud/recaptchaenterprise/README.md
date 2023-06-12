@@ -1,7 +1,8 @@
 # reCAPTCHA Enterprise API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[reCAPTCHA Enterprise API][cloud-service-docs], a service to Help protect your website from fraudulent activity, spam, and abuse without creating friction.
+[reCAPTCHA Enterprise API][cloud-service-docs]. This service helps protect your
+website from fraudulent activity, spam, and abuse without creating friction.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,7 +17,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/recaptchaenterprise/ EDIT HERE .h"
+#include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -26,12 +27,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace recaptchaenterprise = ::google::cloud::recaptchaenterprise;
-  auto client =
-      recaptchaenterprise::Client(recaptchaenterprise::MakeConnection());
+  namespace recaptchaenterprise = ::google::cloud::recaptchaenterprise_v1;
+  auto client = recaptchaenterprise::RecaptchaEnterpriseServiceClient(
+      recaptchaenterprise::MakeRecaptchaEnterpriseServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.ListKeys(project.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
@@ -52,6 +53,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/recaptchaenterprise
+[cloud-service-docs]: https://cloud.google.com/recaptcha-enterprise
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/recaptchaenterprise/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/recaptchaenterprise

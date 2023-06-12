@@ -2,8 +2,9 @@
 
 @mainpage reCAPTCHA Enterprise API C++ Client Library
 
-An idiomatic C++ client library for the [reCAPTCHA Enterprise API][cloud-service-docs], a service
-to Help protect your website from fraudulent activity, spam, and abuse without creating friction.
+An idiomatic C++ client library for the [reCAPTCHA Enterprise API][cloud-service-docs].
+This service helps protect your website from fraudulent activity, spam, and
+abuse without creating friction.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -45,7 +46,7 @@ can override the default policies.
 - @ref recaptchaenterprise-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/recaptchaenterprise
+[cloud-service-docs]: https://cloud.google.com/recaptcha-enterprise
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

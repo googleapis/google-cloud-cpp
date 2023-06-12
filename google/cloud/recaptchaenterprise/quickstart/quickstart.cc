@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/recaptchaenterprise/ EDIT HERE .h"
+#include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,12 +23,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace recaptchaenterprise = ::google::cloud::recaptchaenterprise;
-  auto client =
-      recaptchaenterprise::Client(recaptchaenterprise::MakeConnection());
+  namespace recaptchaenterprise = ::google::cloud::recaptchaenterprise_v1;
+  auto client = recaptchaenterprise::RecaptchaEnterpriseServiceClient(
+      recaptchaenterprise::MakeRecaptchaEnterpriseServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.ListKeys(project.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
