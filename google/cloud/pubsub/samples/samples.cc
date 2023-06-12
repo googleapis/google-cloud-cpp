@@ -2106,7 +2106,7 @@ void AutoRunAvro(
   auto avro_message_file = testdata_directory + "valid_message.avsc";
 
   CleanupSchemas(schema_admin, project_id,
-                 absl::FromChrono(std::chrono::system_clock::clock.now()));
+                 absl::FromChrono(std::chrono::system_clock::now()));
 
   std::cout << "\nRunning CreateAvroSchema() sample" << std::endl;
   CreateAvroSchema(schema_admin,
