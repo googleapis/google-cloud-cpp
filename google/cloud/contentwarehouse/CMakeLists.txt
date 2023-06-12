@@ -35,9 +35,10 @@ foreach (dir IN LISTS service_dirs)
 endforeach ()
 
 include(GoogleCloudCppDoxygen)
-google_cloud_cpp_doxygen_targets("contentwarehouse" DEPENDS cloud-docs
-                                 google-cloud-cpp::contentwarehouse_protos
-                                 google-cloud-cpp::documentai_protos)
+google_cloud_cpp_doxygen_targets(
+    "contentwarehouse" DEPENDS cloud-docs
+    google-cloud-cpp::contentwarehouse_protos
+    google-cloud-cpp::documentai_protos)
 
 include(GoogleCloudCppCommon)
 
