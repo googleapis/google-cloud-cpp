@@ -2105,6 +2105,9 @@ void AutoRunAvro(
       testdata_directory + "revised_schema.avsc";
   auto avro_message_file = testdata_directory + "valid_message.avsc";
 
+  CleanupSchemas(schema_admin, project_id,
+                 absl::FromChrono(std::chrono::system_clock::clock.now()));
+
   std::cout << "\nRunning CreateAvroSchema() sample" << std::endl;
   CreateAvroSchema(schema_admin,
                    {project_id, avro_schema_id, avro_schema_definition_file});
@@ -2195,9 +2198,6 @@ void AutoRunAvro(
 
   std::cout << "\nRunning DeleteSchema() sample [avro]" << std::endl;
   DeleteSchema(schema_admin, {project_id, avro_schema_id});
-
-  std::chrono::system_clock clock;
-  CleanupSchemas(schema_admin, project_id, absl::FromChrono(clock.now()));
 }
 
 void AutoRunProtobuf(
