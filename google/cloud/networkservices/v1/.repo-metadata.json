@@ -3,7 +3,7 @@
     "api_shortname": "networkservices",
     "client_documentation": "https://cloud.google.com/cpp/docs/reference/networkservices/latest",
     "distribution_name": "google-cloud-cpp",
-    "issue_tracker": "https://b.corp.google.com/savedsearches/6133807",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/6133807",
     "language": "cpp",
     "library_type": "GAPIC_AUTO",
     "name_pretty": "Network Services API",
