@@ -370,14 +370,16 @@ StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
 }
 
 Status GenerateProtosFromDiscoveryDoc(
-    nlohmann::json const& discovery_doc, std::string const&, std::string const&,
-    std::string const& output_path, std::set<std::string> operation_services) {
+    nlohmann::json const& discovery_doc, std::string const& discovery_doc_url,
+    std::string const&, std::string const&, std::string const& output_path,
+    std::set<std::string> operation_services) {
   auto default_hostname = DefaultHostFromRootUrl(discovery_doc);
   if (!default_hostname) return std::move(default_hostname).status();
 
   DiscoveryDocumentProperties document_properties{
       discovery_doc.value("basePath", ""), *default_hostname,
-      discovery_doc.value("name", ""), discovery_doc.value("version", ""),
+      discovery_doc.value("name", ""),     discovery_doc.value("version", ""),
+      discovery_doc.value("revision", ""), discovery_doc_url,
       std::move(operation_services)};
 
   if (document_properties.base_path.empty() ||

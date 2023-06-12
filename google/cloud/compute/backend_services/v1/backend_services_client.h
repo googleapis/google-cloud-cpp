@@ -118,7 +118,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.AddSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L201}
+  /// [google.cloud.cpp.compute.backend_services.v1.AddSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L206}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
@@ -158,7 +158,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.AddSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L201}
+  /// [google.cloud.cpp.compute.backend_services.v1.AddSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L206}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
@@ -186,8 +186,8 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.AggregatedListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L230}
-  /// [google.cloud.cpp.compute.v1.BackendServiceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2663}
+  /// [google.cloud.cpp.compute.backend_services.v1.AggregatedListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L235}
+  /// [google.cloud.cpp.compute.v1.BackendServiceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2668}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
@@ -218,8 +218,8 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.AggregatedListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L230}
-  /// [google.cloud.cpp.compute.v1.BackendServiceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2663}
+  /// [google.cloud.cpp.compute.backend_services.v1.AggregatedListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L235}
+  /// [google.cloud.cpp.compute.v1.BackendServiceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2668}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
@@ -254,7 +254,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.DeleteBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L304}
+  /// [google.cloud.cpp.compute.backend_services.v1.DeleteBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L309}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -291,7 +291,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.DeleteBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L304}
+  /// [google.cloud.cpp.compute.backend_services.v1.DeleteBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L309}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -328,7 +328,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.DeleteSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L328}
+  /// [google.cloud.cpp.compute.backend_services.v1.DeleteSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L333}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -367,7 +367,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.DeleteSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L328}
+  /// [google.cloud.cpp.compute.backend_services.v1.DeleteSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L333}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -395,8 +395,8 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.GetBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L356}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
+  /// [google.cloud.cpp.compute.backend_services.v1.GetBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L361}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2342}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendServices(
@@ -427,8 +427,8 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.GetBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L356}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
+  /// [google.cloud.cpp.compute.backend_services.v1.GetBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L361}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2342}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendServices(
@@ -459,8 +459,8 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L365}
-  /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3003}
+  /// [google.cloud.cpp.compute.backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L370}
+  /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3008}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
@@ -495,8 +495,8 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L365}
-  /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3003}
+  /// [google.cloud.cpp.compute.backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L370}
+  /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3008}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
@@ -526,8 +526,8 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L377}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
+  /// [google.cloud.cpp.compute.backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L382}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18680}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -559,8 +559,8 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L377}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
+  /// [google.cloud.cpp.compute.backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L382}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18680}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -596,7 +596,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.InsertBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L389}
+  /// [google.cloud.cpp.compute.backend_services.v1.InsertBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L394}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -637,7 +637,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.InsertBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L389}
+  /// [google.cloud.cpp.compute.backend_services.v1.InsertBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L394}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -674,8 +674,8 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.ListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L414}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
+  /// [google.cloud.cpp.compute.backend_services.v1.ListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L419}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2342}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
@@ -715,8 +715,8 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.ListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L414}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
+  /// [google.cloud.cpp.compute.backend_services.v1.ListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L419}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2342}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
@@ -754,7 +754,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.PatchBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L479}
+  /// [google.cloud.cpp.compute.backend_services.v1.PatchBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L484}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -797,7 +797,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.PatchBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L479}
+  /// [google.cloud.cpp.compute.backend_services.v1.PatchBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L484}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -833,7 +833,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.SetEdgeSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L507}
+  /// [google.cloud.cpp.compute.backend_services.v1.SetEdgeSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L512}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -873,7 +873,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.SetEdgeSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L507}
+  /// [google.cloud.cpp.compute.backend_services.v1.SetEdgeSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L512}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -903,8 +903,8 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L537}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
+  /// [google.cloud.cpp.compute.backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L542}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18680}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -938,8 +938,8 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L537}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
+  /// [google.cloud.cpp.compute.backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L542}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18680}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -976,7 +976,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.SetSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L551}
+  /// [google.cloud.cpp.compute.backend_services.v1.SetSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L556}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1017,7 +1017,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.SetSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L551}
+  /// [google.cloud.cpp.compute.backend_services.v1.SetSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L556}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1053,7 +1053,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.UpdateBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L581}
+  /// [google.cloud.cpp.compute.backend_services.v1.UpdateBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L586}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1094,7 +1094,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.UpdateBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L581}
+  /// [google.cloud.cpp.compute.backend_services.v1.UpdateBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L586}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

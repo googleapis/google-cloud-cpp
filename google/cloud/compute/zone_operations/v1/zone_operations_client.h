@@ -106,7 +106,7 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L83}
+  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L88}
   ///
   // clang-format on
   Status DeleteZoneOperations(std::string const& project,
@@ -135,7 +135,7 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L83}
+  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L88}
   ///
   // clang-format on
   Status DeleteZoneOperations(google::cloud::cpp::compute::zone_operations::v1::
@@ -163,8 +163,8 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
-  /// [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L95}
+  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17448}
+  /// [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L100}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperations(
@@ -195,8 +195,8 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
-  /// [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L95}
+  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17448}
+  /// [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L100}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperations(
@@ -234,8 +234,8 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
-  /// [google.cloud.cpp.compute.zone_operations.v1.ListZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L113}
+  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17448}
+  /// [google.cloud.cpp.compute.zone_operations.v1.ListZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L118}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListZoneOperations(
@@ -275,8 +275,8 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
-  /// [google.cloud.cpp.compute.zone_operations.v1.ListZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L113}
+  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17448}
+  /// [google.cloud.cpp.compute.zone_operations.v1.ListZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L118}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListZoneOperations(
@@ -314,8 +314,8 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
-  /// [google.cloud.cpp.compute.zone_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L181}
+  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17448}
+  /// [google.cloud.cpp.compute.zone_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L186}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
@@ -355,8 +355,8 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
-  /// [google.cloud.cpp.compute.zone_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L181}
+  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17448}
+  /// [google.cloud.cpp.compute.zone_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L186}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(

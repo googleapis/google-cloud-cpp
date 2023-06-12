@@ -112,7 +112,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L102}
+  /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L107}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteFirewalls(
@@ -149,7 +149,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L102}
+  /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L107}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteFirewalls(
@@ -177,8 +177,8 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L126}
-  /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5714}
+  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L131}
+  /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5719}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewalls(
@@ -209,8 +209,8 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L126}
-  /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5714}
+  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L131}
+  /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5719}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewalls(
@@ -245,7 +245,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L135}
+  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L140}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertFirewalls(
@@ -284,7 +284,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L135}
+  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L140}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertFirewalls(
@@ -320,8 +320,8 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L160}
-  /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5714}
+  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L165}
+  /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5719}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Firewall> ListFirewalls(
@@ -360,8 +360,8 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L160}
-  /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5714}
+  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L165}
+  /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5719}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Firewall> ListFirewalls(
@@ -397,7 +397,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L225}
+  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L230}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchFirewalls(
@@ -437,7 +437,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L225}
+  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L230}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchFirewalls(
@@ -474,7 +474,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L253}
+  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L258}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewalls(
@@ -514,7 +514,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L253}
+  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L258}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewalls(

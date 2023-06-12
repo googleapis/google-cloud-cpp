@@ -107,8 +107,8 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.AggregatedListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L138}
-  /// [google.cloud.cpp.compute.v1.UrlMapsAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29233}
+  /// [google.cloud.cpp.compute.url_maps.v1.AggregatedListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L143}
+  /// [google.cloud.cpp.compute.v1.UrlMapsAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29238}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
@@ -139,8 +139,8 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.AggregatedListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L138}
-  /// [google.cloud.cpp.compute.v1.UrlMapsAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29233}
+  /// [google.cloud.cpp.compute.url_maps.v1.AggregatedListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L143}
+  /// [google.cloud.cpp.compute.v1.UrlMapsAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29238}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
@@ -174,7 +174,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.DeleteUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L212}
+  /// [google.cloud.cpp.compute.url_maps.v1.DeleteUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L217}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMaps(
@@ -211,7 +211,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.DeleteUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L212}
+  /// [google.cloud.cpp.compute.url_maps.v1.DeleteUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L217}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMaps(
@@ -239,8 +239,8 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.GetUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L236}
-  /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
+  /// [google.cloud.cpp.compute.url_maps.v1.GetUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L241}
+  /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28971}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMaps(
@@ -271,8 +271,8 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.GetUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L236}
-  /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
+  /// [google.cloud.cpp.compute.url_maps.v1.GetUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L241}
+  /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28971}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMaps(
@@ -307,7 +307,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.InsertUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L245}
+  /// [google.cloud.cpp.compute.url_maps.v1.InsertUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L250}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMaps(
@@ -346,7 +346,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.InsertUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L245}
+  /// [google.cloud.cpp.compute.url_maps.v1.InsertUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L250}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMaps(
@@ -383,7 +383,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.InvalidateCacheRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L270}
+  /// [google.cloud.cpp.compute.url_maps.v1.InvalidateCacheRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L275}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InvalidateCache(
@@ -424,7 +424,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.InvalidateCacheRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L270}
+  /// [google.cloud.cpp.compute.url_maps.v1.InvalidateCacheRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L275}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InvalidateCache(
@@ -460,8 +460,8 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.ListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L298}
-  /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
+  /// [google.cloud.cpp.compute.url_maps.v1.ListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L303}
+  /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28971}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListUrlMaps(
@@ -500,8 +500,8 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.ListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L298}
-  /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
+  /// [google.cloud.cpp.compute.url_maps.v1.ListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L303}
+  /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28971}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListUrlMaps(
@@ -537,7 +537,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.PatchUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L363}
+  /// [google.cloud.cpp.compute.url_maps.v1.PatchUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchUrlMaps(
@@ -577,7 +577,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.PatchUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L363}
+  /// [google.cloud.cpp.compute.url_maps.v1.PatchUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchUrlMaps(
@@ -613,7 +613,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.UpdateUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L391}
+  /// [google.cloud.cpp.compute.url_maps.v1.UpdateUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L396}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMaps(
@@ -652,7 +652,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.UpdateUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L391}
+  /// [google.cloud.cpp.compute.url_maps.v1.UpdateUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L396}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMaps(
@@ -683,8 +683,8 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L419}
-  /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29444}
+  /// [google.cloud.cpp.compute.url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L424}
+  /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29449}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
@@ -719,8 +719,8 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L419}
-  /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29444}
+  /// [google.cloud.cpp.compute.url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L424}
+  /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29449}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
