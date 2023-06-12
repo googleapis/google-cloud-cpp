@@ -26,6 +26,7 @@
 #include "google/cloud/testing_util/example_driver.h"
 #include <google/cloud/pubsub/samples/samples.pb.h>
 #include <google/protobuf/text_format.h>
+#include <chrono>
 #include <condition_variable>
 #include <iostream>
 #include <mutex>
@@ -2125,7 +2126,8 @@ void AutoRunAvro(
   std::cout << "\nRunning DeleteSchema() sample [avro]" << std::endl;
   DeleteSchema(schema_admin, {project_id, avro_schema_id});
 
-  CleanupSchemas(schema_admin, project_id, absl::Now());
+  std::chrono::system_clock clock;
+  CleanupSchemas(schema_admin, project_id, absl::FromChrono(clock.now()));
 }
 
 void AutoRunProtobuf(
