@@ -26,6 +26,11 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+std::shared_ptr<SpannerStub> DecorateSpannerStub(
+    std::shared_ptr<SpannerStub> stub, spanner::Database const& db,
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    Options const& opts);
+
 /**
  * Creates a SpannerStub configured with @p opts and @p channel_id.
  *
