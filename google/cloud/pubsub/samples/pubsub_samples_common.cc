@@ -17,6 +17,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/project.h"
+#include "absl/strings/match.h"
 #include <fstream>
 #include <sstream>
 
@@ -195,9 +196,10 @@ void CleanupSchemas(google::cloud::pubsub::SchemaServiceClient& schema_admin,
   auto const parent = google::cloud::Project(project_id).FullName();
   for (auto& schema : schema_admin.ListSchemas(parent)) {
     if (!schema) continue;
+    if (!absl::StartsWith(schema->name(), "cloud-cpp-samples")) continue;
+
     auto const schema_create_time =
         google::cloud::internal::ToAbslTime(schema->revision_create_time());
-
     if (schema_create_time < time_now - absl::Hours(48)) {
       google::pubsub::v1::DeleteSchemaRequest request;
       request.set_name(schema->name());
