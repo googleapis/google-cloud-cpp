@@ -202,6 +202,23 @@ std::pair<std::string, std::string> CommitSchemaWithRevisionsForTesting(
   return {std::move(first_revision_id), std::move(last_revision_id)};
 }
 
+void CleanupSchemas(google::cloud::pubsub::SchemaServiceClient& schema_admin,
+                    std::string const& project_id, absl::Time const& time_now) {
+  auto const parent = google::cloud::Project(project_id).FullName();
+  for (auto& schema : schema_admin.ListSchemas(parent)) {
+    if (!schema) continue;
+    absl::Time schema_create_time =
+        absl::FromUnixSeconds((*schema).revision_create_time().seconds()) +
+        absl::Nanoseconds((*schema).revision_create_time().nanos());
+
+    if (schema_create_time < time_now - absl::Hours(48)) {
+      google::pubsub::v1::DeleteSchemaRequest request;
+      request.set_name((*schema).name());
+      schema_admin.DeleteSchema(request);
+    }
+  }
+}
+
 }  // namespace examples
 }  // namespace pubsub
 }  // namespace cloud

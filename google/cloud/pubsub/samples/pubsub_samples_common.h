@@ -85,6 +85,11 @@ std::pair<std::string, std::string> CommitSchemaWithRevisionsForTesting(
     std::string const& schema_file, std::string const& revised_schema_file,
     std::string const& type);
 
+// Delete all schemas older than 48 hours. Ignore any failures. If multiple
+// tests are cleaning up schemas in parallel, then the delete call might fail.
+void CleanupSchemas(google::cloud::pubsub::SchemaServiceClient& schema_admin,
+                    std::string const& project_id, absl::Time const& time_now);
+
 }  // namespace examples
 }  // namespace pubsub
 }  // namespace cloud

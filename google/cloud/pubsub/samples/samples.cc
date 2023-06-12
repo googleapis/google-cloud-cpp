@@ -35,6 +35,7 @@
 
 namespace {
 
+using ::google::cloud::pubsub::examples::CleanupSchemas;
 using ::google::cloud::pubsub::examples::
     CommitSchemaRevisionsForRollbackSchemaTesting;
 using ::google::cloud::pubsub::examples::CommitSchemaWithRevisionsForTesting;
@@ -2207,6 +2208,8 @@ void AutoRunAvro(
 
   std::cout << "\nRunning DeleteSchema() sample [avro]" << std::endl;
   DeleteSchema(schema_admin, {project_id, avro_schema_id});
+
+  CleanupSchemas(schema_admin, project_id, absl::Now());
 }
 
 void AutoRunProtobuf(
