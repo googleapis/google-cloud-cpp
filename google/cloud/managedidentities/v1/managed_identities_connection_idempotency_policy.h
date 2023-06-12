@@ -22,7 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/managedidentities/v1/managed_identities_service.grpc.pb.h>
+#include <google/cloud/managedidentities/v1/managed_identities_service.pb.h>
 #include <memory>
 
 namespace google {

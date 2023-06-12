@@ -23,7 +23,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.grpc.pb.h>
+#include <google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.pb.h>
 #include <memory>
 
 namespace google {

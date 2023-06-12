@@ -22,7 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
+#include <google/cloud/texttospeech/v1/cloud_tts.pb.h>
 #include <memory>
 
 namespace google {

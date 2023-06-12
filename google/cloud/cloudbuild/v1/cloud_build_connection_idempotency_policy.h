@@ -22,7 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h>
+#include <google/devtools/cloudbuild/v1/cloudbuild.pb.h>
 #include <memory>
 
 namespace google {

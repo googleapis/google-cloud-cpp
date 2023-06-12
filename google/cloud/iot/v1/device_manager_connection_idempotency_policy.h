@@ -22,7 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/iot/v1/device_manager.grpc.pb.h>
+#include <google/cloud/iot/v1/device_manager.pb.h>
 #include <memory>
 
 namespace google {

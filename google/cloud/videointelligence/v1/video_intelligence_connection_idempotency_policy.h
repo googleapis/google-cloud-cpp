@@ -22,7 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/videointelligence/v1/video_intelligence.grpc.pb.h>
+#include <google/cloud/videointelligence/v1/video_intelligence.pb.h>
 #include <memory>
 
 namespace google {

@@ -22,7 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/session_entity_type.grpc.pb.h>
+#include <google/cloud/dialogflow/cx/v3/session_entity_type.pb.h>
 #include <memory>
 
 namespace google {

@@ -22,7 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/datacatalog/lineage/v1/lineage.grpc.pb.h>
+#include <google/cloud/datacatalog/lineage/v1/lineage.pb.h>
 #include <memory>
 
 namespace google {
