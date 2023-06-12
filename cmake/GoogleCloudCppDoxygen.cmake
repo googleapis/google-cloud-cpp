@@ -78,7 +78,7 @@ function (google_cloud_cpp_doxygen_targets_impl library)
     list(
         APPEND
         DOXYGEN_ALIASES
-        "googleapis_dev_link{2}=\"https://googleapis.dev/cpp/google-cloud-\\1/${VERSION}/\\2\""
+        "cloud_cpp_docs_link{2}=\"https://cloud.google.com/cpp/docs/reference/\\1/${VERSION}/\\2\""
     )
     set(DOXYGEN_INLINE_INHERITED_MEMB YES)
     set(DOXYGEN_JAVADOC_AUTOBRIEF YES)
