@@ -601,27 +601,7 @@ class JobServiceClient {
   ///  "projects/foo/tenants/bar".
   /// @param filter  Required. The filter string specifies the jobs to be enumerated.
   ///  @n
-  ///  Supported operator: =, AND
-  ///  @n
-  ///  The fields eligible for filtering are:
-  ///  @n
-  ///  * `companyName`
-  ///  * `requisitionId`
-  ///  * `status` Available values: OPEN, EXPIRED, ALL. Defaults to
-  ///  OPEN if no value is specified.
-  ///  @n
-  ///  At least one of `companyName` and `requisitionId` must present or an
-  ///  INVALID_ARGUMENT error is thrown.
-  ///  @n
-  ///  Sample Query:
-  ///  @n
-  ///  * companyName = "projects/foo/tenants/bar/companies/baz"
-  ///  * companyName = "projects/foo/tenants/bar/companies/baz" AND
-  ///  requisitionId = "req-1"
-  ///  * companyName = "projects/foo/tenants/bar/companies/baz" AND
-  ///  status = "EXPIRED"
-  ///  * requisitionId = "req-1"
-  ///  * requisitionId = "req-1" AND status = "EXPIRED"
+  ///  For more information, see [ListJobsRequest][google.cloud.talent.v4.ListJobsRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)

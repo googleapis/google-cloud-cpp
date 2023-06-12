@@ -197,26 +197,9 @@ class LoggingServiceV2Client {
   ///  entries in this list does not matter. Values supplied in this method's
   ///  `log_name`, `resource`, and `labels` fields are copied into those log
   ///  entries in this list that do not include values for their corresponding
-  ///  fields. For more information, see the
-  ///  [LogEntry][google.logging.v2.LogEntry] type.
+  ///  fields.
   ///  @n
-  ///  If the `timestamp` or `insert_id` fields are missing in log entries, then
-  ///  this method supplies the current time or a unique identifier, respectively.
-  ///  The supplied values are chosen so that, among the log entries that did not
-  ///  supply their own values, the entries earlier in the list will sort before
-  ///  the entries later in the list. See the `entries.list` method.
-  ///  @n
-  ///  Log entries with timestamps that are more than the
-  ///  [logs retention period](https://cloud.google.com/logging/quotas) in
-  ///  the past or more than 24 hours in the future will not be available when
-  ///  calling `entries.list`. However, those log entries can still be [exported
-  ///  with
-  ///  LogSinks](https://cloud.google.com/logging/docs/api/tasks/exporting-logs).
-  ///  @n
-  ///  To improve throughput and to avoid exceeding the
-  ///  [quota limit](https://cloud.google.com/logging/quotas) for calls to
-  ///  `entries.write`, you should try to include several log entries in this
-  ///  list, rather than calling this method for each individual log entry.
+  ///  For more information, see [WriteLogEntriesRequest][google.logging.v2.WriteLogEntriesRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -582,26 +565,9 @@ class LoggingServiceV2Client {
   ///  entries in this list does not matter. Values supplied in this method's
   ///  `log_name`, `resource`, and `labels` fields are copied into those log
   ///  entries in this list that do not include values for their corresponding
-  ///  fields. For more information, see the
-  ///  [LogEntry][google.logging.v2.LogEntry] type.
+  ///  fields.
   ///  @n
-  ///  If the `timestamp` or `insert_id` fields are missing in log entries, then
-  ///  this method supplies the current time or a unique identifier, respectively.
-  ///  The supplied values are chosen so that, among the log entries that did not
-  ///  supply their own values, the entries earlier in the list will sort before
-  ///  the entries later in the list. See the `entries.list` method.
-  ///  @n
-  ///  Log entries with timestamps that are more than the
-  ///  [logs retention period](https://cloud.google.com/logging/quotas) in
-  ///  the past or more than 24 hours in the future will not be available when
-  ///  calling `entries.list`. However, those log entries can still be [exported
-  ///  with
-  ///  LogSinks](https://cloud.google.com/logging/docs/api/tasks/exporting-logs).
-  ///  @n
-  ///  To improve throughput and to avoid exceeding the
-  ///  [quota limit](https://cloud.google.com/logging/quotas) for calls to
-  ///  `entries.write`, you should try to include several log entries in this
-  ///  list, rather than calling this method for each individual log entry.
+  ///  For more information, see [WriteLogEntriesRequest][google.logging.v2.WriteLogEntriesRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

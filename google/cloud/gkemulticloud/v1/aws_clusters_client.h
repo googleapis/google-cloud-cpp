@@ -198,32 +198,9 @@ class AwsClustersClient {
   /// @param aws_cluster  Required. The [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   ///  resource to update.
   /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
-  ///  this field. The elements of the repeated paths field can only include these
-  ///  fields from [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]:
+  ///  this field.
   ///  @n
-  ///   *   `description`.
-  ///   *   `annotations`.
-  ///   *   `control_plane.version`.
-  ///   *   `authorization.admin_users`.
-  ///   *   `control_plane.aws_services_authentication.role_arn`.
-  ///   *   `control_plane.aws_services_authentication.role_session_name`.
-  ///   *   `control_plane.config_encryption.kms_key_arn`.
-  ///   *   `control_plane.instance_type`.
-  ///   *   `control_plane.security_group_ids`.
-  ///   *   `control_plane.proxy_config`.
-  ///   *   `control_plane.proxy_config.secret_arn`.
-  ///   *   `control_plane.proxy_config.secret_version`.
-  ///   *   `control_plane.root_volume.size_gib`.
-  ///   *   `control_plane.root_volume.volume_type`.
-  ///   *   `control_plane.root_volume.iops`.
-  ///   *   `control_plane.root_volume.kms_key_arn`.
-  ///   *   `control_plane.ssh_config`.
-  ///   *   `control_plane.ssh_config.ec2_key_pair`.
-  ///   *   `control_plane.instance_placement.tenancy`.
-  ///   *   `control_plane.iam_instance_profile`.
-  ///   *   `logging_config.component_config.enable_components`.
-  ///   *   `control_plane.tags`.
-  ///   *   `monitoring_config.managed_prometheus_config.enabled`.
+  ///  For more information, see [UpdateAwsClusterRequest][google.cloud.gkemulticloud.v1.UpdateAwsClusterRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -693,31 +670,9 @@ class AwsClustersClient {
   /// @param aws_node_pool  Required. The [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]
   ///  resource to update.
   /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
-  ///  this field. The elements of the repeated paths field can only include these
-  ///  fields from [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]:
+  ///  this field.
   ///  @n
-  ///   *   `annotations`.
-  ///   *   `version`.
-  ///   *   `autoscaling.min_node_count`.
-  ///   *   `autoscaling.max_node_count`.
-  ///   *   `config.config_encryption.kms_key_arn`.
-  ///   *   `config.security_group_ids`.
-  ///   *   `config.root_volume.iops`.
-  ///   *   `config.root_volume.kms_key_arn`.
-  ///   *   `config.root_volume.volume_type`.
-  ///   *   `config.root_volume.size_gib`.
-  ///   *   `config.proxy_config`.
-  ///   *   `config.proxy_config.secret_arn`.
-  ///   *   `config.proxy_config.secret_version`.
-  ///   *   `config.ssh_config`.
-  ///   *   `config.ssh_config.ec2_key_pair`.
-  ///   *   `config.instance_placement.tenancy`.
-  ///   *   `config.iam_instance_profile`.
-  ///   *   `config.labels`.
-  ///   *   `config.tags`.
-  ///   *   `config.autoscaling_metrics_collection`.
-  ///   *   `config.autoscaling_metrics_collection.granularity`.
-  ///   *   `config.autoscaling_metrics_collection.metrics`.
+  ///  For more information, see [UpdateAwsNodePoolRequest][google.cloud.gkemulticloud.v1.UpdateAwsNodePoolRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO

@@ -371,10 +371,6 @@ ParameterCommentSubstitution substitutions[] = {
     {R"""("projects/p1/locations/us-central1/repositories/repo1)""",
      R"""("projects/p1/locations/us-central1/repositories/repo1")"""},
 
-    // Doxygen cannot process this tag in dataproc/v1.
-    {"<tbody>", "<!--<tbody>-->"},
-    {"</tbody>", "<!--</tbody>-->"},
-
     // Unescaped elements in spanner/admin/instance/v1.
     {" <parent>/instanceConfigs/us-east1,",
      " `<parent>/instanceConfigs/us-east1`,"},
@@ -383,12 +379,6 @@ ParameterCommentSubstitution substitutions[] = {
     // Extra quotes in asset/v1.
     {R"""( "folders/12345")", or a )""", R"""( "folders/12345"), or a )"""},
 
-    // This triggers a bug (I think it is a bug) in Doxygen:
-    //    https://github.com/doxygen/doxygen/issues/8788
-    // From resourcemanager/v3.
-    {R"""(`displayName=\\"Test String\\"`)""",
-     R"""(`displayName="Test String"`))"""},
-
     // Doxygen gets confused by single quotes in code spans:
     //    https://www.doxygen.nl/manual/markdown.html#mddox_code_spans
     // The workaround is to double quote these:
@@ -396,6 +386,24 @@ ParameterCommentSubstitution substitutions[] = {
     {R"""(`{cluster} = '-'`)""", R"""(``{cluster} = '-'``)"""},
     {R"""(`projects/<Project ID or '-'>`)""",
      R"""(``projects/<Project ID or '-'>``)"""},
+
+    // Further trim some initial paragraphs for long descriptions.
+    {R"""( The included patch
+ environment would specify the scikit-learn version as follows:)""",
+     ""},
+    {R"""( The elements of the repeated paths field can only include these
+ fields from [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]:)""",
+     ""},
+    {R"""( The elements of the repeated paths field can only include these
+ fields from [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]:)""",
+     ""},
+    {R"""( For more information, see the
+ [LogEntry][google.logging.v2.LogEntry] type.)""",
+     ""},
+    {R"""(and the `PATCH` request body would specify the new value, as follows:)""",
+     R"""(and the `PATCH` request body would specify the new value.)"""},
+    {"fields. Some eligible fields are:", "fields."},
+    {" The allowable fields to\n update are:", ""},
 
     // Some comments include multiple newlines in a row. We need to preserve
     // these because they are paragraph separators. When used in `@param`
@@ -409,25 +417,58 @@ ParameterCommentSubstitution substitutions[] = {
     {"\n", "\n  /// "},
 };
 
+// Very long parameters need different formatting.
+auto constexpr kShortParamFormat = "  /// @param %s %s\n";
+auto constexpr kLongParamFormat = R"""(  /// @param %s %s
+  ///  @n
+  ///  For more information, see [%s][%s].
+)""";
+
+std::string FormattedCommentsForParameter(
+    google::protobuf::MethodDescriptor const& method,
+    std::string const& parameter) {
+  google::protobuf::Descriptor const* input_type = method.input_type();
+  google::protobuf::FieldDescriptor const* parameter_descriptor =
+      input_type->FindFieldByName(parameter);
+  google::protobuf::SourceLocation loc;
+  parameter_descriptor->GetSourceLocation(&loc);
+  auto comment = EscapePrinterDelimiter(ChompByValue(loc.leading_comments));
+  // This is an arbitrary threshold. The intent is to simplify the generator
+  // code for corner cases. In the few cases where the documentation of a field
+  // is extremely detailed it manages to confuse Doxygen. We could try to
+  // reformat the comments until Doxygen works. Considering that there are very
+  // few of these cases, and that the long descriptions are confusing when
+  // reading a single function documentation, we just link the full method
+  // documentation and skip the details.
+  auto constexpr kTooManyLines = 20;
+  if (std::count(comment.begin(), comment.end(), '\n') > kTooManyLines) {
+    std::vector<absl::string_view> paragraphs = absl::StrSplit(comment, "\n\n");
+    auto brief = std::string{paragraphs.front()};
+    for (auto& sub : substitutions) {
+      sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &brief);
+    }
+    return absl::StrFormat(kLongParamFormat, FieldName(parameter_descriptor),
+                           brief, method.input_type()->name(),
+                           method.input_type()->full_name());
+  }
+
+  for (auto& sub : substitutions) {
+    sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &comment);
+  }
+  return absl::StrFormat(kShortParamFormat, FieldName(parameter_descriptor),
+                         std::move(comment));
+}
+
 std::string FormatApiMethodSignatureParameters(
     google::protobuf::MethodDescriptor const& method,
     std::string const& signature) {
   std::string parameter_comments;
-  google::protobuf::Descriptor const* input_type = method.input_type();
   std::vector<std::string> parameters =
       absl::StrSplit(signature, ',', absl::SkipEmpty());
   for (auto& parameter : parameters) {
     absl::StripAsciiWhitespace(&parameter);
-    google::protobuf::FieldDescriptor const* parameter_descriptor =
-        input_type->FindFieldByName(parameter);
-    google::protobuf::SourceLocation loc;
-    parameter_descriptor->GetSourceLocation(&loc);
-    auto comment = EscapePrinterDelimiter(ChompByValue(loc.leading_comments));
-    for (auto& sub : substitutions) {
-      sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &comment);
-    }
-    absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
-                          FieldName(parameter_descriptor), std::move(comment));
+    absl::StrAppend(&parameter_comments,
+                    FormattedCommentsForParameter(method, parameter));
   }
   return parameter_comments;
 }
