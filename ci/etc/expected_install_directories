@@ -819,6 +819,10 @@
 ./include/google/cloud/pubsublite/internal
 ./include/google/cloud/pubsublite/mocks
 ./include/google/cloud/pubsublite/v1
+./include/google/cloud/recaptchaenterprise
+./include/google/cloud/recaptchaenterprise/v1
+./include/google/cloud/recaptchaenterprise/v1/internal
+./include/google/cloud/recaptchaenterprise/v1/mocks
 ./include/google/cloud/recommender
 ./include/google/cloud/recommender/mocks
 ./include/google/cloud/recommender/v1
@@ -1151,6 +1155,7 @@
 ./lib64/cmake/google_cloud_cpp_profiler
 ./lib64/cmake/google_cloud_cpp_pubsub
 ./lib64/cmake/google_cloud_cpp_pubsublite
+./lib64/cmake/google_cloud_cpp_recaptchaenterprise
 ./lib64/cmake/google_cloud_cpp_recommender
 ./lib64/cmake/google_cloud_cpp_redis
 ./lib64/cmake/google_cloud_cpp_resourcemanager

@@ -69,6 +69,7 @@ privateca
 profiler
 pubsub
 pubsublite
+recaptchaenterprise
 recommender
 redis
 resourcemanager
