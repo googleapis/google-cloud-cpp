@@ -1,0 +1,14 @@
+{
+    "api_id": "networkservices.googleapis.com",
+    "api_shortname": "networkservices",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/networkservices/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/6133807",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Network Services API",
+    "product_documentation": "https://cloud.google.com/traffic-director/docs/service-routing-overview",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

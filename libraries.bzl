@@ -86,6 +86,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "monitoring",
     "networkconnectivity",
     "networkmanagement",
+    "networkservices",
     "notebooks",
     "optimization",
     "orgpolicy",

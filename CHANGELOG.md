@@ -118,6 +118,7 @@ the APIs in these libraries are stable, and are ready for production use.
 - [Cloud Domains](/google/cloud/domains/README.md)
 - [Essential Contacts](/google/cloud/essentialcontacts/README.md)
 - [Timeseries Insights](/google/cloud/timeseriesinsights/README.md)
+- [Traffic Director](/google/cloud/networkservices/README.md)
 - [Vertex AI](/google/cloud/aiplatform/README.md)
 
 ### Cloud Debugger
