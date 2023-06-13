@@ -35,6 +35,8 @@ foreach (dir IN LISTS service_dirs)
 endforeach ()
 
 include(GoogleCloudCppDoxygen)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
+    "${PROJECT_BINARY_DIR}/google/cloud/documentai")
 google_cloud_cpp_doxygen_targets(
     "contentwarehouse" DEPENDS cloud-docs
     google-cloud-cpp::contentwarehouse_protos
