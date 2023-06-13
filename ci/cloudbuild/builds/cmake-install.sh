@@ -87,6 +87,8 @@ expected_dirs+=(
   # no RPC services in google/cloud/compute common proto dirs
   ./include/google/cloud/compute/v1
   ./include/google/cloud/compute/v1/internal
+  ./include/google/cloud/gkebackup/logging
+  ./include/google/cloud/gkebackup/logging/v1
   ./include/google/cloud/gkehub/v1/configmanagement
   ./include/google/cloud/gkehub/v1/multiclusteringress
   ./include/google/cloud/grpc_utils

@@ -81,6 +81,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "filestore"
     "functions"
     "gameservices"
+    "gkebackup"
     "gkehub"
     "gkemulticloud"
     "iam"
