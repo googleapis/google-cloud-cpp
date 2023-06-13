@@ -48,6 +48,8 @@ Status StubFactoryRestGenerator::GenerateHeader() {
                        "google/cloud/version.h"});
   HeaderSystemIncludes({"memory"});
 
+  // This portability include must be the last file included.
+  HeaderPushPortabilityMacros();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -57,6 +59,8 @@ std::shared_ptr<$stub_rest_class_name$> CreateDefault$stub_rest_class_name$(
 )""");
 
   HeaderCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  HeaderPopPortabilityMacros();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};

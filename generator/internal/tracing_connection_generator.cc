@@ -52,6 +52,8 @@ Status TracingConnectionGenerator::GenerateHeader() {
       {vars("connection_header_path"), "google/cloud/version.h"});
   HeaderSystemIncludes({"memory"});
 
+  // This portability include must be the last file included.
+  HeaderPushPortabilityMacros();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -101,7 +103,8 @@ Make$tracing_connection_class_name$(
 )""");
 
   HeaderCloseNamespaces();
-
+  // Restore any pushed preprocessor definitions.
+  HeaderPopPortabilityMacros();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};

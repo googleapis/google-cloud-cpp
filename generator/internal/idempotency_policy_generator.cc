@@ -54,6 +54,8 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
                        "google/cloud/version.h"});
   HeaderSystemIncludes({vars("proto_grpc_header_path"), "memory"});
 
+  // This portability include must be the last file included.
+  HeaderPushPortabilityMacros();
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;
 
@@ -108,6 +110,8 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
   // clang-format on
 
   HeaderCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  HeaderPopPortabilityMacros();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};

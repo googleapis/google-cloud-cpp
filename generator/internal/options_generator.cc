@@ -52,6 +52,8 @@ Status OptionsGenerator::GenerateHeader() {
                        "google/cloud/options.h", "google/cloud/version.h"});
   HeaderSystemIncludes({"memory"});
 
+  // This portability include must be the last file included.
+  HeaderPushPortabilityMacros();
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;
 
@@ -123,6 +125,8 @@ using $service_name$PolicyOptionList =
   }
 
   HeaderCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  HeaderPopPortabilityMacros();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};

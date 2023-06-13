@@ -47,6 +47,8 @@ Status TracingStubGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/options.h",
                        "google/cloud/version.h"});
 
+  // This portability include must be the last file included.
+  HeaderPushPortabilityMacros();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -82,6 +84,8 @@ std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
 )""");
 
   HeaderCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  HeaderPopPortabilityMacros();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};

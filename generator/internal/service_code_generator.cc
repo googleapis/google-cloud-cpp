@@ -284,6 +284,20 @@ void ServiceCodeGenerator::CcSystemIncludes(
   GenerateSystemIncludes(cc_, system_includes);
 }
 
+void ServiceCodeGenerator::HeaderPushPortabilityMacros() {
+  HeaderPrint(R"""(
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+)""");
+}
+
+void ServiceCodeGenerator::HeaderPopPortabilityMacros() {
+  HeaderPrint(R"""(
+#include "google/cloud/internal/port_undef.inc"
+)""");
+}
+
 Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
   return OpenNamespaces(header_, ns_type, "product_path");
 }

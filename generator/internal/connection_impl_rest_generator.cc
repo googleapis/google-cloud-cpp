@@ -60,6 +60,8 @@ Status ConnectionImplRestGenerator::GenerateHeader() {
       {HasLongrunningMethod() ? "google/longrunning/operations.pb.h" : "",
        "memory"});
 
+  // This portability include must be the last file included.
+  HeaderPushPortabilityMacros();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -141,6 +143,8 @@ clone();
 )""");
 
   HeaderCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  HeaderPopPortabilityMacros();
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
 }

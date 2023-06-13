@@ -74,6 +74,9 @@ class ServiceCodeGenerator : public GeneratorInterface {
   void HeaderSystemIncludes(std::vector<std::string> const& system_includes);
   void CcSystemIncludes(std::vector<std::string> const& system_includes);
 
+  void HeaderPushPortabilityMacros();
+  void HeaderPopPortabilityMacros();
+
   Status HeaderOpenNamespaces(NamespaceType ns_type = NamespaceType::kNormal);
   Status HeaderOpenForwardingNamespaces(
       NamespaceType ns_type = NamespaceType::kNormal,

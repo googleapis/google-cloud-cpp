@@ -103,7 +103,9 @@ add_library(
     internal/parse_rfc3339.h
     internal/populate_common_options.cc
     internal/populate_common_options.h
+    internal/port_def.inc
     internal/port_platform.h
+    internal/port_undef.inc
     internal/random.cc
     internal/random.h
     internal/retry_loop_helpers.cc

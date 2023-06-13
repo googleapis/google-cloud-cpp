@@ -51,6 +51,8 @@ Status MockConnectionGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("connection_header_path")});
   HeaderSystemIncludes({"gmock/gmock.h"});
 
+  // This portability include must be the last file included.
+  HeaderPushPortabilityMacros();
   auto result = HeaderOpenNamespaces(NamespaceType::kMocks);
   if (!result.ok()) return result;
 
@@ -155,6 +157,8 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
   HeaderPrint("};\n");
 
   HeaderCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  HeaderPopPortabilityMacros();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};

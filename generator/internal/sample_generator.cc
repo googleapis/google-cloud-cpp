@@ -50,6 +50,8 @@ Status SampleGenerator::GenerateHeader() {
   });
   HeaderSystemIncludes({"iostream", "fstream", "string", "vector"});
 
+  // This portability include must be the last file included.
+  HeaderPushPortabilityMacros();
   HeaderPrint(R"""(
 // clang-format off
 // main-dox-marker: $product_namespace$::$client_class_name$
@@ -152,6 +154,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
 }
 )""");
 
+  // Restore any pushed preprocessor definitions.
+  HeaderPopPortabilityMacros();
   return {};
 }
 

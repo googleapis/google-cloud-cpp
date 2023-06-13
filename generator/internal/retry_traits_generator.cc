@@ -46,6 +46,8 @@ Status RetryTraitsGenerator::GenerateHeader() {
   HeaderPrint("\n");
   HeaderLocalIncludes({"google/cloud/status.h", "google/cloud/version.h"});
 
+  // This portability include must be the last file included.
+  HeaderPushPortabilityMacros();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -61,6 +63,8 @@ Status RetryTraitsGenerator::GenerateHeader() {
   );
 
   HeaderCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  HeaderPopPortabilityMacros();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
