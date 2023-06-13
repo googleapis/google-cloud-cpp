@@ -73,7 +73,9 @@ Manually edit `generator/generator_config.textproto` and add the new service.
 Find the list of `.proto` files that will need to be included:
 
 ```shell
-git -C ../googleapis grep -l '^service' -- ${subdir}
+bazel_output_base="$(bazel info output_base)"
+find "${bazel_output_base}/external/com_google_googleapis/${subdir}" -name '*.proto' -print0 |
+  xargs -0 grep -l '^service'
 ```
 
 > **Note:**
@@ -197,7 +199,7 @@ an admin operation listing top-level resources, to demonstrate how to use the
 API. Test your changes with:
 
 ```sh
-gcloud services enable --project=cloud-cpp-testing-resources ${lbrary}.googleapis.com
+gcloud services enable --project=cloud-cpp-testing-resources "${library}.googleapis.com"
 bazel run -- //google/cloud/${library}/quickstart:quickstart $params
 ```
 
