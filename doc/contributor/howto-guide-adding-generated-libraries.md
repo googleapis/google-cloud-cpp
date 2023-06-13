@@ -23,6 +23,7 @@ cd $HOME/google-cloud-cpp
 ```shell
 library=... # The name of your new library in the google-cloud-cpp repository
 subdir="google/cloud/${library}"  # The path in googleapis repo, may not start with google/cloud/
+bazel_output_base="$(bazel info output_base)"
 ```
 
 ## Verify the C++ rules exist
@@ -73,7 +74,6 @@ Manually edit `generator/generator_config.textproto` and add the new service.
 Find the list of `.proto` files that will need to be included:
 
 ```shell
-bazel_output_base="$(bazel info output_base)"
 find "${bazel_output_base}/external/com_google_googleapis/${subdir}" -name '*.proto' -print0 |
   xargs -0 grep -l '^service'
 ```
@@ -127,7 +127,6 @@ external/googleapis/update_libraries.sh "${library}"
 Then run the micro-generator to create the scaffold and the C++ sources:
 
 ```shell
-bazel_output_base="$(bazel info output_base)"
 bazel run \
   //generator:google-cloud-cpp-codegen -- \
   --protobuf_proto_path="${bazel_output_base}"/external/com_google_protobuf/src \
