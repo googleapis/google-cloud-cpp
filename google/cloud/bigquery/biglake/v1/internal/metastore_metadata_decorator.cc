@@ -33,7 +33,8 @@ MetastoreServiceMetadata::MetastoreServiceMetadata(
     std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 MetastoreServiceMetadata::CreateCatalog(
@@ -70,7 +71,8 @@ MetastoreServiceMetadata::ListCatalogs(
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 MetastoreServiceMetadata::CreateDatabase(
     grpc::ClientContext& context,
-    google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const& request) {
+    google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
+        request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->CreateDatabase(context, request);
 }
@@ -78,7 +80,8 @@ MetastoreServiceMetadata::CreateDatabase(
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 MetastoreServiceMetadata::DeleteDatabase(
     grpc::ClientContext& context,
-    google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const& request) {
+    google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
+        request) {
   SetMetadata(context, "name=" + request.name());
   return child_->DeleteDatabase(context, request);
 }
@@ -86,7 +89,8 @@ MetastoreServiceMetadata::DeleteDatabase(
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 MetastoreServiceMetadata::UpdateDatabase(
     grpc::ClientContext& context,
-    google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const& request) {
+    google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
+        request) {
   SetMetadata(context, "database.name=" + request.database().name());
   return child_->UpdateDatabase(context, request);
 }
@@ -156,7 +160,7 @@ MetastoreServiceMetadata::ListTables(
 }
 
 void MetastoreServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+                                           std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context);
 }
@@ -168,8 +172,8 @@ void MetastoreServiceMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    context.AddMetadata(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
   }
   auto const& authority = options.get<AuthorityOption>();
   if (!authority.empty()) context.set_authority(authority);

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGLAKE_V1_METASTORE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGLAKE_V1_METASTORE_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/biglake/v1/metastore_connection.h"
 #include "google/cloud/bigquery/biglake/v1/metastore_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

@@ -69,7 +69,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class MetastoreServiceClient {
  public:
-  explicit MetastoreServiceClient(std::shared_ptr<MetastoreServiceConnection> connection, Options opts = {});
+  explicit MetastoreServiceClient(
+      std::shared_ptr<MetastoreServiceConnection> connection,
+      Options opts = {});
   ~MetastoreServiceClient();
 
   ///@{
@@ -82,10 +84,12 @@ class MetastoreServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(MetastoreServiceClient const& a, MetastoreServiceClient const& b) {
+  friend bool operator==(MetastoreServiceClient const& a,
+                         MetastoreServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(MetastoreServiceClient const& a, MetastoreServiceClient const& b) {
+  friend bool operator!=(MetastoreServiceClient const& a,
+                         MetastoreServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -118,8 +122,10 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.CreateCatalogRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L336}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-  CreateCatalog(std::string const& parent, google::cloud::bigquery::biglake::v1::Catalog const& catalog, std::string const& catalog_id, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Catalog> CreateCatalog(
+      std::string const& parent,
+      google::cloud::bigquery::biglake::v1::Catalog const& catalog,
+      std::string const& catalog_id, Options opts = {});
 
   // clang-format off
   ///
@@ -149,8 +155,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.CreateCatalogRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L336}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-  CreateCatalog(google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Catalog> CreateCatalog(
+      google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -177,8 +184,8 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.DeleteCatalogRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L356}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-  DeleteCatalog(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Catalog> DeleteCatalog(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -208,8 +215,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.DeleteCatalogRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L356}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-  DeleteCatalog(google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Catalog> DeleteCatalog(
+      google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -236,8 +244,8 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.GetCatalogRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L367}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-  GetCatalog(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Catalog> GetCatalog(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -267,8 +275,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.GetCatalogRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L367}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-  GetCatalog(google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Catalog> GetCatalog(
+      google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -303,8 +312,8 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.ListCatalogsRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L378}
   ///
   // clang-format on
-  StreamRange<google::cloud::bigquery::biglake::v1::Catalog>
-  ListCatalogs(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::bigquery::biglake::v1::Catalog> ListCatalogs(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -343,8 +352,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.ListCatalogsRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L378}
   ///
   // clang-format on
-  StreamRange<google::cloud::bigquery::biglake::v1::Catalog>
-  ListCatalogs(google::cloud::bigquery::biglake::v1::ListCatalogsRequest request, Options opts = {});
+  StreamRange<google::cloud::bigquery::biglake::v1::Catalog> ListCatalogs(
+      google::cloud::bigquery::biglake::v1::ListCatalogsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -375,8 +385,10 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.Database]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L223}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  CreateDatabase(std::string const& parent, google::cloud::bigquery::biglake::v1::Database const& database, std::string const& database_id, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Database> CreateDatabase(
+      std::string const& parent,
+      google::cloud::bigquery::biglake::v1::Database const& database,
+      std::string const& database_id, Options opts = {});
 
   // clang-format off
   ///
@@ -406,8 +418,10 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.Database]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L223}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  CreateDatabase(google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Database> CreateDatabase(
+      google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -434,8 +448,8 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.DeleteDatabaseRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L432}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  DeleteDatabase(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Database> DeleteDatabase(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -465,8 +479,10 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.DeleteDatabaseRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L432}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  DeleteDatabase(google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Database> DeleteDatabase(
+      google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -500,8 +516,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.UpdateDatabaseRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L445}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  UpdateDatabase(google::cloud::bigquery::biglake::v1::Database const& database, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Database> UpdateDatabase(
+      google::cloud::bigquery::biglake::v1::Database const& database,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -531,8 +548,10 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.UpdateDatabaseRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L445}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  UpdateDatabase(google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Database> UpdateDatabase(
+      google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -559,8 +578,8 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.GetDatabaseRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L462}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  GetDatabase(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Database> GetDatabase(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -590,8 +609,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.GetDatabaseRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L462}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  GetDatabase(google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Database> GetDatabase(
+      google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -627,8 +647,8 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.ListDatabasesRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L475}
   ///
   // clang-format on
-  StreamRange<google::cloud::bigquery::biglake::v1::Database>
-  ListDatabases(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::bigquery::biglake::v1::Database> ListDatabases(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -667,8 +687,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.ListDatabasesRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L475}
   ///
   // clang-format on
-  StreamRange<google::cloud::bigquery::biglake::v1::Database>
-  ListDatabases(google::cloud::bigquery::biglake::v1::ListDatabasesRequest request, Options opts = {});
+  StreamRange<google::cloud::bigquery::biglake::v1::Database> ListDatabases(
+      google::cloud::bigquery::biglake::v1::ListDatabasesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -699,8 +720,10 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.Table]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L278}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  CreateTable(std::string const& parent, google::cloud::bigquery::biglake::v1::Table const& table, std::string const& table_id, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> CreateTable(
+      std::string const& parent,
+      google::cloud::bigquery::biglake::v1::Table const& table,
+      std::string const& table_id, Options opts = {});
 
   // clang-format off
   ///
@@ -730,8 +753,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.Table]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L278}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  CreateTable(google::cloud::bigquery::biglake::v1::CreateTableRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> CreateTable(
+      google::cloud::bigquery::biglake::v1::CreateTableRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -758,8 +782,8 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.Table]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L278}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  DeleteTable(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> DeleteTable(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -789,8 +813,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.Table]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L278}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  DeleteTable(google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> DeleteTable(
+      google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -824,8 +849,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.UpdateTableRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L541}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  UpdateTable(google::cloud::bigquery::biglake::v1::Table const& table, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> UpdateTable(
+      google::cloud::bigquery::biglake::v1::Table const& table,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -855,8 +881,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.UpdateTableRequest]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L541}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  UpdateTable(google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> UpdateTable(
+      google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -886,8 +913,8 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.Table]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L278}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  RenameTable(std::string const& name, std::string const& new_name, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> RenameTable(
+      std::string const& name, std::string const& new_name, Options opts = {});
 
   // clang-format off
   ///
@@ -917,8 +944,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.Table]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L278}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  RenameTable(google::cloud::bigquery::biglake::v1::RenameTableRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> RenameTable(
+      google::cloud::bigquery::biglake::v1::RenameTableRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -945,8 +973,8 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.Table]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L278}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  GetTable(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> GetTable(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -976,8 +1004,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.Table]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L278}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  GetTable(google::cloud::bigquery::biglake::v1::GetTableRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> GetTable(
+      google::cloud::bigquery::biglake::v1::GetTableRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1013,8 +1042,8 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.Table]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L278}
   ///
   // clang-format on
-  StreamRange<google::cloud::bigquery::biglake::v1::Table>
-  ListTables(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::bigquery::biglake::v1::Table> ListTables(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1053,8 +1082,9 @@ class MetastoreServiceClient {
   /// [google.cloud.bigquery.biglake.v1.Table]: @googleapis_reference_link{google/cloud/bigquery/biglake/v1/metastore.proto#L278}
   ///
   // clang-format on
-  StreamRange<google::cloud::bigquery::biglake::v1::Table>
-  ListTables(google::cloud::bigquery::biglake::v1::ListTablesRequest request, Options opts = {});
+  StreamRange<google::cloud::bigquery::biglake::v1::Table> ListTables(
+      google::cloud::bigquery::biglake::v1::ListTablesRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<MetastoreServiceConnection> connection_;

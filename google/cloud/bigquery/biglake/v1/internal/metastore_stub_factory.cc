@@ -36,29 +36,28 @@ namespace cloud {
 namespace bigquery_biglake_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<MetastoreServiceStub>
-CreateDefaultMetastoreServiceStub(
+std::shared_ptr<MetastoreServiceStub> CreateDefaultMetastoreServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::bigquery::biglake::v1::MetastoreService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::bigquery::biglake::v1::MetastoreService::NewStub(channel);
   std::shared_ptr<MetastoreServiceStub> stub =
-    std::make_shared<DefaultMetastoreServiceStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultMetastoreServiceStub>(
+          std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<MetastoreServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<MetastoreServiceAuth>(std::move(auth),
+                                                  std::move(stub));
   }
   stub = std::make_shared<MetastoreServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<MetastoreServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

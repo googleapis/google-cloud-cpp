@@ -26,75 +26,91 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-MetastoreServiceConnectionIdempotencyPolicy::~MetastoreServiceConnectionIdempotencyPolicy() = default;
+MetastoreServiceConnectionIdempotencyPolicy::
+    ~MetastoreServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<MetastoreServiceConnectionIdempotencyPolicy>
 MetastoreServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MetastoreServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::CreateCatalog(google::cloud::bigquery::biglake::v1::CreateCatalogRequest const&) {
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::CreateCatalog(
+    google::cloud::bigquery::biglake::v1::CreateCatalogRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::DeleteCatalog(google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const&) {
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::DeleteCatalog(
+    google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::GetCatalog(google::cloud::bigquery::biglake::v1::GetCatalogRequest const&) {
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::GetCatalog(
+    google::cloud::bigquery::biglake::v1::GetCatalogRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::ListCatalogs(google::cloud::bigquery::biglake::v1::ListCatalogsRequest) {  // NOLINT
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::ListCatalogs(
+    google::cloud::bigquery::biglake::v1::ListCatalogsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::CreateDatabase(google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&) {
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::CreateDatabase(
+    google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::DeleteDatabase(google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&) {
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::DeleteDatabase(
+    google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::UpdateDatabase(google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&) {
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::UpdateDatabase(
+    google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::GetDatabase(google::cloud::bigquery::biglake::v1::GetDatabaseRequest const&) {
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::GetDatabase(
+    google::cloud::bigquery::biglake::v1::GetDatabaseRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::ListDatabases(google::cloud::bigquery::biglake::v1::ListDatabasesRequest) {  // NOLINT
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::ListDatabases(
+    google::cloud::bigquery::biglake::v1::ListDatabasesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::CreateTable(google::cloud::bigquery::biglake::v1::CreateTableRequest const&) {
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::CreateTable(
+    google::cloud::bigquery::biglake::v1::CreateTableRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::DeleteTable(google::cloud::bigquery::biglake::v1::DeleteTableRequest const&) {
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::DeleteTable(
+    google::cloud::bigquery::biglake::v1::DeleteTableRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::UpdateTable(google::cloud::bigquery::biglake::v1::UpdateTableRequest const&) {
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::UpdateTable(
+    google::cloud::bigquery::biglake::v1::UpdateTableRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::RenameTable(google::cloud::bigquery::biglake::v1::RenameTableRequest const&) {
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::RenameTable(
+    google::cloud::bigquery::biglake::v1::RenameTableRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::GetTable(google::cloud::bigquery::biglake::v1::GetTableRequest const&) {
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::GetTable(
+    google::cloud::bigquery::biglake::v1::GetTableRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetastoreServiceConnectionIdempotencyPolicy::ListTables(google::cloud::bigquery::biglake::v1::ListTablesRequest) {  // NOLINT
+Idempotency MetastoreServiceConnectionIdempotencyPolicy::ListTables(
+    google::cloud::bigquery::biglake::v1::ListTablesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<MetastoreServiceConnectionIdempotencyPolicy>
-    MakeDefaultMetastoreServiceConnectionIdempotencyPolicy() {
+MakeDefaultMetastoreServiceConnectionIdempotencyPolicy() {
   return std::make_unique<MetastoreServiceConnectionIdempotencyPolicy>();
 }
 
