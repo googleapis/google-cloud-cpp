@@ -23,6 +23,7 @@ cd $HOME/google-cloud-cpp
 ```shell
 library=... # The name of your new library in the google-cloud-cpp repository
 subdir="google/cloud/${library}"  # The path in googleapis repo, may not start with google/cloud/
+bazel_output_base="$(bazel info output_base)"
 ```
 
 ## Verify the C++ rules exist
@@ -69,6 +70,13 @@ Determine the retryable status codes by looking in the service config JSON. For
 example, [here][retryable-status-codes].
 
 Manually edit `generator/generator_config.textproto` and add the new service.
+
+Find the list of `.proto` files that will need to be included:
+
+```shell
+find "${bazel_output_base}/external/com_google_googleapis/${subdir}" -name '*.proto' -print0 |
+  xargs -0 grep -l '^service'
+```
 
 > **Note:**
 > While older service definitions may not include the version specification
@@ -119,7 +127,6 @@ external/googleapis/update_libraries.sh "${library}"
 Then run the micro-generator to create the scaffold and the C++ sources:
 
 ```shell
-bazel_output_base="$(bazel info output_base)"
 bazel run \
   //generator:google-cloud-cpp-codegen -- \
   --protobuf_proto_path="${bazel_output_base}"/external/com_google_protobuf/src \
@@ -184,6 +191,22 @@ Otherwise, if you are generating an experimental library, add it to
 `GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES` and note in a comment when the library
 was generated.
 
+## Update the quickstart
+
+The generated quickstart will need some editing. Use a simple operation, maybe
+an admin operation listing top-level resources, to demonstrate how to use the
+API. Test your changes with:
+
+```sh
+gcloud services enable --project=cloud-cpp-testing-resources "${library}.googleapis.com"
+bazel run -- //google/cloud/${library}/quickstart:quickstart $params
+```
+
+Edit the tests so this new quickstart receives the right command-line
+arguments in the CI builds.
+
+- `google/cloud/${library}/CMakeLists.txt`
+
 ## Add the API baseline
 
 For new GA libraries you need to create the API baseline.  You can leave this
@@ -194,22 +217,6 @@ env GOOGLE_CLOUD_CPP_CHECK_API=${library} ci/cloudbuild/build.sh -t check-api-pr
 git add ci/abi-dumps
 git commit -m"Add API baseline" ci/abi-dumps/
 ```
-
-## Update the quickstart
-
-The generated quickstart will need some editing. Use a simple operation, maybe
-an admin operation listing top-level resources, to demonstrate how to use the
-API. Test your changes with:
-
-```sh
-gcloud services enable --project=cloud-cpp-testing-resources ${lbrary}.googleapis.com
-bazel run -- //google/cloud/${library}/quickstart:quickstart $params
-```
-
-Edit the tests so this new quickstart receives the right command-line
-arguments in the CI builds.
-
-- `google/cloud/${library}/CMakeLists.txt`
 
 ## Update the README files
 
