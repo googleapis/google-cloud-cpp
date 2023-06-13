@@ -70,6 +70,12 @@ example, [here][retryable-status-codes].
 
 Manually edit `generator/generator_config.textproto` and add the new service.
 
+Find the list of `.proto` files that will need to be included:
+
+```shell
+git -C ../googleapis grep -l '^service' -- ${subdir}
+```
+
 > **Note:**
 > While older service definitions may not include the version specification
 > in the `product_path` field, all new services are required to include the
@@ -184,17 +190,6 @@ Otherwise, if you are generating an experimental library, add it to
 `GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES` and note in a comment when the library
 was generated.
 
-## Add the API baseline
-
-For new GA libraries you need to create the API baseline.  You can leave this
-running while you work on tweaks to the quickstart and documentation.
-
-```shell
-env GOOGLE_CLOUD_CPP_CHECK_API=${library} ci/cloudbuild/build.sh -t check-api-pr
-git add ci/abi-dumps
-git commit -m"Add API baseline" ci/abi-dumps/
-```
-
 ## Update the quickstart
 
 The generated quickstart will need some editing. Use a simple operation, maybe
@@ -209,6 +204,17 @@ Edit the tests so this new quickstart receives the right command-line
 arguments in the CI builds.
 
 - `google/cloud/${library}/CMakeLists.txt`
+
+## Add the API baseline
+
+For new GA libraries you need to create the API baseline.  You can leave this
+running while you work on tweaks to the quickstart and documentation.
+
+```shell
+env GOOGLE_CLOUD_CPP_CHECK_API=${library} ci/cloudbuild/build.sh -t check-api-pr
+git add ci/abi-dumps
+git commit -m"Add API baseline" ci/abi-dumps/
+```
 
 ## Update the README files
 
