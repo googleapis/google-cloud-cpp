@@ -60,7 +60,7 @@ static_assert(!HasPublicContent<google::storage::v2::ChecksummedData>::value,
               "The workarounds for [ctype = CORD] are enabled, but not needed."
               "\nPlease disable these workarounds as described in:"
               "\n    https://github.com/googleapis/google-cloud-cpp"
-              "/blob/main/doc/ctype-cord-workaround.md"
+              "/blob/main/doc/ctype-cord-workarounds.md"
               "\n");
 
 static_assert(std::is_same<std::string, ContentType>::value,
@@ -68,7 +68,7 @@ static_assert(std::is_same<std::string, ContentType>::value,
               "\nThis will result in compile-time errors."
               "\nPlease disable these workarounds as described in:"
               "\n    https://github.com/googleapis/google-cloud-cpp"
-              "/blob/main/doc/ctype-cord-workaround.md"
+              "/blob/main/doc/ctype-cord-workarounds.md"
               "\n");
 
 // Workaround for older Protobuf versions without `[ctype = CORD]` support.
@@ -119,7 +119,7 @@ static_assert(
     "\nThis will result in compile-time errors"
     "\nPlease enable these workarounds as described in:"
     "\n    https://github.com/googleapis/google-cloud-cpp"
-    "/blob/main/doc/ctype-cord-workaround.md"
+    "/blob/main/doc/ctype-cord-workarounds.md"
     "\n");
 
 // The OSS version of [ctype = CORD] will not support `mutable_content()`. That

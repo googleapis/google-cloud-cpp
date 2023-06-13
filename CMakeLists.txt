@@ -122,7 +122,7 @@ option(
     [==[Enable the workarounds for [ctype = CORD] when using Protobuf < v23.
 More details at
 
-https://github.com/googleapis/google-cloud-cpp/blob/main/doc/ctype-cord-workaround.md
+https://github.com/googleapis/google-cloud-cpp/blob/main/doc/ctype-cord-workarounds.md
 ]==]
     OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
