@@ -25,6 +25,10 @@
 #include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace profiler_v2 {
@@ -56,5 +60,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler_v2
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_PROFILER_CONNECTION_IDEMPOTENCY_POLICY_H

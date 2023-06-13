@@ -22,6 +22,10 @@
 #include "google/cloud/compute/node_types/v1/node_types_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace compute_node_types_v1_mocks {
@@ -70,5 +74,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_node_types_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TYPES_V1_MOCKS_MOCK_NODE_TYPES_CONNECTION_H

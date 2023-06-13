@@ -25,6 +25,10 @@
 #include <google/logging/v2/logging.grpc.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace logging_v2 {
@@ -61,5 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_v2
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_LOGGING_SERVICE_V2_CONNECTION_IDEMPOTENCY_POLICY_H

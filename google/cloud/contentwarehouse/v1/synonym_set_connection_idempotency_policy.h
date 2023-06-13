@@ -25,6 +25,10 @@
 #include <google/cloud/contentwarehouse/v1/synonymset_service.grpc.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace contentwarehouse_v1 {
@@ -64,5 +68,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contentwarehouse_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_SYNONYM_SET_CONNECTION_IDEMPOTENCY_POLICY_H

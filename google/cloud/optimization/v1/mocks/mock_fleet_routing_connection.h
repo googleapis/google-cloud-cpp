@@ -22,6 +22,10 @@
 #include "google/cloud/optimization/v1/fleet_routing_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace optimization_v1_mocks {
@@ -65,5 +69,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_MOCKS_MOCK_FLEET_ROUTING_CONNECTION_H

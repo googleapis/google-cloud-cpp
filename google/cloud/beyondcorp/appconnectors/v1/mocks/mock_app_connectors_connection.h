@@ -22,6 +22,10 @@
 #include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace beyondcorp_appconnectors_v1_mocks {
@@ -97,5 +101,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_appconnectors_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPCONNECTORS_V1_MOCKS_MOCK_APP_CONNECTORS_CONNECTION_H

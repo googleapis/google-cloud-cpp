@@ -22,6 +22,10 @@
 #include "google/cloud/iap/v1/identity_aware_proxy_admin_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace iap_v1_mocks {
@@ -98,5 +102,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_MOCKS_MOCK_IDENTITY_AWARE_PROXY_ADMIN_CONNECTION_H

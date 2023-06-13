@@ -22,6 +22,10 @@
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace bigquery_analyticshub_v1_mocks {
@@ -143,5 +147,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_analyticshub_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ANALYTICSHUB_V1_MOCKS_MOCK_ANALYTICS_HUB_CONNECTION_H

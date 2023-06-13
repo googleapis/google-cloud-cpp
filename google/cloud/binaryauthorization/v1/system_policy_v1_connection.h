@@ -28,6 +28,10 @@
 #include <google/cloud/binaryauthorization/v1/service.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace binaryauthorization_v1 {
@@ -98,5 +102,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_SYSTEM_POLICY_V1_CONNECTION_H

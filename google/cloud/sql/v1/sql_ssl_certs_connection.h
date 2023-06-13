@@ -29,6 +29,10 @@
 #include <google/cloud/sql/v1/cloud_sql_ssl_certs.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace sql_v1 {
@@ -81,5 +85,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_SSL_CERTS_CONNECTION_H

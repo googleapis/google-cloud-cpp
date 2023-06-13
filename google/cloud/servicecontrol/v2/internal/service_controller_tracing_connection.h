@@ -23,6 +23,10 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace servicecontrol_v2_internal {
@@ -66,5 +70,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V2_INTERNAL_SERVICE_CONTROLLER_TRACING_CONNECTION_H

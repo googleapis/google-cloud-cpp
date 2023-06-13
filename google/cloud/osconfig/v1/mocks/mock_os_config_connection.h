@@ -22,6 +22,10 @@
 #include "google/cloud/osconfig/v1/os_config_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace osconfig_v1_mocks {
@@ -117,5 +121,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_MOCKS_MOCK_OS_CONFIG_CONNECTION_H

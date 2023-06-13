@@ -29,6 +29,10 @@
 #include <memory>
 #include <string>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace compute_region_network_endpoint_groups_v1_internal {
@@ -92,5 +96,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_network_endpoint_groups_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_NETWORK_ENDPOINT_GROUPS_V1_INTERNAL_REGION_NETWORK_ENDPOINT_GROUPS_REST_METADATA_DECORATOR_H

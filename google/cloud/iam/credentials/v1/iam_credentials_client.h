@@ -28,6 +28,10 @@
 #include <google/protobuf/duration.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace iam_credentials_v1 {
@@ -412,5 +416,7 @@ namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_credentials_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_CREDENTIALS_V1_IAM_CREDENTIALS_CLIENT_H

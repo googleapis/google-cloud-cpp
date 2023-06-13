@@ -25,6 +25,10 @@
 #include <memory>
 #include <string>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace tasks_v2_internal {
@@ -114,5 +118,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_V2_INTERNAL_CLOUD_TASKS_METADATA_DECORATOR_H

@@ -31,6 +31,10 @@
 #include <google/monitoring/metricsscope/v1/metrics_scopes.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace monitoring_metricsscope_v1 {
@@ -119,5 +123,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_metricsscope_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICSSCOPE_V1_METRICS_SCOPES_CONNECTION_H

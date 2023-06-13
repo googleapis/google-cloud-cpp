@@ -22,6 +22,10 @@
 #include "google/cloud/compute/image_family_views/v1/image_family_views_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace compute_image_family_views_v1_mocks {
@@ -58,5 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_image_family_views_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGE_FAMILY_VIEWS_V1_MOCKS_MOCK_IMAGE_FAMILY_VIEWS_CONNECTION_H

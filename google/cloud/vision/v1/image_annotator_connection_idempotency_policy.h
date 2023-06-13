@@ -25,6 +25,10 @@
 #include <google/cloud/vision/v1/image_annotator.grpc.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace vision_v1 {
@@ -59,5 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_IMAGE_ANNOTATOR_CONNECTION_IDEMPOTENCY_POLICY_H

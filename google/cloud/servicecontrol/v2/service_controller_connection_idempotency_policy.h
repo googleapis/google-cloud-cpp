@@ -25,6 +25,10 @@
 #include <google/api/servicecontrol/v2/service_controller.grpc.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace servicecontrol_v2 {
@@ -52,5 +56,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_v2
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V2_SERVICE_CONTROLLER_CONNECTION_IDEMPOTENCY_POLICY_H

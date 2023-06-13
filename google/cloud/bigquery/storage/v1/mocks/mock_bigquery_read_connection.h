@@ -22,6 +22,10 @@
 #include "google/cloud/bigquery/storage/v1/bigquery_read_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace bigquery_storage_v1_mocks {
@@ -72,5 +76,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_storage_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_STORAGE_V1_MOCKS_MOCK_BIGQUERY_READ_CONNECTION_H

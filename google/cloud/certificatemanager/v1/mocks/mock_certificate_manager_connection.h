@@ -22,6 +22,10 @@
 #include "google/cloud/certificatemanager/v1/certificate_manager_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace certificatemanager_v1_mocks {
@@ -229,5 +233,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_MOCKS_MOCK_CERTIFICATE_MANAGER_CONNECTION_H

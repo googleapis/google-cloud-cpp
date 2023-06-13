@@ -22,6 +22,10 @@
 #include "google/cloud/binaryauthorization/v1/validation_helper_v1_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace binaryauthorization_v1_mocks {
@@ -59,5 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_MOCKS_MOCK_VALIDATION_HELPER_V1_CONNECTION_H

@@ -29,6 +29,10 @@
 #include <google/cloud/orchestration/airflow/service/v1/image_versions.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace composer_v1 {
@@ -98,5 +102,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_IMAGE_VERSIONS_CONNECTION_H

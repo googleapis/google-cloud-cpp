@@ -23,6 +23,10 @@
 #include "google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace compute_global_forwarding_rules_v1_mocks {
@@ -96,5 +100,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_global_forwarding_rules_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_FORWARDING_RULES_V1_MOCKS_MOCK_GLOBAL_FORWARDING_RULES_CONNECTION_H

@@ -29,6 +29,10 @@
 #include <google/cloud/recaptchaenterprise/v1/recaptchaenterprise.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace recaptchaenterprise_v1 {
@@ -154,5 +158,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recaptchaenterprise_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECAPTCHAENTERPRISE_V1_RECAPTCHA_ENTERPRISE_CONNECTION_H

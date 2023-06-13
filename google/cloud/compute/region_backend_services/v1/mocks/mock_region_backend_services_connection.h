@@ -23,6 +23,10 @@
 #include "google/cloud/compute/region_backend_services/v1/region_backend_services_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace compute_region_backend_services_v1_mocks {
@@ -107,5 +111,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_backend_services_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_BACKEND_SERVICES_V1_MOCKS_MOCK_REGION_BACKEND_SERVICES_CONNECTION_H

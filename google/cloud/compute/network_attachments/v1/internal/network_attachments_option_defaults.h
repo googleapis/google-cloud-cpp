@@ -22,6 +22,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace compute_network_attachments_v1_internal {
@@ -33,5 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_network_attachments_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_ATTACHMENTS_V1_INTERNAL_NETWORK_ATTACHMENTS_OPTION_DEFAULTS_H

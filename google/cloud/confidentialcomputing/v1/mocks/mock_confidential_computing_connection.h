@@ -22,6 +22,10 @@
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace confidentialcomputing_v1_mocks {
@@ -67,5 +71,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace confidentialcomputing_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_MOCKS_MOCK_CONFIDENTIAL_COMPUTING_CONNECTION_H

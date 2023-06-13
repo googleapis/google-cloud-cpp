@@ -22,6 +22,10 @@
 #include "google/cloud/logging/v2/logging_service_v2_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace logging_v2_mocks {
@@ -83,5 +87,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_v2_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_MOCKS_MOCK_LOGGING_SERVICE_V2_CONNECTION_H

@@ -29,6 +29,10 @@
 #include <vector>
 
 // clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
+// clang-format off
 // main-dox-marker: compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient
 // clang-format on
 namespace {
@@ -100,3 +104,5 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   });
   return example.Run(argc, argv);
 }
+
+#include "google/cloud/internal/port_undef.inc"

@@ -28,6 +28,10 @@
 #include <google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace compute_target_ssl_proxies_v1_internal {
@@ -201,5 +205,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_ssl_proxies_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_SSL_PROXIES_V1_INTERNAL_TARGET_SSL_PROXIES_REST_STUB_H

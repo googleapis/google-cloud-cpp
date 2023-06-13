@@ -25,6 +25,10 @@
 #include <google/identity/accesscontextmanager/v1/access_context_manager.grpc.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace accesscontextmanager_v1 {
@@ -146,5 +150,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_ACCESS_CONTEXT_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H

@@ -25,6 +25,10 @@
 #include <google/cloud/websecurityscanner/v1/web_security_scanner.grpc.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace websecurityscanner_v1 {
@@ -91,5 +95,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_WEB_SECURITY_SCANNER_CONNECTION_IDEMPOTENCY_POLICY_H

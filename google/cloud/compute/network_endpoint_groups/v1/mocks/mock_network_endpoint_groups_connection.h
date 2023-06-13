@@ -23,6 +23,10 @@
 #include "google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace compute_network_endpoint_groups_v1_mocks {
@@ -114,5 +118,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_network_endpoint_groups_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_ENDPOINT_GROUPS_V1_MOCKS_MOCK_NETWORK_ENDPOINT_GROUPS_CONNECTION_H

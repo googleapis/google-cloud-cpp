@@ -31,7 +31,7 @@
 // detect/prohibit anytime it is #included twice without a corresponding
 // #undef.
 
-#ifdef GOOGLE_CLOUD_CPP_PORT_
+#ifndef GOOGLE_CLOUD_CPP_PORT_
 #error "port_undef.inc must be included after port_def.inc"
 #endif
 #undef GOOGLE_CLOUD_CPP_PORT_

@@ -22,6 +22,10 @@
 #include "google/cloud/spanner/admin/database_admin_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace spanner_admin_mocks {
@@ -167,5 +171,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_admin_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_MOCKS_MOCK_DATABASE_ADMIN_CONNECTION_H

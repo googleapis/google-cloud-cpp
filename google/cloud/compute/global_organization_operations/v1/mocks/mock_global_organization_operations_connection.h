@@ -23,6 +23,10 @@
 #include "google/cloud/compute/global_organization_operations/v1/global_organization_operations_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace compute_global_organization_operations_v1_mocks {
@@ -71,5 +75,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_global_organization_operations_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ORGANIZATION_OPERATIONS_V1_MOCKS_MOCK_GLOBAL_ORGANIZATION_OPERATIONS_CONNECTION_H

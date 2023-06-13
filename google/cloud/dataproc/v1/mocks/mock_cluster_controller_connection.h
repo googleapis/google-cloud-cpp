@@ -22,6 +22,10 @@
 #include "google/cloud/dataproc/v1/cluster_controller_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace dataproc_v1_mocks {
@@ -92,5 +96,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_MOCKS_MOCK_CLUSTER_CONTROLLER_CONNECTION_H

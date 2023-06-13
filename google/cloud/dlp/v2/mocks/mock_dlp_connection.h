@@ -22,6 +22,10 @@
 #include "google/cloud/dlp/v2/dlp_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace dlp_v2_mocks {
@@ -224,5 +228,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_v2_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_MOCKS_MOCK_DLP_CONNECTION_H

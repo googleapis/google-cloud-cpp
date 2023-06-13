@@ -23,6 +23,10 @@
 #include "google/cloud/compute/network_edge_security_services/v1/network_edge_security_services_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace compute_network_edge_security_services_v1_mocks {
@@ -87,5 +91,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_network_edge_security_services_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_EDGE_SECURITY_SERVICES_V1_MOCKS_MOCK_NETWORK_EDGE_SECURITY_SERVICES_CONNECTION_H

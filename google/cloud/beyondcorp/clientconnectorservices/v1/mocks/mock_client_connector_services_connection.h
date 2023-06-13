@@ -23,6 +23,10 @@
 #include "google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace beyondcorp_clientconnectorservices_v1_mocks {
@@ -92,5 +96,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_clientconnectorservices_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_CLIENTCONNECTORSERVICES_V1_MOCKS_MOCK_CLIENT_CONNECTOR_SERVICES_CONNECTION_H

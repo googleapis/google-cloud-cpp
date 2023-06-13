@@ -26,6 +26,10 @@
 #include <google/cloud/compute/region_health_check_services/v1/region_health_check_services.grpc.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace compute_region_health_check_services_v1 {
@@ -67,5 +71,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_health_check_services_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_HEALTH_CHECK_SERVICES_V1_REGION_HEALTH_CHECK_SERVICES_CONNECTION_IDEMPOTENCY_POLICY_H

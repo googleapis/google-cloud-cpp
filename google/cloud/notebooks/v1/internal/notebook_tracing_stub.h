@@ -23,6 +23,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace notebooks_v1_internal {
@@ -261,5 +265,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_V1_INTERNAL_NOTEBOOK_TRACING_STUB_H

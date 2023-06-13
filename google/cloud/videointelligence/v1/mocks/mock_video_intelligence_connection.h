@@ -22,6 +22,10 @@
 #include "google/cloud/videointelligence/v1/video_intelligence_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace videointelligence_v1_mocks {
@@ -59,5 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_v1_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_MOCKS_MOCK_VIDEO_INTELLIGENCE_CONNECTION_H

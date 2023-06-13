@@ -25,6 +25,10 @@
 #include <google/cloud/workflows/executions/v1/executions.grpc.pb.h>
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace workflows_executions_v1 {
@@ -60,5 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_executions_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_EXECUTIONS_CONNECTION_IDEMPOTENCY_POLICY_H

@@ -22,6 +22,10 @@
 #include "google/cloud/tpu/v2/tpu_connection.h"
 #include <gmock/gmock.h>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace tpu_v2_mocks {
@@ -111,5 +115,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_v2_mocks
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V2_MOCKS_MOCK_TPU_CONNECTION_H

@@ -23,6 +23,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace iam_credentials_v1_internal {
@@ -75,5 +79,7 @@ namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_credentials_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_CREDENTIALS_V1_INTERNAL_IAM_CREDENTIALS_TRACING_STUB_H
