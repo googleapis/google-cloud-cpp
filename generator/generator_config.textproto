@@ -2103,7 +2103,7 @@ service {
 service {
   service_proto_path: "google/cloud/gkebackup/v1/gkebackup.proto"
   product_path: "google/cloud/gkebackup/v1"
-  initial_copyright_year: "2022"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 
