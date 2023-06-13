@@ -30,22 +30,10 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
-    spanner::Database const& db,
+std::shared_ptr<SpannerStub> DecorateSpannerStub(
+    std::shared_ptr<SpannerStub> stub, spanner::Database const& db,
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
-    Options const& opts, int channel_id) {
-  grpc::ChannelArguments channel_arguments =
-      internal::MakeChannelArguments(opts);
-  // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use
-  // its value here to allow compiling against older versions.
-  channel_arguments.SetInt("grpc.channel_id", channel_id);
-
-  auto channel =
-      auth->CreateChannel(opts.get<EndpointOption>(), channel_arguments);
-  auto spanner_grpc_stub = google::spanner::v1::Spanner::NewStub(channel);
-  std::shared_ptr<SpannerStub> stub =
-      std::make_shared<DefaultSpannerStub>(std::move(spanner_grpc_stub));
-
+    Options const& opts) {
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<SpannerAuth>(std::move(auth), std::move(stub));
   }
@@ -62,6 +50,24 @@ std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
     stub = MakeSpannerTracingStub(std::move(stub));
   }
   return stub;
+}
+
+std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
+    spanner::Database const& db,
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    Options const& opts, int channel_id) {
+  grpc::ChannelArguments channel_arguments =
+      internal::MakeChannelArguments(opts);
+  // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use
+  // its value here to allow compiling against older versions.
+  channel_arguments.SetInt("grpc.channel_id", channel_id);
+
+  auto channel =
+      auth->CreateChannel(opts.get<EndpointOption>(), channel_arguments);
+  auto spanner_grpc_stub = google::spanner::v1::Spanner::NewStub(channel);
+  auto stub =
+      std::make_shared<DefaultSpannerStub>(std::move(spanner_grpc_stub));
+  return DecorateSpannerStub(std::move(stub), db, std::move(auth), opts);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

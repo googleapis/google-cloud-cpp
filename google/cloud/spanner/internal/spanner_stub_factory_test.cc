@@ -13,13 +13,16 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/spanner_stub_factory.h"
-#include "google/cloud/spanner/internal/defaults.h"
+#include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 
@@ -30,45 +33,85 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::NotNull;
+using ::testing::Pair;
+using ::testing::Return;
 
-TEST(CreateDefaultSpannerStub, Basic) {
-  auto opts = spanner_internal::DefaultOptions();
-  auto auth =
-      internal::CreateAuthenticationStrategy(opts.get<GrpcCredentialOption>());
-  auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
-                                       std::move(auth), std::move(opts),
-                                       /*channel_id=*/0);
-  EXPECT_NE(stub, nullptr);
-}
-
-TEST(CreateDefaultSpannerStub, WithLogging) {
-  testing_util::ScopedLog log;
-
+TEST(DecorateSpannerStub, Auth) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce([](grpc::ClientContext& context,
+                   google::spanner::v1::CreateSessionRequest const&) {
+        EXPECT_THAT(context.credentials(), NotNull());
+        return internal::AbortedError("fail");
+      });
+  auto credentials = MakeAccessTokenCredentials(
+      "test-only-invalid",
+      std::chrono::system_clock::now() + std::chrono::minutes(5));
   auto opts = Options{}
-                  .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-                  .set<EndpointOption>("localhost:1")
+                  .set<UnifiedCredentialsOption>(credentials)
                   .set<TracingComponentsOption>({"rpc"});
-  auto auth =
-      internal::CreateAuthenticationStrategy(opts.get<GrpcCredentialOption>());
-  auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
-                                       std::move(auth), std::move(opts),
-                                       /*channel_id=*/0);
-  EXPECT_NE(stub, nullptr);
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  auto auth = internal::CreateAuthenticationStrategy(background.cq(), opts);
+  auto stub = DecorateSpannerStub(mock, spanner::Database("foo", "bar", "baz"),
+                                  std::move(auth), opts);
+  ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  context.set_deadline(std::chrono::system_clock::now() +
-                       std::chrono::milliseconds(5));
   auto session =
       stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
-  EXPECT_THAT(session, StatusIs(AnyOf(StatusCode::kUnavailable,
-                                      StatusCode::kInvalidArgument,
-                                      StatusCode::kDeadlineExceeded)));
+  EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
+}
+
+TEST(DecorateSpannerStub, Metadata) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto const db = spanner::Database("foo", "bar", "baz");
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce([&db](grpc::ClientContext& context,
+                      google::spanner::v1::CreateSessionRequest const&) {
+        testing_util::ValidateMetadataFixture fixture;
+        auto metadata = fixture.GetMetadata(context);
+        EXPECT_THAT(metadata, Contains(Pair("google-cloud-resource-prefix",
+                                            db.FullName())));
+        return internal::AbortedError("fail");
+      });
+  auto opts =
+      Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  auto auth = internal::CreateAuthenticationStrategy(background.cq(), opts);
+  auto stub = DecorateSpannerStub(mock, db, std::move(auth), opts);
+  ASSERT_NE(stub, nullptr);
+
+  grpc::ClientContext context;
+  auto session =
+      stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
+  EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
+}
+
+TEST(DecorateSpannerStub, Logging) {
+  testing_util::ScopedLog log;
+
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce(Return(internal::AbortedError("fail")));
+  auto opts = Options{}
+                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+                  .set<TracingComponentsOption>({"rpc"});
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  auto auth = internal::CreateAuthenticationStrategy(background.cq(), opts);
+  auto stub = DecorateSpannerStub(mock, spanner::Database("foo", "bar", "baz"),
+                                  std::move(auth), opts);
+  ASSERT_NE(stub, nullptr);
+
+  grpc::ClientContext context;
+  auto session =
+      stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
+  EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(log.ExtractLines(),
-              Contains(HasSubstr(session.status().message())));
+              Contains(AllOf(HasSubstr("CreateSession"), HasSubstr("fail"))));
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -78,60 +121,52 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 
-TEST(CreateDefaultSpannerStub, TracingEnabled) {
+TEST(DecorateSpannerStub, TracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
   auto propagator = testing_util::InstallMockPropagator();
   EXPECT_CALL(*propagator, Inject);
 
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce(Return(internal::AbortedError("fail")));
   auto opts = EnableTracing(
-      Options{}
-          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<EndpointOption>("localhost:1"));
-  auto auth =
-      internal::CreateAuthenticationStrategy(opts.get<GrpcCredentialOption>());
-  auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
-                                       std::move(auth), std::move(opts),
-                                       /*channel_id=*/0);
-  EXPECT_NE(stub, nullptr);
+      Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  auto auth = internal::CreateAuthenticationStrategy(background.cq(), opts);
+  auto stub = DecorateSpannerStub(mock, spanner::Database("foo", "bar", "baz"),
+                                  std::move(auth), opts);
+  ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  context.set_deadline(std::chrono::system_clock::now() +
-                       std::chrono::milliseconds(5));
   auto session =
       stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
-  EXPECT_THAT(session, StatusIs(AnyOf(StatusCode::kUnavailable,
-                                      StatusCode::kInvalidArgument,
-                                      StatusCode::kDeadlineExceeded)));
+  EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(
       span_catcher->GetSpans(),
       ElementsAre(SpanNamed("google.spanner.v1.Spanner/CreateSession")));
 }
 
-TEST(CreateDefaultSpannerStub, TracingDisabled) {
+TEST(DecorateSpannerStub, TracingDisabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
   auto propagator = testing_util::InstallMockPropagator();
   EXPECT_CALL(*propagator, Inject).Times(0);
 
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce(Return(internal::AbortedError("fail")));
   auto opts = DisableTracing(
-      Options{}
-          .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
-          .set<EndpointOption>("localhost:1"));
-  auto auth =
-      internal::CreateAuthenticationStrategy(opts.get<GrpcCredentialOption>());
-  auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
-                                       std::move(auth), std::move(opts),
-                                       /*channel_id=*/0);
+      Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  auto auth = internal::CreateAuthenticationStrategy(background.cq(), opts);
+  auto stub = DecorateSpannerStub(mock, spanner::Database("foo", "bar", "baz"),
+                                  std::move(auth), opts);
   EXPECT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  context.set_deadline(std::chrono::system_clock::now() +
-                       std::chrono::milliseconds(5));
   auto session =
       stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
-  EXPECT_THAT(session, StatusIs(AnyOf(StatusCode::kUnavailable,
-                                      StatusCode::kInvalidArgument,
-                                      StatusCode::kDeadlineExceeded)));
+  EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
 }
