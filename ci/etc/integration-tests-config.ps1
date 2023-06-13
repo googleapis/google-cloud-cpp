@@ -14,6 +14,10 @@
 
 # The name of the project used to run the integration tests and examples.
 $env:GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
+# Some services seemingly require project numbers. If you ever need to generate
+# this again use:
+#   gcloud projects describe "${GOOGLE_CLOUD_PROJECT}"
+$env:GOOGLE_CLOUD_CPP_TEST_PROJECT_NUMBER="936212892354"
 # Some quickstarts require a x-goog-user-project header, either when using
 # our own user account in local builds, or when using the GCB service
 # account
@@ -73,6 +77,9 @@ $env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC="quickstart"
 
 # Cloud BigQuery configuration parameters
 $env:GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE="projects/bigquery-public-data/datasets/usa_names/tables/usa_1910_current"
+
+# Content Warehouse
+$env:GOOGLE_CLOUD_CPP_CONTENTWAREHOUSE_TEST_LOCATION_ID="us"
 
 # Document AI
 $env:GOOGLE_CLOUD_CPP_DOCUMENTAI_TEST_LOCATION_ID="us"

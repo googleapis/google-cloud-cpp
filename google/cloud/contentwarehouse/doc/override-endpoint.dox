@@ -1,0 +1,57 @@
+/*!
+@page contentwarehouse-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `contentwarehouse_v1::DocumentServiceClient`:
+
+@snippet document_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c contentwarehouse_v1::DocumentServiceClient](@ref contentwarehouse_v1::DocumentServiceClient-endpoint-snippet)
+- [\c contentwarehouse_v1::DocumentLinkServiceClient](@ref contentwarehouse_v1::DocumentLinkServiceClient-endpoint-snippet)
+- [\c contentwarehouse_v1::DocumentSchemaServiceClient](@ref contentwarehouse_v1::DocumentSchemaServiceClient-endpoint-snippet)
+- [\c contentwarehouse_v1::RuleSetServiceClient](@ref contentwarehouse_v1::RuleSetServiceClient-endpoint-snippet)
+- [\c contentwarehouse_v1::SynonymSetServiceClient](@ref contentwarehouse_v1::SynonymSetServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page contentwarehouse_v1::DocumentServiceClient-endpoint-snippet Override contentwarehouse_v1::DocumentServiceClient Endpoint Configuration
+
+@snippet google/cloud/contentwarehouse/v1/samples/document_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page contentwarehouse_v1::DocumentLinkServiceClient-endpoint-snippet Override contentwarehouse_v1::DocumentLinkServiceClient Endpoint Configuration
+
+@snippet google/cloud/contentwarehouse/v1/samples/document_link_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page contentwarehouse_v1::DocumentSchemaServiceClient-endpoint-snippet Override contentwarehouse_v1::DocumentSchemaServiceClient Endpoint Configuration
+
+@snippet google/cloud/contentwarehouse/v1/samples/document_schema_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page contentwarehouse_v1::RuleSetServiceClient-endpoint-snippet Override contentwarehouse_v1::RuleSetServiceClient Endpoint Configuration
+
+@snippet google/cloud/contentwarehouse/v1/samples/rule_set_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page contentwarehouse_v1::SynonymSetServiceClient-endpoint-snippet Override contentwarehouse_v1::SynonymSetServiceClient Endpoint Configuration
+
+@snippet google/cloud/contentwarehouse/v1/samples/synonym_set_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

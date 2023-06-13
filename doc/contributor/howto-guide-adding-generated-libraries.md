@@ -202,6 +202,7 @@ an admin operation listing top-level resources, to demonstrate how to use the
 API. Test your changes with:
 
 ```sh
+gcloud services enable --project=cloud-cpp-testing-resources ${lbrary}.googleapis.com
 bazel run -- //google/cloud/${library}/quickstart:quickstart $params
 ```
 

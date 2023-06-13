@@ -115,6 +115,7 @@ info, see [#7463] and [#5976].
 We are happy to announce the following GA libraries.  Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
+- [Content Warehouse](/google/cloud/contentwarehouse/README.md)
 - [Cloud Domains](/google/cloud/domains/README.md)
 - [Essential Contacts](/google/cloud/essentialcontacts/README.md)
 - [reCAPTCHA Enterprise](/google/cloud/recaptchaenterprise/README.md)

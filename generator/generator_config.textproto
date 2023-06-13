@@ -1539,6 +1539,42 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Content Warehouse
+service {
+  service_proto_path: "google/cloud/contentwarehouse/v1/document_link_service.proto"
+  product_path: "google/cloud/contentwarehouse/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/contentwarehouse/v1/document_schema_service.proto"
+  product_path: "google/cloud/contentwarehouse/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/contentwarehouse/v1/document_service.proto"
+  product_path: "google/cloud/contentwarehouse/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/contentwarehouse/v1/ruleset_service.proto"
+  product_path: "google/cloud/contentwarehouse/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/contentwarehouse/v1/synonymset_service.proto"
+  product_path: "google/cloud/contentwarehouse/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Data Catalog
 service {
   service_proto_path: "google/cloud/datacatalog/v1/datacatalog.proto"

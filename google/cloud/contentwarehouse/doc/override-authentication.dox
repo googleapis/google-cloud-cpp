@@ -1,0 +1,67 @@
+/*!
+@page contentwarehouse-override-authentication How to Override the Authentication Credentials
+
+Unless otherwise configured, the client libraries use
+[Application Default Credentials] to authenticate with Google Cloud Services.
+While this works for most applications, in some cases you may need to override
+this default. You can do so by providing the
+[UnifiedCredentialsOption](@ref google::cloud::UnifiedCredentialsOption)
+The following example shows how to explicitly load a service account key file:
+
+<!-- inject-service-account-snippet-start -->
+@snippet document_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c contentwarehouse_v1::DocumentServiceClient](@ref contentwarehouse_v1::DocumentServiceClient-service-account-snippet)
+- [\c contentwarehouse_v1::DocumentLinkServiceClient](@ref contentwarehouse_v1::DocumentLinkServiceClient-service-account-snippet)
+- [\c contentwarehouse_v1::DocumentSchemaServiceClient](@ref contentwarehouse_v1::DocumentSchemaServiceClient-service-account-snippet)
+- [\c contentwarehouse_v1::RuleSetServiceClient](@ref contentwarehouse_v1::RuleSetServiceClient-service-account-snippet)
+- [\c contentwarehouse_v1::SynonymSetServiceClient](@ref contentwarehouse_v1::SynonymSetServiceClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
+*/
+
+// <!-- inject-authentication-pages-start -->
+
+/*! @page contentwarehouse_v1::DocumentServiceClient-service-account-snippet Override contentwarehouse_v1::DocumentServiceClient Authentication Defaults
+
+@snippet google/cloud/contentwarehouse/v1/samples/document_client_samples.cc with-service-account
+
+*/
+
+/*! @page contentwarehouse_v1::DocumentLinkServiceClient-service-account-snippet Override contentwarehouse_v1::DocumentLinkServiceClient Authentication Defaults
+
+@snippet google/cloud/contentwarehouse/v1/samples/document_link_client_samples.cc with-service-account
+
+*/
+
+/*! @page contentwarehouse_v1::DocumentSchemaServiceClient-service-account-snippet Override contentwarehouse_v1::DocumentSchemaServiceClient Authentication Defaults
+
+@snippet google/cloud/contentwarehouse/v1/samples/document_schema_client_samples.cc with-service-account
+
+*/
+
+/*! @page contentwarehouse_v1::RuleSetServiceClient-service-account-snippet Override contentwarehouse_v1::RuleSetServiceClient Authentication Defaults
+
+@snippet google/cloud/contentwarehouse/v1/samples/rule_set_client_samples.cc with-service-account
+
+*/
+
+/*! @page contentwarehouse_v1::SynonymSetServiceClient-service-account-snippet Override contentwarehouse_v1::SynonymSetServiceClient Authentication Defaults
+
+@snippet google/cloud/contentwarehouse/v1/samples/synonym_set_client_samples.cc with-service-account
+
+*/
+// <!-- inject-authentication-pages-end -->
