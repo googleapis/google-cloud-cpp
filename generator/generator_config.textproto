@@ -2497,6 +2497,14 @@ service {
   omit_repo_metadata: true
 }
 
+# reCAPTCHA Enterprise
+service {
+  service_proto_path: "google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto"
+  product_path: "google/cloud/recaptchaenterprise/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Recommender
 service {
   service_proto_path: "google/cloud/recommender/v1/recommender_service.proto"
