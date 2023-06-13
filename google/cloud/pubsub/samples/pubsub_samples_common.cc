@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/project.h"
 #include <fstream>
 #include <sstream>
 
@@ -167,25 +168,38 @@ std::string ReadFile(std::string const& path) {
   return std::string{std::istreambuf_iterator<char>{ifs.rdbuf()}, {}};
 }
 
-std::string CommitSchemaRevisionsForRollbackSchemaTesting(
-    google::cloud::pubsub::SchemaServiceClient& schema_admin,
+std::pair<std::string, std::string> CommitSchemaWithRevisionsForTesting(
+    google::cloud::pubsub::SchemaServiceClient& client,
     std::string const& project_id, std::string const& schema_id,
-    std::string const& file) {
-  std::string const definition = ReadFile(file);
+    std::string const& schema_file, std::string const& revised_schema_file,
+    std::string const& type) {
+  std::string const initial_definition = ReadFile(schema_file);
+  std::string const revised_definition = ReadFile(revised_schema_file);
+  auto const schema_type = type == "AVRO"
+                               ? google::pubsub::v1::Schema::AVRO
+                               : google::pubsub::v1::Schema::PROTOCOL_BUFFER;
 
-  google::pubsub::v1::CommitSchemaRequest request;
+  google::pubsub::v1::CreateSchemaRequest create_request;
+  create_request.set_parent(google::cloud::Project(project_id).FullName());
+  create_request.set_schema_id(schema_id);
+  create_request.mutable_schema()->set_type(schema_type);
+  create_request.mutable_schema()->set_definition(initial_definition);
+  auto schema = client.CreateSchema(create_request);
+  if (!schema) throw std::move(schema).status();
+  auto first_revision_id = schema->revision_id();
+
+  google::pubsub::v1::CommitSchemaRequest commit_request;
   std::string const name =
       google::cloud::pubsub::Schema(project_id, schema_id).FullName();
-  request.set_name(name);
-  request.mutable_schema()->set_name(name);
-  request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
-  request.mutable_schema()->set_definition(definition);
-  auto schema = schema_admin.CommitSchema(request);
+  commit_request.set_name(name);
+  commit_request.mutable_schema()->set_name(name);
+  commit_request.mutable_schema()->set_type(schema_type);
+  commit_request.mutable_schema()->set_definition(revised_definition);
+  schema = client.CommitSchema(commit_request);
   if (!schema) throw std::move(schema).status();
-  std::string first_revision_id = schema.value().revision_id();
-  schema = schema_admin.CommitSchema(request);
-  if (!schema) throw std::move(schema).status();
-  return first_revision_id;
+  auto last_revision_id = schema->revision_id();
+
+  return {std::move(first_revision_id), std::move(last_revision_id)};
 }
 
 }  // namespace examples
