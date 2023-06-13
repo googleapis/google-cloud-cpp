@@ -2152,9 +2152,6 @@ void AutoRunAvro(
 
   std::cout << "\nRunning DeleteSchemaRevision sample" << std::endl;
   DeleteSchemaRevision(schema_admin,
-<<<<<<< Updated upstream
-                       {project_id, avro_schema_id, last_revision_id});
-=======
                        {project_id, avro_revision_schema_id, last_revision_id});
 
   std::cout
@@ -2162,7 +2159,6 @@ void AutoRunAvro(
       << std::endl;
   DeleteTopic(topic_admin_client, {project_id, avro_revision_topic_id});
   DeleteSchema(schema_admin, {project_id, avro_revision_schema_id});
->>>>>>> Stashed changes
 
   std::cout << "\nRunning ListSchemas() sample" << std::endl;
   ListSchemas(schema_admin, {project_id});
