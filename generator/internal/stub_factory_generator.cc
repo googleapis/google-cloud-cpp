@@ -91,6 +91,8 @@ Status StubFactoryGenerator::GenerateCc() {
                    "google/cloud/options.h", "google/cloud/log.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
 
+  // This portability include must be the last file included.
+  CcPushPortabilityMacros();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -141,6 +143,8 @@ CreateDefault$stub_class_name$(
 )""");
 
   CcCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  CcPopPortabilityMacros();
   return {};
 }
 

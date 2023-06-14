@@ -121,6 +121,8 @@ Status TracingStubGenerator::GenerateCc() {
            : "",
        "google/cloud/internal/grpc_opentelemetry.h"});
 
+  // This portability include must be the last file included.
+  CcPushPortabilityMacros();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -333,6 +335,8 @@ std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
 }
 )""");
   CcCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  CcPopPortabilityMacros();
   return {};
 }
 

@@ -147,6 +147,8 @@ Status ConnectionRestGenerator::GenerateCc() {
        "google/cloud/internal/rest_background_threads_impl.h"});
   CcSystemIncludes({"memory"});
 
+  // This portability include must be the last file included.
+  CcPushPortabilityMacros();
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
   auto endpoint_location_style = EndpointLocationStyle();
@@ -195,6 +197,8 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
   }
 
   CcCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  CcPopPortabilityMacros();
   return {};
 }
 

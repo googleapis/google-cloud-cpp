@@ -204,6 +204,8 @@ Status ConnectionImplGenerator::GenerateCc() {
            : ""});
   CcSystemIncludes({"memory"});
 
+  // This portability include must be the last file included.
+  CcPushPortabilityMacros();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -229,6 +231,8 @@ $connection_class_name$Impl::$connection_class_name$Impl(
   }
 
   CcCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  CcPopPortabilityMacros();
   return {};
 }
 

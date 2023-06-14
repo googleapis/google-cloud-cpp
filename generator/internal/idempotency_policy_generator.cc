@@ -131,6 +131,8 @@ Status IdempotencyPolicyGenerator::GenerateCc() {
   CcLocalIncludes({vars("idempotency_policy_header_path")});
   CcSystemIncludes({"memory"});
 
+  // This portability include must be the last file included.
+  CcPushPortabilityMacros();
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
 
@@ -195,6 +197,8 @@ Idempotency $idempotency_class_name$::$method_name$($request_type$ const&) {
   // clang-format on
 
   CcCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  CcPopPortabilityMacros();
   return {};
 }
 

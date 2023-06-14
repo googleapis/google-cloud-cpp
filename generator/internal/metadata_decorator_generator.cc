@@ -187,6 +187,8 @@ Status MetadataDecoratorGenerator::GenerateCc() {
        "google/cloud/common_options.h", "google/cloud/status_or.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
 
+  // This portability include must be the last file included.
+  CcPushPortabilityMacros();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -386,6 +388,8 @@ void $metadata_class_name$::SetMetadata(grpc::ClientContext& context) {
 )""");
 
   CcCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  CcPopPortabilityMacros();
   return {};
 }
 

@@ -356,6 +356,8 @@ Status ClientGenerator::GenerateCc() {
     CcSystemIncludes({"thread"});
   }
 
+  // This portability include must be the last file included.
+  CcPushPortabilityMacros();
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
 
@@ -633,6 +635,8 @@ $client_class_name$::Async$method_name$(Options opts) {
   }
 
   CcCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  CcPopPortabilityMacros();
   return {};
 }
 

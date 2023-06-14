@@ -283,19 +283,30 @@ void ServiceCodeGenerator::CcSystemIncludes(
     std::vector<std::string> const& system_includes) {
   GenerateSystemIncludes(cc_, system_includes);
 }
-
-void ServiceCodeGenerator::HeaderPushPortabilityMacros() {
-  HeaderPrint(R"""(
+auto constexpr kPortabilityDefInclude = R"""(
 // clang-format off
 #include "google/cloud/internal/port_def.inc"
 // clang-format on
-)""");
+)""";
+
+auto constexpr kPortabilityUndefInclude = R"""(
+#include "google/cloud/internal/port_undef.inc"
+)""";
+
+void ServiceCodeGenerator::HeaderPushPortabilityMacros() {
+  HeaderPrint(kPortabilityDefInclude);
 }
 
 void ServiceCodeGenerator::HeaderPopPortabilityMacros() {
-  HeaderPrint(R"""(
-#include "google/cloud/internal/port_undef.inc"
-)""");
+  HeaderPrint(kPortabilityUndefInclude);
+}
+
+void ServiceCodeGenerator::CcPushPortabilityMacros() {
+  CcPrint(kPortabilityDefInclude);
+}
+
+void ServiceCodeGenerator::CcPopPortabilityMacros() {
+  CcPrint(kPortabilityUndefInclude);
 }
 
 Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {

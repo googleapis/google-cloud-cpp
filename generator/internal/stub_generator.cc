@@ -396,6 +396,8 @@ Status StubGenerator::GenerateCc() {
        HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
        "memory"});
 
+  // This portability include must be the last file included.
+  CcPushPortabilityMacros();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -606,6 +608,8 @@ future<Status> Default$stub_class_name$::AsyncCancelOperation(
   }
 
   CcCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  CcPopPortabilityMacros();
   return {};
 }
 

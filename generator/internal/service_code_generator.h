@@ -76,6 +76,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
 
   void HeaderPushPortabilityMacros();
   void HeaderPopPortabilityMacros();
+  void CcPushPortabilityMacros();
+  void CcPopPortabilityMacros();
 
   Status HeaderOpenNamespaces(NamespaceType ns_type = NamespaceType::kNormal);
   Status HeaderOpenForwardingNamespaces(

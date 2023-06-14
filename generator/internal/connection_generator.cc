@@ -228,6 +228,8 @@ Status ConnectionGenerator::GenerateCc() {
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : ""});
   CcSystemIncludes({"memory"});
 
+  // This portability include must be the last file included.
+  CcPushPortabilityMacros();
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
 
@@ -364,6 +366,8 @@ void BigQueryReadReadRowsStreamingUpdater(
     CcCloseNamespaces();
   }
 
+  // Restore any pushed preprocessor definitions.
+  CcPopPortabilityMacros();
   return {};
 }
 

@@ -164,6 +164,8 @@ Status LoggingDecoratorRestGenerator::GenerateCc() {
                    "google/cloud/status_or.h"});
   CcSystemIncludes({"memory"});
 
+  // This portability include must be the last file included.
+  CcPushPortabilityMacros();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -302,6 +304,8 @@ $logging_rest_class_name$::AsyncCancelOperation(
   }
 
   CcCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  CcPopPortabilityMacros();
   return {};
 }
 

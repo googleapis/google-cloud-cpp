@@ -86,6 +86,8 @@ Status StubFactoryRestGenerator::GenerateCc() {
        "google/cloud/log.h", "absl/strings/match.h"});
   CcSystemIncludes({"memory"});
 
+  // This portability include must be the last file included.
+  CcPushPortabilityMacros();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -123,6 +125,8 @@ CreateDefault$stub_rest_class_name$(Options const& options) {
 )""");
 
   CcCloseNamespaces();
+  // Restore any pushed preprocessor definitions.
+  CcPopPortabilityMacros();
   return {};
 }
 
