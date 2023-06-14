@@ -19,6 +19,10 @@
 #include "google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies_client.h"
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace compute_target_tcp_proxies_v1 {
@@ -191,3 +195,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_tcp_proxies_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"

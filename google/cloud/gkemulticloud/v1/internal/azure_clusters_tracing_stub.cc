@@ -19,6 +19,10 @@
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace gkemulticloud_v1_internal {
@@ -300,3 +304,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkemulticloud_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"

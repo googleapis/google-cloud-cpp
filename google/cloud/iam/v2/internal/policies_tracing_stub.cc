@@ -19,6 +19,10 @@
 #include "google/cloud/iam/v2/internal/policies_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace iam_v2_internal {
@@ -135,3 +139,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"

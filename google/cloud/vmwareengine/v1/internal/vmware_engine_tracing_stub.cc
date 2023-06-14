@@ -19,6 +19,10 @@
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace vmwareengine_v1_internal {
@@ -626,3 +630,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmwareengine_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"

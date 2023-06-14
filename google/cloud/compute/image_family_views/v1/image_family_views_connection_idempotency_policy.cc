@@ -19,6 +19,10 @@
 #include "google/cloud/compute/image_family_views/v1/image_family_views_connection_idempotency_policy.h"
 #include <memory>
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace compute_image_family_views_v1 {
@@ -49,3 +53,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_image_family_views_v1
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"

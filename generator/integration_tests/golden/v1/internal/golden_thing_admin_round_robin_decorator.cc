@@ -18,6 +18,10 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_round_robin_decorator.h"
 
+// clang-format off
+#include "google/cloud/internal/port_def.inc"
+// clang-format on
+
 namespace google {
 namespace cloud {
 namespace golden_v1_internal {
@@ -190,3 +194,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/port_undef.inc"
