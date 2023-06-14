@@ -14,6 +14,7 @@ For example, this will override the default endpoint for `bigquery_analyticshub_
 Follow these links to find examples for other \c *Client classes:
 
 - [\c bigquery_analyticshub_v1::AnalyticsHubServiceClient](@ref bigquery_analyticshub_v1::AnalyticsHubServiceClient-endpoint-snippet)
+- [\c bigquery_biglake_v1::MetastoreServiceClient](@ref bigquery_biglake_v1::MetastoreServiceClient-endpoint-snippet)
 - [\c bigquery_connection_v1::ConnectionServiceClient](@ref bigquery_connection_v1::ConnectionServiceClient-endpoint-snippet)
 - [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref bigquery_datapolicies_v1::DataPolicyServiceClient-endpoint-snippet)
 - [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref bigquery_datatransfer_v1::DataTransferServiceClient-endpoint-snippet)
@@ -31,6 +32,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page bigquery_analyticshub_v1::AnalyticsHubServiceClient-endpoint-snippet Override bigquery_analyticshub_v1::AnalyticsHubServiceClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/analyticshub/v1/samples/analytics_hub_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquery_biglake_v1::MetastoreServiceClient-endpoint-snippet Override bigquery_biglake_v1::MetastoreServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/biglake/v1/samples/metastore_client_samples.cc set-client-endpoint
 
 */
 

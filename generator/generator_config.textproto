@@ -338,6 +338,13 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/bigquery/biglake/v1/metastore.proto"
+  product_path: "google/cloud/bigquery/biglake/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/bigquery/connection/v1/connection.proto"
   product_path: "google/cloud/bigquery/connection/v1"
   forwarding_product_path: "google/cloud/bigquery"

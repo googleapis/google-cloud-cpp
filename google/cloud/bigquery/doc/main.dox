@@ -31,6 +31,7 @@ parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
 
 - [\c bigquery_analyticshub_v1::AnalyticsHubServiceClient](@ref google::cloud::bigquery_analyticshub_v1::AnalyticsHubServiceClient)
+- [\c bigquery_biglake_v1::MetastoreServiceClient](@ref google::cloud::bigquery_biglake_v1::MetastoreServiceClient)
 - [\c bigquery_connection_v1::ConnectionServiceClient](@ref google::cloud::bigquery_connection_v1::ConnectionServiceClient)
 - [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref google::cloud::bigquery_datapolicies_v1::DataPolicyServiceClient)
 - [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref google::cloud::bigquery_datatransfer_v1::DataTransferServiceClient)

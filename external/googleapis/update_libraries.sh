@@ -60,6 +60,7 @@ declare -A -r LIBRARIES=(
     # This is long enough that it needs to be kept in alphabetical order
     printf ",%s" \
       "@com_google_googleapis//google/cloud/bigquery/analyticshub/v1:analyticshub_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/biglake/v1:biglake_cc_grpc" \
       "@com_google_googleapis//google/cloud/bigquery/connection/v1:connection_cc_grpc" \
       "@com_google_googleapis//google/cloud/bigquery/datapolicies/v1:datapolicies_cc_grpc" \
       "@com_google_googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer_cc_grpc" \
