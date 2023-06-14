@@ -202,6 +202,110 @@ class BigQueryConfigBuilder {
 };
 
 /**
+ * A helper class to build `google::pubsub::v1::CloudStorageConfig` protos.
+ *
+ * Makes it easier to create the protobuf messages consumed by
+ * `SubscriptionAdminClient`.  The main advantages are:
+ *
+ * - Use a fluent API to set multiple values when constructing complex objects.
+ * - Automatically compute the set of paths for update requests.
+ */
+class CloudStorageConfigBuilder {
+ public:
+  CloudStorageConfigBuilder() = default;
+
+  /// @name Setters for each protocol buffer field.
+  ///@{
+  CloudStorageConfigBuilder& set_bucket(std::string bucket) & {
+    *proto_.mutable_bucket() = std::move(bucket);
+    paths_.insert("bucket");
+    return *this;
+  }
+  CloudStorageConfigBuilder&& set_bucket(std::string bucket) && {
+    return std::move(set_bucket(std::move(bucket)));
+  }
+
+  CloudStorageConfigBuilder& set_filename_prefix(
+      std::string filename_prefix) & {
+    *proto_.mutable_filename_prefix() = std::move(filename_prefix);
+    paths_.insert("filename_prefix");
+    return *this;
+  }
+  CloudStorageConfigBuilder&& set_filename_prefix(
+      std::string filename_prefix) && {
+    return std::move(set_filename_prefix(std::move(filename_prefix)));
+  }
+
+  CloudStorageConfigBuilder& set_filename_suffix(
+      std::string filename_suffix) & {
+    *proto_.mutable_filename_suffix() = std::move(filename_suffix);
+    paths_.insert("filename_suffix");
+    return *this;
+  }
+  CloudStorageConfigBuilder&& set_filename_suffix(
+      std::string filename_suffix) && {
+    return std::move(set_filename_suffix(std::move(filename_suffix)));
+  }
+
+  static google::pubsub::v1::CloudStorageConfig::AvroConfig MakeAvroConfig(
+      bool write_metadata) {
+    google::pubsub::v1::CloudStorageConfig::AvroConfig proto;
+    proto.set_write_metadata(write_metadata);
+    return proto;
+  }
+
+  CloudStorageConfigBuilder& set_avro_config(
+      google::pubsub::v1::CloudStorageConfig::AvroConfig avro_config) & {
+    *proto_.mutable_avro_config() = std::move(avro_config);
+    paths_.insert("avro_config");
+    return *this;
+  }
+  CloudStorageConfigBuilder&& set_avro_config(
+      google::pubsub::v1::CloudStorageConfig::AvroConfig avro_config) && {
+    return std::move(set_avro_config(std::move(avro_config)));
+  }
+
+  template <typename Rep, typename Period>
+  CloudStorageConfigBuilder& set_max_duration(
+      std::chrono::duration<Rep, Period> d) & {
+    *proto_.mutable_max_duration() =
+        google::cloud::internal::ToDurationProto(d);
+    paths_.insert("max_duration");
+    return *this;
+  }
+  template <typename Rep, typename Period>
+  CloudStorageConfigBuilder&& set_max_duration(
+      std::chrono::duration<Rep, Period> d) && {
+    return std::move(set_max_duration(d));
+  }
+  CloudStorageConfigBuilder& set_max_duration(
+      google::protobuf::Duration const& d) & {
+    *proto_.mutable_max_duration() = d;
+    paths_.insert("max_duration");
+    return *this;
+  }
+  CloudStorageConfigBuilder&& set_max_duration(
+      google::protobuf::Duration const& d) && {
+    return std::move(set_max_duration(d));
+  }
+
+  CloudStorageConfigBuilder& set_max_bytes(int v) & {
+    proto_.set_max_bytes(v);
+    paths_.insert("max_bytes");
+    return *this;
+  }
+  CloudStorageConfigBuilder&& set_max_bytes(int v) && {
+    return std::move(set_max_bytes(v));
+  }
+  ///@}
+
+ private:
+  friend class SubscriptionBuilder;
+  google::pubsub::v1::CloudStorageConfig proto_;
+  std::set<std::string> paths_;
+};
+
+/**
  * Create a Cloud Pub/Sub subscription configuration.
  *
  * Makes it easier to create the protobuf messages consumed by
@@ -232,6 +336,12 @@ class SubscriptionBuilder {
   SubscriptionBuilder& set_bigquery_config(BigQueryConfigBuilder v) &;
   SubscriptionBuilder&& set_bigquery_config(BigQueryConfigBuilder v) && {
     return std::move(set_bigquery_config(std::move(v)));
+  }
+
+  SubscriptionBuilder& set_cloud_storage_config(CloudStorageConfigBuilder v) &;
+  SubscriptionBuilder&& set_cloud_storage_config(
+      CloudStorageConfigBuilder v) && {
+    return std::move(set_cloud_storage_config(std::move(v)));
   }
 
   SubscriptionBuilder& set_ack_deadline(std::chrono::seconds v) & {
