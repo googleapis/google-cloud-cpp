@@ -104,11 +104,13 @@ DefaultRegistrationServiceStub::CreateService(
     google::cloud::servicedirectory::v1::CreateServiceRequest const& request) {
   google::cloud::servicedirectory::v1::Service response;
 #if defined(UNICODE) && (defined(_WIN32) || defined(_MSC_VER))
-  auto status = grpc_stub_->CreateServiceW(&client_context, request, &response);
+#define CreateService CreateServiceW
 #elif (defined(_WIN32) || defined(_MSC_VER))
-  auto status = grpc_stub_->CreateServiceA(&client_context, request, &response);
-#else
+#define CreateService CreateServiceA
+#endif
   auto status = grpc_stub_->CreateService(&client_context, request, &response);
+#ifdef CreateService
+#undef CreateService
 #endif
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);

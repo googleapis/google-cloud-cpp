@@ -443,29 +443,58 @@ Default$stub_class_name$::Async$method_name$(
 )""");
       continue;
     }
-    CcPrintMethod(
-        method,
-        {MethodPattern(
-             {{IsResponseTypeEmpty,
-               // clang-format off
-    "\nStatus\n",
-    "\nStatusOr<$response_type$>\n"},
-    {"Default$stub_class_name$::$method_name$(\n"
-    "  grpc::ClientContext& client_context,\n"
-    "  $request_type$ const& request) {\n"
-    "    $response_type$ response;\n"
-    "    auto status =\n"
-    "        grpc_stub_->$method_name$(&client_context, request, &response);\n"
-    "    if (!status.ok()) {\n"
-    "      return google::cloud::MakeStatusFromRpcError(status);\n"
-    "    }\n"},
-   {IsResponseTypeEmpty,
-    "    return google::cloud::Status();\n",
-    "    return response;\n"},
-   {"}\n"}},
-             // clang-format on
-             And(IsNonStreaming, Not(IsLongrunningOperation))),
-         MethodPattern({{R"""(
+
+    if (IsNonStreaming(method) && !IsLongrunningOperation(method)) {
+      if (IsResponseTypeEmpty(method)) {
+        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+Status)""");
+      } else {
+        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+StatusOr<$response_type$>)""");
+      }
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+Default$stub_class_name$::$method_name$(
+  grpc::ClientContext& client_context,
+  $request_type$ const& request) {
+    $response_type$ response;)""");
+      if (method.get().name() == "CreateService") {
+        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+#if defined(UNICODE) && (defined(_WIN32) || defined(_MSC_VER))
+#define CreateService CreateServiceW
+#elif (defined(_WIN32) || defined(_MSC_VER))
+#define CreateService CreateServiceA
+#endif)""");
+      }
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+    auto status =
+        grpc_stub_->$method_name$(&client_context, request, &response);)""");
+      if (method.get().name() == "CreateService") {
+        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+#ifdef CreateService
+#undef CreateService
+#endif)""");
+      }
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    })""");
+      if (IsResponseTypeEmpty(method)) {
+        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+    return google::cloud::Status();
+}
+)""");
+      } else {
+        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+    return response;
+}
+)""");
+      }
+      continue;
+    }
+
+    if (IsLongrunningOperation(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 future<StatusOr<google::longrunning::Operation>>
 Default$stub_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
@@ -481,23 +510,25 @@ Default$stub_class_name$::Async$method_name$(
       },
       request, std::move(context));
 }
-)"""}},
-                       IsLongrunningOperation),
-         MethodPattern(
-             {// clang-format off
-   {"\n"
-    "std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
-    "Default$stub_class_name$::$method_name$(\n"
-    "    std::shared_ptr<grpc::ClientContext> client_context,\n"
-    "    $request_type$ const& request) {\n"
-    "  auto stream = grpc_stub_->$method_name$(client_context.get(), request);\n"
-    "  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<\n"
-    "      $response_type$>>(\n"
-    "      std::move(client_context), std::move(stream));\n"
-    "}\n"}},
-             // clang-format on
-             IsStreamingRead)},
-        __FILE__, __LINE__);
+      )""");
+      continue;
+    }
+
+    if (IsStreamingRead(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
+Default$stub_class_name$::$method_name$(
+    std::shared_ptr<grpc::ClientContext> client_context,
+    $request_type$ const& request) {
+  auto stream = grpc_stub_->$method_name$(client_context.get(), request);
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+      $response_type$>>(
+      std::move(client_context), std::move(stream));
+}
+      )""");
+      continue;
+    }
   }
 
   for (auto const& method : async_methods()) {
