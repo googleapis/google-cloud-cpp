@@ -223,33 +223,39 @@ TEST(GetJobResponseTest, DebugString) {
   auto response = GetJobResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(response);
 
-  EXPECT_EQ(response->DebugString("GetJobResponse", TracingOptions{}),
-            R"(GetJobResponse {)"
-            R"( http_response {)"
-            R"( status_code: 200)"
-            R"( http_headers {)"
-            R"( key: "header1")"
-            R"( value: "value1")"
-            R"( })"
-            R"( payload: REDACTED)"
-            R"( })"
-            R"( job {)"
-            R"( etag: "jtag")"
-            R"( kind: "jkind")"
-            R"( id: "j123")"
-            R"( job_configuration {)"
-            R"( job_type: "QUERY")"
-            R"( query: "select 1;")"
-            R"( })"
-            R"( job_reference {)"
-            R"( project_id: "p123")"
-            R"( job_id: "j123")"
-            R"( location: "")"
-            R"( })"
-            R"( job_status: "DONE")"
-            R"( error_result: "")"
-            R"( })"
-            R"( })");
+  EXPECT_EQ(
+      response->DebugString("GetJobResponse", TracingOptions{}),
+      R"(GetJobResponse { http_response {)"
+      R"( status_code: 200)"
+      R"( http_headers {)"
+      R"( key: "header1" value: "value1")"
+      R"( })"
+      R"( payload: REDACTED)"
+      R"( })"
+      R"( job {)"
+      R"( etag: "jtag" kind: "jkind" id: "j123")"
+      R"( job_configuration {)"
+      R"( job_type: "QUERY" dry_run: false job_timeout_ms: 0)"
+      R"( query_config {)"
+      R"( query: "select 1;" create_disposition: "")"
+      R"( write_disposition: "" priority: "" parameter_mode: "")"
+      R"( preserve_nulls: false allow_large_results: false)"
+      R"( use_query_cache: false flatten_results: false)"
+      R"( use_legacy_sql: false create_session: false)"
+      R"( continuous: false maximum_bytes_billed: 0)"
+      R"( default_dataset { project_id: "" dataset_id: "" })"
+      R"( destination_table { project_id: "" dataset_id: "")"
+      R"( table_id: "" } time_partitioning { type: "")"
+      R"( expiration_time { "0" } field: "" })"
+      R"( range_partitioning { field: "")"
+      R"( range { start: "" end: "" interval: "" } })"
+      R"( clustering { })"
+      R"( destination_encryption_configuration { kms_key_name: "" })"
+      R"( script_options { statement_timeout_ms: 0)"
+      R"( statement_byte_budget: 0 key_result_statement { value: "" } })"
+      R"( system_variables { values { } } } })"
+      R"( job_reference { project_id: "p123" job_id: "j123" location: "" })"
+      R"( job_status: "DONE" error_result: "" } })");
 
   EXPECT_EQ(response->DebugString("GetJobResponse", TracingOptions{}.SetOptions(
                                                         "single_line_mode=F")),
@@ -268,7 +274,63 @@ TEST(GetJobResponseTest, DebugString) {
     id: "j123"
     job_configuration {
       job_type: "QUERY"
-      query: "select 1;"
+      dry_run: false
+      job_timeout_ms: 0
+      query_config {
+        query: "select 1;"
+        create_disposition: ""
+        write_disposition: ""
+        priority: ""
+        parameter_mode: ""
+        preserve_nulls: false
+        allow_large_results: false
+        use_query_cache: false
+        flatten_results: false
+        use_legacy_sql: false
+        create_session: false
+        continuous: false
+        maximum_bytes_billed: 0
+        default_dataset {
+          project_id: ""
+          dataset_id: ""
+        }
+        destination_table {
+          project_id: ""
+          dataset_id: ""
+          table_id: ""
+        }
+        time_partitioning {
+          type: ""
+          expiration_time {
+            "0"
+          }
+          field: ""
+        }
+        range_partitioning {
+          field: ""
+          range {
+            start: ""
+            end: ""
+            interval: ""
+          }
+        }
+        clustering {
+        }
+        destination_encryption_configuration {
+          kms_key_name: ""
+        }
+        script_options {
+          statement_timeout_ms: 0
+          statement_byte_budget: 0
+          key_result_statement {
+            value: ""
+          }
+        }
+        system_variables {
+          values {
+          }
+        }
+      }
     }
     job_reference {
       project_id: "p123"
@@ -307,70 +369,54 @@ TEST(ListJobsResponseTest, DebugString) {
   auto response = ListJobsResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(response);
 
-  EXPECT_EQ(response->DebugString("ListJobsResponse", TracingOptions{}),
-            R"(ListJobsResponse {)"
-            R"( jobs {)"
-            R"( id: "1")"
-            R"( kind: "kind-2")"
-            R"( state: "DONE")"
-            R"( job_configuration {)"
-            R"( job_type: "QUERY")"
-            R"( query: "select 1;")"
-            R"( })"
-            R"( job_reference {)"
-            R"( project_id: "p123")"
-            R"( job_id: "j123")"
-            R"( location: "")"
-            R"( })"
-            R"( job_status: "DONE")"
-            R"( error_result: "")"
-            R"( })"
-            R"( next_page_token: "npt-123")"
-            R"( kind: "kind-1")"
-            R"( etag: "tag-1")"
-            R"( http_response {)"
-            R"( status_code: 200)"
-            R"( http_headers {)"
-            R"( key: "header1")"
-            R"( value: "value1")"
-            R"( })"
-            R"( payload: REDACTED)"
-            R"( })"
-            R"( })");
+  EXPECT_EQ(
+      response->DebugString("ListJobsResponse", TracingOptions{}),
+      R"(ListJobsResponse { jobs { id: "1" kind: "kind-2" state: "DONE")"
+      R"( job_configuration { job_type: "QUERY" dry_run: false)"
+      R"( job_timeout_ms: 0 query_config { query: "select 1;")"
+      R"( create_disposition: "" write_disposition: "" priority: "")"
+      R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
+      R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
+      R"( create_session: false continuous: false maximum_bytes_billed: 0)"
+      R"( default_dataset { project_id: "" dataset_id: "" })"
+      R"( destination_table { project_id: "" dataset_id: "" table_id: "" })"
+      R"( time_partitioning { type: "" expiration_time { "0" } field: "" })"
+      R"( range_partitioning { field: "" range { start: "" end: "" interval: "")"
+      R"( } } clustering { })"
+      R"( destination_encryption_configuration { kms_key_name: "" })"
+      R"( script_options { statement_timeout_ms: 0 statement_byte_budget: 0)"
+      R"( key_result_statement { value: "" } } system_variables {)"
+      R"( values { } } } } job_reference {)"
+      R"( project_id: "p123" job_id: "j123" location: "" })"
+      R"( job_status: "DONE" error_result: "" })"
+      R"( next_page_token: "npt-123" kind: "kind-1" etag: "tag-1")"
+      R"( http_response { status_code: 200)"
+      R"( http_headers { key: "header1" value: "value1" } payload: REDACTED } })");
 
   EXPECT_EQ(
       response->DebugString("ListJobsResponse",
                             TracingOptions{}.SetOptions(
                                 "truncate_string_field_longer_than=1024")),
-      R"(ListJobsResponse {)"
-      R"( jobs {)"
-      R"( id: "1")"
-      R"( kind: "kind-2")"
-      R"( state: "DONE")"
-      R"( job_configuration {)"
-      R"( job_type: "QUERY")"
-      R"( query: "select 1;")"
-      R"( })"
-      R"( job_reference {)"
-      R"( project_id: "p123")"
-      R"( job_id: "j123")"
-      R"( location: "")"
-      R"( })"
-      R"( job_status: "DONE")"
-      R"( error_result: "")"
-      R"( })"
-      R"( next_page_token: "npt-123")"
-      R"( kind: "kind-1")"
-      R"( etag: "tag-1")"
-      R"( http_response {)"
-      R"( status_code: 200)"
-      R"( http_headers {)"
-      R"( key: "header1")"
-      R"( value: "value1")"
-      R"( })"
-      R"( payload: REDACTED)"
-      R"( })"
-      R"( })");
+      R"(ListJobsResponse { jobs { id: "1" kind: "kind-2" state: "DONE")"
+      R"( job_configuration { job_type: "QUERY" dry_run: false)"
+      R"( job_timeout_ms: 0 query_config { query: "select 1;")"
+      R"( create_disposition: "" write_disposition: "" priority: "")"
+      R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
+      R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
+      R"( create_session: false continuous: false maximum_bytes_billed: 0)"
+      R"( default_dataset { project_id: "" dataset_id: "" })"
+      R"( destination_table { project_id: "" dataset_id: "" table_id: "" })"
+      R"( time_partitioning { type: "" expiration_time { "0" } field: "" })"
+      R"( range_partitioning { field: "")"
+      R"( range { start: "" end: "" interval: "" } })"
+      R"( clustering { } destination_encryption_configuration {)"
+      R"( kms_key_name: "" } script_options { statement_timeout_ms: 0)"
+      R"( statement_byte_budget: 0 key_result_statement { value: "" } })"
+      R"( system_variables { values { } } } } job_reference {)"
+      R"( project_id: "p123" job_id: "j123" location: "" })"
+      R"( job_status: "DONE" error_result: "" } next_page_token: "npt-123")"
+      R"( kind: "kind-1" etag: "tag-1" http_response { status_code: 200)"
+      R"( http_headers { key: "header1" value: "value1" } payload: REDACTED } })");
 
   EXPECT_EQ(
       response->DebugString("ListJobsResponse",
@@ -382,7 +428,63 @@ TEST(ListJobsResponseTest, DebugString) {
     state: "DONE"
     job_configuration {
       job_type: "QUERY"
-      query: "select 1;"
+      dry_run: false
+      job_timeout_ms: 0
+      query_config {
+        query: "select 1;"
+        create_disposition: ""
+        write_disposition: ""
+        priority: ""
+        parameter_mode: ""
+        preserve_nulls: false
+        allow_large_results: false
+        use_query_cache: false
+        flatten_results: false
+        use_legacy_sql: false
+        create_session: false
+        continuous: false
+        maximum_bytes_billed: 0
+        default_dataset {
+          project_id: ""
+          dataset_id: ""
+        }
+        destination_table {
+          project_id: ""
+          dataset_id: ""
+          table_id: ""
+        }
+        time_partitioning {
+          type: ""
+          expiration_time {
+            "0"
+          }
+          field: ""
+        }
+        range_partitioning {
+          field: ""
+          range {
+            start: ""
+            end: ""
+            interval: ""
+          }
+        }
+        clustering {
+        }
+        destination_encryption_configuration {
+          kms_key_name: ""
+        }
+        script_options {
+          statement_timeout_ms: 0
+          statement_byte_budget: 0
+          key_result_statement {
+            value: ""
+          }
+        }
+        system_variables {
+          values {
+          }
+        }
+      }
     }
     job_reference {
       project_id: "p123"

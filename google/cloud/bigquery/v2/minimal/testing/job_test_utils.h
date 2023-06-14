@@ -24,6 +24,9 @@ namespace cloud {
 namespace bigquery_v2_minimal_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+bigquery_v2_minimal_internal::JobConfiguration MakeJobConfiguration();
+bigquery_v2_minimal_internal::JobConfigurationQuery MakeJobConfigurationQuery();
+
 bigquery_v2_minimal_internal::JobQueryStatistics MakeJobQueryStats();
 void AssertEquals(bigquery_v2_minimal_internal::JobQueryStatistics& expected,
                   bigquery_v2_minimal_internal::JobQueryStatistics& actual);

@@ -50,7 +50,9 @@ add_library(
     v2/minimal/internal/job.h
     v2/minimal/internal/job_client.cc
     v2/minimal/internal/job_client.h
+    v2/minimal/internal/job_configuration.cc
     v2/minimal/internal/job_configuration.h
+    v2/minimal/internal/job_configuration_query.cc
     v2/minimal/internal/job_configuration_query.h
     v2/minimal/internal/job_connection.cc
     v2/minimal/internal/job_connection.h
@@ -251,6 +253,8 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/dataset_rest_stub_test.cc
         v2/minimal/internal/dataset_test.cc
         v2/minimal/internal/job_client_test.cc
+        v2/minimal/internal/job_configuration_query_test.cc
+        v2/minimal/internal/job_configuration_test.cc
         v2/minimal/internal/job_connection_test.cc
         v2/minimal/internal/job_idempotency_policy_test.cc
         v2/minimal/internal/job_logging_test.cc

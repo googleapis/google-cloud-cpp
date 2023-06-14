@@ -102,6 +102,8 @@ google_cloud_cpp_bigquery_rest_srcs = [
     "v2/minimal/internal/dataset_rest_stub_factory.cc",
     "v2/minimal/internal/job.cc",
     "v2/minimal/internal/job_client.cc",
+    "v2/minimal/internal/job_configuration.cc",
+    "v2/minimal/internal/job_configuration_query.cc",
     "v2/minimal/internal/job_connection.cc",
     "v2/minimal/internal/job_idempotency_policy.cc",
     "v2/minimal/internal/job_logging.cc",

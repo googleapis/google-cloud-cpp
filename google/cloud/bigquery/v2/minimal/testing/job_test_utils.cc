@@ -23,17 +23,23 @@ namespace cloud {
 namespace bigquery_v2_minimal_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_internal::Clustering;
 using ::google::cloud::bigquery_v2_minimal_internal::ComputeMode;
+using ::google::cloud::bigquery_v2_minimal_internal::ConnectionProperty;
 using ::google::cloud::bigquery_v2_minimal_internal::DatasetReference;
 using ::google::cloud::bigquery_v2_minimal_internal::DmlStats;
+using ::google::cloud::bigquery_v2_minimal_internal::EncryptionConfiguration;
 using ::google::cloud::bigquery_v2_minimal_internal::EvaluationKind;
 using ::google::cloud::bigquery_v2_minimal_internal::ExplainQueryStage;
 using ::google::cloud::bigquery_v2_minimal_internal::IndexedUnusedReasonCode;
 using ::google::cloud::bigquery_v2_minimal_internal::IndexUnusedReason;
 using ::google::cloud::bigquery_v2_minimal_internal::IndexUsageMode;
 using ::google::cloud::bigquery_v2_minimal_internal::Job;
+using ::google::cloud::bigquery_v2_minimal_internal::JobConfiguration;
+using ::google::cloud::bigquery_v2_minimal_internal::JobConfigurationQuery;
 using ::google::cloud::bigquery_v2_minimal_internal::JobQueryStatistics;
 using ::google::cloud::bigquery_v2_minimal_internal::JobStatistics;
+using ::google::cloud::bigquery_v2_minimal_internal::KeyResultStatementKind;
 using ::google::cloud::bigquery_v2_minimal_internal::ListFormatJob;
 using ::google::cloud::bigquery_v2_minimal_internal::MaterializedView;
 using ::google::cloud::bigquery_v2_minimal_internal::MaterializedViewStatistics;
@@ -41,14 +47,17 @@ using ::google::cloud::bigquery_v2_minimal_internal::MetadataCacheStatistics;
 using ::google::cloud::bigquery_v2_minimal_internal::MetadataCacheUnusedReason;
 using ::google::cloud::bigquery_v2_minimal_internal::PerformanceInsights;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryTimelineSample;
+using ::google::cloud::bigquery_v2_minimal_internal::RangePartitioning;
 using ::google::cloud::bigquery_v2_minimal_internal::RejectedReason;
 using ::google::cloud::bigquery_v2_minimal_internal::RoutineReference;
 using ::google::cloud::bigquery_v2_minimal_internal::RowAccessPolicyReference;
+using ::google::cloud::bigquery_v2_minimal_internal::ScriptOptions;
 using ::google::cloud::bigquery_v2_minimal_internal::ScriptStackFrame;
 using ::google::cloud::bigquery_v2_minimal_internal::ScriptStatistics;
 using ::google::cloud::bigquery_v2_minimal_internal::SearchStatistics;
 using ::google::cloud::bigquery_v2_minimal_internal::TableMetadataCacheUsage;
 using ::google::cloud::bigquery_v2_minimal_internal::TableReference;
+using ::google::cloud::bigquery_v2_minimal_internal::TimePartitioning;
 
 using ::testing::IsEmpty;
 using ::testing::Not;
@@ -218,8 +227,60 @@ ScriptStatistics MakeScriptStatistics() {
   ScriptStatistics s;
   s.evaluation_kind = EvaluationKind::Statement();
   s.stack_frames.push_back(MakeScriptStackFrame());
+
   return s;
 }
+
+ScriptOptions MakeScriptOptions() {
+  ScriptOptions s;
+  s.statement_byte_budget = 10;
+  s.statement_timeout_ms = 10;
+  s.key_result_statement = KeyResultStatementKind::FirstSelect();
+
+  return s;
+}
+
+EncryptionConfiguration MakeEncryptionConfiguration() {
+  EncryptionConfiguration e;
+  e.kms_key_name = "encryption-key-name";
+
+  return e;
+}
+
+ConnectionProperty MakeConnectionProperty() {
+  ConnectionProperty cp;
+  cp.key = "conn-prop-key";
+  cp.value = "conn-prop-val";
+
+  return cp;
+}
+
+TimePartitioning MakeTimePartitioning() {
+  TimePartitioning tp;
+  tp.field = "tp-field-1";
+  tp.type = "tp-field-type";
+
+  return tp;
+}
+
+Clustering MakeClustering() {
+  Clustering c;
+  c.fields.emplace_back("clustering-field-1");
+  c.fields.emplace_back("clustering-field-2");
+
+  return c;
+}
+
+RangePartitioning MakeRangePartitioning() {
+  RangePartitioning rp;
+  rp.field = "rp-field-1";
+  rp.range.end = "range-end";
+  rp.range.start = "range-start";
+  rp.range.interval = "range-interval";
+
+  return rp;
+}
+
 }  // namespace
 
 JobQueryStatistics MakeJobQueryStats() {
@@ -296,6 +357,51 @@ JobStatistics MakeJobStats() {
   stats.job_query_stats = MakeJobQueryStats();
 
   return stats;
+}
+
+JobConfigurationQuery MakeJobConfigurationQuery() {
+  JobConfigurationQuery config;
+  config.query = "select 1;";
+  config.create_disposition = "job-create-disposition";
+  config.write_disposition = "job-write-disposition";
+  config.priority = "job-priority";
+  config.parameter_mode = "job-param-mode";
+  config.preserve_nulls = true;
+  config.allow_large_results = true;
+  config.use_query_cache = true;
+  config.flatten_results = true;
+  config.use_legacy_sql = true;
+  config.create_session = true;
+  config.continuous = true;
+  config.maximum_bytes_billed = 0;
+
+  config.query_parameters.push_back(MakeQueryParameter());
+  config.schema_update_options.emplace_back("job-update-options");
+  config.connection_properties.push_back(MakeConnectionProperty());
+
+  config.default_dataset = MakeDatasetReference();
+  config.destination_table = MakeTableReference();
+  config.time_partitioning = MakeTimePartitioning();
+
+  config.range_partitioning = MakeRangePartitioning();
+  config.clustering = MakeClustering();
+  config.destination_encryption_configuration = MakeEncryptionConfiguration();
+  config.script_options = MakeScriptOptions();
+  config.system_variables = MakeSystemVariables();
+
+  return config;
+}
+
+JobConfiguration MakeJobConfiguration() {
+  JobConfiguration jc;
+
+  jc.dry_run = true;
+  jc.job_timeout_ms = 10;
+  jc.job_type = "QUERY";
+  jc.labels.insert({"label-key1", "label-val1"});
+  jc.query_config = MakeJobConfigurationQuery();
+
+  return jc;
 }
 
 Job MakeJob() {

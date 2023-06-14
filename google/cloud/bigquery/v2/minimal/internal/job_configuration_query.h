@@ -59,6 +59,10 @@ struct JobConfigurationQuery {
   EncryptionConfiguration destination_encryption_configuration;
   ScriptOptions script_options;
   SystemVariables system_variables;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
     JobConfigurationQuery, query, create_disposition, write_disposition,
