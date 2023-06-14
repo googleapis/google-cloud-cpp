@@ -13,21 +13,22 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/datafusion/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/datafusion/v1/data_fusion_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
-  namespace datafusion = ::google::cloud::datafusion;
-  auto client = datafusion::Client(datafusion::MakeConnection());
+  namespace datafusion = ::google::cloud::datafusion_v1;
+  auto client =
+      datafusion::DataFusionClient(datafusion::MakeDataFusionConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListAvailableVersions(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

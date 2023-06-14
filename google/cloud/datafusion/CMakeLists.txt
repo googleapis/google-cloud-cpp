@@ -120,8 +120,7 @@ if (BUILD_TESTING)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:datafusion_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+            GOOGLE_CLOUD_CPP_TEST_REGION)
     set_tests_properties(datafusion_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()

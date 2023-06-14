@@ -2,8 +2,10 @@
 
 @mainpage Cloud Data Fusion API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Data Fusion API][cloud-service-docs], a service
-to Cloud Data Fusion is a fully-managed, cloud native, enterprise data integration service for     quickly building and managing data pipelines. It provides a graphical interface to increase     time efficiency and reduce complexity, and allows business users, developers, and data scientists to easily and reliably build scalable data integration solutions to cleanse,     prepare, blend, transfer and transform data without having to wrestle with infrastructure.
+An idiomatic C++ client library for the
+[Cloud Data Fusion API][cloud-service-docs], a fully-managed, cloud native,
+enterprise data integration service for quickly building and managing data
+pipelines.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -45,7 +47,7 @@ can override the default policies.
 - @ref datafusion-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/datafusion
+[cloud-service-docs]: https://cloud.google.com/data-fusion
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */
