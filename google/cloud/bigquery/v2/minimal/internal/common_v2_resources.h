@@ -31,6 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT.
 using namespace nlohmann::literals;  // NOLINT
 
+// NOLINTBEGIN(misc-no-recursion)
 struct ErrorProto {
   std::string reason;
   std::string location;
@@ -102,6 +103,10 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RoundingMode, value);
 struct ConnectionProperty {
   std::string key;
   std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ConnectionProperty, key, value);
 
@@ -111,6 +116,10 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ConnectionProperty, key, value);
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/EncryptionConfiguration
 struct EncryptionConfiguration {
   std::string kms_key_name;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(EncryptionConfiguration,
                                                 kms_key_name);
@@ -126,6 +135,10 @@ struct KeyResultStatementKind {
   static KeyResultStatementKind Last();
   static KeyResultStatementKind FirstSelect();
 
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+
   std::string value;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(KeyResultStatementKind, value);
@@ -140,6 +153,10 @@ struct ScriptOptions {
   std::int64_t statement_byte_budget = 0;
 
   KeyResultStatementKind key_result_statement;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ScriptOptions,
                                                 statement_timeout_ms,
@@ -174,6 +191,10 @@ struct TypeKind {
   static TypeKind Struct();
 
   std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TypeKind, value);
 
@@ -182,7 +203,6 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TypeKind, value);
 // clang-tidy warnings for these two types as we want to be close to the
 // protobuf definition as possible.
 
-// NOLINTBEGIN
 // Represents the data type of a variable.
 // Please see the full definition for more details.
 struct StandardSqlDataType;
@@ -194,6 +214,10 @@ struct StandardSqlDataType;
 struct StandardSqlField {
   std::string name;
   std::shared_ptr<StandardSqlDataType> type;
+
+  std::string DebugString(absl::string_view field_name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 void to_json(nlohmann::json& j, StandardSqlField const& f);
 void from_json(nlohmann::json const& j, StandardSqlField& f);
@@ -207,6 +231,10 @@ bool operator==(StandardSqlField const& lhs, StandardSqlField const& rhs);
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/StandardSqlDataType
 struct StandardSqlStructType {
   std::vector<StandardSqlField> fields;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 void to_json(nlohmann::json& j, StandardSqlStructType const& t);
 void from_json(nlohmann::json const& j, StandardSqlStructType& t);
@@ -231,6 +259,10 @@ struct StandardSqlDataType {
   TypeKind type_kind;
 
   ValueType sub_type;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 void to_json(nlohmann::json& j, StandardSqlDataType const& t);
 void from_json(nlohmann::json const& j, StandardSqlDataType& t);
@@ -256,6 +288,10 @@ struct Value {
   using KindType = absl::variant<absl::monostate, double, std::string, bool,
                                  std::shared_ptr<Struct>, std::vector<Value>>;
   KindType value_kind;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 void to_json(nlohmann::json& j, Value const& v);
 void from_json(nlohmann::json const& j, Value& v);
@@ -268,6 +304,10 @@ bool operator==(Value const& lhs, Value const& rhs);
 // https://protobuf.dev/reference/protobuf/google.protobuf/#struct
 struct Struct {
   std::map<std::string, Value> fields;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 void to_json(nlohmann::json& j, Struct const& s);
 void from_json(nlohmann::json const& j, Struct& s);
@@ -285,6 +325,10 @@ struct SystemVariables {
   std::map<std::string, StandardSqlDataType> types;
   //  Value for each system variable.
   Struct values;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 void to_json(nlohmann::json& j, SystemVariables const& s);
 void from_json(nlohmann::json const& j, SystemVariables& s);
@@ -295,6 +339,10 @@ struct QueryParameterStructType {
   std::string name;
   std::shared_ptr<QueryParameterType> type;
   std::string description;
+
+  std::string DebugString(absl::string_view qp_name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 struct QueryParameterType {
@@ -302,6 +350,10 @@ struct QueryParameterType {
 
   std::shared_ptr<QueryParameterType> array_type;
   std::vector<QueryParameterStructType> struct_types;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 void to_json(nlohmann::json& j, QueryParameterType const& q);
@@ -311,6 +363,10 @@ struct QueryParameterValue {
   std::string value;
   std::vector<QueryParameterValue> array_values;
   std::map<std::string, QueryParameterValue> struct_values;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 void to_json(nlohmann::json& j, QueryParameterValue const& q);
@@ -320,12 +376,16 @@ struct QueryParameter {
   std::string name;
   QueryParameterType parameter_type;
   QueryParameterValue parameter_value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(QueryParameter, name,
                                                 parameter_type,
                                                 parameter_value);
 bool operator==(QueryParameter const& lhs, QueryParameter const& rhs);
-// NOLINTEND
+// NOLINTEND(misc-no-recursion)
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

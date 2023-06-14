@@ -24,7 +24,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Bypass clang-tidy warnings for self-referential and recursive structures.
 
-// NOLINTBEGIN
+// NOLINTBEGIN(misc-no-recursion)
 struct QueryParameterType;
 
 void to_json(nlohmann::json& j, QueryParameterStructType const& q) {
@@ -250,7 +250,6 @@ bool operator==(StandardSqlDataType const& lhs,
 bool operator==(Value const& lhs, Value const& rhs) {
   return (lhs.value_kind == rhs.value_kind);
 }
-// NOLINTEND
 
 RoundingMode RoundingMode::UnSpecified() {
   return RoundingMode{"ROUNDING_MODE_UNSPECIFIED"};
@@ -347,6 +346,180 @@ std::string TableReference::DebugString(absl::string_view name,
       .Build();
 }
 
+std::string RoutineReference::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id)
+      .StringField("dataset_id", dataset_id)
+      .StringField("routine_id", routine_id)
+      .Build();
+}
+
+std::string ConnectionProperty::DebugString(absl::string_view name,
+                                            TracingOptions const& options,
+                                            int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("key", key)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string EncryptionConfiguration::DebugString(absl::string_view name,
+                                                 TracingOptions const& options,
+                                                 int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("kms_key_name", kms_key_name)
+      .Build();
+}
+
+std::string KeyResultStatementKind::DebugString(absl::string_view name,
+                                                TracingOptions const& options,
+                                                int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string ScriptOptions::DebugString(absl::string_view name,
+                                       TracingOptions const& options,
+                                       int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("statement_timeout_ms", statement_timeout_ms)
+      .Field("statement_byte_budget", statement_byte_budget)
+      .SubMessage("key_result_statement", key_result_statement)
+      .Build();
+}
+
+std::string TypeKind::DebugString(absl::string_view name,
+                                  TracingOptions const& options,
+                                  int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string StandardSqlField::DebugString(absl::string_view field_name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(field_name, options, indent)
+      .StringField("name", name)
+      .Build();
+}
+
+std::string StandardSqlStructType::DebugString(absl::string_view name,
+                                               TracingOptions const& options,
+                                               int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("fields", fields)
+      .Build();
+}
+
+std::string Struct::DebugString(absl::string_view name,
+                                TracingOptions const& options,
+                                int indent) const {
+  // DebugFormatter currently doesn't support std::map<string, T>.
+  // Hence we convert this to std::map<string,string> and then call the
+  // formatter.
+  std::map<std::string, std::string> mv;
+  for (auto const& v : fields) {
+    mv.emplace_hint(mv.end(), v.first,
+                    v.second.DebugString(name, options, indent));
+  }
+  return internal::DebugFormatter(name, options, indent)
+      .Field("fields", mv)
+      .Build();
+}
+
+std::string StandardSqlDataType::DebugString(absl::string_view name,
+                                             TracingOptions const& options,
+                                             int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .SubMessage("type_kind", type_kind)
+      .Build();
+}
+
+std::string Value::DebugString(absl::string_view name,
+                               TracingOptions const& options,
+                               int indent) const {
+  switch (value_kind.index()) {
+    case 1: {
+      double val = absl::get<double>(value_kind);
+      return internal::DebugFormatter(name, options, indent)
+          .Field("value_kind", val)
+          .Build();
+    }
+    case 2: {
+      std::string val = absl::get<std::string>(value_kind);
+      return internal::DebugFormatter(name, options, indent)
+          .StringField("value_kind", val)
+          .Build();
+    }
+    case 3: {
+      bool val = absl::get<bool>(value_kind);
+      return internal::DebugFormatter(name, options, indent)
+          .Field("value_kind", val)
+          .Build();
+    }
+  }
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value_kind", "")
+      .Build();
+}
+
+std::string SystemVariables::DebugString(absl::string_view name,
+                                         TracingOptions const& options,
+                                         int indent) const {
+  // DebugFormatter currently doesn't support std::map<string, T>.
+  // Hence we convert this to std::map<string,string> and then call the
+  // formatter.
+  std::map<std::string, std::string> mt;
+  for (auto const& t : types) {
+    mt.emplace_hint(mt.end(), t.first,
+                    t.second.DebugString(name, options, indent));
+  }
+  return internal::DebugFormatter(name, options, indent)
+      .Field("types", mt)
+      .SubMessage("values", values)
+      .Build();
+}
+
+std::string QueryParameterStructType::DebugString(absl::string_view qp_name,
+                                                  TracingOptions const& options,
+                                                  int indent) const {
+  return internal::DebugFormatter(qp_name, options, indent)
+      .StringField("name", name)
+      .StringField("description", description)
+      .Build();
+}
+
+std::string QueryParameterType::DebugString(absl::string_view name,
+                                            TracingOptions const& options,
+                                            int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("type", type)
+      .Field("struct_types", struct_types)
+      .Build();
+}
+
+std::string QueryParameterValue::DebugString(absl::string_view name,
+                                             TracingOptions const& options,
+                                             int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string QueryParameter::DebugString(absl::string_view qp_name,
+                                        TracingOptions const& options,
+                                        int indent) const {
+  return internal::DebugFormatter(qp_name, options, indent)
+      .StringField("name", name)
+      .SubMessage("parameter_type", parameter_type)
+      .SubMessage("parameter_value", parameter_value)
+      .Build();
+}
+
 bool operator==(TableReference const& lhs, TableReference const& rhs) {
   return (lhs.dataset_id == rhs.dataset_id &&
           lhs.project_id == rhs.project_id && lhs.table_id == rhs.table_id);
@@ -366,6 +539,7 @@ bool operator==(QueryParameter const& lhs, QueryParameter const& rhs) {
           lhs.parameter_type.type == rhs.parameter_type.type &&
           lhs.parameter_value.value == rhs.parameter_value.value);
 }
+// NOLINTEND(misc-no-recursion)
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

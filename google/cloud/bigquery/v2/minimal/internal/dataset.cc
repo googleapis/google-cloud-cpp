@@ -116,16 +116,6 @@ std::string LinkedDatasetSource::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string RoutineReference::DebugString(absl::string_view name,
-                                          TracingOptions const& options,
-                                          int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", project_id)
-      .StringField("dataset_id", dataset_id)
-      .StringField("routine_id", routine_id)
-      .Build();
-}
-
 std::string TargetType::DebugString(absl::string_view name,
                                     TracingOptions const& options,
                                     int indent) const {

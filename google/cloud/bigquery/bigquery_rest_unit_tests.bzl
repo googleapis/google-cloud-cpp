@@ -30,6 +30,8 @@ bigquery_rest_unit_tests = [
     "v2/minimal/internal/dataset_rest_stub_test.cc",
     "v2/minimal/internal/dataset_test.cc",
     "v2/minimal/internal/job_client_test.cc",
+    "v2/minimal/internal/job_configuration_query_test.cc",
+    "v2/minimal/internal/job_configuration_test.cc",
     "v2/minimal/internal/job_connection_test.cc",
     "v2/minimal/internal/job_idempotency_policy_test.cc",
     "v2/minimal/internal/job_logging_test.cc",
