@@ -273,13 +273,10 @@ void Recordable::SetDuration(std::chrono::nanoseconds duration) noexcept {
 void Recordable::SetInstrumentationScope(
     opentelemetry::sdk::instrumentationscope::InstrumentationScope const&
         instrumentation_scope) noexcept {
-  valid_ = valid_ && internal::NoExceptAction([&] {
-             SetAttribute("otel.scope.name", instrumentation_scope.GetName());
-             if (!instrumentation_scope.GetVersion().empty()) {
-               SetAttribute("otel.scope.version",
-                            instrumentation_scope.GetVersion());
-             }
-           });
+  SetAttribute("otel.scope.name", instrumentation_scope.GetName());
+  if (!instrumentation_scope.GetVersion().empty()) {
+    SetAttribute("otel.scope.version", instrumentation_scope.GetVersion());
+  }
 }
 
 void Recordable::SetIdentityImpl(
