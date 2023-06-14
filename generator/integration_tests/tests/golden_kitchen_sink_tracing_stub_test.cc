@@ -18,7 +18,6 @@
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/internal/async_streaming_write_rpc_impl.h"
 #include "google/cloud/internal/make_status.h"
-#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/internal/streaming_write_rpc_impl.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"

@@ -17,7 +17,6 @@
 #include "generator/integration_tests/test.pb.h"
 #include "google/cloud/mocks/mock_stream_range.h"
 #include "google/cloud/internal/make_status.h"
-#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>

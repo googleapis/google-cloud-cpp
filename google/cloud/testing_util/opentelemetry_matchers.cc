@@ -15,6 +15,7 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/opentelemetry_options.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/sdk/trace/simple_processor.h>
 #include <opentelemetry/sdk/trace/tracer.h>
@@ -167,11 +168,11 @@ std::shared_ptr<MockTextMapPropagator> InstallMockPropagator() {
 }
 
 Options EnableTracing(Options options) {
-  return options.set<internal::OpenTelemetryTracingOption>(true);
+  return options.set<experimental::OpenTelemetryTracingOption>(true);
 }
 
 Options DisableTracing(Options options) {
-  return options.set<internal::OpenTelemetryTracingOption>(false);
+  return options.set<experimental::OpenTelemetryTracingOption>(false);
 }
 
 }  // namespace testing_util

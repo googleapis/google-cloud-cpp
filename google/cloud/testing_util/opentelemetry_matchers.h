@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_OPENTELEMETRY_MATCHERS_H
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>

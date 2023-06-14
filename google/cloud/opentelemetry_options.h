@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENTELEMETRY_OPTIONS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENTELEMETRY_OPTIONS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_OPTIONS_H
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/version.h"
@@ -21,7 +21,7 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
+namespace experimental {
 
 /**
  * Enables tracing with [OpenTelemetry]
@@ -34,10 +34,10 @@ struct OpenTelemetryTracingOption {
   using Type = bool;
 };
 
-}  // namespace internal
+}  // namespace experimental
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENTELEMETRY_OPTIONS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_OPTIONS_H

@@ -14,7 +14,7 @@
 
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/make_status.h"
-#include "google/cloud/internal/opentelemetry_options.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include <gmock/gmock.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -279,10 +279,10 @@ TEST(OpenTelemetry, TracingEnabled) {
   auto options = Options{};
   EXPECT_FALSE(TracingEnabled(options));
 
-  options.set<OpenTelemetryTracingOption>(false);
+  options.set<experimental::OpenTelemetryTracingOption>(false);
   EXPECT_FALSE(TracingEnabled(options));
 
-  options.set<OpenTelemetryTracingOption>(true);
+  options.set<experimental::OpenTelemetryTracingOption>(true);
   EXPECT_TRUE(TracingEnabled(options));
 }
 
