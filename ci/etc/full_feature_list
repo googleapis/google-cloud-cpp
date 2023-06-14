@@ -29,6 +29,7 @@ container
 containeranalysis
 contentwarehouse
 datacatalog
+datafusion
 datamigration
 dataplex
 dataproc
