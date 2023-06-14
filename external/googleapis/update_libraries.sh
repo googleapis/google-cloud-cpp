@@ -105,6 +105,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/datacatalog/v1:datacatalog_cc_grpc" \
       "@com_google_googleapis//google/cloud/datacatalog/lineage/v1:lineage_cc_grpc"
   )"
+  ["datafusion"]="@com_google_googleapis//google/cloud/datafusion/v1:datafusion_cc_grpc"
   ["datamigration"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/clouddms/v1:clouddms_cc_grpc" \
