@@ -423,7 +423,8 @@ std::string Struct::DebugString(absl::string_view name,
   // formatter.
   std::map<std::string, std::string> mv;
   for (auto const& v : fields) {
-    mv.insert({v.first, v.second.DebugString(name, options, indent)});
+    mv.emplace_hint(mv.end(), v.first,
+                    v.second.DebugString(name, options, indent));
   }
   return internal::DebugFormatter(name, options, indent)
       .Field("fields", mv)
@@ -474,7 +475,8 @@ std::string SystemVariables::DebugString(absl::string_view name,
   // formatter.
   std::map<std::string, std::string> mt;
   for (auto const& t : types) {
-    mt.insert({t.first, t.second.DebugString(name, options, indent)});
+    mt.emplace_hint(mt.end(), t.first,
+                    t.second.DebugString(name, options, indent));
   }
   return internal::DebugFormatter(name, options, indent)
       .Field("types", mt)
