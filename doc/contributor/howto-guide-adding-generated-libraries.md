@@ -309,7 +309,7 @@ api_name=... # e.g. BigLake API
 - Add the new directory to `service_dirs` in:
   - `google/cloud/${library}/CMakeLists.txt`
   - `google/cloud/${library}/BUILD.bazel`
-- Add the new `*_cc_grpc` dependency to 
+- Add the new `*_cc_grpc` dependency to
   `//google/cloud/${library}:${library}_client` in
   `google/cloud/${library}/BUILD.bazel`
 - Announce the new API in the `CHANGELOG.md`
