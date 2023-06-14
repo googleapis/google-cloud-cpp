@@ -16,7 +16,6 @@
 #include "google/cloud/internal/rest_opentelemetry.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/options.h"
 #include "absl/strings/match.h"

@@ -25,7 +25,7 @@ program is used in this quickstart.
 ```cc
 #include "google/cloud/opentelemetry/configure_basic_tracing.h"
 #include "google/cloud/storage/client.h"
-#include "google/cloud/internal/opentelemetry_options.h"
+#include "google/cloud/opentelemetry_options.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) {
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
 
   // Create a client with OpenTelemetry tracing enabled.
   auto options =
-      gc::Options{}.set<gc::internal::OpenTelemetryTracingOption>(true);
+      gc::Options{}.set<gc::experimental::OpenTelemetryTracingOption>(true);
   auto client = gcs::Client(options);
 
   auto writer = client.WriteObject(bucket_name, "quickstart.txt");

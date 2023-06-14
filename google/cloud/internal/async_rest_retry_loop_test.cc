@@ -15,7 +15,6 @@
 #include "google/cloud/internal/async_rest_retry_loop.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/async_sequencer.h"

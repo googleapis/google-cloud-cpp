@@ -97,7 +97,6 @@ add_library(
     internal/non_constructible.h
     internal/opentelemetry.cc
     internal/opentelemetry.h
-    internal/opentelemetry_options.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc
     internal/parse_rfc3339.h
@@ -139,6 +138,7 @@ add_library(
     kms_key_name.h
     log.cc
     log.h
+    opentelemetry_options.h
     optional.h
     options.cc
     options.h
