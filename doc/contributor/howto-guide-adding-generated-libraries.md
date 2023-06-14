@@ -5,12 +5,14 @@ This document describes the steps required to add a new library to
 familiar with the existing libraries, the build systems used in those
 libraries, and which libraries are based on gRPC.
 
+## Adding a new library
+
 > :warning: For libraries that include multiple services, the scaffold README
 > files (and any other documentation) will use the **last** service description
 > as the description of the library. Adjust the ordering and/or fix the
 > documentation after the fact.
 
-## Set your working directory
+### Set your working directory
 
 Go to whatever directory holds your clone of the project, for example:
 
@@ -18,7 +20,7 @@ Go to whatever directory holds your clone of the project, for example:
 cd $HOME/google-cloud-cpp
 ```
 
-## Set some useful variables
+### Set some useful variables
 
 ```shell
 library=... # The name of your new library in the google-cloud-cpp repository
@@ -26,7 +28,7 @@ subdir="google/cloud/${library}"  # The path in googleapis repo, may not start w
 bazel_output_base="$(bazel info output_base)"
 ```
 
-## Verify the C++ rules exist
+### Verify the C++ rules exist
 
 ```shell
 bazel --batch query --noshow_progress --noshow_loading_progress \
@@ -36,7 +38,7 @@ bazel --batch query --noshow_progress --noshow_loading_progress \
 If this fails, send a CL to add the rule. Wait until that is submitted and
 exported before proceeding any further.
 
-## Edit the scripts and configuration
+### Edit the scripts and configuration
 
 Update the `external/googleapis/update_libraries.sh` script.
 
@@ -64,7 +66,7 @@ index cdaa0bc9f..b0381d72d 100755
 
 </details>
 
-## Update the Generator Configuration
+### Update the Generator Configuration
 
 Determine the retryable status codes by looking in the service config JSON. For
 example, [here][retryable-status-codes].
@@ -107,7 +109,7 @@ index ab033dde9..3753287d8 100644
 
 </details>
 
-## Commit these changes
+### Commit these changes
 
 Create your first commit with purely hand-crafted changes
 
@@ -116,13 +118,13 @@ git checkout -b feat-${library}-generate-library
 git commit -m"feat(${library}): generate library" external/ generator/
 ```
 
-## Update the list of proto files and proto dependencies
+### Update the list of proto files and proto dependencies
 
 ```shell
 external/googleapis/update_libraries.sh "${library}"
 ```
 
-## Run the Scaffold Generator
+### Run the Scaffold Generator
 
 Then run the micro-generator to create the scaffold and the C++ sources:
 
@@ -141,21 +143,21 @@ bazel run \
 To generate a library that is initially experimental, add an
 `--experimental_scaffold` flag.
 
-## Fix formatting of existing libraries and the generated code
+### Fix formatting of existing libraries and the generated code
 
 ```shell
 git add "google/cloud/${library}"
 ci/cloudbuild/build.sh -t checkers-pr
 ```
 
-## Commit all the generated files
+### Commit all the generated files
 
 ```shell
 git add external ci "google/cloud/${library}"
 git commit -m"Run generators and format their outputs"
 ```
 
-## Create any custom source files
+### Create any custom source files
 
 If the `generator/generator_config.textproto` entry for the service does not
 enumerate the `retryable_status_codes`, you need to manually create the file as
@@ -165,14 +167,14 @@ Likewise, for services using streaming operations you may need to implement the
 streaming `*Updater` function. Use `google/cloud/bigquery/internal/streaming.cc`
 or `google/cloud/logging/internal/streaming.cc` for inspiration.
 
-## Potentially fix the bazel build
+### Potentially fix the bazel build
 
 The generated `BUILD.bazel` file may require manual editing. The scaffold will
 add one dependency from `@com_github_googleapis//${subdir}`, which might not be
 correct. You may need to modify that dependency and/or add additional
 dependencies for more complex libraries.
 
-## Potentially update the service directories
+### Potentially update the service directories
 
 A library may contain services in several subdirectories. The scaffold only
 knows about one such subdirectory. You may need to manually update the
@@ -183,7 +185,7 @@ knows about one such subdirectory. You may need to manually update the
 
 [#10237] offers one way to automate this step.
 
-## Update the root files
+### Update the root files
 
 Manually edit `cmake/GoogleCloudCppFeatures.cmake` to include the new target.
 If you are generating a GA library, add it to `GOOGLE_CLOUD_CPP_GA_LIBRARIES`.
@@ -191,7 +193,7 @@ Otherwise, if you are generating an experimental library, add it to
 `GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES` and note in a comment when the library
 was generated.
 
-## Update the quickstart
+### Update the quickstart
 
 The generated quickstart will need some editing. Use a simple operation, maybe
 an admin operation listing top-level resources, to demonstrate how to use the
@@ -207,7 +209,7 @@ arguments in the CI builds.
 
 - `google/cloud/${library}/CMakeLists.txt`
 
-## Add the API baseline
+### Add the API baseline
 
 For new GA libraries you need to create the API baseline.  You can leave this
 running while you work on tweaks to the quickstart and documentation.
@@ -218,7 +220,7 @@ git add ci/abi-dumps
 git commit -m"Add API baseline" ci/abi-dumps/
 ```
 
-## Update the README files
+### Update the README files
 
 The following files probably need some light copy-editing to read less like they
 were written by a robot:
@@ -231,24 +233,24 @@ were written by a robot:
 The Cloud documentation links (`cloud.google.com/*/docs/*`) in these files are
 not always valid. Find the correct urls and update the links.
 
-## Review the metadata file
+### Review the metadata file
 
 Newer services provide all the data needed to generate this file correctly,
 but with older services we need to edit a few places:
 
 - `google/cloud/${library}/**/.repo-metadata.json`
 
-## Edit the top-level CHANGELOG file
+### Edit the top-level CHANGELOG file
 
 Announce the new library in the CHANGELOG for the next release.
 
-## Fix formatting nits
+### Fix formatting nits
 
 ```shell
 ci/cloudbuild/build.sh -t checkers-pr
 ```
 
-## Verify everything compiles
+### Verify everything compiles
 
 ```shell
 bazel build //google/cloud/${library}/...
@@ -280,10 +282,49 @@ index c4ce00489..1858b48dc 100755
 
 </details>
 
-## Commit these changes
+### Commit these changes
 
 ```shell
 git commit -m"Manually update READMEs, quickstart, and top-level stuff" .
+```
+
+## Expanding a library
+
+> This section assumes the developer is familiar with running the generator. For
+> more details on any of the steps involved, see the "Adding a new library"
+> section.
+
+Sometimes we add services to libraries that already exist. In this case we do
+not need to run the scaffold generator. We provide a simple checklist below.
+
+### Manual changes
+
+```sh
+library=...  # e.g. bigquery
+api_name=... # e.g. BigLake API
+```
+
+- Update `generator_config.textproto`
+- Update and run `external/googleapis/update_libraries.sh ${library}`
+- Add the new directory to `service_dirs` in:
+  - `google/cloud/${library}/CMakeLists.txt`
+  - `google/cloud/${library}/BUILD.bazel`
+- Add the new `*_cc_grpc` dependency to
+  `//google/cloud/${library}:${library}_client` in
+  `google/cloud/${library}/BUILD.bazel`
+- Announce the new API in the `CHANGELOG.md`
+  - e.g. `The library has been expanded to include the ${api_name}.`
+- Commit the manual changes
+  - `git commit -am "feat(${library}): add ${api_name}"`
+
+### Generated changes
+
+```shell
+ci/cloudbuild/build.sh -t generate-libraries-pr
+env GOOGLE_CLOUD_CPP_CHECK_API ${library} ci/cloudbuild/build.sh -t check-api-pr
+git add .
+ci/cloudbuild/build.sh -t checkers-pr
+git commit -am "generated changes"
 ```
 
 [#10237]: https://github.com/googleapis/google-cloud-cpp/issues/10237
