@@ -26,6 +26,7 @@
 #include "google/cloud/testing_util/example_driver.h"
 #include <google/cloud/pubsub/samples/samples.pb.h>
 #include <google/protobuf/text_format.h>
+#include <chrono>
 #include <condition_variable>
 #include <iostream>
 #include <mutex>
@@ -35,6 +36,7 @@
 
 namespace {
 
+using ::google::cloud::pubsub::examples::CleanupSchemas;
 using ::google::cloud::pubsub::examples::CommitSchemaWithRevisionsForTesting;
 using ::google::cloud::pubsub::examples::RandomSchemaId;
 using ::google::cloud::pubsub::examples::RandomSnapshotId;
@@ -2102,6 +2104,9 @@ void AutoRunAvro(
       testdata_directory + "revised_schema.avsc";
   auto avro_message_file = testdata_directory + "valid_message.avsc";
 
+  CleanupSchemas(schema_admin, project_id,
+                 absl::FromChrono(std::chrono::system_clock::now()));
+
   std::cout << "\nRunning CreateAvroSchema() sample" << std::endl;
   CreateAvroSchema(schema_admin,
                    {project_id, avro_schema_id, avro_schema_definition_file});
@@ -2146,8 +2151,8 @@ void AutoRunAvro(
                  {project_id, avro_revision_schema_id, first_revision_id});
 
   std::cout << "\nRunning DeleteSchemaRevision sample" << std::endl;
-  DeleteSchemaRevision(
-      schema_admin, {project_id, avro_revision_schema_id, first_revision_id});
+  DeleteSchemaRevision(schema_admin,
+                       {project_id, avro_revision_schema_id, last_revision_id});
 
   std::cout
       << "\nCleaning up the topic and schema created for testing revisions"
