@@ -15,6 +15,7 @@
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
@@ -121,13 +122,38 @@ TEST(PopulateCommonOptions, UserProject) {
   }
 }
 
-TEST(PopulateCommonOptions, DefaultTracingComponentsNoEnvironment) {
+TEST(PopulateCommonOptions, OpenTelemetryTracing) {
+  using OTelOption = ::google::cloud::experimental::OpenTelemetryTracingOption;
+
+  struct TestCase {
+    absl::optional<std::string> env;
+    Options input;
+    bool has_option;
+    bool get_option;
+  };
+  std::vector<TestCase> tests = {
+      {absl::nullopt, Options{}, false, false},
+      {absl::nullopt, Options{}.set<OTelOption>(false), true, false},
+      {absl::nullopt, Options{}.set<OTelOption>(true), true, true},
+      {"ON", Options{}, true, true},
+      {"ON", Options{}.set<OTelOption>(false), true, false},
+      {"ON", Options{}.set<OTelOption>(true), true, true},
+  };
+  for (auto const& test : tests) {
+    ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", test.env);
+    auto options = PopulateCommonOptions(test.input, {}, {}, {}, {});
+    EXPECT_EQ(options.has<OTelOption>(), test.has_option);
+    EXPECT_EQ(options.get<OTelOption>(), test.get_option);
+  }
+}
+
+TEST(DefaultTracingComponents, NoEnvironment) {
   ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
   auto const actual = DefaultTracingComponents();
   EXPECT_THAT(actual, ElementsAre());
 }
 
-TEST(PopulateCommonOptions, DefaultTracingComponentsWithValue) {
+TEST(DefaultTracingComponents, WithValue) {
   ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", "a,b,c");
   auto const actual = DefaultTracingComponents();
   EXPECT_THAT(actual, ElementsAre("a", "b", "c"));
