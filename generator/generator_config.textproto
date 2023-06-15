@@ -2405,6 +2405,15 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Network Security
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/network_security.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Network Services (aka Traffic Director)
 service {
   service_proto_path: "google/cloud/networkservices/v1/network_services.proto"
