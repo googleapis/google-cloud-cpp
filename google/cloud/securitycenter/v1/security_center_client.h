@@ -414,9 +414,9 @@ class SecurityCenterClient {
   ///  "projects/[project_id]".
   /// @param mute_config  Required. The mute config being created.
   /// @param mute_config_id  Required. Unique identifier provided by the client within the parent scope.
-  ///  It must consist of lower case letters, numbers, and hyphen, with the first
-  ///  character a letter, the last a letter or a number, and a 63 character
-  ///  maximum.
+  ///  It must consist of only lowercase letters, numbers, and hyphens, must start
+  ///  with a letter, must end with either a letter or a number, and must be 63
+  ///  characters or less.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -2911,9 +2911,9 @@ class SecurityCenterClient {
   ///  "projects/[project_id]".
   /// @param big_query_export  Required. The BigQuery export being created.
   /// @param big_query_export_id  Required. Unique identifier provided by the client within the parent scope.
-  ///  It must consist of lower case letters, numbers, and hyphen, with the first
-  ///  character a letter, the last a letter or a number, and a 63 character
-  ///  maximum.
+  ///  It must consist of only lowercase letters, numbers, and hyphens, must start
+  ///  with a letter, must end with either a letter or a number, and must be 63
+  ///  characters or less.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

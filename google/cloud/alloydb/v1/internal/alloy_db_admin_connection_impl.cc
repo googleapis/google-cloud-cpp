@@ -171,6 +171,35 @@ AlloyDBAdminConnectionImpl::DeleteCluster(
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+AlloyDBAdminConnectionImpl::PromoteCluster(
+    google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::alloydb::v1::Cluster>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
+        return stub->AsyncPromoteCluster(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::alloydb::v1::Cluster>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->PromoteCluster(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnectionImpl::RestoreCluster(
     google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   auto& stub = stub_;
@@ -196,6 +225,37 @@ AlloyDBAdminConnectionImpl::RestoreCluster(
           google::cloud::alloydb::v1::Cluster>,
       retry_policy(), backoff_policy(),
       idempotency_policy()->RestoreCluster(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+AlloyDBAdminConnectionImpl::CreateSecondaryCluster(
+    google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::alloydb::v1::Cluster>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::alloydb::v1::CreateSecondaryClusterRequest const&
+                 request) {
+        return stub->AsyncCreateSecondaryCluster(cq, std::move(context),
+                                                 request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::alloydb::v1::Cluster>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateSecondaryCluster(request), polling_policy(),
       __func__);
 }
 
@@ -271,6 +331,37 @@ AlloyDBAdminConnectionImpl::CreateInstance(
           google::cloud::alloydb::v1::Instance>,
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateInstance(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::Instance>>
+AlloyDBAdminConnectionImpl::CreateSecondaryInstance(
+    google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::alloydb::v1::Instance>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&
+                 request) {
+        return stub->AsyncCreateSecondaryInstance(cq, std::move(context),
+                                                  request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::alloydb::v1::Instance>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateSecondaryInstance(request), polling_policy(),
       __func__);
 }
 
@@ -390,6 +481,34 @@ AlloyDBAdminConnectionImpl::FailoverInstance(
       retry_policy(), backoff_policy(),
       idempotency_policy()->FailoverInstance(request), polling_policy(),
       __func__);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::Instance>>
+AlloyDBAdminConnectionImpl::InjectFault(
+    google::cloud::alloydb::v1::InjectFaultRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::alloydb::v1::Instance>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::alloydb::v1::InjectFaultRequest const& request) {
+        return stub->AsyncInjectFault(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::alloydb::v1::Instance>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->InjectFault(request), polling_policy(), __func__);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -584,6 +703,87 @@ AlloyDBAdminConnectionImpl::ListSupportedDatabaseFlags(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
+}
+
+StreamRange<google::cloud::alloydb::v1::User>
+AlloyDBAdminConnectionImpl::ListUsers(
+    google::cloud::alloydb::v1::ListUsersRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy const>(
+      retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListUsers(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::alloydb::v1::User>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::alloydb::v1::ListUsersRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::alloydb::v1::ListUsersRequest const& request) {
+              return stub->ListUsers(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::alloydb::v1::ListUsersResponse r) {
+        std::vector<google::cloud::alloydb::v1::User> result(r.users().size());
+        auto& messages = *r.mutable_users();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminConnectionImpl::GetUser(
+    google::cloud::alloydb::v1::GetUserRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(), idempotency_policy()->GetUser(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::alloydb::v1::GetUserRequest const& request) {
+        return stub_->GetUser(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::alloydb::v1::User>
+AlloyDBAdminConnectionImpl::CreateUser(
+    google::cloud::alloydb::v1::CreateUserRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateUser(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::alloydb::v1::CreateUserRequest const& request) {
+        return stub_->CreateUser(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::alloydb::v1::User>
+AlloyDBAdminConnectionImpl::UpdateUser(
+    google::cloud::alloydb::v1::UpdateUserRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateUser(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::alloydb::v1::UpdateUserRequest const& request) {
+        return stub_->UpdateUser(context, request);
+      },
+      request, __func__);
+}
+
+Status AlloyDBAdminConnectionImpl::DeleteUser(
+    google::cloud::alloydb::v1::DeleteUserRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteUser(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::alloydb::v1::DeleteUserRequest const& request) {
+        return stub_->DeleteUser(context, request);
+      },
+      request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

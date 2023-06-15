@@ -105,6 +105,25 @@ AlloyDBAdminAuth::AsyncDeleteCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminAuth::AsyncPromoteCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncPromoteCluster(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncRestoreCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -120,6 +139,26 @@ AlloyDBAdminAuth::AsyncRestoreCluster(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncRestoreCluster(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminAuth::AsyncCreateSecondaryCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateSecondaryCluster(cq, *std::move(context),
+                                                  request);
       });
 }
 
@@ -156,6 +195,26 @@ AlloyDBAdminAuth::AsyncCreateInstance(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncCreateInstance(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminAuth::AsyncCreateSecondaryInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateSecondaryInstance(cq, *std::move(context),
+                                                   request);
       });
 }
 
@@ -233,6 +292,25 @@ AlloyDBAdminAuth::AsyncFailoverInstance(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncFailoverInstance(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminAuth::AsyncInjectFault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::InjectFaultRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncInjectFault(cq, *std::move(context), request);
       });
 }
 
@@ -337,6 +415,47 @@ AlloyDBAdminAuth::ListSupportedDatabaseFlags(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSupportedDatabaseFlags(context, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
+AlloyDBAdminAuth::ListUsers(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::ListUsersRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListUsers(context, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminAuth::GetUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::GetUserRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetUser(context, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminAuth::CreateUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::CreateUserRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateUser(context, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminAuth::UpdateUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::UpdateUserRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateUser(context, request);
+}
+
+Status AlloyDBAdminAuth::DeleteUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::DeleteUserRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteUser(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -116,6 +116,54 @@ DefaultEnvironmentsStub::AsyncDeleteEnvironment(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ExecuteAirflowCommandResponse>
+DefaultEnvironmentsStub::ExecuteAirflowCommand(
+    grpc::ClientContext& client_context,
+    google::cloud::orchestration::airflow::service::v1::
+        ExecuteAirflowCommandRequest const& request) {
+  google::cloud::orchestration::airflow::service::v1::
+      ExecuteAirflowCommandResponse response;
+  auto status =
+      grpc_stub_->ExecuteAirflowCommand(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             StopAirflowCommandResponse>
+DefaultEnvironmentsStub::StopAirflowCommand(
+    grpc::ClientContext& client_context,
+    google::cloud::orchestration::airflow::service::v1::
+        StopAirflowCommandRequest const& request) {
+  google::cloud::orchestration::airflow::service::v1::StopAirflowCommandResponse
+      response;
+  auto status =
+      grpc_stub_->StopAirflowCommand(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             PollAirflowCommandResponse>
+DefaultEnvironmentsStub::PollAirflowCommand(
+    grpc::ClientContext& client_context,
+    google::cloud::orchestration::airflow::service::v1::
+        PollAirflowCommandRequest const& request) {
+  google::cloud::orchestration::airflow::service::v1::PollAirflowCommandResponse
+      response;
+  auto status =
+      grpc_stub_->PollAirflowCommand(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncSaveSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -152,6 +200,41 @@ DefaultEnvironmentsStub::AsyncLoadSnapshot(
         return grpc_stub_->AsyncLoadSnapshot(context, request, cq);
       },
       request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEnvironmentsStub::AsyncDatabaseFailover(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::orchestration::airflow::
+                                        service::v1::DatabaseFailoverRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::orchestration::airflow::service::v1::
+                 DatabaseFailoverRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDatabaseFailover(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             FetchDatabasePropertiesResponse>
+DefaultEnvironmentsStub::FetchDatabaseProperties(
+    grpc::ClientContext& client_context,
+    google::cloud::orchestration::airflow::service::v1::
+        FetchDatabasePropertiesRequest const& request) {
+  google::cloud::orchestration::airflow::service::v1::
+      FetchDatabasePropertiesResponse response;
+  auto status =
+      grpc_stub_->FetchDatabaseProperties(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
