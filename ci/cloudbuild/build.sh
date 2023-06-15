@@ -312,9 +312,6 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--build-arg=NCPU=$(nproc)"
     -f "ci/cloudbuild/dockerfiles/${DISTRO_FLAG}.Dockerfile"
   )
-  if [[ -n "${DOCKER_NETWORK:-}" ]]; then
-    build_flags+=("--network=${DOCKER_NETWORK:-bridge}")
-  fi
   if [[ -n "${ARCH_FLAG}" ]]; then
     build_flags+=("--build-arg=ARCH=${ARCH_FLAG}")
   fi
