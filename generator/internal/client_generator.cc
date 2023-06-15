@@ -84,9 +84,10 @@ Status ClientGenerator::GenerateHeader() {
     HeaderLocalIncludes({"google/cloud/iam_updater.h"});
   }
   HeaderSystemIncludes(MethodSignatureWellKnownProtobufTypeIncludes());
-  HeaderSystemIncludes(
-      {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
-       HasMessageWithMapField() ? "map" : "", "memory"});
+  HeaderSystemIncludes({HasGRPCLongrunningOperation()
+                            ? "google/longrunning/operations.grpc.pb.h"
+                            : "",
+                        HasMessageWithMapField() ? "map" : "", "memory"});
 
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;

@@ -470,6 +470,11 @@ void ServiceCodeGenerator::SetMethods() {
   }
 }
 
+std::string ServiceCodeGenerator::GetPbIncludeByTransport() const {
+  if (HasGenerateGrpcTransport()) return vars("proto_grpc_header_path");
+  return vars("proto_header_path");
+}
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

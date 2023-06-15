@@ -68,7 +68,8 @@ Status ConnectionGenerator::GenerateHeader() {
        "google/cloud/version.h"});
   HeaderSystemIncludes(
       {vars("proto_header_path"), vars("additional_pb_header_paths"),
-       HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
+       HasGRPCLongrunningOperation() ? "google/longrunning/operations.grpc.pb.h"
+                                     : "",
        "memory"});
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
