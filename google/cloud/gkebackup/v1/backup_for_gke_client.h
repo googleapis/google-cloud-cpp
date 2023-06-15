@@ -92,7 +92,7 @@ class BackupForGKEClient {
   /// Creates a new BackupPlan in a given location.
   ///
   /// @param parent  Required. The location within which to create the BackupPlan.
-  ///  Format: projects/*/locations/*
+  ///  Format: `projects/*/locations/*`
   /// @param backup_plan  Required. The BackupPlan resource object to create.
   /// @param backup_plan_id  Required. The client-provided short name for the BackupPlan resource.
   ///  This name must:
@@ -123,7 +123,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L331}
+  /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L350}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> CreateBackupPlan(
@@ -162,7 +162,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L331}
+  /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L350}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> CreateBackupPlan(
@@ -174,7 +174,7 @@ class BackupForGKEClient {
   /// Lists BackupPlans in a given location.
   ///
   /// @param parent  Required. The location that contains the BackupPlans to list.
-  ///  Format: projects/*/locations/*
+  ///  Format: `projects/*/locations/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -199,7 +199,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L356}
+  /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L375}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::BackupPlan> ListBackupPlans(
@@ -239,7 +239,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L356}
+  /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L375}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::BackupPlan> ListBackupPlans(
@@ -251,7 +251,7 @@ class BackupForGKEClient {
   /// Retrieve the details of a single BackupPlan.
   ///
   /// @param name  Required. Fully qualified BackupPlan name.
-  ///  Format: projects/*/locations/*/backupPlans/*
+  ///  Format: `projects/*/locations/*/backupPlans/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -267,7 +267,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L406}
+  /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L425}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::BackupPlan> GetBackupPlan(
@@ -298,7 +298,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L406}
+  /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L425}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::BackupPlan> GetBackupPlan(
@@ -309,8 +309,8 @@ class BackupForGKEClient {
   ///
   /// Update a BackupPlan.
   ///
-  /// @param backup_plan  Required. A new version of the BackupPlan resource that contains updated fields.
-  ///  This may be sparsely populated if an `update_mask` is provided.
+  /// @param backup_plan  Required. A new version of the BackupPlan resource that contains updated
+  ///  fields. This may be sparsely populated if an `update_mask` is provided.
   /// @param update_mask  This is used to specify the fields to be overwritten in the
   ///  BackupPlan targeted for update. The values for each of these
   ///  updated fields will be taken from the `backup_plan` provided
@@ -341,7 +341,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L418}
+  /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L437}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> UpdateBackupPlan(
@@ -379,7 +379,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.BackupPlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup_plan.proto#L33}
-  /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L418}
+  /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L437}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> UpdateBackupPlan(
@@ -391,7 +391,7 @@ class BackupForGKEClient {
   /// Deletes an existing BackupPlan.
   ///
   /// @param name  Required. Fully qualified BackupPlan name.
-  ///  Format: projects/*/locations/*/backupPlans/*
+  ///  Format: `projects/*/locations/*/backupPlans/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -412,8 +412,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L436}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L304}
+  /// [google.cloud.gkebackup.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L455}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -449,8 +449,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L436}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L304}
+  /// [google.cloud.gkebackup.v1.DeleteBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L455}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -463,7 +463,7 @@ class BackupForGKEClient {
   /// Creates a Backup for the given BackupPlan.
   ///
   /// @param parent  Required. The BackupPlan within which to create the Backup.
-  ///  Format: projects/*/locations/*/backupPlans/*
+  ///  Format: `projects/*/locations/*/backupPlans/*`
   /// @param backup  The Backup resource to create.
   /// @param backup_id  The client-provided short name for the Backup resource.
   ///  This name must:
@@ -494,7 +494,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L453}
+  /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L472}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
@@ -533,7 +533,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L453}
+  /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L472}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
@@ -545,7 +545,7 @@ class BackupForGKEClient {
   /// Lists the Backups for a given BackupPlan.
   ///
   /// @param parent  Required. The BackupPlan that contains the Backups to list.
-  ///  Format: projects/*/locations/*/backupPlans/*
+  ///  Format: `projects/*/locations/*/backupPlans/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -570,7 +570,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L478}
+  /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L497}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::Backup> ListBackups(
@@ -610,7 +610,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L478}
+  /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L497}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::Backup> ListBackups(
@@ -622,7 +622,7 @@ class BackupForGKEClient {
   /// Retrieve the details of a single Backup.
   ///
   /// @param name  Required. Full name of the Backup resource.
-  ///  Format: projects/*/locations/*/backupPlans/*/backups/*
+  ///  Format: `projects/*/locations/*/backupPlans/*/backups/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -638,7 +638,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L523}
+  /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L543}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::Backup> GetBackup(
@@ -669,7 +669,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L523}
+  /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L543}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::Backup> GetBackup(
@@ -680,8 +680,8 @@ class BackupForGKEClient {
   ///
   /// Update a Backup.
   ///
-  /// @param backup  Required. A new version of the Backup resource that contains updated fields.
-  ///  This may be sparsely populated if an `update_mask` is provided.
+  /// @param backup  Required. A new version of the Backup resource that contains updated
+  ///  fields. This may be sparsely populated if an `update_mask` is provided.
   /// @param update_mask  This is used to specify the fields to be overwritten in the
   ///  Backup targeted for update. The values for each of these
   ///  updated fields will be taken from the `backup_plan` provided
@@ -711,7 +711,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L535}
+  /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L555}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> UpdateBackup(
@@ -749,7 +749,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Backup]: @googleapis_reference_link{google/cloud/gkebackup/v1/backup.proto#L37}
-  /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L535}
+  /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L555}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> UpdateBackup(
@@ -761,7 +761,7 @@ class BackupForGKEClient {
   /// Deletes an existing Backup.
   ///
   /// @param name  Required. Name of the Backup resource.
-  ///  Format: projects/*/locations/*/backupPlans/*/backups/*
+  ///  Format: `projects/*/locations/*/backupPlans/*/backups/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -782,8 +782,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L552}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L304}
+  /// [google.cloud.gkebackup.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L572}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -819,8 +819,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L552}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L304}
+  /// [google.cloud.gkebackup.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L572}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -832,7 +832,7 @@ class BackupForGKEClient {
   /// Lists the VolumeBackups for a given Backup.
   ///
   /// @param parent  Required. The Backup that contains the VolumeBackups to list.
-  ///  Format: projects/*/locations/*/backupPlans/*/backups/*
+  ///  Format: `projects/*/locations/*/backupPlans/*/backups/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -856,7 +856,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListVolumeBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L574}
+  /// [google.cloud.gkebackup.v1.ListVolumeBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L594}
   /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L36}
   ///
   // clang-format on
@@ -896,7 +896,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListVolumeBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L574}
+  /// [google.cloud.gkebackup.v1.ListVolumeBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L594}
   /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L36}
   ///
   // clang-format on
@@ -909,7 +909,7 @@ class BackupForGKEClient {
   /// Retrieve the details of a single VolumeBackup.
   ///
   /// @param name  Required. Full name of the VolumeBackup resource.
-  ///  Format: projects/*/locations/*/backupPlans/*/backups/*/volumeBackups/*
+  ///  Format: `projects/*/locations/*/backupPlans/*/backups/*/volumeBackups/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -924,7 +924,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetVolumeBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L621}
+  /// [google.cloud.gkebackup.v1.GetVolumeBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L641}
   /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L36}
   ///
   // clang-format on
@@ -955,7 +955,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetVolumeBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L621}
+  /// [google.cloud.gkebackup.v1.GetVolumeBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L641}
   /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L36}
   ///
   // clang-format on
@@ -968,7 +968,7 @@ class BackupForGKEClient {
   /// Creates a new RestorePlan in a given location.
   ///
   /// @param parent  Required. The location within which to create the RestorePlan.
-  ///  Format: projects/*/locations/*
+  ///  Format: `projects/*/locations/*`
   /// @param restore_plan  Required. The RestorePlan resource object to create.
   /// @param restore_plan_id  Required. The client-provided short name for the RestorePlan resource.
   ///  This name must:
@@ -998,7 +998,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.CreateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L633}
+  /// [google.cloud.gkebackup.v1.CreateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L653}
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
   ///
   // clang-format on
@@ -1037,7 +1037,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.CreateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L633}
+  /// [google.cloud.gkebackup.v1.CreateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L653}
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
   ///
   // clang-format on
@@ -1050,7 +1050,7 @@ class BackupForGKEClient {
   /// Lists RestorePlans in a given location.
   ///
   /// @param parent  Required. The location that contains the RestorePlans to list.
-  ///  Format: projects/*/locations/*
+  ///  Format: `projects/*/locations/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1074,7 +1074,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListRestorePlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L658}
+  /// [google.cloud.gkebackup.v1.ListRestorePlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L678}
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
   ///
   // clang-format on
@@ -1114,7 +1114,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListRestorePlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L658}
+  /// [google.cloud.gkebackup.v1.ListRestorePlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L678}
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
   ///
   // clang-format on
@@ -1127,7 +1127,7 @@ class BackupForGKEClient {
   /// Retrieve the details of a single RestorePlan.
   ///
   /// @param name  Required. Fully qualified RestorePlan name.
-  ///  Format: projects/*/locations/*/restorePlans/*
+  ///  Format: `projects/*/locations/*/restorePlans/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -1142,7 +1142,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L708}
+  /// [google.cloud.gkebackup.v1.GetRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L728}
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
   ///
   // clang-format on
@@ -1173,7 +1173,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L708}
+  /// [google.cloud.gkebackup.v1.GetRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L728}
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
   ///
   // clang-format on
@@ -1185,8 +1185,8 @@ class BackupForGKEClient {
   ///
   /// Update a RestorePlan.
   ///
-  /// @param restore_plan  Required. A new version of the RestorePlan resource that contains updated fields.
-  ///  This may be sparsely populated if an `update_mask` is provided.
+  /// @param restore_plan  Required. A new version of the RestorePlan resource that contains updated
+  ///  fields. This may be sparsely populated if an `update_mask` is provided.
   /// @param update_mask  This is used to specify the fields to be overwritten in the
   ///  RestorePlan targeted for update. The values for each of these
   ///  updated fields will be taken from the `restore_plan` provided
@@ -1216,7 +1216,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
-  /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L720}
+  /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L740}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> UpdateRestorePlan(
@@ -1254,7 +1254,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L35}
-  /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L720}
+  /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L740}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> UpdateRestorePlan(
@@ -1266,7 +1266,7 @@ class BackupForGKEClient {
   /// Deletes an existing RestorePlan.
   ///
   /// @param name  Required. Fully qualified RestorePlan name.
-  ///  Format: projects/*/locations/*/restorePlans/*
+  ///  Format: `projects/*/locations/*/restorePlans/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1287,8 +1287,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L737}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L304}
+  /// [google.cloud.gkebackup.v1.DeleteRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L757}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -1324,8 +1324,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L737}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L304}
+  /// [google.cloud.gkebackup.v1.DeleteRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L757}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -1338,7 +1338,7 @@ class BackupForGKEClient {
   /// Creates a new Restore for the given RestorePlan.
   ///
   /// @param parent  Required. The RestorePlan within which to create the Restore.
-  ///  Format: projects/*/locations/*/restorePlans/*
+  ///  Format: `projects/*/locations/*/restorePlans/*`
   /// @param restore  Required. The restore resource to create.
   /// @param restore_id  Required. The client-provided short name for the Restore resource.
   ///  This name must:
@@ -1368,7 +1368,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.CreateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L759}
+  /// [google.cloud.gkebackup.v1.CreateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L779}
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
   ///
   // clang-format on
@@ -1407,7 +1407,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.CreateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L759}
+  /// [google.cloud.gkebackup.v1.CreateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L779}
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
   ///
   // clang-format on
@@ -1420,7 +1420,7 @@ class BackupForGKEClient {
   /// Lists the Restores for a given RestorePlan.
   ///
   /// @param parent  Required. The RestorePlan that contains the Restores to list.
-  ///  Format: projects/*/locations/*/restorePlans/*
+  ///  Format: `projects/*/locations/*/restorePlans/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1444,7 +1444,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L784}
+  /// [google.cloud.gkebackup.v1.ListRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L804}
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
   ///
   // clang-format on
@@ -1484,7 +1484,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L784}
+  /// [google.cloud.gkebackup.v1.ListRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L804}
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
   ///
   // clang-format on
@@ -1497,7 +1497,7 @@ class BackupForGKEClient {
   /// Retrieves the details of a single Restore.
   ///
   /// @param name  Required. Name of the restore resource.
-  ///  Format: projects/*/locations/*/restorePlans/*/restores/*
+  ///  Format: `projects/*/locations/*/restorePlans/*/restores/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -1512,7 +1512,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L833}
+  /// [google.cloud.gkebackup.v1.GetRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L853}
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
   ///
   // clang-format on
@@ -1543,7 +1543,7 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L833}
+  /// [google.cloud.gkebackup.v1.GetRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L853}
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
   ///
   // clang-format on
@@ -1555,8 +1555,8 @@ class BackupForGKEClient {
   ///
   /// Update a Restore.
   ///
-  /// @param restore  Required. A new version of the Restore resource that contains updated fields.
-  ///  This may be sparsely populated if an `update_mask` is provided.
+  /// @param restore  Required. A new version of the Restore resource that contains updated
+  ///  fields. This may be sparsely populated if an `update_mask` is provided.
   /// @param update_mask  This is used to specify the fields to be overwritten in the
   ///  Restore targeted for update. The values for each of these
   ///  updated fields will be taken from the `restore` provided
@@ -1586,7 +1586,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
-  /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L845}
+  /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L865}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Restore>> UpdateRestore(
@@ -1624,7 +1624,7 @@ class BackupForGKEClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L35}
-  /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L845}
+  /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L865}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Restore>> UpdateRestore(
@@ -1636,7 +1636,7 @@ class BackupForGKEClient {
   /// Deletes an existing Restore.
   ///
   /// @param name  Required. Full name of the Restore
-  ///  Format: projects/*/locations/*/restorePlans/*/restores/*
+  ///  Format: `projects/*/locations/*/restorePlans/*/restores/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1657,8 +1657,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L862}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L304}
+  /// [google.cloud.gkebackup.v1.DeleteRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L882}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -1694,8 +1694,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.DeleteRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L862}
-  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L304}
+  /// [google.cloud.gkebackup.v1.DeleteRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L882}
+  /// [google.cloud.gkebackup.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -1708,7 +1708,7 @@ class BackupForGKEClient {
   /// Lists the VolumeRestores for a given Restore.
   ///
   /// @param parent  Required. The Restore that contains the VolumeRestores to list.
-  ///  Format: projects/*/locations/*/restorePlans/*/restores/*
+  ///  Format: `projects/*/locations/*/restorePlans/*/restores/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1732,8 +1732,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListVolumeRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L884}
-  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L138}
+  /// [google.cloud.gkebackup.v1.ListVolumeRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L904}
+  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L143}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::VolumeRestore> ListVolumeRestores(
@@ -1772,8 +1772,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.ListVolumeRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L884}
-  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L138}
+  /// [google.cloud.gkebackup.v1.ListVolumeRestoresRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L904}
+  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L143}
   ///
   // clang-format on
   StreamRange<google::cloud::gkebackup::v1::VolumeRestore> ListVolumeRestores(
@@ -1785,7 +1785,7 @@ class BackupForGKEClient {
   /// Retrieve the details of a single VolumeRestore.
   ///
   /// @param name  Required. Full name of the VolumeRestore resource.
-  ///  Format: projects/*/locations/*/restorePlans/*/restores/*/volumeRestores/*
+  ///  Format: `projects/*/locations/*/restorePlans/*/restores/*/volumeRestores/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -1800,8 +1800,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetVolumeRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L931}
-  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L138}
+  /// [google.cloud.gkebackup.v1.GetVolumeRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L951}
+  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L143}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::VolumeRestore> GetVolumeRestore(
@@ -1831,8 +1831,8 @@ class BackupForGKEClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkebackup.v1.GetVolumeRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L931}
-  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L138}
+  /// [google.cloud.gkebackup.v1.GetVolumeRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L951}
+  /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L143}
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::VolumeRestore> GetVolumeRestore(

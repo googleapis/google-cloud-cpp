@@ -100,6 +100,21 @@ AlloyDBAdminTracingStub::AsyncDeleteCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminTracingStub::AsyncPromoteCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "PromoteCluster");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncPromoteCluster(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminTracingStub::AsyncRestoreCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -111,6 +126,21 @@ AlloyDBAdminTracingStub::AsyncRestoreCluster(
     internal::InjectTraceContext(*context, internal::CurrentOptions());
   }
   auto f = child_->AsyncRestoreCluster(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminTracingStub::AsyncCreateSecondaryCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "CreateSecondaryCluster");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCreateSecondaryCluster(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -150,6 +180,21 @@ AlloyDBAdminTracingStub::AsyncCreateInstance(
     internal::InjectTraceContext(*context, internal::CurrentOptions());
   }
   auto f = child_->AsyncCreateInstance(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminTracingStub::AsyncCreateSecondaryInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "CreateSecondaryInstance");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCreateSecondaryInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -210,6 +255,21 @@ AlloyDBAdminTracingStub::AsyncFailoverInstance(
     internal::InjectTraceContext(*context, internal::CurrentOptions());
   }
   auto f = child_->AsyncFailoverInstance(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminTracingStub::AsyncInjectFault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::InjectFaultRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "InjectFault");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncInjectFault(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -306,6 +366,60 @@ AlloyDBAdminTracingStub::ListSupportedDatabaseFlags(
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(
       context, *span, child_->ListSupportedDatabaseFlags(context, request));
+}
+
+StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
+AlloyDBAdminTracingStub::ListUsers(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::ListUsersRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "ListUsers");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->ListUsers(context, request));
+}
+
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminTracingStub::GetUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::GetUserRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin", "GetUser");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetUser(context, request));
+}
+
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminTracingStub::CreateUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::CreateUserRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "CreateUser");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateUser(context, request));
+}
+
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminTracingStub::UpdateUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::UpdateUserRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "UpdateUser");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateUser(context, request));
+}
+
+Status AlloyDBAdminTracingStub::DeleteUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::DeleteUserRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
+                                     "DeleteUser");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteUser(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

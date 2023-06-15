@@ -85,6 +85,36 @@ EnvironmentsMetadata::AsyncDeleteEnvironment(
   return child_->AsyncDeleteEnvironment(cq, std::move(context), request);
 }
 
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ExecuteAirflowCommandResponse>
+EnvironmentsMetadata::ExecuteAirflowCommand(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        ExecuteAirflowCommandRequest const& request) {
+  SetMetadata(context, "environment=" + request.environment());
+  return child_->ExecuteAirflowCommand(context, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             StopAirflowCommandResponse>
+EnvironmentsMetadata::StopAirflowCommand(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        StopAirflowCommandRequest const& request) {
+  SetMetadata(context, "environment=" + request.environment());
+  return child_->StopAirflowCommand(context, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             PollAirflowCommandResponse>
+EnvironmentsMetadata::PollAirflowCommand(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        PollAirflowCommandRequest const& request) {
+  SetMetadata(context, "environment=" + request.environment());
+  return child_->PollAirflowCommand(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncSaveSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -103,6 +133,26 @@ EnvironmentsMetadata::AsyncLoadSnapshot(
         LoadSnapshotRequest const& request) {
   SetMetadata(*context, "environment=" + request.environment());
   return child_->AsyncLoadSnapshot(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EnvironmentsMetadata::AsyncDatabaseFailover(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const& request) {
+  SetMetadata(*context, "environment=" + request.environment());
+  return child_->AsyncDatabaseFailover(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             FetchDatabasePropertiesResponse>
+EnvironmentsMetadata::FetchDatabaseProperties(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        FetchDatabasePropertiesRequest const& request) {
+  SetMetadata(context, "environment=" + request.environment());
+  return child_->FetchDatabaseProperties(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

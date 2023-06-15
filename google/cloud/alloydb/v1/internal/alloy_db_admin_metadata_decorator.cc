@@ -79,12 +79,30 @@ AlloyDBAdminMetadata::AsyncDeleteCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminMetadata::AsyncPromoteCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncPromoteCluster(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncRestoreCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncRestoreCluster(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminMetadata::AsyncCreateSecondaryCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncCreateSecondaryCluster(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::alloydb::v1::ListInstancesResponse>
@@ -110,6 +128,15 @@ AlloyDBAdminMetadata::AsyncCreateInstance(
     google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateInstance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminMetadata::AsyncCreateSecondaryInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncCreateSecondaryInstance(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -146,6 +173,15 @@ AlloyDBAdminMetadata::AsyncFailoverInstance(
     google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncFailoverInstance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminMetadata::AsyncInjectFault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::InjectFaultRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncInjectFault(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -206,6 +242,42 @@ AlloyDBAdminMetadata::ListSupportedDatabaseFlags(
         request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListSupportedDatabaseFlags(context, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
+AlloyDBAdminMetadata::ListUsers(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::ListUsersRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListUsers(context, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminMetadata::GetUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::GetUserRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetUser(context, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminMetadata::CreateUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::CreateUserRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->CreateUser(context, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminMetadata::UpdateUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::UpdateUserRequest const& request) {
+  SetMetadata(context, "user.name=" + request.user().name());
+  return child_->UpdateUser(context, request);
+}
+
+Status AlloyDBAdminMetadata::DeleteUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::DeleteUserRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DeleteUser(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

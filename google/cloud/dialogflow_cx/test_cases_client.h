@@ -118,7 +118,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L572}
+  /// [google.cloud.dialogflow.cx.v3.ListTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L573}
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
@@ -158,7 +158,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L572}
+  /// [google.cloud.dialogflow.cx.v3.ListTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L573}
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
@@ -184,7 +184,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.BatchDeleteTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L622}
+  /// [google.cloud.dialogflow.cx.v3.BatchDeleteTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L623}
   ///
   // clang-format on
   Status BatchDeleteTestCases(std::string const& parent, Options opts = {});
@@ -211,7 +211,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.BatchDeleteTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L622}
+  /// [google.cloud.dialogflow.cx.v3.BatchDeleteTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L623}
   ///
   // clang-format on
   Status BatchDeleteTestCases(
@@ -240,7 +240,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L674}
+  /// [google.cloud.dialogflow.cx.v3.GetTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L675}
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
@@ -271,7 +271,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L674}
+  /// [google.cloud.dialogflow.cx.v3.GetTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L675}
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
@@ -300,7 +300,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L644}
+  /// [google.cloud.dialogflow.cx.v3.CreateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L645}
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
@@ -333,7 +333,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L644}
+  /// [google.cloud.dialogflow.cx.v3.CreateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L645}
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
@@ -365,7 +365,7 @@ class TestCasesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
-  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L660}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L661}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
@@ -397,7 +397,7 @@ class TestCasesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
-  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L660}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L661}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
@@ -443,9 +443,9 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.RunTestCaseMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L719}
-  /// [google.cloud.dialogflow.cx.v3.RunTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L688}
-  /// [google.cloud.dialogflow.cx.v3.RunTestCaseResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L711}
+  /// [google.cloud.dialogflow.cx.v3.RunTestCaseMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L720}
+  /// [google.cloud.dialogflow.cx.v3.RunTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L689}
+  /// [google.cloud.dialogflow.cx.v3.RunTestCaseResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L712}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
@@ -492,9 +492,9 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L766}
-  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L723}
-  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L755}
+  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L767}
+  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L724}
+  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L756}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
@@ -527,8 +527,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CalculateCoverageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L519}
-  /// [google.cloud.dialogflow.cx.v3.CalculateCoverageResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L550}
+  /// [google.cloud.dialogflow.cx.v3.CalculateCoverageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L520}
+  /// [google.cloud.dialogflow.cx.v3.CalculateCoverageResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L551}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
@@ -578,9 +578,9 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ImportTestCasesMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L829}
-  /// [google.cloud.dialogflow.cx.v3.ImportTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L787}
-  /// [google.cloud.dialogflow.cx.v3.ImportTestCasesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L817}
+  /// [google.cloud.dialogflow.cx.v3.ImportTestCasesMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L830}
+  /// [google.cloud.dialogflow.cx.v3.ImportTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L788}
+  /// [google.cloud.dialogflow.cx.v3.ImportTestCasesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L818}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
@@ -628,9 +628,9 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ExportTestCasesMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L917}
-  /// [google.cloud.dialogflow.cx.v3.ExportTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L845}
-  /// [google.cloud.dialogflow.cx.v3.ExportTestCasesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L901}
+  /// [google.cloud.dialogflow.cx.v3.ExportTestCasesMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L918}
+  /// [google.cloud.dialogflow.cx.v3.ExportTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L846}
+  /// [google.cloud.dialogflow.cx.v3.ExportTestCasesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L902}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
@@ -669,7 +669,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListTestCaseResultsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L921}
+  /// [google.cloud.dialogflow.cx.v3.ListTestCaseResultsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L922}
   /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L256}
   ///
   // clang-format on
@@ -709,7 +709,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListTestCaseResultsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L921}
+  /// [google.cloud.dialogflow.cx.v3.ListTestCaseResultsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L922}
   /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L256}
   ///
   // clang-format on
@@ -739,7 +739,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetTestCaseResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L980}
+  /// [google.cloud.dialogflow.cx.v3.GetTestCaseResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L981}
   /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L256}
   ///
   // clang-format on
@@ -770,7 +770,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetTestCaseResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L980}
+  /// [google.cloud.dialogflow.cx.v3.GetTestCaseResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L981}
   /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L256}
   ///
   // clang-format on

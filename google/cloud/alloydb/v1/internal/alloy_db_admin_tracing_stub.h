@@ -59,10 +59,22 @@ class AlloyDBAdminTracingStub : public AlloyDBAdminStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::alloydb::v1::DeleteClusterRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncPromoteCluster(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::alloydb::v1::PromoteClusterRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::alloydb::v1::RestoreClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateSecondaryCluster(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request)
       override;
 
   StatusOr<google::cloud::alloydb::v1::ListInstancesResponse> ListInstances(
@@ -77,6 +89,12 @@ class AlloyDBAdminTracingStub : public AlloyDBAdminStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::alloydb::v1::CreateInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateSecondaryInstance(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateInstances(
@@ -102,6 +120,11 @@ class AlloyDBAdminTracingStub : public AlloyDBAdminStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::alloydb::v1::FailoverInstanceRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncInjectFault(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::alloydb::v1::InjectFaultRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestartInstance(
       google::cloud::CompletionQueue& cq,
@@ -137,6 +160,26 @@ class AlloyDBAdminTracingStub : public AlloyDBAdminStub {
       grpc::ClientContext& context,
       google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
           request) override;
+
+  StatusOr<google::cloud::alloydb::v1::ListUsersResponse> ListUsers(
+      grpc::ClientContext& context,
+      google::cloud::alloydb::v1::ListUsersRequest const& request) override;
+
+  StatusOr<google::cloud::alloydb::v1::User> GetUser(
+      grpc::ClientContext& context,
+      google::cloud::alloydb::v1::GetUserRequest const& request) override;
+
+  StatusOr<google::cloud::alloydb::v1::User> CreateUser(
+      grpc::ClientContext& context,
+      google::cloud::alloydb::v1::CreateUserRequest const& request) override;
+
+  StatusOr<google::cloud::alloydb::v1::User> UpdateUser(
+      grpc::ClientContext& context,
+      google::cloud::alloydb::v1::UpdateUserRequest const& request) override;
+
+  Status DeleteUser(
+      grpc::ClientContext& context,
+      google::cloud::alloydb::v1::DeleteUserRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

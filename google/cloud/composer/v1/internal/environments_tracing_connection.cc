@@ -88,6 +88,39 @@ EnvironmentsTracingConnection::DeleteEnvironment(
   return internal::EndSpan(std::move(span), child_->DeleteEnvironment(request));
 }
 
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ExecuteAirflowCommandResponse>
+EnvironmentsTracingConnection::ExecuteAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        ExecuteAirflowCommandRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::ExecuteAirflowCommand");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ExecuteAirflowCommand(request));
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             StopAirflowCommandResponse>
+EnvironmentsTracingConnection::StopAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        StopAirflowCommandRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::StopAirflowCommand");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->StopAirflowCommand(request));
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             PollAirflowCommandResponse>
+EnvironmentsTracingConnection::PollAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        PollAirflowCommandRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::PollAirflowCommand");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->PollAirflowCommand(request));
+}
+
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
 EnvironmentsTracingConnection::SaveSnapshot(
@@ -108,6 +141,28 @@ EnvironmentsTracingConnection::LoadSnapshot(
       internal::MakeSpan("composer_v1::EnvironmentsConnection::LoadSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->LoadSnapshot(request));
+}
+
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                    DatabaseFailoverResponse>>
+EnvironmentsTracingConnection::DatabaseFailover(
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::DatabaseFailover");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DatabaseFailover(request));
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             FetchDatabasePropertiesResponse>
+EnvironmentsTracingConnection::FetchDatabaseProperties(
+    google::cloud::orchestration::airflow::service::v1::
+        FetchDatabasePropertiesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::FetchDatabaseProperties");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FetchDatabaseProperties(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

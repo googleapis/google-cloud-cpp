@@ -59,8 +59,18 @@ Idempotency AlloyDBAdminConnectionIdempotencyPolicy::DeleteCluster(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::PromoteCluster(
+    google::cloud::alloydb::v1::PromoteClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency AlloyDBAdminConnectionIdempotencyPolicy::RestoreCluster(
     google::cloud::alloydb::v1::RestoreClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::CreateSecondaryCluster(
+    google::cloud::alloydb::v1::CreateSecondaryClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -76,6 +86,11 @@ Idempotency AlloyDBAdminConnectionIdempotencyPolicy::GetInstance(
 
 Idempotency AlloyDBAdminConnectionIdempotencyPolicy::CreateInstance(
     google::cloud::alloydb::v1::CreateInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::CreateSecondaryInstance(
+    google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -96,6 +111,11 @@ Idempotency AlloyDBAdminConnectionIdempotencyPolicy::DeleteInstance(
 
 Idempotency AlloyDBAdminConnectionIdempotencyPolicy::FailoverInstance(
     google::cloud::alloydb::v1::FailoverInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::InjectFault(
+    google::cloud::alloydb::v1::InjectFaultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -132,6 +152,31 @@ Idempotency AlloyDBAdminConnectionIdempotencyPolicy::DeleteBackup(
 Idempotency AlloyDBAdminConnectionIdempotencyPolicy::ListSupportedDatabaseFlags(
     google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::ListUsers(
+    google::cloud::alloydb::v1::ListUsersRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::GetUser(
+    google::cloud::alloydb::v1::GetUserRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::CreateUser(
+    google::cloud::alloydb::v1::CreateUserRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::UpdateUser(
+    google::cloud::alloydb::v1::UpdateUserRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::DeleteUser(
+    google::cloud::alloydb::v1::DeleteUserRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AlloyDBAdminConnectionIdempotencyPolicy>

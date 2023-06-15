@@ -83,8 +83,15 @@ class AlloyDBAdminConnection {
   DeleteCluster(
       google::cloud::alloydb::v1::DeleteClusterRequest const& request);
 
+  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
+      google::cloud::alloydb::v1::PromoteClusterRequest const& request);
+
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
       google::cloud::alloydb::v1::RestoreClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+  CreateSecondaryCluster(
+      google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request);
 
   virtual StreamRange<google::cloud::alloydb::v1::Instance> ListInstances(
       google::cloud::alloydb::v1::ListInstancesRequest request);
@@ -94,6 +101,11 @@ class AlloyDBAdminConnection {
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>> CreateInstance(
       google::cloud::alloydb::v1::CreateInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
+  CreateSecondaryInstance(
+      google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&
+          request);
 
   virtual future<
       StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
@@ -110,6 +122,9 @@ class AlloyDBAdminConnection {
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
   FailoverInstance(
       google::cloud::alloydb::v1::FailoverInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
+      google::cloud::alloydb::v1::InjectFaultRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
   RestartInstance(
@@ -133,6 +148,21 @@ class AlloyDBAdminConnection {
   virtual StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>
   ListSupportedDatabaseFlags(
       google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request);
+
+  virtual StreamRange<google::cloud::alloydb::v1::User> ListUsers(
+      google::cloud::alloydb::v1::ListUsersRequest request);
+
+  virtual StatusOr<google::cloud::alloydb::v1::User> GetUser(
+      google::cloud::alloydb::v1::GetUserRequest const& request);
+
+  virtual StatusOr<google::cloud::alloydb::v1::User> CreateUser(
+      google::cloud::alloydb::v1::CreateUserRequest const& request);
+
+  virtual StatusOr<google::cloud::alloydb::v1::User> UpdateUser(
+      google::cloud::alloydb::v1::UpdateUserRequest const& request);
+
+  virtual Status DeleteUser(
+      google::cloud::alloydb::v1::DeleteUserRequest const& request);
 };
 
 /**

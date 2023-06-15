@@ -63,6 +63,22 @@ class EnvironmentsTracingConnection
   DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::
                         DeleteEnvironmentRequest const& request) override;
 
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               ExecuteAirflowCommandResponse>
+  ExecuteAirflowCommand(
+      google::cloud::orchestration::airflow::service::v1::
+          ExecuteAirflowCommandRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               StopAirflowCommandResponse>
+  StopAirflowCommand(google::cloud::orchestration::airflow::service::v1::
+                         StopAirflowCommandRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               PollAirflowCommandResponse>
+  PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::
+                         PollAirflowCommandRequest const& request) override;
+
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
   SaveSnapshot(google::cloud::orchestration::airflow::service::v1::
@@ -72,6 +88,17 @@ class EnvironmentsTracingConnection
       google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
   LoadSnapshot(google::cloud::orchestration::airflow::service::v1::
                    LoadSnapshotRequest const& request) override;
+
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                      DatabaseFailoverResponse>>
+  DatabaseFailover(google::cloud::orchestration::airflow::service::v1::
+                       DatabaseFailoverRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               FetchDatabasePropertiesResponse>
+  FetchDatabaseProperties(
+      google::cloud::orchestration::airflow::service::v1::
+          FetchDatabasePropertiesRequest const& request) override;
 
  private:
   std::shared_ptr<composer_v1::EnvironmentsConnection> child_;

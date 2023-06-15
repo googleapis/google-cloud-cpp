@@ -106,6 +106,23 @@ DefaultAlloyDBAdminStub::AsyncDeleteCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultAlloyDBAdminStub::AsyncPromoteCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::alloydb::v1::PromoteClusterRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::alloydb::v1::PromoteClusterRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncPromoteCluster(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncRestoreCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -118,6 +135,24 @@ DefaultAlloyDBAdminStub::AsyncRestoreCluster(
              google::cloud::alloydb::v1::RestoreClusterRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRestoreCluster(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultAlloyDBAdminStub::AsyncCreateSecondaryCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::alloydb::v1::CreateSecondaryClusterRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::alloydb::v1::CreateSecondaryClusterRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateSecondaryCluster(context, request, cq);
       },
       request, std::move(context));
 }
@@ -159,6 +194,24 @@ DefaultAlloyDBAdminStub::AsyncCreateInstance(
              google::cloud::alloydb::v1::CreateInstanceRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateInstance(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultAlloyDBAdminStub::AsyncCreateSecondaryInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::alloydb::v1::CreateSecondaryInstanceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateSecondaryInstance(context, request, cq);
       },
       request, std::move(context));
 }
@@ -228,6 +281,23 @@ DefaultAlloyDBAdminStub::AsyncFailoverInstance(
              google::cloud::alloydb::v1::FailoverInstanceRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncFailoverInstance(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultAlloyDBAdminStub::AsyncInjectFault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::InjectFaultRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::alloydb::v1::InjectFaultRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::alloydb::v1::InjectFaultRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncInjectFault(context, request, cq);
       },
       request, std::move(context));
 }
@@ -335,6 +405,62 @@ DefaultAlloyDBAdminStub::ListSupportedDatabaseFlags(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
+DefaultAlloyDBAdminStub::ListUsers(
+    grpc::ClientContext& client_context,
+    google::cloud::alloydb::v1::ListUsersRequest const& request) {
+  google::cloud::alloydb::v1::ListUsersResponse response;
+  auto status = grpc_stub_->ListUsers(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::GetUser(
+    grpc::ClientContext& client_context,
+    google::cloud::alloydb::v1::GetUserRequest const& request) {
+  google::cloud::alloydb::v1::User response;
+  auto status = grpc_stub_->GetUser(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::CreateUser(
+    grpc::ClientContext& client_context,
+    google::cloud::alloydb::v1::CreateUserRequest const& request) {
+  google::cloud::alloydb::v1::User response;
+  auto status = grpc_stub_->CreateUser(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::UpdateUser(
+    grpc::ClientContext& client_context,
+    google::cloud::alloydb::v1::UpdateUserRequest const& request) {
+  google::cloud::alloydb::v1::User response;
+  auto status = grpc_stub_->UpdateUser(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultAlloyDBAdminStub::DeleteUser(
+    grpc::ClientContext& client_context,
+    google::cloud::alloydb::v1::DeleteUserRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteUser(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>

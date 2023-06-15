@@ -58,6 +58,18 @@ class EnvironmentsConnectionIdempotencyPolicy {
       google::cloud::orchestration::airflow::service::v1::
           DeleteEnvironmentRequest const& request);
 
+  virtual google::cloud::Idempotency ExecuteAirflowCommand(
+      google::cloud::orchestration::airflow::service::v1::
+          ExecuteAirflowCommandRequest const& request);
+
+  virtual google::cloud::Idempotency StopAirflowCommand(
+      google::cloud::orchestration::airflow::service::v1::
+          StopAirflowCommandRequest const& request);
+
+  virtual google::cloud::Idempotency PollAirflowCommand(
+      google::cloud::orchestration::airflow::service::v1::
+          PollAirflowCommandRequest const& request);
+
   virtual google::cloud::Idempotency SaveSnapshot(
       google::cloud::orchestration::airflow::service::v1::
           SaveSnapshotRequest const& request);
@@ -65,6 +77,14 @@ class EnvironmentsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency LoadSnapshot(
       google::cloud::orchestration::airflow::service::v1::
           LoadSnapshotRequest const& request);
+
+  virtual google::cloud::Idempotency DatabaseFailover(
+      google::cloud::orchestration::airflow::service::v1::
+          DatabaseFailoverRequest const& request);
+
+  virtual google::cloud::Idempotency FetchDatabaseProperties(
+      google::cloud::orchestration::airflow::service::v1::
+          FetchDatabasePropertiesRequest const& request);
 };
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
