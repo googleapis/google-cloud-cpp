@@ -31,7 +31,6 @@
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/compute/region_instance_templates/v1/region_instance_templates.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {

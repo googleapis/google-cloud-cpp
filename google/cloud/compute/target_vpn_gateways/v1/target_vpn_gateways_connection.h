@@ -30,7 +30,6 @@
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {

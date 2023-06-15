@@ -30,7 +30,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {

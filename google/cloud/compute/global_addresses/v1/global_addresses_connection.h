@@ -30,7 +30,6 @@
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/compute/global_addresses/v1/global_addresses.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {

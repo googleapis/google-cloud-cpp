@@ -22,7 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/https_health_checks/v1/https_health_checks.grpc.pb.h>
+#include <google/cloud/compute/https_health_checks/v1/https_health_checks.pb.h>
 #include <memory>
 
 namespace google {

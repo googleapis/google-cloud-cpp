@@ -23,7 +23,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.grpc.pb.h>
+#include <google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.pb.h>
 #include <memory>
 
 namespace google {

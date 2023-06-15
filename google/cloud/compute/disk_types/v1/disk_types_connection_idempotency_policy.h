@@ -22,7 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/disk_types/v1/disk_types.grpc.pb.h>
+#include <google/cloud/compute/disk_types/v1/disk_types.pb.h>
 #include <memory>
 
 namespace google {

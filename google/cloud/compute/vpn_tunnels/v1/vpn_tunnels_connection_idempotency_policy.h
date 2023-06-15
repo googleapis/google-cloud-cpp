@@ -22,7 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.grpc.pb.h>
+#include <google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.pb.h>
 #include <memory>
 
 namespace google {

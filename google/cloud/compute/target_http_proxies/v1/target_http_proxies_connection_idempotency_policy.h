@@ -22,7 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/target_http_proxies/v1/target_http_proxies.grpc.pb.h>
+#include <google/cloud/compute/target_http_proxies/v1/target_http_proxies.pb.h>
 #include <memory>
 
 namespace google {
