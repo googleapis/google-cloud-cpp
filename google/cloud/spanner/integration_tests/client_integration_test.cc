@@ -304,6 +304,52 @@ TEST_F(ClientIntegrationTest, Commit) {
   EXPECT_THAT(ids, UnorderedElementsAre(100, 199));
 }
 
+/// @test Verify the basics of CommitAtLeastOnce().
+TEST_F(ClientIntegrationTest, CommitAtLeastOnce) {
+  // Insert SingerIds 200, 202, and 299.
+  auto isb =
+      InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
+          .EmplaceRow(200, "first-name-200", "last-name-200")
+          .EmplaceRow(202, "first-name-202", "last-name-202")
+          .EmplaceRow(299, "first-name-299", "last-name-299");
+  auto insert_result = client_->CommitAtLeastOnce(
+      Transaction::ReadWriteOptions{}, Mutations{isb.Build()});
+  if (insert_result) {
+    EXPECT_NE(Timestamp{}, insert_result->commit_timestamp);
+  } else {
+    if (insert_result.status().code() == StatusCode::kAborted) {
+      return;  // try another day
+    }
+    // A replay will make it look like the row already exists.
+    EXPECT_THAT(insert_result, StatusIs(StatusCode::kAlreadyExists));
+  }
+
+  // Delete SingerId 202.
+  auto delete_result = client_->CommitAtLeastOnce(
+      Transaction::ReadWriteOptions{},
+      Mutations{MakeDeleteMutation("Singers", KeySet().AddKey(MakeKey(202)))});
+  if (delete_result) {
+    EXPECT_LT(insert_result->commit_timestamp, delete_result->commit_timestamp);
+  } else {
+    if (delete_result.status().code() == StatusCode::kAborted) {
+      return;  // try another day
+    }
+    // A replay will make it look like the row doesn't exist.
+    EXPECT_THAT(delete_result, StatusIs(StatusCode::kNotFound));
+  }
+
+  // Read SingerIds [200 ... 300).
+  using RowType = std::tuple<std::int64_t>;
+  std::vector<std::int64_t> ids;
+  auto ks = KeySet().AddRange(MakeKeyBoundClosed(200), MakeKeyBoundOpen(300));
+  auto rows = client_->Read("Singers", std::move(ks), {"SingerId"});
+  for (auto const& row : StreamOf<RowType>(rows)) {
+    EXPECT_STATUS_OK(row);
+    if (row) ids.push_back(std::get<0>(*row));
+  }
+  EXPECT_THAT(ids, UnorderedElementsAre(200, 299));
+}
+
 /// @test Test various forms of ExecuteQuery() and ExecuteDml()
 TEST_F(ClientIntegrationTest, ExecuteQueryDml) {
   auto& client = *client_;
