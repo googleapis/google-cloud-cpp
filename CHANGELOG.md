@@ -116,6 +116,7 @@ We are happy to announce the following GA libraries.  Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Cloud Data Fusion](/google/cloud/datafusion/README.md)
+- [Secure Web Proxy](/google/cloud/networksecurity/README.md)
 
 ## v2.12.0 - 2023-06
 

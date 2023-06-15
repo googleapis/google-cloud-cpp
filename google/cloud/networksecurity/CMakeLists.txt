@@ -120,11 +120,8 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(networksecurity_quickstart)
     add_test(
         NAME networksecurity_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:networksecurity_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:networksecurity_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(networksecurity_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()

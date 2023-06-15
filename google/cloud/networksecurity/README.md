@@ -1,7 +1,8 @@
 # Network Security API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Network Security API][cloud-service-docs], a service to \<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Network Security API][cloud-service-docs], a cloud first service that helps you
+secure egress web traffic (HTTP/S).
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,7 +17,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/networksecurity/ EDIT HERE .h"
+#include "google/cloud/networksecurity/v1/network_security_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -26,11 +27,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace networksecurity = ::google::cloud::networksecurity;
-  auto client = networksecurity::Client(networksecurity::MakeConnection());
+  namespace networksecurity = ::google::cloud::networksecurity_v1;
+  auto client = networksecurity::NetworkSecurityClient(
+      networksecurity::MakeNetworkSecurityConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
+  for (auto r : client.ListAuthorizationPolicies(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
@@ -51,6 +53,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/networksecurity
+[cloud-service-docs]: https://cloud.google.com/secure-web-proxy
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/networksecurity/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/networksecurity

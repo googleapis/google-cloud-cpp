@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/networksecurity/ EDIT HERE .h"
+#include "google/cloud/networksecurity/v1/network_security_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,11 +23,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace networksecurity = ::google::cloud::networksecurity;
-  auto client = networksecurity::Client(networksecurity::MakeConnection());
+  namespace networksecurity = ::google::cloud::networksecurity_v1;
+  auto client = networksecurity::NetworkSecurityClient(
+      networksecurity::MakeNetworkSecurityConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
+  for (auto r : client.ListAuthorizationPolicies(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
