@@ -108,7 +108,7 @@ info, see [#7463] and [#5976].
 
 </details>
 
-## v2.12.0 - TBD
+## v2.12.0 - 2023-06
 
 ### New Libraries
 
@@ -128,6 +128,22 @@ the APIs in these libraries are stable, and are ready for production use.
 The Cloud Debugger service (aka Stackdriver Debugger API) has been
 [shutdown][cloud-debugger-deprecated]. The corresponding client library has been
 removed.
+
+### [BigQuery](/google/cloud/bigquery/README.md)
+
+This library has been expanded to include the BigLake API ([#11882](https://github.com/googleapis/google-cloud-cpp/pull/11882))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- doc(pubsub): add new samples for schemas ([#11872](https://github.com/googleapis/google-cloud-cpp/pull/11872))
+  ([#11848](https://github.com/googleapis/google-cloud-cpp/pull/11848))
+  ([#11840](https://github.com/googleapis/google-cloud-cpp/pull/11840))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- docs: use c.g.com/cpp mocking guide ([#11869](https://github.com/googleapis/google-cloud-cpp/pull/11869))
+- docs: link reference docs at c.g.c/cpp/docs/reference ([#11799](https://github.com/googleapis/google-cloud-cpp/pull/11799))
+- fix(generator): correct URL for reference docs ([#11765](https://github.com/googleapis/google-cloud-cpp/pull/11765))
 
 ## v2.11.0 - 2023-06
 
