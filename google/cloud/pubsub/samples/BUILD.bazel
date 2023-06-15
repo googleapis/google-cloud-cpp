@@ -53,7 +53,7 @@ load(":pubsub_client_integration_samples.bzl", "pubsub_client_integration_sample
 proto_library(
     name = "samples_proto",
     srcs = [
-        "samples.proto",
+        "testdata/schema.proto",
     ],
     visibility = ["//:__pkg__"],
 )
