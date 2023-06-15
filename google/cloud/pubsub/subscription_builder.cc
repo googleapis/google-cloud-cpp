@@ -77,6 +77,20 @@ SubscriptionBuilder& SubscriptionBuilder::set_bigquery_config(
   return *this;
 }
 
+SubscriptionBuilder& SubscriptionBuilder::set_cloud_storage_config(
+    CloudStorageConfigBuilder v) & {
+  if (v.paths_.empty()) {
+    proto_.clear_cloud_storage_config();
+    paths_.insert("cloud_storage_config");
+  } else {
+    *proto_.mutable_cloud_storage_config() = std::move(v.proto_);
+    for (auto const& s : v.paths_) {
+      paths_.insert("cloud_storage_config." + s);
+    }
+  }
+  return *this;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 }  // namespace cloud
