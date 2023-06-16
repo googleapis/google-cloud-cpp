@@ -23,7 +23,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.grpc.pb.h>
+#include <google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.pb.h>
 #include <memory>
 
 namespace google {

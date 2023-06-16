@@ -205,6 +205,12 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool OmitMethodSignature(google::protobuf::MethodDescriptor const& method,
                            int method_signature_number) const;
 
+  /**
+   * If gRPC transport is enabled return the appropriate grpc.pb.h file.
+   * Otherwise, return the appropriate pb.h file.
+   */
+  std::string GetPbIncludeByTransport() const;
+
  private:
   void SetMethods();
 

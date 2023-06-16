@@ -35,6 +35,7 @@ using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::testing::Contains;
+using ::testing::Eq;
 using ::testing::IsEmpty;
 using ::testing::Return;
 
@@ -47,6 +48,7 @@ class TestGenerator : public ServiceCodeGenerator {
       : ServiceCodeGenerator("header_path_key", service_descriptor,
                              std::move(service_vars), {}, context) {}
 
+  using ServiceCodeGenerator::GetPbIncludeByTransport;
   using ServiceCodeGenerator::HasBidirStreamingMethod;
   using ServiceCodeGenerator::HasExplicitRoutingMethod;
   using ServiceCodeGenerator::HasGRPCLongrunningOperation;
@@ -864,6 +866,51 @@ service Service1 {
   TestGenerator g_service_1(service_file_descriptor->service(1),
                             generator_context.get());
   EXPECT_FALSE(g_service_1.HasExplicitRoutingMethod());
+}
+
+TEST(GetPbIncludeByTransport, ReturnsCorrectIncludeByTransport) {
+  FileDescriptorProto service_file;
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.foo.v1"
+    service { name: "Service" }
+  )pb";
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  ON_CALL(*generator_context, Open).WillByDefault([](std::string const&) {
+    return nullptr;
+  });
+
+  VarsDictionary service_vars = {{"proto_grpc_header_path", "foo.grpc.pb.h"},
+                                 {"proto_header_path", "foo.pb.h"}};
+  TestGenerator grpc_only(service_file_descriptor->service(0),
+                          generator_context.get(), [service_vars]() mutable {
+                            service_vars.emplace("generate_grpc_transport",
+                                                 "true");
+                            return service_vars;
+                          }());
+  EXPECT_THAT(grpc_only.GetPbIncludeByTransport(), Eq("foo.grpc.pb.h"));
+
+  TestGenerator rest_only(service_file_descriptor->service(0),
+                          generator_context.get(), [service_vars]() mutable {
+                            service_vars.emplace("generate_rest_transport",
+                                                 "true");
+                            return service_vars;
+                          }());
+  EXPECT_THAT(rest_only.GetPbIncludeByTransport(), Eq("foo.pb.h"));
+
+  TestGenerator both_rest_and_grpc(
+      service_file_descriptor->service(0), generator_context.get(),
+      [service_vars]() mutable {
+        service_vars.emplace("generate_rest_transport", "true");
+        service_vars.emplace("generate_grpc_transport", "true");
+        return service_vars;
+      }());
+  EXPECT_THAT(both_rest_and_grpc.GetPbIncludeByTransport(),
+              Eq("foo.grpc.pb.h"));
 }
 
 }  // namespace

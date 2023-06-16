@@ -23,7 +23,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.grpc.pb.h>
+#include <google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.pb.h>
 #include <memory>
 
 namespace google {
