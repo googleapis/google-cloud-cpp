@@ -42,10 +42,14 @@ file_status status(std::string const& path) {
 
 #if _WIN32
 using os_stat_type = struct ::_stat64;
-#define os_stat ::_stat64
+inline int os_stat(std::string const& path, os_stat_type& s) {
+  return ::_stat64(path.c_str(), &s);
+}
 #else
 using os_stat_type = struct stat;
-#define os_stat  ::stat
+inline int os_stat(std::string const& path, os_stat_type& s) {
+  return stat(path.c_str(), &s);
+}
 #endif  // _WIN32
 
 perms ExtractPermissions(os_stat_type const& s) {
@@ -107,7 +111,7 @@ file_type ExtractFileType(os_stat_type const& s) {
 file_status status(std::string const& path, std::error_code& ec) noexcept {
   os_stat_type stat{};
   ec.clear();
-  int r = os_stat(path.c_str(), &stat);
+  int r = os_stat(path, stat);
 #if _WIN32
   if (r == -1) {
     if (errno == ENOENT) {
@@ -152,7 +156,7 @@ std::uintmax_t file_size(std::string const& path,
                          std::error_code& ec) noexcept {
   os_stat_type stat{};
   ec.clear();
-  int r = os_stat(path.c_str(), &stat);
+  int r = os_stat(path, stat);
 #if _WIN32
   if (r == -1) {
     ec.assign(errno, std::generic_category());
