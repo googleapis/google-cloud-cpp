@@ -2351,6 +2351,40 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
   EXPECT_EQ(42, commit->commit_stats->mutation_count);
 }
 
+TEST(ConnectionImplTest, CommitAtLeastOnce) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock, BeginTransaction).Times(0);  // The whole point!
+  auto const commit_timestamp =
+      spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+          .value();
+  EXPECT_CALL(*mock, Commit)
+      .WillOnce([commit_timestamp](
+                    grpc::ClientContext&,
+                    google::spanner::v1::CommitRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        EXPECT_TRUE(request.has_single_use_transaction());
+        EXPECT_EQ(0, request.mutations_size());
+        EXPECT_FALSE(request.return_commit_stats());
+        EXPECT_EQ(google::spanner::v1::RequestOptions::PRIORITY_UNSPECIFIED,
+                  request.request_options().priority());
+        EXPECT_THAT(request.request_options().request_tag(), IsEmpty());
+        EXPECT_THAT(request.request_options().transaction_tag(), IsEmpty());
+        return MakeCommitResponse(commit_timestamp);
+      });
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  auto commit =
+      conn->Commit({spanner_internal::MakeSingleUseCommitTransaction({}),
+                    spanner::Mutations{}, spanner::CommitOptions{}});
+  ASSERT_STATUS_OK(commit);
+  EXPECT_EQ(commit_timestamp, commit->commit_timestamp);
+}
+
 TEST(ConnectionImplTest, RollbackCreateSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");

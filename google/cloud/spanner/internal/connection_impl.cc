@@ -1031,17 +1031,29 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
   // (for a user-supplied transaction).
   request.mutable_request_options()->set_transaction_tag(ctx.tag);
 
-  if (s->selector_case() != google::spanner::v1::TransactionSelector::kId) {
-    auto begin =
-        BeginTransaction(session, s->has_begin() ? s->begin() : s->single_use(),
-                         std::string(), ctx, __func__);
-    if (!begin.ok()) {
-      s = begin.status();  // invalidate the transaction
-      return begin.status();
+  switch (s->selector_case()) {
+    case google::spanner::v1::TransactionSelector::kSingleUse: {
+      *request.mutable_single_use_transaction() = s->single_use();
+      break;
     }
-    s->set_id(begin->id());
+    case google::spanner::v1::TransactionSelector::kBegin: {
+      auto begin =
+          BeginTransaction(session, s->begin(), std::string(), ctx, __func__);
+      if (!begin.ok()) {
+        s = begin.status();  // invalidate the transaction
+        return begin.status();
+      }
+      s->set_id(begin->id());
+      request.set_transaction_id(s->id());
+      break;
+    }
+    case google::spanner::v1::TransactionSelector::kId: {
+      request.set_transaction_id(s->id());
+      break;
+    }
+    default:
+      return Status(StatusCode::kInternal, "TransactionSelector state error");
   }
-  request.set_transaction_id(s->id());
 
   auto stub = session_pool_->GetStub(*session);
   auto response = RetryLoop(
