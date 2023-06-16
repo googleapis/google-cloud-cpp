@@ -59,8 +59,8 @@ struct PartitionOptions {
    * Use "data boost" in the returned partitions.
    *
    * If true, the requests from the subsequent partitioned `Client::Read()`
-   * and `Client::ExecuteQuery()` requests will be executed via Spanner-
-   * independent compute resources.
+   * and `Client::ExecuteQuery()` calls will be executed using the independent
+   * compute resources of Cloud Spanner Data Boost.
    */
   bool data_boost = false;
 };
