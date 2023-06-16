@@ -2,11 +2,12 @@
 
 @mainpage Dataproc Metastore API C++ Client Library
 
-An idiomatic C++ client library for the [Dataproc Metastore API][cloud-service-docs], a service
-to The Dataproc Metastore API is used to manage the lifecycle and configuration of metastore services.
+An idiomatic C++ client library for the
+[Dataproc Metastore API][cloud-service-docs], a service to manage the lifecycle
+and configuration of metastore services.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 @tableofcontents{HTML:2}
 

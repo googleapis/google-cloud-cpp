@@ -117,11 +117,8 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(metastore_quickstart)
     add_test(
         NAME metastore_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:metastore_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:metastore_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(metastore_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()

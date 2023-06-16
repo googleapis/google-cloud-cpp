@@ -93,6 +93,10 @@ expected_dirs+=(
   ./include/google/cloud/gkehub/v1/multiclusteringress
   ./include/google/cloud/grpc_utils
   ./include/google/cloud/internal
+  # no RPC services in google/cloud/metastore/logging
+  ./include/google/cloud/metastore/logging
+  ./include/google/cloud/metastore/logging/v1
+  # mocks and opentelemetry/* are hand-crafted directories
   ./include/google/cloud/mocks
   ./include/google/cloud/opentelemetry
   ./include/google/cloud/opentelemetry/internal

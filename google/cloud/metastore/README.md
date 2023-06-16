@@ -1,7 +1,8 @@
 # Dataproc Metastore API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Dataproc Metastore API][cloud-service-docs], a service to The Dataproc Metastore API is used to manage the lifecycle and configuration of metastore services.
+[Dataproc Metastore API][cloud-service-docs], a service to manage the lifecycle
+and configuration of metastore services.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,8 +17,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/metastore/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/metastore/v1/dataproc_metastore_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -26,11 +26,13 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace metastore = ::google::cloud::metastore;
-  auto client = metastore::Client(metastore::MakeConnection());
+  namespace metastore = ::google::cloud::metastore_v1;
+  auto client = metastore::DataprocMetastoreClient(
+      metastore::MakeDataprocMetastoreConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  // Use the `-` wildcard to search in all locations.
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
+  for (auto r : client.ListServices(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
@@ -51,6 +53,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/metastore
+[cloud-service-docs]: https://cloud.google.com/dataproc-metastore
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/metastore/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/metastore
