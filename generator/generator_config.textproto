@@ -1625,6 +1625,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Data Fusion
+service {
+  service_proto_path: "google/cloud/datafusion/v1/datafusion.proto"
+  product_path: "google/cloud/datafusion/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Dataplex
 service {
   service_proto_path: "google/cloud/dataplex/v1/content.proto"

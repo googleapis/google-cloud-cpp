@@ -110,6 +110,13 @@ info, see [#7463] and [#5976].
 
 ## v2.13.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries.  Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Cloud Data Fusion](/google/cloud/datafusion/README.md)
+
 ## v2.12.0 - 2023-06
 
 ### New Libraries

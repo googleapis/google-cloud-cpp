@@ -592,6 +592,10 @@
 ./include/google/cloud/datacatalog/v1
 ./include/google/cloud/datacatalog/v1/internal
 ./include/google/cloud/datacatalog/v1/mocks
+./include/google/cloud/datafusion
+./include/google/cloud/datafusion/v1
+./include/google/cloud/datafusion/v1/internal
+./include/google/cloud/datafusion/v1/mocks
 ./include/google/cloud/datamigration
 ./include/google/cloud/datamigration/mocks
 ./include/google/cloud/datamigration/v1
@@ -1127,6 +1131,7 @@
 ./lib64/cmake/google_cloud_cpp_containeranalysis
 ./lib64/cmake/google_cloud_cpp_contentwarehouse
 ./lib64/cmake/google_cloud_cpp_datacatalog
+./lib64/cmake/google_cloud_cpp_datafusion
 ./lib64/cmake/google_cloud_cpp_datamigration
 ./lib64/cmake/google_cloud_cpp_dataplex
 ./lib64/cmake/google_cloud_cpp_dataproc
