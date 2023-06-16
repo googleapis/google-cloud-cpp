@@ -1752,6 +1752,33 @@ void UpdateData(google::cloud::spanner::Client client) {
 }
 //! [END spanner_update_data]
 
+void DeleteDataAtLeastOnce(google::cloud::spanner::Client client) {
+  //! [commit-at-least-once]
+  namespace spanner = ::google::cloud::spanner;
+
+  // Delete the album with key (2,2) without automatic re-run (e.g., if the
+  // transaction was aborted) or replay protection, but using a single RPC.
+  auto commit_result = client.CommitAtLeastOnce(
+      spanner::Transaction::ReadWriteOptions(),
+      spanner::Mutations{
+          spanner::DeleteMutationBuilder(
+              "Albums", spanner::KeySet().AddKey(spanner::MakeKey(2, 2)))
+              .Build()});
+
+  if (commit_result) {
+    std::cout << "Delete was successful\n";
+  } else if (commit_result.status().code() ==
+             google::cloud::StatusCode::kNotFound) {
+    std::cout << "Delete was successful but seemingly replayed\n";
+  } else if (commit_result.status().code() ==
+             google::cloud::StatusCode::kAborted) {
+    std::cout << "Delete was aborted\n";
+  } else {
+    throw std::move(commit_result).status();
+  }
+  //! [commit-at-least-once]
+}
+
 //! [START spanner_delete_data]
 void DeleteData(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
@@ -3946,6 +3973,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"create-client-with-query-options", CreateClientWithQueryOptionsCommand},
       make_command_entry("insert-data", InsertData),
       make_command_entry("update-data", UpdateData),
+      make_command_entry("delete-data-at-least-once", DeleteDataAtLeastOnce),
       make_command_entry("delete-data", DeleteData),
       make_command_entry("insert-datatypes-data", InsertDatatypesData),
       make_command_entry("query-with-array-parameter", QueryWithArrayParameter),
@@ -4701,6 +4729,9 @@ void RunAll(bool emulator) {
 
   SampleBanner("spanner_dml_standard_delete");
   DmlStandardDelete(client);
+
+  SampleBanner("delete-data-at-least-once");
+  DeleteDataAtLeastOnce(client);
 
   SampleBanner("spanner_delete_data");
   DeleteData(client);
