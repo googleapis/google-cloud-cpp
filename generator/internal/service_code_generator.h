@@ -208,7 +208,6 @@ class ServiceCodeGenerator : public GeneratorInterface {
   /**
    * If gRPC transport is enabled return the appropriate grpc.pb.h file.
    * Otherwise, return the appropriate pb.h file.
-   * @return
    */
   std::string GetPbIncludeByTransport() const;
 
