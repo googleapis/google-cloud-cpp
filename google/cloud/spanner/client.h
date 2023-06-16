@@ -617,6 +617,9 @@ class Client {
    * @note Prefer the `Commit` overloads if you want exactly-once semantics
    *     or want to reapply mutations after a `kAborted` error.
    *
+   * @par Example
+   * @snippet samples.cc commit-at-least-once
+   *
    * @param transaction_options Execute the commit in a temporary transaction
    *     with these options.
    * @param mutations The mutations to be executed when this transaction
