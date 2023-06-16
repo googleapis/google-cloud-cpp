@@ -43,6 +43,7 @@ install_vcpkg() {
   readonly CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
   readonly CACHE_FOLDER="build-cache/google-cloud-cpp/vcpkg/macos"
   export VCPKG_BINARY_SOURCES="x-gcs,gs://${CACHE_BUCKET}/${CACHE_FOLDER},readwrite"
+  export X_VCPKG_IGNORE_LOCK_FAILURES=true
 
   create_gcloud_config
   activate_service_account_keyfile "${CACHE_KEYFILE}"
