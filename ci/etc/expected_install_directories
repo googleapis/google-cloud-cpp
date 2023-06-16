@@ -753,6 +753,10 @@
 ./include/google/cloud/memcache/v1
 ./include/google/cloud/memcache/v1/internal
 ./include/google/cloud/memcache/v1/mocks
+./include/google/cloud/metastore
+./include/google/cloud/metastore/v1
+./include/google/cloud/metastore/v1/internal
+./include/google/cloud/metastore/v1/mocks
 ./include/google/cloud/monitoring
 ./include/google/cloud/monitoring/dashboard
 ./include/google/cloud/monitoring/dashboard/v1
@@ -1164,6 +1168,7 @@
 ./lib64/cmake/google_cloud_cpp_logging
 ./lib64/cmake/google_cloud_cpp_managedidentities
 ./lib64/cmake/google_cloud_cpp_memcache
+./lib64/cmake/google_cloud_cpp_metastore
 ./lib64/cmake/google_cloud_cpp_monitoring
 ./lib64/cmake/google_cloud_cpp_networkconnectivity
 ./lib64/cmake/google_cloud_cpp_networkmanagement

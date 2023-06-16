@@ -58,6 +58,7 @@ language
 logging
 managedidentities
 memcache
+metastore
 monitoring
 networkconnectivity
 networkmanagement

@@ -94,6 +94,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "logging"
     "managedidentities"
     "memcache"
+    "metastore"
     "monitoring"
     "networkconnectivity"
     "networkmanagement"

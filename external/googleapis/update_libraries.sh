@@ -171,6 +171,11 @@ declare -A -r LIBRARIES=(
   ["logging"]="@com_google_googleapis//google/logging/v2:logging_cc_grpc"
   ["managedidentities"]="@com_google_googleapis//google/cloud/managedidentities/v1:managedidentities_cc_grpc"
   ["memcache"]="@com_google_googleapis//google/cloud/memcache/v1:memcache_cc_grpc"
+  ["metastore"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/metastore/logging/v1:logging_cc_grpc" \
+      "@com_google_googleapis//google/cloud/metastore/v1:metastore_cc_grpc"
+  )"
   ["monitoring"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/monitoring/v3:monitoring_cc_grpc" \
