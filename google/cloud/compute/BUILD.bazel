@@ -134,20 +134,12 @@ proto_library(
 
 load(
     "@com_google_googleapis_imports//:imports.bzl",
-    "cc_grpc_library",
     "cc_proto_library",
 )
 
 cc_proto_library(
     name = "google_cloud_cpp_compute_cc_proto",
     deps = [":google_cloud_cpp_compute_proto"],
-)
-
-cc_grpc_library(
-    name = "google_cloud_cpp_compute_cc_grpc",
-    srcs = [":google_cloud_cpp_compute_proto"],
-    grpc_only = True,
-    deps = [":google_cloud_cpp_compute_cc_proto"],
 )
 
 service_dirs = [
@@ -257,7 +249,7 @@ cc_library(
     ],
     visibility = ["//:__pkg__"],
     deps = [
-        ":google_cloud_cpp_compute_cc_grpc",
+        ":google_cloud_cpp_compute_cc_proto",
         "//:common",
         "//:grpc_utils",
         "//google/cloud:google_cloud_cpp_rest_internal",
