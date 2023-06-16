@@ -776,6 +776,10 @@
 ./include/google/cloud/networkmanagement/v1
 ./include/google/cloud/networkmanagement/v1/internal
 ./include/google/cloud/networkmanagement/v1/mocks
+./include/google/cloud/networksecurity
+./include/google/cloud/networksecurity/v1
+./include/google/cloud/networksecurity/v1/internal
+./include/google/cloud/networksecurity/v1/mocks
 ./include/google/cloud/networkservices
 ./include/google/cloud/networkservices/v1
 ./include/google/cloud/networkservices/v1/internal
@@ -1163,6 +1167,7 @@
 ./lib64/cmake/google_cloud_cpp_monitoring
 ./lib64/cmake/google_cloud_cpp_networkconnectivity
 ./lib64/cmake/google_cloud_cpp_networkmanagement
+./lib64/cmake/google_cloud_cpp_networksecurity
 ./lib64/cmake/google_cloud_cpp_networkservices
 ./lib64/cmake/google_cloud_cpp_notebooks
 ./lib64/cmake/google_cloud_cpp_optimization
