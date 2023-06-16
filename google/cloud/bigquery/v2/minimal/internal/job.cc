@@ -36,11 +36,12 @@ std::string Job::DebugString(absl::string_view name,
   return internal::DebugFormatter(name, options, indent)
       .StringField("etag", etag)
       .StringField("kind", kind)
+      .StringField("self_link", self_link)
       .StringField("id", id)
-      .SubMessage("job_configuration", configuration)
-      .SubMessage("job_reference", reference)
-      .StringField("job_status", status.state)
-      .StringField("error_result", status.error_result.message)
+      .SubMessage("configuration", configuration)
+      .SubMessage("reference", reference)
+      .SubMessage("status", status)
+      .SubMessage("statistics", statistics)
       .Build();
 }
 
@@ -51,10 +52,21 @@ std::string ListFormatJob::DebugString(absl::string_view name,
       .StringField("id", id)
       .StringField("kind", kind)
       .StringField("state", state)
-      .SubMessage("job_configuration", configuration)
-      .SubMessage("job_reference", reference)
-      .StringField("job_status", status.state)
-      .StringField("error_result", status.error_result.message)
+      .SubMessage("configuration", configuration)
+      .SubMessage("reference", reference)
+      .SubMessage("status", status)
+      .SubMessage("statistics", statistics)
+      .SubMessage("error_result", error_result)
+      .Build();
+}
+
+std::string JobStatus::DebugString(absl::string_view name,
+                                   TracingOptions const& options,
+                                   int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("errors", errors)
+      .StringField("state", state)
+      .SubMessage("error_result", error_result)
       .Build();
 }
 

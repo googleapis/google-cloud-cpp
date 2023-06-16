@@ -105,19 +105,19 @@ struct JobStatistics {
   std::chrono::milliseconds final_execution_duration =
       std::chrono::milliseconds(0);
 
-  std::int64_t total_bytes_processed;
-  std::int64_t num_child_jobs;
-  std::int64_t total_modified_partitions;
+  std::int64_t total_bytes_processed = 0;
+  std::int64_t num_child_jobs = 0;
+  std::int64_t total_modified_partitions = 0;
 
   std::string parent_job_id;
   std::string session_id;
   std::string transaction_id;
   std::string reservation_id;
 
-  bool row_level_security_applied;
-  bool data_masking_applied;
+  bool row_level_security_applied = false;
+  bool data_masking_applied = false;
 
-  double completion_ratio;
+  double completion_ratio = 0;
   std::vector<std::string> quota_deferments;
 
   ScriptStatistics script_statistics;

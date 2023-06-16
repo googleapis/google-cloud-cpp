@@ -82,7 +82,7 @@ TEST(JobLoggingClientTest, GetJob) {
   EXPECT_THAT(actual_lines,
               Contains(HasSubstr(R"(project_id: "p123")")).Times(2));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetJobResponse)")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(status: "DONE")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(state: "DONE")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "j123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "jkind")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(etag: "jtag")")));
