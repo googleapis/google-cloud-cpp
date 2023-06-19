@@ -15,6 +15,7 @@
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/curl_options.h"
+#include "absl/strings/str_format.h"
 #include <algorithm>
 #include <iterator>
 
@@ -43,6 +44,8 @@ std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory(
 }
 
 DefaultCurlHandleFactory::DefaultCurlHandleFactory(Options const& o) {
+  if (o.has<ProxyServerAddressPortOption>()) proxyAddressPort_ = o.get<ProxyServerAddressPortOption>();
+  if (o.has<ProxyServerCredentialsOption>()) proxyUsernamePassword_ = o.get<ProxyServerCredentialsOption>();
   if (o.has<CARootsFilePathOption>()) cainfo_ = o.get<CARootsFilePathOption>();
   if (o.has<CAPathOption>()) capath_ = o.get<CAPathOption>();
 }
@@ -74,6 +77,19 @@ void DefaultCurlHandleFactory::CleanupMultiHandle(CurlMulti m,
 }
 
 void DefaultCurlHandleFactory::SetCurlOptions(CURL* handle) {
+  if (proxyAddressPort_) {
+    auto const& opt = proxyAddressPort_.value();
+    SetCurlStringOption(
+        handle, CURLOPT_PROXY,
+        absl::StrFormat("%s:%s", opt.first, opt.second).c_str());
+
+    if (proxyUsernamePassword_) {
+      auto const& opt = proxyUsernamePassword_.value();
+      SetCurlStringOption(
+          handle, CURLOPT_PROXYUSERPWD,
+          absl::StrFormat("%s:%s", opt.first, opt.second).c_str());
+    }
+  }
   if (cainfo_) {
     SetCurlStringOption(handle, CURLOPT_CAINFO, cainfo_->c_str());
   }
@@ -84,7 +100,11 @@ void DefaultCurlHandleFactory::SetCurlOptions(CURL* handle) {
 
 PooledCurlHandleFactory::PooledCurlHandleFactory(std::size_t maximum_size,
                                                  Options const& o)
-    : maximum_size_(maximum_size), cainfo_(CAInfo(o)), capath_(CAPath(o)) {}
+    : maximum_size_(maximum_size),
+      proxyAddressPort_(ProxyServerAddressPort(o)),
+      proxyUsernamePassword_(ProxyServerCredentials(o)),
+      cainfo_(CAInfo(o)),
+      capath_(CAPath(o)) {}
 
 PooledCurlHandleFactory::~PooledCurlHandleFactory() = default;
 
@@ -192,12 +212,37 @@ void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti m,
 }
 
 void PooledCurlHandleFactory::SetCurlOptions(CURL* handle) {
+  if (proxyAddressPort_) {
+    auto const& opt = proxyAddressPort_.value();
+    SetCurlStringOption(
+        handle, CURLOPT_PROXY,
+        absl::StrFormat("%s:%s", opt.first, opt.second).c_str());
+
+    if (proxyUsernamePassword_) {
+      auto const& opt = proxyUsernamePassword_.value();
+      SetCurlStringOption(
+          handle, CURLOPT_PROXYUSERPWD,
+          absl::StrFormat("%s:%s", opt.first, opt.second).c_str());
+    }
+  }
   if (cainfo_) {
     SetCurlStringOption(handle, CURLOPT_CAINFO, cainfo_->c_str());
   }
   if (capath_) {
     SetCurlStringOption(handle, CURLOPT_CAPATH, capath_->c_str());
   }
+}
+
+absl::optional<std::pair<std::string, std::string>> PooledCurlHandleFactory::ProxyServerAddressPort(
+    google::cloud::Options const& o) {    
+  if (!o.has<ProxyServerAddressPortOption>()) return absl::nullopt;
+  return o.get<ProxyServerAddressPortOption>();
+}
+
+absl::optional<std::pair<std::string, std::string>> PooledCurlHandleFactory::ProxyServerCredentials(
+    google::cloud::Options const& o) {
+  if (!o.has<ProxyServerCredentialsOption>()) return absl::nullopt;
+  return o.get<ProxyServerCredentialsOption>();
 }
 
 absl::optional<std::string> PooledCurlHandleFactory::CAInfo(Options const& o) {

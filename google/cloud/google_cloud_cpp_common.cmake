@@ -146,6 +146,7 @@ add_library(
     project.cc
     project.h
     retry_policy.h
+    proxy_options.h
     status.cc
     status.h
     status_or.h
@@ -376,6 +377,7 @@ if (BUILD_TESTING)
         options_test.cc
         polling_policy_test.cc
         project_test.cc
+		proxy_options_test.cc
         status_or_test.cc
         status_test.cc
         stream_range_test.cc

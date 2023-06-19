@@ -27,3 +27,5 @@ cmake-build-*/
 # Ignore Visual Studio Code files
 .vsbuild/
 .vscode/
+/out/build/x64-Debug
+/.vs

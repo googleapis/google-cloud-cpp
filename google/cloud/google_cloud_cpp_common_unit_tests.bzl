@@ -70,6 +70,7 @@ google_cloud_cpp_common_unit_tests = [
     "options_test.cc",
     "polling_policy_test.cc",
     "project_test.cc",
+    "proxy_options_test.cc",
     "status_or_test.cc",
     "status_test.cc",
     "stream_range_test.cc",

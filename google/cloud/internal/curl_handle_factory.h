@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/options.h"
+#include "google/cloud/proxy_options.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <deque>
@@ -96,6 +97,8 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
 
   mutable std::mutex mu_;
   std::string last_client_ip_address_;
+  absl::optional<std::pair<std::string, std::string>> proxyAddressPort_;
+  absl::optional<std::pair<std::string, std::string>> proxyUsernamePassword_;
   absl::optional<std::string> cainfo_;
   absl::optional<std::string> capath_;
 };
@@ -140,11 +143,15 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
 
  private:
   void SetCurlOptions(CURL* handle);
+  static absl::optional<std::pair<std::string, std::string>> ProxyServerAddressPort(google::cloud::Options const& o);
+  static absl::optional<std::pair<std::string, std::string>> ProxyServerCredentials(google::cloud::Options const& o);
   static absl::optional<std::string> CAInfo(Options const& o);
   static absl::optional<std::string> CAPath(Options const& o);
 
   // These are constant after initialization and thus need no locking.
   std::size_t const maximum_size_;
+  absl::optional<std::pair<std::string, std::string>> const proxyAddressPort_;
+  absl::optional<std::pair<std::string, std::string>> const proxyUsernamePassword_;
   absl::optional<std::string> const cainfo_;
   absl::optional<std::string> const capath_;
 
