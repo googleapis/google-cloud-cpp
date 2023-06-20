@@ -37,9 +37,9 @@ google-api-core==2.11.0 \
     #   -r ci/etc/docuploader-requirements.in
     #   google-cloud-core
     #   google-cloud-storage
-google-auth==2.17.3 \
-    --hash=sha256:ce311e2bc58b130fddf316df57c9b3943c2a7b4f6ec31de9663a9333e4064efc \
-    --hash=sha256:f586b274d3eb7bd932ea424b1c702a30e0393a2e2bc4ca3eae8263ffd8be229f
+google-auth==2.20.0 \
+    --hash=sha256:030af34138909ccde0fbce611afc178f1d65d32fbff281f25738b1fe1c6f3eaa \
+    --hash=sha256:23b7b0950fcda519bfb6692bf0d5289d2ea49fc143717cc7188458ec620e63fa
     # via
     #   -r ci/etc/docuploader-requirements.in
     #   google-api-core
