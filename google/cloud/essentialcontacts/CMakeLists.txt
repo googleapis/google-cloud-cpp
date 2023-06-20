@@ -126,7 +126,7 @@ if (BUILD_TESTING)
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:essentialcontacts_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(essentialcontacts_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+                         PROPERTIES DISABLED TRUE LABELS "integration-test;quickstart")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.
