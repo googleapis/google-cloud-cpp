@@ -418,16 +418,8 @@ std::string StandardSqlStructType::DebugString(absl::string_view name,
 std::string Struct::DebugString(absl::string_view name,
                                 TracingOptions const& options,
                                 int indent) const {
-  // DebugFormatter currently doesn't support std::map<string, T>.
-  // Hence we convert this to std::map<string,string> and then call the
-  // formatter.
-  std::map<std::string, std::string> mv;
-  for (auto const& v : fields) {
-    mv.emplace_hint(mv.end(), v.first,
-                    v.second.DebugString(name, options, indent));
-  }
   return internal::DebugFormatter(name, options, indent)
-      .Field("fields", mv)
+      .Field("fields", fields)
       .Build();
 }
 
@@ -470,16 +462,8 @@ std::string Value::DebugString(absl::string_view name,
 std::string SystemVariables::DebugString(absl::string_view name,
                                          TracingOptions const& options,
                                          int indent) const {
-  // DebugFormatter currently doesn't support std::map<string, T>.
-  // Hence we convert this to std::map<string,string> and then call the
-  // formatter.
-  std::map<std::string, std::string> mt;
-  for (auto const& t : types) {
-    mt.emplace_hint(mt.end(), t.first,
-                    t.second.DebugString(name, options, indent));
-  }
   return internal::DebugFormatter(name, options, indent)
-      .Field("types", mt)
+      .Field("types", types)
       .SubMessage("values", values)
       .Build();
 }

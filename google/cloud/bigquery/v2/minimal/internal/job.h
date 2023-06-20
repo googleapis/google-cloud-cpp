@@ -37,6 +37,10 @@ struct JobStatus {
   ErrorProto error_result;
   std::vector<ErrorProto> errors;
   std::string state;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 struct JobReference {

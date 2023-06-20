@@ -79,13 +79,13 @@ struct ExplainQueryStage {
   std::string name;
   std::string status;
 
-  std::int64_t id;
-  std::int64_t shuffle_output_bytes;
-  std::int64_t shuffle_output_bytes_spilled;
-  std::int64_t records_read;
-  std::int64_t records_written;
-  std::int64_t parallel_inputs;
-  std::int64_t completed_parallel_inputs;
+  std::int64_t id = 0;
+  std::int64_t shuffle_output_bytes = 0;
+  std::int64_t shuffle_output_bytes_spilled = 0;
+  std::int64_t records_read = 0;
+  std::int64_t records_written = 0;
+  std::int64_t parallel_inputs = 0;
+  std::int64_t completed_parallel_inputs = 0;
   std::vector<std::int64_t> input_stages;
 
   std::chrono::milliseconds start_time = std::chrono::milliseconds(0);
@@ -102,14 +102,14 @@ struct ExplainQueryStage {
   std::chrono::milliseconds compute_max_time_spent =
       std::chrono::milliseconds(0);
 
-  double wait_ratio_avg;
-  double wait_ratio_max;
-  double read_ratio_avg;
-  double read_ratio_max;
-  double compute_ratio_avg;
-  double compute_ratio_max;
-  double write_ratio_avg;
-  double write_ratio_max;
+  double wait_ratio_avg = 0;
+  double wait_ratio_max = 0;
+  double read_ratio_avg = 0;
+  double read_ratio_max = 0;
+  double compute_ratio_avg = 0;
+  double compute_ratio_max = 0;
+  double write_ratio_avg = 0;
+  double write_ratio_max = 0;
 
   std::vector<ExplainQueryStep> steps;
   ComputeMode compute_mode;
@@ -131,10 +131,10 @@ struct QueryTimelineSample {
   std::chrono::milliseconds elapsed_time = std::chrono::milliseconds(0);
   std::chrono::milliseconds total_slot_time = std::chrono::milliseconds(0);
 
-  std::int64_t pending_units;
-  std::int64_t completed_units;
-  std::int64_t active_units;
-  std::int64_t estimated_runnable_units;
+  std::int64_t pending_units = 0;
+  std::int64_t completed_units = 0;
+  std::int64_t active_units = 0;
+  std::int64_t estimated_runnable_units = 0;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
@@ -150,9 +150,9 @@ bool operator==(QueryTimelineSample const& lhs, QueryTimelineSample const& rhs);
 // For more details on field members, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/DmlStats.
 struct DmlStats {
-  std::int64_t inserted_row_count;
-  std::int64_t deleted_row_count;
-  std::int64_t updated_row_count;
+  std::int64_t inserted_row_count = 0;
+  std::int64_t deleted_row_count = 0;
+  std::int64_t updated_row_count = 0;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
@@ -285,7 +285,7 @@ bool operator==(SearchStatistics const& lhs, SearchStatistics const& rhs);
 // For more details on fields, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#inputdatachange
 struct InputDataChange {
-  std::float_t records_read_diff_percentage;
+  std::float_t records_read_diff_percentage = 0;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
@@ -300,7 +300,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(InputDataChange,
 // For more details on fields, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#stageperformancechangeinsight
 struct StagePerformanceChangeInsight {
-  std::int64_t stage_id;
+  std::int64_t stage_id = 0;
   InputDataChange input_data_change;
 
   std::string DebugString(absl::string_view name,
@@ -315,9 +315,9 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(StagePerformanceChangeInsight,
 // For more details on fields, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#stageperformancestandaloneinsight
 struct StagePerformanceStandaloneInsight {
-  std::int64_t stage_id;
-  bool slot_contention;
-  bool insufficient_shuffle_quota;
+  std::int64_t stage_id = 0;
+  bool slot_contention = false;
+  bool insufficient_shuffle_quota = false;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
@@ -375,8 +375,8 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RejectedReason, value);
 // For more details on field members, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#materializedview
 struct MaterializedView {
-  bool chosen;
-  std::int64_t estimated_bytes_saved;
+  bool chosen = false;
+  std::int64_t estimated_bytes_saved = 0;
 
   RejectedReason rejected_reason;
   TableReference table_reference;
@@ -463,21 +463,21 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(MetadataCacheStatistics,
 // For more details on field members, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#jobstatistics2
 struct JobQueryStatistics {
-  std::int64_t estimated_bytes_processed;
-  std::int64_t total_partitions_processed;
-  std::int64_t total_bytes_processed;
-  std::int64_t total_bytes_billed;
-  std::int64_t billing_tier;
-  std::int64_t num_dml_affected_rows;
-  std::int64_t ddl_affected_row_access_policy_count;
-  std::int64_t transferred_bytes;
+  std::int64_t estimated_bytes_processed = 0;
+  std::int64_t total_partitions_processed = 0;
+  std::int64_t total_bytes_processed = 0;
+  std::int64_t total_bytes_billed = 0;
+  std::int64_t billing_tier = 0;
+  std::int64_t num_dml_affected_rows = 0;
+  std::int64_t ddl_affected_row_access_policy_count = 0;
+  std::int64_t transferred_bytes = 0;
 
   std::string total_bytes_processed_accuracy;
   std::string statement_type;
   std::string ddl_operation_performed;
 
   std::chrono::milliseconds total_slot_time = std::chrono::milliseconds(0);
-  bool cache_hit;
+  bool cache_hit = false;
 
   std::vector<ExplainQueryStage> query_plan;
   std::vector<QueryTimelineSample> timeline;

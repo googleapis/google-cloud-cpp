@@ -36,9 +36,8 @@ TEST(JobConfigurationQueryTest, DebugString) {
       R"( priority: "job-priority" parameter_mode: "job-param-mode")"
       R"( preserve_nulls: true allow_large_results: true)"
       R"( use_query_cache: true flatten_results: true)"
-      R"( use_legacy_sql: true create_session: true)"
-      R"( continuous: true maximum_bytes_billed: 0)"
-      R"( schema_update_options: "job-update-options")"
+      R"( use_legacy_sql: true create_session: true continuous: true)"
+      R"( maximum_bytes_billed: 0 schema_update_options: "job-update-options")"
       R"( connection_properties { key: "conn-prop-key")"
       R"( value: "conn-prop-val" } query_parameters {)"
       R"( name: "query-parameter-name" parameter_type {)"
@@ -48,24 +47,25 @@ TEST(JobConfigurationQueryTest, DebugString) {
       R"( default_dataset { project_id: "2" dataset_id: "1" })"
       R"( destination_table { project_id: "2" dataset_id: "1" table_id: "3" })"
       R"( time_partitioning { type: "tp-field-type" expiration_time { "0" })"
-      R"( field: "tp-field-1" } range_partitioning { field: "rp-field-1")"
-      R"( range { start: "range-start" end: "range-end")"
-      R"( interval: "range-interval" } } clustering {)"
-      R"( fields: "clustering-field-1" fields: "clustering-field-2" })"
+      R"( field: "tp-field-1" } range_partitioning {)"
+      R"( field: "rp-field-1" range { start: "range-start")"
+      R"( end: "range-end" interval: "range-interval" } })"
+      R"( clustering { fields: "clustering-field-1")"
+      R"( fields: "clustering-field-2" })"
       R"( destination_encryption_configuration {)"
-      R"( kms_key_name: "encryption-key-name" } script_options {)"
-      R"( statement_timeout_ms: 10 statement_byte_budget: 10)"
-      R"( key_result_statement { value: "FIRST_SELECT" } })"
-      R"( system_variables { types { key: "sql-struct-type-key-1")"
-      R"( value: " system_variables { type_kind { value: "INT64" } }" })"
-      R"( types { key: "sql-struct-type-key-2" value: ")"
-      R"( system_variables { type_kind { value: "STRING" } }" } types {)"
-      R"( key: "sql-struct-type-key-3" value: ")"
-      R"( system_variables { type_kind { value: "STRING" } }" })"
-      R"( values { fields { key: "bool-key" value: " values {)"
-      R"( value_kind: true }" } fields { key: "double-key" value: " values {)"
-      R"( value_kind: 3.4 }" } fields { key: "string-key" value: " values {)"
-      R"( value_kind: "val3" }" } } } })");
+      R"( kms_key_name: "encryption-key-name" })"
+      R"( script_options { statement_timeout_ms: 10)"
+      R"( statement_byte_budget: 10 key_result_statement {)"
+      R"( value: "FIRST_SELECT" } } system_variables {)"
+      R"( types { key: "sql-struct-type-key-1" value {)"
+      R"( type_kind { value: "INT64" } } } types {)"
+      R"( key: "sql-struct-type-key-2" value {)"
+      R"( type_kind { value: "STRING" } } } types {)"
+      R"( key: "sql-struct-type-key-3" value { type_kind {)"
+      R"( value: "STRING" } } } values { fields {)"
+      R"( key: "bool-key" value { value_kind: true } })"
+      R"( fields { key: "double-key" value { value_kind: 3.4 } })"
+      R"( fields { key: "string-key" value { value_kind: "val3" } } } } })");
 
   EXPECT_EQ(
       job_query_config.DebugString(
@@ -80,34 +80,37 @@ TEST(JobConfigurationQueryTest, DebugString) {
       R"( use_query_cache: true flatten_results: true use_legacy_sql: true)"
       R"( create_session: true continuous: true maximum_bytes_billed: 0)"
       R"( schema_update_options: "job-update...<truncated>...")"
-      R"( connection_properties { key: "conn-prop-...<truncated>...)"
-      R"(" value: "conn-prop-...<truncated>..." } query_parameters {)"
-      R"( name: "query-para...<truncated>..." parameter_type {)"
-      R"( type: "query-para...<truncated>..." struct_types {)"
-      R"( name: "qp-struct-...<truncated>...")"
+      R"( connection_properties { key: "conn-prop-...<truncated>...")"
+      R"( value: "conn-prop-...<truncated>..." })"
+      R"( query_parameters { name: "query-para...<truncated>...")"
+      R"( parameter_type { type: "query-para...<truncated>...")"
+      R"( struct_types { name: "qp-struct-...<truncated>...")"
       R"( description: "qp-struct-...<truncated>..." } })"
       R"( parameter_value { value: "query-para...<truncated>..." } })"
       R"( default_dataset { project_id: "2" dataset_id: "1" })"
-      R"( destination_table { project_id: "2" dataset_id: "1" table_id: "3" })"
-      R"( time_partitioning { type: "tp-field-t...<truncated>...")"
+      R"( destination_table { project_id: "2" dataset_id: "1")"
+      R"( table_id: "3" } time_partitioning { type: "tp-field-t...<truncated>...")"
       R"( expiration_time { "0" } field: "tp-field-1" })"
-      R"( range_partitioning { field: "rp-field-1" range {)"
-      R"( start: "range-star...<truncated>..." end: "range-end")"
-      R"( interval: "range-inte...<truncated>..." } })"
+      R"( range_partitioning { field: "rp-field-1")"
+      R"( range { start: "range-star...<truncated>...")"
+      R"( end: "range-end" interval: "range-inte...<truncated>..." } })"
       R"( clustering { fields: "clustering...<truncated>...")"
       R"( fields: "clustering...<truncated>..." })"
       R"( destination_encryption_configuration {)"
       R"( kms_key_name: "encryption...<truncated>..." })"
-      R"( script_options { statement_timeout_ms: 10 statement_byte_budget: 10)"
-      R"( key_result_statement { value: "FIRST_SELE...<truncated>..." } })"
+      R"( script_options { statement_timeout_ms: 10)"
+      R"( statement_byte_budget: 10 key_result_statement {)"
+      R"( value: "FIRST_SELE...<truncated>..." } })"
       R"( system_variables { types { key: "sql-struct-type-key-1")"
-      R"( value: " system_va...<truncated>..." } types {)"
-      R"( key: "sql-struct-type-key-2" value: " system_va...<truncated>..." })"
-      R"( types { key: "sql-struct-type-key-3" value: " system_va...<truncated>..." })"
-      R"( values { fields { key: "bool-key" value: ")"
-      R"( values { ...<truncated>..." } fields { key: "double-key" value: ")"
-      R"( values { ...<truncated>..." } fields { key: "string-key")"
-      R"( value: " values { ...<truncated>..." } } } })");
+      R"( value { type_kind { value: "INT64" } } })"
+      R"( types { key: "sql-struct-type-key-2")"
+      R"( value { type_kind { value: "STRING" } } })"
+      R"( types { key: "sql-struct-type-key-3")"
+      R"( value { type_kind { value: "STRING" } } })"
+      R"( values { fields { key: "bool-key")"
+      R"( value { value_kind: true } } fields {)"
+      R"( key: "double-key" value { value_kind: 3.4 } })"
+      R"( fields { key: "string-key" value { value_kind: "val3" } } } } })");
 
   EXPECT_EQ(job_query_config.DebugString(
                 "JobConfigurationQuery",
@@ -185,52 +188,46 @@ TEST(JobConfigurationQueryTest, DebugString) {
   system_variables {
     types {
       key: "sql-struct-type-key-1"
-      value: "
-  system_variables {
-    type_kind {
-      value: "INT64"
-    }
-  }"
+      value {
+        type_kind {
+          value: "INT64"
+        }
+      }
     }
     types {
       key: "sql-struct-type-key-2"
-      value: "
-  system_variables {
-    type_kind {
-      value: "STRING"
-    }
-  }"
+      value {
+        type_kind {
+          value: "STRING"
+        }
+      }
     }
     types {
       key: "sql-struct-type-key-3"
-      value: "
-  system_variables {
-    type_kind {
-      value: "STRING"
-    }
-  }"
+      value {
+        type_kind {
+          value: "STRING"
+        }
+      }
     }
     values {
       fields {
         key: "bool-key"
-        value: "
-    values {
-      value_kind: true
-    }"
+        value {
+          value_kind: true
+        }
       }
       fields {
         key: "double-key"
-        value: "
-    values {
-      value_kind: 3.4
-    }"
+        value {
+          value_kind: 3.4
+        }
       }
       fields {
         key: "string-key"
-        value: "
-    values {
-      value_kind: "val3"
-    }"
+        value {
+          value_kind: "val3"
+        }
       }
     }
   }

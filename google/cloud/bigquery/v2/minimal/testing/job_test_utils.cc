@@ -406,14 +406,17 @@ JobConfiguration MakeJobConfiguration() {
 
 Job MakeJob() {
   Job job;
+
   job.etag = "etag";
   job.id = "1";
   job.kind = "Job";
+  job.self_link = "self-link";
+  job.user_email = "a@b.com";
   job.reference.project_id = "1";
   job.reference.job_id = "2";
+  job.reference.location = "us-east";
   job.status.state = "DONE";
-  job.configuration.job_type = "QUERY";
-  job.configuration.query_config.query = "select 1;";
+  job.configuration = MakeJobConfiguration();
   job.statistics = MakeJobStats();
 
   return job;
@@ -421,14 +424,17 @@ Job MakeJob() {
 
 ListFormatJob MakeListFormatJob() {
   ListFormatJob job;
+
   job.id = "1";
   job.kind = "Job";
+  job.user_email = "a@b.com";
+  job.principal_subject = "principal-sub";
   job.reference.project_id = "1";
   job.reference.job_id = "2";
+  job.reference.location = "us-east";
   job.state = "DONE";
   job.status.state = "DONE";
-  job.configuration.job_type = "QUERY";
-  job.configuration.query_config.query = "select 1;";
+  job.configuration = MakeJobConfiguration();
   job.statistics = MakeJobStats();
 
   return job;
