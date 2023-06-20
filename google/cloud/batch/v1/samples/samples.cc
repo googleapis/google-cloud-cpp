@@ -14,9 +14,10 @@
 
 // The #includes (with the extra blank line) are part of the code extracted into
 // the reference documentation. We want to highlight what includes are needed.
-// [START batch_create_container_job]
 // [START batch_create_script_job]
+// [START batch_create_container_job]
 // [START batch_create_script_job_with_bucket]
+// [START batch_create_job_with_template]
 // [START batch_get_job]
 // [START batch_get_task]
 // [START batch_list_jobs]
@@ -29,7 +30,8 @@
 // [END batch_list_jobs]
 // [END batch_get_task]
 // [END batch_get_job]
-// [END batch_create_script_job_with_bucket]
+// [END batch_create_job_with_template]
+// [END batch_create_container_job]
 // [END batch_create_container_job]
 // [END batch_create_script_job]
 #include "google/cloud/common_options.h"
@@ -54,7 +56,7 @@ void CreateContainerJob(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage{
         "create-container-job <project-id> <location-id> <job-id>"};
   }
-  // [END batch_create_container_job]
+  // [START batch_create_container_job]
   [](std::string const& project_id, std::string const& location_id,
      std::string const& job_id) {
     // Initialize the request, first the fields that depend on the sample input.
