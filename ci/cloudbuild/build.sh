@@ -182,14 +182,12 @@ fi
 : "${BRANCH_NAME:=$(git branch --show-current)}"
 : "${COMMIT_SHA:=$(git rev-parse HEAD)}"
 CODECOV_TOKEN="$(tr -d '[:space:]' <<<"${CODECOV_TOKEN:-}")"
-LOG_LINKER_PAT="$(tr -d '[:space:]' <<<"${LOG_LINKER_PAT:-}")"
 
 export CODECOV_TOKEN
 export BRANCH_NAME
 export COMMIT_SHA
 export TRIGGER_TYPE
 export VERBOSE_FLAG
-export LOG_LINKER_PAT
 
 # --local is the most fundamental build mode, in that all other builds
 # eventually call this one. For example, a --docker build will build the
@@ -260,7 +258,7 @@ if [[ -n "${CLOUD_FLAG}" ]]; then
   # project's "Secret Manager". This is true for our main production project, but
   # for personal projects we may need to create them (with empty strings).
   if [[ "${CLOUD_FLAG}" != "cloud-cpp-testing-resources" ]]; then
-    for secret in "CODECOV_TOKEN" "LOG_LINKER_PAT"; do
+    for secret in "CODECOV_TOKEN"; do
       if ! gcloud --project "${CLOUD_FLAG}" secrets describe "${secret}" >/dev/null; then
         io::log_yellow "Adding missing secret ${secret} to ${CLOUD_FLAG}"
         echo | gcloud --project "${CLOUD_FLAG}" secrets create "${secret}" --data-file=-
