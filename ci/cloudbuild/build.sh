@@ -258,12 +258,10 @@ if [[ -n "${CLOUD_FLAG}" ]]; then
   # project's "Secret Manager". This is true for our main production project, but
   # for personal projects we may need to create them (with empty strings).
   if [[ "${CLOUD_FLAG}" != "cloud-cpp-testing-resources" ]]; then
-    for secret in "CODECOV_TOKEN"; do
-      if ! gcloud --project "${CLOUD_FLAG}" secrets describe "${secret}" >/dev/null; then
-        io::log_yellow "Adding missing secret ${secret} to ${CLOUD_FLAG}"
-        echo | gcloud --project "${CLOUD_FLAG}" secrets create "${secret}" --data-file=-
-      fi
-    done
+    if ! gcloud --project "${CLOUD_FLAG}" secrets describe "CODECOV_TOKEN" >/dev/null; then
+      io::log_yellow "Adding missing secret CODECOV_TOKEN to ${CLOUD_FLAG}"
+      echo | gcloud --project "${CLOUD_FLAG}" secrets create "CODECOV_TOKEN" --data-file=-
+    fi
   fi
   account="$(gcloud config get-value account 2>/dev/null)"
   subs=("_DISTRO=${DISTRO_FLAG}")
