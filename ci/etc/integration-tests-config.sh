@@ -92,6 +92,13 @@ export GOOGLE_CLOUD_CPP_SPANNER_TEST_QUICKSTART_DATABASE="quickstart-db"
 # Cloud Pub/Sub configuration parameters
 export GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC="quickstart"
 
+# Cloud Batch configuration parameters
+# Created using:
+#    gcloud compute instance-templates create \
+#        --project=cloud-cpp-testing-resources "cloud-batch-sample-template" \
+#        --region us-central1 --machine-type e2-standard-4
+export GOOGLE_CLOUD_CPP_BATCH_TEST_TEMPLATE_NAME="cloud-batch-sample-template"
+
 # Cloud BigQuery configuration parameters
 export GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE="projects/bigquery-public-data/datasets/usa_names/tables/usa_1910_current"
 
