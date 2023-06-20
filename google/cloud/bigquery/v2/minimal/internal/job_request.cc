@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job.h"
 #include "google/cloud/bigquery/v2/minimal/internal/rest_stub_utils.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -80,6 +81,15 @@ std::string ListJobsRequest::DebugString(absl::string_view name,
       .SubMessage("projection", projection_)
       .SubMessage("state_filter", state_filter_)
       .StringField("parent_job_id", parent_job_id_)
+      .Build();
+}
+
+std::string InsertJobRequest::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id_)
+      .SubMessage("job", job_)
       .Build();
 }
 
@@ -187,6 +197,41 @@ std::ostream& operator<<(std::ostream& os, ListJobsRequest const& request) {
      << ", state_filter=" << request.state_filter().value
      << ", parent_job_id=" << request.parent_job_id();
   return os << "}";
+}
+
+StatusOr<rest_internal::RestRequest> BuildRestRequest(
+    InsertJobRequest const& r) {
+  auto const& opts = internal::CurrentOptions();
+
+  rest_internal::RestRequest request;
+  if (r.project_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid InsertJobRequest: Project Id is empty", GCP_ERROR_INFO());
+  }
+
+  // Builds InsertJob request path based on endpoint provided.
+  std::string endpoint = GetBaseEndpoint(opts);
+  std::string path =
+      absl::StrCat(endpoint, "/projects/", r.project_id(), "/jobs");
+  request.SetPath(std::move(path));
+
+  // Validate request body is a valid json Job payload.
+  nlohmann::json json_payload;
+  to_json(json_payload, r.job());
+
+  if (!json_payload.is_object()) {
+    return internal::InvalidArgumentError(
+        "Invalid InsertJobRequest: Invalid json payload", GCP_ERROR_INFO());
+  }
+
+  auto const& job = json_payload.get<Job>();
+
+  if (job.configuration.job_type.empty() || job.id != r.job().id) {
+    return internal::InvalidArgumentError(
+        "Invalid InsertJobRequest: Invalid Job object", GCP_ERROR_INFO());
+  }
+
+  return request;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
