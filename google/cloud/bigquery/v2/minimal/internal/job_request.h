@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_REQUEST_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_REQUEST_H
 
+#include "google/cloud/bigquery/v2/minimal/internal/job.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -200,7 +201,6 @@ class ListJobsRequest {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
-  // Members
  private:
   std::string project_id_;
   bool all_users_;
@@ -213,10 +213,47 @@ class ListJobsRequest {
   std::string parent_job_id_;
 };
 
+class InsertJobRequest {
+ public:
+  InsertJobRequest() = default;
+  explicit InsertJobRequest(std::string project_id, Job job)
+      : project_id_(std::move(project_id)), job_(std::move(job)) {}
+
+  std::string const& project_id() const { return project_id_; }
+  Job const& job() const { return job_; }
+
+  InsertJobRequest& set_project_id(std::string project_id) & {
+    project_id_ = std::move(project_id);
+    return *this;
+  }
+  InsertJobRequest&& set_project_id(std::string project_id) && {
+    return std::move(set_project_id(std::move(project_id)));
+  }
+
+  InsertJobRequest& set_job(Job job) & {
+    job_ = std::move(job);
+    return *this;
+  }
+  InsertJobRequest&& set_job(Job job) && {
+    return std::move(set_job(std::move(job)));
+  }
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+
+ private:
+  std::string project_id_;
+  Job job_;
+};
+
 // Builds RestRequest from GetJobRequest.
 StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r);
 // Builds RestRequest from ListJobsRequest.
 StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r);
+// Builds RestRequest from InsertJobRequest.
+StatusOr<rest_internal::RestRequest> BuildRestRequest(
+    InsertJobRequest const& r);
 
 std::ostream& operator<<(std::ostream& os, GetJobRequest const& request);
 std::ostream& operator<<(std::ostream& os, ListJobsRequest const& request);
