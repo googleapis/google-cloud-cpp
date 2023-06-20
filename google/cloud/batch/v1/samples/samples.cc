@@ -59,11 +59,12 @@ void CreateContainerJob(std::vector<std::string> const& argv) {
   // [START batch_create_container_job]
   [](std::string const& project_id, std::string const& location_id,
      std::string const& job_id) {
-    // Initialize the request, first the fields that depend on the sample input.
+    // Initialize the request; start with the fields that depend on the sample
+    // input.
     google::cloud::batch::v1::CreateJobRequest request;
     request.set_parent("projects/" + project_id + "/locations/" + location_id);
     request.set_job_id(job_id);
-    // Most of the job description is fixed in this example, use a string to
+    // Most of the job description is fixed in this example; use a string to
     // initialize it.
     auto constexpr kText = R"pb(
       task_groups {
@@ -114,11 +115,12 @@ void CreateScriptJob(std::vector<std::string> const& argv) {
   // [START batch_create_script_job]
   [](std::string const& project_id, std::string const& location_id,
      std::string const& job_id) {
-    // Initialize the request, first the fields that depend on the sample input.
+    // Initialize the request; start with the fields that depend on the sample
+    // input.
     google::cloud::batch::v1::CreateJobRequest request;
     request.set_parent("projects/" + project_id + "/locations/" + location_id);
     request.set_job_id(job_id);
-    // Most of the job description is fixed in this example, use a string to
+    // Most of the job description is fixed in this example; use a string to
     // initialize it.
     auto constexpr kText = R"pb(
       task_groups {
@@ -167,11 +169,12 @@ void CreateScriptJobWithBucket(std::vector<std::string> const& argv) {
   // [START batch_create_script_job_with_bucket]
   [](std::string const& project_id, std::string const& location_id,
      std::string const& job_id, std::string const& bucket_name) {
-    // Initialize the request, first the fields that depend on the sample input.
+    // Initialize the request; start with the fields that depend on the sample
+    // input.
     google::cloud::batch::v1::CreateJobRequest request;
     request.set_parent("projects/" + project_id + "/locations/" + location_id);
     request.set_job_id(job_id);
-    // Most of the job description is fixed in this example, use a string to
+    // Most of the job description is fixed in this example; use a string to
     // initialize it, and then override the GCS remote path.
     auto constexpr kText = R"pb(
       task_groups {
@@ -226,11 +229,12 @@ void CreateJobWithTemplate(std::vector<std::string> const& argv) {
   // [START batch_create_job_with_template]
   [](std::string const& project_id, std::string const& location_id,
      std::string const& job_id, std::string const& template_name) {
-    // Initialize the request, first the fields that depend on the sample input.
+    // Initialize the request; start with the fields that depend on the sample
+    // input.
     google::cloud::batch::v1::CreateJobRequest request;
     request.set_parent("projects/" + project_id + "/locations/" + location_id);
     request.set_job_id(job_id);
-    // Most of the job description is fixed in this example, use a string to
+    // Most of the job description is fixed in this example; use a string to
     // initialize it, and then override the template name.
     auto constexpr kText = R"pb(
       task_groups {
@@ -366,7 +370,6 @@ void DeleteJob(std::vector<std::string> const& argv) {
      std::string const& job_id) {
     auto const name = "projects/" + project_id + "/locations/" + location_id +
                       "/jobs/" + job_id;
-    // Initialize the request, first the fields that depend on the sample input.
     google::cloud::batch::v1::DeleteJobRequest request;
     request.set_name(name);
     // Initialize a client and issue the request.
@@ -482,7 +485,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   bool success = false;
   auto const name = "projects/" + project_id + "/locations/" + location_id +
                     "/jobs/" + script_job_id;
-  // It taskes about 60 seconds to finish a job, waiting for about 5 minutes
+  // It taskes about 60 seconds to finish a job, so waiting for about 5 minutes
   // seems enough.
   auto const polling_period = std::chrono::seconds(10);
   for (int i = 0; i != 30; ++i) {
