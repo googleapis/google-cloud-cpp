@@ -31,7 +31,7 @@
 // [END batch_get_task]
 // [END batch_get_job]
 // [END batch_create_job_with_template]
-// [END batch_create_container_job]
+// [END batch_create_script_job_with_bucket]
 // [END batch_create_container_job]
 // [END batch_create_script_job]
 #include "google/cloud/common_options.h"
