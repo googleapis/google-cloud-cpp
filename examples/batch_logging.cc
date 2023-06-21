@@ -116,7 +116,7 @@ google::cloud::batch::v1::Job CreateTestJob(
 void WaitForJob(google::cloud::batch_v1::BatchServiceClient client,
                 std::string job_name) {
   std::cout << "\nWaiting for " << job_name << std::flush;
-  // It taskes about 60 seconds to finish a job, so waiting for about 5 minutes
+  // It takes about 60 seconds to finish a job, so waiting for about 5 minutes
   // seems enough.
   auto const polling_period = std::chrono::seconds(10);
   for (int i = 0; i != 30; ++i) {
@@ -166,7 +166,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Running JobLogs() test" << std::endl;
   JobLogs({project_id, location_id, job_id});
 
-  //  (void) client.DeleteJob(job.name()).get().value();
+  (void)client.DeleteJob(job.name()).get().value();
   std::cout << "Deleted test job: " << job.name() << "\n";
 }
 

@@ -485,7 +485,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   bool success = false;
   auto const name = "projects/" + project_id + "/locations/" + location_id +
                     "/jobs/" + script_job_id;
-  // It taskes about 60 seconds to finish a job, so waiting for about 5 minutes
+  // It takes about 60 seconds to finish a job, so waiting for about 5 minutes
   // seems enough.
   auto const polling_period = std::chrono::seconds(10);
   for (int i = 0; i != 30; ++i) {
