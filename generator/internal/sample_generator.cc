@@ -153,7 +153,7 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
   // c3.SomeRpc(..., google::cloud::Options{}
   //     .set<google::cloud::$product_namespace$::$retry_policy_name$Option>(
   //       google::cloud::$product_namespace$::$limited_error_count_retry_policy_name$(10).clone()));
-  //! [set-client-client-retry-policy]
+  //! [set-retry-policy]
 }
 )""");
   } else
@@ -173,7 +173,7 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
   // c3.SomeRpc(..., google::cloud::Options{}
   //     .set<google::cloud::$product_namespace$::$retry_policy_name$Option>(
   //       google::cloud::$product_namespace$::$limited_error_count_retry_policy_name$(10).clone()));
-  //! [set-client-client-retry-policy]
+  //! [set-retry-policy]
 }
 )""");
 
