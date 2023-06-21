@@ -150,7 +150,7 @@ file(GLOB proto_files RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}"
      ${proto_globs})
 list(SORT proto_files)
 
-google_cloud_cpp_grpcpp_library(
+google_cloud_cpp_proto_library(
     google_cloud_cpp_compute_protos ${proto_list} PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}"
     "${PROJECT_SOURCE_DIR}")
