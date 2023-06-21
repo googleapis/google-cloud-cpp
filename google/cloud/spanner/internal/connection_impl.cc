@@ -1017,9 +1017,11 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
   request.mutable_request_options()->set_priority(
       ProtoRequestPriority(params.options.request_priority()));
 
-  if (params.options.batching_delay().has_value()) {
-    request.mutable_request_options()->set_batching_delay_ms(
-      absl::ToDoubleMillis(params.options.batching_delay.value()));
+  if (params.options.max_batching_delay().has_value()) {
+    *request.mutable_max_batching_delay() =
+      util_time::EncodeGoogleApiProto(
+        params.options.max_batching_delay.value()).value();
+  }
 
   // params.options.transaction_tag() was either already used to set
   // ctx.tag (for a library-generated transaction), or it is ignored

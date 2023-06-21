@@ -70,14 +70,14 @@ class CommitOptions {
     return request_priority_;
   }
 
-  CommitOptions& set_batching_delay(
-      absl::optional<absl::Duration> batching_delay) {
-    batching_delay_ = std::move(batching_delay);
+  CommitOptions& set_max_batching_delay(
+      absl::optional<absl::Duration> max_batching_delay) {
+    max_batching_delay_ = std::move(max_batching_delay);
     return *this;
   }
 
-  absl::optional<absl::Duration> batching_delay() const {
-    return batching_delay_;
+  absl::optional<absl::Duration> max_batching_delay() const {
+    return max_batching_delay_;
   }
 				    
   /**
@@ -100,7 +100,7 @@ class CommitOptions {
   // so we do not even provide a mechanism to specify one.
   bool return_stats_ = false;
   absl::optional<RequestPriority> request_priority_;
-  absl::optional<absl::Duration> batching_delay_;
+  absl::optional<absl::Duration> max_batching_delay_;
   absl::optional<std::string> transaction_tag_;
 };
 
