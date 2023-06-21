@@ -1019,8 +1019,8 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
 
   if (params.options.max_batching_delay().has_value()) {
     *request.mutable_max_batching_delay() =
-      util_time::EncodeGoogleApiProto(
-        params.options.max_batching_delay.value()).value();
+      google::protobuf::util::TimeUtil::MillisecondsToDuration(
+        absl::ToDoubleMilliseconds(params.options.max_batching_delay().value()));
   }
 
   // params.options.transaction_tag() was either already used to set
