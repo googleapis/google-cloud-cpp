@@ -101,7 +101,7 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
       InterconnectLocationsClient(google::cloud::ExperimentalTag{}, connection);
 
   // You can override any of the policies in a new client. This new client
-  // will share the policies from c1 (or c2) *except* from the retry policy.
+  // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::compute_interconnect_locations_v1::
       InterconnectLocationsClient(
           google::cloud::ExperimentalTag{}, connection,
