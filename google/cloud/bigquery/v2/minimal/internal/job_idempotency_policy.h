@@ -37,6 +37,8 @@ class BigQueryJobIdempotencyPolicy {
   virtual google::cloud::Idempotency GetJob(GetJobRequest const& request);
 
   virtual google::cloud::Idempotency ListJobs(ListJobsRequest const& request);
+
+  virtual google::cloud::Idempotency InsertJob(InsertJobRequest const& request);
 };
 
 std::unique_ptr<BigQueryJobIdempotencyPolicy>

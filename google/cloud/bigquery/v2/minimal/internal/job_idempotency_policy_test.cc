@@ -38,6 +38,14 @@ TEST(JobIdempotencyPolicytTest, ListJobs) {
   EXPECT_EQ(actual->ListJobs(request), expected);
 }
 
+TEST(JobIdempotencyPolicytTest, InsertJob) {
+  auto actual = MakeDefaultBigQueryJobIdempotencyPolicy();
+  auto expected = Idempotency::kNonIdempotent;
+
+  InsertJobRequest request;
+  EXPECT_EQ(actual->InsertJob(request), expected);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
