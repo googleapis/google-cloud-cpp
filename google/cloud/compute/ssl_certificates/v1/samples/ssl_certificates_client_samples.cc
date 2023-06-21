@@ -113,7 +113,7 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
   // c3.SomeRpc(..., google::cloud::Options{}
   //     .set<google::cloud::compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>(
   //       google::cloud::compute_ssl_certificates_v1::SslCertificatesLimitedErrorCountRetryPolicy(10).clone()));
-  //! [set-client-client-retry-policy]
+  //! [set-retry-policy]
 }
 
 void WithServiceAccount(std::vector<std::string> const& argv) {

@@ -110,7 +110,7 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
   // c3.SomeRpc(..., google::cloud::Options{}
   //     .set<google::cloud::bigquery_biglake_v1::MetastoreServiceRetryPolicyOption>(
   //       google::cloud::bigquery_biglake_v1::MetastoreServiceLimitedErrorCountRetryPolicy(10).clone()));
-  //! [set-client-client-retry-policy]
+  //! [set-retry-policy]
 }
 
 void WithServiceAccount(std::vector<std::string> const& argv) {

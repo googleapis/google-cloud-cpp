@@ -110,7 +110,7 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
   // c3.SomeRpc(..., google::cloud::Options{}
   //     .set<google::cloud::video_transcoder_v1::TranscoderServiceRetryPolicyOption>(
   //       google::cloud::video_transcoder_v1::TranscoderServiceLimitedErrorCountRetryPolicy(10).clone()));
-  //! [set-client-client-retry-policy]
+  //! [set-retry-policy]
 }
 
 void WithServiceAccount(std::vector<std::string> const& argv) {
