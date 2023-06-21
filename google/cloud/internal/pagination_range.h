@@ -93,8 +93,7 @@ class PagedStreamReader {
    *   successful end of stream.
    */
   typename StreamReader<T>::result_type GetNext() {
-    if (current_ == page_.end()) {
-      if (last_page_) return Status{};
+    while (current_ == page_.end() && !last_page_) {
       request_.set_page_token(std::move(token_));
       auto response = loader_(request_);
       if (!response.ok()) return std::move(response).status();
@@ -102,9 +101,9 @@ class PagedStreamReader {
       if (token_.empty()) last_page_ = true;
       page_ = extractor_(*std::move(response));
       current_ = page_.begin();
-      if (current_ == page_.end()) return Status{};
     }
-    return std::move(*current_++);
+    if (current_ != page_.end()) return std::move(*current_++);
+    return Status{};
   }
 
  private:
