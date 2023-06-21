@@ -17,6 +17,8 @@
 // source: google/cloud/shell/v1/cloudshell.proto
 
 #include "google/cloud/shell/v1/cloud_shell_client.h"
+#include "google/cloud/shell/v1/cloud_shell_connection_idempotency_policy.h"
+#include "google/cloud/shell/v1/cloud_shell_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -43,6 +45,65 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto client = google::cloud::shell_v1::CloudShellServiceClient(
       google::cloud::shell_v1::MakeCloudShellServiceConnection(options));
   //! [set-client-endpoint]
+}
+
+//! [custom-idempotency-policy]
+class CustomIdempotencyPolicy
+    : public google::cloud::shell_v1::
+          CloudShellServiceConnectionIdempotencyPolicy {
+ public:
+  ~CustomIdempotencyPolicy() override = default;
+  std::unique_ptr<
+      google::cloud::shell_v1::CloudShellServiceConnectionIdempotencyPolicy>
+  clone() const override {
+    return std::make_unique<CustomIdempotencyPolicy>(*this);
+  }
+  // Override inherited functions to define as needed.
+};
+//! [custom-idempotency-policy]
+
+void SetRetryPolicy(std::vector<std::string> const& argv) {
+  if (!argv.empty()) {
+    throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
+  }
+  //! [set-retry-policy]
+  auto options =
+      google::cloud::Options{}
+          .set<google::cloud::shell_v1::
+                   CloudShellServiceConnectionIdempotencyPolicyOption>(
+              CustomIdempotencyPolicy().clone())
+          .set<google::cloud::shell_v1::CloudShellServiceRetryPolicyOption>(
+              google::cloud::shell_v1::
+                  CloudShellServiceLimitedErrorCountRetryPolicy(3)
+                      .clone())
+          .set<google::cloud::shell_v1::CloudShellServiceBackoffPolicyOption>(
+              google::cloud::ExponentialBackoffPolicy(
+                  /*initial_delay=*/std::chrono::milliseconds(200),
+                  /*maximum_delay=*/std::chrono::seconds(45),
+                  /*scaling=*/2.0)
+                  .clone());
+  auto connection =
+      google::cloud::shell_v1::MakeCloudShellServiceConnection(options);
+
+  // c1 and c2 share the same retry policies
+  auto c1 = google::cloud::shell_v1::CloudShellServiceClient(connection);
+  auto c2 = google::cloud::shell_v1::CloudShellServiceClient(connection);
+
+  // You can override any of the policies in a new client. This new client
+  // will share the policies from c1 (or c2) *except* from the retry policy.
+  auto c3 = google::cloud::shell_v1::CloudShellServiceClient(
+      connection,
+      google::cloud::Options{}
+          .set<google::cloud::shell_v1::CloudShellServiceRetryPolicyOption>(
+              google::cloud::shell_v1::CloudShellServiceLimitedTimeRetryPolicy(
+                  std::chrono::minutes(5))
+                  .clone()));
+
+  // You can also override the policies in a single call:
+  // c3.SomeRpc(..., google::cloud::Options{}
+  //     .set<google::cloud::shell_v1::CloudShellServiceRetryPolicyOption>(
+  //       google::cloud::shell_v1::CloudShellServiceLimitedErrorCountRetryPolicy(10).clone()));
+  //! [set-client-client-retry-policy]
 }
 
 void WithServiceAccount(std::vector<std::string> const& argv) {
@@ -76,6 +137,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetClientEndpoint() example" << std::endl;
   SetClientEndpoint({});
 
+  std::cout << "\nRunning SetRetryPolicy() example" << std::endl;
+  SetRetryPolicy({});
+
   std::cout << "\nRunning WithServiceAccount() example" << std::endl;
   WithServiceAccount({keyfile});
 }
@@ -85,6 +149,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::Example example({
       {"set-client-endpoint", SetClientEndpoint},
+      {"set-retry-policy", SetRetryPolicy},
       {"with-service-account", WithServiceAccount},
       {"auto", AutoRun},
   });

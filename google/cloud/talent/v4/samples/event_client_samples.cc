@@ -17,6 +17,8 @@
 // source: google/cloud/talent/v4/event_service.proto
 
 #include "google/cloud/talent/v4/event_client.h"
+#include "google/cloud/talent/v4/event_connection_idempotency_policy.h"
+#include "google/cloud/talent/v4/event_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -43,6 +45,64 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto client = google::cloud::talent_v4::EventServiceClient(
       google::cloud::talent_v4::MakeEventServiceConnection(options));
   //! [set-client-endpoint]
+}
+
+//! [custom-idempotency-policy]
+class CustomIdempotencyPolicy
+    : public google::cloud::talent_v4::EventServiceConnectionIdempotencyPolicy {
+ public:
+  ~CustomIdempotencyPolicy() override = default;
+  std::unique_ptr<
+      google::cloud::talent_v4::EventServiceConnectionIdempotencyPolicy>
+  clone() const override {
+    return std::make_unique<CustomIdempotencyPolicy>(*this);
+  }
+  // Override inherited functions to define as needed.
+};
+//! [custom-idempotency-policy]
+
+void SetRetryPolicy(std::vector<std::string> const& argv) {
+  if (!argv.empty()) {
+    throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
+  }
+  //! [set-retry-policy]
+  auto options =
+      google::cloud::Options{}
+          .set<google::cloud::talent_v4::
+                   EventServiceConnectionIdempotencyPolicyOption>(
+              CustomIdempotencyPolicy().clone())
+          .set<google::cloud::talent_v4::EventServiceRetryPolicyOption>(
+              google::cloud::talent_v4::
+                  EventServiceLimitedErrorCountRetryPolicy(3)
+                      .clone())
+          .set<google::cloud::talent_v4::EventServiceBackoffPolicyOption>(
+              google::cloud::ExponentialBackoffPolicy(
+                  /*initial_delay=*/std::chrono::milliseconds(200),
+                  /*maximum_delay=*/std::chrono::seconds(45),
+                  /*scaling=*/2.0)
+                  .clone());
+  auto connection =
+      google::cloud::talent_v4::MakeEventServiceConnection(options);
+
+  // c1 and c2 share the same retry policies
+  auto c1 = google::cloud::talent_v4::EventServiceClient(connection);
+  auto c2 = google::cloud::talent_v4::EventServiceClient(connection);
+
+  // You can override any of the policies in a new client. This new client
+  // will share the policies from c1 (or c2) *except* from the retry policy.
+  auto c3 = google::cloud::talent_v4::EventServiceClient(
+      connection,
+      google::cloud::Options{}
+          .set<google::cloud::talent_v4::EventServiceRetryPolicyOption>(
+              google::cloud::talent_v4::EventServiceLimitedTimeRetryPolicy(
+                  std::chrono::minutes(5))
+                  .clone()));
+
+  // You can also override the policies in a single call:
+  // c3.SomeRpc(..., google::cloud::Options{}
+  //     .set<google::cloud::talent_v4::EventServiceRetryPolicyOption>(
+  //       google::cloud::talent_v4::EventServiceLimitedErrorCountRetryPolicy(10).clone()));
+  //! [set-client-client-retry-policy]
 }
 
 void WithServiceAccount(std::vector<std::string> const& argv) {
@@ -76,6 +136,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetClientEndpoint() example" << std::endl;
   SetClientEndpoint({});
 
+  std::cout << "\nRunning SetRetryPolicy() example" << std::endl;
+  SetRetryPolicy({});
+
   std::cout << "\nRunning WithServiceAccount() example" << std::endl;
   WithServiceAccount({keyfile});
 }
@@ -85,6 +148,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::Example example({
       {"set-client-endpoint", SetClientEndpoint},
+      {"set-retry-policy", SetRetryPolicy},
       {"with-service-account", WithServiceAccount},
       {"auto", AutoRun},
   });

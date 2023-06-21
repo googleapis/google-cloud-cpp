@@ -17,6 +17,8 @@
 // source: google/cloud/bigquery/reservation/v1/reservation.proto
 
 #include "google/cloud/bigquery/reservation/v1/reservation_client.h"
+#include "google/cloud/bigquery/reservation/v1/reservation_connection_idempotency_policy.h"
+#include "google/cloud/bigquery/reservation/v1/reservation_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -45,6 +47,71 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
           google::cloud::bigquery_reservation_v1::
               MakeReservationServiceConnection(options));
   //! [set-client-endpoint]
+}
+
+//! [custom-idempotency-policy]
+class CustomIdempotencyPolicy
+    : public google::cloud::bigquery_reservation_v1::
+          ReservationServiceConnectionIdempotencyPolicy {
+ public:
+  ~CustomIdempotencyPolicy() override = default;
+  std::unique_ptr<google::cloud::bigquery_reservation_v1::
+                      ReservationServiceConnectionIdempotencyPolicy>
+  clone() const override {
+    return std::make_unique<CustomIdempotencyPolicy>(*this);
+  }
+  // Override inherited functions to define as needed.
+};
+//! [custom-idempotency-policy]
+
+void SetRetryPolicy(std::vector<std::string> const& argv) {
+  if (!argv.empty()) {
+    throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
+  }
+  //! [set-retry-policy]
+  auto options =
+      google::cloud::Options{}
+          .set<google::cloud::bigquery_reservation_v1::
+                   ReservationServiceConnectionIdempotencyPolicyOption>(
+              CustomIdempotencyPolicy().clone())
+          .set<google::cloud::bigquery_reservation_v1::
+                   ReservationServiceRetryPolicyOption>(
+              google::cloud::bigquery_reservation_v1::
+                  ReservationServiceLimitedErrorCountRetryPolicy(3)
+                      .clone())
+          .set<google::cloud::bigquery_reservation_v1::
+                   ReservationServiceBackoffPolicyOption>(
+              google::cloud::ExponentialBackoffPolicy(
+                  /*initial_delay=*/std::chrono::milliseconds(200),
+                  /*maximum_delay=*/std::chrono::seconds(45),
+                  /*scaling=*/2.0)
+                  .clone());
+  auto connection =
+      google::cloud::bigquery_reservation_v1::MakeReservationServiceConnection(
+          options);
+
+  // c1 and c2 share the same retry policies
+  auto c1 = google::cloud::bigquery_reservation_v1::ReservationServiceClient(
+      connection);
+  auto c2 = google::cloud::bigquery_reservation_v1::ReservationServiceClient(
+      connection);
+
+  // You can override any of the policies in a new client. This new client
+  // will share the policies from c1 (or c2) *except* from the retry policy.
+  auto c3 = google::cloud::bigquery_reservation_v1::ReservationServiceClient(
+      connection, google::cloud::Options{}
+                      .set<google::cloud::bigquery_reservation_v1::
+                               ReservationServiceRetryPolicyOption>(
+                          google::cloud::bigquery_reservation_v1::
+                              ReservationServiceLimitedTimeRetryPolicy(
+                                  std::chrono::minutes(5))
+                                  .clone()));
+
+  // You can also override the policies in a single call:
+  // c3.SomeRpc(..., google::cloud::Options{}
+  //     .set<google::cloud::bigquery_reservation_v1::ReservationServiceRetryPolicyOption>(
+  //       google::cloud::bigquery_reservation_v1::ReservationServiceLimitedErrorCountRetryPolicy(10).clone()));
+  //! [set-client-client-retry-policy]
 }
 
 void WithServiceAccount(std::vector<std::string> const& argv) {
@@ -79,6 +146,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetClientEndpoint() example" << std::endl;
   SetClientEndpoint({});
 
+  std::cout << "\nRunning SetRetryPolicy() example" << std::endl;
+  SetRetryPolicy({});
+
   std::cout << "\nRunning WithServiceAccount() example" << std::endl;
   WithServiceAccount({keyfile});
 }
@@ -88,6 +158,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::Example example({
       {"set-client-endpoint", SetClientEndpoint},
+      {"set-retry-policy", SetRetryPolicy},
       {"with-service-account", WithServiceAccount},
       {"auto", AutoRun},
   });
