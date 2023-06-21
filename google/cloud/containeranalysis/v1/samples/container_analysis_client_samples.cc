@@ -17,6 +17,8 @@
 // source: google/devtools/containeranalysis/v1/containeranalysis.proto
 
 #include "google/cloud/containeranalysis/v1/container_analysis_client.h"
+#include "google/cloud/containeranalysis/v1/container_analysis_connection_idempotency_policy.h"
+#include "google/cloud/containeranalysis/v1/container_analysis_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -44,6 +46,71 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
       google::cloud::containeranalysis_v1::MakeContainerAnalysisConnection(
           options));
   //! [set-client-endpoint]
+}
+
+//! [custom-idempotency-policy]
+class CustomIdempotencyPolicy
+    : public google::cloud::containeranalysis_v1::
+          ContainerAnalysisConnectionIdempotencyPolicy {
+ public:
+  ~CustomIdempotencyPolicy() override = default;
+  std::unique_ptr<google::cloud::containeranalysis_v1::
+                      ContainerAnalysisConnectionIdempotencyPolicy>
+  clone() const override {
+    return std::make_unique<CustomIdempotencyPolicy>(*this);
+  }
+  // Override inherited functions to define as needed.
+};
+//! [custom-idempotency-policy]
+
+void SetRetryPolicy(std::vector<std::string> const& argv) {
+  if (!argv.empty()) {
+    throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
+  }
+  //! [set-retry-policy]
+  auto options =
+      google::cloud::Options{}
+          .set<google::cloud::containeranalysis_v1::
+                   ContainerAnalysisConnectionIdempotencyPolicyOption>(
+              CustomIdempotencyPolicy().clone())
+          .set<google::cloud::containeranalysis_v1::
+                   ContainerAnalysisRetryPolicyOption>(
+              google::cloud::containeranalysis_v1::
+                  ContainerAnalysisLimitedErrorCountRetryPolicy(3)
+                      .clone())
+          .set<google::cloud::containeranalysis_v1::
+                   ContainerAnalysisBackoffPolicyOption>(
+              google::cloud::ExponentialBackoffPolicy(
+                  /*initial_delay=*/std::chrono::milliseconds(200),
+                  /*maximum_delay=*/std::chrono::seconds(45),
+                  /*scaling=*/2.0)
+                  .clone());
+  auto connection =
+      google::cloud::containeranalysis_v1::MakeContainerAnalysisConnection(
+          options);
+
+  // c1 and c2 share the same retry policies
+  auto c1 =
+      google::cloud::containeranalysis_v1::ContainerAnalysisClient(connection);
+  auto c2 =
+      google::cloud::containeranalysis_v1::ContainerAnalysisClient(connection);
+
+  // You can override any of the policies in a new client. This new client
+  // will share the policies from c1 (or c2) *except* from the retry policy.
+  auto c3 = google::cloud::containeranalysis_v1::ContainerAnalysisClient(
+      connection, google::cloud::Options{}
+                      .set<google::cloud::containeranalysis_v1::
+                               ContainerAnalysisRetryPolicyOption>(
+                          google::cloud::containeranalysis_v1::
+                              ContainerAnalysisLimitedTimeRetryPolicy(
+                                  std::chrono::minutes(5))
+                                  .clone()));
+
+  // You can also override the policies in a single call:
+  // c3.SomeRpc(..., google::cloud::Options{}
+  //     .set<google::cloud::containeranalysis_v1::ContainerAnalysisRetryPolicyOption>(
+  //       google::cloud::containeranalysis_v1::ContainerAnalysisLimitedErrorCountRetryPolicy(10).clone()));
+  //! [set-retry-policy]
 }
 
 void WithServiceAccount(std::vector<std::string> const& argv) {
@@ -78,6 +145,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetClientEndpoint() example" << std::endl;
   SetClientEndpoint({});
 
+  std::cout << "\nRunning SetRetryPolicy() example" << std::endl;
+  SetRetryPolicy({});
+
   std::cout << "\nRunning WithServiceAccount() example" << std::endl;
   WithServiceAccount({keyfile});
 }
@@ -87,6 +157,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::Example example({
       {"set-client-endpoint", SetClientEndpoint},
+      {"set-retry-policy", SetRetryPolicy},
       {"with-service-account", WithServiceAccount},
       {"auto", AutoRun},
   });
