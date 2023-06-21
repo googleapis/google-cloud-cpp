@@ -240,15 +240,7 @@ endif ()
 add_subdirectory(google/cloud)
 google_cloud_cpp_enable_features()
 
-# The examples are more readable if we use exceptions for error handling. We had
-# to tradeoff readability vs. "making them compile everywhere".
-if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
-    AND bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE
-    AND iam IN_LIST GOOGLE_CLOUD_CPP_ENABLE
-    AND spanner IN_LIST GOOGLE_CLOUD_CPP_ENABLE
-    AND storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-    add_subdirectory(examples)
-endif ()
+add_subdirectory(examples)
 
 # Obsolete / retired flags and options. Removing them just cleans up a bit of
 # our code at the cost of breaking customers, while putting them here makes them
