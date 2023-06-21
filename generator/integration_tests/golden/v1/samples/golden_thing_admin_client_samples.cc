@@ -17,6 +17,8 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/v1/golden_thing_admin_client.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_connection_idempotency_policy.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -43,6 +45,52 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto client = google::cloud::golden_v1::GoldenThingAdminClient(
       google::cloud::golden_v1::MakeGoldenThingAdminConnection(options));
   //! [set-client-endpoint]
+}
+
+//! [custom-idempotency-policy]
+class CustomIdempotencyPolicy
+   : public google::cloud::golden_v1::GoldenThingAdminConnectionIdempotencyPolicy {
+ public:
+  ~CustomIdempotencyPolicy() override = default;
+  std::unique_ptr<google::cloud::golden_v1::GoldenThingAdminConnectionIdempotencyPolicy> clone() const override {
+    return std::make_unique<CustomIdempotencyPolicy>(*this);
+  }
+  // Override inherited functions to define as needed.
+};
+//! [custom-idempotency-policy]
+
+void SetRetryPolicy(std::vector<std::string> const& argv) {
+  if (!argv.empty()) {
+    throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
+  }
+  //! [set-retry-policy]
+  auto options = google::cloud::Options{}
+    .set<google::cloud::golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption>(
+      CustomIdempotencyPolicy().clone())
+    .set<google::cloud::golden_v1::GoldenThingAdminRetryPolicyOption>(
+      google::cloud::golden_v1::GoldenThingAdminLimitedErrorCountRetryPolicy(3).clone())
+    .set<google::cloud::golden_v1::GoldenThingAdminBackoffPolicyOption>(
+      google::cloud::ExponentialBackoffPolicy(
+          /*initial_delay=*/std::chrono::milliseconds(200),
+          /*maximum_delay=*/std::chrono::seconds(45),
+          /*scaling=*/2.0).clone());
+  auto connection = google::cloud::golden_v1::MakeGoldenThingAdminConnection(options);
+
+  // c1 and c2 share the same retry policies
+  auto c1 = google::cloud::golden_v1::GoldenThingAdminClient(connection);
+  auto c2 = google::cloud::golden_v1::GoldenThingAdminClient(connection);
+
+  // You can override any of the policies in a new client. This new client
+  // will share the policies from c1 (or c2) *except* from the retry policy.
+  auto c3 = google::cloud::golden_v1::GoldenThingAdminClient(
+    connection, google::cloud::Options{}.set<google::cloud::golden_v1::GoldenThingAdminRetryPolicyOption>(
+      google::cloud::golden_v1::GoldenThingAdminLimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
+
+  // You can also override the policies in a single call:
+  // c3.SomeRpc(..., google::cloud::Options{}
+  //     .set<google::cloud::golden_v1::GoldenThingAdminRetryPolicyOption>(
+  //       google::cloud::golden_v1::GoldenThingAdminLimitedErrorCountRetryPolicy(10).clone()));
+  //! [set-client-client-retry-policy]
 }
 
 void WithServiceAccount(std::vector<std::string> const& argv) {
@@ -77,6 +125,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetClientEndpoint() example" << std::endl;
   SetClientEndpoint({});
 
+  std::cout << "\nRunning SetRetryPolicy() example" << std::endl;
+  SetRetryPolicy({});
+
   std::cout << "\nRunning WithServiceAccount() example" << std::endl;
   WithServiceAccount({keyfile});
 }
@@ -86,6 +137,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::Example example({
       {"set-client-endpoint", SetClientEndpoint},
+      {"set-retry-policy", SetRetryPolicy},
       {"with-service-account", WithServiceAccount},
       {"auto", AutoRun},
   });
