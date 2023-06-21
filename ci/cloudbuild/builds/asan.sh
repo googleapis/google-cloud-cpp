@@ -18,6 +18,7 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
+source module ci/cloudbuild/builds/lib/conformance.sh
 source module ci/cloudbuild/builds/lib/integration.sh
 
 export CC=clang
@@ -29,3 +30,5 @@ bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 
 mapfile -t integration_args < <(integration::bazel_args)
 integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
+
+conformance::bazel_with_proxies
