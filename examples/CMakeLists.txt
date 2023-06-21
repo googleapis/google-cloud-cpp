@@ -51,12 +51,21 @@ if (spanner IN_LIST GOOGLE_CLOUD_CPP_ENABLE AND iam IN_LIST
     google_cloud_cpp_add_common_options(grpc_credential_types)
 endif ()
 
+if (batch IN_LIST GOOGLE_CLOUD_CPP_ENABLE AND logging IN_LIST
+                                              GOOGLE_CLOUD_CPP_ENABLE)
+    add_executable(batch_logging batch_logging.cc)
+    target_link_libraries(
+        batch_logging PRIVATE google_cloud_cpp_testing google-cloud-cpp::batch
+                              google-cloud-cpp::logging)
+    google_cloud_cpp_add_common_options(batch_logging)
+endif ()
+
 # Label all the binaries as "tests", so they run in our CI builds.
 if (NOT BUILD_TESTING)
     return()
 endif ()
 
-foreach (test gcs2cbt grpc_credential_types)
+foreach (test batch_logging gcs2cbt grpc_credential_types)
     if (NOT TARGET "${test}")
         continue()
     endif ()
