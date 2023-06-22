@@ -31,11 +31,14 @@ source module ci/lib/io.sh
 #
 # Example usage:
 #
-#   conformance::bazel_with_proxies
+#   mapfile -t args < <(bazel::common_args)
+#   conformance::bazel_with_proxies "${args[@]}"
 #
 function conformance::bazel_with_proxies() {
   readonly PROXY_SCRIPT="run_conformance_tests_proxy_bazel.sh"
 
+  local args=("${@:1}")
+
   io::log_h2 "Running Bigtable conformance tests (with proxy)"
-  "google/cloud/bigtable/ci/${PROXY_SCRIPT}"
+  "google/cloud/bigtable/ci/${PROXY_SCRIPT}" bazel "${args[@]}"
 }

@@ -21,18 +21,27 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
 
-# Build and start the proxy
-pushd . >/dev/null
-cd "$(dirname "$0")/../test_proxy"
-bazel build :cbt_test_proxy_main
-nohup bazel run :cbt_test_proxy_main -- 9999 &
+if [[ $# -lt 1 ]]; then
+  echo "Usage: $(basename "$0") <bazel-program> [bazel-args]"
+  exit 1
+fi
+
+BAZEL_BIN="$1"
+shift
+bazel_args=("$@")
+
+# Build and start the proxy in the background process. They are splitted as the
+# test will wait for the proxy to be live, subject to timeout (e.g. 100s).
+# Building the binary can easily take more than the timeout limit.
+pushd "$(dirname "$0")/../test_proxy" >/dev/null
+"${BAZEL_BIN}" build "${bazel_args[@]}" :cbt_test_proxy_main
+nohup "${BAZEL_BIN}" run "${bazel_args[@]}" :cbt_test_proxy_main -- 9999 &
 proxy_pid=$!
 popd >/dev/null
 
 # Run the test
-pushd . >/dev/null
-cd /var/tmp/downloads/cloud-bigtable-clients-test/tests
-eval "go test -v -skip Generic_CloseClient -proxy_addr=:9999"
+pushd /var/tmp/downloads/cloud-bigtable-clients-test/tests >/dev/null
+go test -v -skip Generic_CloseClient -proxy_addr=:9999
 exit_status=$?
 popd >/dev/null
 

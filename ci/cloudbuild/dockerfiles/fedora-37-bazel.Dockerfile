@@ -52,10 +52,11 @@ RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/relea
     chmod +x /usr/bin/bazelisk && \
     ln -s /usr/bin/bazelisk /usr/bin/bazel
 
-# Install the Go pakcage needed to run Bigtable conformance tests.
+# Download the packages needed to run Bigtable conformance tests.
 WORKDIR /var/tmp/downloads
 RUN wget -O go.tgz https://go.dev/dl/go1.20.5.linux-amd64.tar.gz
 RUN tar -C /usr/local/ -xzf go.tgz
-ENV PATH "/usr/local/go/bin:$PATH"
+ENV GO_LOCATION=/usr/local/go
+ENV PATH=${GO_LOCATION}/bin:${PATH}
 RUN go version
-RUN git clone https://github.com/googleapis/cloud-bigtable-clients-test.git
+RUN git clone -b v0.0.1 --single-branch https://github.com/googleapis/cloud-bigtable-clients-test.git
