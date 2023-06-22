@@ -62,6 +62,21 @@ StatusOr<ListJobsResponse> BigQueryJobLogging::ListJobs(
       tracing_options_);
 }
 
+// Customized LogWrapper is used here since InsertJobRequest is
+// not a protobuf message.
+StatusOr<InsertJobResponse> BigQueryJobLogging::InsertJob(
+    rest_internal::RestContext& rest_context, InsertJobRequest const& request) {
+  return LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             InsertJobRequest const& request) {
+        return child_->InsertJob(rest_context, request);
+      },
+      rest_context, request, __func__,
+      "google.cloud.bigquery.v2.minimal.internal.InsertJobRequest",
+      "google.cloud.bigquery.v2.minimal.internal.InsertJobResponse",
+      tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -46,6 +47,28 @@ StatusOr<ListJobsResponse> DefaultBigQueryJobRestStub::ListJobs(
   rest_internal::RestContext context;
   return ParseFromRestResponse<ListJobsResponse>(
       rest_stub_->Get(context, std::move(*rest_request)));
+}
+
+StatusOr<InsertJobResponse> DefaultBigQueryJobRestStub::InsertJob(
+    rest_internal::RestContext& rest_context, InsertJobRequest const& request) {
+  // Prepare the RestRequest from InsertJobRequest.
+  // This  does the following:
+  // 1) Sets the request url path.
+  // 2) Adds any query parameters and headers.
+  auto rest_request =
+      PrepareRestRequest<InsertJobRequest>(rest_context, request);
+
+  rest_request->AddHeader("Content-Type", "application/json");
+
+  // 3) Get the request body as json payload.
+  nlohmann::json json_payload;
+  to_json(json_payload, request.job());
+
+  // 4) Call the rest stub and parse the RestResponse.
+  rest_internal::RestContext context;
+  return ParseFromRestResponse<InsertJobResponse>(
+      rest_stub_->Post(context, std::move(*rest_request),
+                       {absl::MakeConstSpan(json_payload.dump())}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
