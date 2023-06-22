@@ -50,7 +50,7 @@ function Get-Released-Quickstarts {
         # In addition, the `google/cloud/debugger/quickstart` directory is gone.
         # However, we use the previous release of `google-cloud-cpp` in these
         # builds, where the target still exists:
-        #   TODO(#11772) - deprecated library.
+        #   TODO(#11772) - debugger deprecated library.
         Where-Object { -not ("asset", "compute", "channel", "dialogflow_es", "debugger" -contains $_) } |
         # TODO(#9923) - compiling all quickstarts on Windows is too slow
         Get-Random -Count 10
