@@ -68,6 +68,20 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section notebooks-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `notebooks_v1::ManagedNotebookServiceClient`:
+
+@snippet managed_notebook_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet managed_notebook_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c notebooks_v1::ManagedNotebookServiceClient](@ref notebooks_v1::ManagedNotebookServiceClient-retry-snippet)
+- [\c notebooks_v1::NotebookServiceClient](@ref notebooks_v1::NotebookServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section notebooks-override-retry-more-information More Information
@@ -81,5 +95,28 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page notebooks_v1::ManagedNotebookServiceClient-retry-snippet Override notebooks_v1::ManagedNotebookServiceClient Retry Policies
+
+This shows how to override the retry policies for notebooks_v1::ManagedNotebookServiceClient:
+
+@snippet google/cloud/notebooks/v1/samples/managed_notebook_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/notebooks/v1/samples/managed_notebook_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page notebooks_v1::NotebookServiceClient-retry-snippet Override notebooks_v1::NotebookServiceClient Retry Policies
+
+This shows how to override the retry policies for notebooks_v1::NotebookServiceClient:
+
+@snippet google/cloud/notebooks/v1/samples/notebook_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/notebooks/v1/samples/notebook_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

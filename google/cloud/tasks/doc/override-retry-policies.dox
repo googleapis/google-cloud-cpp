@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section tasks-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `tasks_v2::CloudTasksClient`:
+
+@snippet cloud_tasks_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet cloud_tasks_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section tasks-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page tasks_v2::CloudTasksClient-retry-snippet Override tasks_v2::CloudTasksClient Retry Policies
+
+This shows how to override the retry policies for tasks_v2::CloudTasksClient:
+
+@snippet google/cloud/tasks/v2/samples/cloud_tasks_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/tasks/v2/samples/cloud_tasks_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

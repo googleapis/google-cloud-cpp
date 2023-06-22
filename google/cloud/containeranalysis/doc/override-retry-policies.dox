@@ -68,6 +68,20 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section containeranalysis-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `containeranalysis_v1::ContainerAnalysisClient`:
+
+@snippet container_analysis_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet container_analysis_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c containeranalysis_v1::ContainerAnalysisClient](@ref containeranalysis_v1::ContainerAnalysisClient-retry-snippet)
+- [\c containeranalysis_v1::GrafeasClient](@ref containeranalysis_v1::GrafeasClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section containeranalysis-override-retry-more-information More Information
@@ -81,5 +95,28 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page containeranalysis_v1::ContainerAnalysisClient-retry-snippet Override containeranalysis_v1::ContainerAnalysisClient Retry Policies
+
+This shows how to override the retry policies for containeranalysis_v1::ContainerAnalysisClient:
+
+@snippet google/cloud/containeranalysis/v1/samples/container_analysis_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/containeranalysis/v1/samples/container_analysis_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page containeranalysis_v1::GrafeasClient-retry-snippet Override containeranalysis_v1::GrafeasClient Retry Policies
+
+This shows how to override the retry policies for containeranalysis_v1::GrafeasClient:
+
+@snippet google/cloud/containeranalysis/v1/samples/grafeas_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/containeranalysis/v1/samples/grafeas_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

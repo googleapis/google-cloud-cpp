@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section gkehub-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `gkehub_v1::GkeHubClient`:
+
+@snippet gke_hub_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet gke_hub_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section gkehub-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page gkehub_v1::GkeHubClient-retry-snippet Override gkehub_v1::GkeHubClient Retry Policies
+
+This shows how to override the retry policies for gkehub_v1::GkeHubClient:
+
+@snippet google/cloud/gkehub/v1/samples/gke_hub_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/gkehub/v1/samples/gke_hub_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

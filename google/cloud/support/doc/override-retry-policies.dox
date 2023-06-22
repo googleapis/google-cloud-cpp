@@ -68,6 +68,21 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section support-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `support_v2::CaseAttachmentServiceClient`:
+
+@snippet case_attachment_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet case_attachment_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c support_v2::CaseAttachmentServiceClient](@ref support_v2::CaseAttachmentServiceClient-retry-snippet)
+- [\c support_v2::CaseServiceClient](@ref support_v2::CaseServiceClient-retry-snippet)
+- [\c support_v2::CommentServiceClient](@ref support_v2::CommentServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section support-override-retry-more-information More Information
@@ -81,5 +96,40 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page support_v2::CaseAttachmentServiceClient-retry-snippet Override support_v2::CaseAttachmentServiceClient Retry Policies
+
+This shows how to override the retry policies for support_v2::CaseAttachmentServiceClient:
+
+@snippet google/cloud/support/v2/samples/case_attachment_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/support/v2/samples/case_attachment_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page support_v2::CaseServiceClient-retry-snippet Override support_v2::CaseServiceClient Retry Policies
+
+This shows how to override the retry policies for support_v2::CaseServiceClient:
+
+@snippet google/cloud/support/v2/samples/case_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/support/v2/samples/case_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page support_v2::CommentServiceClient-retry-snippet Override support_v2::CommentServiceClient Retry Policies
+
+This shows how to override the retry policies for support_v2::CommentServiceClient:
+
+@snippet google/cloud/support/v2/samples/comment_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/support/v2/samples/comment_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

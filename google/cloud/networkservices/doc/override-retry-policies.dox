@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section networkservices-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `networkservices_v1::NetworkServicesClient`:
+
+@snippet network_services_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet network_services_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section networkservices-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page networkservices_v1::NetworkServicesClient-retry-snippet Override networkservices_v1::NetworkServicesClient Retry Policies
+
+This shows how to override the retry policies for networkservices_v1::NetworkServicesClient:
+
+@snippet google/cloud/networkservices/v1/samples/network_services_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/networkservices/v1/samples/network_services_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

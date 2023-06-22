@@ -68,6 +68,34 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section dialogflow_cx-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `dialogflow_cx::AgentsClient`:
+
+@snippet agents_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet agents_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c dialogflow_cx::AgentsClient](@ref dialogflow_cx::AgentsClient-retry-snippet)
+- [\c dialogflow_cx::ChangelogsClient](@ref dialogflow_cx::ChangelogsClient-retry-snippet)
+- [\c dialogflow_cx::DeploymentsClient](@ref dialogflow_cx::DeploymentsClient-retry-snippet)
+- [\c dialogflow_cx::EntityTypesClient](@ref dialogflow_cx::EntityTypesClient-retry-snippet)
+- [\c dialogflow_cx::EnvironmentsClient](@ref dialogflow_cx::EnvironmentsClient-retry-snippet)
+- [\c dialogflow_cx::ExperimentsClient](@ref dialogflow_cx::ExperimentsClient-retry-snippet)
+- [\c dialogflow_cx::FlowsClient](@ref dialogflow_cx::FlowsClient-retry-snippet)
+- [\c dialogflow_cx::IntentsClient](@ref dialogflow_cx::IntentsClient-retry-snippet)
+- [\c dialogflow_cx::PagesClient](@ref dialogflow_cx::PagesClient-retry-snippet)
+- [\c dialogflow_cx::SecuritySettingsServiceClient](@ref dialogflow_cx::SecuritySettingsServiceClient-retry-snippet)
+- [\c dialogflow_cx::SessionEntityTypesClient](@ref dialogflow_cx::SessionEntityTypesClient-retry-snippet)
+- [\c dialogflow_cx::SessionsClient](@ref dialogflow_cx::SessionsClient-retry-snippet)
+- [\c dialogflow_cx::TestCasesClient](@ref dialogflow_cx::TestCasesClient-retry-snippet)
+- [\c dialogflow_cx::TransitionRouteGroupsClient](@ref dialogflow_cx::TransitionRouteGroupsClient-retry-snippet)
+- [\c dialogflow_cx::VersionsClient](@ref dialogflow_cx::VersionsClient-retry-snippet)
+- [\c dialogflow_cx::WebhooksClient](@ref dialogflow_cx::WebhooksClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section dialogflow_cx-override-retry-more-information More Information
@@ -81,5 +109,196 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page dialogflow_cx::AgentsClient-retry-snippet Override dialogflow_cx::AgentsClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::AgentsClient:
+
+@snippet google/cloud/dialogflow_cx/samples/agents_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/agents_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::ChangelogsClient-retry-snippet Override dialogflow_cx::ChangelogsClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::ChangelogsClient:
+
+@snippet google/cloud/dialogflow_cx/samples/changelogs_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/changelogs_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::DeploymentsClient-retry-snippet Override dialogflow_cx::DeploymentsClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::DeploymentsClient:
+
+@snippet google/cloud/dialogflow_cx/samples/deployments_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/deployments_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::EntityTypesClient-retry-snippet Override dialogflow_cx::EntityTypesClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::EntityTypesClient:
+
+@snippet google/cloud/dialogflow_cx/samples/entity_types_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/entity_types_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::EnvironmentsClient-retry-snippet Override dialogflow_cx::EnvironmentsClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::EnvironmentsClient:
+
+@snippet google/cloud/dialogflow_cx/samples/environments_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/environments_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::ExperimentsClient-retry-snippet Override dialogflow_cx::ExperimentsClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::ExperimentsClient:
+
+@snippet google/cloud/dialogflow_cx/samples/experiments_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/experiments_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::FlowsClient-retry-snippet Override dialogflow_cx::FlowsClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::FlowsClient:
+
+@snippet google/cloud/dialogflow_cx/samples/flows_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/flows_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::IntentsClient-retry-snippet Override dialogflow_cx::IntentsClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::IntentsClient:
+
+@snippet google/cloud/dialogflow_cx/samples/intents_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/intents_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::PagesClient-retry-snippet Override dialogflow_cx::PagesClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::PagesClient:
+
+@snippet google/cloud/dialogflow_cx/samples/pages_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/pages_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::SecuritySettingsServiceClient-retry-snippet Override dialogflow_cx::SecuritySettingsServiceClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::SecuritySettingsServiceClient:
+
+@snippet google/cloud/dialogflow_cx/samples/security_settings_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/security_settings_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::SessionEntityTypesClient-retry-snippet Override dialogflow_cx::SessionEntityTypesClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::SessionEntityTypesClient:
+
+@snippet google/cloud/dialogflow_cx/samples/session_entity_types_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/session_entity_types_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::SessionsClient-retry-snippet Override dialogflow_cx::SessionsClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::SessionsClient:
+
+@snippet google/cloud/dialogflow_cx/samples/sessions_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/sessions_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::TestCasesClient-retry-snippet Override dialogflow_cx::TestCasesClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::TestCasesClient:
+
+@snippet google/cloud/dialogflow_cx/samples/test_cases_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/test_cases_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::TransitionRouteGroupsClient-retry-snippet Override dialogflow_cx::TransitionRouteGroupsClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::TransitionRouteGroupsClient:
+
+@snippet google/cloud/dialogflow_cx/samples/transition_route_groups_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/transition_route_groups_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::VersionsClient-retry-snippet Override dialogflow_cx::VersionsClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::VersionsClient:
+
+@snippet google/cloud/dialogflow_cx/samples/versions_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/versions_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_cx::WebhooksClient-retry-snippet Override dialogflow_cx::WebhooksClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_cx::WebhooksClient:
+
+@snippet google/cloud/dialogflow_cx/samples/webhooks_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_cx/samples/webhooks_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

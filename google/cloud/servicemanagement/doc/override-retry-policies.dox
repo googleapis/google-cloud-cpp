@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section servicemanagement-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `servicemanagement_v1::ServiceManagerClient`:
+
+@snippet service_manager_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet service_manager_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section servicemanagement-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page servicemanagement_v1::ServiceManagerClient-retry-snippet Override servicemanagement_v1::ServiceManagerClient Retry Policies
+
+This shows how to override the retry policies for servicemanagement_v1::ServiceManagerClient:
+
+@snippet google/cloud/servicemanagement/v1/samples/service_manager_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/servicemanagement/v1/samples/service_manager_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

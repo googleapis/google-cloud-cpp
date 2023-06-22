@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section networkconnectivity-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `networkconnectivity_v1::HubServiceClient`:
+
+@snippet hub_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet hub_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section networkconnectivity-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page networkconnectivity_v1::HubServiceClient-retry-snippet Override networkconnectivity_v1::HubServiceClient Retry Policies
+
+This shows how to override the retry policies for networkconnectivity_v1::HubServiceClient:
+
+@snippet google/cloud/networkconnectivity/v1/samples/hub_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/networkconnectivity/v1/samples/hub_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

@@ -68,6 +68,20 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section run-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `run_v2::RevisionsClient`:
+
+@snippet revisions_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet revisions_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c run_v2::RevisionsClient](@ref run_v2::RevisionsClient-retry-snippet)
+- [\c run_v2::ServicesClient](@ref run_v2::ServicesClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section run-override-retry-more-information More Information
@@ -81,5 +95,28 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page run_v2::RevisionsClient-retry-snippet Override run_v2::RevisionsClient Retry Policies
+
+This shows how to override the retry policies for run_v2::RevisionsClient:
+
+@snippet google/cloud/run/v2/samples/revisions_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/run/v2/samples/revisions_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page run_v2::ServicesClient-retry-snippet Override run_v2::ServicesClient Retry Policies
+
+This shows how to override the retry policies for run_v2::ServicesClient:
+
+@snippet google/cloud/run/v2/samples/services_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/run/v2/samples/services_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

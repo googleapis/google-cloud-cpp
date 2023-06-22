@@ -68,6 +68,20 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section osconfig-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `osconfig_agentendpoint_v1::AgentEndpointServiceClient`:
+
+@snippet agent_endpoint_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet agent_endpoint_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c osconfig_agentendpoint_v1::AgentEndpointServiceClient](@ref osconfig_agentendpoint_v1::AgentEndpointServiceClient-retry-snippet)
+- [\c osconfig_v1::OsConfigServiceClient](@ref osconfig_v1::OsConfigServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section osconfig-override-retry-more-information More Information
@@ -81,5 +95,28 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page osconfig_agentendpoint_v1::AgentEndpointServiceClient-retry-snippet Override osconfig_agentendpoint_v1::AgentEndpointServiceClient Retry Policies
+
+This shows how to override the retry policies for osconfig_agentendpoint_v1::AgentEndpointServiceClient:
+
+@snippet google/cloud/osconfig/agentendpoint/v1/samples/agent_endpoint_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/osconfig/agentendpoint/v1/samples/agent_endpoint_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page osconfig_v1::OsConfigServiceClient-retry-snippet Override osconfig_v1::OsConfigServiceClient Retry Policies
+
+This shows how to override the retry policies for osconfig_v1::OsConfigServiceClient:
+
+@snippet google/cloud/osconfig/v1/samples/os_config_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/osconfig/v1/samples/os_config_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

@@ -68,6 +68,22 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section gameservices-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `gameservices_v1::GameServerClustersServiceClient`:
+
+@snippet game_server_clusters_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet game_server_clusters_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c gameservices_v1::GameServerClustersServiceClient](@ref gameservices_v1::GameServerClustersServiceClient-retry-snippet)
+- [\c gameservices_v1::GameServerConfigsServiceClient](@ref gameservices_v1::GameServerConfigsServiceClient-retry-snippet)
+- [\c gameservices_v1::GameServerDeploymentsServiceClient](@ref gameservices_v1::GameServerDeploymentsServiceClient-retry-snippet)
+- [\c gameservices_v1::RealmsServiceClient](@ref gameservices_v1::RealmsServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section gameservices-override-retry-more-information More Information
@@ -81,5 +97,52 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page gameservices_v1::GameServerClustersServiceClient-retry-snippet Override gameservices_v1::GameServerClustersServiceClient Retry Policies
+
+This shows how to override the retry policies for gameservices_v1::GameServerClustersServiceClient:
+
+@snippet google/cloud/gameservices/v1/samples/game_server_clusters_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/gameservices/v1/samples/game_server_clusters_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page gameservices_v1::GameServerConfigsServiceClient-retry-snippet Override gameservices_v1::GameServerConfigsServiceClient Retry Policies
+
+This shows how to override the retry policies for gameservices_v1::GameServerConfigsServiceClient:
+
+@snippet google/cloud/gameservices/v1/samples/game_server_configs_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/gameservices/v1/samples/game_server_configs_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page gameservices_v1::GameServerDeploymentsServiceClient-retry-snippet Override gameservices_v1::GameServerDeploymentsServiceClient Retry Policies
+
+This shows how to override the retry policies for gameservices_v1::GameServerDeploymentsServiceClient:
+
+@snippet google/cloud/gameservices/v1/samples/game_server_deployments_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/gameservices/v1/samples/game_server_deployments_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page gameservices_v1::RealmsServiceClient-retry-snippet Override gameservices_v1::RealmsServiceClient Retry Policies
+
+This shows how to override the retry policies for gameservices_v1::RealmsServiceClient:
+
+@snippet google/cloud/gameservices/v1/samples/realms_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/gameservices/v1/samples/realms_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

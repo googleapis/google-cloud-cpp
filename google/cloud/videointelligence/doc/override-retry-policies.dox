@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section videointelligence-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `videointelligence_v1::VideoIntelligenceServiceClient`:
+
+@snippet video_intelligence_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet video_intelligence_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section videointelligence-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page videointelligence_v1::VideoIntelligenceServiceClient-retry-snippet Override videointelligence_v1::VideoIntelligenceServiceClient Retry Policies
+
+This shows how to override the retry policies for videointelligence_v1::VideoIntelligenceServiceClient:
+
+@snippet google/cloud/videointelligence/v1/samples/video_intelligence_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/videointelligence/v1/samples/video_intelligence_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

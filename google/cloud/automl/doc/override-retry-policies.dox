@@ -68,6 +68,20 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section automl-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `automl_v1::AutoMlClient`:
+
+@snippet auto_ml_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet auto_ml_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c automl_v1::AutoMlClient](@ref automl_v1::AutoMlClient-retry-snippet)
+- [\c automl_v1::PredictionServiceClient](@ref automl_v1::PredictionServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section automl-override-retry-more-information More Information
@@ -81,5 +95,28 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page automl_v1::AutoMlClient-retry-snippet Override automl_v1::AutoMlClient Retry Policies
+
+This shows how to override the retry policies for automl_v1::AutoMlClient:
+
+@snippet google/cloud/automl/v1/samples/auto_ml_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/automl/v1/samples/auto_ml_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page automl_v1::PredictionServiceClient-retry-snippet Override automl_v1::PredictionServiceClient Retry Policies
+
+This shows how to override the retry policies for automl_v1::PredictionServiceClient:
+
+@snippet google/cloud/automl/v1/samples/prediction_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/automl/v1/samples/prediction_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

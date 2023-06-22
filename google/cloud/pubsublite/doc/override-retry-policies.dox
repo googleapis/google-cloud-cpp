@@ -68,6 +68,20 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section pubsublite-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `pubsublite::AdminServiceClient`:
+
+@snippet admin_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet admin_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c pubsublite::AdminServiceClient](@ref pubsublite::AdminServiceClient-retry-snippet)
+- [\c pubsublite::TopicStatsServiceClient](@ref pubsublite::TopicStatsServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section pubsublite-override-retry-more-information More Information
@@ -81,4 +95,28 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
+
+/*! @page pubsublite::AdminServiceClient-retry-snippet Override pubsublite::AdminServiceClient Retry Policies
+
+This shows how to override the retry policies for pubsublite::AdminServiceClient:
+
+@snippet google/cloud/pubsublite/samples/admin_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/pubsublite/samples/admin_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page pubsublite::TopicStatsServiceClient-retry-snippet Override pubsublite::TopicStatsServiceClient Retry Policies
+
+This shows how to override the retry policies for pubsublite::TopicStatsServiceClient:
+
+@snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc custom-idempotency-policy
+
+*/
 // <!-- inject-retry-pages-end -->

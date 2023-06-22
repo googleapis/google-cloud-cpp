@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section workstations-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `workstations_v1::WorkstationsClient`:
+
+@snippet workstations_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet workstations_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section workstations-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page workstations_v1::WorkstationsClient-retry-snippet Override workstations_v1::WorkstationsClient Retry Policies
+
+This shows how to override the retry policies for workstations_v1::WorkstationsClient:
+
+@snippet google/cloud/workstations/v1/samples/workstations_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/workstations/v1/samples/workstations_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

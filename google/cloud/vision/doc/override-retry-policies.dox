@@ -68,6 +68,20 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section vision-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `vision_v1::ImageAnnotatorClient`:
+
+@snippet image_annotator_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet image_annotator_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c vision_v1::ImageAnnotatorClient](@ref vision_v1::ImageAnnotatorClient-retry-snippet)
+- [\c vision_v1::ProductSearchClient](@ref vision_v1::ProductSearchClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section vision-override-retry-more-information More Information
@@ -81,5 +95,28 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page vision_v1::ImageAnnotatorClient-retry-snippet Override vision_v1::ImageAnnotatorClient Retry Policies
+
+This shows how to override the retry policies for vision_v1::ImageAnnotatorClient:
+
+@snippet google/cloud/vision/v1/samples/image_annotator_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/vision/v1/samples/image_annotator_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page vision_v1::ProductSearchClient-retry-snippet Override vision_v1::ProductSearchClient Retry Policies
+
+This shows how to override the retry policies for vision_v1::ProductSearchClient:
+
+@snippet google/cloud/vision/v1/samples/product_search_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/vision/v1/samples/product_search_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

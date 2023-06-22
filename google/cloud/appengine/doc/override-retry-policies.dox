@@ -68,6 +68,26 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section appengine-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `appengine_v1::ApplicationsClient`:
+
+@snippet applications_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet applications_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c appengine_v1::ApplicationsClient](@ref appengine_v1::ApplicationsClient-retry-snippet)
+- [\c appengine_v1::AuthorizedCertificatesClient](@ref appengine_v1::AuthorizedCertificatesClient-retry-snippet)
+- [\c appengine_v1::AuthorizedDomainsClient](@ref appengine_v1::AuthorizedDomainsClient-retry-snippet)
+- [\c appengine_v1::DomainMappingsClient](@ref appengine_v1::DomainMappingsClient-retry-snippet)
+- [\c appengine_v1::FirewallClient](@ref appengine_v1::FirewallClient-retry-snippet)
+- [\c appengine_v1::InstancesClient](@ref appengine_v1::InstancesClient-retry-snippet)
+- [\c appengine_v1::ServicesClient](@ref appengine_v1::ServicesClient-retry-snippet)
+- [\c appengine_v1::VersionsClient](@ref appengine_v1::VersionsClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section appengine-override-retry-more-information More Information
@@ -81,5 +101,100 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page appengine_v1::ApplicationsClient-retry-snippet Override appengine_v1::ApplicationsClient Retry Policies
+
+This shows how to override the retry policies for appengine_v1::ApplicationsClient:
+
+@snippet google/cloud/appengine/v1/samples/applications_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/appengine/v1/samples/applications_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page appengine_v1::AuthorizedCertificatesClient-retry-snippet Override appengine_v1::AuthorizedCertificatesClient Retry Policies
+
+This shows how to override the retry policies for appengine_v1::AuthorizedCertificatesClient:
+
+@snippet google/cloud/appengine/v1/samples/authorized_certificates_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/appengine/v1/samples/authorized_certificates_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page appengine_v1::AuthorizedDomainsClient-retry-snippet Override appengine_v1::AuthorizedDomainsClient Retry Policies
+
+This shows how to override the retry policies for appengine_v1::AuthorizedDomainsClient:
+
+@snippet google/cloud/appengine/v1/samples/authorized_domains_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/appengine/v1/samples/authorized_domains_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page appengine_v1::DomainMappingsClient-retry-snippet Override appengine_v1::DomainMappingsClient Retry Policies
+
+This shows how to override the retry policies for appengine_v1::DomainMappingsClient:
+
+@snippet google/cloud/appengine/v1/samples/domain_mappings_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/appengine/v1/samples/domain_mappings_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page appengine_v1::FirewallClient-retry-snippet Override appengine_v1::FirewallClient Retry Policies
+
+This shows how to override the retry policies for appengine_v1::FirewallClient:
+
+@snippet google/cloud/appengine/v1/samples/firewall_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/appengine/v1/samples/firewall_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page appengine_v1::InstancesClient-retry-snippet Override appengine_v1::InstancesClient Retry Policies
+
+This shows how to override the retry policies for appengine_v1::InstancesClient:
+
+@snippet google/cloud/appengine/v1/samples/instances_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/appengine/v1/samples/instances_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page appengine_v1::ServicesClient-retry-snippet Override appengine_v1::ServicesClient Retry Policies
+
+This shows how to override the retry policies for appengine_v1::ServicesClient:
+
+@snippet google/cloud/appengine/v1/samples/services_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/appengine/v1/samples/services_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page appengine_v1::VersionsClient-retry-snippet Override appengine_v1::VersionsClient Retry Policies
+
+This shows how to override the retry policies for appengine_v1::VersionsClient:
+
+@snippet google/cloud/appengine/v1/samples/versions_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/appengine/v1/samples/versions_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

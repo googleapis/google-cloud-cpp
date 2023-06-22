@@ -68,6 +68,21 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section gkemulticloud-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `gkemulticloud_v1::AttachedClustersClient`:
+
+@snippet attached_clusters_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet attached_clusters_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c gkemulticloud_v1::AttachedClustersClient](@ref gkemulticloud_v1::AttachedClustersClient-retry-snippet)
+- [\c gkemulticloud_v1::AwsClustersClient](@ref gkemulticloud_v1::AwsClustersClient-retry-snippet)
+- [\c gkemulticloud_v1::AzureClustersClient](@ref gkemulticloud_v1::AzureClustersClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section gkemulticloud-override-retry-more-information More Information
@@ -81,5 +96,40 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page gkemulticloud_v1::AttachedClustersClient-retry-snippet Override gkemulticloud_v1::AttachedClustersClient Retry Policies
+
+This shows how to override the retry policies for gkemulticloud_v1::AttachedClustersClient:
+
+@snippet google/cloud/gkemulticloud/v1/samples/attached_clusters_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/gkemulticloud/v1/samples/attached_clusters_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page gkemulticloud_v1::AwsClustersClient-retry-snippet Override gkemulticloud_v1::AwsClustersClient Retry Policies
+
+This shows how to override the retry policies for gkemulticloud_v1::AwsClustersClient:
+
+@snippet google/cloud/gkemulticloud/v1/samples/aws_clusters_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/gkemulticloud/v1/samples/aws_clusters_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page gkemulticloud_v1::AzureClustersClient-retry-snippet Override gkemulticloud_v1::AzureClustersClient Retry Policies
+
+This shows how to override the retry policies for gkemulticloud_v1::AzureClustersClient:
+
+@snippet google/cloud/gkemulticloud/v1/samples/azure_clusters_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/gkemulticloud/v1/samples/azure_clusters_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

@@ -68,6 +68,20 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section servicedirectory-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `servicedirectory_v1::LookupServiceClient`:
+
+@snippet lookup_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet lookup_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c servicedirectory_v1::LookupServiceClient](@ref servicedirectory_v1::LookupServiceClient-retry-snippet)
+- [\c servicedirectory_v1::RegistrationServiceClient](@ref servicedirectory_v1::RegistrationServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section servicedirectory-override-retry-more-information More Information
@@ -81,5 +95,28 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page servicedirectory_v1::LookupServiceClient-retry-snippet Override servicedirectory_v1::LookupServiceClient Retry Policies
+
+This shows how to override the retry policies for servicedirectory_v1::LookupServiceClient:
+
+@snippet google/cloud/servicedirectory/v1/samples/lookup_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/servicedirectory/v1/samples/lookup_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page servicedirectory_v1::RegistrationServiceClient-retry-snippet Override servicedirectory_v1::RegistrationServiceClient Retry Policies
+
+This shows how to override the retry policies for servicedirectory_v1::RegistrationServiceClient:
+
+@snippet google/cloud/servicedirectory/v1/samples/registration_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/servicedirectory/v1/samples/registration_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

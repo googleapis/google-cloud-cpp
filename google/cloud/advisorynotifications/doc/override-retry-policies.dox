@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section advisorynotifications-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `advisorynotifications_v1::AdvisoryNotificationsServiceClient`:
+
+@snippet advisory_notifications_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet advisory_notifications_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section advisorynotifications-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page advisorynotifications_v1::AdvisoryNotificationsServiceClient-retry-snippet Override advisorynotifications_v1::AdvisoryNotificationsServiceClient Retry Policies
+
+This shows how to override the retry policies for advisorynotifications_v1::AdvisoryNotificationsServiceClient:
+
+@snippet google/cloud/advisorynotifications/v1/samples/advisory_notifications_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/advisorynotifications/v1/samples/advisory_notifications_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

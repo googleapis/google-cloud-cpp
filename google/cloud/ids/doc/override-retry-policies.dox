@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section ids-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `ids_v1::IDSClient`:
+
+@snippet ids_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet ids_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section ids-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page ids_v1::IDSClient-retry-snippet Override ids_v1::IDSClient Retry Policies
+
+This shows how to override the retry policies for ids_v1::IDSClient:
+
+@snippet google/cloud/ids/v1/samples/ids_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/ids/v1/samples/ids_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

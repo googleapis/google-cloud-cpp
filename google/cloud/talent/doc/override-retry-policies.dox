@@ -68,6 +68,23 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section talent-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `talent_v4::CompanyServiceClient`:
+
+@snippet company_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet company_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c talent_v4::CompanyServiceClient](@ref talent_v4::CompanyServiceClient-retry-snippet)
+- [\c talent_v4::CompletionClient](@ref talent_v4::CompletionClient-retry-snippet)
+- [\c talent_v4::EventServiceClient](@ref talent_v4::EventServiceClient-retry-snippet)
+- [\c talent_v4::JobServiceClient](@ref talent_v4::JobServiceClient-retry-snippet)
+- [\c talent_v4::TenantServiceClient](@ref talent_v4::TenantServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section talent-override-retry-more-information More Information
@@ -81,5 +98,64 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page talent_v4::CompanyServiceClient-retry-snippet Override talent_v4::CompanyServiceClient Retry Policies
+
+This shows how to override the retry policies for talent_v4::CompanyServiceClient:
+
+@snippet google/cloud/talent/v4/samples/company_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/talent/v4/samples/company_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page talent_v4::CompletionClient-retry-snippet Override talent_v4::CompletionClient Retry Policies
+
+This shows how to override the retry policies for talent_v4::CompletionClient:
+
+@snippet google/cloud/talent/v4/samples/completion_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/talent/v4/samples/completion_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page talent_v4::EventServiceClient-retry-snippet Override talent_v4::EventServiceClient Retry Policies
+
+This shows how to override the retry policies for talent_v4::EventServiceClient:
+
+@snippet google/cloud/talent/v4/samples/event_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/talent/v4/samples/event_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page talent_v4::JobServiceClient-retry-snippet Override talent_v4::JobServiceClient Retry Policies
+
+This shows how to override the retry policies for talent_v4::JobServiceClient:
+
+@snippet google/cloud/talent/v4/samples/job_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/talent/v4/samples/job_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page talent_v4::TenantServiceClient-retry-snippet Override talent_v4::TenantServiceClient Retry Policies
+
+This shows how to override the retry policies for talent_v4::TenantServiceClient:
+
+@snippet google/cloud/talent/v4/samples/tenant_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/talent/v4/samples/tenant_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

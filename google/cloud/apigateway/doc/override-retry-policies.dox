@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section apigateway-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `apigateway_v1::ApiGatewayServiceClient`:
+
+@snippet api_gateway_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet api_gateway_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section apigateway-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page apigateway_v1::ApiGatewayServiceClient-retry-snippet Override apigateway_v1::ApiGatewayServiceClient Retry Policies
+
+This shows how to override the retry policies for apigateway_v1::ApiGatewayServiceClient:
+
+@snippet google/cloud/apigateway/v1/samples/api_gateway_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/apigateway/v1/samples/api_gateway_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

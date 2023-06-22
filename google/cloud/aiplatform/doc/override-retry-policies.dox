@@ -68,6 +68,35 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section aiplatform-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `aiplatform_v1::DatasetServiceClient`:
+
+@snippet dataset_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet dataset_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c aiplatform_v1::DatasetServiceClient](@ref aiplatform_v1::DatasetServiceClient-retry-snippet)
+- [\c aiplatform_v1::EndpointServiceClient](@ref aiplatform_v1::EndpointServiceClient-retry-snippet)
+- [\c aiplatform_v1::FeaturestoreServiceClient](@ref aiplatform_v1::FeaturestoreServiceClient-retry-snippet)
+- [\c aiplatform_v1::FeaturestoreOnlineServingServiceClient](@ref aiplatform_v1::FeaturestoreOnlineServingServiceClient-retry-snippet)
+- [\c aiplatform_v1::IndexServiceClient](@ref aiplatform_v1::IndexServiceClient-retry-snippet)
+- [\c aiplatform_v1::IndexEndpointServiceClient](@ref aiplatform_v1::IndexEndpointServiceClient-retry-snippet)
+- [\c aiplatform_v1::JobServiceClient](@ref aiplatform_v1::JobServiceClient-retry-snippet)
+- [\c aiplatform_v1::MatchServiceClient](@ref aiplatform_v1::MatchServiceClient-retry-snippet)
+- [\c aiplatform_v1::MetadataServiceClient](@ref aiplatform_v1::MetadataServiceClient-retry-snippet)
+- [\c aiplatform_v1::MigrationServiceClient](@ref aiplatform_v1::MigrationServiceClient-retry-snippet)
+- [\c aiplatform_v1::ModelServiceClient](@ref aiplatform_v1::ModelServiceClient-retry-snippet)
+- [\c aiplatform_v1::ModelGardenServiceClient](@ref aiplatform_v1::ModelGardenServiceClient-retry-snippet)
+- [\c aiplatform_v1::PipelineServiceClient](@ref aiplatform_v1::PipelineServiceClient-retry-snippet)
+- [\c aiplatform_v1::PredictionServiceClient](@ref aiplatform_v1::PredictionServiceClient-retry-snippet)
+- [\c aiplatform_v1::SpecialistPoolServiceClient](@ref aiplatform_v1::SpecialistPoolServiceClient-retry-snippet)
+- [\c aiplatform_v1::TensorboardServiceClient](@ref aiplatform_v1::TensorboardServiceClient-retry-snippet)
+- [\c aiplatform_v1::VizierServiceClient](@ref aiplatform_v1::VizierServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section aiplatform-override-retry-more-information More Information
@@ -81,5 +110,208 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page aiplatform_v1::DatasetServiceClient-retry-snippet Override aiplatform_v1::DatasetServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::DatasetServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/dataset_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/dataset_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::EndpointServiceClient-retry-snippet Override aiplatform_v1::EndpointServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::EndpointServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/endpoint_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/endpoint_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::FeaturestoreServiceClient-retry-snippet Override aiplatform_v1::FeaturestoreServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::FeaturestoreServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/featurestore_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/featurestore_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::FeaturestoreOnlineServingServiceClient-retry-snippet Override aiplatform_v1::FeaturestoreOnlineServingServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::FeaturestoreOnlineServingServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/featurestore_online_serving_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/featurestore_online_serving_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::IndexServiceClient-retry-snippet Override aiplatform_v1::IndexServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::IndexServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/index_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/index_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::IndexEndpointServiceClient-retry-snippet Override aiplatform_v1::IndexEndpointServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::IndexEndpointServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/index_endpoint_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/index_endpoint_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::JobServiceClient-retry-snippet Override aiplatform_v1::JobServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::JobServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/job_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/job_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::MatchServiceClient-retry-snippet Override aiplatform_v1::MatchServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::MatchServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/match_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/match_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::MetadataServiceClient-retry-snippet Override aiplatform_v1::MetadataServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::MetadataServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/metadata_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/metadata_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::MigrationServiceClient-retry-snippet Override aiplatform_v1::MigrationServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::MigrationServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/migration_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/migration_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::ModelServiceClient-retry-snippet Override aiplatform_v1::ModelServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::ModelServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/model_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/model_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::ModelGardenServiceClient-retry-snippet Override aiplatform_v1::ModelGardenServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::ModelGardenServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/model_garden_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/model_garden_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::PipelineServiceClient-retry-snippet Override aiplatform_v1::PipelineServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::PipelineServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/pipeline_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/pipeline_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::PredictionServiceClient-retry-snippet Override aiplatform_v1::PredictionServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::PredictionServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/prediction_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/prediction_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::SpecialistPoolServiceClient-retry-snippet Override aiplatform_v1::SpecialistPoolServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::SpecialistPoolServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/specialist_pool_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/specialist_pool_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::TensorboardServiceClient-retry-snippet Override aiplatform_v1::TensorboardServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::TensorboardServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/tensorboard_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/tensorboard_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page aiplatform_v1::VizierServiceClient-retry-snippet Override aiplatform_v1::VizierServiceClient Retry Policies
+
+This shows how to override the retry policies for aiplatform_v1::VizierServiceClient:
+
+@snippet google/cloud/aiplatform/v1/samples/vizier_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/aiplatform/v1/samples/vizier_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

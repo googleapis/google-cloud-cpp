@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section securitycenter-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `securitycenter_v1::SecurityCenterClient`:
+
+@snippet security_center_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet security_center_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section securitycenter-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page securitycenter_v1::SecurityCenterClient-retry-snippet Override securitycenter_v1::SecurityCenterClient Retry Policies
+
+This shows how to override the retry policies for securitycenter_v1::SecurityCenterClient:
+
+@snippet google/cloud/securitycenter/v1/samples/security_center_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/securitycenter/v1/samples/security_center_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

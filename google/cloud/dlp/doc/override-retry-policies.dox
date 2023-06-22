@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section dlp-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `dlp_v2::DlpServiceClient`:
+
+@snippet dlp_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet dlp_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section dlp-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page dlp_v2::DlpServiceClient-retry-snippet Override dlp_v2::DlpServiceClient Retry Policies
+
+This shows how to override the retry policies for dlp_v2::DlpServiceClient:
+
+@snippet google/cloud/dlp/v2/samples/dlp_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dlp/v2/samples/dlp_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

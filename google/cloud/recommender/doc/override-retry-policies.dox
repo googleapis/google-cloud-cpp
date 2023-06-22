@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section recommender-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `recommender_v1::RecommenderClient`:
+
+@snippet recommender_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet recommender_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section recommender-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page recommender_v1::RecommenderClient-retry-snippet Override recommender_v1::RecommenderClient Retry Policies
+
+This shows how to override the retry policies for recommender_v1::RecommenderClient:
+
+@snippet google/cloud/recommender/v1/samples/recommender_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/recommender/v1/samples/recommender_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

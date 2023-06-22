@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section accesscontextmanager-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `accesscontextmanager_v1::AccessContextManagerClient`:
+
+@snippet access_context_manager_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet access_context_manager_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section accesscontextmanager-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page accesscontextmanager_v1::AccessContextManagerClient-retry-snippet Override accesscontextmanager_v1::AccessContextManagerClient Retry Policies
+
+This shows how to override the retry policies for accesscontextmanager_v1::AccessContextManagerClient:
+
+@snippet google/cloud/accesscontextmanager/v1/samples/access_context_manager_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/accesscontextmanager/v1/samples/access_context_manager_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

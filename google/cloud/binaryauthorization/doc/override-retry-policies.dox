@@ -68,6 +68,21 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section binaryauthorization-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `binaryauthorization_v1::BinauthzManagementServiceV1Client`:
+
+@snippet binauthz_management_service_v1_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet binauthz_management_service_v1_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c binaryauthorization_v1::BinauthzManagementServiceV1Client](@ref binaryauthorization_v1::BinauthzManagementServiceV1Client-retry-snippet)
+- [\c binaryauthorization_v1::SystemPolicyV1Client](@ref binaryauthorization_v1::SystemPolicyV1Client-retry-snippet)
+- [\c binaryauthorization_v1::ValidationHelperV1Client](@ref binaryauthorization_v1::ValidationHelperV1Client-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section binaryauthorization-override-retry-more-information More Information
@@ -81,5 +96,40 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page binaryauthorization_v1::BinauthzManagementServiceV1Client-retry-snippet Override binaryauthorization_v1::BinauthzManagementServiceV1Client Retry Policies
+
+This shows how to override the retry policies for binaryauthorization_v1::BinauthzManagementServiceV1Client:
+
+@snippet google/cloud/binaryauthorization/v1/samples/binauthz_management_service_v1_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/binaryauthorization/v1/samples/binauthz_management_service_v1_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page binaryauthorization_v1::SystemPolicyV1Client-retry-snippet Override binaryauthorization_v1::SystemPolicyV1Client Retry Policies
+
+This shows how to override the retry policies for binaryauthorization_v1::SystemPolicyV1Client:
+
+@snippet google/cloud/binaryauthorization/v1/samples/system_policy_v1_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/binaryauthorization/v1/samples/system_policy_v1_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page binaryauthorization_v1::ValidationHelperV1Client-retry-snippet Override binaryauthorization_v1::ValidationHelperV1Client Retry Policies
+
+This shows how to override the retry policies for binaryauthorization_v1::ValidationHelperV1Client:
+
+@snippet google/cloud/binaryauthorization/v1/samples/validation_helper_v1_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/binaryauthorization/v1/samples/validation_helper_v1_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

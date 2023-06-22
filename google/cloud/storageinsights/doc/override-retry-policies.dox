@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section storageinsights-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `storageinsights_v1::StorageInsightsClient`:
+
+@snippet storage_insights_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet storage_insights_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section storageinsights-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page storageinsights_v1::StorageInsightsClient-retry-snippet Override storageinsights_v1::StorageInsightsClient Retry Policies
+
+This shows how to override the retry policies for storageinsights_v1::StorageInsightsClient:
+
+@snippet google/cloud/storageinsights/v1/samples/storage_insights_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/storageinsights/v1/samples/storage_insights_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

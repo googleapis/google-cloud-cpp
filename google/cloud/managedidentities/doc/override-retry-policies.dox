@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section managedidentities-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `managedidentities_v1::ManagedIdentitiesServiceClient`:
+
+@snippet managed_identities_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet managed_identities_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section managedidentities-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page managedidentities_v1::ManagedIdentitiesServiceClient-retry-snippet Override managedidentities_v1::ManagedIdentitiesServiceClient Retry Policies
+
+This shows how to override the retry policies for managedidentities_v1::ManagedIdentitiesServiceClient:
+
+@snippet google/cloud/managedidentities/v1/samples/managed_identities_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/managedidentities/v1/samples/managed_identities_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

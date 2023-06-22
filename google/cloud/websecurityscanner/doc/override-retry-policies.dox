@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section websecurityscanner-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `websecurityscanner_v1::WebSecurityScannerClient`:
+
+@snippet web_security_scanner_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet web_security_scanner_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section websecurityscanner-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page websecurityscanner_v1::WebSecurityScannerClient-retry-snippet Override websecurityscanner_v1::WebSecurityScannerClient Retry Policies
+
+This shows how to override the retry policies for websecurityscanner_v1::WebSecurityScannerClient:
+
+@snippet google/cloud/websecurityscanner/v1/samples/web_security_scanner_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/websecurityscanner/v1/samples/web_security_scanner_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

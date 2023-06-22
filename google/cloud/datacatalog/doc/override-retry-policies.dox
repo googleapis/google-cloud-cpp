@@ -68,6 +68,22 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section datacatalog-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `datacatalog_lineage_v1::LineageClient`:
+
+@snippet lineage_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet lineage_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c datacatalog_lineage_v1::LineageClient](@ref datacatalog_lineage_v1::LineageClient-retry-snippet)
+- [\c datacatalog_v1::DataCatalogClient](@ref datacatalog_v1::DataCatalogClient-retry-snippet)
+- [\c datacatalog_v1::PolicyTagManagerClient](@ref datacatalog_v1::PolicyTagManagerClient-retry-snippet)
+- [\c datacatalog_v1::PolicyTagManagerSerializationClient](@ref datacatalog_v1::PolicyTagManagerSerializationClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section datacatalog-override-retry-more-information More Information
@@ -81,5 +97,52 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page datacatalog_lineage_v1::LineageClient-retry-snippet Override datacatalog_lineage_v1::LineageClient Retry Policies
+
+This shows how to override the retry policies for datacatalog_lineage_v1::LineageClient:
+
+@snippet google/cloud/datacatalog/lineage/v1/samples/lineage_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/datacatalog/lineage/v1/samples/lineage_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page datacatalog_v1::DataCatalogClient-retry-snippet Override datacatalog_v1::DataCatalogClient Retry Policies
+
+This shows how to override the retry policies for datacatalog_v1::DataCatalogClient:
+
+@snippet google/cloud/datacatalog/v1/samples/data_catalog_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/datacatalog/v1/samples/data_catalog_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page datacatalog_v1::PolicyTagManagerClient-retry-snippet Override datacatalog_v1::PolicyTagManagerClient Retry Policies
+
+This shows how to override the retry policies for datacatalog_v1::PolicyTagManagerClient:
+
+@snippet google/cloud/datacatalog/v1/samples/policy_tag_manager_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/datacatalog/v1/samples/policy_tag_manager_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page datacatalog_v1::PolicyTagManagerSerializationClient-retry-snippet Override datacatalog_v1::PolicyTagManagerSerializationClient Retry Policies
+
+This shows how to override the retry policies for datacatalog_v1::PolicyTagManagerSerializationClient:
+
+@snippet google/cloud/datacatalog/v1/samples/policy_tag_manager_serialization_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/datacatalog/v1/samples/policy_tag_manager_serialization_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

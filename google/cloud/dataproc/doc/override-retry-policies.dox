@@ -68,6 +68,23 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section dataproc-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `dataproc_v1::AutoscalingPolicyServiceClient`:
+
+@snippet autoscaling_policy_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet autoscaling_policy_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c dataproc_v1::AutoscalingPolicyServiceClient](@ref dataproc_v1::AutoscalingPolicyServiceClient-retry-snippet)
+- [\c dataproc_v1::BatchControllerClient](@ref dataproc_v1::BatchControllerClient-retry-snippet)
+- [\c dataproc_v1::ClusterControllerClient](@ref dataproc_v1::ClusterControllerClient-retry-snippet)
+- [\c dataproc_v1::JobControllerClient](@ref dataproc_v1::JobControllerClient-retry-snippet)
+- [\c dataproc_v1::WorkflowTemplateServiceClient](@ref dataproc_v1::WorkflowTemplateServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section dataproc-override-retry-more-information More Information
@@ -81,5 +98,64 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page dataproc_v1::AutoscalingPolicyServiceClient-retry-snippet Override dataproc_v1::AutoscalingPolicyServiceClient Retry Policies
+
+This shows how to override the retry policies for dataproc_v1::AutoscalingPolicyServiceClient:
+
+@snippet google/cloud/dataproc/v1/samples/autoscaling_policy_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dataproc/v1/samples/autoscaling_policy_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dataproc_v1::BatchControllerClient-retry-snippet Override dataproc_v1::BatchControllerClient Retry Policies
+
+This shows how to override the retry policies for dataproc_v1::BatchControllerClient:
+
+@snippet google/cloud/dataproc/v1/samples/batch_controller_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dataproc/v1/samples/batch_controller_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dataproc_v1::ClusterControllerClient-retry-snippet Override dataproc_v1::ClusterControllerClient Retry Policies
+
+This shows how to override the retry policies for dataproc_v1::ClusterControllerClient:
+
+@snippet google/cloud/dataproc/v1/samples/cluster_controller_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dataproc/v1/samples/cluster_controller_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dataproc_v1::JobControllerClient-retry-snippet Override dataproc_v1::JobControllerClient Retry Policies
+
+This shows how to override the retry policies for dataproc_v1::JobControllerClient:
+
+@snippet google/cloud/dataproc/v1/samples/job_controller_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dataproc/v1/samples/job_controller_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dataproc_v1::WorkflowTemplateServiceClient-retry-snippet Override dataproc_v1::WorkflowTemplateServiceClient Retry Policies
+
+This shows how to override the retry policies for dataproc_v1::WorkflowTemplateServiceClient:
+
+@snippet google/cloud/dataproc/v1/samples/workflow_template_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dataproc/v1/samples/workflow_template_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

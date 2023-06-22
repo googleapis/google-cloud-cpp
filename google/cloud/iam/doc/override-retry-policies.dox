@@ -68,6 +68,22 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section iam-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `iam_admin_v1::IAMClient`:
+
+@snippet iam_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet iam_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c iam_admin_v1::IAMClient](@ref iam_admin_v1::IAMClient-retry-snippet)
+- [\c iam_credentials_v1::IAMCredentialsClient](@ref iam_credentials_v1::IAMCredentialsClient-retry-snippet)
+- [\c iam_v1::IAMPolicyClient](@ref iam_v1::IAMPolicyClient-retry-snippet)
+- [\c iam_v2::PoliciesClient](@ref iam_v2::PoliciesClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section iam-override-retry-more-information More Information
@@ -81,4 +97,52 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
+
+/*! @page iam_admin_v1::IAMClient-retry-snippet Override iam_admin_v1::IAMClient Retry Policies
+
+This shows how to override the retry policies for iam_admin_v1::IAMClient:
+
+@snippet google/cloud/iam/admin/v1/samples/iam_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/iam/admin/v1/samples/iam_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page iam_credentials_v1::IAMCredentialsClient-retry-snippet Override iam_credentials_v1::IAMCredentialsClient Retry Policies
+
+This shows how to override the retry policies for iam_credentials_v1::IAMCredentialsClient:
+
+@snippet google/cloud/iam/credentials/v1/samples/iam_credentials_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/iam/credentials/v1/samples/iam_credentials_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page iam_v1::IAMPolicyClient-retry-snippet Override iam_v1::IAMPolicyClient Retry Policies
+
+This shows how to override the retry policies for iam_v1::IAMPolicyClient:
+
+@snippet google/cloud/iam/v1/samples/iam_policy_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/iam/v1/samples/iam_policy_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page iam_v2::PoliciesClient-retry-snippet Override iam_v2::PoliciesClient Retry Policies
+
+This shows how to override the retry policies for iam_v2::PoliciesClient:
+
+@snippet google/cloud/iam/v2/samples/policies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/iam/v2/samples/policies_client_samples.cc custom-idempotency-policy
+
+*/
 // <!-- inject-retry-pages-end -->

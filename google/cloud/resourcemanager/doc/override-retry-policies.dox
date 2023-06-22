@@ -68,6 +68,21 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section resourcemanager-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `resourcemanager_v3::FoldersClient`:
+
+@snippet folders_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet folders_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c resourcemanager_v3::FoldersClient](@ref resourcemanager_v3::FoldersClient-retry-snippet)
+- [\c resourcemanager_v3::OrganizationsClient](@ref resourcemanager_v3::OrganizationsClient-retry-snippet)
+- [\c resourcemanager_v3::ProjectsClient](@ref resourcemanager_v3::ProjectsClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section resourcemanager-override-retry-more-information More Information
@@ -81,5 +96,40 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page resourcemanager_v3::FoldersClient-retry-snippet Override resourcemanager_v3::FoldersClient Retry Policies
+
+This shows how to override the retry policies for resourcemanager_v3::FoldersClient:
+
+@snippet google/cloud/resourcemanager/v3/samples/folders_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/resourcemanager/v3/samples/folders_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page resourcemanager_v3::OrganizationsClient-retry-snippet Override resourcemanager_v3::OrganizationsClient Retry Policies
+
+This shows how to override the retry policies for resourcemanager_v3::OrganizationsClient:
+
+@snippet google/cloud/resourcemanager/v3/samples/organizations_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/resourcemanager/v3/samples/organizations_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page resourcemanager_v3::ProjectsClient-retry-snippet Override resourcemanager_v3::ProjectsClient Retry Policies
+
+This shows how to override the retry policies for resourcemanager_v3::ProjectsClient:
+
+@snippet google/cloud/resourcemanager/v3/samples/projects_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/resourcemanager/v3/samples/projects_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

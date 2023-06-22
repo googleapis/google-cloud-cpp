@@ -68,6 +68,24 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section retail-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `retail_v2::CatalogServiceClient`:
+
+@snippet catalog_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet catalog_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c retail_v2::CatalogServiceClient](@ref retail_v2::CatalogServiceClient-retry-snippet)
+- [\c retail_v2::CompletionServiceClient](@ref retail_v2::CompletionServiceClient-retry-snippet)
+- [\c retail_v2::PredictionServiceClient](@ref retail_v2::PredictionServiceClient-retry-snippet)
+- [\c retail_v2::ProductServiceClient](@ref retail_v2::ProductServiceClient-retry-snippet)
+- [\c retail_v2::SearchServiceClient](@ref retail_v2::SearchServiceClient-retry-snippet)
+- [\c retail_v2::UserEventServiceClient](@ref retail_v2::UserEventServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section retail-override-retry-more-information More Information
@@ -81,5 +99,76 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page retail_v2::CatalogServiceClient-retry-snippet Override retail_v2::CatalogServiceClient Retry Policies
+
+This shows how to override the retry policies for retail_v2::CatalogServiceClient:
+
+@snippet google/cloud/retail/v2/samples/catalog_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/retail/v2/samples/catalog_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page retail_v2::CompletionServiceClient-retry-snippet Override retail_v2::CompletionServiceClient Retry Policies
+
+This shows how to override the retry policies for retail_v2::CompletionServiceClient:
+
+@snippet google/cloud/retail/v2/samples/completion_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/retail/v2/samples/completion_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page retail_v2::PredictionServiceClient-retry-snippet Override retail_v2::PredictionServiceClient Retry Policies
+
+This shows how to override the retry policies for retail_v2::PredictionServiceClient:
+
+@snippet google/cloud/retail/v2/samples/prediction_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/retail/v2/samples/prediction_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page retail_v2::ProductServiceClient-retry-snippet Override retail_v2::ProductServiceClient Retry Policies
+
+This shows how to override the retry policies for retail_v2::ProductServiceClient:
+
+@snippet google/cloud/retail/v2/samples/product_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/retail/v2/samples/product_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page retail_v2::SearchServiceClient-retry-snippet Override retail_v2::SearchServiceClient Retry Policies
+
+This shows how to override the retry policies for retail_v2::SearchServiceClient:
+
+@snippet google/cloud/retail/v2/samples/search_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/retail/v2/samples/search_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page retail_v2::UserEventServiceClient-retry-snippet Override retail_v2::UserEventServiceClient Retry Policies
+
+This shows how to override the retry policies for retail_v2::UserEventServiceClient:
+
+@snippet google/cloud/retail/v2/samples/user_event_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/retail/v2/samples/user_event_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

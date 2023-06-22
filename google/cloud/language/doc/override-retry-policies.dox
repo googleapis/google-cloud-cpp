@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section language-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `language_v1::LanguageServiceClient`:
+
+@snippet language_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet language_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section language-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page language_v1::LanguageServiceClient-retry-snippet Override language_v1::LanguageServiceClient Retry Policies
+
+This shows how to override the retry policies for language_v1::LanguageServiceClient:
+
+@snippet google/cloud/language/v1/samples/language_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/language/v1/samples/language_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

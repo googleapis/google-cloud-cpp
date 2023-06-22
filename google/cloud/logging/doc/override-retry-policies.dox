@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section logging-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `logging_v2::LoggingServiceV2Client`:
+
+@snippet logging_service_v2_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet logging_service_v2_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section logging-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page logging_v2::LoggingServiceV2Client-retry-snippet Override logging_v2::LoggingServiceV2Client Retry Policies
+
+This shows how to override the retry policies for logging_v2::LoggingServiceV2Client:
+
+@snippet google/cloud/logging/v2/samples/logging_service_v2_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/logging/v2/samples/logging_service_v2_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

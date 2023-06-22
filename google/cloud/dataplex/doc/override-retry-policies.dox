@@ -68,6 +68,21 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section dataplex-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `dataplex_v1::ContentServiceClient`:
+
+@snippet content_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet content_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c dataplex_v1::ContentServiceClient](@ref dataplex_v1::ContentServiceClient-retry-snippet)
+- [\c dataplex_v1::DataplexServiceClient](@ref dataplex_v1::DataplexServiceClient-retry-snippet)
+- [\c dataplex_v1::MetadataServiceClient](@ref dataplex_v1::MetadataServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section dataplex-override-retry-more-information More Information
@@ -81,5 +96,40 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page dataplex_v1::ContentServiceClient-retry-snippet Override dataplex_v1::ContentServiceClient Retry Policies
+
+This shows how to override the retry policies for dataplex_v1::ContentServiceClient:
+
+@snippet google/cloud/dataplex/v1/samples/content_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dataplex/v1/samples/content_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dataplex_v1::DataplexServiceClient-retry-snippet Override dataplex_v1::DataplexServiceClient Retry Policies
+
+This shows how to override the retry policies for dataplex_v1::DataplexServiceClient:
+
+@snippet google/cloud/dataplex/v1/samples/dataplex_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dataplex/v1/samples/dataplex_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dataplex_v1::MetadataServiceClient-retry-snippet Override dataplex_v1::MetadataServiceClient Retry Policies
+
+This shows how to override the retry policies for dataplex_v1::MetadataServiceClient:
+
+@snippet google/cloud/dataplex/v1/samples/metadata_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dataplex/v1/samples/metadata_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

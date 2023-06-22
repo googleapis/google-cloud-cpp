@@ -68,6 +68,20 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section eventarc-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `eventarc_publishing_v1::PublisherClient`:
+
+@snippet publisher_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet publisher_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c eventarc_publishing_v1::PublisherClient](@ref eventarc_publishing_v1::PublisherClient-retry-snippet)
+- [\c eventarc_v1::EventarcClient](@ref eventarc_v1::EventarcClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section eventarc-override-retry-more-information More Information
@@ -81,5 +95,28 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page eventarc_publishing_v1::PublisherClient-retry-snippet Override eventarc_publishing_v1::PublisherClient Retry Policies
+
+This shows how to override the retry policies for eventarc_publishing_v1::PublisherClient:
+
+@snippet google/cloud/eventarc/publishing/v1/samples/publisher_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/eventarc/publishing/v1/samples/publisher_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page eventarc_v1::EventarcClient-retry-snippet Override eventarc_v1::EventarcClient Retry Policies
+
+This shows how to override the retry policies for eventarc_v1::EventarcClient:
+
+@snippet google/cloud/eventarc/v1/samples/eventarc_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/eventarc/v1/samples/eventarc_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

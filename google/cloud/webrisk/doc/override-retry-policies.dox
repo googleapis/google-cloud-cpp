@@ -68,6 +68,15 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section webrisk-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `webrisk_v1::WebRiskServiceClient`:
+
+@snippet web_risk_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet web_risk_client_samples.cc custom-idempotency-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section webrisk-override-retry-more-information More Information
@@ -81,5 +90,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page webrisk_v1::WebRiskServiceClient-retry-snippet Override webrisk_v1::WebRiskServiceClient Retry Policies
+
+This shows how to override the retry policies for webrisk_v1::WebRiskServiceClient:
+
+@snippet google/cloud/webrisk/v1/samples/web_risk_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/webrisk/v1/samples/web_risk_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

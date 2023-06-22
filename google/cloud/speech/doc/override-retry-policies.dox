@@ -68,6 +68,20 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section speech-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `speech_v1::SpeechClient`:
+
+@snippet speech_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet speech_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c speech_v1::SpeechClient](@ref speech_v1::SpeechClient-retry-snippet)
+- [\c speech_v2::SpeechClient](@ref speech_v2::SpeechClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section speech-override-retry-more-information More Information
@@ -81,5 +95,28 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page speech_v1::SpeechClient-retry-snippet Override speech_v1::SpeechClient Retry Policies
+
+This shows how to override the retry policies for speech_v1::SpeechClient:
+
+@snippet google/cloud/speech/v1/samples/speech_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/speech/v1/samples/speech_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page speech_v2::SpeechClient-retry-snippet Override speech_v2::SpeechClient Retry Policies
+
+This shows how to override the retry policies for speech_v2::SpeechClient:
+
+@snippet google/cloud/speech/v2/samples/speech_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/speech/v2/samples/speech_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

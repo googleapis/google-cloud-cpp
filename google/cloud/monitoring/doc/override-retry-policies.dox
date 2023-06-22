@@ -68,6 +68,27 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section monitoring-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `monitoring_dashboard_v1::DashboardsServiceClient`:
+
+@snippet dashboards_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet dashboards_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c monitoring_dashboard_v1::DashboardsServiceClient](@ref monitoring_dashboard_v1::DashboardsServiceClient-retry-snippet)
+- [\c monitoring_metricsscope_v1::MetricsScopesClient](@ref monitoring_metricsscope_v1::MetricsScopesClient-retry-snippet)
+- [\c monitoring_v3::AlertPolicyServiceClient](@ref monitoring_v3::AlertPolicyServiceClient-retry-snippet)
+- [\c monitoring_v3::GroupServiceClient](@ref monitoring_v3::GroupServiceClient-retry-snippet)
+- [\c monitoring_v3::MetricServiceClient](@ref monitoring_v3::MetricServiceClient-retry-snippet)
+- [\c monitoring_v3::NotificationChannelServiceClient](@ref monitoring_v3::NotificationChannelServiceClient-retry-snippet)
+- [\c monitoring_v3::QueryServiceClient](@ref monitoring_v3::QueryServiceClient-retry-snippet)
+- [\c monitoring_v3::ServiceMonitoringServiceClient](@ref monitoring_v3::ServiceMonitoringServiceClient-retry-snippet)
+- [\c monitoring_v3::UptimeCheckServiceClient](@ref monitoring_v3::UptimeCheckServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section monitoring-override-retry-more-information More Information
@@ -81,5 +102,112 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page monitoring_dashboard_v1::DashboardsServiceClient-retry-snippet Override monitoring_dashboard_v1::DashboardsServiceClient Retry Policies
+
+This shows how to override the retry policies for monitoring_dashboard_v1::DashboardsServiceClient:
+
+@snippet google/cloud/monitoring/dashboard/v1/samples/dashboards_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/monitoring/dashboard/v1/samples/dashboards_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page monitoring_metricsscope_v1::MetricsScopesClient-retry-snippet Override monitoring_metricsscope_v1::MetricsScopesClient Retry Policies
+
+This shows how to override the retry policies for monitoring_metricsscope_v1::MetricsScopesClient:
+
+@snippet google/cloud/monitoring/metricsscope/v1/samples/metrics_scopes_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/monitoring/metricsscope/v1/samples/metrics_scopes_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page monitoring_v3::AlertPolicyServiceClient-retry-snippet Override monitoring_v3::AlertPolicyServiceClient Retry Policies
+
+This shows how to override the retry policies for monitoring_v3::AlertPolicyServiceClient:
+
+@snippet google/cloud/monitoring/v3/samples/alert_policy_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/monitoring/v3/samples/alert_policy_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page monitoring_v3::GroupServiceClient-retry-snippet Override monitoring_v3::GroupServiceClient Retry Policies
+
+This shows how to override the retry policies for monitoring_v3::GroupServiceClient:
+
+@snippet google/cloud/monitoring/v3/samples/group_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/monitoring/v3/samples/group_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page monitoring_v3::MetricServiceClient-retry-snippet Override monitoring_v3::MetricServiceClient Retry Policies
+
+This shows how to override the retry policies for monitoring_v3::MetricServiceClient:
+
+@snippet google/cloud/monitoring/v3/samples/metric_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/monitoring/v3/samples/metric_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page monitoring_v3::NotificationChannelServiceClient-retry-snippet Override monitoring_v3::NotificationChannelServiceClient Retry Policies
+
+This shows how to override the retry policies for monitoring_v3::NotificationChannelServiceClient:
+
+@snippet google/cloud/monitoring/v3/samples/notification_channel_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/monitoring/v3/samples/notification_channel_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page monitoring_v3::QueryServiceClient-retry-snippet Override monitoring_v3::QueryServiceClient Retry Policies
+
+This shows how to override the retry policies for monitoring_v3::QueryServiceClient:
+
+@snippet google/cloud/monitoring/v3/samples/query_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/monitoring/v3/samples/query_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page monitoring_v3::ServiceMonitoringServiceClient-retry-snippet Override monitoring_v3::ServiceMonitoringServiceClient Retry Policies
+
+This shows how to override the retry policies for monitoring_v3::ServiceMonitoringServiceClient:
+
+@snippet google/cloud/monitoring/v3/samples/service_monitoring_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/monitoring/v3/samples/service_monitoring_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page monitoring_v3::UptimeCheckServiceClient-retry-snippet Override monitoring_v3::UptimeCheckServiceClient Retry Policies
+
+This shows how to override the retry policies for monitoring_v3::UptimeCheckServiceClient:
+
+@snippet google/cloud/monitoring/v3/samples/uptime_check_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/monitoring/v3/samples/uptime_check_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

@@ -68,6 +68,21 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section billing-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `billing_budgets_v1::BudgetServiceClient`:
+
+@snippet budget_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet budget_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c billing_budgets_v1::BudgetServiceClient](@ref billing_budgets_v1::BudgetServiceClient-retry-snippet)
+- [\c billing_v1::CloudBillingClient](@ref billing_v1::CloudBillingClient-retry-snippet)
+- [\c billing_v1::CloudCatalogClient](@ref billing_v1::CloudCatalogClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section billing-override-retry-more-information More Information
@@ -81,5 +96,40 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page billing_budgets_v1::BudgetServiceClient-retry-snippet Override billing_budgets_v1::BudgetServiceClient Retry Policies
+
+This shows how to override the retry policies for billing_budgets_v1::BudgetServiceClient:
+
+@snippet google/cloud/billing/budgets/v1/samples/budget_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/billing/budgets/v1/samples/budget_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page billing_v1::CloudBillingClient-retry-snippet Override billing_v1::CloudBillingClient Retry Policies
+
+This shows how to override the retry policies for billing_v1::CloudBillingClient:
+
+@snippet google/cloud/billing/v1/samples/cloud_billing_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/billing/v1/samples/cloud_billing_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page billing_v1::CloudCatalogClient-retry-snippet Override billing_v1::CloudCatalogClient Retry Policies
+
+This shows how to override the retry policies for billing_v1::CloudCatalogClient:
+
+@snippet google/cloud/billing/v1/samples/cloud_catalog_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/billing/v1/samples/cloud_catalog_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

@@ -68,6 +68,20 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section trace-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `trace_v1::TraceServiceClient`:
+
+@snippet trace_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet trace_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c trace_v1::TraceServiceClient](@ref trace_v1::TraceServiceClient-retry-snippet)
+- [\c trace_v2::TraceServiceClient](@ref trace_v2::TraceServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section trace-override-retry-more-information More Information
@@ -81,5 +95,28 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page trace_v1::TraceServiceClient-retry-snippet Override trace_v1::TraceServiceClient Retry Policies
+
+This shows how to override the retry policies for trace_v1::TraceServiceClient:
+
+@snippet google/cloud/trace/v1/samples/trace_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/trace/v1/samples/trace_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page trace_v2::TraceServiceClient-retry-snippet Override trace_v2::TraceServiceClient Retry Policies
+
+This shows how to override the retry policies for trace_v2::TraceServiceClient:
+
+@snippet google/cloud/trace/v2/samples/trace_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/trace/v2/samples/trace_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

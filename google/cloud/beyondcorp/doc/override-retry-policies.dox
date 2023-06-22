@@ -68,6 +68,23 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section beyondcorp-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `beyondcorp_appconnections_v1::AppConnectionsServiceClient`:
+
+@snippet app_connections_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet app_connections_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c beyondcorp_appconnections_v1::AppConnectionsServiceClient](@ref beyondcorp_appconnections_v1::AppConnectionsServiceClient-retry-snippet)
+- [\c beyondcorp_appconnectors_v1::AppConnectorsServiceClient](@ref beyondcorp_appconnectors_v1::AppConnectorsServiceClient-retry-snippet)
+- [\c beyondcorp_appgateways_v1::AppGatewaysServiceClient](@ref beyondcorp_appgateways_v1::AppGatewaysServiceClient-retry-snippet)
+- [\c beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient](@ref beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient-retry-snippet)
+- [\c beyondcorp_clientgateways_v1::ClientGatewaysServiceClient](@ref beyondcorp_clientgateways_v1::ClientGatewaysServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section beyondcorp-override-retry-more-information More Information
@@ -81,5 +98,64 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
-// <!-- inject-retry-pages-end -->
 
+/*! @page beyondcorp_appconnections_v1::AppConnectionsServiceClient-retry-snippet Override beyondcorp_appconnections_v1::AppConnectionsServiceClient Retry Policies
+
+This shows how to override the retry policies for beyondcorp_appconnections_v1::AppConnectionsServiceClient:
+
+@snippet google/cloud/beyondcorp/appconnections/v1/samples/app_connections_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/beyondcorp/appconnections/v1/samples/app_connections_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page beyondcorp_appconnectors_v1::AppConnectorsServiceClient-retry-snippet Override beyondcorp_appconnectors_v1::AppConnectorsServiceClient Retry Policies
+
+This shows how to override the retry policies for beyondcorp_appconnectors_v1::AppConnectorsServiceClient:
+
+@snippet google/cloud/beyondcorp/appconnectors/v1/samples/app_connectors_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/beyondcorp/appconnectors/v1/samples/app_connectors_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page beyondcorp_appgateways_v1::AppGatewaysServiceClient-retry-snippet Override beyondcorp_appgateways_v1::AppGatewaysServiceClient Retry Policies
+
+This shows how to override the retry policies for beyondcorp_appgateways_v1::AppGatewaysServiceClient:
+
+@snippet google/cloud/beyondcorp/appgateways/v1/samples/app_gateways_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/beyondcorp/appgateways/v1/samples/app_gateways_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient-retry-snippet Override beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient Retry Policies
+
+This shows how to override the retry policies for beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient:
+
+@snippet google/cloud/beyondcorp/clientconnectorservices/v1/samples/client_connector_services_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/beyondcorp/clientconnectorservices/v1/samples/client_connector_services_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page beyondcorp_clientgateways_v1::ClientGatewaysServiceClient-retry-snippet Override beyondcorp_clientgateways_v1::ClientGatewaysServiceClient Retry Policies
+
+This shows how to override the retry policies for beyondcorp_clientgateways_v1::ClientGatewaysServiceClient:
+
+@snippet google/cloud/beyondcorp/clientgateways/v1/samples/client_gateways_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/beyondcorp/clientgateways/v1/samples/client_gateways_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->
