@@ -220,10 +220,7 @@ time {
 
 printf "%-50s" "Running doxygen landing-page updates:" >&2
 time {
-  mapfile -t libraries < <(features::libraries)
-  for library in "${libraries[@]}"; do
-    ci/generate-markdown/update-library-landing-dox.sh "${library}"
-  done
+  features::libraries | xargs -P "$(nproc)" -n 1 ci/generate-markdown/update-library-landing-dox.sh
 }
 
 # If there are any diffs, report them and exit with a non-zero status so
