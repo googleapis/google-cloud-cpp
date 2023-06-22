@@ -153,6 +153,12 @@ void SetHttpGetQueryParameters(
                                         i.first, i.first));
             return;
           }
+          if (i.second == protobuf::FieldDescriptor::CPPTYPE_BOOL) {
+            out->append(absl::StrFormat(
+                R"""(std::make_pair("%s", request.%s() ? "1" : "0"))""",
+                i.first, i.first));
+            return;
+          }
           out->append(absl::StrFormat(
               "std::make_pair(\"%s\", std::to_string(request.%s()))", i.first,
               i.first));

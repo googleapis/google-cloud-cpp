@@ -133,6 +133,7 @@ char const* const kServiceProto =
     "  int32 page_size = 1;\n"
     "  string page_token = 2;\n"
     "  string name = 3;\n"
+    "  bool include_foo = 4;\n"
     "}\n"
     "// Leading comments about message PaginatedOutput.\n"
     "message PaginatedOutput {\n"
@@ -389,9 +390,8 @@ TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersGet) {
       service_file_descriptor->service(0)->method(4);
   VarsDictionary vars;
   SetHttpGetQueryParameters(ParseHttpExtension(*method), *method, vars);
-  EXPECT_THAT(vars.at("method_http_query_parameters"),
-              Eq(",\n      {std::make_pair(\"not_used_anymore\", "
-                 "request.not_used_anymore())}"));
+  EXPECT_THAT(vars.at("method_http_query_parameters"), Eq(R"""(,
+      {std::make_pair("not_used_anymore", request.not_used_anymore())})"""));
 }
 
 TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersGetPaginated) {
@@ -401,11 +401,11 @@ TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersGetPaginated) {
       service_file_descriptor->service(0)->method(3);
   VarsDictionary vars;
   SetHttpGetQueryParameters(ParseHttpExtension(*method), *method, vars);
-  EXPECT_THAT(vars.at("method_http_query_parameters"),
-              Eq(",\n      {std::make_pair(\"page_size\", "
-                 "std::to_string(request.page_size())),\n       "
-                 "std::make_pair(\"page_token\", request.page_token()),\n      "
-                 " std::make_pair(\"name\", request.name())}"));
+  EXPECT_THAT(vars.at("method_http_query_parameters"), Eq(R"""(,
+      {std::make_pair("page_size", std::to_string(request.page_size())),
+       std::make_pair("page_token", request.page_token()),
+       std::make_pair("name", request.name()),
+       std::make_pair("include_foo", request.include_foo() ? "1" : "0")})"""));
 }
 
 TEST_F(HttpOptionUtilsTest, HasHttpAnnotationRoutingHeaderSuccess) {
