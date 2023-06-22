@@ -48,6 +48,8 @@ application.
   endpoint.
 - @ref bigquery-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref bigquery-override-retry - describes how to change the default retry
+  policies.
 - @ref bigquery-env - describes environment variables that can configure the behavior of the library.
 - @ref bigquery-read-mock
 

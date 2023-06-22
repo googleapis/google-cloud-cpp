@@ -43,6 +43,8 @@ application.
   endpoint.
 - @ref iam-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref iam-override-retry - describes how to change the default retry
+  policies.
 - @ref iam-env - describes environment variables that can configure the behavior of the library.
 - @ref iam-mock
 - @ref iam-credentials-mock
