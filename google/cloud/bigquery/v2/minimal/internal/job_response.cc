@@ -125,6 +125,32 @@ std::string ListJobsResponse::DebugString(absl::string_view name,
       .Build();
 }
 
+StatusOr<InsertJobResponse> InsertJobResponse::BuildFromHttpResponse(
+    BigQueryHttpResponse const& http_response) {
+  auto json = parse_json(http_response.payload);
+  if (!json) return std::move(json).status();
+
+  if (!valid_job(*json)) {
+    return internal::InternalError("Not a valid Json Job object",
+                                   GCP_ERROR_INFO());
+  }
+
+  InsertJobResponse result;
+  result.job = json->get<Job>();
+  result.http_response = http_response;
+
+  return result;
+}
+
+std::string InsertJobResponse::DebugString(absl::string_view name,
+                                           TracingOptions const& options,
+                                           int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .SubMessage("http_response", http_response)
+      .SubMessage("job", job)
+      .Build();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
