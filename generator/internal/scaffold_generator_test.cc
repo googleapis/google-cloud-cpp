@@ -283,6 +283,8 @@ to Provides a placeholder to write this test.
   endpoint.
 - @ref test-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref test-override-retry - describes how to change the default retry
+  policies.
 )"""));
 }
 
@@ -332,6 +334,16 @@ TEST_F(ScaffoldGenerator, OverrideEndpointPage) {
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, AllOf(HasSubstr(R"""(
 @page test-override-endpoint How to Override the Default Endpoint
+)""")));
+}
+
+TEST_F(ScaffoldGenerator, OverrideRetryPoliciesPage) {
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
+  std::ostringstream os;
+  GenerateOverrideRetryPoliciesPage(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, AllOf(HasSubstr(R"""(
+@page test-override-retry Override Retry, Backof, and Idempotency Policies
 )""")));
 }
 

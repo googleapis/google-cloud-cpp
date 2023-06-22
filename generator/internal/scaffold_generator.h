@@ -128,6 +128,8 @@ void GenerateOverrideAuthenticationPage(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateOverrideEndpointPage(
     std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateOverrideRetryPoliciesPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateQuickstartReadme(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateQuickstartSkeleton(
