@@ -78,7 +78,7 @@ DefaultGlobalOrganizationOperationsRestStub::ListGlobalOrganizationOperations(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("parent_id", request.parent_id()),
        std::make_pair("return_partial_success",
-                      std::to_string(request.return_partial_success()))});
+                      request.return_partial_success() ? "1" : "0")});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
