@@ -35,12 +35,6 @@ application.
 - [\c automl_v1::PredictionServiceClient](@ref google::cloud::automl_v1::PredictionServiceClient)
 <!-- inject-client-list-end -->
 
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
-
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
@@ -48,9 +42,10 @@ can override the default policies.
   endpoint.
 - @ref automl-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref automl-override-retry - describes how to change the default retry
+  policies.
 - @ref automl-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/automl
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

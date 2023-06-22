@@ -40,12 +40,6 @@ application.
 - [\c appengine_v1::VersionsClient](@ref google::cloud::appengine_v1::VersionsClient)
 <!-- inject-client-list-end -->
 
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
-
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
@@ -53,9 +47,10 @@ can override the default policies.
   endpoint.
 - @ref appengine-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref appengine-override-retry - describes how to change the default retry
+  policies.
 - @ref appengine-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/appengine/docs/admin-api
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */
