@@ -102,8 +102,8 @@ class PagedStreamReader {
       page_ = extractor_(*std::move(response));
       current_ = page_.begin();
     }
-    if (current_ != page_.end()) return std::move(*current_++);
-    return Status{};
+    if (current_ == page_.end()) return Status{};
+    return std::move(*current_++);
   }
 
  private:
