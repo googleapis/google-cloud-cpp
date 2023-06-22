@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
-#include "google/cloud/pubsub/samples/testdata/schema.pb.h"
 #include "google/cloud/pubsub/schema.h"
 #include "google/cloud/pubsub/schema_client.h"
 #include "google/cloud/pubsub/subscriber.h"
@@ -25,6 +24,7 @@
 #include "google/cloud/project.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include <google/cloud/pubsub/samples/testdata/schema.pb.h>
 #include <google/protobuf/text_format.h>
 #include <chrono>
 #include <condition_variable>
