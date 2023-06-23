@@ -32,8 +32,6 @@ BigQueryJobLogging::BigQueryJobLogging(
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-// Customized LogWrapper is used here since GetJobRequest is
-// not a protobuf message.
 StatusOr<GetJobResponse> BigQueryJobLogging::GetJob(
     rest_internal::RestContext& rest_context, GetJobRequest const& request) {
   return LogWrapper(
@@ -47,8 +45,6 @@ StatusOr<GetJobResponse> BigQueryJobLogging::GetJob(
       tracing_options_);
 }
 
-// Customized LogWrapper is used here since ListJobsRequest is
-// not a protobuf message.
 StatusOr<ListJobsResponse> BigQueryJobLogging::ListJobs(
     rest_internal::RestContext& rest_context, ListJobsRequest const& request) {
   return LogWrapper(
@@ -59,6 +55,19 @@ StatusOr<ListJobsResponse> BigQueryJobLogging::ListJobs(
       rest_context, request, __func__,
       "google.cloud.bigquery.v2.minimal.internal.ListJobsRequest",
       "google.cloud.bigquery.v2.minimal.internal.ListJobsResponse",
+      tracing_options_);
+}
+
+StatusOr<InsertJobResponse> BigQueryJobLogging::InsertJob(
+    rest_internal::RestContext& rest_context, InsertJobRequest const& request) {
+  return LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             InsertJobRequest const& request) {
+        return child_->InsertJob(rest_context, request);
+      },
+      rest_context, request, __func__,
+      "google.cloud.bigquery.v2.minimal.internal.InsertJobRequest",
+      "google.cloud.bigquery.v2.minimal.internal.InsertJobResponse",
       tracing_options_);
 }
 

@@ -38,6 +38,10 @@ class BigQueryJobRestStub {
   virtual StatusOr<ListJobsResponse> ListJobs(
       rest_internal::RestContext& rest_context,
       ListJobsRequest const& request) = 0;
+
+  virtual StatusOr<InsertJobResponse> InsertJob(
+      rest_internal::RestContext& rest_context,
+      InsertJobRequest const& request) = 0;
 };
 
 class DefaultBigQueryJobRestStub : public BigQueryJobRestStub {
@@ -50,6 +54,10 @@ class DefaultBigQueryJobRestStub : public BigQueryJobRestStub {
                                   GetJobRequest const& request) override;
   StatusOr<ListJobsResponse> ListJobs(rest_internal::RestContext& rest_context,
                                       ListJobsRequest const& request) override;
+
+  StatusOr<InsertJobResponse> InsertJob(
+      rest_internal::RestContext& rest_context,
+      InsertJobRequest const& request) override;
 
  private:
   std::unique_ptr<rest_internal::RestClient> rest_stub_;
