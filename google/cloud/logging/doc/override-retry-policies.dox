@@ -1,6 +1,6 @@
 /*!
 
-@page logging-override-retry Override Retry, Backof, and Idempotency Policies
+@page logging-override-retry Override Retry, Backoff, and Idempotency Policies
 
 When it is safe to do so, the library automatically retries requests that fail
 due to a transient error. The library then uses [exponential backoff] to backoff
