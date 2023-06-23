@@ -45,12 +45,13 @@ function Get-Released-Quickstarts {
         # The following quickstarts have problems building on Windows:
         #   TODO(#8145) - asset (TRUE/FALSE macros)
         #   TODO(#8125) - channel (DOMAIN macro)
+        #   TODO(#11925) - compute (too big for windows)
         #   TODO(#10737) - dialogflow_es triggers bug in Bazel 6.0.0
         # In addition, the `google/cloud/debugger/quickstart` directory is gone.
         # However, we use the previous release of `google-cloud-cpp` in these
         # builds, where the target still exists:
-        #    TODO(#11772) - deprecated library.
-        Where-Object { -not ("asset", "channel", "dialogflow_es", "debugger" -contains $_) } |
+        #   TODO(#11772) - debugger (deprecated library).
+        Where-Object { -not ("asset", "compute", "channel", "dialogflow_es", "debugger" -contains $_) } |
         # TODO(#9923) - compiling all quickstarts on Windows is too slow
         Get-Random -Count 10
     Pop-Location
