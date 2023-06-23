@@ -837,7 +837,7 @@ client library to change this default.
 void GenerateOverrideRetryPoliciesPage(
     std::ostream& os, std::map<std::string, std::string> const& variables) {
   auto constexpr kText = R"""(/*!
-@page $library$-override-retry Override Retry, Backof, and Idempotency Policies
+@page $library$-override-retry Override Retry, Backoff, and Idempotency Policies
 
 When it is safe to do so, the library automatically retries requests that fail
 due to a transient error. The library then uses [exponential backoff] to backoff

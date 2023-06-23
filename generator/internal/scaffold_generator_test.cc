@@ -343,7 +343,7 @@ TEST_F(ScaffoldGenerator, OverrideRetryPoliciesPage) {
   GenerateOverrideRetryPoliciesPage(os, vars);
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, AllOf(HasSubstr(R"""(
-@page test-override-retry Override Retry, Backof, and Idempotency Policies
+@page test-override-retry Override Retry, Backoff, and Idempotency Policies
 )""")));
 }
 
