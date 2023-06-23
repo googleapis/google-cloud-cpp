@@ -43,12 +43,6 @@ application.
 - [\c run_v2::ServicesClient](@ref google::cloud::run_v2::ServicesClient)
 <!-- inject-client-list-end -->
 
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
-
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
@@ -56,9 +50,10 @@ can override the default policies.
   endpoint.
 - @ref run-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref run-override-retry - describes how to change the default retry
+  policies.
 - @ref run-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/run
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

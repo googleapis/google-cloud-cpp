@@ -36,12 +36,6 @@ application.
 - [\c compute_disks_v1::DisksClient](@ref google::cloud::compute_disks_v1::DisksClient)
 <!-- inject-client-list-end -->
 
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
-
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
@@ -49,6 +43,8 @@ can override the default policies.
   endpoint.
 - @ref compute-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref compute-override-retry - describes how to change the default retry
+  policies.
 - @ref compute-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/compute

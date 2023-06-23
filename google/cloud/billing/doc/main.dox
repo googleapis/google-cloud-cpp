@@ -36,12 +36,6 @@ application.
 - [\c billing_v1::CloudCatalogClient](@ref google::cloud::billing_v1::CloudCatalogClient)
 <!-- inject-client-list-end -->
 
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
-
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
@@ -49,8 +43,9 @@ can override the default policies.
   endpoint.
 - @ref billing-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref billing-override-retry - describes how to change the default retry
+  policies.
 - @ref billing-env - describes environment variables that can configure the behavior of the library.
 
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

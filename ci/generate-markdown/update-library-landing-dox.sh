@@ -38,6 +38,7 @@ readonly EXPECTED=(
   "environment-variables.dox"
   "override-authentication.dox"
   "override-endpoint.dox"
+  "override-retry-policies.dox"
 )
 for file in "${EXPECTED[@]}"; do
   if [[ ! -r "${DOCDIR}/${file}" ]]; then
@@ -49,6 +50,7 @@ readonly MAIN_DOX="${DOCDIR}/main.dox"
 readonly ENVIRONMENT_DOX="${DOCDIR}/environment-variables.dox"
 readonly OVERRIDE_AUTHENTICATION_DOX="${DOCDIR}/override-authentication.dox"
 readonly OVERRIDE_ENDPOINT_DOX="${DOCDIR}/override-endpoint.dox"
+readonly OVERRIDE_RETRY_POLICIES_DOX="${DOCDIR}/override-retry-policies.dox"
 
 inject_start="<!-- inject-endpoint-env-vars-start -->"
 inject_end="<!-- inject-endpoint-env-vars-end -->"
@@ -189,3 +191,55 @@ _EOF_
   done
   sed -n '/<!-- inject-endpoint-pages-end -->/,$p' "${OVERRIDE_ENDPOINT_DOX}"
 ) | sponge "${OVERRIDE_ENDPOINT_DOX}"
+
+(
+  sed '/<!-- inject-retry-snippet-start -->/q' "${OVERRIDE_RETRY_POLICIES_DOX}"
+  if [[ ${#samples_cc[@]} -gt 0 ]]; then
+    sample_cc="${samples_cc[0]}"
+    client_name="${clients[${sample_cc}]}"
+    cat <<_EOF_
+For example, this will override the retry policies for \`${client_name}\`:
+
+@snippet $(basename "${sample_cc}") set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet $(basename "${sample_cc}") custom-idempotency-policy
+
+_EOF_
+    if [[ ${#samples_cc[@]} -gt 1 ]]; then
+      echo
+      echo "Follow these links to find examples for other \\c *Client classes:"
+      echo
+      for sample_cc in "${samples_cc[@]}"; do
+        client_name="${clients[${sample_cc}]}"
+        # shellcheck disable=SC2016
+        printf -- '- [\c %s](@ref %s-retry-snippet)\n' "${client_name}" "${client_name}"
+      done
+    fi
+  fi
+  echo
+  sed -n '/<!-- inject-retry-snippet-end -->/,$p' "${OVERRIDE_RETRY_POLICIES_DOX}"
+) | sponge "${OVERRIDE_RETRY_POLICIES_DOX}"
+
+(
+  sed '/<!-- inject-retry-pages-start -->/q' "${OVERRIDE_RETRY_POLICIES_DOX}"
+  for sample_cc in "${samples_cc[@]}"; do
+    client_name="${clients[${sample_cc}]}"
+    cat <<_EOF_
+
+/*! @page ${client_name}-retry-snippet Override ${client_name} Retry Policies
+
+This shows how to override the retry policies for ${client_name}:
+
+@snippet ${sample_cc} set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet ${sample_cc} custom-idempotency-policy
+
+*/
+_EOF_
+  done
+  sed -n '/<!-- inject-retry-pages-end -->/,$p' "${OVERRIDE_RETRY_POLICIES_DOX}"
+) | sponge "${OVERRIDE_RETRY_POLICIES_DOX}"

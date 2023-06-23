@@ -1,0 +1,213 @@
+/*!
+
+@page bigquery-override-retry Override Retry, Backoff, and Idempotency Policies
+
+When it is safe to do so, the library automatically retries requests that fail
+due to a transient error. The library then uses [exponential backoff] to backoff
+before trying again. Which operations are considered safe to retry, which
+errors are treated as transient failures, the details of the exponential backoff
+algorithm, and for how long the library retries are all configurable via
+policies.
+
+This document provides examples showing how to override the default policies.
+
+The policies can be set when the `*Connection` object is created. The library
+provides default policies for any policy that is not set. The application can
+also override some (or all) policies when the `*Client` object is created. This
+can be useful if multiple `*Client` objects share the same `*Connection` object,
+but you want different retry behavior in some of the clients. Finally, the
+application can override some retry policies when calling a specific member
+function.
+
+The library uses three different options to control the retry loop. The options
+have per-client names
+
+@section bigquery-override-retry-retry-policy Configuring the transient errors and retry duration
+
+The `*RetryPolicyOption` controls:
+
+- Which errors are to be treated as transient errors.
+- How long will the library will keep retrying transient errors.
+
+You can provide your own class for this option. The library also provides two
+built-in policies:
+
+- `*LimitedErrorCountRetryPolicy`: stops retrying after a specified number
+  of transient errors.
+- `*LimitedTimeRetryPolicy`: stops retrying after a specified time.
+
+Note that a library may have more than one version of these classes. Their name
+match the `*Client` and `*Connection` object they are intended to be used
+with. Some `*Client` objects treat different error codes as transient errors.
+In most cases, only [kUnavailable](@ref google::cloud::StatusCode) is treated
+as a transient error.
+
+@section bigquery-override-retry-backoff-policy Controlling the backoff algorithm
+
+The `*BackoffPolicyOption controls how long the client library will wait
+before retrying a request that failed with a transient error. You can provide
+your own class for this option.
+
+The only built-in backoff policy is
+[`ExponentialBackoffPolicy`](@ref google::cloud::ExponentialBackoffPolicy).
+This class implements a truncated exponential backoff algorithm, with jitter.
+In summary, it doubles the current backoff time after each failure. The actual
+backoff time for an RPC is chosen at random, but never exceeds the current
+backoff. The current backoff is doubled after each failure, but never exceeds
+(or is "truncated") if it reaches a prescribed maximum.
+
+@section bigquery-override-retry-idempotency-policy Controlling which operations are retryable
+
+The `*IdempotencyPolicyOption` controls which requests are retryable, as some
+requests are never safe to retry.
+
+Only one built-in idempotency policy is provided by the library. The name
+matches the name of the client it is intended for. For example, `FooBarClient`
+will use `FooBarIdempotencyPolicy`. This policy is very conservative.
+
+@section bigquery-override-retry-example Example
+
+<!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `bigquery_analyticshub_v1::AnalyticsHubServiceClient`:
+
+@snippet analytics_hub_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet analytics_hub_client_samples.cc custom-idempotency-policy
+
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c bigquery_analyticshub_v1::AnalyticsHubServiceClient](@ref bigquery_analyticshub_v1::AnalyticsHubServiceClient-retry-snippet)
+- [\c bigquery_biglake_v1::MetastoreServiceClient](@ref bigquery_biglake_v1::MetastoreServiceClient-retry-snippet)
+- [\c bigquery_connection_v1::ConnectionServiceClient](@ref bigquery_connection_v1::ConnectionServiceClient-retry-snippet)
+- [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref bigquery_datapolicies_v1::DataPolicyServiceClient-retry-snippet)
+- [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref bigquery_datatransfer_v1::DataTransferServiceClient-retry-snippet)
+- [\c bigquery_migration_v2::MigrationServiceClient](@ref bigquery_migration_v2::MigrationServiceClient-retry-snippet)
+- [\c bigquery_reservation_v1::ReservationServiceClient](@ref bigquery_reservation_v1::ReservationServiceClient-retry-snippet)
+- [\c bigquery_storage_v1::BigQueryReadClient](@ref bigquery_storage_v1::BigQueryReadClient-retry-snippet)
+- [\c bigquery_storage_v1::BigQueryWriteClient](@ref bigquery_storage_v1::BigQueryWriteClient-retry-snippet)
+
+<!-- inject-retry-snippet-end -->
+
+@section bigquery-override-retry-more-information More Information
+
+@see google::cloud::Options
+@see google::cloud::BackoffPolicy
+@see google::cloud::ExponentialBackoffPolicy
+
+[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+
+*/
+
+// <!-- inject-retry-pages-start -->
+
+/*! @page bigquery_analyticshub_v1::AnalyticsHubServiceClient-retry-snippet Override bigquery_analyticshub_v1::AnalyticsHubServiceClient Retry Policies
+
+This shows how to override the retry policies for bigquery_analyticshub_v1::AnalyticsHubServiceClient:
+
+@snippet google/cloud/bigquery/analyticshub/v1/samples/analytics_hub_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/analyticshub/v1/samples/analytics_hub_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_biglake_v1::MetastoreServiceClient-retry-snippet Override bigquery_biglake_v1::MetastoreServiceClient Retry Policies
+
+This shows how to override the retry policies for bigquery_biglake_v1::MetastoreServiceClient:
+
+@snippet google/cloud/bigquery/biglake/v1/samples/metastore_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/biglake/v1/samples/metastore_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_connection_v1::ConnectionServiceClient-retry-snippet Override bigquery_connection_v1::ConnectionServiceClient Retry Policies
+
+This shows how to override the retry policies for bigquery_connection_v1::ConnectionServiceClient:
+
+@snippet google/cloud/bigquery/connection/v1/samples/connection_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/connection/v1/samples/connection_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_datapolicies_v1::DataPolicyServiceClient-retry-snippet Override bigquery_datapolicies_v1::DataPolicyServiceClient Retry Policies
+
+This shows how to override the retry policies for bigquery_datapolicies_v1::DataPolicyServiceClient:
+
+@snippet google/cloud/bigquery/datapolicies/v1/samples/data_policy_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/datapolicies/v1/samples/data_policy_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_datatransfer_v1::DataTransferServiceClient-retry-snippet Override bigquery_datatransfer_v1::DataTransferServiceClient Retry Policies
+
+This shows how to override the retry policies for bigquery_datatransfer_v1::DataTransferServiceClient:
+
+@snippet google/cloud/bigquery/datatransfer/v1/samples/data_transfer_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/datatransfer/v1/samples/data_transfer_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_migration_v2::MigrationServiceClient-retry-snippet Override bigquery_migration_v2::MigrationServiceClient Retry Policies
+
+This shows how to override the retry policies for bigquery_migration_v2::MigrationServiceClient:
+
+@snippet google/cloud/bigquery/migration/v2/samples/migration_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/migration/v2/samples/migration_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_reservation_v1::ReservationServiceClient-retry-snippet Override bigquery_reservation_v1::ReservationServiceClient Retry Policies
+
+This shows how to override the retry policies for bigquery_reservation_v1::ReservationServiceClient:
+
+@snippet google/cloud/bigquery/reservation/v1/samples/reservation_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/reservation/v1/samples/reservation_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_storage_v1::BigQueryReadClient-retry-snippet Override bigquery_storage_v1::BigQueryReadClient Retry Policies
+
+This shows how to override the retry policies for bigquery_storage_v1::BigQueryReadClient:
+
+@snippet google/cloud/bigquery/storage/v1/samples/bigquery_read_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/storage/v1/samples/bigquery_read_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_storage_v1::BigQueryWriteClient-retry-snippet Override bigquery_storage_v1::BigQueryWriteClient Retry Policies
+
+This shows how to override the retry policies for bigquery_storage_v1::BigQueryWriteClient:
+
+@snippet google/cloud/bigquery/storage/v1/samples/bigquery_write_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/storage/v1/samples/bigquery_write_client_samples.cc custom-idempotency-policy
+
+*/
+// <!-- inject-retry-pages-end -->

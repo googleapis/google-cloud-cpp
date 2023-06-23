@@ -36,12 +36,6 @@ application.
 - [\c support_v2::CommentServiceClient](@ref google::cloud::support_v2::CommentServiceClient)
 <!-- inject-client-list-end -->
 
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
-
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
@@ -49,9 +43,10 @@ can override the default policies.
   endpoint.
 - @ref support-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref support-override-retry - describes how to change the default retry
+  policies.
 - @ref support-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/support
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

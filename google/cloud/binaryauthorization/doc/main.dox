@@ -36,12 +36,6 @@ application.
 - [\c binaryauthorization_v1::ValidationHelperV1Client](@ref google::cloud::binaryauthorization_v1::ValidationHelperV1Client)
 <!-- inject-client-list-end -->
 
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
-
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
@@ -49,9 +43,10 @@ can override the default policies.
   endpoint.
 - @ref binaryauthorization-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref binaryauthorization-override-retry - describes how to change the default retry
+  policies.
 - @ref binaryauthorization-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/binary-authorization
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */
