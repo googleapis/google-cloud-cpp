@@ -864,7 +864,7 @@ have per-client names
 The `*RetryPolicyOption` controls:
 
 - Which errors are to be treated as transient errors.
-- How long will the library will keep retrying transient errors.
+- How long the library will keep retrying transient errors.
 
 You can provide your own class for this option. The library also provides two
 built-in policies:
@@ -881,7 +881,7 @@ as a transient error.
 
 @section $library$-override-retry-backoff-policy Controlling the backoff algorithm
 
-The `*BackoffPolicyOption controls how long the client library will wait
+The `*BackoffPolicyOption` controls how long the client library will wait
 before retrying a request that failed with a transient error. You can provide
 your own class for this option.
 
