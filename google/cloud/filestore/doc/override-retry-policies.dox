@@ -20,7 +20,7 @@ application can override some retry policies when calling a specific member
 function.
 
 The library uses three different options to control the retry loop. The options
-have per-client names
+have per-client names.
 
 @section filestore-override-retry-retry-policy Configuring the transient errors and retry duration
 
