@@ -66,6 +66,11 @@ class JobClient {
   StreamRange<ListFormatJob> ListJobs(ListJobsRequest const& request,
                                       Options opts = {});
 
+  /// Starts a new asynchronous BigQuery job. For more details on BigQuery
+  /// jobs, please refer to:
+  /// https://cloud.google.com/bigquery/docs/jobs-overview
+  StatusOr<Job> InsertJob(InsertJobRequest const& request, Options opts = {});
+
  private:
   std::shared_ptr<BigQueryJobConnection> connection_;
   Options options_;
