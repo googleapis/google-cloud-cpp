@@ -32,12 +32,12 @@ The `*RetryPolicyOption` controls:
 You can provide your own class for this option. The library also provides two
 built-in policies:
 
-- `*LimitedErrorCountRetryPolicy`: stops retrying after an specified number
+- `*LimitedErrorCountRetryPolicy`: stops retrying after a specified number
   of transient errors.
-- `*LimitedTimeRetryPolicy`: stops retrying after an specified time.
+- `*LimitedTimeRetryPolicy`: stops retrying after a specified time.
 
 Note that a library may have more than one version of these classes. Their name
-matches the `*Client` and `*Connection` object they are intended to be used
+match the `*Client` and `*Connection` object they are intended to be used
 with. Some `*Client` objects treat different error codes as transient errors.
 In most cases, only [kUnavailable](@ref google::cloud::StatusCode) is treated
 as a transient error.
@@ -56,7 +56,7 @@ backoff time for an RPC is chosen at random, but never exceeds the current
 backoff. The current backoff is doubled after each failure, but never exceeds
 (or is "truncated") if it reaches a prescribed maximum.
 
-@section videointelligence-override-retry-idempotency-policy Controlling the which operations are retryable
+@section videointelligence-override-retry-idempotency-policy Controlling which operations are retryable
 
 The `*IdempotencyPolicyOption` controls which requests are retryable, as some
 requests are never safe to retry.
