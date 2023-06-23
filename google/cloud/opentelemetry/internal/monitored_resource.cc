@@ -55,17 +55,15 @@ class MonitoredResourceProvider {
     MonitoredResource mr;
     mr.type = type_;
     for (auto const& kv : lookup_) {
-      auto found = false;
-      for (auto const& otel_key : kv.second.otel_keys) {
-        auto p = attributes.find(otel_key);
-        if (p != attributes.end()) {
-          found = true;
-          mr.labels[kv.first] = AsString(p->second);
-          break;
-        }
-      }
-      if (!found && kv.second.fallback)
+      auto const& oks = kv.second.otel_keys;
+      auto found = std::find_first_of(
+          oks.begin(), oks.end(), attributes.begin(), attributes.end(),
+          [](auto const& key, auto const& attr) { return key == attr.first; });
+      if (found != oks.end()) {
+        mr.labels[kv.first] = AsString(attributes.at(*found));
+      } else if (kv.second.fallback) {
         mr.labels[kv.first] = *kv.second.fallback;
+      }
     }
     return mr;
   }

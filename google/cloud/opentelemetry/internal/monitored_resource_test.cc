@@ -91,7 +91,6 @@ TEST(MonitoredResource, K8sPod) {
         {sc::kK8sClusterName, "test-cluster"},
         {sc::kK8sNamespaceName, "test-namespace"},
         {sc::kK8sPodName, "test-pod"},
-        //{sc::kK8sContainerName, "test-container"},
     };
     if (test.zone) attributes[sc::kCloudAvailabilityZone] = *test.zone;
     if (test.region) attributes[sc::kCloudRegion] = *test.region;
@@ -122,8 +121,6 @@ TEST(MonitoredResource, K8sNode) {
         {sc::kCloudPlatform, "gcp_kubernetes_engine"},
         {sc::kK8sClusterName, "test-cluster"},
         {sc::kK8sNodeName, "test-node"},
-        //{sc::kK8sPodName, "test-pod"},
-        //{sc::kK8sContainerName, "test-container"},
     };
     if (test.zone) attributes[sc::kCloudAvailabilityZone] = *test.zone;
     if (test.region) attributes[sc::kCloudRegion] = *test.region;
@@ -152,9 +149,6 @@ TEST(MonitoredResource, K8sCluster) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
         {sc::kCloudPlatform, "gcp_kubernetes_engine"},
         {sc::kK8sClusterName, "test-cluster"},
-        //{sc::kK8sNodeName, "test-node"},
-        //{sc::kK8sPodName, "test-pod"},
-        //{sc::kK8sContainerName, "test-container"},
     };
     if (test.zone) attributes[sc::kCloudAvailabilityZone] = *test.zone;
     if (test.region) attributes[sc::kCloudRegion] = *test.region;
