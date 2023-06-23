@@ -32,8 +32,6 @@ BigQueryJobLogging::BigQueryJobLogging(
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-// Customized LogWrapper is used here since GetJobRequest is
-// not a protobuf message.
 StatusOr<GetJobResponse> BigQueryJobLogging::GetJob(
     rest_internal::RestContext& rest_context, GetJobRequest const& request) {
   return LogWrapper(
@@ -47,8 +45,6 @@ StatusOr<GetJobResponse> BigQueryJobLogging::GetJob(
       tracing_options_);
 }
 
-// Customized LogWrapper is used here since ListJobsRequest is
-// not a protobuf message.
 StatusOr<ListJobsResponse> BigQueryJobLogging::ListJobs(
     rest_internal::RestContext& rest_context, ListJobsRequest const& request) {
   return LogWrapper(
@@ -62,8 +58,6 @@ StatusOr<ListJobsResponse> BigQueryJobLogging::ListJobs(
       tracing_options_);
 }
 
-// Customized LogWrapper is used here since InsertJobRequest is
-// not a protobuf message.
 StatusOr<InsertJobResponse> BigQueryJobLogging::InsertJob(
     rest_internal::RestContext& rest_context, InsertJobRequest const& request) {
   return LogWrapper(
