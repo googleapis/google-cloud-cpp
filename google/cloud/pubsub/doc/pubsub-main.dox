@@ -26,6 +26,7 @@ library.
   effective approach to diagnose runtime problems.
 - @ref pubsub-endpoint-example
 - @ref pubsub-auth-example
+- @ref pubsub-override-retry
 - @ref publisher-mock shows how to write tests mocking [Publisher]
 - @ref subscriber-mock shows how to write tests mocking [Subscriber]
 - The [Setting up your development environment] guide describes how to set up
