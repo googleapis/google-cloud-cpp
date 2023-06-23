@@ -75,6 +75,20 @@ StreamRange<ListFormatJob> BigQueryJobRestConnectionImpl::ListJobs(
       });
 }
 
+StatusOr<Job> BigQueryJobRestConnectionImpl::InsertJob(
+    InsertJobRequest const& request) {
+  auto result = rest_internal::RestRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->InsertJob(request),
+      [this](rest_internal::RestContext& rest_context,
+             InsertJobRequest const& request) {
+        return stub_->InsertJob(rest_context, request);
+      },
+      request, __func__);
+  if (!result) return std::move(result).status();
+  return result->job;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

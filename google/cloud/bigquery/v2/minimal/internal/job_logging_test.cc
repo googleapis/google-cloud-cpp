@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_logging.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/testing/job_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_job_rest_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/log.h"
@@ -26,6 +27,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
 using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
 using ::google::cloud::testing_util::ScopedLog;
 using ::testing::Contains;
@@ -186,18 +188,7 @@ TEST(JobLoggingClientTest, InsertJob) {
 
   auto client = CreateMockJobLogging(std::move(mock_stub));
 
-  Job job;
-  job.etag = "jtag";
-  job.id = "j123";
-  job.self_link = "jselfLink";
-  job.user_email = "juserEmail";
-  job.status.state = "DONE";
-  job.reference.project_id = "p123";
-  job.reference.job_id = "j123";
-  job.configuration.job_type = "QUERY";
-  job.configuration.query_config.query = "select 1;";
-
-  InsertJobRequest request("test-project-id", job);
+  InsertJobRequest request("test-project-id", MakePartialJob());
 
   rest_internal::RestContext context;
   context.AddHeader("header-1", "value-1");
