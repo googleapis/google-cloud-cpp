@@ -36,6 +36,9 @@ void AssertEquals(bigquery_v2_minimal_internal::JobStatistics& expected,
                   bigquery_v2_minimal_internal::JobStatistics& actual);
 
 bigquery_v2_minimal_internal::Job MakeJob();
+bigquery_v2_minimal_internal::Job MakePartialJob();
+void AssertEqualsPartial(bigquery_v2_minimal_internal::Job& expected,
+                         bigquery_v2_minimal_internal::Job& actual);
 void AssertEquals(bigquery_v2_minimal_internal::Job& expected,
                   bigquery_v2_minimal_internal::Job& actual);
 

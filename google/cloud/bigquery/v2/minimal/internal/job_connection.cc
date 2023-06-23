@@ -38,6 +38,10 @@ StreamRange<ListFormatJob> BigQueryJobConnection::ListJobs(
       });
 }
 
+StatusOr<Job> BigQueryJobConnection::InsertJob(InsertJobRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<BigQueryJobConnection> MakeBigQueryJobConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, UnifiedCredentialsOptionList,

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/testing/job_test_utils.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/http_payload.h"
 #include "google/cloud/internal/make_status.h"
@@ -29,6 +30,8 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace rest = ::google::cloud::rest_internal;
+
+using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockHttpPayload;
@@ -52,21 +55,6 @@ Status InternalError() {
 
 Status InvalidArgumentError() {
   return Status(StatusCode::kInvalidArgument, "");
-}
-
-Job MakeInsertJob() {
-  Job job;
-  job.etag = "jtag";
-  job.id = "j123";
-  job.self_link = "jselfLink";
-  job.user_email = "juserEmail";
-  job.status.state = "DONE";
-  job.reference.project_id = "p123";
-  job.reference.job_id = "j123";
-  job.configuration.job_type = "QUERY";
-  job.configuration.query_config.query = "select 1;";
-
-  return job;
 }
 
 ListJobsRequest GetListJobsRequest() {
@@ -275,7 +263,8 @@ TEST(BigQueryJobStubTest, InsertJobSuccess) {
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
-  InsertJobRequest job_request("p123", MakeInsertJob());
+  auto job = MakePartialJob();
+  InsertJobRequest job_request("p123", job);
 
   rest_internal::RestContext context;
   DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
@@ -284,9 +273,8 @@ TEST(BigQueryJobStubTest, InsertJobSuccess) {
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(result->http_response.http_status_code, Eq(HttpStatusCode::kOk));
   EXPECT_THAT(result->http_response.payload, Eq(job_response_payload));
-  EXPECT_THAT(result->job.reference.project_id, Eq("p123"));
-  EXPECT_THAT(result->job.id, Eq("j123"));
-  EXPECT_THAT(result->job.status.state, Eq("DONE"));
+
+  bigquery_v2_minimal_testing::AssertEqualsPartial(job, result->job);
 }
 
 TEST(BigQueryJobStubTest, InsertJobRestClientError) {
@@ -299,7 +287,7 @@ TEST(BigQueryJobStubTest, InsertJobRestClientError) {
   rest_internal::RestContext context;
   DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
 
-  InsertJobRequest job_request("p123", MakeInsertJob());
+  InsertJobRequest job_request("p123", MakePartialJob());
 
   auto status = rest_stub.InsertJob(context, std::move(job_request));
   EXPECT_THAT(status,
@@ -322,7 +310,7 @@ TEST(BigQueryJobStubTest, InsertJobRestResponseError) {
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
-  InsertJobRequest job_request("p123", MakeInsertJob());
+  InsertJobRequest job_request("p123", MakePartialJob());
 
   rest_internal::RestContext context;
   DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
