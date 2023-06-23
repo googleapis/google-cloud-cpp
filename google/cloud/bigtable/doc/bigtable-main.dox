@@ -37,6 +37,7 @@ library.
   This can be an effective approach to diagnose runtime problems.
 - @ref bigtable-endpoint-example
 - @ref bigtable-auth-example
+- @ref bigtable-override-retry
 - @ref bigtable-mocking "Mocking the Cloud Bigtable C++ client"
 - The [Setting up your development environment] guide describes how to set up
   a C++ development environment in various platforms, including the Google Cloud
