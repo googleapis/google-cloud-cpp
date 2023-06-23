@@ -32,6 +32,8 @@ add_library(
     google_cloud_cpp_opentelemetry # cmake-format: sort
     configure_basic_tracing.cc
     configure_basic_tracing.h
+    internal/monitored_resource.cc
+    internal/monitored_resource.h
     internal/recordable.cc
     internal/recordable.h
     internal/resource_detector_impl.cc
@@ -118,8 +120,8 @@ add_subdirectory(samples)
 
 set(opentelemetry_unit_tests
     # cmake-format: sort
-    internal/recordable_test.cc internal/resource_detector_impl_test.cc
-    trace_exporter_test.cc)
+    internal/monitored_resource_test.cc internal/recordable_test.cc
+    internal/resource_detector_impl_test.cc trace_exporter_test.cc)
 
 export_list_to_bazel("opentelemetry_unit_tests.bzl" "opentelemetry_unit_tests"
                      YEAR "2023")
