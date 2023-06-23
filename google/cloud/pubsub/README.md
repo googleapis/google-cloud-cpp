@@ -50,23 +50,6 @@ int main(int argc, char* argv[]) try {
 
 <!-- inject-quickstart-end -->
 
-## Build and Install
-
-- Packaging maintainers or developers who prefer to install the library in a
-  fixed directory (such as `/usr/local` or `/opt`) should consult the
-  [packaging guide](/doc/packaging.md).
-- Developers who prefer using a package manager such as
-  [vcpkg](https://vcpkg.io), or [Conda](https://conda.io), should follow the
-  instructions for their package manager.
-- Developers wanting to use the libraries as part of a larger CMake or Bazel
-  project should consult the [quickstart guides](#quickstart) for the library
-  or libraries they want to use.
-- Developers wanting to compile the library just to run some examples or
-  tests should read the project's top-level
-  [README](/README.md#building-and-installing).
-- Contributors and developers to `google-cloud-cpp` should consult the guide to
-  [set up a development workstation][howto-setup-dev-workstation].
-
 ## More Information
 
 - Official documentation about the [Cloud Pub/Sub][cloud-pubsub-docs] service
@@ -75,5 +58,4 @@ int main(int argc, char* argv[]) try {
 
 [cloud-pubsub-docs]: https://cloud.google.com/pubsub/docs/
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/pubsub/latest/
-[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/pubsub
