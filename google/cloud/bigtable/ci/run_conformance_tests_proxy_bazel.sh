@@ -30,7 +30,7 @@ BAZEL_BIN="$1"
 shift
 bazel_args=("$@")
 
-# Build and start the proxy in the background process. They are splitted as the
+# Build and start the proxy in the background process. They are split as the
 # test will wait for the proxy to be live, subject to timeout (e.g. 100s).
 # Building the binary can easily take more than the timeout limit.
 pushd "$(dirname "$0")/../test_proxy" >/dev/null
