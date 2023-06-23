@@ -156,6 +156,74 @@ TEST(JobLoggingClientTest, ListJobs) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-2")")));
 }
 
+TEST(JobLoggingClientTest, InsertJob) {
+  ScopedLog log;
+
+  auto mock_stub = std::make_shared<MockBigQueryJobRestStub>();
+  auto constexpr kExpectedPayload =
+      R"({"kind": "jkind",
+          "etag": "jtag",
+          "id": "j123",
+          "self_link": "jselfLink",
+          "user_email": "juserEmail",
+          "status": {"state": "DONE"},
+          "reference": {"project_id": "p123", "job_id": "j123"},
+          "configuration": {
+            "job_type": "QUERY",
+            "query_config": {"query": "select 1;"}
+          }})";
+
+  EXPECT_CALL(*mock_stub, InsertJob)
+      .WillOnce(
+          [&](rest_internal::RestContext&,
+              InsertJobRequest const& request) -> StatusOr<InsertJobResponse> {
+            EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+            BigQueryHttpResponse http_response;
+            http_response.payload = kExpectedPayload;
+            return InsertJobResponse::BuildFromHttpResponse(
+                std::move(http_response));
+          });
+
+  auto client = CreateMockJobLogging(std::move(mock_stub));
+
+  Job job;
+  job.etag = "jtag";
+  job.id = "j123";
+  job.self_link = "jselfLink";
+  job.user_email = "juserEmail";
+  job.status.state = "DONE";
+  job.reference.project_id = "p123";
+  job.reference.job_id = "j123";
+  job.configuration.job_type = "QUERY";
+  job.configuration.query_config.query = "select 1;";
+
+  InsertJobRequest request("test-project-id", job);
+
+  rest_internal::RestContext context;
+  context.AddHeader("header-1", "value-1");
+  context.AddHeader("header-2", "value-2");
+
+  client->InsertJob(context, request);
+
+  auto actual_lines = log.ExtractLines();
+
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(" << ")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(InsertJobRequest)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(job_id: "j123")")).Times(2));
+  EXPECT_THAT(actual_lines,
+              Contains(HasSubstr(R"(project_id: "p123")")).Times(2));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(InsertJobResponse)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(state: "DONE")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "j123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "jkind")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(etag: "jtag")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(Context)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-2")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-2")")));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
