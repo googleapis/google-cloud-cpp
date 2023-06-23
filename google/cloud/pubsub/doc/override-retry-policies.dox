@@ -20,7 +20,7 @@ application can override some retry policies when calling a specific member
 function.
 
 The library uses three different options to control the retry loop. The options
-have per-client names
+have per-client names.
 
 @section pubsub-override-retry-retry-policy Configuring the transient errors and retry duration
 
@@ -66,7 +66,8 @@ backoff. The current backoff is doubled after each failure, but never exceeds
 
 [`SchemaServiceClient`] supports the
 [`SchemaServiceConnectionIdempotencyPolicyOption`] to control which requests are
-retryable.  In all other cases the Pub/Sub library retries the operations.
+[idempotent], and therefore retryable.  In all other cases the Pub/Sub library
+retries the operations.
 
 For `SchemaServiceClient` only one built-in idempotency policy is provided by
 the library: [`SchemaServiceConnectionIdempotencyPolicy`].
@@ -96,6 +97,7 @@ Follow these links to find examples for other classes:
 @see google::cloud::ExponentialBackoffPolicy
 
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+[idempotent]: https://en.wikipedia.org/wiki/Idempotence
 
 */
 
