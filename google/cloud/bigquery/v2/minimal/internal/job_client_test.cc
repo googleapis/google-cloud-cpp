@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_client.h"
 #include "google/cloud/bigquery/v2/minimal/mocks/mock_job_connection.h"
+#include "google/cloud/bigquery/v2/minimal/testing/job_test_utils.h"
 #include "google/cloud/mocks/mock_stream_range.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -27,34 +28,21 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-Job MakeTestJob() {
-  Job job;
-  job.etag = "jtag";
-  job.kind = "jkind";
-  job.id = "j123";
-  job.self_link = "jselfLink";
-  job.user_email = "juserEmail";
-  job.status.state = "DONE";
-  job.reference.project_id = "p123";
-  job.reference.job_id = "j123";
-  job.configuration.job_type = "QUERY";
-  job.configuration.query_config.query = "select 1;";
-  return job;
-}
-
 TEST(JobClientTest, GetJobSuccess) {
+  auto job = MakePartialJob();
   auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
 
   EXPECT_CALL(*mock_job_connection, GetJob)
       .WillOnce([&](GetJobRequest const& request) {
         EXPECT_EQ("test-project-id", request.project_id());
         EXPECT_EQ("test-job-id", request.job_id());
-        return make_status_or(MakeTestJob());
+        return make_status_or(job);
       });
 
   JobClient job_client(mock_job_connection);
@@ -63,19 +51,10 @@ TEST(JobClientTest, GetJobSuccess) {
   request.set_project_id("test-project-id");
   request.set_job_id("test-job-id");
 
-  auto job = job_client.GetJob(request);
+  auto actual_job = job_client.GetJob(request);
 
-  ASSERT_STATUS_OK(job);
-  EXPECT_EQ(job->kind, "jkind");
-  EXPECT_EQ(job->etag, "jtag");
-  EXPECT_EQ(job->id, "j123");
-  EXPECT_EQ(job->self_link, "jselfLink");
-  EXPECT_EQ(job->user_email, "juserEmail");
-  EXPECT_EQ(job->status.state, "DONE");
-  EXPECT_EQ(job->reference.project_id, "p123");
-  EXPECT_EQ(job->reference.job_id, "j123");
-  EXPECT_EQ(job->configuration.job_type, "QUERY");
-  EXPECT_EQ(job->configuration.query_config.query, "select 1;");
+  ASSERT_STATUS_OK(actual_job);
+  bigquery_v2_minimal_testing::AssertEqualsPartial(job, *actual_job);
 }
 
 TEST(JobClientTest, GetJobFailure) {
@@ -113,6 +92,40 @@ TEST(JobClientTest, ListJobs) {
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(JobClientTest, InsertJobSuccess) {
+  auto job = MakePartialJob();
+  auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
+
+  EXPECT_CALL(*mock_job_connection, InsertJob)
+      .WillOnce([&](InsertJobRequest const& request) {
+        EXPECT_EQ("test-project-id", request.project_id());
+        return make_status_or(job);
+      });
+
+  JobClient job_client(mock_job_connection);
+
+  InsertJobRequest request("test-project-id", job);
+
+  auto actual_job = job_client.InsertJob(request);
+
+  ASSERT_STATUS_OK(actual_job);
+  bigquery_v2_minimal_testing::AssertEqualsPartial(job, *actual_job);
+}
+
+TEST(JobClientTest, InsertJobFailure) {
+  auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
+
+  EXPECT_CALL(*mock_job_connection, InsertJob)
+      .WillOnce(Return(rest_internal::AsStatus(HttpStatusCode::kBadRequest,
+                                               "bad-request-error")));
+
+  JobClient job_client(mock_job_connection);
+
+  auto result = job_client.InsertJob(InsertJobRequest());
+  EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("bad-request-error")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
