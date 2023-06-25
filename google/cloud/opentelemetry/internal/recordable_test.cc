@@ -72,6 +72,15 @@ opentelemetry::nostd::span<T> MakeCompositeAttribute() {
   return opentelemetry::nostd::span<T>(v);
 }
 
+template <>
+opentelemetry::nostd::span<opentelemetry::nostd::string_view>
+MakeCompositeAttribute() {
+  std::string s1{"s1"};
+  std::string s2{"s2"};
+  opentelemetry::nostd::string_view v[]{s1, s2};
+  return opentelemetry::nostd::span<opentelemetry::nostd::string_view>(v);
+}
+
 Matcher<v2::AttributeValue const&> AttributeValue(bool value) {
   return ResultOf(
       "bool_value",
@@ -556,6 +565,42 @@ TEST(Recordable, SetAttributeRespectsLimit) {
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.attributes(), Attributes(SizeIs(kSpanAttributeLimit),
                                              /*dropped_attributes_count=*/1));
+}
+
+TEST(Recordable, SetResourceCopiesResourceAttributes) {
+  auto resource = opentelemetry::sdk::resource::Resource::Create({
+      {"bool", true},
+      {"int32", std::int32_t(5)},
+      {"uint32", std::uint32_t(5)},
+      {"int64", std::int64_t(5)},
+      {"uint64", std::uint64_t(5)},
+      {"double", 5.0},
+      {"string", "5"},
+      // Composite attributes are dropped, but let's include them to make sure
+      // they are handled by the AttributeConverter.
+      {"vector<bool>", MakeCompositeAttribute<bool>()},
+      {"vector<int32>", MakeCompositeAttribute<std::int32_t>()},
+      {"vector<int64>", MakeCompositeAttribute<std::int64_t>()},
+      {"vector<uint32>", MakeCompositeAttribute<std::uint32_t>()},
+      {"vector<double>", MakeCompositeAttribute<double>()},
+      {"vector<string>",
+       MakeCompositeAttribute<opentelemetry::nostd::string_view>()},
+      {"vector<uint64>", MakeCompositeAttribute<std::uint64_t>()},
+      {"vector<uint8>", MakeCompositeAttribute<std::uint8_t>()},
+  });
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.SetResource(resource);
+  auto proto = std::move(rec).as_proto();
+  EXPECT_THAT(proto.attributes(),
+              Attributes(IsSupersetOf({Pair("bool", AttributeValue(true)),
+                                       Pair("int32", AttributeValue(5)),
+                                       Pair("uint32", AttributeValue(5)),
+                                       Pair("int64", AttributeValue(5)),
+                                       Pair("uint64", AttributeValue(5)),
+                                       Pair("double", AttributeValue("5")),
+                                       Pair("string", AttributeValue("5"))}),
+                         /*dropped_attributes_count=*/8));
 }
 
 TEST(Recordable, SetResourceMapsMonitoredResources) {

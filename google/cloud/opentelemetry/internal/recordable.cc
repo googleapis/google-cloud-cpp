@@ -160,6 +160,52 @@ google::devtools::cloudtrace::v2::Span::SpanKind MapSpanKind(
   }
 }
 
+template <typename T>
+opentelemetry::common::AttributeValue convertVector(std::vector<T> const& v) {
+  return opentelemetry::nostd::span<T const>(v.data(), v.size());
+}
+template <>
+opentelemetry::common::AttributeValue convertVector(std::vector<bool> const&) {
+  // We discard the data in vector<bool> attributes because:
+  // - We cannot convert a vector<bool> to a span<bool> without allocating
+  //   memory.
+  // - The exporter drops span<bool> attributes anyways.
+  // - vector<bool> attributes are probably rare.
+  return opentelemetry::nostd::span<bool>{};
+}
+template <>
+opentelemetry::common::AttributeValue convertVector(
+    std::vector<std::string> const& v) {
+  return opentelemetry::nostd::span<bool>{};
+
+  std::vector<opentelemetry::nostd::string_view> ref(v.size());
+  std::transform(v.begin(), v.end(), ref.begin(),
+                 [](std::string v) { return v; });
+  return opentelemetry::nostd::span<opentelemetry::nostd::string_view>(
+      ref.data(), ref.size());
+}
+
+/**
+ * Creates an unowned AttributeValue (span attributes) from an
+ * OwnedAttributeValue (resource attributes)
+ */
+struct AttributeConverter {
+  using AttributeValue = ::opentelemetry::common::AttributeValue;
+  AttributeValue operator()(bool v) { return v; }
+  AttributeValue operator()(std::int32_t v) { return v; }
+  AttributeValue operator()(std::uint32_t v) { return v; }
+  AttributeValue operator()(std::int64_t v) { return v; }
+  AttributeValue operator()(double v) { return v; }
+  AttributeValue operator()(std::string const& v) {
+    return opentelemetry::nostd::string_view(v.data(), v.size());
+  }
+  template <typename T>
+  AttributeValue operator()(std::vector<T> const& v) {
+    return convertVector(v);
+  }
+  AttributeValue operator()(std::uint64_t v) { return v; }
+};
+
 }  // namespace
 
 void SetTruncatableString(
@@ -379,7 +425,10 @@ void Recordable::SetStatusImpl(opentelemetry::trace::StatusCode code,
 void Recordable::SetResourceImpl(
     opentelemetry::sdk::resource::Resource const& resource) {
   auto const& attributes = resource.GetAttributes();
-  // TODO(#11775) - add resource attributes as span attributes
+  AttributeConverter converter;
+  for (auto const& kv : attributes) {
+    SetAttribute(kv.first, absl::visit(converter, kv.second));
+  }
   auto mr = ToMonitoredResource(attributes);
   for (auto const& label : mr.labels) {
     SetAttribute(absl::StrCat("g.co/r/", mr.type, "/", label.first),
