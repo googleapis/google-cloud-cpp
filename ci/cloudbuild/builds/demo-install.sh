@@ -40,7 +40,7 @@ cmake_config_testing_details=(
 ## [BEGIN packaging.md]
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"
-cmake -H. -Bcmake-out \
+cmake -S . -B cmake-out \
   "${cmake_config_testing_details[@]}" \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \

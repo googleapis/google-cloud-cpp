@@ -104,7 +104,7 @@ https://cloud.google.com/docs/authentication/production
 
    ```bash
    cd $HOME/google-cloud-cpp/google/cloud/storage/quickstart
-   cmake -H. -B.build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+   cmake -S . -B .build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
    cmake --build .build
    ```
 
@@ -142,7 +142,7 @@ to your CMake configuration step. Using the previous example:
 
 ```sh
 cd $HOME/google-cloud-cpp/google/cloud/storage/quickstart
-cmake -H. -B.build -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON \
+cmake -S . -B .build -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON \
     -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build .build --target quickstart_grpc
 ```

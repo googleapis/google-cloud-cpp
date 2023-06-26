@@ -68,7 +68,7 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | 
       -DCMAKE_BUILD_TYPE="Release" \
       -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
-      -H. -Bcmake-out/abseil && \
+      -S . -B cmake-out/abseil && \
     cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
@@ -82,7 +82,7 @@ RUN curl -fsSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
       -DCMAKE_CXX_STANDARD=14 \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
-      -H. -Bcmake-out/googletest && \
+      -S . -B cmake-out/googletest && \
     cmake --build cmake-out/googletest --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
@@ -96,7 +96,7 @@ RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
         -DCMAKE_BUILD_TYPE="Release" \
         -DBUILD_SHARED_LIBS=yes \
         -DBENCHMARK_ENABLE_TESTING=OFF \
-        -H. -Bcmake-out/benchmark && \
+        -S . -B cmake-out/benchmark && \
     cmake --build cmake-out/benchmark --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
@@ -111,7 +111,7 @@ RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -Bcmake-out/crc32c && \
+      -S . -B cmake-out/crc32c && \
     cmake --build cmake-out/crc32c --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
@@ -125,7 +125,7 @@ RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -DJSON_BuildTests=OFF \
-      -H. -Bcmake-out/nlohmann/json && \
+      -S . -B cmake-out/nlohmann/json && \
     cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
@@ -139,7 +139,7 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz 
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
-        -H. -Bcmake-out -GNinja && \
+        -S . -B cmake-out -GNinja && \
     cmake --build cmake-out --target install && \
     ldconfig && \
     cd /var/tmp && rm -fr build
@@ -173,7 +173,7 @@ RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
         -DgRPC_RE2_PROVIDER=package \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
-        -H. -Bcmake-out -GNinja && \
+        -S . -B cmake-out -GNinja && \
     cmake --build cmake-out --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
@@ -190,7 +190,7 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.
         -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
-        -H. -Bcmake-out -GNinja && \
+        -S . -B cmake-out -GNinja && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
