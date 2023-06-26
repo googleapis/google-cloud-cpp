@@ -63,7 +63,6 @@ class ListJobsResponse {
   BigQueryHttpResponse http_response;
 };
 
-// Starts a new asynchronous BigQuery job.
 class InsertJobResponse {
  public:
   InsertJobResponse() = default;
@@ -75,6 +74,22 @@ class InsertJobResponse {
                           int indent = 0) const;
 
   Job job;
+  BigQueryHttpResponse http_response;
+};
+
+class CancelJobResponse {
+ public:
+  CancelJobResponse() = default;
+  static StatusOr<CancelJobResponse> BuildFromHttpResponse(
+      BigQueryHttpResponse const& http_response);
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+
+  std::string kind;
+  Job job;
+
   BigQueryHttpResponse http_response;
 };
 
