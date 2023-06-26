@@ -14,7 +14,7 @@
 # limitations under the License.
 # ~~~
 
-cmake_minimum_required(VERSION 3.10...3.24)
+cmake_minimum_required(VERSION 3.13...3.24)
 
 # Define the project name and where to report bugs.
 set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
