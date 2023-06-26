@@ -47,6 +47,5 @@ popd >/dev/null
 
 # Stop the proxy
 kill $proxy_pid
-trap '' EXIT
 
 exit "${exit_status}"
