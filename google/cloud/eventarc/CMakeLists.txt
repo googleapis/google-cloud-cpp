@@ -170,7 +170,7 @@ google_cloud_cpp_install_headers("google_cloud_cpp_eventarc_mocks"
 google_cloud_cpp_add_pkgconfig(
     eventarc "The Eventarc API C++ Client Library"
     "Provides C++ APIs to use the Eventarc API." "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common" " google_cloud_cpp_eventarc_protos")
+    "google_cloud_cpp_common" "google_cloud_cpp_eventarc_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

@@ -238,12 +238,12 @@ google_cloud_cpp_add_pkgconfig(
     "Google Cloud C++ Client Library Common Components"
     "Common Components used by the Google Cloud C++ Client Libraries."
     "absl_optional"
-    " absl_span"
-    " absl_strings"
-    " absl_time"
-    " absl_time_zone"
-    " absl_variant"
-    " openssl")
+    "absl_span"
+    "absl_strings"
+    "absl_time"
+    "absl_time_zone"
+    "absl_variant"
+    "openssl")
 
 # Create and install the CMake configuration files.
 configure_file("config.cmake.in" "google_cloud_cpp_common-config.cmake" @ONLY)
@@ -300,7 +300,7 @@ install(
 google_cloud_cpp_add_pkgconfig(
     "mocks" "Google Cloud C++ Testing Library"
     "Helpers for testing the Google Cloud C++ Client Libraries"
-    "google_cloud_cpp_common" " gmock_main")
+    "google_cloud_cpp_common" "gmock_main")
 
 # Create and install the CMake configuration files.
 configure_file("mocks-config.cmake.in" "google_cloud_cpp_mocks-config.cmake"

@@ -175,8 +175,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Database Migration API C++ Client Library"
     "Provides C++ APIs to use the Database Migration API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_datamigration_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_datamigration_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

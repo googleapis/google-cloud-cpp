@@ -146,13 +146,13 @@ google_cloud_cpp_add_pkgconfig(
     "The GCS (Google Cloud Storage) gRPC plugin"
     "An extension to the GCS C++ client library using gRPC for transport."
     "google_cloud_cpp_storage"
-    " google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_storage_protos"
-    " google_cloud_cpp_rpc_status_protos"
-    " google_cloud_cpp_rpc_error_details_protos"
-    " google_cloud_cpp_common"
-    " libcurl"
-    " openssl")
+    "google_cloud_cpp_grpc_utils"
+    "google_cloud_cpp_storage_protos"
+    "google_cloud_cpp_rpc_status_protos"
+    "google_cloud_cpp_rpc_error_details_protos"
+    "google_cloud_cpp_common"
+    "libcurl"
+    "openssl")
 
 install(
     TARGETS google_cloud_cpp_storage_grpc

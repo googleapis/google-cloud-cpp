@@ -361,7 +361,7 @@ google_cloud_cpp_install_headers("google_cloud_cpp_bigquery_rest_mocks"
 google_cloud_cpp_add_pkgconfig(
     bigquery_rest "Experimental BigQuery REST client library"
     "An experimental BigQuery C++ client library using REST for transport."
-    " google_cloud_cpp_rest_internal")
+    "google_cloud_cpp_rest_internal")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

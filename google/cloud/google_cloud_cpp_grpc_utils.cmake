@@ -175,15 +175,15 @@ google_cloud_cpp_add_pkgconfig(
     "gRPC Utilities for the Google Cloud C++ Client Library"
     "Provides gRPC Utilities for the Google Cloud C++ Client Library."
     "google_cloud_cpp_common"
-    " google_cloud_cpp_iam_protos"
-    " google_cloud_cpp_longrunning_operations_protos"
-    " google_cloud_cpp_rpc_status_protos"
-    " absl_function_ref"
-    " absl_strings"
-    " absl_time"
-    " absl_time_zone"
-    " absl_variant"
-    " openssl")
+    "google_cloud_cpp_iam_protos"
+    "google_cloud_cpp_longrunning_operations_protos"
+    "google_cloud_cpp_rpc_status_protos"
+    "absl_function_ref"
+    "absl_strings"
+    "absl_time"
+    "absl_time_zone"
+    "absl_variant"
+    "openssl")
 
 # Create and install the CMake configuration files.
 configure_file("grpc_utils/config.cmake.in"

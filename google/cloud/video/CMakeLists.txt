@@ -169,8 +169,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Video Services C++ Client Library"
     "Provides C++ APIs to use the Live Stream, Transcoder, and Stitcher APIs."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_video_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_video_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

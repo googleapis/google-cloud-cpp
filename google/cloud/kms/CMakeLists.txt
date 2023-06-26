@@ -168,8 +168,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Cloud Key Management Service (KMS) API C++ Client Library"
     "Provides C++ APIs to use the Cloud Key Management Service (KMS) API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_kms_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_kms_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
