@@ -234,6 +234,43 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   return request;
 }
 
+StatusOr<rest_internal::RestRequest> BuildRestRequest(
+    CancelJobRequest const& r) {
+  auto const& opts = internal::CurrentOptions();
+
+  rest_internal::RestRequest request;
+  if (r.project_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid GetJobRequest: Project Id is empty", GCP_ERROR_INFO());
+  }
+  if (r.job_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid GetJobRequest: Job Id is empty", GCP_ERROR_INFO());
+  }
+  // Builds CancelJob request path based on endpoint provided.
+  std::string endpoint = GetBaseEndpoint(opts);
+
+  std::string path = absl::StrCat(endpoint, "/projects/", r.project_id(),
+                                  "/jobs/", r.job_id());
+  request.SetPath(std::move(path));
+
+  // Add query params.
+  if (!r.location().empty()) {
+    request.AddQueryParameter("location", r.location());
+  }
+  return request;
+}
+
+std::string CancelJobRequest::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id_)
+      .StringField("job_id", job_id_)
+      .StringField("location", location_)
+      .Build();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

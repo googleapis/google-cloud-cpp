@@ -120,7 +120,7 @@ TEST(GetJobRequestTest, EmptyProjectId) {
                                      HasSubstr("Project Id is empty")));
 }
 
-TEST(GetJobRequest, EmptyJobId) {
+TEST(GetJobRequestTest, EmptyJobId) {
   GetJobRequest request("test-project-id", "");
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
@@ -131,7 +131,7 @@ TEST(GetJobRequest, EmptyJobId) {
                                      HasSubstr("Job Id is empty")));
 }
 
-TEST(GetJobRequest, OutputStream) {
+TEST(GetJobRequestTest, OutputStream) {
   GetJobRequest request("test-project-id", "test-job-id");
   request.set_location("test-location");
   std::string expected = absl::StrCat(
@@ -191,7 +191,7 @@ TEST(ListJobsRequestTest, OutputStream) {
   EXPECT_EQ(expected, os.str());
 }
 
-TEST(GetJobRequest, DebugString) {
+TEST(GetJobRequestTest, DebugString) {
   GetJobRequest request("test-project-id", "test-job-id");
   request.set_location("test-location");
 
@@ -966,6 +966,116 @@ TEST(InsertJobRequest, DebugString) {
       }
     }
   }
+})");
+}
+
+TEST(CancelJobRequestTest, SuccessWithLocation) {
+  CancelJobRequest request("1", "2");
+  request.set_location("useast");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto actual = BuildRestRequest(request);
+  ASSERT_STATUS_OK(actual);
+
+  rest_internal::RestRequest expected;
+  expected.SetPath(
+      "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2");
+  expected.AddQueryParameter("location", "useast");
+  EXPECT_EQ(expected, *actual);
+}
+
+TEST(CancelJobRequestTest, SuccessWithoutLocation) {
+  CancelJobRequest request("1", "2");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+  auto actual = BuildRestRequest(request);
+  ASSERT_STATUS_OK(actual);
+
+  rest_internal::RestRequest expected;
+  expected.SetPath(
+      "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2");
+  EXPECT_EQ(expected, *actual);
+}
+
+TEST(CancelJobRequestTest, SuccessWithDifferentEndpoints) {
+  CancelJobRequest request("1", "2");
+
+  struct EndpointTest {
+    std::string endpoint;
+    std::string expected;
+  } cases[] = {
+      {"https://myendpoint.google.com",
+       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+      {"http://myendpoint.google.com",
+       "http://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+      {"myendpoint.google.com",
+       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+      {"https://myendpoint.google.com/",
+       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+  };
+
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing for endpoint: " + test.endpoint +
+                 ", expected: " + test.expected);
+    Options opts;
+    opts.set<EndpointOption>(test.endpoint);
+    internal::OptionsSpan span(opts);
+
+    auto actual = BuildRestRequest(request);
+    ASSERT_STATUS_OK(actual);
+    EXPECT_EQ(test.expected, actual->path());
+  }
+}
+
+TEST(CancelJobRequestTest, FailEmptyProjectId) {
+  CancelJobRequest request("", "test-job-id");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto rest_request = BuildRestRequest(request);
+  EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
+                                     HasSubstr("Project Id is empty")));
+}
+
+TEST(CancelJobRequestTest, FailEmptyJobId) {
+  CancelJobRequest request("test-project-id", "");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto rest_request = BuildRestRequest(request);
+  EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
+                                     HasSubstr("Job Id is empty")));
+}
+
+TEST(CancelJobRequestTest, DebugString) {
+  CancelJobRequest request("test-project-id", "test-job-id");
+  request.set_location("test-location");
+
+  EXPECT_EQ(request.DebugString("CancelJobRequest", TracingOptions{}),
+            R"(CancelJobRequest {)"
+            R"( project_id: "test-project-id")"
+            R"( job_id: "test-job-id")"
+            R"( location: "test-location")"
+            R"( })");
+  EXPECT_EQ(request.DebugString("CancelJobRequest",
+                                TracingOptions{}.SetOptions(
+                                    "truncate_string_field_longer_than=7")),
+            R"(CancelJobRequest {)"
+            R"( project_id: "test-pr...<truncated>...")"
+            R"( job_id: "test-jo...<truncated>...")"
+            R"( location: "test-lo...<truncated>...")"
+            R"( })");
+  EXPECT_EQ(request.DebugString("CancelJobRequest", TracingOptions{}.SetOptions(
+                                                        "single_line_mode=F")),
+            R"(CancelJobRequest {
+  project_id: "test-project-id"
+  job_id: "test-job-id"
+  location: "test-location"
 })");
 }
 

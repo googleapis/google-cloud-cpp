@@ -247,6 +247,50 @@ class InsertJobRequest {
   Job job_;
 };
 
+class CancelJobRequest {
+ public:
+  CancelJobRequest() = default;
+  explicit CancelJobRequest(std::string project_id, std::string job_id)
+      : project_id_(std::move(project_id)), job_id_(std::move(job_id)) {}
+
+  std::string const& project_id() const { return project_id_; }
+  std::string const& job_id() const { return job_id_; }
+  std::string const& location() const { return location_; }
+
+  CancelJobRequest& set_project_id(std::string project_id) & {
+    project_id_ = std::move(project_id);
+    return *this;
+  }
+  CancelJobRequest&& set_project_id(std::string project_id) && {
+    return std::move(set_project_id(std::move(project_id)));
+  }
+
+  CancelJobRequest& set_job_id(std::string job_id) & {
+    job_id_ = std::move(job_id);
+    return *this;
+  }
+  CancelJobRequest&& set_job_id(std::string job_id) && {
+    return std::move(set_job_id(std::move(job_id)));
+  }
+
+  CancelJobRequest& set_location(std::string location) & {
+    location_ = std::move(location);
+    return *this;
+  }
+  CancelJobRequest&& set_location(std::string location) && {
+    return std::move(set_location(std::move(location)));
+  }
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+
+ private:
+  std::string project_id_;
+  std::string job_id_;
+  std::string location_;
+};
+
 // Builds RestRequest from GetJobRequest.
 StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r);
 // Builds RestRequest from ListJobsRequest.
@@ -254,6 +298,9 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r);
 // Builds RestRequest from InsertJobRequest.
 StatusOr<rest_internal::RestRequest> BuildRestRequest(
     InsertJobRequest const& r);
+// Builds RestRequest from CancelJobRequest.
+StatusOr<rest_internal::RestRequest> BuildRestRequest(
+    CancelJobRequest const& r);
 
 std::ostream& operator<<(std::ostream& os, GetJobRequest const& request);
 std::ostream& operator<<(std::ostream& os, ListJobsRequest const& request);
