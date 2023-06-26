@@ -182,8 +182,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Network Connectivity API C++ Client Library"
     "Provides C++ APIs to use the Network Connectivity API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_networkconnectivity_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_networkconnectivity_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

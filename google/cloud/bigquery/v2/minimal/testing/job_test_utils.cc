@@ -440,6 +440,37 @@ ListFormatJob MakeListFormatJob() {
   return job;
 }
 
+Job MakePartialJob() {
+  Job job;
+
+  job.kind = "jkind";
+  job.etag = "jtag";
+  job.id = "j123";
+  job.self_link = "jselfLink";
+  job.user_email = "juserEmail";
+  job.status.state = "DONE";
+  job.reference.project_id = "p123";
+  job.reference.job_id = "j123";
+  job.configuration.job_type = "QUERY";
+  job.configuration.query_config.query = "select 1;";
+
+  return job;
+}
+
+void AssertEqualsPartial(Job& expected, Job& actual) {
+  EXPECT_EQ(expected.kind, actual.kind);
+  EXPECT_EQ(expected.etag, actual.etag);
+  EXPECT_EQ(expected.id, actual.id);
+  EXPECT_EQ(expected.self_link, actual.self_link);
+  EXPECT_EQ(expected.user_email, actual.user_email);
+  EXPECT_EQ(expected.status.state, actual.status.state);
+  EXPECT_EQ(expected.reference.project_id, actual.reference.project_id);
+  EXPECT_EQ(expected.reference.job_id, actual.reference.job_id);
+  EXPECT_EQ(expected.configuration.job_type, actual.configuration.job_type);
+  EXPECT_EQ(expected.configuration.query_config.query,
+            actual.configuration.query_config.query);
+}
+
 void AssertEquals(Job& expected, Job& actual) {
   EXPECT_EQ(expected.etag, actual.etag);
   EXPECT_EQ(expected.id, actual.id);

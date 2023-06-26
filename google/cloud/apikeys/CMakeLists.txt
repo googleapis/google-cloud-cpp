@@ -167,7 +167,7 @@ google_cloud_cpp_install_headers("google_cloud_cpp_apikeys_mocks"
 google_cloud_cpp_add_pkgconfig(
     apikeys "The API Keys API C++ Client Library"
     "Provides C++ APIs to use the API Keys API." "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common" " google_cloud_cpp_apikeys_protos")
+    "google_cloud_cpp_common" "google_cloud_cpp_apikeys_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

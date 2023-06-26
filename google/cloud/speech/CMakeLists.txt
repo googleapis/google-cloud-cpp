@@ -172,8 +172,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Cloud Speech-to-Text API C++ Client Library"
     "Provides C++ APIs to use the Cloud Speech-to-Text API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_speech_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_speech_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

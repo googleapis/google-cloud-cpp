@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_logging.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/testing/job_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_job_rest_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/log.h"
@@ -26,6 +27,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
 using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
 using ::google::cloud::testing_util::ScopedLog;
 using ::testing::Contains;
@@ -149,6 +151,63 @@ TEST(JobLoggingClientTest, ListJobs) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "kind-1")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(job_id: "j123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(state: "DONE")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(Context)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-2")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-2")")));
+}
+
+TEST(JobLoggingClientTest, InsertJob) {
+  ScopedLog log;
+
+  auto mock_stub = std::make_shared<MockBigQueryJobRestStub>();
+  auto constexpr kExpectedPayload =
+      R"({"kind": "jkind",
+          "etag": "jtag",
+          "id": "j123",
+          "self_link": "jselfLink",
+          "user_email": "juserEmail",
+          "status": {"state": "DONE"},
+          "reference": {"project_id": "p123", "job_id": "j123"},
+          "configuration": {
+            "job_type": "QUERY",
+            "query_config": {"query": "select 1;"}
+          }})";
+
+  EXPECT_CALL(*mock_stub, InsertJob)
+      .WillOnce(
+          [&](rest_internal::RestContext&,
+              InsertJobRequest const& request) -> StatusOr<InsertJobResponse> {
+            EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+            BigQueryHttpResponse http_response;
+            http_response.payload = kExpectedPayload;
+            return InsertJobResponse::BuildFromHttpResponse(
+                std::move(http_response));
+          });
+
+  auto client = CreateMockJobLogging(std::move(mock_stub));
+
+  InsertJobRequest request("test-project-id", MakePartialJob());
+
+  rest_internal::RestContext context;
+  context.AddHeader("header-1", "value-1");
+  context.AddHeader("header-2", "value-2");
+
+  client->InsertJob(context, request);
+
+  auto actual_lines = log.ExtractLines();
+
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(" << ")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(InsertJobRequest)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(job_id: "j123")")).Times(2));
+  EXPECT_THAT(actual_lines,
+              Contains(HasSubstr(R"(project_id: "p123")")).Times(2));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(InsertJobResponse)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(state: "DONE")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "j123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "jkind")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(etag: "jtag")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(Context)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-1")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-1")")));

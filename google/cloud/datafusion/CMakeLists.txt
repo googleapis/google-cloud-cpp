@@ -170,8 +170,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Cloud Data Fusion API C++ Client Library"
     "Provides C++ APIs to use the Cloud Data Fusion API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_datafusion_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_datafusion_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

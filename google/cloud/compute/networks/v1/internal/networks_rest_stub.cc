@@ -158,7 +158,7 @@ DefaultNetworksRestStub::ListNetworks(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("return_partial_success",
-                      std::to_string(request.return_partial_success()))});
+                      request.return_partial_success() ? "1" : "0")});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList>
@@ -181,7 +181,7 @@ DefaultNetworksRestStub::ListPeeringRoutes(
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
        std::make_pair("return_partial_success",
-                      std::to_string(request.return_partial_success()))});
+                      request.return_partial_success() ? "1" : "0")});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -197,6 +197,63 @@ TYPED_TEST(PaginationRangeTest, TwoPages) {
   EXPECT_THAT(names, ElementsAre("p1", "p2", "p3", "p4"));
 }
 
+TYPED_TEST(PaginationRangeTest, EmptyAndFullPages) {
+  using ResponseType = TypeParam;
+  MockRpc<ResponseType> mock;
+  EXPECT_CALL(mock, Loader)
+      .WillOnce([](Request const& request) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(), "EmptyAndFullPages");
+        EXPECT_TRUE(request.testonly_page_token.empty());
+        ResponseType response;
+        response.testonly_set_page_token("t1");
+        return response;
+      })
+      .WillOnce([](Request const& request) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(), "EmptyAndFullPages");
+        EXPECT_EQ("t1", request.testonly_page_token);
+        ResponseType response;
+        response.testonly_set_page_token("t2");
+        return response;
+      })
+      .WillOnce([](Request const& request) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(), "EmptyAndFullPages");
+        EXPECT_EQ("t2", request.testonly_page_token);
+        ResponseType response;
+        response.testonly_items.push_back(Item{"p1"});
+        response.testonly_items.push_back(Item{"p2"});
+        response.testonly_set_page_token("t3");
+        return response;
+      })
+      .WillOnce([](Request const& request) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(), "EmptyAndFullPages");
+        EXPECT_EQ("t3", request.testonly_page_token);
+        ResponseType response;
+        response.testonly_set_page_token("t4");
+        return response;
+      })
+      .WillOnce([](Request const& request) {
+        EXPECT_EQ(CurrentOptions().get<StringOption>(), "EmptyAndFullPages");
+        EXPECT_EQ("t4", request.testonly_page_token);
+        ResponseType response;
+        response.testonly_items.push_back(Item{"p3"});
+        response.testonly_items.push_back(Item{"p4"});
+        response.testonly_set_page_token("");
+        return response;
+      });
+
+  OptionsSpan span(Options{}.set<StringOption>("EmptyAndFullPages"));
+  auto range = MakePaginationRange<ItemRange>(
+      Request{}, [&mock](Request const& r) { return mock.Loader(r); },
+      [](ResponseType const& r) { return r.testonly_items; });
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  std::vector<std::string> names;
+  for (auto& p : range) {
+    if (!p) break;
+    names.push_back(p->data);
+  }
+  EXPECT_THAT(names, ElementsAre("p1", "p2", "p3", "p4"));
+}
+
 TYPED_TEST(PaginationRangeTest, TwoPagesWithError) {
   using ResponseType = TypeParam;
   MockRpc<ResponseType> mock;

@@ -175,8 +175,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Storage Transfer API C++ Client Library"
     "Provides C++ APIs to use the Storage Transfer API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_storagetransfer_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_storagetransfer_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

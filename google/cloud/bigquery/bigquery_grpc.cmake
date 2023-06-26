@@ -149,8 +149,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Google Cloud BigQuery C++ Client Library"
     "Provides C++ APIs to access Google Cloud BigQuery."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_cloud_bigquery_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_cloud_bigquery_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

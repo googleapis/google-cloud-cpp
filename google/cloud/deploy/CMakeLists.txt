@@ -171,8 +171,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Google Cloud Deploy API C++ Client Library"
     "Provides C++ APIs to use the Google Cloud Deploy API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_deploy_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_deploy_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

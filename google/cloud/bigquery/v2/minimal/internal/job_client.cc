@@ -38,6 +38,12 @@ StreamRange<ListFormatJob> JobClient::ListJobs(ListJobsRequest const& request,
   return connection_->ListJobs(request);
 }
 
+StatusOr<Job> JobClient::InsertJob(InsertJobRequest const& request,
+                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertJob(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

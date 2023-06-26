@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_metadata.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/testing/job_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/metadata_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_job_rest_stub.h"
 #include "google/cloud/common_options.h"
@@ -27,6 +28,7 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::GetMetadataOptions;
+using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
 using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
 using ::google::cloud::bigquery_v2_minimal_testing::VerifyMetadataContext;
 
@@ -116,6 +118,44 @@ TEST(JobMetadataTest, ListJobs) {
   internal::OptionsSpan span(GetMetadataOptions());
 
   auto result = metadata->ListJobs(context, request);
+  ASSERT_STATUS_OK(result);
+  VerifyMetadataContext(context, "bigquery_v2_job");
+}
+
+TEST(JobMetadataTest, InsertJob) {
+  auto mock_stub = std::make_shared<MockBigQueryJobRestStub>();
+  auto constexpr kExpectedPayload =
+      R"({"kind": "jkind",
+          "etag": "jtag",
+          "id": "j123",
+          "self_link": "jselfLink",
+          "user_email": "juserEmail",
+          "status": {"state": "DONE"},
+          "reference": {"project_id": "p123", "job_id": "j123"},
+          "configuration": {
+            "job_type": "QUERY",
+            "query_config": {"query": "select 1;"}
+          }})";
+
+  EXPECT_CALL(*mock_stub, InsertJob)
+      .WillOnce(
+          [&](rest_internal::RestContext&,
+              InsertJobRequest const& request) -> StatusOr<InsertJobResponse> {
+            EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+            BigQueryHttpResponse http_response;
+            http_response.payload = kExpectedPayload;
+            return InsertJobResponse::BuildFromHttpResponse(
+                std::move(http_response));
+          });
+
+  auto metadata = CreateMockJobMetadata(std::move(mock_stub));
+
+  rest_internal::RestContext context;
+  InsertJobRequest request("test-project-id", MakePartialJob());
+
+  internal::OptionsSpan span(GetMetadataOptions());
+
+  auto result = metadata->InsertJob(context, request);
   ASSERT_STATUS_OK(result);
   VerifyMetadataContext(context, "bigquery_v2_job");
 }

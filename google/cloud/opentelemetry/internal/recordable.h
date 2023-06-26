@@ -150,6 +150,7 @@ class Recordable final : public opentelemetry::sdk::trace::Recordable {
                    opentelemetry::common::KeyValueIterable const& attributes);
   void SetStatusImpl(opentelemetry::trace::StatusCode code,
                      opentelemetry::nostd::string_view description);
+  void SetResourceImpl(opentelemetry::sdk::resource::Resource const& resource);
 
   Project project_;
   google::devtools::cloudtrace::v2::Span span_;

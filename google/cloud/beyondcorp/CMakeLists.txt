@@ -173,8 +173,8 @@ google_cloud_cpp_add_pkgconfig(
     "The BeyondCorp API C++ Client Library"
     "Provides C++ APIs to use the BeyondCorp API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_beyondcorp_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_beyondcorp_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

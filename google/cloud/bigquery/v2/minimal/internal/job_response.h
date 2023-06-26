@@ -63,6 +63,21 @@ class ListJobsResponse {
   BigQueryHttpResponse http_response;
 };
 
+// Starts a new asynchronous BigQuery job.
+class InsertJobResponse {
+ public:
+  InsertJobResponse() = default;
+  static StatusOr<InsertJobResponse> BuildFromHttpResponse(
+      BigQueryHttpResponse const& http_response);
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+
+  Job job;
+  BigQueryHttpResponse http_response;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

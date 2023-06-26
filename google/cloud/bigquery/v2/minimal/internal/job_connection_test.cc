@@ -16,6 +16,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_client.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_connection_impl.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/testing/job_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_job_rest_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/make_status.h"
@@ -28,6 +29,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
 using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
@@ -84,19 +86,11 @@ TEST(JobConnectionTest, GetJobSuccess) {
   request.set_project_id("test-project-id");
   request.set_job_id("test-job-id");
 
+  auto job = MakePartialJob();
   auto job_result = conn->GetJob(request);
 
   ASSERT_STATUS_OK(job_result);
-  EXPECT_EQ(job_result->kind, "jkind");
-  EXPECT_EQ(job_result->etag, "jtag");
-  EXPECT_EQ(job_result->id, "j123");
-  EXPECT_EQ(job_result->self_link, "jselfLink");
-  EXPECT_EQ(job_result->user_email, "juserEmail");
-  EXPECT_EQ(job_result->status.state, "DONE");
-  EXPECT_EQ(job_result->reference.project_id, "p123");
-  EXPECT_EQ(job_result->reference.job_id, "j123");
-  EXPECT_EQ(job_result->configuration.job_type, "QUERY");
-  EXPECT_EQ(job_result->configuration.query_config.query, "select 1;");
+  bigquery_v2_minimal_testing::AssertEqualsPartial(job, *job_result);
 }
 
 TEST(JobConnectionTest, ListJobsSuccess) {
@@ -150,6 +144,44 @@ TEST(JobConnectionTest, ListJobsSuccess) {
   EXPECT_THAT(actual_job_ids, ElementsAre("job1", "job2", "job3"));
 }
 
+TEST(JobConnectionTest, InsertJobSuccess) {
+  auto mock = std::make_shared<MockBigQueryJobRestStub>();
+
+  auto constexpr kExpectedPayload =
+      R"({"kind": "jkind",
+          "etag": "jtag",
+          "id": "j123",
+          "self_link": "jselfLink",
+          "user_email": "juserEmail",
+          "status": {"state": "DONE"},
+          "reference": {"project_id": "p123", "job_id": "j123"},
+          "configuration": {
+            "job_type": "QUERY",
+            "query_config": {"query": "select 1;"}
+          }})";
+
+  EXPECT_CALL(*mock, InsertJob)
+      .WillOnce(
+          [&](rest_internal::RestContext&,
+              InsertJobRequest const& request) -> StatusOr<InsertJobResponse> {
+            EXPECT_EQ("test-project-id", request.project_id());
+            BigQueryHttpResponse http_response;
+            http_response.payload = kExpectedPayload;
+            return InsertJobResponse::BuildFromHttpResponse(
+                std::move(http_response));
+          });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+
+  auto job = MakePartialJob();
+  InsertJobRequest request("test-project-id", job);
+
+  auto job_result = conn->InsertJob(request);
+
+  ASSERT_STATUS_OK(job_result);
+  bigquery_v2_minimal_testing::AssertEqualsPartial(job, *job_result);
+}
+
 // Verify that permanent errors are reported immediately.
 TEST(JobConnectionTest, GetJobPermanentError) {
   auto mock = std::make_shared<MockBigQueryJobRestStub>();
@@ -176,6 +208,19 @@ TEST(JobConnectionTest, ListJobsPermanentError) {
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(JobConnectionTest, InsertJobPermanentError) {
+  auto mock = std::make_shared<MockBigQueryJobRestStub>();
+  EXPECT_CALL(*mock, InsertJob)
+      .WillOnce(
+          Return(Status(StatusCode::kPermissionDenied, "permission-denied")));
+  auto conn = CreateTestingConnection(std::move(mock));
+
+  InsertJobRequest request;
+  auto result = conn->InsertJob(request);
+  EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
+                               HasSubstr("permission-denied")));
 }
 
 // Verify that too many transients errors are reported correctly.
@@ -206,6 +251,18 @@ TEST(JobConnectionTest, ListJobsTooManyTransients) {
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_THAT(*begin, StatusIs(StatusCode::kDeadlineExceeded));
+}
+
+TEST(JobConnectionTest, InsertJobCalledOnceTooManyTransients) {
+  auto mock = std::make_shared<MockBigQueryJobRestStub>();
+  EXPECT_CALL(*mock, InsertJob)
+      .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
+  auto conn = CreateTestingConnection(std::move(mock));
+
+  InsertJobRequest request;
+  auto result = conn->InsertJob(request);
+  EXPECT_THAT(result,
+              StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try-again")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

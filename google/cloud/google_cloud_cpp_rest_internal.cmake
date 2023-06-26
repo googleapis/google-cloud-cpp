@@ -165,7 +165,7 @@ google_cloud_cpp_install_headers(google_cloud_cpp_rest_internal
 google_cloud_cpp_add_pkgconfig(
     rest_internal "REST library for the Google Cloud C++ Client Library"
     "Provides REST Transport for the Google Cloud C++ Client Library."
-    "google_cloud_cpp_common" " libcurl" " openssl")
+    "google_cloud_cpp_common" "libcurl" "openssl")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

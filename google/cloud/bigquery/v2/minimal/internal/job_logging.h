@@ -39,6 +39,10 @@ class BigQueryJobLogging : public BigQueryJobRestStub {
   StatusOr<ListJobsResponse> ListJobs(rest_internal::RestContext& rest_context,
                                       ListJobsRequest const& request) override;
 
+  StatusOr<InsertJobResponse> InsertJob(
+      rest_internal::RestContext& rest_context,
+      InsertJobRequest const& request) override;
+
  private:
   std::shared_ptr<BigQueryJobRestStub> child_;
   TracingOptions tracing_options_;

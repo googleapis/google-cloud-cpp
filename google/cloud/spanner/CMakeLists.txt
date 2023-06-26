@@ -562,11 +562,11 @@ google_cloud_cpp_add_pkgconfig(
     "The Google Cloud Spanner C++ Client Library"
     "Provides C++ APIs to access Google Cloud Spanner."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_spanner_protos"
-    " absl_numeric"
-    " absl_strings"
-    " absl_time")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_spanner_protos"
+    "absl_numeric"
+    "absl_strings"
+    "absl_time")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

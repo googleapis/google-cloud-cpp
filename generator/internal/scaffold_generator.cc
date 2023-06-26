@@ -300,6 +300,7 @@ void GenerateScaffold(
       {"doc/environment-variables.dox", GenerateDoxygenEnvironmentPage},
       {"doc/override-authentication.dox", GenerateOverrideAuthenticationPage},
       {"doc/override-endpoint.dox", GenerateOverrideEndpointPage},
+      {"doc/override-retry-policies.dox", GenerateOverrideRetryPoliciesPage},
       {"doc/options.dox", GenerateDoxygenOptionsPage},
       {"quickstart/README.md", GenerateQuickstartReadme},
       {"quickstart/quickstart.cc", GenerateQuickstartSkeleton},
@@ -641,8 +642,8 @@ google_cloud_cpp_add_pkgconfig(
     "The $title$ C++ Client Library"
     "Provides C++ APIs to use the $title$."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_$library$_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_$library$_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -700,12 +701,6 @@ which should give you a taste of the $title$ C++ client library API.
 <!-- inject-client-list-start -->
 <!-- inject-client-list-end -->
 
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
-
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
@@ -713,11 +708,12 @@ can override the default policies.
   endpoint.
 - @ref $library$-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref $library$-override-retry - describes how to change the default retry
+  policies.
 - @ref $library$-env - describes environment variables that can configure the
   behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/$site_root$
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */
 )""";
@@ -832,6 +828,97 @@ client library to change this default.
 
 // <!-- inject-endpoint-pages-start -->
 // <!-- inject-endpoint-pages-end -->
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateOverrideRetryPoliciesPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(/*!
+@page $library$-override-retry Override Retry, Backoff, and Idempotency Policies
+
+When it is safe to do so, the library automatically retries requests that fail
+due to a transient error. The library then uses [exponential backoff] to backoff
+before trying again. Which operations are considered safe to retry, which
+errors are treated as transient failures, the details of the exponential backoff
+algorithm, and for how long the library retries are all configurable via
+policies.
+
+This document provides examples showing how to override the default policies.
+
+The policies can be set when the `*Connection` object is created. The library
+provides default policies for any policy that is not set. The application can
+also override some (or all) policies when the `*Client` object is created. This
+can be useful if multiple `*Client` objects share the same `*Connection` object,
+but you want different retry behavior in some of the clients. Finally, the
+application can override some retry policies when calling a specific member
+function.
+
+The library uses three different options to control the retry loop. The options
+have per-client names.
+
+@section $library$-override-retry-retry-policy Configuring the transient errors and retry duration
+
+The `*RetryPolicyOption` controls:
+
+- Which errors are to be treated as transient errors.
+- How long the library will keep retrying transient errors.
+
+You can provide your own class for this option. The library also provides two
+built-in policies:
+
+- `*LimitedErrorCountRetryPolicy`: stops retrying after a specified number
+  of transient errors.
+- `*LimitedTimeRetryPolicy`: stops retrying after a specified time.
+
+Note that a library may have more than one version of these classes. Their name
+match the `*Client` and `*Connection` object they are intended to be used
+with. Some `*Client` objects treat different error codes as transient errors.
+In most cases, only [kUnavailable](@ref google::cloud::StatusCode) is treated
+as a transient error.
+
+@section $library$-override-retry-backoff-policy Controlling the backoff algorithm
+
+The `*BackoffPolicyOption` controls how long the client library will wait
+before retrying a request that failed with a transient error. You can provide
+your own class for this option.
+
+The only built-in backoff policy is
+[`ExponentialBackoffPolicy`](@ref google::cloud::ExponentialBackoffPolicy).
+This class implements a truncated exponential backoff algorithm, with jitter.
+In summary, it doubles the current backoff time after each failure. The actual
+backoff time for an RPC is chosen at random, but never exceeds the current
+backoff. The current backoff is doubled after each failure, but never exceeds
+(or is "truncated") if it reaches a prescribed maximum.
+
+@section $library$-override-retry-idempotency-policy Controlling which operations are retryable
+
+The `*IdempotencyPolicyOption` controls which requests are retryable, as some
+requests are never safe to retry.
+
+Only one built-in idempotency policy is provided by the library. The name
+matches the name of the client it is intended for. For example, `FooBarClient`
+will use `FooBarIdempotencyPolicy`. This policy is very conservative.
+
+@section $library$-override-retry-example Example
+
+<!-- inject-retry-snippet-start -->
+<!-- inject-retry-snippet-end -->
+
+@section $library$-override-retry-more-information More Information
+
+@see google::cloud::Options
+@see google::cloud::BackoffPolicy
+@see google::cloud::ExponentialBackoffPolicy
+
+[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+
+*/
+
+// <!-- inject-retry-pages-start -->
+// <!-- inject-retry-pages-end -->
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
@@ -966,7 +1053,7 @@ https://cloud.google.com/docs/authentication/production
 
    ```bash
    cd $$HOME/google-cloud-cpp/google/cloud/$library$/quickstart
-   cmake -H. -B.build -DCMAKE_TOOLCHAIN_FILE=$$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+   cmake -S . -B .build -DCMAKE_TOOLCHAIN_FILE=$$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
    cmake --build .build
    ```
 

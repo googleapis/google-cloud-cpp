@@ -172,8 +172,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Cloud Trace API C++ Client Library"
     "Provides C++ APIs to use the Cloud Trace API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_trace_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_trace_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

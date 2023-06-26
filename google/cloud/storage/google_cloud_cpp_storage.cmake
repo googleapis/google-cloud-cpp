@@ -354,17 +354,20 @@ google_cloud_cpp_install_headers(google_cloud_cpp_storage
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Storage C++ Client Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Storage.")
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage" " -lcrc32c")
+string(JOIN " " GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage"
+       "-lcrc32c")
 string(
-    CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
-           "google_cloud_cpp_common"
-           " google_cloud_cpp_rest_internal"
-           " libcurl openssl"
-           " absl_cord"
-           " absl_strings"
-           " absl_str_format"
-           " absl_time"
-           " absl_variant")
+    JOIN
+    " "
+    GOOGLE_CLOUD_CPP_PC_REQUIRES
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_rest_internal"
+    "libcurl openssl"
+    "absl_cord"
+    "absl_strings"
+    "absl_str_format"
+    "absl_time"
+    "absl_variant")
 
 # Create and install the pkg-config files.
 google_cloud_cpp_set_pkgconfig_paths()

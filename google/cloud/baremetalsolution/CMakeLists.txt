@@ -181,8 +181,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Bare Metal Solution API C++ Client Library"
     "Provides C++ APIs to use the Bare Metal Solution API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_baremetalsolution_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_baremetalsolution_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

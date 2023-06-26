@@ -40,12 +40,6 @@ application.
 - [\c dataproc_v1::WorkflowTemplateServiceClient](@ref google::cloud::dataproc_v1::WorkflowTemplateServiceClient)
 <!-- inject-client-list-end -->
 
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
-
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
@@ -53,9 +47,10 @@ can override the default policies.
   endpoint.
 - @ref dataproc-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref dataproc-override-retry - describes how to change the default retry
+  policies.
 - @ref dataproc-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/dataproc
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

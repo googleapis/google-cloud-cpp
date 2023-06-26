@@ -174,8 +174,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Cloud Document AI API C++ Client Library"
     "Provides C++ APIs to use the Cloud Document AI API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_documentai_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_documentai_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
