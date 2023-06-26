@@ -59,4 +59,6 @@ RUN tar -C /usr/local/ -xzf go.tgz
 ENV GO_LOCATION=/usr/local/go
 ENV PATH=${GO_LOCATION}/bin:${PATH}
 RUN go version
-RUN git clone -b v0.0.1 --single-branch https://github.com/googleapis/cloud-bigtable-clients-test.git
+WORKDIR /var/tmp/downloads/cloud-bigtable-clients-test
+RUN curl -fsSL https://github.com/googleapis/cloud-bigtable-clients-test/archive/v0.0.1.tar.gz | \
+    tar -xzf - --strip-components=1
