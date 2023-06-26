@@ -43,6 +43,10 @@ Idempotency BigQueryJobIdempotencyPolicy::InsertJob(InsertJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency BigQueryJobIdempotencyPolicy::CancelJob(CancelJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<BigQueryJobIdempotencyPolicy>
 MakeDefaultBigQueryJobIdempotencyPolicy() {
   return std::make_unique<BigQueryJobIdempotencyPolicy>();

@@ -46,6 +46,14 @@ TEST(JobIdempotencyPolicytTest, InsertJob) {
   EXPECT_EQ(actual->InsertJob(request), expected);
 }
 
+TEST(JobIdempotencyPolicytTest, CancelJob) {
+  auto actual = MakeDefaultBigQueryJobIdempotencyPolicy();
+  auto expected = Idempotency::kNonIdempotent;
+
+  CancelJobRequest request;
+  EXPECT_EQ(actual->CancelJob(request), expected);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
