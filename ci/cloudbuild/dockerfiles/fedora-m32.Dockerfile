@@ -17,7 +17,7 @@ ARG NCPU=4
 
 # Install the minimal development tools:
 RUN dnf makecache && \
-    dnf install -y ccache cmake curl diffutils findutils gcc-c++ git make \
+    dnf install -y cmake curl diffutils findutils gcc-c++ git make \
         ninja-build patch tar unzip wget which zip
 
 # Fedora 37 includes packages, with recent enough versions, for most of the
@@ -135,6 +135,12 @@ RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 
-# Some of the above libraries may have installed in /usr/local, so make sure
-# those library directories will be found.
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache
+
+# Update the ld.conf cache in case any libraries installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*

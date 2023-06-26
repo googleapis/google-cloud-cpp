@@ -21,7 +21,7 @@ ARG NCPU=4
 
 # ```bash
 RUN dnf makecache && \
-    dnf install -y ccache cmake curl findutils gcc-c++ git make ninja-build \
+    dnf install -y cmake curl findutils gcc-c++ git make ninja-build \
         openssl-devel patch unzip tar wget zip zlib-devel
 # ```
 
@@ -95,6 +95,12 @@ RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
 
 ## [DONE packaging.md]
 
-# Some of the above libraries may have installed in /usr/local, so make sure
-# those library directories will be found.
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache
+
+# Update the ld.conf cache in case any libraries installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*

@@ -36,13 +36,13 @@ export NINJA_STATUS="T+%es [%f/%t] "
 # This block is run the first (and only) time this script is sourced. It first
 # clears the ccache stats. Then it registers an exit handler that will display
 # the ccache stats when the calling script exits.
-if command -v ccache >/dev/null 2>&1; then
+if command -v sccache >/dev/null 2>&1; then
   io::log "Clearing ccache stats"
-  ccache --zero-stats
+  sccache --zero-stats
   function show_stats_handler() {
     if [[ "${TRIGGER_TYPE:-}" != "manual" || "${VERBOSE_FLAG:-}" == "true" ]]; then
-      io::log "===> ccache stats"
-      ccache --show-stats
+      io::log "===> sccache stats"
+      sccache --show-stats
     fi
   }
   trap show_stats_handler EXIT
@@ -51,12 +51,18 @@ fi
 function cmake::common_args() {
   local args
   args=(
-    -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON
+    -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF
     -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON
     -GNinja
     -S .
     -B cmake-out
   )
+  if command -v /usr/local/bin/sccache >/dev/null 2>&1; then
+    args+=(
+      -DCMAKE_CXX_COMPILER_LAUNCHER=/usr/local/bin/sccache
+      -DCMAKE_CC_COMPILER_LAUNCHER=/usr/local/bin/sccache
+    )
+  fi
   printf "%s\n" "${args[@]}"
 }
 

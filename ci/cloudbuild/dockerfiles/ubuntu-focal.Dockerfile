@@ -21,7 +21,6 @@ RUN apt-get update && \
     apt-get --no-install-recommends install -y \
         automake \
         build-essential \
-        ccache \
         clang \
         clang-9 \
         cmake \

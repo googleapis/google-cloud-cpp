@@ -60,9 +60,14 @@ function quickstart::build_one_quickstart() {
     "-H${src_dir}"
     "-B${cmake_bin_dir}"
     -DCMAKE_PREFIX_PATH="${prefix}"
-    -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON
     -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON
   )
+  if command -v /usr/local/bin/sccache >/dev/null 2>&1; then
+    configure_args+=(
+      -DCMAKE_CXX_COMPILER_LAUNCHER=/usr/local/bin/sccache
+      -DCMAKE_CC_COMPILER_LAUNCHER=/usr/local/bin/sccache
+    )
+  fi
   cmake "${configure_args[@]}"
   cmake --build "${cmake_bin_dir}"
 

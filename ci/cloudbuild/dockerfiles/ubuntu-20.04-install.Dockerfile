@@ -19,7 +19,6 @@ RUN apt-get update && \
     apt-get --no-install-recommends install -y \
         automake \
         build-essential \
-        ccache \
         clang \
         cmake \
         curl \
@@ -198,3 +197,13 @@ WORKDIR /var/tmp/downloads
 RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
+
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache
+
+# Update the ld.conf cache in case any libraries installed in /usr/local/lib*
+RUN ldconfig /usr/local/lib*

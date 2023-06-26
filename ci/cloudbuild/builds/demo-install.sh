@@ -29,14 +29,20 @@ source module ci/cloudbuild/builds/lib/quickstart.sh
 source module ci/lib/io.sh
 
 # We cannot use `cmake --install` below. That flag was introduced
-# in CMake == 3.15, and we use (and tell folks to use this code)
-# with versions as old as 3.5.
+# in CMake == 3.15, and we support CMake >= 3.13.
 
 cmake_config_testing_details=(
   -DCMAKE_INSTALL_MESSAGE=NEVER
-  -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON
+  -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF
   -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON
 )
+if command -v /usr/local/bin/sccache >/dev/null 2>&1; then
+  cmake_config_testing_details+=(
+    -DCMAKE_CXX_COMPILER_LAUNCHER=/usr/local/bin/sccache
+    -DCMAKE_CC_COMPILER_LAUNCHER=/usr/local/bin/sccache
+  )
+fi
+
 ## [BEGIN packaging.md]
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"

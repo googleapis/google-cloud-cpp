@@ -19,7 +19,7 @@ ARG ARCH=amd64
 # Install the minimal packages needed to compile libcxx, install Bazel, and
 # then compile our code.
 RUN dnf makecache && \
-    dnf install -y ccache clang clang-tools-extra cmake findutils \
+    dnf install -y clang clang-tools-extra cmake findutils \
         git llvm make ninja-build openssl-devel patch python \
         python3 python3-devel python3-lit python-pip tar unzip which wget xz
 
