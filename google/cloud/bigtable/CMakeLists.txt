@@ -510,8 +510,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Google Cloud Bigtable C++ Client Library"
     "Provides C++ APIs to access Google Cloud Bigtable."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_bigtable_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_bigtable_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

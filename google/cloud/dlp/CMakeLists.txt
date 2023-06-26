@@ -179,8 +179,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Cloud Data Loss Prevention (DLP) API C++ Client Library"
     "Provides C++ APIs to use the Cloud Data Loss Prevention (DLP) API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_dlp_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_dlp_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

@@ -167,7 +167,7 @@ google_cloud_cpp_install_headers("google_cloud_cpp_batch_mocks"
 google_cloud_cpp_add_pkgconfig(
     batch "The Batch API C++ Client Library"
     "Provides C++ APIs to use the Batch API." "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common" " google_cloud_cpp_batch_protos")
+    "google_cloud_cpp_common" "google_cloud_cpp_batch_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

@@ -167,8 +167,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Cloud Domains API C++ Client Library"
     "Provides C++ APIs to use the Cloud Domains API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_domains_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_domains_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

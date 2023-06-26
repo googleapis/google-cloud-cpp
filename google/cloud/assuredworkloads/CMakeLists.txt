@@ -183,8 +183,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Assured Workloads API C++ Client Library"
     "Provides C++ APIs to use the Assured Workloads API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_assuredworkloads_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_assuredworkloads_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

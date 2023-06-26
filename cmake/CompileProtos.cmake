@@ -468,13 +468,13 @@ macro (external_googleapis_install_pc_common target)
     list(
         APPEND
         _target_pc_requires
-        " grpc++"
-        " grpc"
-        " openssl"
-        " protobuf"
-        " zlib"
-        " libcares")
-    string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES ${_target_pc_requires})
+        "grpc++"
+        "grpc"
+        "openssl"
+        "protobuf"
+        "zlib"
+        "libcares")
+    string(JOIN " " GOOGLE_CLOUD_CPP_PC_REQUIRES ${_target_pc_requires})
     get_target_property(_target_type ${target} TYPE)
     if ("${_target_type}" STREQUAL "INTERFACE_LIBRARY")
         set(GOOGLE_CLOUD_CPP_PC_LIBS "")

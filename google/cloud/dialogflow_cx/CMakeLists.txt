@@ -163,8 +163,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Dialogflow API C++ Client Library"
     "Provides C++ APIs to use the Dialogflow API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_dialogflow_cx_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_dialogflow_cx_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
