@@ -26,7 +26,7 @@ source module ci/lib/io.sh
 export CC=clang
 export CXX=clang++
 
-io::run cmake -GNinja -H. -Bcmake-out \
+io::run cmake -GNinja -S . -B cmake-out \
   -DGOOGLE_CLOUD_CPP_ENABLE="$(features::always_build_cmake)" \
   -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON \
   -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON \
