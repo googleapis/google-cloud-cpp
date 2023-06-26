@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/recordable.h"
+#include "google/cloud/opentelemetry/internal/monitored_resource.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/time_utils.h"
@@ -248,7 +249,10 @@ void Recordable::SetSpanKind(
 }
 
 void Recordable::SetResource(
-    opentelemetry::sdk::resource::Resource const& /*resource*/) noexcept {}
+    opentelemetry::sdk::resource::Resource const& resource) noexcept {
+  valid_ =
+      valid_ && internal::NoExceptAction([&] { SetResourceImpl(resource); });
+}
 
 void Recordable::SetStartTime(
     opentelemetry::common::SystemTimestamp start_time) noexcept {
@@ -370,6 +374,17 @@ void Recordable::SetStatusImpl(opentelemetry::trace::StatusCode code,
   }
   s.set_code(google::rpc::Code::UNKNOWN);
   *s.mutable_message() = std::string{description.data(), description.size()};
+}
+
+void Recordable::SetResourceImpl(
+    opentelemetry::sdk::resource::Resource const& resource) {
+  auto const& attributes = resource.GetAttributes();
+  // TODO(#11775) - add resource attributes as span attributes
+  auto mr = ToMonitoredResource(attributes);
+  for (auto const& label : mr.labels) {
+    SetAttribute(absl::StrCat("g.co/r/", mr.type, "/", label.first),
+                 label.second);
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

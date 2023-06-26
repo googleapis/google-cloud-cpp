@@ -18,6 +18,7 @@
 #include "absl/time/clock.h"
 #include <google/rpc/code.pb.h>
 #include <gmock/gmock.h>
+#include <opentelemetry/sdk/resource/semantic_conventions.h>
 
 namespace google {
 namespace cloud {
@@ -25,12 +26,14 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+namespace sc = opentelemetry::sdk::resource::SemanticConventions;
 namespace v2 = ::google::devtools::cloudtrace::v2;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::IsEmpty;
+using ::testing::IsSupersetOf;
 using ::testing::Matcher;
 using ::testing::Pair;
 using ::testing::ResultOf;
@@ -553,6 +556,26 @@ TEST(Recordable, SetAttributeRespectsLimit) {
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.attributes(), Attributes(SizeIs(kSpanAttributeLimit),
                                              /*dropped_attributes_count=*/1));
+}
+
+TEST(Recordable, SetResourceMapsMonitoredResources) {
+  auto resource = opentelemetry::sdk::resource::Resource::Create({
+      {sc::kCloudProvider, "gcp"},
+      {sc::kCloudPlatform, "gcp_compute_engine"},
+      {sc::kHostId, "1020304050607080900"},
+      {sc::kCloudAvailabilityZone, "us-central1-a"},
+  });
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.SetResource(resource);
+  auto proto = std::move(rec).as_proto();
+  EXPECT_THAT(
+      proto.attributes(),
+      Attributes(IsSupersetOf({
+          Pair("g.co/r/gce_instance/zone", AttributeValue("us-central1-a")),
+          Pair("g.co/r/gce_instance/instance_id",
+               AttributeValue("1020304050607080900")),
+      })));
 }
 
 TEST(Recordable, SetStartTime) {
