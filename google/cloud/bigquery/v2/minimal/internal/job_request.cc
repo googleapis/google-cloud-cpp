@@ -241,11 +241,11 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   rest_internal::RestRequest request;
   if (r.project_id().empty()) {
     return internal::InvalidArgumentError(
-        "Invalid GetJobRequest: Project Id is empty", GCP_ERROR_INFO());
+        "Invalid CancelJobRequest: Project Id is empty", GCP_ERROR_INFO());
   }
   if (r.job_id().empty()) {
     return internal::InvalidArgumentError(
-        "Invalid GetJobRequest: Job Id is empty", GCP_ERROR_INFO());
+        "Invalid CancelJobRequest: Job Id is empty", GCP_ERROR_INFO());
   }
   // Builds CancelJob request path based on endpoint provided.
   std::string endpoint = GetBaseEndpoint(opts);
