@@ -68,17 +68,8 @@ class KVIterable : public opentelemetry::common::KeyValueIterable {
 
 template <typename T>
 opentelemetry::nostd::span<T> MakeCompositeAttribute() {
-  T v[]{T{}, T{}};
-  return opentelemetry::nostd::span<T>(v);
-}
-
-template <>
-opentelemetry::nostd::span<opentelemetry::nostd::string_view>
-MakeCompositeAttribute() {
-  std::string s1{"s1"};
-  std::string s2{"s2"};
-  opentelemetry::nostd::string_view v[]{s1, s2};
-  return opentelemetry::nostd::span<opentelemetry::nostd::string_view>(v);
+  static auto* const kData = new T{};
+  return opentelemetry::nostd::span<T>(kData, 1);
 }
 
 Matcher<v2::AttributeValue const&> AttributeValue(bool value) {
@@ -570,10 +561,10 @@ TEST(Recordable, SetAttributeRespectsLimit) {
 TEST(Recordable, SetResourceCopiesResourceAttributes) {
   auto resource = opentelemetry::sdk::resource::Resource::Create({
       {"bool", true},
-      {"int32", std::int32_t(5)},
-      {"uint32", std::uint32_t(5)},
-      {"int64", std::int64_t(5)},
-      {"uint64", std::uint64_t(5)},
+      {"int32", std::int32_t{5}},
+      {"uint32", std::uint32_t{5}},
+      {"int64", std::int64_t{5}},
+      {"uint64", std::uint64_t{5}},
       {"double", 5.0},
       {"string", "5"},
       // Composite attributes are dropped, but let's include them to make sure
