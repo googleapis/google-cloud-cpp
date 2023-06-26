@@ -35,19 +35,14 @@ bazel_args=("$@")
 # Building the binary can easily take more than the timeout limit.
 pushd "$(dirname "$0")/../test_proxy" >/dev/null
 "${BAZEL_BIN}" build "${bazel_args[@]}" :cbt_test_proxy_main
-nohup "${BAZEL_BIN}" run "${bazel_args[@]}" :cbt_test_proxy_main -- 9999 > proxy.log &
+nohup "${BAZEL_BIN}" run "${bazel_args[@]}" :cbt_test_proxy_main -- 9999 &
 proxy_pid=$!
 popd >/dev/null
 
 # Run the test
 pushd /var/tmp/downloads/cloud-bigtable-clients-test/tests >/dev/null
-go test -v -skip Generic_CloseClient -proxy_addr=:9999 > test.log 2>&1
+go test -v -skip Generic_CloseClient -proxy_addr=:9999
 exit_status=$?
-if [[ $exit_status -ne 0 ]]; then
-  echo "The conformance test has failures:"
-  grep "FAIL" test.log
-  echo "Please refer to google-cloud-cpp/google/cloud/bigtable/test_proxy for fix."
-fi
 popd >/dev/null
 
 # Stop the proxy
