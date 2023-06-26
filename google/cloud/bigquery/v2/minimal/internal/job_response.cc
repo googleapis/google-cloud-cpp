@@ -142,10 +142,44 @@ StatusOr<InsertJobResponse> InsertJobResponse::BuildFromHttpResponse(
   return result;
 }
 
+StatusOr<CancelJobResponse> CancelJobResponse::BuildFromHttpResponse(
+    BigQueryHttpResponse const& http_response) {
+  auto json = parse_json(http_response.payload);
+  if (!json) return std::move(json).status();
+
+  if (!json->contains("job")) {
+    return internal::InternalError("Not a valid CancelJobResponse object",
+                                   GCP_ERROR_INFO());
+  }
+
+  auto const& json_job_obj = json->at("job");
+  if (!valid_job(json_job_obj)) {
+    return internal::InternalError("Not a valid Json Job object",
+                                   GCP_ERROR_INFO());
+  }
+
+  CancelJobResponse result;
+  result.kind = json->value("kind", "");
+  result.http_response = http_response;
+  result.job = json_job_obj.get<Job>();
+
+  return result;
+}
+
 std::string InsertJobResponse::DebugString(absl::string_view name,
                                            TracingOptions const& options,
                                            int indent) const {
   return internal::DebugFormatter(name, options, indent)
+      .SubMessage("http_response", http_response)
+      .SubMessage("job", job)
+      .Build();
+}
+
+std::string CancelJobResponse::DebugString(absl::string_view name,
+                                           TracingOptions const& options,
+                                           int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("kind", kind)
       .SubMessage("http_response", http_response)
       .SubMessage("job", job)
       .Build();
