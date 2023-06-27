@@ -89,6 +89,20 @@ StatusOr<Job> BigQueryJobRestConnectionImpl::InsertJob(
   return result->job;
 }
 
+StatusOr<Job> BigQueryJobRestConnectionImpl::CancelJob(
+    CancelJobRequest const& request) {
+  auto result = rest_internal::RestRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CancelJob(request),
+      [this](rest_internal::RestContext& rest_context,
+             CancelJobRequest const& request) {
+        return stub_->CancelJob(rest_context, request);
+      },
+      request, __func__);
+  if (!result) return std::move(result).status();
+  return result->job;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

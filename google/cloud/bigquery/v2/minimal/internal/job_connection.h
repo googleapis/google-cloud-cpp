@@ -38,6 +38,7 @@ class BigQueryJobConnection {
   virtual StatusOr<Job> GetJob(GetJobRequest const& request);
   virtual StreamRange<ListFormatJob> ListJobs(ListJobsRequest const& request);
   virtual StatusOr<Job> InsertJob(InsertJobRequest const& request);
+  virtual StatusOr<Job> CancelJob(CancelJobRequest const& request);
 };
 
 std::shared_ptr<BigQueryJobConnection> MakeBigQueryJobConnection(
