@@ -51,6 +51,12 @@ StatusOr<InsertJobResponse> BigQueryJobMetadata::InsertJob(
   return child_->InsertJob(context, request);
 }
 
+StatusOr<CancelJobResponse> BigQueryJobMetadata::CancelJob(
+    rest_internal::RestContext& context, CancelJobRequest const& request) {
+  SetMetadata(context);
+  return child_->CancelJob(context, request);
+}
+
 void BigQueryJobMetadata::SetMetadata(rest_internal::RestContext& rest_context,
                                       std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);

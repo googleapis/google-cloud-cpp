@@ -160,6 +160,46 @@ TEST(JobMetadataTest, InsertJob) {
   VerifyMetadataContext(context, "bigquery_v2_job");
 }
 
+TEST(JobMetadataTest, CancelJob) {
+  auto mock_stub = std::make_shared<MockBigQueryJobRestStub>();
+  auto constexpr kExpectedPayload =
+      R"({"kind":"cancel-job",
+          "job":{"kind": "jkind",
+          "etag": "jtag",
+          "id": "j123",
+          "self_link": "jselfLink",
+          "user_email": "juserEmail",
+          "status": {"state": "DONE"},
+          "reference": {"project_id": "p123", "job_id": "j123"},
+          "configuration": {
+            "job_type": "QUERY",
+            "query_config": {"query": "select 1;"}
+          }}})";
+
+  EXPECT_CALL(*mock_stub, CancelJob)
+      .WillOnce(
+          [&](rest_internal::RestContext&,
+              CancelJobRequest const& request) -> StatusOr<CancelJobResponse> {
+            EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+            EXPECT_THAT(request.job_id(), Not(IsEmpty()));
+            BigQueryHttpResponse http_response;
+            http_response.payload = kExpectedPayload;
+            return CancelJobResponse::BuildFromHttpResponse(
+                std::move(http_response));
+          });
+
+  auto metadata = CreateMockJobMetadata(std::move(mock_stub));
+
+  rest_internal::RestContext context;
+  CancelJobRequest request("test-project-id", "test-job-id");
+
+  internal::OptionsSpan span(GetMetadataOptions());
+
+  auto result = metadata->CancelJob(context, request);
+  ASSERT_STATUS_OK(result);
+  VerifyMetadataContext(context, "bigquery_v2_job");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

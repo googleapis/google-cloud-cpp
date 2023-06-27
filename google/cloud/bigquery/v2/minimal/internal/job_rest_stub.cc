@@ -71,6 +71,24 @@ StatusOr<InsertJobResponse> DefaultBigQueryJobRestStub::InsertJob(
                        {absl::MakeConstSpan(json_payload.dump())}));
 }
 
+StatusOr<CancelJobResponse> DefaultBigQueryJobRestStub::CancelJob(
+    rest_internal::RestContext& rest_context, CancelJobRequest const& request) {
+  // Prepare the RestRequest from CancelJobRequest.
+  auto rest_request =
+      PrepareRestRequest<CancelJobRequest>(rest_context, request);
+
+  rest_request->AddHeader("Content-Type", "application/json");
+
+  // For cancel jobs, request body is empty:
+  // https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/cancel#request-body
+  absl::Span<char const> empty_span = absl::MakeConstSpan("");
+
+  // Call the rest stub and parse the RestResponse.
+  rest_internal::RestContext context;
+  return ParseFromRestResponse<CancelJobResponse>(
+      rest_stub_->Post(context, std::move(*rest_request), {empty_span}));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
