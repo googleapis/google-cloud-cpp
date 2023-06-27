@@ -13,21 +13,22 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/migrationcenter/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/migrationcenter/v1/migration_center_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
-  namespace migrationcenter = ::google::cloud::migrationcenter;
-  auto client = migrationcenter::Client(migrationcenter::MakeConnection());
+  namespace migrationcenter = ::google::cloud::migrationcenter_v1;
+  auto client = migrationcenter::MigrationCenterClient(
+      migrationcenter::MakeMigrationCenterConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListAssets(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
