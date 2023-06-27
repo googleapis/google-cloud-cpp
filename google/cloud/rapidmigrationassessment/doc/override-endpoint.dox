@@ -1,0 +1,25 @@
+/*!
+@page rapidmigrationassessment-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `rapidmigrationassessment_v1::RapidMigrationAssessmentClient`:
+
+@snippet rapid_migration_assessment_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page rapidmigrationassessment_v1::RapidMigrationAssessmentClient-endpoint-snippet Override rapidmigrationassessment_v1::RapidMigrationAssessmentClient Endpoint Configuration
+
+@snippet google/cloud/rapidmigrationassessment/v1/samples/rapid_migration_assessment_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->
