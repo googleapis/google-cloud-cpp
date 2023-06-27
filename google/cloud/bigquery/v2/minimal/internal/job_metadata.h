@@ -39,6 +39,9 @@ class BigQueryJobMetadata : public BigQueryJobRestStub {
   StatusOr<InsertJobResponse> InsertJob(
       rest_internal::RestContext& rest_context,
       InsertJobRequest const& request) override;
+  StatusOr<CancelJobResponse> CancelJob(
+      rest_internal::RestContext& rest_context,
+      CancelJobRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& context,

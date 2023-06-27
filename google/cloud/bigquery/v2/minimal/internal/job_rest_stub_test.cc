@@ -256,7 +256,7 @@ TEST(BigQueryJobStubTest, InsertJobSuccess) {
       .WillOnce(
           Return(ByMove(MakeMockHttpPayloadSuccess(job_response_payload))));
 
-  // Get() is successful.
+  // Post() is successful.
   auto mock_rest_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_rest_client,
               Post(_, An<rest::RestRequest const&>(), ExpectedPayload()))
@@ -278,7 +278,7 @@ TEST(BigQueryJobStubTest, InsertJobSuccess) {
 }
 
 TEST(BigQueryJobStubTest, InsertJobRestClientError) {
-  // Get() fails with error code.
+  // Post() fails with error code.
   auto mock_rest_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_rest_client,
               Post(_, An<rest::RestRequest const&>(), ExpectedPayload()))
@@ -303,7 +303,7 @@ TEST(BigQueryJobStubTest, InsertJobRestResponseError) {
   EXPECT_CALL(std::move(*mock_response), ExtractPayload)
       .WillOnce(Return(std::move(mock_payload)));
 
-  // Get() is successful but returns invalid Rest response.
+  // Post() is successful but returns invalid Rest response.
   auto mock_rest_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_rest_client,
               Post(_, An<rest::RestRequest const&>(), ExpectedPayload()))
@@ -316,6 +316,93 @@ TEST(BigQueryJobStubTest, InsertJobRestResponseError) {
   DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
 
   auto status = rest_stub.InsertJob(context, std::move(job_request));
+
+  EXPECT_THAT(status, StatusIs(InvalidArgumentError().code()));
+}
+
+TEST(BigQueryJobStubTest, CancelJobSuccess) {
+  std::string job_response_payload = R"({"kind":"cancel-job",
+          "job":{"kind": "jkind",
+          "etag": "jtag",
+          "id": "j123",
+          "self_link": "jselfLink",
+          "user_email": "juserEmail",
+          "status": {"state": "DONE"},
+          "reference": {"project_id": "p123", "job_id": "j123"},
+          "configuration": {
+            "job_type": "QUERY",
+            "query_config": {"query": "select 1;"}
+          }}})";
+  auto mock_response = std::make_unique<MockRestResponse>();
+
+  EXPECT_CALL(*mock_response, StatusCode)
+      .WillRepeatedly(Return(HttpStatusCode::kOk));
+  EXPECT_CALL(*mock_response, Headers)
+      .WillRepeatedly(Return(std::multimap<std::string, std::string>()));
+  EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+      .WillOnce(
+          Return(ByMove(MakeMockHttpPayloadSuccess(job_response_payload))));
+
+  // Post() is successful.
+  auto mock_rest_client = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_rest_client,
+              Post(_, An<rest::RestRequest const&>(), ExpectedPayload()))
+      .WillOnce(Return(ByMove(
+          std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
+
+  auto job = MakePartialJob();
+  CancelJobRequest job_request("p123", "j123");
+
+  rest_internal::RestContext context;
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
+
+  auto result = rest_stub.CancelJob(context, std::move(job_request));
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ(result->http_response.http_status_code, HttpStatusCode::kOk);
+  EXPECT_EQ(result->http_response.payload, job_response_payload);
+  EXPECT_EQ(result->kind, "cancel-job");
+  bigquery_v2_minimal_testing::AssertEqualsPartial(job, result->job);
+}
+
+TEST(BigQueryJobStubTest, CancelJobRestClientError) {
+  // Post() fails with error code.
+  auto mock_rest_client = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_rest_client,
+              Post(_, An<rest::RestRequest const&>(), ExpectedPayload()))
+      .WillOnce(Return(InternalError()));
+
+  rest_internal::RestContext context;
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
+
+  CancelJobRequest job_request("p123", "j123");
+
+  auto status = rest_stub.CancelJob(context, std::move(job_request));
+  EXPECT_THAT(status,
+              StatusIs(InternalError().code(), InternalError().message()));
+}
+
+TEST(BigQueryJobStubTest, CancelJobRestResponseError) {
+  // Setup invalid Rest response.
+  auto mock_payload = std::make_unique<MockHttpPayload>();
+  auto mock_response = std::make_unique<MockRestResponse>();
+  EXPECT_CALL(*mock_response, StatusCode)
+      .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
+  EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+      .WillOnce(Return(std::move(mock_payload)));
+
+  // Post() is successful but returns invalid Rest response.
+  auto mock_rest_client = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_rest_client,
+              Post(_, An<rest::RestRequest const&>(), ExpectedPayload()))
+      .WillOnce(Return(ByMove(
+          std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
+
+  CancelJobRequest job_request("p123", "j123");
+
+  rest_internal::RestContext context;
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
+
+  auto status = rest_stub.CancelJob(context, std::move(job_request));
 
   EXPECT_THAT(status, StatusIs(InvalidArgumentError().code()));
 }

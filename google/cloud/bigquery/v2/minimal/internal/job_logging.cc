@@ -71,6 +71,19 @@ StatusOr<InsertJobResponse> BigQueryJobLogging::InsertJob(
       tracing_options_);
 }
 
+StatusOr<CancelJobResponse> BigQueryJobLogging::CancelJob(
+    rest_internal::RestContext& rest_context, CancelJobRequest const& request) {
+  return LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             CancelJobRequest const& request) {
+        return child_->CancelJob(rest_context, request);
+      },
+      rest_context, request, __func__,
+      "google.cloud.bigquery.v2.minimal.internal.CancelJobRequest",
+      "google.cloud.bigquery.v2.minimal.internal.CancelJobResponse",
+      tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
