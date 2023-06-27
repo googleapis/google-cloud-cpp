@@ -2732,6 +2732,7 @@ service {
   product_path: "google/cloud/securitycenter/v1"
   forwarding_product_path: "google/cloud/securitycenter"
   initial_copyright_year: "2022"
+  emitted_rpcs: ["GroupAssets", "ListAssets", "RunAssetDiscovery"]
   retryable_status_codes: ["kUnavailable"]
 }
 

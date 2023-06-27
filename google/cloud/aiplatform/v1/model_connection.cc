@@ -71,6 +71,15 @@ ModelServiceConnection::UpdateModel(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<
+    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+ModelServiceConnection::UpdateExplanationDataset(
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceConnection::DeleteModel(
     google::cloud::aiplatform::v1::DeleteModelRequest const&) {

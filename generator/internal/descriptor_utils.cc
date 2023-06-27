@@ -409,6 +409,14 @@ ParameterCommentSubstitution substitutions[] = {
     {R"""(`projects/{project}/locations/{location}'`)""",
      R"""(`projects/{project}/locations/{location}`)"""},
 
+    // These appear in google/api/servicemanagement/v1/servicemanager.proto
+    // Doxygen gets confused by single quotes in code spans:
+    //    https://www.doxygen.nl/manual/markdown.html#mddox_code_spans
+    // The workaround is to double quote these:
+    {"`filter='status=SUCCESS'`", "``filter='status=SUCCESS'``"},
+    {"`filter='strategy=TrafficPercentStrategy'`",
+     "``filter='strategy=TrafficPercentStrategy'``"},
+
     // Some comments include multiple newlines in a row. We need to preserve
     // these because they are paragraph separators. When used in `@param`
     // commands we need to represent them as `@n` or they do would terminate the

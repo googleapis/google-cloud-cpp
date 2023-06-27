@@ -159,6 +159,12 @@ class CloudChannelServiceConnectionIdempotencyPolicy {
       google::cloud::channel::v1::
           DeleteChannelPartnerRepricingConfigRequest const& request);
 
+  virtual google::cloud::Idempotency ListSkuGroups(
+      google::cloud::channel::v1::ListSkuGroupsRequest request);
+
+  virtual google::cloud::Idempotency ListSkuGroupBillableSkus(
+      google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request);
+
   virtual google::cloud::Idempotency LookupOffer(
       google::cloud::channel::v1::LookupOfferRequest const& request);
 

@@ -59,6 +59,11 @@ Idempotency ModelServiceConnectionIdempotencyPolicy::UpdateModel(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ModelServiceConnectionIdempotencyPolicy::UpdateExplanationDataset(
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ModelServiceConnectionIdempotencyPolicy::DeleteModel(
     google::cloud::aiplatform::v1::DeleteModelRequest const&) {
   return Idempotency::kNonIdempotent;

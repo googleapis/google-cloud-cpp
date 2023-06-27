@@ -53,6 +53,10 @@ class ModelServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateModel(
       google::cloud::aiplatform::v1::UpdateModelRequest const& request);
 
+  virtual google::cloud::Idempotency UpdateExplanationDataset(
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request);
+
   virtual google::cloud::Idempotency DeleteModel(
       google::cloud::aiplatform::v1::DeleteModelRequest const& request);
 

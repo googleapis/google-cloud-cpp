@@ -349,6 +349,23 @@ Status CloudChannelServiceMetadata::DeleteChannelPartnerRepricingConfig(
   return child_->DeleteChannelPartnerRepricingConfig(context, request);
 }
 
+StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse>
+CloudChannelServiceMetadata::ListSkuGroups(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListSkuGroupsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListSkuGroups(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
+CloudChannelServiceMetadata::ListSkuGroupBillableSkus(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListSkuGroupBillableSkus(context, request);
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceMetadata::LookupOffer(
     grpc::ClientContext& context,

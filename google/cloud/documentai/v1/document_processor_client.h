@@ -35,7 +35,7 @@ namespace documentai_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Service to call Cloud DocumentAI to process documents according to the
+/// Service to call Document AI to process documents according to the
 /// processor's definition. Processors are built using state-of-the-art Google
 /// AI such as natural language, computer vision, and translation to extract
 /// structured information from unstructured or semi-structured documents.
@@ -121,8 +121,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.ProcessRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L328}
-  /// [google.cloud.documentai.v1.ProcessResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L400}
+  /// [google.cloud.documentai.v1.ProcessRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L332}
+  /// [google.cloud.documentai.v1.ProcessResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L410}
   ///
   // clang-format on
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
@@ -152,8 +152,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.ProcessRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L328}
-  /// [google.cloud.documentai.v1.ProcessResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L400}
+  /// [google.cloud.documentai.v1.ProcessRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L332}
+  /// [google.cloud.documentai.v1.ProcessResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L410}
   ///
   // clang-format on
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
@@ -191,8 +191,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.BatchProcessRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L410}
-  /// [google.cloud.documentai.v1.BatchProcessResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L434}
+  /// [google.cloud.documentai.v1.BatchProcessRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L421}
+  /// [google.cloud.documentai.v1.BatchProcessResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L450}
   ///
   // clang-format on
   future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
@@ -229,8 +229,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.BatchProcessRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L410}
-  /// [google.cloud.documentai.v1.BatchProcessResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L434}
+  /// [google.cloud.documentai.v1.BatchProcessRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L421}
+  /// [google.cloud.documentai.v1.BatchProcessResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L450}
   ///
   // clang-format on
   future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
@@ -240,12 +240,12 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// Fetches processor types. Note that we do not use ListProcessorTypes here
-  /// because it is not paginated.
+  /// Fetches processor types. Note that we don't use
+  /// [ListProcessorTypes][google.cloud.documentai.v1.DocumentProcessorService.ListProcessorTypes]
+  /// here, because it isn't paginated.
   ///
-  /// @param parent  Required. The project of processor type to list.
-  ///  The available processor types may depend on the allow-listing on projects.
-  ///  Format: `projects/{project}/locations/{location}`
+  /// @param parent  Required. The location of processor types to list.
+  ///  Format: `projects/{project}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -260,8 +260,9 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.FetchProcessorTypesRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L499}
-  /// [google.cloud.documentai.v1.FetchProcessorTypesResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L512}
+  /// [google.cloud.documentai.v1.DocumentProcessorService.ListProcessorTypes]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L105}
+  /// [google.cloud.documentai.v1.FetchProcessorTypesRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L519}
+  /// [google.cloud.documentai.v1.FetchProcessorTypesResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L533}
   ///
   // clang-format on
   StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
@@ -269,8 +270,9 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// Fetches processor types. Note that we do not use ListProcessorTypes here
-  /// because it is not paginated.
+  /// Fetches processor types. Note that we don't use
+  /// [ListProcessorTypes][google.cloud.documentai.v1.DocumentProcessorService.ListProcessorTypes]
+  /// here, because it isn't paginated.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -292,8 +294,9 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.FetchProcessorTypesRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L499}
-  /// [google.cloud.documentai.v1.FetchProcessorTypesResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L512}
+  /// [google.cloud.documentai.v1.DocumentProcessorService.ListProcessorTypes]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L105}
+  /// [google.cloud.documentai.v1.FetchProcessorTypesRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L519}
+  /// [google.cloud.documentai.v1.FetchProcessorTypesResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L533}
   ///
   // clang-format on
   StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
@@ -305,9 +308,8 @@ class DocumentProcessorServiceClient {
   ///
   /// Lists the processor types that exist.
   ///
-  /// @param parent  Required. The location of processor type to list.
-  ///  The available processor types may depend on the allow-listing on projects.
-  ///  Format: `projects/{project}/locations/{location}`
+  /// @param parent  Required. The location of processor types to list.
+  ///  Format: `projects/{project}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -331,7 +333,7 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.ListProcessorTypesRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L518}
+  /// [google.cloud.documentai.v1.ListProcessorTypesRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L542}
   /// [google.cloud.documentai.v1.ProcessorType]: @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
   // clang-format on
@@ -371,7 +373,7 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.ListProcessorTypesRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L518}
+  /// [google.cloud.documentai.v1.ListProcessorTypesRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L542}
   /// [google.cloud.documentai.v1.ProcessorType]: @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
   // clang-format on
@@ -398,7 +400,7 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.GetProcessorTypeRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L578}
+  /// [google.cloud.documentai.v1.GetProcessorTypeRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L607}
   /// [google.cloud.documentai.v1.ProcessorType]: @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
   // clang-format on
@@ -429,7 +431,7 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.GetProcessorTypeRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L578}
+  /// [google.cloud.documentai.v1.GetProcessorTypeRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L607}
   /// [google.cloud.documentai.v1.ProcessorType]: @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
   // clang-format on
@@ -466,8 +468,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.ListProcessorsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L548}
-  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
+  /// [google.cloud.documentai.v1.ListProcessorsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L573}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
   ///
   // clang-format on
   StreamRange<google::cloud::documentai::v1::Processor> ListProcessors(
@@ -506,8 +508,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.ListProcessorsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L548}
-  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
+  /// [google.cloud.documentai.v1.ListProcessorsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L573}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
   ///
   // clang-format on
   StreamRange<google::cloud::documentai::v1::Processor> ListProcessors(
@@ -533,8 +535,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.GetProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L589}
-  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
+  /// [google.cloud.documentai.v1.GetProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L620}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
   ///
   // clang-format on
   StatusOr<google::cloud::documentai::v1::Processor> GetProcessor(
@@ -564,8 +566,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.GetProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L589}
-  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
+  /// [google.cloud.documentai.v1.GetProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L620}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
   ///
   // clang-format on
   StatusOr<google::cloud::documentai::v1::Processor> GetProcessor(
@@ -576,7 +578,7 @@ class DocumentProcessorServiceClient {
   ///
   /// Trains a new processor version.
   /// Operation metadata is returned as
-  /// cloud_documentai_core.TrainProcessorVersionMetadata.
+  /// [TrainProcessorVersionMetadata][google.cloud.documentai.v1.TrainProcessorVersionMetadata].
   ///
   /// @param parent  Required. The parent (project, location and processor) to create the new
   ///  version for. Format:
@@ -602,8 +604,9 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.TrainProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L812}
-  /// [google.cloud.documentai.v1.TrainProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L849}
+  /// [google.cloud.documentai.v1.TrainProcessorVersionMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L933}
+  /// [google.cloud.documentai.v1.TrainProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L887}
+  /// [google.cloud.documentai.v1.TrainProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L927}
   ///
   // clang-format on
   future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
@@ -616,7 +619,7 @@ class DocumentProcessorServiceClient {
   ///
   /// Trains a new processor version.
   /// Operation metadata is returned as
-  /// cloud_documentai_core.TrainProcessorVersionMetadata.
+  /// [TrainProcessorVersionMetadata][google.cloud.documentai.v1.TrainProcessorVersionMetadata].
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -644,8 +647,9 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.TrainProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L812}
-  /// [google.cloud.documentai.v1.TrainProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L849}
+  /// [google.cloud.documentai.v1.TrainProcessorVersionMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L933}
+  /// [google.cloud.documentai.v1.TrainProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L887}
+  /// [google.cloud.documentai.v1.TrainProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L927}
   ///
   // clang-format on
   future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
@@ -673,8 +677,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.GetProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L600}
-  /// [google.cloud.documentai.v1.ProcessorVersion]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L38}
+  /// [google.cloud.documentai.v1.GetProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L633}
+  /// [google.cloud.documentai.v1.ProcessorVersion]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L37}
   ///
   // clang-format on
   StatusOr<google::cloud::documentai::v1::ProcessorVersion> GetProcessorVersion(
@@ -704,8 +708,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.GetProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L600}
-  /// [google.cloud.documentai.v1.ProcessorVersion]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L38}
+  /// [google.cloud.documentai.v1.GetProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L633}
+  /// [google.cloud.documentai.v1.ProcessorVersion]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L37}
   ///
   // clang-format on
   StatusOr<google::cloud::documentai::v1::ProcessorVersion> GetProcessorVersion(
@@ -742,8 +746,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.ListProcessorVersionsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L611}
-  /// [google.cloud.documentai.v1.ProcessorVersion]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L38}
+  /// [google.cloud.documentai.v1.ListProcessorVersionsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L644}
+  /// [google.cloud.documentai.v1.ProcessorVersion]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L37}
   ///
   // clang-format on
   StreamRange<google::cloud::documentai::v1::ProcessorVersion>
@@ -782,8 +786,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.ListProcessorVersionsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L611}
-  /// [google.cloud.documentai.v1.ProcessorVersion]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L38}
+  /// [google.cloud.documentai.v1.ListProcessorVersionsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L644}
+  /// [google.cloud.documentai.v1.ProcessorVersion]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L37}
   ///
   // clang-format on
   StreamRange<google::cloud::documentai::v1::ProcessorVersion>
@@ -817,8 +821,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.DeleteProcessorVersionMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L653}
-  /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L642}
+  /// [google.cloud.documentai.v1.DeleteProcessorVersionMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L692}
+  /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L679}
   ///
   // clang-format on
   future<
@@ -856,8 +860,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.DeleteProcessorVersionMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L653}
-  /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L642}
+  /// [google.cloud.documentai.v1.DeleteProcessorVersionMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L692}
+  /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L679}
   ///
   // clang-format on
   future<
@@ -892,8 +896,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.DeployProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L659}
-  /// [google.cloud.documentai.v1.DeployProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L670}
+  /// [google.cloud.documentai.v1.DeployProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L700}
+  /// [google.cloud.documentai.v1.DeployProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L713}
   ///
   // clang-format on
   future<
@@ -930,8 +934,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.DeployProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L659}
-  /// [google.cloud.documentai.v1.DeployProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L670}
+  /// [google.cloud.documentai.v1.DeployProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L700}
+  /// [google.cloud.documentai.v1.DeployProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L713}
   ///
   // clang-format on
   future<
@@ -966,8 +970,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.UndeployProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L679}
-  /// [google.cloud.documentai.v1.UndeployProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L690}
+  /// [google.cloud.documentai.v1.UndeployProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L726}
+  /// [google.cloud.documentai.v1.UndeployProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L739}
   ///
   // clang-format on
   future<
@@ -1004,8 +1008,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.UndeployProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L679}
-  /// [google.cloud.documentai.v1.UndeployProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L690}
+  /// [google.cloud.documentai.v1.UndeployProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L726}
+  /// [google.cloud.documentai.v1.UndeployProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L739}
   ///
   // clang-format on
   future<
@@ -1017,14 +1021,17 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// Creates a processor from the type processor that the user chose.
-  /// The processor will be at "ENABLED" state by default after its creation.
+  /// Creates a processor from the
+  /// [ProcessorType][google.cloud.documentai.v1.ProcessorType] provided. The
+  /// processor will be at `ENABLED` state by default after its creation.
   ///
   /// @param parent  Required. The parent (project and location) under which to create the
   ///  processor. Format: `projects/{project}/locations/{location}`
-  /// @param processor  Required. The processor to be created, requires [processor_type] and
-  ///  [display_name] to be set. Also, the processor is under CMEK if CMEK fields
-  ///  are set.
+  /// @param processor  Required. The processor to be created, requires
+  ///  [Processor.type][google.cloud.documentai.v1.Processor.type] and
+  ///  [Processor.display_name]][] to be set. Also, the
+  ///  [Processor.kms_key_name][google.cloud.documentai.v1.Processor.kms_key_name]
+  ///  field must be set if the processor is under CMEK.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -1039,8 +1046,9 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.CreateProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L702}
-  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
+  /// [google.cloud.documentai.v1.CreateProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L754}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
+  /// [google.cloud.documentai.v1.ProcessorType]: @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
@@ -1050,8 +1058,9 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// Creates a processor from the type processor that the user chose.
-  /// The processor will be at "ENABLED" state by default after its creation.
+  /// Creates a processor from the
+  /// [ProcessorType][google.cloud.documentai.v1.ProcessorType] provided. The
+  /// processor will be at `ENABLED` state by default after its creation.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1073,8 +1082,9 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.CreateProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L702}
-  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
+  /// [google.cloud.documentai.v1.CreateProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L754}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
+  /// [google.cloud.documentai.v1.ProcessorType]: @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
@@ -1107,8 +1117,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.DeleteProcessorMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L730}
-  /// [google.cloud.documentai.v1.DeleteProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L719}
+  /// [google.cloud.documentai.v1.DeleteProcessorMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L788}
+  /// [google.cloud.documentai.v1.DeleteProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L775}
   ///
   // clang-format on
   future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
@@ -1145,8 +1155,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.DeleteProcessorMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L730}
-  /// [google.cloud.documentai.v1.DeleteProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L719}
+  /// [google.cloud.documentai.v1.DeleteProcessorMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L788}
+  /// [google.cloud.documentai.v1.DeleteProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L775}
   ///
   // clang-format on
   future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
@@ -1184,8 +1194,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.EnableProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L736}
-  /// [google.cloud.documentai.v1.EnableProcessorResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L748}
+  /// [google.cloud.documentai.v1.EnableProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L796}
+  /// [google.cloud.documentai.v1.EnableProcessorResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L809}
   ///
   // clang-format on
   future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
@@ -1223,8 +1233,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.DisableProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L757}
-  /// [google.cloud.documentai.v1.DisableProcessorResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L769}
+  /// [google.cloud.documentai.v1.DisableProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L822}
+  /// [google.cloud.documentai.v1.DisableProcessorResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L835}
   ///
   // clang-format on
   future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
@@ -1268,9 +1278,9 @@ class DocumentProcessorServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.documentai.v1.DocumentProcessorService.BatchProcessDocuments]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L76}
   /// [google.cloud.documentai.v1.DocumentProcessorService.ProcessDocument]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L62}
-  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
-  /// [google.cloud.documentai.v1.SetDefaultProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L778}
-  /// [google.cloud.documentai.v1.SetDefaultProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L802}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
+  /// [google.cloud.documentai.v1.SetDefaultProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L848}
+  /// [google.cloud.documentai.v1.SetDefaultProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L874}
   ///
   // clang-format on
   future<StatusOr<
@@ -1285,8 +1295,9 @@ class DocumentProcessorServiceClient {
   /// Send a document for Human Review. The input document should be processed by
   /// the specified processor.
   ///
-  /// @param human_review_config  Required. The resource name of the HumanReviewConfig that the document will
-  ///  be reviewed with.
+  /// @param human_review_config  Required. The resource name of the
+  ///  [HumanReviewConfig][google.cloud.documentai.v1.HumanReviewConfig] that the
+  ///  document will be reviewed with.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1307,8 +1318,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.ReviewDocumentRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L887}
-  /// [google.cloud.documentai.v1.ReviewDocumentResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L924}
+  /// [google.cloud.documentai.v1.ReviewDocumentRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L967}
+  /// [google.cloud.documentai.v1.ReviewDocumentResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1007}
   ///
   // clang-format on
   future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
@@ -1345,8 +1356,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.ReviewDocumentRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L887}
-  /// [google.cloud.documentai.v1.ReviewDocumentResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L924}
+  /// [google.cloud.documentai.v1.ReviewDocumentRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L967}
+  /// [google.cloud.documentai.v1.ReviewDocumentResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1007}
   ///
   // clang-format on
   future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
@@ -1383,8 +1394,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.EvaluateProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L958}
-  /// [google.cloud.documentai.v1.EvaluateProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L983}
+  /// [google.cloud.documentai.v1.EvaluateProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1045}
+  /// [google.cloud.documentai.v1.EvaluateProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1074}
   ///
   // clang-format on
   future<
@@ -1423,8 +1434,8 @@ class DocumentProcessorServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.documentai.v1.EvaluateProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L958}
-  /// [google.cloud.documentai.v1.EvaluateProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L983}
+  /// [google.cloud.documentai.v1.EvaluateProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1045}
+  /// [google.cloud.documentai.v1.EvaluateProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1074}
   ///
   // clang-format on
   future<
@@ -1456,7 +1467,7 @@ class DocumentProcessorServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.documentai.v1.Evaluation]: @googleapis_reference_link{google/cloud/documentai/v1/evaluation.proto#L48}
-  /// [google.cloud.documentai.v1.GetEvaluationRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L989}
+  /// [google.cloud.documentai.v1.GetEvaluationRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1080}
   ///
   // clang-format on
   StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
@@ -1487,7 +1498,7 @@ class DocumentProcessorServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.documentai.v1.Evaluation]: @googleapis_reference_link{google/cloud/documentai/v1/evaluation.proto#L48}
-  /// [google.cloud.documentai.v1.GetEvaluationRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L989}
+  /// [google.cloud.documentai.v1.GetEvaluationRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1080}
   ///
   // clang-format on
   StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
@@ -1526,7 +1537,7 @@ class DocumentProcessorServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.documentai.v1.Evaluation]: @googleapis_reference_link{google/cloud/documentai/v1/evaluation.proto#L48}
-  /// [google.cloud.documentai.v1.ListEvaluationsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1002}
+  /// [google.cloud.documentai.v1.ListEvaluationsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1094}
   ///
   // clang-format on
   StreamRange<google::cloud::documentai::v1::Evaluation> ListEvaluations(
@@ -1566,7 +1577,7 @@ class DocumentProcessorServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.documentai.v1.Evaluation]: @googleapis_reference_link{google/cloud/documentai/v1/evaluation.proto#L48}
-  /// [google.cloud.documentai.v1.ListEvaluationsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1002}
+  /// [google.cloud.documentai.v1.ListEvaluationsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1094}
   ///
   // clang-format on
   StreamRange<google::cloud::documentai::v1::Evaluation> ListEvaluations(

@@ -535,6 +535,32 @@ Status CloudChannelServiceLogging::DeleteChannelPartnerRepricingConfig(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse>
+CloudChannelServiceLogging::ListSkuGroups(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListSkuGroupsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::channel::v1::ListSkuGroupsRequest const& request) {
+        return child_->ListSkuGroups(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
+CloudChannelServiceLogging::ListSkuGroupBillableSkus(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+                 request) {
+        return child_->ListSkuGroupBillableSkus(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceLogging::LookupOffer(
     grpc::ClientContext& context,

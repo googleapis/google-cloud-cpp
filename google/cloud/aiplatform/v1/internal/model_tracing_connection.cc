@@ -81,6 +81,18 @@ ModelServiceTracingConnection::UpdateModel(
   return internal::EndSpan(*span, child_->UpdateModel(request));
 }
 
+future<
+    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+ModelServiceTracingConnection::UpdateExplanationDataset(
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ModelServiceConnection::UpdateExplanationDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateExplanationDataset(request));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceTracingConnection::DeleteModel(
     google::cloud::aiplatform::v1::DeleteModelRequest const& request) {

@@ -97,6 +97,26 @@ DefaultModelServiceStub::UpdateModel(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultModelServiceStub::AsyncUpdateExplanationDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateExplanationDataset(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

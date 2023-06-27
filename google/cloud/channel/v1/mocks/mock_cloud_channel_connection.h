@@ -263,6 +263,16 @@ class MockCloudChannelServiceConnection
                    DeleteChannelPartnerRepricingConfigRequest const& request),
               (override));
 
+  MOCK_METHOD(StreamRange<google::cloud::channel::v1::SkuGroup>, ListSkuGroups,
+              (google::cloud::channel::v1::ListSkuGroupsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::channel::v1::BillableSku>,
+      ListSkuGroupBillableSkus,
+      (google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::channel::v1::Offer>, LookupOffer,
               (google::cloud::channel::v1::LookupOfferRequest const& request),
               (override));
