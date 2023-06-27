@@ -60,6 +60,13 @@ class ModelServiceStub {
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::UpdateModelRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateExplanationDataset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -177,6 +184,13 @@ class DefaultModelServiceStub : public ModelServiceStub {
       grpc::ClientContext& client_context,
       google::cloud::aiplatform::v1::UpdateModelRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateExplanationDataset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteModel(
       google::cloud::CompletionQueue& cq,

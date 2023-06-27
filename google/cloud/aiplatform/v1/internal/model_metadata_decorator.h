@@ -62,6 +62,13 @@ class ModelServiceMetadata : public ModelServiceStub {
       google::cloud::aiplatform::v1::UpdateModelRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateExplanationDataset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

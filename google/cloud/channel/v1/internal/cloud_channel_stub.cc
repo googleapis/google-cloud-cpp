@@ -557,6 +557,32 @@ Status DefaultCloudChannelServiceStub::DeleteChannelPartnerRepricingConfig(
   return google::cloud::Status();
 }
 
+StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse>
+DefaultCloudChannelServiceStub::ListSkuGroups(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::ListSkuGroupsRequest const& request) {
+  google::cloud::channel::v1::ListSkuGroupsResponse response;
+  auto status = grpc_stub_->ListSkuGroups(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
+DefaultCloudChannelServiceStub::ListSkuGroupBillableSkus(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+        request) {
+  google::cloud::channel::v1::ListSkuGroupBillableSkusResponse response;
+  auto status =
+      grpc_stub_->ListSkuGroupBillableSkus(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 DefaultCloudChannelServiceStub::LookupOffer(
     grpc::ClientContext& client_context,

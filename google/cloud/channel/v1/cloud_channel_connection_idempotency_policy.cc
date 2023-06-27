@@ -242,6 +242,17 @@ Idempotency CloudChannelServiceConnectionIdempotencyPolicy::
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListSkuGroups(
+    google::cloud::channel::v1::ListSkuGroupsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::ListSkuGroupBillableSkus(
+    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency CloudChannelServiceConnectionIdempotencyPolicy::LookupOffer(
     google::cloud::channel::v1::LookupOfferRequest const&) {
   return Idempotency::kIdempotent;

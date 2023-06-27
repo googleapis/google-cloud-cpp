@@ -446,6 +446,39 @@ Status CloudChannelServiceClient::DeleteChannelPartnerRepricingConfig(
   return connection_->DeleteChannelPartnerRepricingConfig(request);
 }
 
+StreamRange<google::cloud::channel::v1::SkuGroup>
+CloudChannelServiceClient::ListSkuGroups(std::string const& parent,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::channel::v1::ListSkuGroupsRequest request;
+  request.set_parent(parent);
+  return connection_->ListSkuGroups(request);
+}
+
+StreamRange<google::cloud::channel::v1::SkuGroup>
+CloudChannelServiceClient::ListSkuGroups(
+    google::cloud::channel::v1::ListSkuGroupsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListSkuGroups(std::move(request));
+}
+
+StreamRange<google::cloud::channel::v1::BillableSku>
+CloudChannelServiceClient::ListSkuGroupBillableSkus(std::string const& parent,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request;
+  request.set_parent(parent);
+  return connection_->ListSkuGroupBillableSkus(request);
+}
+
+StreamRange<google::cloud::channel::v1::BillableSku>
+CloudChannelServiceClient::ListSkuGroupBillableSkus(
+    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListSkuGroupBillableSkus(std::move(request));
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceClient::LookupOffer(
     google::cloud::channel::v1::LookupOfferRequest const& request,

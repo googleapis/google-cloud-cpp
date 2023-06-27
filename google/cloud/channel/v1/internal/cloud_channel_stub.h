@@ -244,6 +244,17 @@ class CloudChannelServiceStub {
       google::cloud::channel::v1::
           DeleteChannelPartnerRepricingConfigRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse>
+  ListSkuGroups(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::ListSkuGroupsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
+  ListSkuGroupBillableSkus(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
       grpc::ClientContext& context,
       google::cloud::channel::v1::LookupOfferRequest const& request) = 0;
@@ -519,6 +530,16 @@ class DefaultCloudChannelServiceStub : public CloudChannelServiceStub {
       grpc::ClientContext& client_context,
       google::cloud::channel::v1::
           DeleteChannelPartnerRepricingConfigRequest const& request) override;
+
+  StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse> ListSkuGroups(
+      grpc::ClientContext& client_context,
+      google::cloud::channel::v1::ListSkuGroupsRequest const& request) override;
+
+  StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
+  ListSkuGroupBillableSkus(
+      grpc::ClientContext& client_context,
+      google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+          request) override;
 
   StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
       grpc::ClientContext& client_context,

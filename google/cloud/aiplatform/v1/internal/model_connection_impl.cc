@@ -158,6 +158,40 @@ ModelServiceConnectionImpl::UpdateModel(
       request, __func__);
 }
 
+future<
+    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+ModelServiceConnectionImpl::UpdateExplanationDataset(
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+              request) {
+        return stub->AsyncUpdateExplanationDataset(cq, std::move(context),
+                                                   request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateExplanationDataset(request), polling_policy(),
+      __func__);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceConnectionImpl::DeleteModel(
     google::cloud::aiplatform::v1::DeleteModelRequest const& request) {

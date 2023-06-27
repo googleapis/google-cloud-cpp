@@ -57,6 +57,12 @@ class ModelServiceTracingConnection
       google::cloud::aiplatform::v1::UpdateModelRequest const& request)
       override;
 
+  future<
+      StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+  UpdateExplanationDataset(
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteModel(google::cloud::aiplatform::v1::DeleteModelRequest const& request)
       override;

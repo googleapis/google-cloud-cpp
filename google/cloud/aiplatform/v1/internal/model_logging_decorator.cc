@@ -96,6 +96,24 @@ StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceLogging::UpdateModel(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ModelServiceLogging::AsyncUpdateExplanationDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+              request) {
+        return child_->AsyncUpdateExplanationDataset(cq, std::move(context),
+                                                     request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ModelServiceLogging::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

@@ -77,6 +77,16 @@ ModelServiceMetadata::UpdateModel(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ModelServiceMetadata::AsyncUpdateExplanationDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request) {
+  SetMetadata(*context, "model=" + request.model());
+  return child_->AsyncUpdateExplanationDataset(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

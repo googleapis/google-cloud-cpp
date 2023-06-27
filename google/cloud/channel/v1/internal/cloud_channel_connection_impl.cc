@@ -875,6 +875,75 @@ Status CloudChannelServiceConnectionImpl::DeleteChannelPartnerRepricingConfig(
       request, __func__);
 }
 
+StreamRange<google::cloud::channel::v1::SkuGroup>
+CloudChannelServiceConnectionImpl::ListSkuGroups(
+    google::cloud::channel::v1::ListSkuGroupsRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListSkuGroups(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::channel::v1::SkuGroup>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::channel::v1::ListSkuGroupsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::channel::v1::ListSkuGroupsRequest const&
+                       request) {
+              return stub->ListSkuGroups(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::channel::v1::ListSkuGroupsResponse r) {
+        std::vector<google::cloud::channel::v1::SkuGroup> result(
+            r.sku_groups().size());
+        auto& messages = *r.mutable_sku_groups();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<google::cloud::channel::v1::BillableSku>
+CloudChannelServiceConnectionImpl::ListSkuGroupBillableSkus(
+    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListSkuGroupBillableSkus(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::channel::v1::BillableSku>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::channel::v1::
+                       ListSkuGroupBillableSkusRequest const& request) {
+              return stub->ListSkuGroupBillableSkus(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::channel::v1::ListSkuGroupBillableSkusResponse r) {
+        std::vector<google::cloud::channel::v1::BillableSku> result(
+            r.billable_skus().size());
+        auto& messages = *r.mutable_billable_skus();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceConnectionImpl::LookupOffer(
     google::cloud::channel::v1::LookupOfferRequest const& request) {

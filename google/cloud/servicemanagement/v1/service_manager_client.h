@@ -123,7 +123,7 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.ListServicesRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L261}
+  /// [google.api.servicemanagement.v1.ListServicesRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L262}
   /// [google.api.servicemanagement.v1.ManagedService]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L34}
   ///
   // clang-format on
@@ -152,7 +152,7 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.GetServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L291}
+  /// [google.api.servicemanagement.v1.GetServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L292}
   /// [google.api.servicemanagement.v1.ManagedService]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L34}
   ///
   // clang-format on
@@ -184,7 +184,7 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.GetServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L291}
+  /// [google.api.servicemanagement.v1.GetServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L292}
   /// [google.api.servicemanagement.v1.ManagedService]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L34}
   ///
   // clang-format on
@@ -227,7 +227,7 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.CreateServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L298}
+  /// [google.api.servicemanagement.v1.CreateServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L299}
   /// [google.api.servicemanagement.v1.ManagedService]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L34}
   ///
   // clang-format on
@@ -276,7 +276,7 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.CreateServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L298}
+  /// [google.api.servicemanagement.v1.CreateServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L299}
   /// [google.api.servicemanagement.v1.ManagedService]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L34}
   ///
   // clang-format on
@@ -297,8 +297,8 @@ class ServiceManagerClient {
   /// Operation<response: google.protobuf.Empty>
   ///
   /// @param service_name  Required. The name of the service.  See the
-  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview) for naming requirements.  For
-  ///  example: `example.googleapis.com`.
+  ///  [overview](https://cloud.google.com/service-management/overview) for naming
+  ///  requirements.  For example: `example.googleapis.com`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -319,9 +319,9 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.DeleteServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L304}
+  /// [google.api.servicemanagement.v1.DeleteServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L305}
   /// [google.api.servicemanagement.v1.OperationMetadata]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L45}
-  /// [google.api.servicemanagement.v1.ServiceManager.UndeleteService]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L117}
+  /// [google.api.servicemanagement.v1.ServiceManager.UndeleteService]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L118}
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
@@ -364,9 +364,9 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.DeleteServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L304}
+  /// [google.api.servicemanagement.v1.DeleteServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L305}
   /// [google.api.servicemanagement.v1.OperationMetadata]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L45}
-  /// [google.api.servicemanagement.v1.ServiceManager.UndeleteService]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L117}
+  /// [google.api.servicemanagement.v1.ServiceManager.UndeleteService]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L118}
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
@@ -384,8 +384,8 @@ class ServiceManagerClient {
   /// Operation<response: UndeleteServiceResponse>
   ///
   /// @param service_name  Required. The name of the service. See the
-  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview) for naming requirements. For
-  ///  example: `example.googleapis.com`.
+  ///  [overview](https://cloud.google.com/service-management/overview) for naming
+  ///  requirements. For example: `example.googleapis.com`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -406,8 +406,8 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.UndeleteServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L312}
-  /// [google.api.servicemanagement.v1.UndeleteServiceResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L320}
+  /// [google.api.servicemanagement.v1.UndeleteServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L313}
+  /// [google.api.servicemanagement.v1.UndeleteServiceResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L321}
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
@@ -448,8 +448,8 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.UndeleteServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L312}
-  /// [google.api.servicemanagement.v1.UndeleteServiceResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L320}
+  /// [google.api.servicemanagement.v1.UndeleteServiceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L313}
+  /// [google.api.servicemanagement.v1.UndeleteServiceResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L321}
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
@@ -463,8 +463,8 @@ class ServiceManagerClient {
   /// from the newest to the oldest.
   ///
   /// @param service_name  Required. The name of the service.  See the
-  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview) for naming requirements.  For
-  ///  example: `example.googleapis.com`.
+  ///  [overview](https://cloud.google.com/service-management/overview) for naming
+  ///  requirements.  For example: `example.googleapis.com`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -489,7 +489,7 @@ class ServiceManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.Service]: @googleapis_reference_link{google/api/service.proto#L80}
-  /// [google.api.servicemanagement.v1.ListServiceConfigsRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L355}
+  /// [google.api.servicemanagement.v1.ListServiceConfigsRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L356}
   ///
   // clang-format on
   StreamRange<google::api::Service> ListServiceConfigs(
@@ -530,7 +530,7 @@ class ServiceManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.Service]: @googleapis_reference_link{google/api/service.proto#L80}
-  /// [google.api.servicemanagement.v1.ListServiceConfigsRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L355}
+  /// [google.api.servicemanagement.v1.ListServiceConfigsRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L356}
   ///
   // clang-format on
   StreamRange<google::api::Service> ListServiceConfigs(
@@ -542,8 +542,8 @@ class ServiceManagerClient {
   /// Gets a service configuration (version) for a managed service.
   ///
   /// @param service_name  Required. The name of the service.  See the
-  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview) for naming requirements.  For
-  ///  example: `example.googleapis.com`.
+  ///  [overview](https://cloud.google.com/service-management/overview) for naming
+  ///  requirements.  For example: `example.googleapis.com`.
   /// @param config_id  Required. The id of the service configuration resource.
   ///  @n
   ///  This field must be specified for the server to return all fields, including
@@ -565,7 +565,7 @@ class ServiceManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.Service]: @googleapis_reference_link{google/api/service.proto#L80}
-  /// [google.api.servicemanagement.v1.GetServiceConfigRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L326}
+  /// [google.api.servicemanagement.v1.GetServiceConfigRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L327}
   ///
   // clang-format on
   StatusOr<google::api::Service> GetServiceConfig(
@@ -599,7 +599,7 @@ class ServiceManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.Service]: @googleapis_reference_link{google/api/service.proto#L80}
-  /// [google.api.servicemanagement.v1.GetServiceConfigRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L326}
+  /// [google.api.servicemanagement.v1.GetServiceConfigRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L327}
   ///
   // clang-format on
   StatusOr<google::api::Service> GetServiceConfig(
@@ -619,8 +619,8 @@ class ServiceManagerClient {
   /// eventually.
   ///
   /// @param service_name  Required. The name of the service.  See the
-  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview) for naming requirements.  For
-  ///  example: `example.googleapis.com`.
+  ///  [overview](https://cloud.google.com/service-management/overview) for naming
+  ///  requirements.  For example: `example.googleapis.com`.
   /// @param service_config  Required. The service configuration resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -637,8 +637,8 @@ class ServiceManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.Service]: @googleapis_reference_link{google/api/service.proto#L80}
-  /// [google.api.servicemanagement.v1.CreateServiceConfigRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L379}
-  /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L226}
+  /// [google.api.servicemanagement.v1.CreateServiceConfigRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L380}
+  /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L227}
   ///
   // clang-format on
   StatusOr<google::api::Service> CreateServiceConfig(
@@ -677,8 +677,8 @@ class ServiceManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.Service]: @googleapis_reference_link{google/api/service.proto#L80}
-  /// [google.api.servicemanagement.v1.CreateServiceConfigRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L379}
-  /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L226}
+  /// [google.api.servicemanagement.v1.CreateServiceConfigRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L380}
+  /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L227}
   ///
   // clang-format on
   StatusOr<google::api::Service> CreateServiceConfig(
@@ -704,8 +704,8 @@ class ServiceManagerClient {
   /// Operation<response: SubmitConfigSourceResponse>
   ///
   /// @param service_name  Required. The name of the service.  See the
-  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview) for naming requirements.  For
-  ///  example: `example.googleapis.com`.
+  ///  [overview](https://cloud.google.com/service-management/overview) for naming
+  ///  requirements.  For example: `example.googleapis.com`.
   /// @param config_source  Required. The source configuration for the service.
   /// @param validate_only  Optional. If set, this will result in the generation of a
   ///  `google.api.Service` configuration based on the `ConfigSource` provided,
@@ -730,9 +730,9 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L226}
-  /// [google.api.servicemanagement.v1.SubmitConfigSourceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L391}
-  /// [google.api.servicemanagement.v1.SubmitConfigSourceResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L407}
+  /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L227}
+  /// [google.api.servicemanagement.v1.SubmitConfigSourceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L392}
+  /// [google.api.servicemanagement.v1.SubmitConfigSourceResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L408}
   ///
   // clang-format on
   future<
@@ -785,9 +785,9 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L226}
-  /// [google.api.servicemanagement.v1.SubmitConfigSourceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L391}
-  /// [google.api.servicemanagement.v1.SubmitConfigSourceResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L407}
+  /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L227}
+  /// [google.api.servicemanagement.v1.SubmitConfigSourceRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L392}
+  /// [google.api.servicemanagement.v1.SubmitConfigSourceResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L408}
   ///
   // clang-format on
   future<
@@ -803,16 +803,18 @@ class ServiceManagerClient {
   /// service, from the newest to the oldest.
   ///
   /// @param service_name  Required. The name of the service.  See the
-  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview) for naming requirements.  For
-  ///  example: `example.googleapis.com`.
+  ///  [overview](https://cloud.google.com/service-management/overview) for naming
+  ///  requirements.  For example: `example.googleapis.com`.
   /// @param filter  Required. Use `filter` to return subset of rollouts.
   ///  The following filters are supported:
-  ///    -- To limit the results to only those in
-  ///       status (google.api.servicemanagement.v1.RolloutStatus) 'SUCCESS',
-  ///       use filter='status=SUCCESS'
-  ///    -- To limit the results to those in
-  ///       status (google.api.servicemanagement.v1.RolloutStatus) 'CANCELLED'
-  ///       or 'FAILED', use filter='status=CANCELLED OR status=FAILED'
+  ///  @n
+  ///   -- By [status]
+  ///   [google.api.servicemanagement.v1.Rollout.RolloutStatus]. For example,
+  ///   `filter='status=SUCCESS'`
+  ///  @n
+  ///   -- By [strategy]
+  ///   [google.api.servicemanagement.v1.Rollout.strategy]. For example,
+  ///   `filter='strategy=TrafficPercentStrategy'`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -836,7 +838,7 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.ListServiceRolloutsRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L424}
+  /// [google.api.servicemanagement.v1.ListServiceRolloutsRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L426}
   /// [google.api.servicemanagement.v1.Rollout]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   // clang-format on
@@ -878,7 +880,7 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.ListServiceRolloutsRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L424}
+  /// [google.api.servicemanagement.v1.ListServiceRolloutsRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L426}
   /// [google.api.servicemanagement.v1.Rollout]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   // clang-format on
@@ -892,8 +894,8 @@ class ServiceManagerClient {
   /// [rollout][google.api.servicemanagement.v1.Rollout].
   ///
   /// @param service_name  Required. The name of the service.  See the
-  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview) for naming requirements.  For
-  ///  example: `example.googleapis.com`.
+  ///  [overview](https://cloud.google.com/service-management/overview) for naming
+  ///  requirements.  For example: `example.googleapis.com`.
   /// @param rollout_id  Required. The id of the rollout resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -909,7 +911,7 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.GetServiceRolloutRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L458}
+  /// [google.api.servicemanagement.v1.GetServiceRolloutRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L462}
   /// [google.api.servicemanagement.v1.Rollout]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   // clang-format on
@@ -942,7 +944,7 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.GetServiceRolloutRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L458}
+  /// [google.api.servicemanagement.v1.GetServiceRolloutRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L462}
   /// [google.api.servicemanagement.v1.Rollout]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   // clang-format on
@@ -969,8 +971,8 @@ class ServiceManagerClient {
   /// Operation<response: Rollout>
   ///
   /// @param service_name  Required. The name of the service.  See the
-  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview) for naming requirements.  For
-  ///  example: `example.googleapis.com`.
+  ///  [overview](https://cloud.google.com/service-management/overview) for naming
+  ///  requirements.  For example: `example.googleapis.com`.
   /// @param rollout  Required. The rollout resource. The `service_name` field is output only.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -992,7 +994,7 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.CreateServiceRolloutRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L413}
+  /// [google.api.servicemanagement.v1.CreateServiceRolloutRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L415}
   /// [google.api.servicemanagement.v1.Rollout]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   // clang-format on
@@ -1045,7 +1047,7 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.CreateServiceRolloutRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L413}
+  /// [google.api.servicemanagement.v1.CreateServiceRolloutRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L415}
   /// [google.api.servicemanagement.v1.Rollout]: @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   // clang-format on
@@ -1093,8 +1095,8 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.GenerateConfigReportRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L469}
-  /// [google.api.servicemanagement.v1.GenerateConfigReportResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L486}
+  /// [google.api.servicemanagement.v1.GenerateConfigReportRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L476}
+  /// [google.api.servicemanagement.v1.GenerateConfigReportResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L493}
   ///
   // clang-format on
   StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
@@ -1136,8 +1138,8 @@ class ServiceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicemanagement.v1.GenerateConfigReportRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L469}
-  /// [google.api.servicemanagement.v1.GenerateConfigReportResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L486}
+  /// [google.api.servicemanagement.v1.GenerateConfigReportRequest]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L476}
+  /// [google.api.servicemanagement.v1.GenerateConfigReportResponse]: @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L493}
   ///
   // clang-format on
   StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>

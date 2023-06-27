@@ -243,6 +243,16 @@ class CloudChannelServiceLogging : public CloudChannelServiceStub {
       google::cloud::channel::v1::
           DeleteChannelPartnerRepricingConfigRequest const& request) override;
 
+  StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse> ListSkuGroups(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::ListSkuGroupsRequest const& request) override;
+
+  StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
+  ListSkuGroupBillableSkus(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+          request) override;
+
   StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
       grpc::ClientContext& context,
       google::cloud::channel::v1::LookupOfferRequest const& request) override;

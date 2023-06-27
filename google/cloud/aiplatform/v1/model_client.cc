@@ -113,6 +113,26 @@ StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceClient::UpdateModel(
   return connection_->UpdateModel(request);
 }
 
+future<
+    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+ModelServiceClient::UpdateExplanationDataset(std::string const& model,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest request;
+  request.set_model(model);
+  return connection_->UpdateExplanationDataset(request);
+}
+
+future<
+    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+ModelServiceClient::UpdateExplanationDataset(
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateExplanationDataset(request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceClient::DeleteModel(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

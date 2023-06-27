@@ -84,6 +84,27 @@ StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceAuth::UpdateModel(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ModelServiceAuth::AsyncUpdateExplanationDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateExplanationDataset(cq, *std::move(context),
+                                                    request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ModelServiceAuth::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
