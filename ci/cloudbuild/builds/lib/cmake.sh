@@ -34,10 +34,10 @@ cmake --version
 export NINJA_STATUS="T+%es [%f/%t] "
 
 # This block is run the first (and only) time this script is sourced. It first
-# clears the ccache stats. Then it registers an exit handler that will display
+# clears the sccache stats. Then it registers an exit handler that will display
 # the ccache stats when the calling script exits.
 if command -v sccache >/dev/null 2>&1; then
-  io::log "Clearing ccache stats"
+  io::log "Clearing sccache stats"
   sccache --zero-stats
   function show_stats_handler() {
     if [[ "${TRIGGER_TYPE:-}" != "manual" || "${VERBOSE_FLAG:-}" == "true" ]]; then

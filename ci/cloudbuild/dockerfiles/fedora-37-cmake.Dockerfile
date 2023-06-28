@@ -21,11 +21,11 @@ ARG ARCH=amd64
 # tools to compile the dependencies:
 RUN dnf makecache && \
     dnf install -y abi-compliance-checker autoconf automake \
-    clang clang-analyzer clang-tools-extra \
-    cmake diffutils doxygen findutils gcc-c++ git \
-    libcurl-devel llvm make ninja-build \
-    openssl-devel patch python python3 \
-    python-pip tar unzip w3m wget which zip zlib-devel
+        clang clang-analyzer clang-tools-extra \
+        cmake diffutils doxygen findutils gcc-c++ git \
+        libcurl-devel llvm make ninja-build \
+        openssl-devel patch python python3 \
+        python-pip tar unzip w3m wget which zip zlib-devel
 
 # Install the Python modules needed to run the storage emulator
 RUN dnf makecache && dnf install -y python3-devel
@@ -73,10 +73,10 @@ WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_SHARED_LIBS=ON \
-    -DBUILD_TESTING=OFF \
-    -GNinja -S . -B cmake-out && \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=ON \
+      -DBUILD_TESTING=OFF \
+      -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
@@ -88,10 +88,10 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | 
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     sed -i 's/^#define ABSL_OPTION_USE_INLINE_NAMESPACE 1$/#define ABSL_OPTION_USE_INLINE_NAMESPACE 0/' "absl/base/options.h" && \
     cmake \
-    -DCMAKE_BUILD_TYPE="Release" \
-    -DABSL_BUILD_TESTING=OFF \
-    -DBUILD_SHARED_LIBS=yes \
-    -GNinja -S . -B cmake-out && \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DABSL_BUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
@@ -99,9 +99,9 @@ WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-    -DCMAKE_BUILD_TYPE="Release" \
-    -DBUILD_SHARED_LIBS=yes \
-    -GNinja -S . -B cmake-out && \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
@@ -109,10 +109,10 @@ WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-    -DCMAKE_BUILD_TYPE="Release" \
-    -DBUILD_SHARED_LIBS=yes \
-    -DBENCHMARK_ENABLE_TESTING=OFF \
-    -GNinja -S . -B cmake-out && \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBENCHMARK_ENABLE_TESTING=OFF \
+      -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
@@ -120,12 +120,12 @@ WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_SHARED_LIBS=yes \
-    -DCRC32C_BUILD_TESTS=OFF \
-    -DCRC32C_BUILD_BENCHMARKS=OFF \
-    -DCRC32C_USE_GLOG=OFF \
-    -GNinja -S . -B cmake-out && \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DCRC32C_BUILD_TESTS=OFF \
+      -DCRC32C_BUILD_BENCHMARKS=OFF \
+      -DCRC32C_USE_GLOG=OFF \
+      -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
@@ -133,11 +133,11 @@ WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_SHARED_LIBS=yes \
-    -DBUILD_TESTING=OFF \
-    -DJSON_BuildTests=OFF \
-    -GNinja -S . -B cmake-out && \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=yes \
+      -DBUILD_TESTING=OFF \
+      -DJSON_BuildTests=OFF \
+      -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
@@ -145,11 +145,11 @@ WORKDIR /var/tmp/build/protobuf
 RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_SHARED_LIBS=yes \
-    -Dprotobuf_BUILD_TESTS=OFF \
-    -Dprotobuf_ABSL_PROVIDER=package \
-    -GNinja -S . -B cmake-out && \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Dprotobuf_ABSL_PROVIDER=package \
+      -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
@@ -160,9 +160,9 @@ WORKDIR /var/tmp/build/re2
 RUN curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_SHARED_LIBS=ON \
-    -DRE2_BUILD_TESTING=OFF \
-    -S . -B cmake-out && \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -172,18 +172,18 @@ RUN dnf makecache && dnf install -y c-ares-devel
 RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_SHARED_LIBS=ON \
-    -DgRPC_INSTALL=ON \
-    -DgRPC_BUILD_TESTS=OFF \
-    -DgRPC_ABSL_PROVIDER=package \
-    -DgRPC_CARES_PROVIDER=package \
-    -DgRPC_PROTOBUF_PROVIDER=package \
-    -DgRPC_PROTOBUF_PACKAGE_TYPE=CONFIG \
-    -DgRPC_RE2_PROVIDER=package \
-    -DgRPC_SSL_PROVIDER=package \
-    -DgRPC_ZLIB_PROVIDER=package \
-    -GNinja -S . -B cmake-out && \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=ON \
+      -DgRPC_INSTALL=ON \
+      -DgRPC_BUILD_TESTS=OFF \
+      -DgRPC_ABSL_PROVIDER=package \
+      -DgRPC_CARES_PROVIDER=package \
+      -DgRPC_PROTOBUF_PROVIDER=package \
+      -DgRPC_PROTOBUF_PACKAGE_TYPE=CONFIG \
+      -DgRPC_RE2_PROVIDER=package \
+      -DgRPC_SSL_PROVIDER=package \
+      -DgRPC_ZLIB_PROVIDER=package \
+      -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
@@ -191,15 +191,15 @@ WORKDIR /var/tmp/build/
 RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-    -DCMAKE_CXX_STANDARD=14 \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
-    -DBUILD_SHARED_LIBS=ON \
-    -DWITH_EXAMPLES=OFF \
-    -DWITH_ABSEIL=ON \
-    -DBUILD_TESTING=OFF \
-    -DOPENTELEMETRY_INSTALL=ON \
-    -S . -B cmake-out -GNinja && \
+        -DCMAKE_CXX_STANDARD=14 \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
+        -DBUILD_SHARED_LIBS=ON \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -S . -B cmake-out -GNinja && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
@@ -252,5 +252,5 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccac
     mv sccache /usr/local/bin/sccache && \
     chmod +x /usr/local/bin/sccache
 
-# Update the ld.conf cache in case any libraries installed in /usr/local/lib*
+# Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*

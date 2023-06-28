@@ -60,6 +60,7 @@ function quickstart::build_one_quickstart() {
     "-H${src_dir}"
     "-B${cmake_bin_dir}"
     -DCMAKE_PREFIX_PATH="${prefix}"
+    -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON
     -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON
   )
   if command -v /usr/local/bin/sccache >/dev/null 2>&1; then
