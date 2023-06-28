@@ -35,7 +35,7 @@ bazel_args=("$@")
 # Building the binary can easily take more than the timeout limit.
 pushd "$(dirname "$0")/../test_proxy" >/dev/null
 "${BAZEL_BIN}" build "${bazel_args[@]}" :cbt_test_proxy_main
-nohup "${BAZEL_BIN}" run "${bazel_args[@]}" :cbt_test_proxy_main -- 9999 >/dev/null 2>&1 &
+"${BAZEL_BIN}" run "${bazel_args[@]}" :cbt_test_proxy_main -- 9999 >/dev/null 2>&1 &
 proxy_pid=$!
 popd >/dev/null
 
@@ -43,7 +43,8 @@ popd >/dev/null
 pushd /var/tmp/downloads/cloud-bigtable-clients-test/tests >/dev/null
 go test -v -skip Generic_CloseClient -proxy_addr=:9999
 exit_status=$?
-# Remove the entire module cache, including unpacked source code of versioned dependencies.
+# Remove the entire module cache, including unpacked source code of versioned
+# dependencies.
 go clean -modcache
 popd >/dev/null
 
