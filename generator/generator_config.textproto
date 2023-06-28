@@ -2327,6 +2327,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Migration Center
+service {
+  service_proto_path: "google/cloud/migrationcenter/v1/migrationcenter.proto"
+  product_path: "google/cloud/migrationcenter/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Monitoring
 service {
   service_proto_path: "google/monitoring/v3/alert_service.proto"

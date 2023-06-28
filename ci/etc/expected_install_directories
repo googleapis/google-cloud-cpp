@@ -757,6 +757,10 @@
 ./include/google/cloud/metastore/v1
 ./include/google/cloud/metastore/v1/internal
 ./include/google/cloud/metastore/v1/mocks
+./include/google/cloud/migrationcenter
+./include/google/cloud/migrationcenter/v1
+./include/google/cloud/migrationcenter/v1/internal
+./include/google/cloud/migrationcenter/v1/mocks
 ./include/google/cloud/monitoring
 ./include/google/cloud/monitoring/dashboard
 ./include/google/cloud/monitoring/dashboard/v1
@@ -1169,6 +1173,7 @@
 ./lib64/cmake/google_cloud_cpp_managedidentities
 ./lib64/cmake/google_cloud_cpp_memcache
 ./lib64/cmake/google_cloud_cpp_metastore
+./lib64/cmake/google_cloud_cpp_migrationcenter
 ./lib64/cmake/google_cloud_cpp_monitoring
 ./lib64/cmake/google_cloud_cpp_networkconnectivity
 ./lib64/cmake/google_cloud_cpp_networkmanagement

@@ -87,6 +87,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "managedidentities",
     "memcache",
     "metastore",
+    "migrationcenter",
     "monitoring",
     "networkconnectivity",
     "networkmanagement",

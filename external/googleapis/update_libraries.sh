@@ -176,6 +176,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/metastore/logging/v1:logging_cc_grpc" \
       "@com_google_googleapis//google/cloud/metastore/v1:metastore_cc_grpc"
   )"
+  ["migrationcenter"]="@com_google_googleapis//google/cloud/migrationcenter/v1:migrationcenter_cc_grpc"
   ["monitoring"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/monitoring/v3:monitoring_cc_grpc" \

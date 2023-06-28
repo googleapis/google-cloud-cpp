@@ -59,6 +59,7 @@ logging
 managedidentities
 memcache
 metastore
+migrationcenter
 monitoring
 networkconnectivity
 networkmanagement
