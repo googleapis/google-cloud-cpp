@@ -13,25 +13,25 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/rapidmigrationassessment/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace rapidmigrationassessment =
-      ::google::cloud::rapidmigrationassessment;
-  auto client = rapidmigrationassessment::Client(
-      rapidmigrationassessment::MakeConnection());
+      ::google::cloud::rapidmigrationassessment_v1;
+  auto client = rapidmigrationassessment::RapidMigrationAssessmentClient(
+      rapidmigrationassessment::MakeRapidMigrationAssessmentConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  auto const parent =
+      std::string("projects/") + argv[1] + "/locations/" + argv[2];
+  for (auto c : client.ListCollectors(parent)) {
+    if (!c) throw std::move(c).status();
+    std::cout << c->DebugString() << "\n";
   }
 
   return 0;

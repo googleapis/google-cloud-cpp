@@ -118,6 +118,7 @@ the APIs in these libraries are stable, and are ready for production use.
 - [Cloud Data Fusion](/google/cloud/datafusion/README.md)
 - [Dataproc Metastore](/google/cloud/metastore/README.md)
 - [Migration Center](google/cloud/migrationcenter/README.md)
+- [Rapid Migration Assessment](/google/cloud/rapidmigrationassessment/README.md)
 - [Secure Web Proxy](/google/cloud/networksecurity/README.md)
 
 ## v2.12.0 - 2023-06
