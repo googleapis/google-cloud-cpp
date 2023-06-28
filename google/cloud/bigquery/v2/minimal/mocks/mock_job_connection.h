@@ -46,6 +46,9 @@ class MockBigQueryJobConnection : public BigQueryJobConnection {
 
   MOCK_METHOD(StatusOr<Job>, InsertJob, (InsertJobRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<Job>, CancelJob, (CancelJobRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
