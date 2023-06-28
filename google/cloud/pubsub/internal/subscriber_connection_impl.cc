@@ -55,16 +55,22 @@ StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
   request.set_subscription(subscription.FullName());
   request.set_max_messages(1);
 
-  auto response = google::cloud::internal::RetryLoop(
-      current.get<pubsub::RetryPolicyOption>()->clone(),
-      current.get<pubsub::BackoffPolicyOption>()->clone(),
-      google::cloud::Idempotency::kIdempotent,
-      [stub = stub_](auto& context, auto const& request) {
-        return stub->Pull(context, request);
-      },
-      request, __func__);
-  if (!response) return std::move(response).status();
-  if (response->received_messages_size() != 1) {
+  auto messages_received = 0;
+  StatusOr<google::pubsub::v1::PullResponse> response;
+  while (messages_received == 0) {
+    response = google::cloud::internal::RetryLoop(
+        current.get<pubsub::RetryPolicyOption>()->clone(),
+        current.get<pubsub::BackoffPolicyOption>()->clone(),
+        google::cloud::Idempotency::kIdempotent,
+        [stub = stub_](auto& context, auto const& request) {
+          return stub->Pull(context, request);
+        },
+        request, __func__);
+
+    if (!response) return std::move(response).status();
+    messages_received = response->received_messages_size();
+  }
+  if (messages_received > 1) {
     return internal::InternalError("invalid response, mismatched ID count",
                                    GCP_ERROR_INFO());
   }

@@ -409,6 +409,52 @@ TEST(SubscriberConnectionTest, Pull) {
   t.join();
 }
 
+TEST(SubscriberConnectionTest, PullReturnsNoMessage) {
+  auto const subscription = Subscription("test-project", "test-subscription");
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+                         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return make_ready_future(Status{});
+      });
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .WillOnce([](google::cloud::CompletionQueue&, auto,
+                   google::pubsub::v1::AcknowledgeRequest const& request) {
+        EXPECT_THAT(request.ack_ids(), Contains("test-ack-id-0"));
+        return make_ready_future(
+            Status{StatusCode::kUnknown, "test-only-unknown"});
+      });
+  EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
+                                   Property(&PullRequest::subscription,
+                                            subscription.FullName()))))
+      .WillOnce([](auto&, google::pubsub::v1::PullRequest const&) {
+        google::pubsub::v1::PullResponse response;
+        return response;
+      })
+      .WillOnce([](auto&, google::pubsub::v1::PullRequest const&) {
+        google::pubsub::v1::PullResponse response;
+        auto& message = *response.add_received_messages();
+        message.set_delivery_attempt(42);
+        message.set_ack_id("test-ack-id-0");
+        message.mutable_message()->set_data("test-data-0");
+        return response;
+      });
+
+  CompletionQueue cq;
+  std::thread t([&cq] { cq.Run(); });
+
+  auto subscriber = std::make_shared<SubscriberConnectionImpl>(
+      MakeTestOptions(subscription, cq), mock);
+  google::cloud::internal::OptionsSpan span(subscriber->options());
+  auto response = subscriber->Pull();
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->message.data(), "test-data-0");
+  std::move(response->handler).ack();
+
+  cq.Shutdown();
+  t.join();
+}
+
 TEST(SubscriberConnectionTest, PullOverrideSubscription) {
   auto const s1 = Subscription("test-project", "test-subscription");
   auto const s2 = Subscription("test-project", "test-override-subscription");
