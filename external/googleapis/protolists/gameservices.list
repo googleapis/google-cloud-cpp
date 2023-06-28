@@ -1,9 +1,0 @@
-@com_google_googleapis//google/cloud/gaming/v1:common.proto
-@com_google_googleapis//google/cloud/gaming/v1:game_server_clusters.proto
-@com_google_googleapis//google/cloud/gaming/v1:game_server_clusters_service.proto
-@com_google_googleapis//google/cloud/gaming/v1:game_server_configs.proto
-@com_google_googleapis//google/cloud/gaming/v1:game_server_configs_service.proto
-@com_google_googleapis//google/cloud/gaming/v1:game_server_deployments.proto
-@com_google_googleapis//google/cloud/gaming/v1:game_server_deployments_service.proto
-@com_google_googleapis//google/cloud/gaming/v1:realms.proto
-@com_google_googleapis//google/cloud/gaming/v1:realms_service.proto

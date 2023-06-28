@@ -129,7 +129,6 @@ declare -A -r LIBRARIES=(
   )"
   ["filestore"]="@com_google_googleapis//google/cloud/filestore/v1:filestore_cc_grpc"
   ["functions"]="@com_google_googleapis//google/cloud/functions/v1:functions_cc_grpc"
-  ["gameservices"]="@com_google_googleapis//google/cloud/gaming/v1:gaming_cc_grpc"
   ["gkebackup"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/gkebackup/logging/v1:logging_cc_grpc" \

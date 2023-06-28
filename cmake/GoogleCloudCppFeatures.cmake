@@ -81,7 +81,6 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "eventarc"
     "filestore"
     "functions"
-    "gameservices"
     "gkebackup"
     "gkehub"
     "gkemulticloud"

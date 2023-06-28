@@ -124,10 +124,6 @@ export GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=""
 # Rest configuration parameters
 export GOOGLE_CLOUD_CPP_REST_TEST_SIGNING_SERVICE_ACCOUNT="kokoro-run@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 
-# To run google/cloud/gameservices' quickstart
-export GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_LOCATION="global"
-export GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_REALM="test-realm"
-
 # To run google/cloud/resourcemanager's quickstart, this is the Cloud C++ team community folder
 export GOOGLE_CLOUD_CPP_RESOURCEMANAGER_TEST_FOLDER="204009073908"
 
