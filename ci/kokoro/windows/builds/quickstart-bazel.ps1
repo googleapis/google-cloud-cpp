@@ -55,11 +55,10 @@ function Get-Released-Quickstarts {
             # In addition, the `google/cloud/debugger/quickstart` directory
             # is gone. However, we use the previous release of
             # `google-cloud-cpp` in these builds, where the target still exists:
-            #   TODO(#11772) - debugger (the service and library are retired).
+            #   TODO(#11772) - the service and library are retired.
             "debugger",
-            #   TODO(#11987) - gameservices (the service and library are retired).
-            "gameservices"
-            -contains $_) } |
+            #   TODO(#11987) - the service and library are retiredq.
+            "gameservices" -contains $_) } |
         # TODO(#9923) - compiling all quickstarts on Windows is too slow
         Get-Random -Count 10
     Pop-Location
