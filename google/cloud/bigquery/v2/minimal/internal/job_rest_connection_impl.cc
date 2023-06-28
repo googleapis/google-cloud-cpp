@@ -100,7 +100,7 @@ StatusOr<Job> BigQueryJobRestConnectionImpl::CancelJob(
       },
       request, __func__);
   if (!result) return std::move(result).status();
-  return result->job;
+  return std::move(result->job);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
