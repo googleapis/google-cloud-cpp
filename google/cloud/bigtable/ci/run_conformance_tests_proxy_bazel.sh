@@ -43,7 +43,8 @@ popd >/dev/null
 pushd /var/tmp/downloads/cloud-bigtable-clients-test/tests >/dev/null
 go test -v -skip Generic_CloseClient -proxy_addr=:9999
 exit_status=$?
-go clean
+# Remove the entire module cache, including unpacked source code of versioned dependencies.
+go clean -modcache
 popd >/dev/null
 
 # Stop the proxy
