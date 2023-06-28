@@ -102,6 +102,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "privateca",
     "profiler",
     "pubsub",
+    "rapidmigrationassessment",
     "recaptchaenterprise",
     "recommender",
     "redis",
