@@ -52,7 +52,10 @@ function Get-Vcpkg-Features {
             # TODO(#8125) - does not compile on Windows.
             "channel",
             # TODO(#11772) - deprecated library. Need to remove from vcpkg.
-            "debugger" -contains $_) } |
+            "debugger",
+            # TODO(#11987)
+            "gameservices"
+            -contains $_) } |
         # These are convenience features to refactor dependencies; they do not have quickstarts.
         Where-Object { -not ("googleapis", "grpc-common", "grafeas" -contains $_) }
 }

@@ -42,16 +42,24 @@ function Get-Released-Quickstarts {
     bazelisk $bazel_common_flags version | Out-Null
     bazelisk $bazel_common_flags query --noshow_progress --noshow_loading_progress "filter(/quickstart:quickstart$, kind(cc_binary, @google_cloud_cpp//google/...))" |
         ForEach-Object { $_.replace("@google_cloud_cpp//google/cloud/", "").replace("/quickstart:quickstart", "") } |
-        # The following quickstarts have problems building on Windows:
-        #   TODO(#8145) - asset (TRUE/FALSE macros)
-        #   TODO(#8125) - channel (DOMAIN macro)
-        #   TODO(#11925) - compute (too big for windows)
-        #   TODO(#10737) - dialogflow_es triggers bug in Bazel 6.0.0
-        # In addition, the `google/cloud/debugger/quickstart` directory is gone.
-        # However, we use the previous release of `google-cloud-cpp` in these
-        # builds, where the target still exists:
-        #   TODO(#11772) - debugger (deprecated library).
-        Where-Object { -not ("asset", "compute", "channel", "dialogflow_es", "debugger" -contains $_) } |
+        Where-Object { -not (
+            # The following quickstarts have problems building on Windows:
+            #  TODO(#8145) - asset (TRUE/FALSE macros)
+            "asset",
+            #   TODO(#8125) - channel (DOMAIN macro)
+            "compute",
+            #   TODO(#11925) - compute (too big for windows)
+            "channel",
+            #   TODO(#10737) - dialogflow_es triggers bug in Bazel 6.0.0
+            "dialogflow_es",
+            # In addition, the `google/cloud/debugger/quickstart` directory
+            # is gone. However, we use the previous release of
+            # `google-cloud-cpp` in these builds, where the target still exists:
+            #   TODO(#11772) - debugger (the service and library are retired).
+            "debugger",
+            #   TODO(#11987) - gameservices (the service and library are retired).
+            "gameservices"
+            -contains $_) } |
         # TODO(#9923) - compiling all quickstarts on Windows is too slow
         Get-Random -Count 10
     Pop-Location
