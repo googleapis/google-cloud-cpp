@@ -44,7 +44,7 @@ function Get-Released-Quickstarts {
         ForEach-Object { $_.replace("@google_cloud_cpp//google/cloud/", "").replace("/quickstart:quickstart", "") } |
         Where-Object { -not (
             # The following quickstarts have problems building on Windows:
-            #  TODO(#8145) - asset (TRUE/FALSE macros)
+            #   TODO(#8145) - asset (TRUE/FALSE macros)
             "asset",
             #   TODO(#8125) - channel (DOMAIN macro)
             "compute",
@@ -57,7 +57,7 @@ function Get-Released-Quickstarts {
             # `google-cloud-cpp` in these builds, where the target still exists:
             #   TODO(#11772) - the service and library are retired.
             "debugger",
-            #   TODO(#11987) - the service and library are retiredq.
+            #   TODO(#11987) - the service and library are retired.
             "gameservices" -contains $_) } |
         # TODO(#9923) - compiling all quickstarts on Windows is too slow
         Get-Random -Count 10
