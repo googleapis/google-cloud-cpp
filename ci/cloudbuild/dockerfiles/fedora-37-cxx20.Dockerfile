@@ -213,7 +213,3 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccac
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*
-
-RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.17.0/bazelisk-linux-${ARCH}" && \
-    chmod +x /usr/bin/bazelisk && \
-    ln -s /usr/bin/bazelisk /usr/bin/bazel
