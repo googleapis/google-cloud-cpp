@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// A retry policy suitable to retry ack/nack messages when exactly-once is
 /// enabled.
-class ExactlyOnceRetryPolicy : public google::cloud::internal::RetryPolicy {
+class ExactlyOnceRetryPolicy : public google::cloud::RetryPolicy {
  public:
   explicit ExactlyOnceRetryPolicy(std::string ack_id);
   ~ExactlyOnceRetryPolicy() override = default;
