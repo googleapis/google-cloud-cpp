@@ -21,7 +21,7 @@ ARG ARCH=amd64
 # tools to compile the dependencies:
 RUN dnf makecache && \
     dnf install -y autoconf automake \
-        ccache clang clang-analyzer clang-tools-extra \
+        clang clang-analyzer clang-tools-extra \
         cmake diffutils findutils gcc-c++ git \
         libcurl-devel llvm make ninja-build \
         openssl-devel patch python python3 \
@@ -204,8 +204,14 @@ RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 
-# Some of the above libraries may have installed in /usr/local, so make sure
-# those library directories will be found.
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache
+
+# Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*
 
 RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.17.0/bazelisk-linux-${ARCH}" && \

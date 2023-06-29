@@ -25,7 +25,7 @@ RUN dnf makecache && \
     dnf update -y && \
     dnf install -y epel-release && \
     dnf makecache && \
-    dnf install -y ccache cmake curl findutils gcc-c++ git make openssl-devel \
+    dnf install -y cmake curl findutils gcc-c++ git make openssl-devel \
         patch zlib-devel libcurl-devel c-ares-devel tar wget which
 # ```
 
@@ -195,6 +195,12 @@ RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
 
 ## [DONE packaging.md]
 
-# Some of the above libraries may have installed in /usr/local, so make sure
-# those library directories will be found.
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache
+
+# Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*

@@ -101,6 +101,9 @@ steps:
   secretEnv: ['CODECOV_TOKEN']
   env: [
     'BAZEL_REMOTE_CACHE=https://storage.googleapis.com/${_CACHE_BUCKET}/bazel-cache/${_DISTRO}-${_BUILD_NAME}',
+    'SCCACHE_GCS_BUCKET=${_CACHE_BUCKET}',
+    'SCCACHE_GCS_KEY_PREFIX=sccache/${_DISTRO}-${_BUILD_NAME}',
+    'SCCACHE_GCS_RW_MODE=READ_WRITE',
     'VCPKG_BINARY_SOURCES=x-gcs,gs://${_CACHE_BUCKET}/vcpkg-cache/${_DISTRO}-${_BUILD_NAME},readwrite'
   ]
 
@@ -116,9 +119,7 @@ steps:
       /workspace/ci/cloudbuild/cache.sh save
       --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
       --key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h
-      --path=.ccache
       --path=.cache/bazelisk
-      --path=.cache/ccache
       --path=.cache/ctcache
       --path=.cache/vcpkg
       --path=.cache/google-cloud-cpp

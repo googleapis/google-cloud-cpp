@@ -35,8 +35,7 @@ time {
     git -C "${VCPKG_ROOT_DIR}" checkout "${VCPKG_VERSION}"
     pwd
   fi
-  env -C "${VCPKG_ROOT_DIR}" VCPKG_ROOT="${VCPKG_ROOT_DIR}" \
-    CC="ccache ${CC}" CXX="ccache ${CXX}" ./bootstrap-vcpkg.sh
+  env -C "${VCPKG_ROOT_DIR}" VCPKG_ROOT="${VCPKG_ROOT_DIR}" ./bootstrap-vcpkg.sh
 }
 
 # Outputs the root directory where vcpkg is installed (and bootstrapped)
