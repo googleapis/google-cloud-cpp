@@ -247,11 +247,11 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
     return internal::InvalidArgumentError(
         "Invalid CancelJobRequest: Job Id is empty", GCP_ERROR_INFO());
   }
+
   // Builds CancelJob request path based on endpoint provided.
   std::string endpoint = GetBaseEndpoint(opts);
-
   std::string path = absl::StrCat(endpoint, "/projects/", r.project_id(),
-                                  "/jobs/", r.job_id());
+                                  "/jobs/", r.job_id(), "/cancel");
   request.SetPath(std::move(path));
 
   // Add query params.
