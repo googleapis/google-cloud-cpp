@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"

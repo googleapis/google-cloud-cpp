@@ -107,8 +107,8 @@ add_library(
     internal/random.h
     internal/retry_loop_helpers.cc
     internal/retry_loop_helpers.h
-    internal/retry_policy.cc
-    internal/retry_policy.h
+    internal/retry_policy_impl.cc
+    internal/retry_policy_impl.h
     internal/sha256_hash.cc
     internal/sha256_hash.h
     internal/sha256_hmac.cc
@@ -145,6 +145,7 @@ add_library(
     polling_policy.h
     project.cc
     project.h
+    retry_policy.h
     status.cc
     status.h
     status_or.h
@@ -355,7 +356,7 @@ if (BUILD_TESTING)
         internal/populate_common_options_test.cc
         internal/random_test.cc
         internal/retry_loop_helpers_test.cc
-        internal/retry_policy_test.cc
+        internal/retry_policy_impl_test.cc
         internal/sha256_hash_test.cc
         internal/sha256_hmac_test.cc
         internal/status_payload_keys_test.cc

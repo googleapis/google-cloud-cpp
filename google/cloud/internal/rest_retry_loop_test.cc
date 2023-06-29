@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/internal/rest_retry_loop.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
@@ -27,6 +29,7 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::Idempotency;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -45,7 +48,7 @@ struct TestRetryablePolicy {
 
 auto constexpr kNumRetries = 3;
 
-std::unique_ptr<internal::RetryPolicy> TestRetryPolicy() {
+std::unique_ptr<RetryPolicy> TestRetryPolicy() {
   return internal::LimitedErrorCountRetryPolicy<TestRetryablePolicy>(
              kNumRetries)
       .clone();
