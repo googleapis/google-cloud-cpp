@@ -128,6 +128,41 @@ TEST(JobClientTest, InsertJobFailure) {
                                HasSubstr("bad-request-error")));
 }
 
+TEST(JobClientTest, CancelJobSuccess) {
+  auto job = MakePartialJob();
+  auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
+
+  EXPECT_CALL(*mock_job_connection, CancelJob)
+      .WillOnce([&](CancelJobRequest const& request) {
+        EXPECT_EQ("p123", request.project_id());
+        EXPECT_EQ("j123", request.job_id());
+        return make_status_or(job);
+      });
+
+  JobClient job_client(mock_job_connection);
+
+  CancelJobRequest request("p123", "j123");
+
+  auto actual_job = job_client.CancelJob(request);
+
+  ASSERT_STATUS_OK(actual_job);
+  bigquery_v2_minimal_testing::AssertEqualsPartial(job, *actual_job);
+}
+
+TEST(JobClientTest, CancelJobFailure) {
+  auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
+
+  EXPECT_CALL(*mock_job_connection, CancelJob)
+      .WillOnce(Return(rest_internal::AsStatus(HttpStatusCode::kBadRequest,
+                                               "bad-request-error")));
+
+  JobClient job_client(mock_job_connection);
+
+  auto result = job_client.CancelJob(CancelJobRequest());
+  EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("bad-request-error")));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
