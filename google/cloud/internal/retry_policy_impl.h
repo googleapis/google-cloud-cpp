@@ -155,6 +155,7 @@ class LimitedTimeRetryPolicy : public TraitBasedRetryPolicy<RetryablePolicy> {
     return std::chrono::system_clock::now() >= deadline_;
   }
 
+  std::chrono::milliseconds maximum_duration() const { return maximum_duration_; }
   std::chrono::system_clock::time_point deadline() const { return deadline_; }
 
  protected:
