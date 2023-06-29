@@ -48,6 +48,10 @@ ci/retry-command.sh 3 120 curl -fsSL -o /dev/shm/roots.pem https://pki.google.co
 function integration::bazel_args() {
   declare -a args
 
+  # Integration tests are inherently flaky. Make up to three attempts to get the
+  # test passing.
+  args+=(--flaky_test_attempts=3)
+
   args+=(
     # Common settings
     "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
@@ -148,9 +152,6 @@ function integration::bazel_with_emulators() {
 
   local verb="$1"
   local args=("${@:2}")
-  # Integration tests are inherently flaky. Make up to three attempts to get the
-  # test passing.
-  args+=(--flaky_test_attempts=3)
 
   production_integration_tests=(
     # gRPC Utils integration tests
@@ -274,8 +275,8 @@ function integration::ctest_with_emulators() {
 
   local cmake_out="$1"
   mapfile -t ctest_args < <(ctest::common_args)
-  # The integration tests are inherently flaky.  Try them 3 times before
-  # declaring a failure.
+  # Integration tests are inherently flaky. Make up to three attempts to get the
+  # test passing.
   ctest_args+=(--repeat until-pass:3)
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
