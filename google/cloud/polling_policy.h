@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLLING_POLICY_H
 
 #include "google/cloud/internal/backoff_policy.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/retry_policy.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <chrono>
@@ -126,7 +126,7 @@ class GenericPollingPolicy : public PollingPolicy {
   Retry retry_prototype_;
   Backoff backoff_prototype_;
 
-  std::unique_ptr<internal::RetryPolicy> retry_clone_;
+  std::unique_ptr<RetryPolicy> retry_clone_;
   std::unique_ptr<internal::BackoffPolicy> backoff_clone_;
 };
 
