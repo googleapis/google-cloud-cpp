@@ -36,10 +36,11 @@ using ms = std::chrono::milliseconds;
 
 class MockRetryPolicy : public GoldenThingAdminRetryPolicy {
  public:
-  MOCK_METHOD(std::unique_ptr<TraitBasedRetryPolicy>, clone, (),
-              (const, override));
+  MOCK_METHOD(bool, OnFailure, (Status const&), (override));
   MOCK_METHOD(bool, IsExhausted, (), (const, override));
-  MOCK_METHOD(void, OnFailureImpl, (), (override));
+  MOCK_METHOD(bool, IsPermanentFailure, (Status const&), (const, override));
+  MOCK_METHOD(std::unique_ptr<GoldenThingAdminRetryPolicy>, clone, (),
+              (const, override));
 };
 
 TEST(PlumbingTest, RetryLoopUsesPerCallPolicies) {
@@ -56,7 +57,9 @@ TEST(PlumbingTest, RetryLoopUsesPerCallPolicies) {
     EXPECT_CALL(*clone, IsExhausted)
         .Times(AtLeast(1))
         .WillRepeatedly(Return(false));
-    EXPECT_CALL(*clone, OnFailureImpl);
+    EXPECT_CALL(*clone, OnFailure)
+        .WillOnce(Return(true))
+        .WillOnce(Return(false));
     return clone;
   });
 
