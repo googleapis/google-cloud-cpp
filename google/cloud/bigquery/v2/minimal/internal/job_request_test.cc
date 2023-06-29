@@ -981,7 +981,7 @@ TEST(CancelJobRequestTest, SuccessWithLocation) {
 
   rest_internal::RestRequest expected;
   expected.SetPath(
-      "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2");
+      "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2/cancel");
   expected.AddQueryParameter("location", "useast");
   EXPECT_EQ(expected, *actual);
 }
@@ -996,7 +996,7 @@ TEST(CancelJobRequestTest, SuccessWithoutLocation) {
 
   rest_internal::RestRequest expected;
   expected.SetPath(
-      "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2");
+      "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2/cancel");
   EXPECT_EQ(expected, *actual);
 }
 
@@ -1008,13 +1008,13 @@ TEST(CancelJobRequestTest, SuccessWithDifferentEndpoints) {
     std::string expected;
   } cases[] = {
       {"https://myendpoint.google.com",
-       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2/cancel"},
       {"http://myendpoint.google.com",
-       "http://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+       "http://myendpoint.google.com/bigquery/v2/projects/1/jobs/2/cancel"},
       {"myendpoint.google.com",
-       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2/cancel"},
       {"https://myendpoint.google.com/",
-       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2/cancel"},
   };
 
   for (auto const& test : cases) {
