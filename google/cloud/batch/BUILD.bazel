@@ -62,8 +62,8 @@ cc_library(
 
 [cc_test(
     name = sample.replace("/", "_").replace(".cc", ""),
-    srcs = [sample],
     timeout = "long",
+    srcs = [sample],
     tags = ["integration-test"],
     deps = [
         "//:batch",
