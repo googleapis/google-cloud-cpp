@@ -18,7 +18,7 @@
 #include "google/cloud/bigtable/internal/rpc_policy_parameters.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
