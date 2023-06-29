@@ -36,17 +36,119 @@ namespace cloud {
 namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using SessionEntityTypesRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        dialogflow_es_internal::SessionEntityTypesRetryTraits>;
+/// The retry policy for `SessionEntityTypesConnection`.
+class SessionEntityTypesRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance with the initial state, as-if no errors had been
+  /// handled.
+  virtual std::unique_ptr<SessionEntityTypesRetryPolicy> clone() const = 0;
+};
 
-using SessionEntityTypesLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_es_internal::SessionEntityTypesRetryTraits>;
+/**
+ * A retry policy for `SessionEntityTypesConnection` that stops retrying after a
+ * prescribed number of transient errors (or the first non-transient error).
+ *
+ * @note You can set the number of errors to 0 (or 1) to disable the retry loop.
+ */
+class SessionEntityTypesLimitedErrorCountRetryPolicy
+    : public SessionEntityTypesRetryPolicy {
+ public:
+  SessionEntityTypesLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using SessionEntityTypesLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_es_internal::SessionEntityTypesRetryTraits>;
+  SessionEntityTypesLimitedErrorCountRetryPolicy(
+      SessionEntityTypesLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : SessionEntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
+  SessionEntityTypesLimitedErrorCountRetryPolicy(
+      SessionEntityTypesLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : SessionEntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<SessionEntityTypesRetryPolicy> clone() const override {
+    return std::make_unique<SessionEntityTypesLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = SessionEntityTypesRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_es_internal::SessionEntityTypesRetryTraits>
+      impl_;
+};
+
+/// A retry policy for `SessionEntityTypesConnection` that stops retrying after
+/// some wall clock time has elapsed.
+class SessionEntityTypesLimitedTimeRetryPolicy
+    : public SessionEntityTypesRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>` (in brief, the underlying
+   *     arithmetic type used to store the number of ticks), for our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>` (in brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`), for our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires,
+   *     while the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit SessionEntityTypesLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  SessionEntityTypesLimitedTimeRetryPolicy(
+      SessionEntityTypesLimitedTimeRetryPolicy&& rhs) noexcept
+      : SessionEntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SessionEntityTypesLimitedTimeRetryPolicy(
+      SessionEntityTypesLimitedTimeRetryPolicy const& rhs) noexcept
+      : SessionEntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<SessionEntityTypesRetryPolicy> clone() const override {
+    return std::make_unique<SessionEntityTypesLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = SessionEntityTypesRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_es_internal::SessionEntityTypesRetryTraits>
+      impl_;
+};
 
 /**
  * The `SessionEntityTypesConnection` object for `SessionEntityTypesClient`.

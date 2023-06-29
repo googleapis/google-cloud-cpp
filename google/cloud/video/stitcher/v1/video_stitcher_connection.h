@@ -38,17 +38,119 @@ namespace cloud {
 namespace video_stitcher_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using VideoStitcherServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        video_stitcher_v1_internal::VideoStitcherServiceRetryTraits>;
+/// The retry policy for `VideoStitcherServiceConnection`.
+class VideoStitcherServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance with the initial state, as-if no errors had been
+  /// handled.
+  virtual std::unique_ptr<VideoStitcherServiceRetryPolicy> clone() const = 0;
+};
 
-using VideoStitcherServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        video_stitcher_v1_internal::VideoStitcherServiceRetryTraits>;
+/**
+ * A retry policy for `VideoStitcherServiceConnection` that stops retrying after
+ * a prescribed number of transient errors (or the first non-transient error).
+ *
+ * @note You can set the number of errors to 0 (or 1) to disable the retry loop.
+ */
+class VideoStitcherServiceLimitedErrorCountRetryPolicy
+    : public VideoStitcherServiceRetryPolicy {
+ public:
+  VideoStitcherServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using VideoStitcherServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        video_stitcher_v1_internal::VideoStitcherServiceRetryTraits>;
+  VideoStitcherServiceLimitedErrorCountRetryPolicy(
+      VideoStitcherServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : VideoStitcherServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+  VideoStitcherServiceLimitedErrorCountRetryPolicy(
+      VideoStitcherServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : VideoStitcherServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<VideoStitcherServiceRetryPolicy> clone() const override {
+    return std::make_unique<VideoStitcherServiceLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = VideoStitcherServiceRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      video_stitcher_v1_internal::VideoStitcherServiceRetryTraits>
+      impl_;
+};
+
+/// A retry policy for `VideoStitcherServiceConnection` that stops retrying
+/// after some wall clock time has elapsed.
+class VideoStitcherServiceLimitedTimeRetryPolicy
+    : public VideoStitcherServiceRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>` (in brief, the underlying
+   *     arithmetic type used to store the number of ticks), for our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>` (in brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`), for our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires,
+   *     while the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit VideoStitcherServiceLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  VideoStitcherServiceLimitedTimeRetryPolicy(
+      VideoStitcherServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : VideoStitcherServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  VideoStitcherServiceLimitedTimeRetryPolicy(
+      VideoStitcherServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : VideoStitcherServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<VideoStitcherServiceRetryPolicy> clone() const override {
+    return std::make_unique<VideoStitcherServiceLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = VideoStitcherServiceRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      video_stitcher_v1_internal::VideoStitcherServiceRetryTraits>
+      impl_;
+};
 
 /**
  * The `VideoStitcherServiceConnection` object for `VideoStitcherServiceClient`.

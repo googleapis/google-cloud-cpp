@@ -38,16 +38,113 @@ namespace cloud {
 namespace domains_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using DomainsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    domains_v1_internal::DomainsRetryTraits>;
+/// The retry policy for `DomainsConnection`.
+class DomainsRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance with the initial state, as-if no errors had been
+  /// handled.
+  virtual std::unique_ptr<DomainsRetryPolicy> clone() const = 0;
+};
 
-using DomainsLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        domains_v1_internal::DomainsRetryTraits>;
+/**
+ * A retry policy for `DomainsConnection` that stops retrying after a
+ * prescribed number of transient errors (or the first non-transient error).
+ *
+ * @note You can set the number of errors to 0 (or 1) to disable the retry loop.
+ */
+class DomainsLimitedErrorCountRetryPolicy : public DomainsRetryPolicy {
+ public:
+  DomainsLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using DomainsLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        domains_v1_internal::DomainsRetryTraits>;
+  DomainsLimitedErrorCountRetryPolicy(
+      DomainsLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : DomainsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+  DomainsLimitedErrorCountRetryPolicy(
+      DomainsLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : DomainsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<DomainsRetryPolicy> clone() const override {
+    return std::make_unique<DomainsLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = DomainsRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      domains_v1_internal::DomainsRetryTraits>
+      impl_;
+};
+
+/// A retry policy for `DomainsConnection` that stops retrying after
+/// some wall clock time has elapsed.
+class DomainsLimitedTimeRetryPolicy : public DomainsRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>` (in brief, the underlying
+   *     arithmetic type used to store the number of ticks), for our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>` (in brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`), for our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires,
+   *     while the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit DomainsLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  DomainsLimitedTimeRetryPolicy(DomainsLimitedTimeRetryPolicy&& rhs) noexcept
+      : DomainsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DomainsLimitedTimeRetryPolicy(
+      DomainsLimitedTimeRetryPolicy const& rhs) noexcept
+      : DomainsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<DomainsRetryPolicy> clone() const override {
+    return std::make_unique<DomainsLimitedTimeRetryPolicy>(maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = DomainsRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      domains_v1_internal::DomainsRetryTraits>
+      impl_;
+};
 
 /**
  * The `DomainsConnection` object for `DomainsClient`.

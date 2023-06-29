@@ -39,20 +39,130 @@ namespace cloud {
 namespace compute_global_network_endpoint_groups_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using GlobalNetworkEndpointGroupsRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        compute_global_network_endpoint_groups_v1_internal::
-            GlobalNetworkEndpointGroupsRetryTraits>;
+/// The retry policy for `GlobalNetworkEndpointGroupsConnection`.
+class GlobalNetworkEndpointGroupsRetryPolicy
+    : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance with the initial state, as-if no errors had been
+  /// handled.
+  virtual std::unique_ptr<GlobalNetworkEndpointGroupsRetryPolicy> clone()
+      const = 0;
+};
 
-using GlobalNetworkEndpointGroupsLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        compute_global_network_endpoint_groups_v1_internal::
-            GlobalNetworkEndpointGroupsRetryTraits>;
+/**
+ * A retry policy for `GlobalNetworkEndpointGroupsConnection` that stops
+ * retrying after a prescribed number of transient errors (or the first
+ * non-transient error).
+ *
+ * @note You can set the number of errors to 0 (or 1) to disable the retry loop.
+ */
+class GlobalNetworkEndpointGroupsLimitedErrorCountRetryPolicy
+    : public GlobalNetworkEndpointGroupsRetryPolicy {
+ public:
+  GlobalNetworkEndpointGroupsLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using GlobalNetworkEndpointGroupsLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        compute_global_network_endpoint_groups_v1_internal::
-            GlobalNetworkEndpointGroupsRetryTraits>;
+  GlobalNetworkEndpointGroupsLimitedErrorCountRetryPolicy(
+      GlobalNetworkEndpointGroupsLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : GlobalNetworkEndpointGroupsLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+  GlobalNetworkEndpointGroupsLimitedErrorCountRetryPolicy(
+      GlobalNetworkEndpointGroupsLimitedErrorCountRetryPolicy const&
+          rhs) noexcept
+      : GlobalNetworkEndpointGroupsLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<GlobalNetworkEndpointGroupsRetryPolicy> clone()
+      const override {
+    return std::make_unique<
+        GlobalNetworkEndpointGroupsLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = GlobalNetworkEndpointGroupsRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_global_network_endpoint_groups_v1_internal::
+          GlobalNetworkEndpointGroupsRetryTraits>
+      impl_;
+};
+
+/// A retry policy for `GlobalNetworkEndpointGroupsConnection` that stops
+/// retrying after some wall clock time has elapsed.
+class GlobalNetworkEndpointGroupsLimitedTimeRetryPolicy
+    : public GlobalNetworkEndpointGroupsRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>` (in brief, the underlying
+   *     arithmetic type used to store the number of ticks), for our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>` (in brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`), for our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires,
+   *     while the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit GlobalNetworkEndpointGroupsLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  GlobalNetworkEndpointGroupsLimitedTimeRetryPolicy(
+      GlobalNetworkEndpointGroupsLimitedTimeRetryPolicy&& rhs) noexcept
+      : GlobalNetworkEndpointGroupsLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
+  GlobalNetworkEndpointGroupsLimitedTimeRetryPolicy(
+      GlobalNetworkEndpointGroupsLimitedTimeRetryPolicy const& rhs) noexcept
+      : GlobalNetworkEndpointGroupsLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<GlobalNetworkEndpointGroupsRetryPolicy> clone()
+      const override {
+    return std::make_unique<GlobalNetworkEndpointGroupsLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = GlobalNetworkEndpointGroupsRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_global_network_endpoint_groups_v1_internal::
+          GlobalNetworkEndpointGroupsRetryTraits>
+      impl_;
+};
 
 /**
  * The `GlobalNetworkEndpointGroupsConnection` object for

@@ -39,20 +39,121 @@ namespace cloud {
 namespace compute_region_instance_groups_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using RegionInstanceGroupsRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        compute_region_instance_groups_v1_internal::
-            RegionInstanceGroupsRetryTraits>;
+/// The retry policy for `RegionInstanceGroupsConnection`.
+class RegionInstanceGroupsRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance with the initial state, as-if no errors had been
+  /// handled.
+  virtual std::unique_ptr<RegionInstanceGroupsRetryPolicy> clone() const = 0;
+};
 
-using RegionInstanceGroupsLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        compute_region_instance_groups_v1_internal::
-            RegionInstanceGroupsRetryTraits>;
+/**
+ * A retry policy for `RegionInstanceGroupsConnection` that stops retrying after
+ * a prescribed number of transient errors (or the first non-transient error).
+ *
+ * @note You can set the number of errors to 0 (or 1) to disable the retry loop.
+ */
+class RegionInstanceGroupsLimitedErrorCountRetryPolicy
+    : public RegionInstanceGroupsRetryPolicy {
+ public:
+  RegionInstanceGroupsLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using RegionInstanceGroupsLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        compute_region_instance_groups_v1_internal::
-            RegionInstanceGroupsRetryTraits>;
+  RegionInstanceGroupsLimitedErrorCountRetryPolicy(
+      RegionInstanceGroupsLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : RegionInstanceGroupsLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+  RegionInstanceGroupsLimitedErrorCountRetryPolicy(
+      RegionInstanceGroupsLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : RegionInstanceGroupsLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<RegionInstanceGroupsRetryPolicy> clone() const override {
+    return std::make_unique<RegionInstanceGroupsLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = RegionInstanceGroupsRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_region_instance_groups_v1_internal::
+          RegionInstanceGroupsRetryTraits>
+      impl_;
+};
+
+/// A retry policy for `RegionInstanceGroupsConnection` that stops retrying
+/// after some wall clock time has elapsed.
+class RegionInstanceGroupsLimitedTimeRetryPolicy
+    : public RegionInstanceGroupsRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>` (in brief, the underlying
+   *     arithmetic type used to store the number of ticks), for our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>` (in brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`), for our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires,
+   *     while the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit RegionInstanceGroupsLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  RegionInstanceGroupsLimitedTimeRetryPolicy(
+      RegionInstanceGroupsLimitedTimeRetryPolicy&& rhs) noexcept
+      : RegionInstanceGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionInstanceGroupsLimitedTimeRetryPolicy(
+      RegionInstanceGroupsLimitedTimeRetryPolicy const& rhs) noexcept
+      : RegionInstanceGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<RegionInstanceGroupsRetryPolicy> clone() const override {
+    return std::make_unique<RegionInstanceGroupsLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = RegionInstanceGroupsRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_region_instance_groups_v1_internal::
+          RegionInstanceGroupsRetryTraits>
+      impl_;
+};
 
 /**
  * The `RegionInstanceGroupsConnection` object for `RegionInstanceGroupsClient`.

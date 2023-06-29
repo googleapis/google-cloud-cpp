@@ -38,17 +38,116 @@ namespace cloud {
 namespace compute_reservations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ReservationsRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        compute_reservations_v1_internal::ReservationsRetryTraits>;
+/// The retry policy for `ReservationsConnection`.
+class ReservationsRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance with the initial state, as-if no errors had been
+  /// handled.
+  virtual std::unique_ptr<ReservationsRetryPolicy> clone() const = 0;
+};
 
-using ReservationsLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        compute_reservations_v1_internal::ReservationsRetryTraits>;
+/**
+ * A retry policy for `ReservationsConnection` that stops retrying after a
+ * prescribed number of transient errors (or the first non-transient error).
+ *
+ * @note You can set the number of errors to 0 (or 1) to disable the retry loop.
+ */
+class ReservationsLimitedErrorCountRetryPolicy
+    : public ReservationsRetryPolicy {
+ public:
+  ReservationsLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using ReservationsLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        compute_reservations_v1_internal::ReservationsRetryTraits>;
+  ReservationsLimitedErrorCountRetryPolicy(
+      ReservationsLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : ReservationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+  ReservationsLimitedErrorCountRetryPolicy(
+      ReservationsLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : ReservationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<ReservationsRetryPolicy> clone() const override {
+    return std::make_unique<ReservationsLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = ReservationsRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_reservations_v1_internal::ReservationsRetryTraits>
+      impl_;
+};
+
+/// A retry policy for `ReservationsConnection` that stops retrying after
+/// some wall clock time has elapsed.
+class ReservationsLimitedTimeRetryPolicy : public ReservationsRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>` (in brief, the underlying
+   *     arithmetic type used to store the number of ticks), for our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>` (in brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`), for our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires,
+   *     while the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit ReservationsLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  ReservationsLimitedTimeRetryPolicy(
+      ReservationsLimitedTimeRetryPolicy&& rhs) noexcept
+      : ReservationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ReservationsLimitedTimeRetryPolicy(
+      ReservationsLimitedTimeRetryPolicy const& rhs) noexcept
+      : ReservationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<ReservationsRetryPolicy> clone() const override {
+    return std::make_unique<ReservationsLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = ReservationsRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_reservations_v1_internal::ReservationsRetryTraits>
+      impl_;
+};
 
 /**
  * The `ReservationsConnection` object for `ReservationsClient`.
