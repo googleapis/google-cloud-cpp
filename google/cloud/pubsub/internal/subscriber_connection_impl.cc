@@ -60,11 +60,17 @@ StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
       current.get<pubsub::BackoffPolicyOption>()->clone(),
       google::cloud::Idempotency::kIdempotent,
       [stub = stub_](auto& context, auto const& request) {
-        return stub->Pull(context, request);
+        auto r = stub->Pull(context, request);
+
+        if (!r || !r->received_messages().empty()) return r;
+        // No messages received, return a retryable error to try again. This
+        // respects the retry policy.
+        return google::cloud::internal::AbortedError("no messages received");
       },
       request, __func__);
+
   if (!response) return std::move(response).status();
-  if (response->received_messages_size() != 1) {
+  if (response->received_messages_size() > 1) {
     return internal::InternalError("invalid response, mismatched ID count",
                                    GCP_ERROR_INFO());
   }
