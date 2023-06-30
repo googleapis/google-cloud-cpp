@@ -111,6 +111,7 @@ google_cloud_cpp_bigtable_hdrs = [
     "polling_policy.h",
     "read_modify_write_rule.h",
     "resource_names.h",
+    "retry_policy.h",
     "row.h",
     "row_key.h",
     "row_key_sample.h",

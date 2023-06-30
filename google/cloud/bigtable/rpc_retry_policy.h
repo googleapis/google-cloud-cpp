@@ -15,10 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RPC_RETRY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_RPC_RETRY_POLICY_H
 
+#include "google/cloud/bigtable/internal/retry_traits.h"
 #include "google/cloud/bigtable/internal/rpc_policy_parameters.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
@@ -35,29 +34,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-/// An adapter to use `grpc::Status` with the `google::cloud::*Policies`.
-struct SafeGrpcRetry {
-  static inline bool IsOk(Status const& status) { return status.ok(); }
-  static inline bool IsTransientFailure(Status const& status) {
-    auto const code = status.code();
-    return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
-           google::cloud::internal::IsTransientInternalError(status);
-  }
-  static inline bool IsPermanentFailure(Status const& status) {
-    return !IsOk(status) && !IsTransientFailure(status);
-  }
-
-  // TODO(#2344) - remove ::grpc::Status version.
-  static inline bool IsOk(grpc::Status const& status) { return status.ok(); }
-  static inline bool IsTransientFailure(grpc::Status const& status) {
-    return IsTransientFailure(MakeStatusFromRpcError(status));
-  }
-  static inline bool IsPermanentFailure(grpc::Status const& status) {
-    return !IsOk(status) && !IsTransientFailure(status);
-  }
-};
-}  // namespace internal
 
 /**
  * Define the interface for controlling how the Bigtable client
@@ -77,7 +53,7 @@ struct SafeGrpcRetry {
  */
 class RPCRetryPolicy {
  public:
-  using RetryableTraits = internal::SafeGrpcRetry;
+  using RetryableTraits = bigtable_internal::SafeGrpcRetry;
 
   virtual ~RPCRetryPolicy() = default;
 
@@ -106,11 +82,11 @@ class RPCRetryPolicy {
   virtual bool OnFailure(grpc::Status const& status) = 0;
 
   static bool IsPermanentFailure(Status const& status) {
-    return internal::SafeGrpcRetry::IsPermanentFailure(status);
+    return bigtable_internal::SafeGrpcRetry::IsPermanentFailure(status);
   }
   // TODO(#2344) - remove ::grpc::Status version.
   static bool IsPermanentFailure(grpc::Status const& status) {
-    return internal::SafeGrpcRetry::IsPermanentFailure(status);
+    return bigtable_internal::SafeGrpcRetry::IsPermanentFailure(status);
   }
 
   virtual bool IsExhausted() const { return exhausted_; }
@@ -143,7 +119,7 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
 
  private:
   using Impl = ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-      internal::SafeGrpcRetry>;
+      bigtable_internal::SafeGrpcRetry>;
   Impl impl_;
 };
 
@@ -166,7 +142,7 @@ class LimitedTimeRetryPolicy : public RPCRetryPolicy {
 
  private:
   using Impl = ::google::cloud::internal::LimitedTimeRetryPolicy<
-      internal::SafeGrpcRetry>;
+      bigtable_internal::SafeGrpcRetry>;
   Impl impl_;
 };
 
