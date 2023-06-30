@@ -418,11 +418,9 @@ TEST(SubscriberConnectionTest, PullReturnsNoMessage) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillOnce([](google::cloud::CompletionQueue&, auto,
-                   google::pubsub::v1::AcknowledgeRequest const& request) {
-        EXPECT_THAT(request.ack_ids(), Contains("test-ack-id-0"));
-        return make_ready_future(
-            Status{StatusCode::kUnknown, "test-only-unknown"});
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+                         google::pubsub::v1::AcknowledgeRequest const&) {
+        return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
                                    Property(&PullRequest::subscription,
@@ -433,10 +431,10 @@ TEST(SubscriberConnectionTest, PullReturnsNoMessage) {
       })
       .WillOnce([](auto&, google::pubsub::v1::PullRequest const&) {
         google::pubsub::v1::PullResponse response;
-        auto& message = *response.add_received_messages();
-        message.set_delivery_attempt(42);
-        message.set_ack_id("test-ack-id-0");
-        message.mutable_message()->set_data("test-data-0");
+        return response;
+      })
+      .WillOnce([](auto&, google::pubsub::v1::PullRequest const&) {
+        google::pubsub::v1::PullResponse response;
         return response;
       });
 
@@ -444,12 +442,18 @@ TEST(SubscriberConnectionTest, PullReturnsNoMessage) {
   std::thread t([&cq] { cq.Run(); });
 
   auto subscriber = std::make_shared<SubscriberConnectionImpl>(
-      MakeTestOptions(subscription, cq), mock);
+      MakeTestOptions(
+          subscription,
+          Options{}
+              .set<GrpcCompletionQueueOption>(cq)
+              .set<google::cloud::pubsub::RetryPolicyOption>(
+                  google::cloud::pubsub::LimitedErrorCountRetryPolicy(3)
+                      .clone())),
+      mock);
   google::cloud::internal::OptionsSpan span(subscriber->options());
   auto response = subscriber->Pull();
-  ASSERT_STATUS_OK(response);
-  EXPECT_EQ(response->message.data(), "test-data-0");
-  std::move(response->handler).ack();
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable,
+                                 HasSubstr("no messages returned")));
 
   cq.Shutdown();
   t.join();
