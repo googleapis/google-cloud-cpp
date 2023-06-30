@@ -198,6 +198,7 @@ add_library(
     internal/prefix_range_end.h
     internal/readrowsparser.cc
     internal/readrowsparser.h
+    internal/retry_traits.h
     internal/row_reader_impl.h
     internal/rpc_policy_parameters.h
     internal/rpc_policy_parameters.inc

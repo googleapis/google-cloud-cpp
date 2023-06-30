@@ -98,6 +98,7 @@ google_cloud_cpp_bigtable_hdrs = [
     "internal/logging_data_client.h",
     "internal/prefix_range_end.h",
     "internal/readrowsparser.h",
+    "internal/retry_traits.h",
     "internal/row_reader_impl.h",
     "internal/rpc_policy_parameters.h",
     "internal/rpc_policy_parameters.inc",
