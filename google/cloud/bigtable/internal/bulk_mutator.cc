@@ -105,7 +105,7 @@ void BulkMutatorState::OnRead(
     if (status.ok()) continue;
     auto& original = *mutations_.mutable_entries(static_cast<int>(index));
     // Failed responses are handled according to the current policies.
-    if (SafeGrpcRetry::IsTransientFailure(status) &&
+    if (bigtable_internal::SafeGrpcRetry::IsTransientFailure(status) &&
         (annotation.idempotency == Idempotency::kIdempotent)) {
       // Retryable requests are saved in the pending mutations, along with the
       // mapping from their index in pending_mutations_ to the original

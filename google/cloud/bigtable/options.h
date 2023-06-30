@@ -39,6 +39,7 @@
  */
 
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/backoff_policy.h"
@@ -161,17 +162,6 @@ using ClientOptionList =
     OptionList<DataEndpointOption, AdminEndpointOption,
                InstanceAdminEndpointOption, MinConnectionRefreshOption,
                MaxConnectionRefreshOption>;
-
-using DataRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    bigtable::internal::SafeGrpcRetry>;
-
-using DataLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigtable::internal::SafeGrpcRetry>;
-
-using DataLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigtable::internal::SafeGrpcRetry>;
 
 /**
  * Option to configure the retry policy used by `Table`.
