@@ -170,7 +170,6 @@ class CommonRetryPolicy : public ReturnType {
   bool IsPermanentFailure(Status const& s) const override {
     return bigtable::RPCRetryPolicy::IsPermanentFailure(s);
   }
-  void OnFailureImpl() override {}
 
  private:
   std::unique_ptr<bigtable::RPCRetryPolicy> impl_;
