@@ -108,7 +108,7 @@ info, see [#7463] and [#5976].
 
 </details>
 
-## v2.13.0 - TBD
+## v2.13.0 - 2023-07
 
 ### New Libraries
 
@@ -120,6 +120,23 @@ the APIs in these libraries are stable, and are ready for production use.
 - [Migration Center](google/cloud/migrationcenter/README.md)
 - [Rapid Migration Assessment](/google/cloud/rapidmigrationassessment/README.md)
 - [Secure Web Proxy](/google/cloud/networksecurity/README.md)
+
+### [Batch](/google/cloud/batch/README.md)
+
+- docs: an example to extract Cloud Batch logs ([#11935](https://github.com/googleapis/google-cloud-cpp/pull/11935))
+- docs(batch): introduce basic snippets ([#11915](https://github.com/googleapis/google-cloud-cpp/pull/11915))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- doc(spanner): add an example for CommitAtLeastOnce() ([#11905](https://github.com/googleapis/google-cloud-cpp/pull/11905))
+- feat(spanner): implement at-least-once Commit ([#11899](https://github.com/googleapis/google-cloud-cpp/pull/11899))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat(generator): separate page for retry policy overrides ([#11950](https://github.com/googleapis/google-cloud-cpp/pull/11950))
+- fix(common): pagination must support empty pages ([#11937](https://github.com/googleapis/google-cloud-cpp/pull/11937))
+- feat(generator): create retry policy samples ([#11930](https://github.com/googleapis/google-cloud-cpp/pull/11930))
+- fix(common): use 64-bit API on Windows to get file sizes ([#11906](https://github.com/googleapis/google-cloud-cpp/pull/11906))
 
 ## v2.12.0 - 2023-06
 
