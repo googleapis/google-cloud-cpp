@@ -41,6 +41,8 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::Not;
 using ::testing::NotNull;
 using ::testing::Return;
 
@@ -252,6 +254,35 @@ TEST_F(BigtableStubFactory, AsyncMutateRow) {
       stub->AsyncMutateRow(cq, std::make_shared<grpc::ClientContext>(), req);
   EXPECT_THAT(response.get(), StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("AsyncMutateRow")));
+}
+
+TEST_F(BigtableStubFactory, FeaturesFlags) {
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockBigtableStub>();
+        EXPECT_CALL(*mock, MutateRow)
+            .WillOnce([](grpc::ClientContext& context,
+                         google::bigtable::v2::MutateRowRequest const&) {
+              ValidateMetadataFixture fixture;
+              auto headers = fixture.GetMetadata(context);
+              EXPECT_THAT(headers,
+                          Contains(Pair("bigtable-features", Not(IsEmpty()))));
+              return internal::AbortedError("fail");
+            });
+        return mock;
+      });
+
+  CompletionQueue cq;
+  auto stub = CreateDecoratedStubs(
+      std::move(cq),
+      Options{}
+          .set<EndpointOption>("localhost:1")
+          .set<GrpcNumChannelsOption>(1)
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
+      factory.AsStdFunction());
+  grpc::ClientContext context;
+  (void)stub->MutateRow(context, {});
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
