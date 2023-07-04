@@ -30,6 +30,7 @@ void AsyncRowReader::MakeRequest() {
 
   request.set_app_profile_id(app_profile_id_);
   request.set_table_name(table_name_);
+  request.set_reversed(reverse_);
   auto row_set_proto = row_set_.as_proto();
   request.mutable_rows()->Swap(&row_set_proto);
 
@@ -39,7 +40,7 @@ void AsyncRowReader::MakeRequest() {
   if (rows_limit_ != NO_ROWS_LIMIT) {
     request.set_rows_limit(rows_limit_ - rows_count_);
   }
-  parser_ = bigtable::internal::ReadRowsParserFactory().Create();
+  parser_ = bigtable::internal::ReadRowsParserFactory().Create(reverse_);
 
   internal::ScopedCallContext scope(call_context_);
   auto context = std::make_shared<grpc::ClientContext>();
@@ -183,8 +184,13 @@ void AsyncRowReader::OnStreamFinished(Status status) {
   if (!last_read_row_key_.empty()) {
     // We've returned some rows and need to make sure we don't
     // request them again.
-    row_set_ =
-        row_set_.Intersect(bigtable::RowRange::Open(last_read_row_key_, ""));
+    if (reverse_) {
+      row_set_ =
+          row_set_.Intersect(bigtable::RowRange::Open("", last_read_row_key_));
+    } else {
+      row_set_ =
+          row_set_.Intersect(bigtable::RowRange::Open(last_read_row_key_, ""));
+    }
   }
 
   // If we receive an error, but the retryable set is empty, consider it a

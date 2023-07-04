@@ -25,7 +25,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DefaultRowReader::DefaultRowReader(
     std::shared_ptr<BigtableStub> stub, std::string app_profile_id,
     std::string table_name, bigtable::RowSet row_set, std::int64_t rows_limit,
-    bigtable::Filter filter,
+    bigtable::Filter filter, bool reverse,
     std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy)
     : stub_(std::move(stub)),
@@ -34,6 +34,7 @@ DefaultRowReader::DefaultRowReader(
       row_set_(std::move(row_set)),
       rows_limit_(rows_limit),
       filter_(std::move(filter)),
+      reverse_(reverse),
       retry_policy_(std::move(retry_policy)),
       backoff_policy_(std::move(backoff_policy)) {}
 
@@ -44,6 +45,7 @@ void DefaultRowReader::MakeRequest() {
   google::bigtable::v2::ReadRowsRequest request;
   request.set_table_name(table_name_);
   request.set_app_profile_id(app_profile_id_);
+  request.set_reversed(reverse_);
 
   auto row_set_proto = row_set_.as_proto();
   request.mutable_rows()->Swap(&row_set_proto);
@@ -61,7 +63,7 @@ void DefaultRowReader::MakeRequest() {
   stream_ = stub_->ReadRows(std::move(context), request);
   stream_is_open_ = true;
 
-  parser_ = bigtable::internal::ReadRowsParserFactory().Create();
+  parser_ = bigtable::internal::ReadRowsParserFactory().Create(reverse_);
 }
 
 bool DefaultRowReader::NextChunk() {
@@ -107,8 +109,13 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
     if (!last_read_row_key_.empty()) {
       // We've returned some rows and need to make sure we don't
       // request them again.
-      row_set_ =
-          row_set_.Intersect(bigtable::RowRange::Open(last_read_row_key_, ""));
+      if (reverse_) {
+        row_set_ = row_set_.Intersect(
+            bigtable::RowRange::Open("", last_read_row_key_));
+      } else {
+        row_set_ = row_set_.Intersect(
+            bigtable::RowRange::Open(last_read_row_key_, ""));
+      }
     }
 
     // If we receive an error, but the retryable set is empty, stop.

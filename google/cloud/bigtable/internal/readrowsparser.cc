@@ -37,10 +37,19 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
   }
 
   if (!chunk.row_key().empty()) {
-    if (CompareRowKey(last_seen_row_key_, chunk.row_key()) >= 0) {
-      status = grpc::Status(grpc::StatusCode::INTERNAL,
-                            "Row keys are expected in increasing order");
-      return;
+    if (!last_seen_row_key_.empty()) {
+      auto c = CompareRowKey(last_seen_row_key_, chunk.row_key());
+      if (reverse_ && c <= 0) {
+        status = grpc::Status(
+            grpc::StatusCode::INTERNAL,
+            "Row keys are expected in decreasing order when reverse=true");
+        return;
+      }
+      if (!reverse_ && c >= 0) {
+        status = grpc::Status(grpc::StatusCode::INTERNAL,
+                              "Row keys are expected in increasing order");
+        return;
+      }
     }
     using std::swap;
     swap(*chunk.mutable_row_key(), cell_.row);

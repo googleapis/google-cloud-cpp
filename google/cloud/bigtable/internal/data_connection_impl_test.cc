@@ -692,6 +692,7 @@ TEST(DataConnectionTest, ReadRows) {
         EXPECT_EQ(42, request.rows_limit());
         EXPECT_THAT(request, HasTestRowSet());
         EXPECT_THAT(request.filter(), IsTestFilter());
+        EXPECT_FALSE(request.reversed());
 
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
@@ -715,6 +716,7 @@ TEST(DataConnectionTest, ReadRowsFull) {
         EXPECT_EQ(42, request.rows_limit());
         EXPECT_THAT(request, HasTestRowSet());
         EXPECT_THAT(request.filter(), IsTestFilter());
+        EXPECT_FALSE(request.reversed());
 
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
