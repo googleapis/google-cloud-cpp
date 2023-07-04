@@ -24,9 +24,11 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
+#include <google/bigtable/v2/feature_flags.pb.h>
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -41,6 +43,18 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
   auto args = internal::MakeChannelArguments(options);
   args.SetInt("grpc.channel_id", channel_id);
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
+}
+
+std::string FeaturesMetadata() {
+  static auto const* const kFeatures = new auto([] {
+    google::bigtable::v2::FeatureFlags proto;
+    proto.set_reverse_scans(true);
+    auto bytes = proto.SerializeAsString();
+    internal::Base64Encoder enc;
+    for (auto c : bytes) enc.PushBack(c);
+    return std::move(enc).FlushAndPad();
+  }());
+  return *kFeatures;
 }
 
 }  // namespace
@@ -80,7 +94,8 @@ std::shared_ptr<BigtableStub> CreateDecoratedStubs(
     stub = std::make_shared<BigtableAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<BigtableMetadata>(
-      std::move(stub), std::multimap<std::string, std::string>{});
+      std::move(stub), std::multimap<std::string, std::string>{
+                           {"bigtable-features", FeaturesMetadata()}});
   if (google::cloud::internal::Contains(options.get<TracingComponentsOption>(),
                                         "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
