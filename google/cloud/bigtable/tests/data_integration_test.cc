@@ -198,6 +198,12 @@ TEST_P(DataIntegrationTest, TableReadRowsAllRows) {
 
   auto read4 = table.ReadRows(RowSet(), Filter::PassAllFilter());
   CheckEqualUnordered(created, MoveCellsFromReader(read4));
+
+  if (GetParam() == "with-data-connection" && !UsingCloudBigtableEmulator()) {
+    auto read5 = table.ReadRows(RowSet(), Filter::PassAllFilter(),
+                                Options{}.set<ReverseScanOption>(true));
+    CheckEqualUnordered(created, MoveCellsFromReader(read5));
+  }
 }
 
 TEST_P(DataIntegrationTest, TableReadRowsPartialRows) {

@@ -77,10 +77,15 @@ future<std::vector<FailedMutation>> DataConnection::AsyncBulkApply(
 RowReader DataConnection::ReadRows(std::string const& table_name,
                                    RowSet row_set, std::int64_t rows_limit,
                                    Filter filter) {
+  auto const& options = google::cloud::internal::CurrentOptions();
   return ReadRowsFull(ReadRowsParams{
       std::move(table_name),
-      google::cloud::internal::CurrentOptions().get<AppProfileIdOption>(),
-      std::move(row_set), rows_limit, std::move(filter)});
+      options.get<AppProfileIdOption>(),
+      std::move(row_set),
+      rows_limit,
+      std::move(filter),
+      options.get<ReverseScanOption>(),
+  });
 }
 
 // NOLINTNEXTLINE(performance-unnecessary-value-param)

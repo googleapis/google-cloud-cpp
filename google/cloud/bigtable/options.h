@@ -77,6 +77,28 @@ struct AppProfileIdOption {
 };
 
 /**
+ * Read rows in reverse order.
+ *
+ * The rows will be streamed in reverse lexicographic order of the keys. This is
+ * particularly useful to get the last N records before a key.
+ *
+ * This option does not affect the contents of the rows, just the order that
+ * the rows are returned.
+ *
+ * @note When using this option, the order of row keys in a `bigtable::RowRange`
+ * does not change. The row keys still must be supplied in lexicographic order.
+ *
+ * @snippet read_snippets.cc reverse scan
+ *
+ * @see https://cloud.google.com/bigtable/docs/reads#reverse-scan
+ *
+ * @ingroup bigtable-options
+ */
+struct ReverseScanOption {
+  using Type = bool;
+};
+
+/**
  * The endpoint for data operations.
  *
  * @deprecated Please use `google::cloud::EndpointOption` instead.
