@@ -46,7 +46,7 @@ void BM_OptionsOneElementDefault(benchmark::State& state) {
       "You will do foolish things, but do them with enthusiasm.");
   for (auto _ : state) {
     auto unused = opts.get<StringOptionDefault>();
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(std::move(unused));
   }
 }
 BENCHMARK(BM_OptionsOneElementDefault);
@@ -56,7 +56,7 @@ void BM_OptionsOneElementPresent(benchmark::State& state) {
       "You will do foolish things, but do them with enthusiasm.");
   for (auto _ : state) {
     auto unused = opts.get<StringOptionPresent>();
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(std::move(unused));
   }
 }
 BENCHMARK(BM_OptionsOneElementPresent);

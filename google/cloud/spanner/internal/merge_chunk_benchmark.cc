@@ -76,7 +76,7 @@ void BM_MergeChunkStrings(benchmark::State& state) {
     auto value = a;
     auto chunk = b;
     auto unused = MergeChunk(value, std::move(chunk));
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(std::move(unused));
   }
 }
 BENCHMARK(BM_MergeChunkStrings);
@@ -88,7 +88,7 @@ void BM_MergeChunkListOfInts(benchmark::State& state) {
     auto value = a;
     auto chunk = b;
     auto unused = MergeChunk(value, std::move(chunk));
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(std::move(unused));
   }
 }
 BENCHMARK(BM_MergeChunkListOfInts);
@@ -100,7 +100,7 @@ void BM_MergeChunkListOfStrings(benchmark::State& state) {
     auto value = a;
     auto chunk = b;
     auto unused = MergeChunk(value, std::move(chunk));
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(std::move(unused));
   }
 }
 BENCHMARK(BM_MergeChunkListOfStrings);
@@ -114,7 +114,7 @@ void BM_MergeChunkListsOfListOfString(benchmark::State& state) {
     auto value = a;
     auto chunk = b;
     auto unused = MergeChunk(value, std::move(chunk));
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(std::move(unused));
   }
 }
 BENCHMARK(BM_MergeChunkListsOfListOfString);
