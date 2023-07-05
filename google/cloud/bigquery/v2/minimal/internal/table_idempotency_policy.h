@@ -17,7 +17,6 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/table_request.h"
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 

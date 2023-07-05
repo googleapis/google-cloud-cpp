@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "absl/strings/match.h"
 #include <algorithm>
 

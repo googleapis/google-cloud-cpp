@@ -17,7 +17,7 @@
 
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/backoff_policy.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/status.h"
 
 namespace google {

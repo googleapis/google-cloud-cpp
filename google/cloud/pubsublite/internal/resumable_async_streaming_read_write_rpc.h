@@ -18,9 +18,9 @@
 #include "google/cloud/pubsublite/internal/futures.h"
 #include "google/cloud/pubsublite/internal/service.h"
 #include "google/cloud/async_streaming_read_write_rpc.h"
-#include "google/cloud/internal/backoff_policy.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/log.h"
+#include "google/cloud/retry_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <chrono>
@@ -32,8 +32,8 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using google::cloud::internal::BackoffPolicy;
-using google::cloud::internal::RetryPolicy;
+using google::cloud::BackoffPolicy;
+using google::cloud::RetryPolicy;
 
 /**
  * `ResumableAsyncStreamingReadWriteRpc<ResponseType, RequestType>` uses

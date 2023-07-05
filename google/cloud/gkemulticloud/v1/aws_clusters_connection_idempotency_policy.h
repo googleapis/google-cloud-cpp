@@ -20,7 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_AWS_CLUSTERS_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/version.h"
 #include <google/cloud/gkemulticloud/v1/aws_service.grpc.pb.h>
 #include <memory>

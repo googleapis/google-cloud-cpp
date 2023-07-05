@@ -17,7 +17,7 @@
 
 #include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/status.h"
 #include "absl/strings/match.h"
 

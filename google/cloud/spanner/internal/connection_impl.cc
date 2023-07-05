@@ -26,7 +26,6 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/options.h"
 #include <google/protobuf/util/time_util.h>

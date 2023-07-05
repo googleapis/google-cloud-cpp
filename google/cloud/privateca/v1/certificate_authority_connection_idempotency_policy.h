@@ -20,7 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVATECA_V1_CERTIFICATE_AUTHORITY_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/version.h"
 #include <google/cloud/security/privateca/v1/service.grpc.pb.h>
 #include <memory>

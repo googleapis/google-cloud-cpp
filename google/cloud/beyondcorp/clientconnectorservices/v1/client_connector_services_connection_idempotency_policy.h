@@ -21,7 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_CLIENTCONNECTORSERVICES_V1_CLIENT_CONNECTOR_SERVICES_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/version.h"
 #include <google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.grpc.pb.h>
 #include <memory>

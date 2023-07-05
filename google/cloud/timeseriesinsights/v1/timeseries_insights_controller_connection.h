@@ -22,6 +22,7 @@
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_retry_traits.h"
 #include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"

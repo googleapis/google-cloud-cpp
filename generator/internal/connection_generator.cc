@@ -55,7 +55,7 @@ Status ConnectionGenerator::GenerateHeader() {
        "google/cloud/backoff_policy.h",
        HasLongrunningMethod() || HasAsyncMethod() ? "google/cloud/future.h"
                                                   : "",
-       "google/cloud/options.h",
+       "google/cloud/internal/retry_policy_impl.h", "google/cloud/options.h",
        HasLongrunningMethod() ? "google/cloud/polling_policy.h" : "",
        "google/cloud/status_or.h",
        HasStreamingReadMethod() || HasPaginatedMethod()

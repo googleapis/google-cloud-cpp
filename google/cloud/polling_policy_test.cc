@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/testing_util/check_predicate_becomes_false.h"
 #include <gtest/gtest.h>
 #include <chrono>

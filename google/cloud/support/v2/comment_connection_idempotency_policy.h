@@ -20,7 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_COMMENT_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/version.h"
 #include <google/cloud/support/v2/comment_service.grpc.pb.h>
 #include <memory>

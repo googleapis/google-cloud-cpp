@@ -21,7 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PUBLIC_DELEGATED_PREFIXES_V1_PUBLIC_DELEGATED_PREFIXES_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/version.h"
 #include <google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.pb.h>
 #include <memory>
