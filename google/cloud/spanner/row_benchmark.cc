@@ -39,11 +39,11 @@ void BM_RowGetByPosition(benchmark::State& state) {
   Row row = spanner_mocks::MakeRow(1, "blah", true);
   for (auto _ : state) {
     auto unused_0 = row.get(0);
-    benchmark::DoNotOptimize(unused_0);
+    benchmark::DoNotOptimize(std::move(unused_0));
     auto unused_1 = row.get(1);
-    benchmark::DoNotOptimize(unused_1);
+    benchmark::DoNotOptimize(std::move(unused_1));
     auto unused_2 = row.get(2);
-    benchmark::DoNotOptimize(unused_2);
+    benchmark::DoNotOptimize(std::move(unused_2));
   }
 }
 BENCHMARK(BM_RowGetByPosition);
@@ -56,11 +56,11 @@ void BM_RowGetByColumnName(benchmark::State& state) {
   });
   for (auto _ : state) {
     auto unused_a = row.get("a");
-    benchmark::DoNotOptimize(unused_a);
+    benchmark::DoNotOptimize(std::move(unused_a));
     auto unused_b = row.get("b");
-    benchmark::DoNotOptimize(unused_b);
+    benchmark::DoNotOptimize(std::move(unused_b));
     auto unused_c = row.get("c");
-    benchmark::DoNotOptimize(unused_c);
+    benchmark::DoNotOptimize(std::move(unused_c));
   }
 }
 BENCHMARK(BM_RowGetByColumnName);
