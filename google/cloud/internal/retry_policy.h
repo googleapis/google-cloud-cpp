@@ -133,7 +133,7 @@ class LimitedErrorCountRetryPolicy
         new LimitedErrorCountRetryPolicy(maximum_failures_));
   }
   bool IsExhausted() const override {
-    return failure_count_ >= maximum_failures_;
+    return failure_count_ > maximum_failures_;
   }
   int maximum_failures() const { return maximum_failures_; }
 

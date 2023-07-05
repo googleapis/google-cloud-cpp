@@ -412,6 +412,7 @@ TEST(SubscriberConnectionTest, Pull) {
 TEST(SubscriberConnectionTest, PullReturnsNoMessage) {
   auto const subscription = Subscription("test-project", "test-subscription");
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  auto constexpr kNumRetries = 4;
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
       .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
@@ -425,15 +426,8 @@ TEST(SubscriberConnectionTest, PullReturnsNoMessage) {
   EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
                                    Property(&PullRequest::subscription,
                                             subscription.FullName()))))
-      .WillOnce([](auto&, google::pubsub::v1::PullRequest const&) {
-        google::pubsub::v1::PullResponse response;
-        return response;
-      })
-      .WillOnce([](auto&, google::pubsub::v1::PullRequest const&) {
-        google::pubsub::v1::PullResponse response;
-        return response;
-      })
-      .WillOnce([](auto&, google::pubsub::v1::PullRequest const&) {
+      .Times(kNumRetries + 1)
+      .WillRepeatedly([](auto&, google::pubsub::v1::PullRequest const&) {
         google::pubsub::v1::PullResponse response;
         return response;
       });
@@ -447,7 +441,8 @@ TEST(SubscriberConnectionTest, PullReturnsNoMessage) {
           Options{}
               .set<GrpcCompletionQueueOption>(cq)
               .set<google::cloud::pubsub::RetryPolicyOption>(
-                  google::cloud::pubsub::LimitedErrorCountRetryPolicy(3)
+                  google::cloud::pubsub::LimitedErrorCountRetryPolicy(
+                      kNumRetries)
                       .clone())),
       mock);
   google::cloud::internal::OptionsSpan span(subscriber->options());
