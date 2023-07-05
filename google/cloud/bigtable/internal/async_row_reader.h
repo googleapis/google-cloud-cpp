@@ -57,13 +57,13 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
                      std::string app_profile_id, std::string table_name,
                      RowFunctor on_row, FinishFunctor on_finish,
                      bigtable::RowSet row_set, std::int64_t rows_limit,
-                     bigtable::Filter filter,
+                     bigtable::Filter filter, bool reverse,
                      std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
                      std::unique_ptr<BackoffPolicy> backoff_policy) {
     auto reader = std::shared_ptr<AsyncRowReader>(new AsyncRowReader(
         std::move(cq), std::move(stub), std::move(app_profile_id),
         std::move(table_name), std::move(on_row), std::move(on_finish),
-        std::move(row_set), rows_limit, std::move(filter),
+        std::move(row_set), rows_limit, std::move(filter), reverse,
         std::move(retry_policy), std::move(backoff_policy)));
     reader->MakeRequest();
   }
@@ -73,7 +73,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
                  std::string app_profile_id, std::string table_name,
                  RowFunctor on_row, FinishFunctor on_finish,
                  bigtable::RowSet row_set, std::int64_t rows_limit,
-                 bigtable::Filter filter,
+                 bigtable::Filter filter, bool reverse,
                  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
                  std::unique_ptr<BackoffPolicy> backoff_policy)
       : cq_(std::move(cq)),
@@ -85,6 +85,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
         row_set_(std::move(row_set)),
         rows_limit_(rows_limit),
         filter_(std::move(filter)),
+        reverse_(std::move(reverse)),
         retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)) {}
 
@@ -129,6 +130,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   bigtable::RowSet row_set_;
   std::int64_t rows_limit_;
   bigtable::Filter filter_;
+  bool reverse_;
   std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   std::unique_ptr<bigtable::internal::ReadRowsParser> parser_;

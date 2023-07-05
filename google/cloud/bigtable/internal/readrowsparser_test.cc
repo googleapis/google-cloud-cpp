@@ -36,7 +36,7 @@ using ::testing::Not;
 
 TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
   grpc::Status status;
-  ReadRowsParser parser;
+  ReadRowsParser parser(false);
 
   EXPECT_FALSE(parser.HasNext());
   parser.HandleEndOfStream(status);
@@ -45,7 +45,7 @@ TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
 }
 
 TEST(ReadRowsParserTest, HandleEndOfStreamCalledTwiceThrows) {
-  ReadRowsParser parser;
+  ReadRowsParser parser(false);
   grpc::Status status;
   EXPECT_FALSE(parser.HasNext());
   parser.HandleEndOfStream(status);
@@ -55,7 +55,7 @@ TEST(ReadRowsParserTest, HandleEndOfStreamCalledTwiceThrows) {
 }
 
 TEST(ReadRowsParserTest, HandleChunkAfterEndOfStreamThrows) {
-  ReadRowsParser parser;
+  ReadRowsParser parser(false);
   ReadRowsResponse_CellChunk chunk;
   grpc::Status status;
   chunk.set_value_size(1);
@@ -70,7 +70,7 @@ TEST(ReadRowsParserTest, HandleChunkAfterEndOfStreamThrows) {
 
 TEST(ReadRowsParserTest, SingleChunkSucceeds) {
   using ::google::protobuf::TextFormat;
-  ReadRowsParser parser;
+  ReadRowsParser parser(false);
   ReadRowsResponse_CellChunk chunk;
   std::string chunk1 = R"(
     row_key: "RK"
@@ -105,7 +105,7 @@ TEST(ReadRowsParserTest, SingleChunkSucceeds) {
 
 TEST(ReadRowsParserTest, NextAfterEndOfStreamSucceeds) {
   using ::google::protobuf::TextFormat;
-  ReadRowsParser parser;
+  ReadRowsParser parser(false);
   ReadRowsResponse_CellChunk chunk;
   std::string chunk1 = R"(
     row_key: "RK"
@@ -130,7 +130,7 @@ TEST(ReadRowsParserTest, NextAfterEndOfStreamSucceeds) {
 }
 
 TEST(ReadRowsParserTest, NextWithNoDataThrows) {
-  ReadRowsParser parser;
+  ReadRowsParser parser(false);
   grpc::Status status;
   EXPECT_FALSE(parser.HasNext());
   parser.HandleEndOfStream(status);
@@ -214,7 +214,7 @@ class AcceptanceTest : public ::testing::Test {
   }
 
  private:
-  ReadRowsParser parser_;
+  ReadRowsParser parser_{false};
   std::vector<google::cloud::bigtable::Row> rows_;
 };
 
