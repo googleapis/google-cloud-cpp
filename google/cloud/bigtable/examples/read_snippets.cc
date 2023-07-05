@@ -342,10 +342,11 @@ void ReadRowsReverse(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (StatusOr<cbt::Row>& row : table.ReadRows(
-             cbt::RowRange::RightOpen("phone#5c10102", "phone#5c10103"), 3,
-             cbt::Filter::PassAllFilter(),
-             Options{}.set<cbt::ReverseScanOption>(true))) {
+    auto reader = table.ReadRows(
+        cbt::RowRange::RightOpen("phone#5c10102", "phone#5c10103"), 3,
+        cbt::Filter::PassAllFilter(),
+        Options{}.set<cbt::ReverseScanOption>(true));
+    for (StatusOr<cbt::Row>& row : reader) {
       if (!row) throw std::move(row).status();
       PrintRow(*row);
     }
