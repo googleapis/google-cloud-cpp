@@ -36,6 +36,7 @@ instrumented_patterns=(
   "/google/cloud/pubsublite[/:]"
   "/google/cloud/spanner[/:]"
   "/google/cloud/storage[/:]"
+  "/google/cloud/bigquery/v2[/:]"
 )
 instrumentation_filter="$(printf ",%s" "${instrumented_patterns[@]}")"
 instrumentation_filter="${instrumentation_filter:1}"
