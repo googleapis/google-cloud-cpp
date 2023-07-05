@@ -39,6 +39,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Matcher;
 using ::testing::MockFunction;
 using ::testing::Property;
@@ -53,13 +54,6 @@ auto const* const kTableName =
 Matcher<ReadRowsRequest const&> HasCorrectResourceNames() {
   return AllOf(Property(&ReadRowsRequest::app_profile_id, Eq(kAppProfile)),
                Property(&ReadRowsRequest::table_name, Eq(kTableName)));
-}
-
-// Match the number of expected row keys in a request in EXPECT_CALL
-Matcher<ReadRowsRequest const&> RequestWithRowKeysCount(int n) {
-  return Property(
-      &ReadRowsRequest::rows,
-      Property(&google::bigtable::v2::RowSet::row_keys_size, Eq(n)));
 }
 
 // Match the row limit in a request
@@ -133,8 +127,7 @@ TEST_F(DefaultRowReaderTest, EmptyReaderHasNoRows) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, retry_.clone(), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  EXPECT_EQ(reader.begin(), reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader), IsEmpty());
 }
 
 TEST_F(DefaultRowReaderTest, ReadOneRow) {
@@ -156,12 +149,7 @@ TEST_F(DefaultRowReaderTest, ReadOneRow) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, retry_.clone(), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  ASSERT_STATUS_OK(*it);
-  EXPECT_EQ((*it)->row_key(), "r1");
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, StreamIsDrained) {
@@ -223,12 +211,7 @@ TEST_F(DefaultRowReaderTest, RetryThenSuccess) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, retry_.clone(), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  ASSERT_STATUS_OK(*it);
-  EXPECT_EQ((*it)->row_key(), "r1");
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, NoRetryOnPermanentError) {
@@ -249,11 +232,8 @@ TEST_F(DefaultRowReaderTest, NoRetryOnPermanentError) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, retry_.clone(), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  EXPECT_THAT(*it, StatusIs(StatusCode::kPermissionDenied));
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader),
+              ElementsAre(StatusIs(StatusCode::kPermissionDenied)));
 }
 
 TEST_F(DefaultRowReaderTest, RetryPolicyExhausted) {
@@ -282,11 +262,8 @@ TEST_F(DefaultRowReaderTest, RetryPolicyExhausted) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, retry_.clone(), std::move(backoff));
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  EXPECT_THAT(*it, StatusIs(StatusCode::kUnavailable));
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader),
+              ElementsAre(StatusIs(StatusCode::kUnavailable)));
 }
 
 TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyReadRows) {
@@ -295,7 +272,7 @@ TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyReadRows) {
       .WillOnce([](auto, google::bigtable::v2::ReadRowsRequest const& request) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         // We should have two rows in the initial request: "r1" and "r2".
-        EXPECT_THAT(request, RequestWithRowKeysCount(2));
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(MakeRow("r1")))
@@ -305,7 +282,7 @@ TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyReadRows) {
       .WillOnce([](auto, google::bigtable::v2::ReadRowsRequest const& request) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         // We have read "r1". The new request should only contain: "r2".
-        EXPECT_THAT(request, RequestWithRowKeysCount(1));
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r2"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
         return stream;
@@ -318,12 +295,7 @@ TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyReadRows) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, retry_.clone(), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  ASSERT_STATUS_OK(*it);
-  EXPECT_EQ((*it)->row_key(), "r1");
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyScannedRows) {
@@ -332,7 +304,7 @@ TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyScannedRows) {
       .WillOnce([](auto, google::bigtable::v2::ReadRowsRequest const& request) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         // We start our call with 3 rows in the set: "r1", "r2", "r3".
-        EXPECT_THAT(request, RequestWithRowKeysCount(3));
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2", "r3"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(MakeRow("r1")))
@@ -351,7 +323,7 @@ TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyScannedRows) {
         // We retry the remaining rows. We have "r1" returned, but the service
         // has also told us that "r2" was scanned. This means there is only one
         // row remaining to read: "r3".
-        EXPECT_THAT(request, RequestWithRowKeysCount(1));
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r3"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
         return stream;
@@ -364,12 +336,7 @@ TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyScannedRows) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, retry_.clone(), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  ASSERT_STATUS_OK(*it);
-  EXPECT_EQ((*it)->row_key(), "r1");
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, FailedParseIsRetried) {
@@ -402,12 +369,7 @@ TEST_F(DefaultRowReaderTest, FailedParseIsRetried) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, std::move(retry), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  ASSERT_STATUS_OK(*it);
-  EXPECT_EQ((*it)->row_key(), "r1");
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyReadRows) {
@@ -416,7 +378,7 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyReadRows) {
       .WillOnce([](auto, google::bigtable::v2::ReadRowsRequest const& request) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         // We should have two rows in the initial request: "r1" and "r2".
-        EXPECT_THAT(request, RequestWithRowKeysCount(2));
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(MakeRow("r1")))
@@ -426,7 +388,7 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyReadRows) {
       .WillOnce([](auto, google::bigtable::v2::ReadRowsRequest const& request) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         // We have read "r1". The new request should only contain: "r2".
-        EXPECT_THAT(request, RequestWithRowKeysCount(1));
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r2"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
         return stream;
@@ -444,12 +406,7 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyReadRows) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, std::move(retry), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  ASSERT_STATUS_OK(*it);
-  EXPECT_EQ((*it)->row_key(), "r1");
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyScannedRows) {
@@ -458,7 +415,7 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyScannedRows) {
       .WillOnce([](auto, google::bigtable::v2::ReadRowsRequest const& request) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         // We start our call with 3 rows in the set: "r1", "r2", "r3".
-        EXPECT_THAT(request, RequestWithRowKeysCount(3));
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2", "r3"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(MakeRow("r1")))
@@ -477,7 +434,7 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyScannedRows) {
         // We retry the remaining rows. We have "r1" returned, but the service
         // has also told us that "r2" was scanned. This means there is only one
         // row remaining to read: "r3".
-        EXPECT_THAT(request, RequestWithRowKeysCount(1));
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r3"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
         return stream;
@@ -495,12 +452,7 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyScannedRows) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, std::move(retry), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  ASSERT_STATUS_OK(*it);
-  EXPECT_EQ((*it)->row_key(), "r1");
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, FailedParseWithPermanentError) {
@@ -524,11 +476,8 @@ TEST_F(DefaultRowReaderTest, FailedParseWithPermanentError) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, retry_.clone(), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  EXPECT_THAT(*it, StatusIs(StatusCode::kInternal));
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader),
+              ElementsAre(StatusIs(StatusCode::kInternal)));
 }
 
 TEST_F(DefaultRowReaderTest, NoRetryOnEmptyRowSet) {
@@ -552,12 +501,7 @@ TEST_F(DefaultRowReaderTest, NoRetryOnEmptyRowSet) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, retry_.clone(), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  ASSERT_STATUS_OK(*it);
-  EXPECT_EQ((*it)->row_key(), "r2");
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r2")));
 }
 
 TEST_F(DefaultRowReaderTest, RowLimitIsSent) {
@@ -578,9 +522,7 @@ TEST_F(DefaultRowReaderTest, RowLimitIsSent) {
       bigtable::Filter::PassAllFilter(), false, retry_.clone(),
       backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_EQ(it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader), IsEmpty());
 }
 
 TEST_F(DefaultRowReaderTest, RowLimitIsDecreasedOnRetry) {
@@ -610,12 +552,7 @@ TEST_F(DefaultRowReaderTest, RowLimitIsDecreasedOnRetry) {
       bigtable::Filter::PassAllFilter(), false, retry_.clone(),
       backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  ASSERT_STATUS_OK(*it);
-  EXPECT_EQ((*it)->row_key(), "r1");
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, NoRetryIfRowLimitReached) {
@@ -630,7 +567,7 @@ TEST_F(DefaultRowReaderTest, NoRetryIfRowLimitReached) {
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try again")));
         return stream;
       });
-  // After receiving "r2", the row set will be empty. So even though we
+  // After receiving "r1", the row set will be empty. So even though we
   // encountered a transient error, there is no need to retry the stream.
 
   internal::OptionsSpan span(TestOptions(/*expected_streams=*/1));
@@ -640,12 +577,7 @@ TEST_F(DefaultRowReaderTest, NoRetryIfRowLimitReached) {
       bigtable::Filter::PassAllFilter(), false, retry_.clone(),
       backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  ASSERT_STATUS_OK(*it);
-  EXPECT_EQ((*it)->row_key(), "r1");
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r1")));
 }
 
 TEST_F(DefaultRowReaderTest, CancelDrainsStream) {
@@ -750,11 +682,8 @@ TEST_F(DefaultRowReaderTest, RetryUsesNewContext) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       false, retry_.clone(), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
-  auto it = reader.begin();
-  EXPECT_NE(it, reader.end());
-  EXPECT_THAT(*it, StatusIs(StatusCode::kUnavailable));
-  EXPECT_EQ(++it, reader.end());
+  EXPECT_THAT(StatusOrRowKeys(reader),
+              ElementsAre(StatusIs(StatusCode::kUnavailable)));
 }
 
 TEST_F(DefaultRowReaderTest, ReverseScanSuccess) {
@@ -779,7 +708,6 @@ TEST_F(DefaultRowReaderTest, ReverseScanSuccess) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       true, retry_.clone(), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
   EXPECT_THAT(
       StatusOrRowKeys(reader),
       ElementsAre(IsOkAndHolds("r3"), IsOkAndHolds("r2"), IsOkAndHolds("r1")));
@@ -807,7 +735,6 @@ TEST_F(DefaultRowReaderTest, ReverseScanFailsOnIncreasingRowKeyOrder) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       true, retry_.clone(), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
   EXPECT_THAT(
       StatusOrRowKeys(reader),
       ElementsAre(
@@ -822,7 +749,7 @@ TEST_F(DefaultRowReaderTest, ReverseScanResumption) {
       .WillOnce([](auto, google::bigtable::v2::ReadRowsRequest const& request) {
         EXPECT_TRUE(request.reversed());
         // We start our call with 3 rows in the set: "r1", "r2", "r3".
-        EXPECT_THAT(request, RequestWithRowKeysCount(3));
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2", "r3"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(MakeRow("r3")))
@@ -841,7 +768,7 @@ TEST_F(DefaultRowReaderTest, ReverseScanResumption) {
         // We retry the remaining rows. We have "r3" returned, but the service
         // has also told us that "r2" was scanned. This means there is only one
         // row remaining to read: "r1".
-        EXPECT_THAT(request, RequestWithRowKeysCount(1));
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
         return stream;
@@ -854,7 +781,6 @@ TEST_F(DefaultRowReaderTest, ReverseScanResumption) {
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       true, retry_.clone(), backoff_.clone());
   auto reader = bigtable_internal::MakeRowReader(std::move(impl));
-
   EXPECT_THAT(StatusOrRowKeys(reader), ElementsAre(IsOkAndHolds("r3")));
 }
 
