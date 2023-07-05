@@ -248,7 +248,7 @@ void ReadRows(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (auto& row : table.ReadRows(
+    for (StatusOr<cbt::Row>& row : table.ReadRows(
              cbt::RowSet("phone#4c410523#20190501", "phone#4c410523#20190502"),
              cbt::Filter::PassAllFilter())) {
       if (!row) throw std::move(row).status();
@@ -266,7 +266,7 @@ void ReadRowRange(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowRange::Range("phone#4c410523#20190501",
                                              "phone#4c410523#201906201"),
                         cbt::Filter::PassAllFilter())) {
@@ -285,7 +285,7 @@ void ReadRowRanges(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (auto& row : table.ReadRows(
+    for (StatusOr<cbt::Row>& row : table.ReadRows(
              cbt::RowSet({cbt::RowRange::Range("phone#4c410523#20190501",
                                                "phone#4c410523#20190601"),
                           cbt::RowRange::Range("phone#5c10102#20190501",
@@ -306,8 +306,8 @@ void ReadRowPrefix(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (auto& row : table.ReadRows(cbt::RowRange::Prefix("phone"),
-                                    cbt::Filter::PassAllFilter())) {
+    for (StatusOr<cbt::Row>& row : table.ReadRows(
+             cbt::RowRange::Prefix("phone"), cbt::Filter::PassAllFilter())) {
       if (!row) throw std::move(row).status();
       PrintRow(*row);
     }
@@ -323,8 +323,9 @@ void ReadFilter(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (auto& row : table.ReadRows(cbt::RowRange::InfiniteRange(),
-                                    cbt::Filter::ValueRegex("PQ2A.*"))) {
+    for (StatusOr<cbt::Row>& row :
+         table.ReadRows(cbt::RowRange::InfiniteRange(),
+                        cbt::Filter::ValueRegex("PQ2A.*"))) {
       if (!row) throw std::move(row).status();
       PrintRow(*row);
     }

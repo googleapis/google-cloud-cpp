@@ -41,7 +41,7 @@ void FilterLimitRowSample(google::cloud::bigtable::Table table,
     cbt::Filter filter = cbt::Filter::RowSample(0.75);
 
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -66,7 +66,7 @@ void FilterLimitRowRegex(google::cloud::bigtable::Table table,
     // expression
     cbt::Filter filter = cbt::Filter::RowKeysRegex(".*#20190501$");
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -90,7 +90,7 @@ void FilterLimitCellsPerColumn(google::cloud::bigtable::Table table,
     // Filter the results, only include limited cells
     cbt::Filter filter = cbt::Filter::Latest(2);
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -114,7 +114,7 @@ void FilterLimitCellsPerRow(google::cloud::bigtable::Table table,
     // Filter the results, only include limited cells per row
     cbt::Filter filter = cbt::Filter::CellsRowLimit(2);
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -137,7 +137,7 @@ void FilterLimitCellsPerRowOfset(google::cloud::bigtable::Table table,
   [](cbt::Table table) {
     cbt::Filter filter = cbt::Filter::CellsRowOffset(2);
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -160,7 +160,7 @@ void FilterLimitColFamilyRegex(google::cloud::bigtable::Table table,
   [](cbt::Table table) {
     cbt::Filter filter = cbt::Filter::FamilyRegex("stats_.*$");
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -183,7 +183,7 @@ void FilterLimitColQualifierRegex(google::cloud::bigtable::Table table,
   [](cbt::Table table) {
     cbt::Filter filter = cbt::Filter::ColumnRegex("connected_.*$");
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -207,7 +207,7 @@ void FilterLimitColRange(google::cloud::bigtable::Table table,
     cbt::Filter filter = cbt::Filter::ColumnRange("cell_plan", "data_plan_01gb",
                                                   "data_plan_10gb");
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -230,7 +230,7 @@ void FilterLimitValueRange(google::cloud::bigtable::Table table,
   [](cbt::Table table) {
     cbt::Filter filter = cbt::Filter::ValueRange("PQ2A.190405", "PQ2A.190406");
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -253,7 +253,7 @@ void FilterLimitValueRegex(google::cloud::bigtable::Table table,
   [](cbt::Table table) {
     cbt::Filter filter = cbt::Filter::ValueRegex("PQ2A.*$");
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -277,7 +277,7 @@ void FilterLimitTimestampRange(google::cloud::bigtable::Table table,
     cbt::Filter filter =
         cbt::Filter::TimestampRange(microseconds(1000), milliseconds(2));
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -300,7 +300,7 @@ void FilterLimitBlockAll(google::cloud::bigtable::Table table,
   [](cbt::Table table) {
     cbt::Filter filter = cbt::Filter::BlockAllFilter();
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key();
@@ -324,7 +324,7 @@ void FilterLimitPassAll(google::cloud::bigtable::Table table,
   [](cbt::Table table) {
     cbt::Filter filter = cbt::Filter::PassAllFilter();
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -347,7 +347,7 @@ void FilterModifyStripValue(google::cloud::bigtable::Table table,
   [](cbt::Table table) {
     cbt::Filter filter = cbt::Filter::StripValueTransformer();
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -370,7 +370,7 @@ void FilterModifyApplyLabel(google::cloud::bigtable::Table table,
   [](cbt::Table table) {
     cbt::Filter filter = cbt::Filter::ApplyLabelTransformer("labelled");
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -399,7 +399,7 @@ void FilterComposingChain(google::cloud::bigtable::Table table,
     cbt::Filter filter = cbt::Filter::Chain(
         cbt::Filter::Latest(1), cbt::Filter::FamilyRegex("cell_plan"));
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -423,7 +423,7 @@ void FilterComposingInterleave(google::cloud::bigtable::Table table,
     cbt::Filter filter = cbt::Filter::Interleave(
         cbt::Filter::ValueRegex("true"), cbt::Filter::ColumnRegex("os_build"));
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
@@ -450,7 +450,7 @@ void FilterComposingCondition(google::cloud::bigtable::Table table,
         cbt::Filter::ApplyLabelTransformer("passed-filter"),
         cbt::Filter::ApplyLabelTransformer("filtered-out"));
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowSet(cbt::RowRange::InfiniteRange()), filter)) {
       if (!row) throw std::move(row).status();
       std::cout << row->row_key() << " = ";
