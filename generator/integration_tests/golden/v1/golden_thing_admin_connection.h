@@ -93,6 +93,7 @@ class GoldenThingAdminLimitedErrorCountRetryPolicy : public GoldenThingAdminRetr
 
   // This is provided only for backwards compatibility.
   using BaseType = GoldenThingAdminRetryPolicy;
+
  private:
   google::cloud::internal::LimitedErrorCountRetryPolicy<golden_v1_internal::GoldenThingAdminRetryTraits> impl_;
 };
@@ -158,6 +159,7 @@ class GoldenThingAdminLimitedTimeRetryPolicy : public GoldenThingAdminRetryPolic
 
   // This is provided only for backwards compatibility.
   using BaseType = GoldenThingAdminRetryPolicy;
+
  private:
   google::cloud::internal::LimitedTimeRetryPolicy<golden_v1_internal::GoldenThingAdminRetryTraits> impl_;
 };

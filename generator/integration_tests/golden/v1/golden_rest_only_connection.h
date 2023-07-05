@@ -87,6 +87,7 @@ class GoldenRestOnlyLimitedErrorCountRetryPolicy : public GoldenRestOnlyRetryPol
 
   // This is provided only for backwards compatibility.
   using BaseType = GoldenRestOnlyRetryPolicy;
+
  private:
   google::cloud::internal::LimitedErrorCountRetryPolicy<golden_v1_internal::GoldenRestOnlyRetryTraits> impl_;
 };
@@ -151,6 +152,7 @@ class GoldenRestOnlyLimitedTimeRetryPolicy : public GoldenRestOnlyRetryPolicy {
 
   // This is provided only for backwards compatibility.
   using BaseType = GoldenRestOnlyRetryPolicy;
+
  private:
   google::cloud::internal::LimitedTimeRetryPolicy<golden_v1_internal::GoldenRestOnlyRetryTraits> impl_;
 };

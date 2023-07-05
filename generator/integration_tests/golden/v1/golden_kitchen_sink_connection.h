@@ -92,6 +92,7 @@ class GoldenKitchenSinkLimitedErrorCountRetryPolicy : public GoldenKitchenSinkRe
 
   // This is provided only for backwards compatibility.
   using BaseType = GoldenKitchenSinkRetryPolicy;
+
  private:
   google::cloud::internal::LimitedErrorCountRetryPolicy<golden_v1_internal::GoldenKitchenSinkRetryTraits> impl_;
 };
@@ -157,6 +158,7 @@ class GoldenKitchenSinkLimitedTimeRetryPolicy : public GoldenKitchenSinkRetryPol
 
   // This is provided only for backwards compatibility.
   using BaseType = GoldenKitchenSinkRetryPolicy;
+
  private:
   google::cloud::internal::LimitedTimeRetryPolicy<golden_v1_internal::GoldenKitchenSinkRetryTraits> impl_;
 };
