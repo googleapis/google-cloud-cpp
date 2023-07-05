@@ -135,6 +135,7 @@ class $limited_error_count_retry_policy_name$ : public $retry_policy_name$ {
 
   // This is provided only for backwards compatibility.
   using BaseType = $retry_policy_name$;
+
  private:
   google::cloud::internal::LimitedErrorCountRetryPolicy<$product_internal_namespace$::$retry_traits_name$> impl_;
 };
@@ -197,6 +198,7 @@ class $limited_time_retry_policy_name$ : public $retry_policy_name$ {
 
   // This is provided only for backwards compatibility.
   using BaseType = $retry_policy_name$;
+
  private:
   google::cloud::internal::LimitedTimeRetryPolicy<$product_internal_namespace$::$retry_traits_name$> impl_;
 };
