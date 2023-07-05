@@ -209,6 +209,8 @@ function (bigquery_rest_define_tests)
         INTERFACE
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/common_v2_test_utils.cc
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/common_v2_test_utils.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/job_query_test_utils.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/job_query_test_utils.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/job_test_utils.cc
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/job_test_utils.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/metadata_test_utils.cc

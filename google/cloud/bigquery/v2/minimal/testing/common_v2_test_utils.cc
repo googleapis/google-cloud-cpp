@@ -21,6 +21,8 @@ namespace cloud {
 namespace bigquery_v2_minimal_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_internal::ConnectionProperty;
+using ::google::cloud::bigquery_v2_minimal_internal::DatasetReference;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryParameter;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryParameterStructType;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryParameterType;
@@ -34,6 +36,23 @@ using ::google::cloud::bigquery_v2_minimal_internal::Value;
 
 using ::testing::IsEmpty;
 using ::testing::Not;
+
+DatasetReference MakeDatasetReference() {
+  DatasetReference d;
+  d.dataset_id = "1";
+  d.project_id = "2";
+
+  return d;
+}
+
+ConnectionProperty MakeConnectionProperty() {
+  ConnectionProperty cp;
+
+  cp.key = "conn-prop-key";
+  cp.value = "conn-prop-val";
+
+  return cp;
+}
 
 QueryParameterType MakeQueryParameterType() {
   QueryParameterType expected_qp_type;
