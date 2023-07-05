@@ -47,8 +47,7 @@ void BM_Crc32cDuplicateNonAbseil(benchmark::State& state) {
     for (std::size_t offset = 0; offset < kUploadSize; offset += kWriteSize) {
       for (std::size_t m = 0; m < kWriteSize; m += kMessage) {
         auto w = absl::string_view{buffer}.substr(m, kMessage);
-        auto c = crc32c::Crc32c(w.data(), w.size());
-        benchmark::DoNotOptimize(std::move(c));
+        benchmark::DoNotOptimize(crc32c::Crc32c(w.data(), w.size()));
       }
       crc = crc32c::Extend(crc,
                            reinterpret_cast<std::uint8_t const*>(buffer.data()),
@@ -66,8 +65,7 @@ void BM_Crc32cDuplicate(benchmark::State& state) {
     for (std::size_t offset = 0; offset < kUploadSize; offset += kWriteSize) {
       for (std::size_t m = 0; m < kWriteSize; m += kMessage) {
         auto w = absl::string_view{buffer}.substr(m, kMessage);
-        auto c = Crc32c(w);
-        benchmark::DoNotOptimize(std::move(c));
+        benchmark::DoNotOptimize(Crc32c(w));
       }
       crc = ExtendCrc32c(crc, buffer);
     }
