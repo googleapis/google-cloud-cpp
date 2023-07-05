@@ -26,8 +26,12 @@ source module ci/lib/io.sh
 export CC=clang
 export CXX=clang++
 
+read -r ENABLED_FEATURES < <(features::always_build_cmake)
+ENABLED_FEATURES="${ENABLED_FEATURES},compute"
+readonly ENABLED_FEATURES
+
 io::run cmake -GNinja -S . -B cmake-out \
-  -DGOOGLE_CLOUD_CPP_ENABLE="$(features::always_build_cmake)" \
+  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}" \
   -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON \
   -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON \
   -DBUILD_SHARED_LIBS=yes

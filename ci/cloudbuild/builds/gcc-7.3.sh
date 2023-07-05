@@ -27,6 +27,7 @@ export CXX=g++
 
 mapfile -t cmake_args < <(cmake::common_args)
 read -r ENABLED_FEATURES < <(features::always_build_cmake)
+ENABLED_FEATURES="${ENABLED_FEATURES},compute"
 readonly ENABLED_FEATURES
 
 io::run cmake "${cmake_args[@]}" \
