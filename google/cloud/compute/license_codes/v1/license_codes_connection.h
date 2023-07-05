@@ -35,17 +35,134 @@ namespace cloud {
 namespace compute_license_codes_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using LicenseCodesRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        compute_license_codes_v1_internal::LicenseCodesRetryTraits>;
+/// The retry policy for `LicenseCodesConnection`.
+class LicenseCodesRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<LicenseCodesRetryPolicy> clone() const = 0;
+};
 
-using LicenseCodesLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        compute_license_codes_v1_internal::LicenseCodesRetryTraits>;
+/**
+ * A retry policy for `LicenseCodesConnection` based on counting errors.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - More than a prescribed number of transient failures is detected.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class LicenseCodesLimitedErrorCountRetryPolicy
+    : public LicenseCodesRetryPolicy {
+ public:
+  /**
+   * Create an instance that tolerates up to @p maximum_failures transient
+   * errors.
+   *
+   * @note Disable the retry loop by providing an instance of this policy with
+   *     @p maximum_failures == 0.
+   */
+  explicit LicenseCodesLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using LicenseCodesLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        compute_license_codes_v1_internal::LicenseCodesRetryTraits>;
+  LicenseCodesLimitedErrorCountRetryPolicy(
+      LicenseCodesLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : LicenseCodesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+  LicenseCodesLimitedErrorCountRetryPolicy(
+      LicenseCodesLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : LicenseCodesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<LicenseCodesRetryPolicy> clone() const override {
+    return std::make_unique<LicenseCodesLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = LicenseCodesRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_license_codes_v1_internal::LicenseCodesRetryTraits>
+      impl_;
+};
+
+/**
+ * A retry policy for `LicenseCodesConnection` based on elapsed time.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - The elapsed time in the retry loop exceeds a prescribed duration.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class LicenseCodesLimitedTimeRetryPolicy : public LicenseCodesRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the underlying
+   *     arithmetic type used to store the number of ticks. For our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`. For our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires.
+   *     While the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit LicenseCodesLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  LicenseCodesLimitedTimeRetryPolicy(
+      LicenseCodesLimitedTimeRetryPolicy&& rhs) noexcept
+      : LicenseCodesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LicenseCodesLimitedTimeRetryPolicy(
+      LicenseCodesLimitedTimeRetryPolicy const& rhs) noexcept
+      : LicenseCodesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<LicenseCodesRetryPolicy> clone() const override {
+    return std::make_unique<LicenseCodesLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = LicenseCodesRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_license_codes_v1_internal::LicenseCodesRetryTraits>
+      impl_;
+};
 
 /**
  * The `LicenseCodesConnection` object for `LicenseCodesClient`.

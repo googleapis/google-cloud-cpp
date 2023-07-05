@@ -34,17 +34,139 @@ namespace cloud {
 namespace confidentialcomputing_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ConfidentialComputingRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        confidentialcomputing_v1_internal::ConfidentialComputingRetryTraits>;
+/// The retry policy for `ConfidentialComputingConnection`.
+class ConfidentialComputingRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<ConfidentialComputingRetryPolicy> clone() const = 0;
+};
 
-using ConfidentialComputingLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        confidentialcomputing_v1_internal::ConfidentialComputingRetryTraits>;
+/**
+ * A retry policy for `ConfidentialComputingConnection` based on counting
+ * errors.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - More than a prescribed number of transient failures is detected.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class ConfidentialComputingLimitedErrorCountRetryPolicy
+    : public ConfidentialComputingRetryPolicy {
+ public:
+  /**
+   * Create an instance that tolerates up to @p maximum_failures transient
+   * errors.
+   *
+   * @note Disable the retry loop by providing an instance of this policy with
+   *     @p maximum_failures == 0.
+   */
+  explicit ConfidentialComputingLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using ConfidentialComputingLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        confidentialcomputing_v1_internal::ConfidentialComputingRetryTraits>;
+  ConfidentialComputingLimitedErrorCountRetryPolicy(
+      ConfidentialComputingLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : ConfidentialComputingLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+  ConfidentialComputingLimitedErrorCountRetryPolicy(
+      ConfidentialComputingLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : ConfidentialComputingLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<ConfidentialComputingRetryPolicy> clone() const override {
+    return std::make_unique<ConfidentialComputingLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = ConfidentialComputingRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      confidentialcomputing_v1_internal::ConfidentialComputingRetryTraits>
+      impl_;
+};
+
+/**
+ * A retry policy for `ConfidentialComputingConnection` based on elapsed time.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - The elapsed time in the retry loop exceeds a prescribed duration.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class ConfidentialComputingLimitedTimeRetryPolicy
+    : public ConfidentialComputingRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the underlying
+   *     arithmetic type used to store the number of ticks. For our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`. For our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires.
+   *     While the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit ConfidentialComputingLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  ConfidentialComputingLimitedTimeRetryPolicy(
+      ConfidentialComputingLimitedTimeRetryPolicy&& rhs) noexcept
+      : ConfidentialComputingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConfidentialComputingLimitedTimeRetryPolicy(
+      ConfidentialComputingLimitedTimeRetryPolicy const& rhs) noexcept
+      : ConfidentialComputingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<ConfidentialComputingRetryPolicy> clone() const override {
+    return std::make_unique<ConfidentialComputingLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = ConfidentialComputingRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      confidentialcomputing_v1_internal::ConfidentialComputingRetryTraits>
+      impl_;
+};
 
 /**
  * The `ConfidentialComputingConnection` object for

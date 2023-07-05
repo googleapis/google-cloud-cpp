@@ -35,17 +35,137 @@ namespace cloud {
 namespace monitoring_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using AlertPolicyServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        monitoring_v3_internal::AlertPolicyServiceRetryTraits>;
+/// The retry policy for `AlertPolicyServiceConnection`.
+class AlertPolicyServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<AlertPolicyServiceRetryPolicy> clone() const = 0;
+};
 
-using AlertPolicyServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        monitoring_v3_internal::AlertPolicyServiceRetryTraits>;
+/**
+ * A retry policy for `AlertPolicyServiceConnection` based on counting errors.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - More than a prescribed number of transient failures is detected.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class AlertPolicyServiceLimitedErrorCountRetryPolicy
+    : public AlertPolicyServiceRetryPolicy {
+ public:
+  /**
+   * Create an instance that tolerates up to @p maximum_failures transient
+   * errors.
+   *
+   * @note Disable the retry loop by providing an instance of this policy with
+   *     @p maximum_failures == 0.
+   */
+  explicit AlertPolicyServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using AlertPolicyServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        monitoring_v3_internal::AlertPolicyServiceRetryTraits>;
+  AlertPolicyServiceLimitedErrorCountRetryPolicy(
+      AlertPolicyServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : AlertPolicyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
+  AlertPolicyServiceLimitedErrorCountRetryPolicy(
+      AlertPolicyServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : AlertPolicyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<AlertPolicyServiceRetryPolicy> clone() const override {
+    return std::make_unique<AlertPolicyServiceLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = AlertPolicyServiceRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      monitoring_v3_internal::AlertPolicyServiceRetryTraits>
+      impl_;
+};
+
+/**
+ * A retry policy for `AlertPolicyServiceConnection` based on elapsed time.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - The elapsed time in the retry loop exceeds a prescribed duration.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class AlertPolicyServiceLimitedTimeRetryPolicy
+    : public AlertPolicyServiceRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the underlying
+   *     arithmetic type used to store the number of ticks. For our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`. For our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires.
+   *     While the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit AlertPolicyServiceLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  AlertPolicyServiceLimitedTimeRetryPolicy(
+      AlertPolicyServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : AlertPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AlertPolicyServiceLimitedTimeRetryPolicy(
+      AlertPolicyServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : AlertPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<AlertPolicyServiceRetryPolicy> clone() const override {
+    return std::make_unique<AlertPolicyServiceLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = AlertPolicyServiceRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      monitoring_v3_internal::AlertPolicyServiceRetryTraits>
+      impl_;
+};
 
 /**
  * The `AlertPolicyServiceConnection` object for `AlertPolicyServiceClient`.

@@ -509,6 +509,37 @@ void SetRetryStatusCodeExpression(VarsDictionary& vars) {
   vars["retry_status_code_expression"] = retry_status_code_expression;
 }
 
+std::string TransientErrorsComment(VarsDictionary const& vars) {
+  auto loc = vars.find("retryable_status_codes");
+  if (loc == vars.end()) return {};
+  std::set<std::string> codes = absl::StrSplit(loc->second, ',');
+
+  loc = vars.find("service_name");
+  auto const service_name = loc == vars.end() ? std::string{} : loc->second;
+
+  std::string comment = R"""(
+ * In this class the following status codes are treated as transient errors:)""";
+
+  auto format = [](absl::string_view code) {
+    auto constexpr kCodeFormat = R"""(
+ * - [`%s`](@ref google::cloud::StatusCode))""";
+    return absl::StrFormat(kCodeFormat, code);
+  };
+  for (auto const& code : codes) {
+    std::pair<std::string, std::string> service_code =
+        absl::StrSplit(code, '.');
+    if (service_code.second.empty()) {
+      comment += format(service_code.first);
+      continue;
+    }
+    if (service_code.first == service_name) {
+      comment += format(service_code.second);
+      continue;
+    }
+  }
+  return comment;
+}
+
 std::string FormatAdditionalPbHeaderPaths(VarsDictionary& vars) {
   std::vector<std::string> additional_pb_header_paths;
   auto iter = vars.find("additional_proto_files");
@@ -797,6 +828,7 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_tracing_stub.h");
   SetRetryStatusCodeExpression(vars);
+  vars["transient_errors_comment"] = TransientErrorsComment(vars);
   SetLongrunningOperationServiceVars(descriptor, vars);
   return vars;
 }
