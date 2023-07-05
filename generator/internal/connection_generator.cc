@@ -98,7 +98,7 @@ class $retry_policy_name$ : public ::google::cloud::RetryPolicy {
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
  * - More than a prescribed number of transient failures is detected.
- * $transient_errors_comment$
+ *$transient_errors_comment$
  */
 class $limited_error_count_retry_policy_name$ : public $retry_policy_name$ {
  public:
@@ -145,7 +145,7 @@ class $limited_error_count_retry_policy_name$ : public $retry_policy_name$ {
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
  * - The elapsed time in the retry loop exceeds a prescribed duration.
- * $transient_errors_comment$
+ *$transient_errors_comment$
  */
 class $limited_time_retry_policy_name$ : public $retry_policy_name$ {
  public:
