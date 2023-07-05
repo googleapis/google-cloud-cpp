@@ -334,6 +334,26 @@ void ReadFilter(google::cloud::bigtable::Table table,
   (std::move(table));
 }
 
+void ReadRowsReverse(google::cloud::bigtable::Table table,
+                     std::vector<std::string> const&) {
+  //! [reverse scan] [START bigtable_reverse_scan]
+  namespace cbt = ::google::cloud::bigtable;
+  using ::google::cloud::Options;
+  using ::google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Read and print the rows.
+    for (StatusOr<cbt::Row>& row : table.ReadRows(
+             cbt::RowRange::RightOpen("phone#5c10102", "phone#5c10103"), 3,
+             cbt::Filter::PassAllFilter(),
+             Options{}.set<cbt::ReverseScanOption>(true))) {
+      if (!row) throw std::move(row).status();
+      PrintRow(*row);
+    }
+  }
+  //! [reverse scan] [END bigtable_reverse_scan]
+  (std::move(table));
+}
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = ::google::cloud::bigtable;
@@ -391,6 +411,10 @@ void RunAll(std::vector<std::string> const& argv) {
   ReadFilter(table, {});
   std::cout << "Running ReadRowsWithLimit() example" << std::endl;
   ReadRowsWithLimit(table, {"5"});
+  if (!google::cloud::bigtable::examples::UsingEmulator()) {
+    std::cout << "Running ReadRowsReverse() example" << std::endl;
+    ReadRowsReverse(table, {});
+  }
 
   std::cout << "Running ReadKeySet() example" << std::endl;
   ReadKeysSet({table.project_id(), table.instance_id(), table.table_id(),
@@ -415,6 +439,7 @@ int main(int argc, char* argv[]) try {
       MakeCommandEntry("read-row-ranges", {}, ReadRowRanges),
       MakeCommandEntry("read-row-prefix", {}, ReadRowPrefix),
       MakeCommandEntry("read-filter", {}, ReadFilter),
+      MakeCommandEntry("read-rows-reverse", {}, ReadRowsReverse),
       {"auto", RunAll},
   };
 
