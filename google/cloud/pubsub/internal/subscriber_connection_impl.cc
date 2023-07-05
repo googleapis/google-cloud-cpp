@@ -55,17 +55,16 @@ StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
 
   google::pubsub::v1::PullRequest request;
   request.set_subscription(subscription.FullName());
-  // Pubsub returns at most 1 message.
+  // Ask Pub/Sub to return at most 1 message.
   request.set_max_messages(1);
 
   auto retry_policy = current.get<pubsub::RetryPolicyOption>()->clone();
   auto backoff_policy = current.get<pubsub::BackoffPolicyOption>()->clone();
   google::cloud::Status last_status;
-  google::cloud::StatusOr<google::pubsub::v1::PullResponse> response;
   while (!retry_policy->IsExhausted()) {
     grpc::ClientContext context;
     google::cloud::internal::ConfigureContext(context, current);
-    response = stub_->Pull(context, request);
+    auto response = stub_->Pull(context, request);
 
     if (response && !response->received_messages().empty()) {
       if (response->received_messages_size() > 1) {
@@ -87,7 +86,7 @@ StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
     last_status = std::move(response).status();
     if (!retry_policy->OnFailure(last_status)) {
       break;
-    };
+    }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());
   }
   if (last_status.ok()) {
