@@ -110,8 +110,9 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::Advance() {
       // We've returned some rows and need to make sure we don't
       // request them again.
       if (reverse_) {
-        row_set_ = row_set_.Intersect(
-            bigtable::RowRange::Open("", last_read_row_key_));
+        google::bigtable::v2::RowRange range;
+        range.set_end_key_open(last_read_row_key_);
+        row_set_ = row_set_.Intersect(bigtable::RowRange(std::move(range)));
       } else {
         row_set_ = row_set_.Intersect(
             bigtable::RowRange::Open(last_read_row_key_, ""));
