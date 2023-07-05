@@ -38,17 +38,135 @@ namespace cloud {
 namespace compute_target_vpn_gateways_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using TargetVpnGatewaysRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRetryTraits>;
+/// The retry policy for `TargetVpnGatewaysConnection`.
+class TargetVpnGatewaysRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<TargetVpnGatewaysRetryPolicy> clone() const = 0;
+};
 
-using TargetVpnGatewaysLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRetryTraits>;
+/**
+ * A retry policy for `TargetVpnGatewaysConnection` based on counting errors.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - More than a prescribed number of transient failures is detected.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class TargetVpnGatewaysLimitedErrorCountRetryPolicy
+    : public TargetVpnGatewaysRetryPolicy {
+ public:
+  /**
+   * Create an instance that tolerates up to @p maximum_failures transient
+   * errors.
+   *
+   * @note Disable the retry loop by providing an instance of this policy with
+   *     @p maximum_failures == 0.
+   */
+  TargetVpnGatewaysLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using TargetVpnGatewaysLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRetryTraits>;
+  TargetVpnGatewaysLimitedErrorCountRetryPolicy(
+      TargetVpnGatewaysLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : TargetVpnGatewaysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+  TargetVpnGatewaysLimitedErrorCountRetryPolicy(
+      TargetVpnGatewaysLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : TargetVpnGatewaysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<TargetVpnGatewaysRetryPolicy> clone() const override {
+    return std::make_unique<TargetVpnGatewaysLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = TargetVpnGatewaysRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRetryTraits>
+      impl_;
+};
+
+/**
+ * A retry policy for `TargetVpnGatewaysConnection` based on elapsed time.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - The elapsed time in the retry loop exceeds a prescribed duration.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class TargetVpnGatewaysLimitedTimeRetryPolicy
+    : public TargetVpnGatewaysRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the underlying
+   *     arithmetic type used to store the number of ticks. For our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`. For our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires.
+   *     While the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit TargetVpnGatewaysLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  TargetVpnGatewaysLimitedTimeRetryPolicy(
+      TargetVpnGatewaysLimitedTimeRetryPolicy&& rhs) noexcept
+      : TargetVpnGatewaysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TargetVpnGatewaysLimitedTimeRetryPolicy(
+      TargetVpnGatewaysLimitedTimeRetryPolicy const& rhs) noexcept
+      : TargetVpnGatewaysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<TargetVpnGatewaysRetryPolicy> clone() const override {
+    return std::make_unique<TargetVpnGatewaysLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = TargetVpnGatewaysRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRetryTraits>
+      impl_;
+};
 
 /**
  * The `TargetVpnGatewaysConnection` object for `TargetVpnGatewaysClient`.
