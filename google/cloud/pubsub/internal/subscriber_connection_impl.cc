@@ -92,11 +92,10 @@ StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
   }
   if (!last_status.ok()) {
     return last_status;
-  } else {
+  } else if (last_status.ok()) {
     return google::cloud::internal::UnavailableError("no messages returned",
                                                      GCP_ERROR_INFO());
-  };
-  if (!retry_policy->IsExhausted()) {
+  } else if (!retry_policy->IsExhausted()) {
     return google::cloud::internal::RetryLoopError("Permanent error in",
                                                    __func__, last_status);
   }
