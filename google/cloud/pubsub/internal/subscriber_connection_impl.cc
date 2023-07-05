@@ -90,16 +90,16 @@ StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
     };
     std::this_thread::sleep_for(backoff_policy->OnCompletion());
   }
-  if (last_status.ok())
+  if (last_status.ok()) {
     return google::cloud::internal::UnavailableError("no messages returned",
                                                      GCP_ERROR_INFO());
-
-  if (!retry_policy->IsExhausted())
-    return google::cloud::internal::RetryLoopError("Permanent error in",
+  }
+  if (retry_policy->IsExhausted()) {
+    return google::cloud::internal::RetryLoopError("Retry policy exhausted in",
                                                    __func__, last_status);
-
-  return google::cloud::internal::RetryLoopError("Retry policy exhausted in",
-                                                 __func__, last_status);
+  }
+  return google::cloud::internal::RetryLoopError("Permanent error in", __func__,
+                                                 last_status);
 }
 
 Options SubscriberConnectionImpl::options() { return opts_; }
