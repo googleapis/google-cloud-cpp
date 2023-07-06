@@ -55,19 +55,25 @@ void MapKey(opentelemetry::nostd::string_view& key) {
 
 template <typename T>
 std::string ToString(opentelemetry::nostd::span<T const> values) {
-  return absl::StrJoin(values, "|");
+  return absl::StrCat("[", absl::StrJoin(values, ", "), "]");
 }
 template <>
 std::string ToString(
     opentelemetry::nostd::span<opentelemetry::nostd::string_view const>
         values) {
-  return absl::StrJoin(values, "|", absl::StreamFormatter());
+  return absl::StrCat(
+      R"""([")""",
+      absl::StrJoin(values, R"""(", ")""", absl::StreamFormatter()),
+      R"""("])""");
 }
 template <>
 std::string ToString(opentelemetry::nostd::span<bool const> values) {
-  return absl::StrJoin(values, "|", [](std::string* out, bool v) {
-    out->append(v ? "true" : "false");
-  });
+  return absl::StrCat("[",
+                      absl::StrJoin(values, ", ",
+                                    [](std::string* out, bool v) {
+                                      out->append(v ? "true" : "false");
+                                    }),
+                      "]");
 }
 
 class AttributeVisitor {
@@ -122,8 +128,8 @@ class AttributeVisitor {
     SetTruncatableString(*proto->mutable_string_value(), value,
                          kAttributeValueStringLimit);
   }
-  // There is no mapping from a `span<T>` to the Cloud Trace proto. We just drop
-  // these attributes.
+  // There is no mapping from a `span<T>` to the Cloud Trace proto, so we
+  // convert these attributes to strings.
   template <typename T>
   void operator()(opentelemetry::nostd::span<T> value) {
     auto* proto = ProtoOrDrop();

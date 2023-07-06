@@ -296,7 +296,7 @@ TEST(AddAttribute, HandlesCompositeBoolAttribute) {
                /*limit=*/32);
   EXPECT_THAT(
       attributes,
-      Attributes(ElementsAre(Pair("key", AttributeValue("true|false")))));
+      Attributes(ElementsAre(Pair("key", AttributeValue("[true, false]")))));
 }
 
 TEST(AddAttribute, HandlesCompositeIntAttributes) {
@@ -311,8 +311,9 @@ TEST(AddAttribute, HandlesCompositeIntAttributes) {
   for (auto const& value : values) {
     v2::Span::Attributes attributes;
     AddAttribute(attributes, "key", value, /*limit=*/32);
-    EXPECT_THAT(attributes,
-                Attributes(ElementsAre(Pair("key", AttributeValue("42|84")))));
+    EXPECT_THAT(
+        attributes,
+        Attributes(ElementsAre(Pair("key", AttributeValue("[42, 84]")))));
   }
 }
 
@@ -320,8 +321,9 @@ TEST(AddAttribute, HandlesCompositeDoubleAttributes) {
   v2::Span::Attributes attributes;
   AddAttribute(attributes, "key", MakeCompositeAttribute<double>(4.2, 8.4),
                /*limit=*/32);
-  EXPECT_THAT(attributes,
-              Attributes(ElementsAre(Pair("key", AttributeValue("4.2|8.4")))));
+  EXPECT_THAT(
+      attributes,
+      Attributes(ElementsAre(Pair("key", AttributeValue("[4.2, 8.4]")))));
 }
 
 TEST(AddAttribute, HandlesCompositeStringAttributes) {
@@ -330,8 +332,8 @@ TEST(AddAttribute, HandlesCompositeStringAttributes) {
       attributes, "key",
       MakeCompositeAttribute<opentelemetry::nostd::string_view>("s1", "s2"),
       /*limit=*/32);
-  EXPECT_THAT(attributes,
-              Attributes(ElementsAre(Pair("key", AttributeValue("s1|s2")))));
+  EXPECT_THAT(attributes, Attributes(ElementsAre(Pair(
+                              "key", AttributeValue(R"""(["s1", "s2"])""")))));
 }
 
 TEST(AddAttribute, MapsKeysForCloudTrace) {
