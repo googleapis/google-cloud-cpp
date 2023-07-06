@@ -62,6 +62,10 @@ class SqlInstancesServiceRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlInstancesFailoverRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::sql::v1::Operation> Reencrypt(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::sql::v1::DatabaseInstance> Get(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlInstancesGetRequest const& request) = 0;
@@ -151,6 +155,23 @@ class SqlInstancesServiceRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
           request) = 0;
+
+  virtual StatusOr<google::cloud::sql::v1::Operation> PerformDiskShrink(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
+  GetDiskShrinkConfig(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::sql::v1::Operation> ResetReplicaSize(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
+          request) = 0;
 };
 
 class DefaultSqlInstancesServiceRestStub : public SqlInstancesServiceRestStub {
@@ -188,6 +209,11 @@ class DefaultSqlInstancesServiceRestStub : public SqlInstancesServiceRestStub {
   StatusOr<google::cloud::sql::v1::Operation> Failover(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlInstancesFailoverRequest const& request)
+      override;
+
+  StatusOr<google::cloud::sql::v1::Operation> Reencrypt(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlInstancesReencryptRequest const& request)
       override;
 
   StatusOr<google::cloud::sql::v1::DatabaseInstance> Get(
@@ -283,6 +309,22 @@ class DefaultSqlInstancesServiceRestStub : public SqlInstancesServiceRestStub {
   StatusOr<google::cloud::sql::v1::Operation> StartExternalSync(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
+          request) override;
+
+  StatusOr<google::cloud::sql::v1::Operation> PerformDiskShrink(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+          request) override;
+
+  StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
+  GetDiskShrinkConfig(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::sql::v1::Operation> ResetReplicaSize(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
           request) override;
 
  private:

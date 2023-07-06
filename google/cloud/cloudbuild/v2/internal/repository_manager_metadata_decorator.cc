@@ -149,6 +149,14 @@ RepositoryManagerMetadata::FetchLinkableRepositories(
   return child_->FetchLinkableRepositories(context, request);
 }
 
+StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+RepositoryManagerMetadata::FetchGitRefs(
+    grpc::ClientContext& context,
+    google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
+  SetMetadata(context, "repository=" + request.repository());
+  return child_->FetchGitRefs(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

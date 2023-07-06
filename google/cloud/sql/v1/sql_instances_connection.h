@@ -204,6 +204,9 @@ class SqlInstancesServiceConnection {
   virtual StatusOr<google::cloud::sql::v1::Operation> Failover(
       google::cloud::sql::v1::SqlInstancesFailoverRequest const& request);
 
+  virtual StatusOr<google::cloud::sql::v1::Operation> Reencrypt(
+      google::cloud::sql::v1::SqlInstancesReencryptRequest const& request);
+
   virtual StatusOr<google::cloud::sql::v1::DatabaseInstance> Get(
       google::cloud::sql::v1::SqlInstancesGetRequest const& request);
 
@@ -266,6 +269,20 @@ class SqlInstancesServiceConnection {
 
   virtual StatusOr<google::cloud::sql::v1::Operation> StartExternalSync(
       google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::sql::v1::Operation> PerformDiskShrink(
+      google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+          request);
+
+  virtual StatusOr<
+      google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
+  GetDiskShrinkConfig(
+      google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::sql::v1::Operation> ResetReplicaSize(
+      google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
           request);
 };
 

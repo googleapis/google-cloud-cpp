@@ -110,6 +110,21 @@ class DataprocMetastoreConnectionImpl
   DeleteBackup(google::cloud::metastore::v1::DeleteBackupRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
+  QueryMetadata(google::cloud::metastore::v1::QueryMetadataRequest const&
+                    request) override;
+
+  future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
+  MoveTableToDatabase(
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request)
+      override;
+
+  future<StatusOr<
+      google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
+  AlterMetadataResourceLocation(
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+          request) override;
+
  private:
   std::unique_ptr<metastore_v1::DataprocMetastoreRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

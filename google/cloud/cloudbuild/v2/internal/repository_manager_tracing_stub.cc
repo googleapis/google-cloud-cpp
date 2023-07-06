@@ -209,6 +209,18 @@ RepositoryManagerTracingStub::FetchLinkableRepositories(
                            child_->FetchLinkableRepositories(context, request));
 }
 
+StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+RepositoryManagerTracingStub::FetchGitRefs(
+    grpc::ClientContext& context,
+    google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.cloudbuild.v2.RepositoryManager", "FetchGitRefs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->FetchGitRefs(context, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

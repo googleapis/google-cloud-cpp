@@ -89,7 +89,7 @@ class SqlTiersServiceClient {
   // clang-format off
   ///
   /// Lists all available machine types (tiers) for Cloud SQL, for example,
-  /// db-custom-1-3840. For more information, see
+  /// `db-custom-1-3840`. For more information, see
   /// https://cloud.google.com/sql/pricing.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this

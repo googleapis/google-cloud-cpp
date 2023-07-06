@@ -45,6 +45,11 @@ Idempotency SqlOperationsServiceConnectionIdempotencyPolicy::List(
   return Idempotency::kIdempotent;
 }
 
+Idempotency SqlOperationsServiceConnectionIdempotencyPolicy::Cancel(
+    google::cloud::sql::v1::SqlOperationsCancelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<SqlOperationsServiceConnectionIdempotencyPolicy>
 MakeDefaultSqlOperationsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SqlOperationsServiceConnectionIdempotencyPolicy>();

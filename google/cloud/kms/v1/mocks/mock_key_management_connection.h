@@ -146,6 +146,14 @@ class MockKeyManagementServiceConnection
               (google::cloud::kms::v1::DecryptRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::RawEncryptResponse>, RawEncrypt,
+              (google::cloud::kms::v1::RawEncryptRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::RawDecryptResponse>, RawDecrypt,
+              (google::cloud::kms::v1::RawDecryptRequest const& request),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>,
               AsymmetricSign,
               (google::cloud::kms::v1::AsymmetricSignRequest const& request),

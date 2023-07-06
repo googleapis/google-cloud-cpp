@@ -397,6 +397,32 @@ KeyManagementServiceConnectionImpl::Decrypt(
       request, __func__);
 }
 
+StatusOr<google::cloud::kms::v1::RawEncryptResponse>
+KeyManagementServiceConnectionImpl::RawEncrypt(
+    google::cloud::kms::v1::RawEncryptRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->RawEncrypt(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::kms::v1::RawEncryptRequest const& request) {
+        return stub_->RawEncrypt(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::kms::v1::RawDecryptResponse>
+KeyManagementServiceConnectionImpl::RawDecrypt(
+    google::cloud::kms::v1::RawDecryptRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->RawDecrypt(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::kms::v1::RawDecryptRequest const& request) {
+        return stub_->RawDecrypt(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
 KeyManagementServiceConnectionImpl::AsymmetricSign(
     google::cloud::kms::v1::AsymmetricSignRequest const& request) {

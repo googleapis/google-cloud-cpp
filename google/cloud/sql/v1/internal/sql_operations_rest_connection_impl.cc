@@ -81,6 +81,18 @@ SqlOperationsServiceRestConnectionImpl::List(
       });
 }
 
+Status SqlOperationsServiceRestConnectionImpl::Cancel(
+    google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(), backoff_policy(), idempotency_policy()->Cancel(request),
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
+        return stub_->Cancel(rest_context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1_internal
 }  // namespace cloud

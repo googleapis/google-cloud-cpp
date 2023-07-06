@@ -46,6 +46,10 @@ class SqlOperationsServiceRestMetadata : public SqlOperationsServiceRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlOperationsListRequest const& request) override;
 
+  Status Cancel(google::cloud::rest_internal::RestContext& rest_context,
+                google::cloud::sql::v1::SqlOperationsCancelRequest const&
+                    request) override;
+
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
                    std::vector<std::string> const& params = {});

@@ -287,6 +287,32 @@ DataprocMetastoreClient::DeleteBackup(
   return connection_->DeleteBackup(request);
 }
 
+future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
+DataprocMetastoreClient::QueryMetadata(
+    google::cloud::metastore::v1::QueryMetadataRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->QueryMetadata(request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
+DataprocMetastoreClient::MoveTableToDatabase(
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MoveTableToDatabase(request);
+}
+
+future<StatusOr<
+    google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
+DataprocMetastoreClient::AlterMetadataResourceLocation(
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AlterMetadataResourceLocation(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace metastore_v1
 }  // namespace cloud

@@ -135,8 +135,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L848}
-  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L244}
+  /// [google.cloud.metastore.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L909}
+  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
   ///
   // clang-format on
   StreamRange<google::cloud::metastore::v1::Service> ListServices(
@@ -175,8 +175,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L848}
-  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L244}
+  /// [google.cloud.metastore.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L909}
+  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
   ///
   // clang-format on
   StreamRange<google::cloud::metastore::v1::Service> ListServices(
@@ -205,8 +205,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L902}
-  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L244}
+  /// [google.cloud.metastore.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L963}
+  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
   ///
   // clang-format on
   StatusOr<google::cloud::metastore::v1::Service> GetService(
@@ -236,8 +236,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L902}
-  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L244}
+  /// [google.cloud.metastore.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L963}
+  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
   ///
   // clang-format on
   StatusOr<google::cloud::metastore::v1::Service> GetService(
@@ -281,8 +281,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L917}
-  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L244}
+  /// [google.cloud.metastore.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L978}
+  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Service>> CreateService(
@@ -320,8 +320,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L917}
-  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L244}
+  /// [google.cloud.metastore.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L978}
+  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Service>> CreateService(
@@ -361,8 +361,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L244}
-  /// [google.cloud.metastore.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L959}
+  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
+  /// [google.cloud.metastore.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1020}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Service>> UpdateService(
@@ -399,8 +399,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L244}
-  /// [google.cloud.metastore.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L959}
+  /// [google.cloud.metastore.v1.Service]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L286}
+  /// [google.cloud.metastore.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1020}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Service>> UpdateService(
@@ -435,8 +435,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L991}
-  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1383}
+  /// [google.cloud.metastore.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1052}
+  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1444}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -472,8 +472,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L991}
-  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1383}
+  /// [google.cloud.metastore.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1052}
+  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1444}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -512,8 +512,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.ListMetadataImportsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1020}
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L570}
+  /// [google.cloud.metastore.v1.ListMetadataImportsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1081}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
   ///
   // clang-format on
   StreamRange<google::cloud::metastore::v1::MetadataImport> ListMetadataImports(
@@ -552,8 +552,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.ListMetadataImportsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1020}
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L570}
+  /// [google.cloud.metastore.v1.ListMetadataImportsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1081}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
   ///
   // clang-format on
   StreamRange<google::cloud::metastore::v1::MetadataImport> ListMetadataImports(
@@ -582,8 +582,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.GetMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1073}
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L570}
+  /// [google.cloud.metastore.v1.GetMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1134}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
   ///
   // clang-format on
   StatusOr<google::cloud::metastore::v1::MetadataImport> GetMetadataImport(
@@ -613,8 +613,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.GetMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1073}
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L570}
+  /// [google.cloud.metastore.v1.GetMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1134}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
   ///
   // clang-format on
   StatusOr<google::cloud::metastore::v1::MetadataImport> GetMetadataImport(
@@ -658,8 +658,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.CreateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1088}
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L570}
+  /// [google.cloud.metastore.v1.CreateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1149}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
@@ -698,8 +698,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.CreateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1088}
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L570}
+  /// [google.cloud.metastore.v1.CreateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1149}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
@@ -741,8 +741,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L570}
-  /// [google.cloud.metastore.v1.UpdateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1130}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
+  /// [google.cloud.metastore.v1.UpdateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1191}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
@@ -781,8 +781,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L570}
-  /// [google.cloud.metastore.v1.UpdateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1130}
+  /// [google.cloud.metastore.v1.MetadataImport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L628}
+  /// [google.cloud.metastore.v1.UpdateMetadataImportRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1191}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
@@ -820,8 +820,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.ExportMetadataRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1300}
-  /// [google.cloud.metastore.v1.MetadataExport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L650}
+  /// [google.cloud.metastore.v1.ExportMetadataRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1361}
+  /// [google.cloud.metastore.v1.MetadataExport]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L711}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataExport>> ExportMetadata(
@@ -860,8 +860,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Restore]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L749}
-  /// [google.cloud.metastore.v1.RestoreServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1341}
+  /// [google.cloud.metastore.v1.Restore]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L810}
+  /// [google.cloud.metastore.v1.RestoreServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1402}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
@@ -897,8 +897,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Restore]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L749}
-  /// [google.cloud.metastore.v1.RestoreServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1341}
+  /// [google.cloud.metastore.v1.Restore]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L810}
+  /// [google.cloud.metastore.v1.RestoreServiceRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1402}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
@@ -936,8 +936,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L694}
-  /// [google.cloud.metastore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1162}
+  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L755}
+  /// [google.cloud.metastore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1223}
   ///
   // clang-format on
   StreamRange<google::cloud::metastore::v1::Backup> ListBackups(
@@ -976,8 +976,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L694}
-  /// [google.cloud.metastore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1162}
+  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L755}
+  /// [google.cloud.metastore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1223}
   ///
   // clang-format on
   StreamRange<google::cloud::metastore::v1::Backup> ListBackups(
@@ -1006,8 +1006,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L694}
-  /// [google.cloud.metastore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1215}
+  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L755}
+  /// [google.cloud.metastore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1276}
   ///
   // clang-format on
   StatusOr<google::cloud::metastore::v1::Backup> GetBackup(
@@ -1037,8 +1037,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L694}
-  /// [google.cloud.metastore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1215}
+  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L755}
+  /// [google.cloud.metastore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1276}
   ///
   // clang-format on
   StatusOr<google::cloud::metastore::v1::Backup> GetBackup(
@@ -1081,8 +1081,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L694}
-  /// [google.cloud.metastore.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1230}
+  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L755}
+  /// [google.cloud.metastore.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1291}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Backup>> CreateBackup(
@@ -1120,8 +1120,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L694}
-  /// [google.cloud.metastore.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1230}
+  /// [google.cloud.metastore.v1.Backup]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L755}
+  /// [google.cloud.metastore.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1291}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Backup>> CreateBackup(
@@ -1156,8 +1156,8 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1271}
-  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1383}
+  /// [google.cloud.metastore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1332}
+  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1444}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -1193,13 +1193,135 @@ class DataprocMetastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1271}
-  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1383}
+  /// [google.cloud.metastore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1332}
+  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1444}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteBackup(google::cloud::metastore::v1::DeleteBackupRequest const& request,
                Options opts = {});
+
+  // clang-format off
+  ///
+  /// Query DPMS metadata.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.metastore.v1.QueryMetadataRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.metastore.v1.QueryMetadataResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.metastore.v1.QueryMetadataRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1508}
+  /// [google.cloud.metastore.v1.QueryMetadataResponse]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1527}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
+  QueryMetadata(
+      google::cloud::metastore::v1::QueryMetadataRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Move a table to another database.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.metastore.v1.MoveTableToDatabaseRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.metastore.v1.MoveTableToDatabaseResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.metastore.v1.MoveTableToDatabaseRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1547}
+  /// [google.cloud.metastore.v1.MoveTableToDatabaseResponse]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1571}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
+  MoveTableToDatabase(
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Alter metadata resource location. The metadata resource can be a database,
+  /// table, or partition. This functionality only updates the parent directory
+  /// for the respective metadata resource and does not transfer any existing
+  /// data to the new location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.metastore.v1.AlterMetadataResourceLocationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.metastore.v1.AlterMetadataResourceLocationResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.metastore.v1.AlterMetadataResourceLocationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1575}
+  /// [google.cloud.metastore.v1.AlterMetadataResourceLocationResponse]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1602}
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
+  AlterMetadataResourceLocation(
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DataprocMetastoreConnection> connection_;

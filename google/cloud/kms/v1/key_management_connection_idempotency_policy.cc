@@ -148,6 +148,16 @@ Idempotency KeyManagementServiceConnectionIdempotencyPolicy::Decrypt(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::RawEncrypt(
+    google::cloud::kms::v1::RawEncryptRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::RawDecrypt(
+    google::cloud::kms::v1::RawDecryptRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency KeyManagementServiceConnectionIdempotencyPolicy::AsymmetricSign(
     google::cloud::kms::v1::AsymmetricSignRequest const&) {
   return Idempotency::kNonIdempotent;

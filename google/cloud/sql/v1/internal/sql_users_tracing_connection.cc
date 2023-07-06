@@ -39,6 +39,13 @@ SqlUsersServiceTracingConnection::Delete(
   return internal::EndSpan(*span, child_->Delete(request));
 }
 
+StatusOr<google::cloud::sql::v1::User> SqlUsersServiceTracingConnection::Get(
+    google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+  auto span = internal::MakeSpan("sql_v1::SqlUsersServiceConnection::Get");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Get(request));
+}
+
 StatusOr<google::cloud::sql::v1::Operation>
 SqlUsersServiceTracingConnection::Insert(
     google::cloud::sql::v1::SqlUsersInsertRequest const& request) {

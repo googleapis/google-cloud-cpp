@@ -50,6 +50,10 @@ class MockSqlUsersServiceConnection : public sql_v1::SqlUsersServiceConnection {
               (google::cloud::sql::v1::SqlUsersDeleteRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::User>, Get,
+              (google::cloud::sql::v1::SqlUsersGetRequest const& request),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, Insert,
               (google::cloud::sql::v1::SqlUsersInsertRequest const& request),
               (override));

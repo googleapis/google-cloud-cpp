@@ -108,6 +108,19 @@ SqlInstancesServiceRestLogging::Failover(
       rest_context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestLogging::Reencrypt(
+    rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
+        return child_->Reencrypt(rest_context, request);
+      },
+      rest_context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::sql::v1::DatabaseInstance>
 SqlInstancesServiceRestLogging::Get(
     rest_internal::RestContext& rest_context,
@@ -350,6 +363,49 @@ SqlInstancesServiceRestLogging::StartExternalSync(
              google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
                  request) {
         return child_->StartExternalSync(rest_context, request);
+      },
+      rest_context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestLogging::PerformDiskShrink(
+    rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+                 request) {
+        return child_->PerformDiskShrink(rest_context, request);
+      },
+      rest_context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
+SqlInstancesServiceRestLogging::GetDiskShrinkConfig(
+    rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+              request) {
+        return child_->GetDiskShrinkConfig(rest_context, request);
+      },
+      rest_context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestLogging::ResetReplicaSize(
+    rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
+                 request) {
+        return child_->ResetReplicaSize(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }

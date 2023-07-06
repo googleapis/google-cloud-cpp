@@ -120,6 +120,11 @@ class RepositoryManagerStub {
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
           request) = 0;
 
+  virtual StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+  FetchGitRefs(
+      grpc::ClientContext& context,
+      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -215,6 +220,11 @@ class DefaultRepositoryManagerStub : public RepositoryManagerStub {
       grpc::ClientContext& client_context,
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
           request) override;
+
+  StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> FetchGitRefs(
+      grpc::ClientContext& client_context,
+      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

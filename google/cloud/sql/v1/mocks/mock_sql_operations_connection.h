@@ -54,6 +54,11 @@ class MockSqlOperationsServiceConnection
   MOCK_METHOD(StreamRange<google::cloud::sql::v1::Operation>, List,
               (google::cloud::sql::v1::SqlOperationsListRequest request),
               (override));
+
+  MOCK_METHOD(
+      Status, Cancel,
+      (google::cloud::sql::v1::SqlOperationsCancelRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

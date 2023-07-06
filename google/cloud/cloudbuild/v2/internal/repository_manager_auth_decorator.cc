@@ -211,6 +211,15 @@ RepositoryManagerAuth::FetchLinkableRepositories(
   return child_->FetchLinkableRepositories(context, request);
 }
 
+StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+RepositoryManagerAuth::FetchGitRefs(
+    grpc::ClientContext& context,
+    google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchGitRefs(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

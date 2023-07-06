@@ -381,6 +381,18 @@ RepositoryManagerConnectionImpl::FetchLinkableRepositories(
       });
 }
 
+StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+RepositoryManagerConnectionImpl::FetchGitRefs(
+    google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->FetchGitRefs(request),
+      [this](grpc::ClientContext& context,
+             google::devtools::cloudbuild::v2::FetchGitRefsRequest const&
+                 request) { return stub_->FetchGitRefs(context, request); },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_v2_internal
 }  // namespace cloud

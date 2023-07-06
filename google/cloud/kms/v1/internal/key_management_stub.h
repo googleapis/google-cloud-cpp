@@ -130,6 +130,14 @@ class KeyManagementServiceStub {
       grpc::ClientContext& context,
       google::cloud::kms::v1::DecryptRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::kms::v1::RawEncryptResponse> RawEncrypt(
+      grpc::ClientContext& context,
+      google::cloud::kms::v1::RawEncryptRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::kms::v1::RawDecryptResponse> RawDecrypt(
+      grpc::ClientContext& context,
+      google::cloud::kms::v1::RawDecryptRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
   AsymmetricSign(
       grpc::ClientContext& context,
@@ -254,6 +262,14 @@ class DefaultKeyManagementServiceStub : public KeyManagementServiceStub {
   StatusOr<google::cloud::kms::v1::DecryptResponse> Decrypt(
       grpc::ClientContext& client_context,
       google::cloud::kms::v1::DecryptRequest const& request) override;
+
+  StatusOr<google::cloud::kms::v1::RawEncryptResponse> RawEncrypt(
+      grpc::ClientContext& client_context,
+      google::cloud::kms::v1::RawEncryptRequest const& request) override;
+
+  StatusOr<google::cloud::kms::v1::RawDecryptResponse> RawDecrypt(
+      grpc::ClientContext& client_context,
+      google::cloud::kms::v1::RawDecryptRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::AsymmetricSignResponse> AsymmetricSign(
       grpc::ClientContext& client_context,

@@ -121,6 +121,25 @@ class DataprocMetastoreAuth : public DataprocMetastoreStub {
       google::cloud::metastore::v1::DeleteBackupRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncQueryMetadata(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::metastore::v1::QueryMetadataRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncMoveTableToDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncAlterMetadataResourceLocation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

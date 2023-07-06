@@ -39,6 +39,11 @@ Idempotency SqlUsersServiceConnectionIdempotencyPolicy::Delete(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SqlUsersServiceConnectionIdempotencyPolicy::Get(
+    google::cloud::sql::v1::SqlUsersGetRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency SqlUsersServiceConnectionIdempotencyPolicy::Insert(
     google::cloud::sql::v1::SqlUsersInsertRequest const&) {
   return Idempotency::kNonIdempotent;

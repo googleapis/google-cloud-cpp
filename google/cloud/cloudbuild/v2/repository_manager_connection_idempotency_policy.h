@@ -78,6 +78,9 @@ class RepositoryManagerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency FetchLinkableRepositories(
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest
           request);
+
+  virtual google::cloud::Idempotency FetchGitRefs(
+      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request);
 };
 
 std::unique_ptr<RepositoryManagerConnectionIdempotencyPolicy>

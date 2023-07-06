@@ -81,6 +81,16 @@ class DataprocMetastoreConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteBackup(
       google::cloud::metastore::v1::DeleteBackupRequest const& request);
+
+  virtual google::cloud::Idempotency QueryMetadata(
+      google::cloud::metastore::v1::QueryMetadataRequest const& request);
+
+  virtual google::cloud::Idempotency MoveTableToDatabase(
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request);
+
+  virtual google::cloud::Idempotency AlterMetadataResourceLocation(
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+          request);
 };
 
 std::unique_ptr<DataprocMetastoreConnectionIdempotencyPolicy>

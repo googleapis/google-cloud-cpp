@@ -128,6 +128,12 @@ class MockRepositoryManagerConnection
       (google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>,
+      FetchGitRefs,
+      (google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -192,6 +192,9 @@ class SqlOperationsServiceConnection {
 
   virtual StreamRange<google::cloud::sql::v1::Operation> List(
       google::cloud::sql::v1::SqlOperationsListRequest request);
+
+  virtual Status Cancel(
+      google::cloud::sql::v1::SqlOperationsCancelRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

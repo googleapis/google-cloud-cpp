@@ -101,6 +101,12 @@ class KeyManagementServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency Decrypt(
       google::cloud::kms::v1::DecryptRequest const& request);
 
+  virtual google::cloud::Idempotency RawEncrypt(
+      google::cloud::kms::v1::RawEncryptRequest const& request);
+
+  virtual google::cloud::Idempotency RawDecrypt(
+      google::cloud::kms::v1::RawDecryptRequest const& request);
+
   virtual google::cloud::Idempotency AsymmetricSign(
       google::cloud::kms::v1::AsymmetricSignRequest const& request);
 

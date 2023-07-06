@@ -281,6 +281,30 @@ KeyManagementServiceTracingStub::Decrypt(
   return internal::EndSpan(context, *span, child_->Decrypt(context, request));
 }
 
+StatusOr<google::cloud::kms::v1::RawEncryptResponse>
+KeyManagementServiceTracingStub::RawEncrypt(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::RawEncryptRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
+                                     "RawEncrypt");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->RawEncrypt(context, request));
+}
+
+StatusOr<google::cloud::kms::v1::RawDecryptResponse>
+KeyManagementServiceTracingStub::RawDecrypt(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::RawDecryptRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
+                                     "RawDecrypt");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->RawDecrypt(context, request));
+}
+
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
 KeyManagementServiceTracingStub::AsymmetricSign(
     grpc::ClientContext& context,
