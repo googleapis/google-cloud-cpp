@@ -54,7 +54,7 @@ void BM_Crc32cDuplicateNonAbseil(benchmark::State& state) {
                            buffer.size());
     }
   }
-  benchmark::DoNotOptimize(std::move(crc));
+  benchmark::DoNotOptimize(crc);
 }
 BENCHMARK(BM_Crc32cDuplicateNonAbseil);
 
@@ -70,7 +70,7 @@ void BM_Crc32cDuplicate(benchmark::State& state) {
       crc = ExtendCrc32c(crc, buffer);
     }
   }
-  benchmark::DoNotOptimize(std::move(crc));
+  benchmark::DoNotOptimize(crc);
 }
 BENCHMARK(BM_Crc32cDuplicate);
 
@@ -86,7 +86,7 @@ void BM_Crc32cConcat(benchmark::State& state) {
       }
     }
   }
-  benchmark::DoNotOptimize(std::move(crc));
+  benchmark::DoNotOptimize(crc);
 }
 BENCHMARK(BM_Crc32cConcat);
 
