@@ -260,6 +260,23 @@ RepositoryManagerClient::FetchLinkableRepositories(
   return connection_->FetchLinkableRepositories(std::move(request));
 }
 
+StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+RepositoryManagerClient::FetchGitRefs(std::string const& repository,
+                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v2::FetchGitRefsRequest request;
+  request.set_repository(repository);
+  return connection_->FetchGitRefs(request);
+}
+
+StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+RepositoryManagerClient::FetchGitRefs(
+    google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchGitRefs(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_v2
 }  // namespace cloud

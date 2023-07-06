@@ -150,6 +150,31 @@ DataprocMetastoreConnection::DeleteBackup(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
+DataprocMetastoreConnection::QueryMetadata(
+    google::cloud::metastore::v1::QueryMetadataRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
+DataprocMetastoreConnection::MoveTableToDatabase(
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
+DataprocMetastoreConnection::AlterMetadataResourceLocation(
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<DataprocMetastoreConnection> MakeDataprocMetastoreConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

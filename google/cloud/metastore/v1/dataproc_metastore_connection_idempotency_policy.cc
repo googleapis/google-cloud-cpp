@@ -109,6 +109,22 @@ Idempotency DataprocMetastoreConnectionIdempotencyPolicy::DeleteBackup(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DataprocMetastoreConnectionIdempotencyPolicy::QueryMetadata(
+    google::cloud::metastore::v1::QueryMetadataRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataprocMetastoreConnectionIdempotencyPolicy::MoveTableToDatabase(
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DataprocMetastoreConnectionIdempotencyPolicy::AlterMetadataResourceLocation(
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<DataprocMetastoreConnectionIdempotencyPolicy>
 MakeDefaultDataprocMetastoreConnectionIdempotencyPolicy() {
   return std::make_unique<DataprocMetastoreConnectionIdempotencyPolicy>();

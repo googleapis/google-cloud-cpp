@@ -176,6 +176,38 @@ DataprocMetastoreTracingConnection::DeleteBackup(
   return internal::EndSpan(std::move(span), child_->DeleteBackup(request));
 }
 
+future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
+DataprocMetastoreTracingConnection::QueryMetadata(
+    google::cloud::metastore::v1::QueryMetadataRequest const& request) {
+  auto span = internal::MakeSpan(
+      "metastore_v1::DataprocMetastoreConnection::QueryMetadata");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->QueryMetadata(request));
+}
+
+future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
+DataprocMetastoreTracingConnection::MoveTableToDatabase(
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
+  auto span = internal::MakeSpan(
+      "metastore_v1::DataprocMetastoreConnection::MoveTableToDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->MoveTableToDatabase(request));
+}
+
+future<StatusOr<
+    google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
+DataprocMetastoreTracingConnection::AlterMetadataResourceLocation(
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "metastore_v1::DataprocMetastoreConnection::"
+      "AlterMetadataResourceLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AlterMetadataResourceLocation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<metastore_v1::DataprocMetastoreConnection>

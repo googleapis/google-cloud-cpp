@@ -51,6 +51,14 @@ SqlOperationsServiceTracingConnection::List(
       std::move(span), std::move(sr));
 }
 
+Status SqlOperationsServiceTracingConnection::Cancel(
+    google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlOperationsServiceConnection::Cancel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Cancel(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<sql_v1::SqlOperationsServiceConnection>

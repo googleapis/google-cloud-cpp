@@ -36,7 +36,7 @@ namespace cloudbuild_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Manages connections to source code repostiories.
+/// Manages connections to source code repositories.
 ///
 /// @par Equality
 ///
@@ -119,8 +119,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L195}
-  /// [google.devtools.cloudbuild.v2.CreateConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L425}
+  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L203}
+  /// [google.devtools.cloudbuild.v2.CreateConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L499}
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
@@ -159,8 +159,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L195}
-  /// [google.devtools.cloudbuild.v2.CreateConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L425}
+  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L203}
+  /// [google.devtools.cloudbuild.v2.CreateConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L499}
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
@@ -188,8 +188,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L195}
-  /// [google.devtools.cloudbuild.v2.GetConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L446}
+  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L203}
+  /// [google.devtools.cloudbuild.v2.GetConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L520}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
@@ -219,8 +219,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L195}
-  /// [google.devtools.cloudbuild.v2.GetConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L446}
+  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L203}
+  /// [google.devtools.cloudbuild.v2.GetConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L520}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
@@ -256,8 +256,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L195}
-  /// [google.devtools.cloudbuild.v2.ListConnectionsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L458}
+  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L203}
+  /// [google.devtools.cloudbuild.v2.ListConnectionsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L532}
   ///
   // clang-format on
   StreamRange<google::devtools::cloudbuild::v2::Connection> ListConnections(
@@ -296,8 +296,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L195}
-  /// [google.devtools.cloudbuild.v2.ListConnectionsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L458}
+  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L203}
+  /// [google.devtools.cloudbuild.v2.ListConnectionsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L532}
   ///
   // clang-format on
   StreamRange<google::devtools::cloudbuild::v2::Connection> ListConnections(
@@ -330,8 +330,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L195}
-  /// [google.devtools.cloudbuild.v2.UpdateConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L485}
+  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L203}
+  /// [google.devtools.cloudbuild.v2.UpdateConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L559}
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
@@ -369,8 +369,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L195}
-  /// [google.devtools.cloudbuild.v2.UpdateConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L485}
+  /// [google.devtools.cloudbuild.v2.Connection]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L203}
+  /// [google.devtools.cloudbuild.v2.UpdateConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L559}
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
@@ -404,7 +404,7 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.DeleteConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L506}
+  /// [google.devtools.cloudbuild.v2.DeleteConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L580}
   /// [google.devtools.cloudbuild.v2.OperationMetadata]: @googleapis_reference_link{google/devtools/cloudbuild/v2/cloudbuild.proto#L55}
   ///
   // clang-format on
@@ -441,7 +441,7 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.DeleteConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L506}
+  /// [google.devtools.cloudbuild.v2.DeleteConnectionRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L580}
   /// [google.devtools.cloudbuild.v2.OperationMetadata]: @googleapis_reference_link{google/devtools/cloudbuild/v2/cloudbuild.proto#L55}
   ///
   // clang-format on
@@ -482,8 +482,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L526}
-  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L378}
+  /// [google.devtools.cloudbuild.v2.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L600}
+  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L432}
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
@@ -522,8 +522,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L526}
-  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L378}
+  /// [google.devtools.cloudbuild.v2.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L600}
+  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L432}
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
@@ -560,8 +560,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.BatchCreateRepositoriesRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L548}
-  /// [google.devtools.cloudbuild.v2.BatchCreateRepositoriesResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L566}
+  /// [google.devtools.cloudbuild.v2.BatchCreateRepositoriesRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L622}
+  /// [google.devtools.cloudbuild.v2.BatchCreateRepositoriesResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L640}
   ///
   // clang-format on
   future<StatusOr<
@@ -603,8 +603,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.BatchCreateRepositoriesRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L548}
-  /// [google.devtools.cloudbuild.v2.BatchCreateRepositoriesResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L566}
+  /// [google.devtools.cloudbuild.v2.BatchCreateRepositoriesRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L622}
+  /// [google.devtools.cloudbuild.v2.BatchCreateRepositoriesResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L640}
   ///
   // clang-format on
   future<StatusOr<
@@ -634,8 +634,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L572}
-  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L378}
+  /// [google.devtools.cloudbuild.v2.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L646}
+  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L432}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudbuild::v2::Repository> GetRepository(
@@ -665,8 +665,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L572}
-  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L378}
+  /// [google.devtools.cloudbuild.v2.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L646}
+  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L432}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudbuild::v2::Repository> GetRepository(
@@ -702,8 +702,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L584}
-  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L378}
+  /// [google.devtools.cloudbuild.v2.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L658}
+  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L432}
   ///
   // clang-format on
   StreamRange<google::devtools::cloudbuild::v2::Repository> ListRepositories(
@@ -742,8 +742,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L584}
-  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L378}
+  /// [google.devtools.cloudbuild.v2.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L658}
+  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L432}
   ///
   // clang-format on
   StreamRange<google::devtools::cloudbuild::v2::Repository> ListRepositories(
@@ -776,7 +776,7 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L617}
+  /// [google.devtools.cloudbuild.v2.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L691}
   /// [google.devtools.cloudbuild.v2.OperationMetadata]: @googleapis_reference_link{google/devtools/cloudbuild/v2/cloudbuild.proto#L55}
   ///
   // clang-format on
@@ -813,7 +813,7 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L617}
+  /// [google.devtools.cloudbuild.v2.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L691}
   /// [google.devtools.cloudbuild.v2.OperationMetadata]: @googleapis_reference_link{google/devtools/cloudbuild/v2/cloudbuild.proto#L55}
   ///
   // clang-format on
@@ -842,8 +842,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.FetchReadWriteTokenRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L637}
-  /// [google.devtools.cloudbuild.v2.FetchReadWriteTokenResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L670}
+  /// [google.devtools.cloudbuild.v2.FetchReadWriteTokenRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L711}
+  /// [google.devtools.cloudbuild.v2.FetchReadWriteTokenResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L744}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
@@ -873,8 +873,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.FetchReadWriteTokenRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L637}
-  /// [google.devtools.cloudbuild.v2.FetchReadWriteTokenResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L670}
+  /// [google.devtools.cloudbuild.v2.FetchReadWriteTokenRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L711}
+  /// [google.devtools.cloudbuild.v2.FetchReadWriteTokenResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L744}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
@@ -903,8 +903,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.FetchReadTokenRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L649}
-  /// [google.devtools.cloudbuild.v2.FetchReadTokenResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L661}
+  /// [google.devtools.cloudbuild.v2.FetchReadTokenRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L723}
+  /// [google.devtools.cloudbuild.v2.FetchReadTokenResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L735}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
@@ -934,8 +934,8 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.FetchReadTokenRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L649}
-  /// [google.devtools.cloudbuild.v2.FetchReadTokenResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L661}
+  /// [google.devtools.cloudbuild.v2.FetchReadTokenRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L723}
+  /// [google.devtools.cloudbuild.v2.FetchReadTokenResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L735}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
@@ -977,14 +977,73 @@ class RepositoryManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudbuild.v2.FetchLinkableRepositoriesRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L283}
-  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L378}
+  /// [google.devtools.cloudbuild.v2.FetchLinkableRepositoriesRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L295}
+  /// [google.devtools.cloudbuild.v2.Repository]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L432}
   ///
   // clang-format on
   StreamRange<google::devtools::cloudbuild::v2::Repository>
   FetchLinkableRepositories(
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest
           request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fetch the list of branches or tags for a given repository.
+  ///
+  /// @param repository  Required. The resource name of the repository in the format
+  ///  `projects/*/locations/*/connections/*/repositories/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v2.FetchGitRefsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v2.FetchGitRefsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L772}
+  /// [google.devtools.cloudbuild.v2.FetchGitRefsResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L799}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> FetchGitRefs(
+      std::string const& repository, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fetch the list of branches or tags for a given repository.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v2.FetchGitRefsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v2.FetchGitRefsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v2.FetchGitRefsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L772}
+  /// [google.devtools.cloudbuild.v2.FetchGitRefsResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v2/repositories.proto#L799}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> FetchGitRefs(
+      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request,
       Options opts = {});
 
  private:

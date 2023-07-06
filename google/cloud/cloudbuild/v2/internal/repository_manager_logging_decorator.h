@@ -114,6 +114,11 @@ class RepositoryManagerLogging : public RepositoryManagerStub {
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
           request) override;
 
+  StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> FetchGitRefs(
+      grpc::ClientContext& context,
+      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

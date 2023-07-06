@@ -102,6 +102,11 @@ RepositoryManagerConnectionIdempotencyPolicy::FetchLinkableRepositories(
   return Idempotency::kIdempotent;
 }
 
+Idempotency RepositoryManagerConnectionIdempotencyPolicy::FetchGitRefs(
+    google::devtools::cloudbuild::v2::FetchGitRefsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<RepositoryManagerConnectionIdempotencyPolicy>
 MakeDefaultRepositoryManagerConnectionIdempotencyPolicy() {
   return std::make_unique<RepositoryManagerConnectionIdempotencyPolicy>();

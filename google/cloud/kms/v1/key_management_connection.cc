@@ -170,6 +170,18 @@ KeyManagementServiceConnection::Decrypt(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::kms::v1::RawEncryptResponse>
+KeyManagementServiceConnection::RawEncrypt(
+    google::cloud::kms::v1::RawEncryptRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::kms::v1::RawDecryptResponse>
+KeyManagementServiceConnection::RawDecrypt(
+    google::cloud::kms::v1::RawDecryptRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
 KeyManagementServiceConnection::AsymmetricSign(
     google::cloud::kms::v1::AsymmetricSignRequest const&) {

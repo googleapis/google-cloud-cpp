@@ -133,6 +133,12 @@ RepositoryManagerConnection::FetchLinkableRepositories(
       StreamRange<google::devtools::cloudbuild::v2::Repository>>();
 }
 
+StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+RepositoryManagerConnection::FetchGitRefs(
+    google::devtools::cloudbuild::v2::FetchGitRefsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<RepositoryManagerConnection> MakeRepositoryManagerConnection(
     ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

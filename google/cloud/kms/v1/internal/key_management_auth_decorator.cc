@@ -219,6 +219,24 @@ KeyManagementServiceAuth::Decrypt(
   return child_->Decrypt(context, request);
 }
 
+StatusOr<google::cloud::kms::v1::RawEncryptResponse>
+KeyManagementServiceAuth::RawEncrypt(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::RawEncryptRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RawEncrypt(context, request);
+}
+
+StatusOr<google::cloud::kms::v1::RawDecryptResponse>
+KeyManagementServiceAuth::RawDecrypt(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::RawDecryptRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RawDecrypt(context, request);
+}
+
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
 KeyManagementServiceAuth::AsymmetricSign(
     grpc::ClientContext& context,

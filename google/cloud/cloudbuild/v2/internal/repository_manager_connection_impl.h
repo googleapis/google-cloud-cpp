@@ -113,6 +113,10 @@ class RepositoryManagerConnectionImpl
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest
           request) override;
 
+  StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> FetchGitRefs(
+      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request)
+      override;
+
  private:
   std::unique_ptr<cloudbuild_v2::RepositoryManagerRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

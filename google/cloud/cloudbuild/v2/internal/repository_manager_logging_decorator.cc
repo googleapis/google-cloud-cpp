@@ -211,6 +211,17 @@ RepositoryManagerLogging::FetchLinkableRepositories(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+RepositoryManagerLogging::FetchGitRefs(
+    grpc::ClientContext& context,
+    google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::devtools::cloudbuild::v2::FetchGitRefsRequest const&
+                 request) { return child_->FetchGitRefs(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RepositoryManagerLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

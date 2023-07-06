@@ -112,8 +112,8 @@ class SqlBackupRunsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlBackupRunsDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L71}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlBackupRunsDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L72}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Delete(
@@ -144,8 +144,8 @@ class SqlBackupRunsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.BackupRun]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L125}
-  /// [google.cloud.sql.v1.SqlBackupRunsGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L85}
+  /// [google.cloud.sql.v1.BackupRun]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L126}
+  /// [google.cloud.sql.v1.SqlBackupRunsGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L86}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::BackupRun> Get(
@@ -176,8 +176,8 @@ class SqlBackupRunsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlBackupRunsInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L97}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlBackupRunsInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L98}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Insert(
@@ -210,8 +210,8 @@ class SqlBackupRunsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.BackupRunsListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L187}
-  /// [google.cloud.sql.v1.SqlBackupRunsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L108}
+  /// [google.cloud.sql.v1.BackupRunsListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L193}
+  /// [google.cloud.sql.v1.SqlBackupRunsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L109}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::BackupRunsListResponse> List(

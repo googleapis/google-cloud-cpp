@@ -42,6 +42,9 @@ class SqlOperationsServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency List(
       google::cloud::sql::v1::SqlOperationsListRequest request);
+
+  virtual google::cloud::Idempotency Cancel(
+      google::cloud::sql::v1::SqlOperationsCancelRequest const& request);
 };
 
 std::unique_ptr<SqlOperationsServiceConnectionIdempotencyPolicy>

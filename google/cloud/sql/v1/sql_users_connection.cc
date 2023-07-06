@@ -38,6 +38,11 @@ StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceConnection::Delete(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::sql::v1::User> SqlUsersServiceConnection::Get(
+    google::cloud::sql::v1::SqlUsersGetRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceConnection::Insert(
     google::cloud::sql::v1::SqlUsersInsertRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");

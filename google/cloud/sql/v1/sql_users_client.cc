@@ -39,6 +39,12 @@ StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceClient::Delete(
   return connection_->Delete(request);
 }
 
+StatusOr<google::cloud::sql::v1::User> SqlUsersServiceClient::Get(
+    google::cloud::sql::v1::SqlUsersGetRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Get(request);
+}
+
 StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceClient::Insert(
     google::cloud::sql::v1::SqlUsersInsertRequest const& request,
     Options opts) {

@@ -76,6 +76,14 @@ StatusOr<google::cloud::sql::v1::Operation> SqlInstancesServiceClient::Failover(
   return connection_->Failover(request);
 }
 
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceClient::Reencrypt(
+    google::cloud::sql::v1::SqlInstancesReencryptRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Reencrypt(request);
+}
+
 StatusOr<google::cloud::sql::v1::DatabaseInstance>
 SqlInstancesServiceClient::Get(
     google::cloud::sql::v1::SqlInstancesGetRequest const& request,
@@ -223,6 +231,31 @@ SqlInstancesServiceClient::StartExternalSync(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartExternalSync(request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceClient::PerformDiskShrink(
+    google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PerformDiskShrink(request);
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
+SqlInstancesServiceClient::GetDiskShrinkConfig(
+    google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDiskShrinkConfig(request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceClient::ResetReplicaSize(
+    google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResetReplicaSize(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

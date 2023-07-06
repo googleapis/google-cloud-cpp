@@ -242,6 +242,10 @@ class RepositoryManagerConnection {
   FetchLinkableRepositories(
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest
           request);
+
+  virtual StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+  FetchGitRefs(
+      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request);
 };
 
 /**

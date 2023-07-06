@@ -76,6 +76,11 @@ class MockSqlInstancesServiceConnection
       (google::cloud::sql::v1::SqlInstancesFailoverRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::sql::v1::Operation>, Reencrypt,
+      (google::cloud::sql::v1::SqlInstancesReencryptRequest const& request),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::sql::v1::DatabaseInstance>, Get,
               (google::cloud::sql::v1::SqlInstancesGetRequest const& request),
               (override));
@@ -172,6 +177,25 @@ class MockSqlInstancesServiceConnection
   MOCK_METHOD(
       StatusOr<google::cloud::sql::v1::Operation>, StartExternalSync,
       (google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::sql::v1::Operation>, PerformDiskShrink,
+      (google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>,
+      GetDiskShrinkConfig,
+      (google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::sql::v1::Operation>, ResetReplicaSize,
+      (google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
            request),
       (override));
 };

@@ -62,6 +62,14 @@ DefaultSqlOperationsServiceRestStub::List(
        std::make_pair("project", request.project())});
 }
 
+Status DefaultSqlOperationsServiceRestStub::Cancel(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
+  return rest_internal::Post(
+      *service_, rest_context, request,
+      "/v1/projects/{project}/operations/{operation}/cancel");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1_internal
 }  // namespace cloud

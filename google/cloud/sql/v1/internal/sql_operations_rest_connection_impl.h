@@ -55,6 +55,9 @@ class SqlOperationsServiceRestConnectionImpl
   StreamRange<google::cloud::sql::v1::Operation> List(
       google::cloud::sql::v1::SqlOperationsListRequest request) override;
 
+  Status Cancel(google::cloud::sql::v1::SqlOperationsCancelRequest const&
+                    request) override;
+
  private:
   std::unique_ptr<sql_v1::SqlOperationsServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

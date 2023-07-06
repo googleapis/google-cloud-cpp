@@ -229,6 +229,18 @@ DefaultRepositoryManagerStub::FetchLinkableRepositories(
   return response;
 }
 
+StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+DefaultRepositoryManagerStub::FetchGitRefs(
+    grpc::ClientContext& client_context,
+    google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
+  google::devtools::cloudbuild::v2::FetchGitRefsResponse response;
+  auto status = grpc_stub_->FetchGitRefs(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultRepositoryManagerStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -112,8 +112,8 @@ class SqlOperationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlOperationsGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_operations.proto#L54}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlOperationsGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_operations.proto#L62}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Get(
@@ -154,12 +154,41 @@ class SqlOperationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlOperationsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_operations.proto#L63}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlOperationsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_operations.proto#L71}
   ///
   // clang-format on
   StreamRange<google::cloud::sql::v1::Operation> List(
       google::cloud::sql::v1::SqlOperationsListRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Cancels an instance operation that has been performed on an instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlOperationsCancelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.SqlOperationsCancelRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_operations.proto#L100}
+  ///
+  // clang-format on
+  Status Cancel(
+      google::cloud::sql::v1::SqlOperationsCancelRequest const& request,
       Options opts = {});
 
  private:

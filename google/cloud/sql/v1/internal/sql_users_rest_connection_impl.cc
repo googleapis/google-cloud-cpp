@@ -50,6 +50,17 @@ SqlUsersServiceRestConnectionImpl::Delete(
       request, __func__);
 }
 
+StatusOr<google::cloud::sql::v1::User> SqlUsersServiceRestConnectionImpl::Get(
+    google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(), backoff_policy(), idempotency_policy()->Get(request),
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+        return stub_->Get(rest_context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::sql::v1::Operation>
 SqlUsersServiceRestConnectionImpl::Insert(
     google::cloud::sql::v1::SqlUsersInsertRequest const& request) {

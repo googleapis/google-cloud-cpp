@@ -93,6 +93,15 @@ DefaultSqlInstancesServiceRestStub::Failover(
       "/v1/projects/{project}/instances/{instance}/failover");
 }
 
+StatusOr<google::cloud::sql::v1::Operation>
+DefaultSqlInstancesServiceRestStub::Reencrypt(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
+  return rest_internal::Post<google::cloud::sql::v1::Operation>(
+      *service_, rest_context, request,
+      "/v1/projects/{project}/instances/{instance}/reencrypt");
+}
+
 StatusOr<google::cloud::sql::v1::DatabaseInstance>
 DefaultSqlInstancesServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -274,6 +283,39 @@ DefaultSqlInstancesServiceRestStub::StartExternalSync(
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request,
       "/v1/projects/{project}/instances/{instance}/startExternalSync");
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+DefaultSqlInstancesServiceRestStub::PerformDiskShrink(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::sql::v1::Operation>(
+      *service_, rest_context, request,
+      "/v1/projects/{project}/instances/{instance}/performDiskShrink");
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
+DefaultSqlInstancesServiceRestStub::GetDiskShrinkConfig(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>(
+      *service_, rest_context, request,
+      "/v1/projects/{project}/instances/{instance}/getDiskShrinkConfig",
+      {std::make_pair("instance", request.instance()),
+       std::make_pair("project", request.project())});
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+DefaultSqlInstancesServiceRestStub::ResetReplicaSize(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::sql::v1::Operation>(
+      *service_, rest_context, request,
+      "/v1/projects/{project}/instances/{instance}/resetReplicaSize");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

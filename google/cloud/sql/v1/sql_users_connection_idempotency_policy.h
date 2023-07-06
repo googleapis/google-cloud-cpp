@@ -40,6 +40,9 @@ class SqlUsersServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency Delete(
       google::cloud::sql::v1::SqlUsersDeleteRequest const& request);
 
+  virtual google::cloud::Idempotency Get(
+      google::cloud::sql::v1::SqlUsersGetRequest const& request);
+
   virtual google::cloud::Idempotency Insert(
       google::cloud::sql::v1::SqlUsersInsertRequest const& request);
 

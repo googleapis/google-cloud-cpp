@@ -123,6 +123,27 @@ class MockDataprocMetastoreConnection
       DeleteBackup,
       (google::cloud::metastore::v1::DeleteBackupRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>,
+      QueryMetadata,
+      (google::cloud::metastore::v1::QueryMetadataRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>,
+      MoveTableToDatabase,
+      (google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>,
+      AlterMetadataResourceLocation,
+      (google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
