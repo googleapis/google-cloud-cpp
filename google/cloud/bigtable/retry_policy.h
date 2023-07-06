@@ -24,7 +24,7 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// The base class for the Bigtable library Data-related retry policies.
+/// The retry policy for `bigtable::DataConnection`.
 class DataRetryPolicy : public google::cloud::RetryPolicy {
  public:
   /// Create a new instance with the initial configuration, as-if no errors had
@@ -32,7 +32,72 @@ class DataRetryPolicy : public google::cloud::RetryPolicy {
   virtual std::unique_ptr<DataRetryPolicy> clone() const = 0;
 };
 
-/// A retry policy that stops the retry loop after some prescribed time.
+/**
+ * A retry policy for `bigtable::DataConnection` based on counting errors.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - More than a prescribed number of transient failures is detected.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kAborted`](@ref google::cloud::StatusCode)
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ * - [`kInternal`](@ref google::cloud::StatusCode) if the error message
+ *   indicates this was caused by a connection reset.
+ */
+class DataLimitedErrorCountRetryPolicy : public DataRetryPolicy {
+ public:
+  /**
+   * Create an instance that tolerates up to @p maximum_failures transient
+   * errors.
+   *
+   * @note Disable the retry loop by providing an instance of this policy with
+   *     @p maximum_failures == 0.
+   */
+  explicit DataLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
+
+  DataLimitedErrorCountRetryPolicy(
+      DataLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : DataLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+  DataLimitedErrorCountRetryPolicy(
+      DataLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : DataLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& s) override { return impl_.OnFailure(s); }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& s) const override {
+    return impl_.IsPermanentFailure(s);
+  }
+  std::unique_ptr<DataRetryPolicy> clone() const override {
+    return std::make_unique<DataLimitedErrorCountRetryPolicy>(
+        impl_.maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = RetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigtable_internal::SafeGrpcRetry>
+      impl_;
+};
+
+/**
+ * A retry policy for `bigtable::DataConnection` based on elapsed time.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - The elapsed time in the retry loop exceeds a prescribed duration.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kAborted`](@ref google::cloud::StatusCode)
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ * - [`kInternal`](@ref google::cloud::StatusCode) if the error message
+ *   indicates this was caused by a connection reset.
+ */
 class DataLimitedTimeRetryPolicy : public DataRetryPolicy {
  public:
   /**
@@ -60,48 +125,30 @@ class DataLimitedTimeRetryPolicy : public DataRetryPolicy {
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
       : impl_(maximum_duration) {}
 
+  DataLimitedTimeRetryPolicy(DataLimitedTimeRetryPolicy&& rhs) noexcept
+      : DataLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataLimitedTimeRetryPolicy(DataLimitedTimeRetryPolicy const& rhs) noexcept
+      : DataLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& s) override { return impl_.OnFailure(s); }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& s) const override {
+    return impl_.IsPermanentFailure(s);
+  }
   std::unique_ptr<DataRetryPolicy> clone() const override {
     return std::make_unique<DataLimitedTimeRetryPolicy>(
         impl_.maximum_duration());
   }
-  bool OnFailure(Status const& s) override { return impl_.OnFailure(s); }
-  bool IsExhausted() const override { return impl_.IsExhausted(); }
-  bool IsPermanentFailure(Status const& s) const override {
-    return impl_.IsPermanentFailure(s);
-  }
 
-  // Not very useful, but needed for backwards compatibility.
+  // This is provided only for backwards compatibility.
   using BaseType = RetryPolicy;
 
  private:
   google::cloud::internal::LimitedTimeRetryPolicy<
-      bigtable_internal::SafeGrpcRetry>
-      impl_;
-};
-
-/// A retry policy that limits the number of times a request can fail.
-class DataLimitedErrorCountRetryPolicy : public DataRetryPolicy {
- public:
-  /// Constructor given the maximum number of failures.
-  explicit DataLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
-
-  std::unique_ptr<DataRetryPolicy> clone() const override {
-    return std::make_unique<DataLimitedErrorCountRetryPolicy>(
-        impl_.maximum_failures());
-  }
-  bool OnFailure(Status const& s) override { return impl_.OnFailure(s); }
-  bool IsExhausted() const override { return impl_.IsExhausted(); }
-  bool IsPermanentFailure(Status const& s) const override {
-    return impl_.IsPermanentFailure(s);
-  }
-
-  // Not very useful, but needed for backwards compatibility.
-  /// The maximum number of failures tolerated by this policy.
-  int maximum_failures() const { return impl_.maximum_failures(); }
-
- private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
       bigtable_internal::SafeGrpcRetry>
       impl_;
 };
