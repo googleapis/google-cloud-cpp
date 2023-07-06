@@ -67,7 +67,7 @@ class RetryPolicy : public google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `$connection_class_name$` based on counting errors.
+ * A retry policy for the Spanner library based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -107,6 +107,9 @@ class LimitedErrorCountRetryPolicy : public RetryPolicy {
     return std::make_unique<LimitedErrorCountRetryPolicy>(
         impl_.maximum_failures());
   }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = RetryPolicy;
 
  private:
   google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -312,7 +315,7 @@ class LimitedTimeTransactionRerunPolicy : public TransactionRerunPolicy {
         impl_.maximum_duration());
   }
 
-  // Not very useful, but needed for backwards compatibility.
+  // This is provided only for backwards compatibility.
   using BaseType = RetryPolicy;
 
  private:
