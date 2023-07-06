@@ -87,9 +87,9 @@ Status ConnectionGenerator::GenerateHeader() {
 
 /// The retry policy for `$connection_class_name$`.
 class $retry_policy_name$ : public ::google::cloud::RetryPolicy {
-  public:
-    /// Creates a new instance of the policy, reset to the initial state.
-    virtual std::unique_ptr<$retry_policy_name$> clone() const = 0;
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<$retry_policy_name$> clone() const = 0;
 };
 
 /**

@@ -41,9 +41,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GoldenKitchenSinkConnection`.
 class GoldenKitchenSinkRetryPolicy : public ::google::cloud::RetryPolicy {
-  public:
-    /// Creates a new instance of the policy, reset to the initial state.
-    virtual std::unique_ptr<GoldenKitchenSinkRetryPolicy> clone() const = 0;
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<GoldenKitchenSinkRetryPolicy> clone() const = 0;
 };
 
 /**

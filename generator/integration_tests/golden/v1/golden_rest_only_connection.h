@@ -37,9 +37,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GoldenRestOnlyConnection`.
 class GoldenRestOnlyRetryPolicy : public ::google::cloud::RetryPolicy {
-  public:
-    /// Creates a new instance of the policy, reset to the initial state.
-    virtual std::unique_ptr<GoldenRestOnlyRetryPolicy> clone() const = 0;
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<GoldenRestOnlyRetryPolicy> clone() const = 0;
 };
 
 /**
