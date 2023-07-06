@@ -42,5 +42,6 @@ io::run env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
 # Verify the quickstart programs for generated libraries run. Note
 # that most of these run against production, and are therefore
 # integration tests with the usual flakiness issues.
-io::log_h2 "Running all other quickstart programs"
-io::run env -C cmake-out ctest "${ctest_args[@]}" -L "quickstart"
+io::log_h2 "Running quickstart programs"
+io::run env -C cmake-out ctest "${ctest_args[@]}" \
+  --repeat until-pass:3 -L "quickstart"
