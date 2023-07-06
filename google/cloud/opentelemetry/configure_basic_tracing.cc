@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/configure_basic_tracing.h"
+#include "google/cloud/opentelemetry/resource_detector.h"
 #include "google/cloud/opentelemetry/trace_exporter.h"
 #include <opentelemetry/sdk/trace/batch_span_processor.h>
 #include <opentelemetry/sdk/trace/batch_span_processor_options.h>
@@ -59,12 +60,13 @@ std::unique_ptr<BasicTracingConfiguration> ConfigureBasicTracing(
   auto ratio = options.has<BasicTracingRateOption>()
                    ? options.get<BasicTracingRateOption>()
                    : 1.0;
+  auto detector = MakeResourceDetector(options);
   auto processor =
       std::make_unique<opentelemetry::sdk::trace::BatchSpanProcessor>(
           MakeTraceExporter(std::move(project), std::move(options)),
           opentelemetry::sdk::trace::BatchSpanProcessorOptions{});
   auto provider = std::make_shared<opentelemetry::sdk::trace::TracerProvider>(
-      std::move(processor), opentelemetry::sdk::resource::Resource::Create({}),
+      std::move(processor), detector->Detect(),
       opentelemetry::sdk::trace::TraceIdRatioBasedSamplerFactory::Create(
           ratio));
   return std::make_unique<BasicTracingConfigurationImpl>(std::move(provider));
