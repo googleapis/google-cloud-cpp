@@ -42,9 +42,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GoldenThingAdminConnection`.
 class GoldenThingAdminRetryPolicy : public ::google::cloud::RetryPolicy {
-  public:
-    /// Creates a new instance of the policy, reset to the initial state.
-    virtual std::unique_ptr<GoldenThingAdminRetryPolicy> clone() const = 0;
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<GoldenThingAdminRetryPolicy> clone() const = 0;
 };
 
 /**
