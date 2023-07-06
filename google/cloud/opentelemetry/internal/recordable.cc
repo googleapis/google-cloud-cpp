@@ -76,6 +76,26 @@ std::string ToString(opentelemetry::nostd::span<bool const> values) {
                       "]");
 }
 
+template <typename T>
+std::string ToString(std::vector<T> const& values) {
+  return absl::StrCat("[", absl::StrJoin(values, ", "), "]");
+}
+template <>
+std::string ToString(std::vector<std::string> const& values) {
+  return absl::StrCat(R"""([")""",
+                      absl::StrJoin(std::move(values), R"""(", ")"""),
+                      R"""("])""");
+}
+template <>
+std::string ToString(std::vector<bool> const& values) {
+  return absl::StrCat("[",
+                      absl::StrJoin(values, ", ",
+                                    [](std::string* out, bool v) {
+                                      out->append(v ? "true" : "false");
+                                    }),
+                      "]");
+}
+
 class AttributeVisitor {
  public:
   AttributeVisitor(
@@ -128,10 +148,23 @@ class AttributeVisitor {
     SetTruncatableString(*proto->mutable_string_value(), value,
                          kAttributeValueStringLimit);
   }
+  void operator()(std::string const& value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    SetTruncatableString(*proto->mutable_string_value(), value,
+                         kAttributeValueStringLimit);
+  }
   // There is no mapping from a `span<T>` to the Cloud Trace proto, so we
   // convert these attributes to strings.
   template <typename T>
   void operator()(opentelemetry::nostd::span<T> value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    SetTruncatableString(*proto->mutable_string_value(), ToString(value),
+                         kAttributeValueStringLimit);
+  }
+  template <typename T>
+  void operator()(std::vector<T> const& value) {
     auto* proto = ProtoOrDrop();
     if (!proto) return Drop();
     SetTruncatableString(*proto->mutable_string_value(), ToString(value),
@@ -406,7 +439,11 @@ void Recordable::SetStatusImpl(opentelemetry::trace::StatusCode code,
 void Recordable::SetResourceImpl(
     opentelemetry::sdk::resource::Resource const& resource) {
   auto const& attributes = resource.GetAttributes();
-  // TODO(#11775) - add resource attributes as span attributes
+  for (auto kv : attributes) {
+    absl::visit(AttributeVisitor{*span_.mutable_attributes(), kv.first,
+                                 kSpanAttributeLimit},
+                kv.second);
+  }
   auto mr = ToMonitoredResource(attributes);
   for (auto const& label : mr.labels) {
     SetAttribute(absl::StrCat("g.co/r/", mr.type, "/", label.first),
