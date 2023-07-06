@@ -25,6 +25,8 @@
 #include "absl/strings/match.h"
 #include "absl/strings/str_format.h"
 #include "absl/strings/str_split.h"
+#include <google/protobuf/compiler/importer.h>
+#include <google/protobuf/descriptor.h>
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <future>
@@ -62,7 +64,8 @@ google::cloud::StatusOr<std::string> GetPage(std::string const& url) {
 
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
     DiscoveryDocumentProperties const& document_properties,
-    nlohmann::json const& discovery_doc) {
+    nlohmann::json const& discovery_doc,
+    google::protobuf::DescriptorPool const* descriptor_pool) {
   std::map<std::string, DiscoveryTypeVertex> types;
   if (!discovery_doc.contains("schemas")) {
     return internal::InvalidArgumentError(
@@ -92,7 +95,7 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
                           absl::StrFormat(kCommonPackageNameFormat,
                                           document_properties.product_name,
                                           document_properties.version),
-                          s});
+                          s, descriptor_pool});
   }
 
   if (!schemas_all_have_id) {
@@ -155,7 +158,8 @@ StatusOr<DiscoveryTypeVertex const*> DetermineAndVerifyResponseType(
 
 StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
     nlohmann::json const& method_json, DiscoveryResource const& resource,
-    std::string const& response_type_name, std::string method_name) {
+    std::string const& response_type_name, std::string method_name,
+    google::protobuf::DescriptorPool const* descriptor_pool) {
   if (!method_json.contains("parameters")) {
     return internal::InternalError(
         "method_json does not contain parameters field",
@@ -216,12 +220,14 @@ StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
                            std::string((method_json["request"]["$ref"])));
   }
 
-  return DiscoveryTypeVertex(id, resource.package_name(), synthesized_request);
+  return DiscoveryTypeVertex(id, resource.package_name(), synthesized_request,
+                             descriptor_pool);
 }
 
 Status ProcessMethodRequestsAndResponses(
     std::map<std::string, DiscoveryResource>& resources,
-    std::map<std::string, DiscoveryTypeVertex>& types) {
+    std::map<std::string, DiscoveryTypeVertex>& types,
+    google::protobuf::DescriptorPool const* descriptor_pool) {
   for (auto& resource : resources) {
     std::string resource_name = CapitalizeFirstLetter(resource.first);
     auto const& methods = resource.second.json().find("methods");
@@ -246,8 +252,8 @@ Status ProcessMethodRequestsAndResponses(
       }
 
       if (m->contains("parameters")) {
-        auto request_type = SynthesizeRequestType(*m, resource.second,
-                                                  response_type_name, m.key());
+        auto request_type = SynthesizeRequestType(
+            *m, resource.second, response_type_name, m.key(), descriptor_pool);
         if (!request_type) return std::move(request_type).status();
         // It is necessary to add the resource name to the map key to
         // disambiguate methods that appear in more than one resource.
@@ -279,6 +285,8 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
         &r.second,
         r.second.FormatFilePath(document_properties.product_name,
                                 document_properties.version, output_path),
+        r.second.FormatFilePath(document_properties.product_name,
+                                document_properties.version, {}),
         r.second.package_name(), r.second.GetRequestTypesList()};
     f.AddImportPath("google/api/annotations.proto")
         .AddImportPath("google/api/client.proto")
@@ -319,16 +327,15 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
     }
   }
 
-  files.emplace_back(
-      nullptr,
-      absl::StrCat(output_path,
-                   absl::StrFormat("/google/cloud/%s/%s/internal/common.proto",
-                                   document_properties.product_name,
-                                   document_properties.version)),
-      absl::StrFormat(kCommonPackageNameFormat,
-                      document_properties.product_name,
-                      document_properties.version),
-      std::move(common_types));
+  auto proto_path = absl::StrFormat("google/cloud/%s/%s/internal/common.proto",
+                                    document_properties.product_name,
+                                    document_properties.version);
+  files.emplace_back(nullptr, absl::StrCat(output_path, "/", proto_path),
+                     proto_path,
+                     absl::StrFormat(kCommonPackageNameFormat,
+                                     document_properties.product_name,
+                                     document_properties.version),
+                     std::move(common_types));
   return files;
 }
 
@@ -371,7 +378,8 @@ StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
 
 Status GenerateProtosFromDiscoveryDoc(
     nlohmann::json const& discovery_doc, std::string const& discovery_doc_url,
-    std::string const&, std::string const&, std::string const& output_path,
+    std::string const& protobuf_proto_path,
+    std::string const& googleapis_proto_path, std::string const& output_path,
     std::set<std::string> operation_services) {
   auto default_hostname = DefaultHostFromRootUrl(discovery_doc);
   if (!default_hostname) return std::move(default_hostname).status();
@@ -395,7 +403,24 @@ Status GenerateProtosFromDiscoveryDoc(
             .WithMetadata("version", document_properties.version));
   }
 
-  auto types = ExtractTypesFromSchema(document_properties, discovery_doc);
+  google::protobuf::compiler::DiskSourceTree protobuf_proto_files;
+  protobuf_proto_files.MapPath("", protobuf_proto_path);
+  google::protobuf::compiler::DiskSourceTree googleapis_proto_files;
+  googleapis_proto_files.MapPath("", googleapis_proto_path);
+  google::protobuf::compiler::DiskSourceTree compute_proto_files;
+  compute_proto_files.MapPath("", output_path);
+  google::protobuf::compiler::SourceTreeDescriptorDatabase protobuf_proto_db(
+      &protobuf_proto_files);
+  google::protobuf::compiler::SourceTreeDescriptorDatabase googleapis_proto_db(
+      &googleapis_proto_files);
+  google::protobuf::compiler::SourceTreeDescriptorDatabase compute_proto_db(
+      &compute_proto_files);
+  google::protobuf::MergedDescriptorDatabase merged_db(
+      {&protobuf_proto_db, &googleapis_proto_db, &compute_proto_db});
+  google::protobuf::DescriptorPool descriptor_pool(&merged_db);
+
+  auto types = ExtractTypesFromSchema(document_properties, discovery_doc,
+                                      &descriptor_pool);
   if (!types) return std::move(types).status();
 
   auto resources = ExtractResources(document_properties, discovery_doc);
@@ -404,11 +429,23 @@ Status GenerateProtosFromDiscoveryDoc(
         "No resources found in Discovery Document.");
   }
 
-  auto method_status = ProcessMethodRequestsAndResponses(resources, *types);
+  auto method_status =
+      ProcessMethodRequestsAndResponses(resources, *types, &descriptor_pool);
   if (!method_status.ok()) return method_status;
 
   std::vector<DiscoveryFile> files = AssignResourcesAndTypesToFiles(
       resources, *types, document_properties, output_path);
+
+  // google::protobuf::DescriptorPool lazily initializes itself. Searching for
+  // types by name will fail if the descriptor has not yet been created. By
+  // finding all the files we intend to write, the DescriptorPool builds its
+  // collection of descriptors for that file and any it imports. We must perform
+  // this mutation of the DescriptorPool before we begin the threaded write
+  // process. Additionally, populating the DescriptorPool allows us to snapshot
+  // the existing proto files before we overwrite them in place.
+  for (auto const& f : files) {
+    (void)descriptor_pool.FindFileByName(f.relative_proto_path());
+  }
 
   std::vector<std::future<google::cloud::Status>> tasks;
   tasks.reserve(files.size());

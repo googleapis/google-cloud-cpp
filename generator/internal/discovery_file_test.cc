@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/discovery_file.h"
+#include "generator/testing/descriptor_pool_fixture.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -24,6 +25,8 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+
+class DiscoveryFileTest : public generator_testing::DescriptorPoolFixture {};
 
 auto constexpr kResourceJson = R"""({
   "methods": {
@@ -134,7 +137,7 @@ auto constexpr kGetRequestTypeJson = R"""({
 
 auto constexpr kOperationTypeJson = R"""({})""";
 
-TEST(DiscoveryFile, FormatFileWithImport) {
+TEST_F(DiscoveryFileTest, FormatFileWithImport) {
   auto constexpr kExpectedProto = R"""(// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -223,18 +226,21 @@ message GetMyResourcesRequest {
   ASSERT_TRUE(get_request_type_json.is_object());
   DiscoveryResource r("myResources", "my.package.name", resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "my.package.name",
-                                          do_foo_request_type_json);
-  DiscoveryTypeVertex get_request_type(
-      "GetMyResourcesRequest", "my.package.name", get_request_type_json);
+                                          do_foo_request_type_json, &pool());
+  DiscoveryTypeVertex get_request_type("GetMyResourcesRequest",
+                                       "my.package.name", get_request_type_json,
+                                       &pool());
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
   r.AddRequestType("GetMyResourcesRequest", &get_request_type);
   DiscoveryTypeVertex operation_type("Operation", "other.package",
-                                     operation_type_json);
+                                     operation_type_json, &pool());
   r.AddResponseType("Operation", &operation_type);
-  DiscoveryFile f(&r, "my_path", "my.package.name", r.GetRequestTypesList());
+  DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
+                  r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
+  types.emplace("Foo",
+                DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{"my/service",
                                                   "https://default.host",
@@ -248,7 +254,7 @@ message GetMyResourcesRequest {
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
 }
 
-TEST(DiscoveryFile, FormatFileWithoutImports) {
+TEST_F(DiscoveryFileTest, FormatFileWithoutImports) {
   auto constexpr kExpectedProto = R"""(// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -334,17 +340,20 @@ message GetMyResourcesRequest {
   ASSERT_TRUE(get_request_type_json.is_object());
   DiscoveryResource r("myResources", "my.package.name", resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "my.package.name",
-                                          do_foo_request_type_json);
-  DiscoveryTypeVertex get_request_type(
-      "GetMyResourcesRequest", "my.package.name", get_request_type_json);
+                                          do_foo_request_type_json, &pool());
+  DiscoveryTypeVertex get_request_type("GetMyResourcesRequest",
+                                       "my.package.name", get_request_type_json,
+                                       &pool());
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
   r.AddRequestType("GetMyResourcesRequest", &get_request_type);
   DiscoveryTypeVertex operation_type("Operation", "other.package",
-                                     operation_type_json);
+                                     operation_type_json, &pool());
   r.AddResponseType("Operation", &operation_type);
-  DiscoveryFile f(&r, "my_path", "my.package.name", r.GetRequestTypesList());
+  DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
+                  r.GetRequestTypesList());
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
+  types.emplace("Foo",
+                DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{"my/service",
                                                   "https://default.host",
@@ -358,7 +367,7 @@ message GetMyResourcesRequest {
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
 }
 
-TEST(DiscoveryFile, FormatFileNoResource) {
+TEST_F(DiscoveryFileTest, FormatFileNoResource) {
   auto constexpr kExpectedProto = R"""(// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -413,13 +422,14 @@ message GetMyResourcesRequest {
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "my.package.name",
-                                          do_foo_request_type_json);
+                                          do_foo_request_type_json, &pool());
   DiscoveryTypeVertex get_request_type("GetMyResourcesRequest", "",
-                                       get_request_type_json);
-  DiscoveryFile f(nullptr, "my_path", "my.package.name",
-                  {&do_foo_request_type, &get_request_type});
+                                       get_request_type_json, &pool());
+  DiscoveryFile f(nullptr, "my_path", "my_relative_proto_path",
+                  "my.package.name", {&do_foo_request_type, &get_request_type});
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
+  types.emplace("Foo",
+                DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{
       "", "", "my_product", "v1", "19700101", "file:///my_url", {}};
@@ -428,7 +438,7 @@ message GetMyResourcesRequest {
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
 }
 
-TEST(DiscoveryFile, FormatFileNoTypes) {
+TEST_F(DiscoveryFileTest, FormatFileNoTypes) {
   auto constexpr kResourceJson = R"""({
   "methods": {
     "noop": {
@@ -481,9 +491,11 @@ service MyResources {
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
   DiscoveryResource r("myResources", "", resource_json);
-  DiscoveryFile f(&r, "my_path", "my.package.name", r.GetRequestTypesList());
+  DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
+                  r.GetRequestTypesList());
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
+  types.emplace("Foo",
+                DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{"my/service",
                                                   "https://default.host",
@@ -497,7 +509,7 @@ service MyResources {
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
 }
 
-TEST(DiscoveryFile, FormatFileResourceScopeError) {
+TEST_F(DiscoveryFileTest, FormatFileResourceScopeError) {
   auto constexpr kScopeMissingResourceJson = R"""({
     "methods": {
       "get": {
@@ -536,15 +548,17 @@ TEST(DiscoveryFile, FormatFileResourceScopeError) {
   ASSERT_TRUE(get_request_type_json.is_object());
   DiscoveryResource r("myResources", "", resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "",
-                                          do_foo_request_type_json);
+                                          do_foo_request_type_json, &pool());
   DiscoveryTypeVertex get_request_type("GetMyResourcesRequest", "",
-                                       get_request_type_json);
+                                       get_request_type_json, &pool());
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
   r.AddRequestType("GetMyResourcesRequest", &get_request_type);
-  DiscoveryFile f(&r, "my_path", "my.package.name", r.GetRequestTypesList());
+  DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
+                  r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
+  types.emplace("Foo",
+                DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{
       "", "", "my_product", "v1", "", "", {}};
@@ -553,7 +567,7 @@ TEST(DiscoveryFile, FormatFileResourceScopeError) {
               StatusIs(StatusCode::kInvalidArgument, HasSubstr("scope")));
 }
 
-TEST(DiscoveryFile, FormatFileTypeMissingError) {
+TEST_F(DiscoveryFileTest, FormatFileTypeMissingError) {
   auto constexpr kDoFooRequestMissingTypeJson = R"""({
   "type": "object",
   "id": "DoFooRequest",
@@ -588,19 +602,21 @@ TEST(DiscoveryFile, FormatFileTypeMissingError) {
   ASSERT_TRUE(get_request_type_json.is_object());
   DiscoveryResource r("myResources", "", resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "",
-                                          do_foo_request_type_json);
+                                          do_foo_request_type_json, &pool());
   DiscoveryTypeVertex get_request_type("GetMyResourcesRequest", "",
-                                       get_request_type_json);
+                                       get_request_type_json, &pool());
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
   r.AddRequestType("GetMyResourcesRequest", &get_request_type);
   DiscoveryTypeVertex operation_type("Operation", "other.package",
-                                     operation_type_json);
+                                     operation_type_json, &pool());
   r.AddResponseType("Operation", &operation_type);
 
-  DiscoveryFile f(&r, "my_path", "my.package.name", r.GetRequestTypesList());
+  DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
+                  r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
+  types.emplace("Foo",
+                DiscoveryTypeVertex{"Foo", "my.package.name", {}, &pool()});
   std::stringstream os;
   DiscoveryDocumentProperties document_properties{
       "", "", "my_product", "v1", "", "", {}};
