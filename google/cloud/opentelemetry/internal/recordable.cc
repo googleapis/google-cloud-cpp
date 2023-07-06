@@ -15,6 +15,7 @@
 #include "google/cloud/opentelemetry/internal/recordable.h"
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/time/time.h"
@@ -50,6 +51,23 @@ void MapKey(opentelemetry::nostd::string_view& key) {
   };
   auto it = m->find(key);
   if (it != m->end()) key = it->second;
+}
+
+template <typename T>
+std::string ToString(opentelemetry::nostd::span<T const> values) {
+  return absl::StrJoin(values, "|");
+}
+template <>
+std::string ToString(
+    opentelemetry::nostd::span<opentelemetry::nostd::string_view const>
+        values) {
+  return absl::StrJoin(values, "|", absl::StreamFormatter());
+}
+template <>
+std::string ToString(opentelemetry::nostd::span<bool const> values) {
+  return absl::StrJoin(values, "|", [](std::string* out, bool v) {
+    out->append(v ? "true" : "false");
+  });
 }
 
 class AttributeVisitor {
@@ -107,8 +125,11 @@ class AttributeVisitor {
   // There is no mapping from a `span<T>` to the Cloud Trace proto. We just drop
   // these attributes.
   template <typename T>
-  void operator()(opentelemetry::nostd::span<T>) {
-    Drop();
+  void operator()(opentelemetry::nostd::span<T> value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    SetTruncatableString(*proto->mutable_string_value(), ToString(value),
+                         kAttributeValueStringLimit);
   }
 
  private:

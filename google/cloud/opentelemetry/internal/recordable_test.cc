@@ -67,9 +67,11 @@ class KVIterable : public opentelemetry::common::KeyValueIterable {
 };
 
 template <typename T>
-opentelemetry::nostd::span<T> MakeCompositeAttribute() {
-  T v[]{T{}, T{}};
-  return opentelemetry::nostd::span<T>(v);
+opentelemetry::nostd::span<T const> MakeCompositeAttribute(T t1, T t2) {
+  // We use static storage, so make sure that if this method is called multiple
+  // times for a given T, it is called with the same t1 and t2.
+  static auto const* const kData = new T[2]{t1, t2};
+  return {kData, 2};
 }
 
 Matcher<v2::AttributeValue const&> AttributeValue(bool value) {
@@ -288,23 +290,48 @@ TEST(AddAttribute, ConvertsDoubleAttributeToString) {
               Attributes(ElementsAre(Pair("key", AttributeValue("4.2")))));
 }
 
-TEST(AddAttribute, DropsCompositeAttributes) {
+TEST(AddAttribute, HandlesCompositeBoolAttribute) {
+  v2::Span::Attributes attributes;
+  AddAttribute(attributes, "key", MakeCompositeAttribute<bool>(true, false),
+               /*limit=*/32);
+  EXPECT_THAT(
+      attributes,
+      Attributes(ElementsAre(Pair("key", AttributeValue("true|false")))));
+}
+
+TEST(AddAttribute, HandlesCompositeIntAttributes) {
   std::vector<opentelemetry::common::AttributeValue> values = {
-      MakeCompositeAttribute<bool>(),
-      MakeCompositeAttribute<std::int32_t>(),
-      MakeCompositeAttribute<std::int64_t>(),
-      MakeCompositeAttribute<std::uint32_t>(),
-      MakeCompositeAttribute<double>(),
-      MakeCompositeAttribute<opentelemetry::nostd::string_view>(),
-      MakeCompositeAttribute<std::uint64_t>(),
-      MakeCompositeAttribute<std::uint8_t>()};
+      MakeCompositeAttribute<std::int32_t>(42, 84),
+      MakeCompositeAttribute<std::int64_t>(42, 84),
+      MakeCompositeAttribute<std::uint32_t>(42, 84),
+      MakeCompositeAttribute<std::uint64_t>(42, 84),
+      MakeCompositeAttribute<std::uint8_t>(42, 84),
+  };
 
   for (auto const& value : values) {
     v2::Span::Attributes attributes;
     AddAttribute(attributes, "key", value, /*limit=*/32);
     EXPECT_THAT(attributes,
-                Attributes(IsEmpty(), /*dropped_attributes_count=*/1));
+                Attributes(ElementsAre(Pair("key", AttributeValue("42|84")))));
   }
+}
+
+TEST(AddAttribute, HandlesCompositeDoubleAttributes) {
+  v2::Span::Attributes attributes;
+  AddAttribute(attributes, "key", MakeCompositeAttribute<double>(4.2, 8.4),
+               /*limit=*/32);
+  EXPECT_THAT(attributes,
+              Attributes(ElementsAre(Pair("key", AttributeValue("4.2|8.4")))));
+}
+
+TEST(AddAttribute, HandlesCompositeStringAttributes) {
+  v2::Span::Attributes attributes;
+  AddAttribute(
+      attributes, "key",
+      MakeCompositeAttribute<opentelemetry::nostd::string_view>("s1", "s2"),
+      /*limit=*/32);
+  EXPECT_THAT(attributes,
+              Attributes(ElementsAre(Pair("key", AttributeValue("s1|s2")))));
 }
 
 TEST(AddAttribute, MapsKeysForCloudTrace) {
