@@ -44,11 +44,11 @@ def google_cloud_cpp_development_deps(name = None):
         http_archive,
         name = "com_google_benchmark",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.8.1.tar.gz",
-            "https://github.com/google/benchmark/archive/v1.8.1.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.8.2.tar.gz",
+            "https://github.com/google/benchmark/archive/v1.8.2.tar.gz",
         ],
-        sha256 = "e9ff65cecfed4f60c893a1e8a1ba94221fad3b27075f2f80f47eb424b0f8c9bd",
-        strip_prefix = "benchmark-1.8.1",
+        sha256 = "2aab2980d0376137f969d92848fbb68216abb07633034534fc8c65cc4e7a0e93",
+        strip_prefix = "benchmark-1.8.2",
     )
 
     # PugiXML, this is only used in the docfx internal tool.

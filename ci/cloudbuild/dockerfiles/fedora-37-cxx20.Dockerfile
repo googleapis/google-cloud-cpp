@@ -90,7 +90,7 @@ RUN curl -fsSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
 
 # Download and compile Google microbenchmark support library:
 WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.1.tar.gz | \
+RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=20 \
