@@ -60,7 +60,6 @@ function cmake::common_args() {
   if command -v /usr/local/bin/sccache >/dev/null 2>&1; then
     args+=(
       -DCMAKE_CXX_COMPILER_LAUNCHER=/usr/local/bin/sccache
-      -DCMAKE_CC_COMPILER_LAUNCHER=/usr/local/bin/sccache
     )
   fi
   printf "%s\n" "${args[@]}"
