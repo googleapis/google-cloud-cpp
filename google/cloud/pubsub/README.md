@@ -32,6 +32,7 @@ int main(int argc, char* argv[]) try {
 
   // Create a namespace alias to make the code easier to read.
   namespace pubsub = ::google::cloud::pubsub;
+
   auto publisher = pubsub::Publisher(
       pubsub::MakePublisherConnection(pubsub::Topic(project_id, topic_id)));
   auto id =
@@ -39,23 +40,11 @@ int main(int argc, char* argv[]) try {
           .Publish(pubsub::MessageBuilder{}.SetData("Hello World!").Build())
           .get();
   if (!id) throw std::move(id).status();
-  std::cout << "Hello World published with id=" << *id << "\n";
+  std::cout << "Hello World published with id=" << *id << std::endl;
 
   return 0;
 } catch (google::cloud::Status const& status) {
-  std::cerr << "google::cloud::Status thrown: " << status << "\n";
+  std::cerr << "google::cloud::Status thrown: " << status << std::endl;
   return 1;
 }
 ```
-
-<!-- inject-quickstart-end -->
-
-## More Information
-
-- Official documentation about the [Cloud Pub/Sub][cloud-pubsub-docs] service
-- [Reference doxygen documentation][doxygen-link] for each release of this client library
-- Detailed header comments in our [public `.h`][source-link] files
-
-[cloud-pubsub-docs]: https://cloud.google.com/pubsub/docs/
-[doxygen-link]: https://cloud.google.com/cpp/docs/reference/pubsub/latest/
-[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/pubsub
