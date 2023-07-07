@@ -109,6 +109,7 @@ struct ConnectionProperty {
                           int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ConnectionProperty, key, value);
+bool operator==(ConnectionProperty const& lhs, ConnectionProperty const& rhs);
 
 // Describes the encryption key used to protect the BigQuery destination table.
 //
