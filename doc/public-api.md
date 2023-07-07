@@ -1,6 +1,6 @@
 # The `google-cloud-cpp` public API
 
-This document describes what is part of `google-cloud-cpp`'s public API.
+This document describes what constitutes `google-cloud-cpp`'s public API.
 
 As this project follows Google's [OSS Library Breaking Change Policy], any
 breaking changes in the public API require increasing the major version number
@@ -23,7 +23,7 @@ Previous versions of the library will remain available on the
 even if a newer version has changes that you are unable (or do not have time) to
 adopt.
 
-We think this document covers all interface points, if we missed something
+We think this document covers all interface points. If we missed something
 please file a [GitHub issue][github-issue].
 
 ## Public API Overview
@@ -36,14 +36,16 @@ The public API includes:
   - `google::cloud`
   - `google::cloud::mocks`
   - `google::cloud::${library}` and `google::cloud::${library}_mocks` where
-    `${library}` is just lowercase letters and underscore (`_`).
-    `${library}==internal` is explicitly excluded.
+    `${library}` matches the regular expression `^[a-z][a-z_]*$` and
+    `${library}` is **not** `internal`.
   - `google::cloud::${library}_v${number}` and
-    `google::cloud::${library}_v${number}_mocks` where `${library}` is just
-    lowercase letters and `${number}` is just digits (often a single digit).
+    `google::cloud::${library}_v${number}_mocks` where `${library}` matches
+    `^[a-z][a-z]*$` and `${number}` matches `^[0-9][0-9]*$`. In the common
+    case `${number}` is a single digit..
 - C++ header file names in `google/cloud/*.h` or `google/cloud/${library}/*.h`,
-  where `${library}` is just lowercase letters and  (including their path
-  relative to the top-level directory).
+  and `google/cloud/${library}/v${number}`, where `${library}` matches the
+  regular expression `^[a-z][a-z_]*$` (but it is **not** `internal`), and
+  `${number}` matches `^[0-9][0-9]*`.
 - CMake targets with the `google-cloud-cpp::` prefix.
 - Bazel targets in the top-level directory (e.g. `//:storage`).
 - pkg-config modules starting with `google_cloud_cpp_`.
@@ -51,7 +53,7 @@ The public API includes:
 
 The public API excludes:
 
-- Any C++ symbol or file that include `internal`, `impl`, `test`, `detail`,
+- Any C++ symbol or file that includes `internal`, `impl`, `test`, `detail`,
   `benchmark`, `sample`, or `example` in its fully qualified name or path.
 - Any CMake target that includes `internal` or `experimental` in its name.
 - Any Bazel target that includes `internal` or `experimental` in its name.
@@ -103,7 +105,7 @@ this may be a CMake target, a Bazel rule, a pkg-config module, or just the
 name of some object in the file system.
 
 As with the C++ API, we try to avoid breaking changes to these interface
-points.  We treat breaking changes to these interface points as any other
+points.  We treat breaking changes to these interface points like any other
 breaking change.
 
 ### Experimental Libraries
