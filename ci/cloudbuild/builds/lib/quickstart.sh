@@ -63,7 +63,6 @@ function quickstart::build_one_quickstart() {
   if command -v /usr/local/bin/sccache >/dev/null 2>&1; then
     configure_args+=(
       -DCMAKE_CXX_COMPILER_LAUNCHER=/usr/local/bin/sccache
-      -DCMAKE_CC_COMPILER_LAUNCHER=/usr/local/bin/sccache
     )
   fi
   cmake "${configure_args[@]}"
