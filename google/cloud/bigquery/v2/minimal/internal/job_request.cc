@@ -300,47 +300,63 @@ void to_json(nlohmann::json& j, QueryRequest const& q) {
 }
 
 void from_json(nlohmann::json const& j, PostQueryRequest& q) {
-  if (j.contains("project_id"))
+  if (j.contains("project_id")) {
     q.set_project_id(j.at("project_id").value("project_id", ""));
-  if (j.contains("query_request"))
+  }
+  if (j.contains("query_request")) {
     q.set_query_request(j.at("query_request").get<QueryRequest>());
+  }
 }
 
 void from_json(nlohmann::json const& j, QueryRequest& q) {
   if (j.contains("query")) q.set_query(j.at("query").get<std::string>());
   if (j.contains("kind")) q.set_kind(j.at("kind").get<std::string>());
-  if (j.contains("parameter_mode"))
+  if (j.contains("parameter_mode")) {
     q.set_parameter_mode(j.at("parameter_mode").get<std::string>());
-  if (j.contains("location"))
+  }
+  if (j.contains("location")) {
     q.set_location(j.at("location").get<std::string>());
-  if (j.contains("request_id"))
+  }
+  if (j.contains("request_id")) {
     q.set_request_id(j.at("request_id").get<std::string>());
+  }
   if (j.contains("dry_run")) q.set_dry_run(j.at("dry_run").get<bool>());
-  if (j.contains("preserve_nulls"))
+  if (j.contains("preserve_nulls")) {
     q.set_preserve_nulls(j.at("preserve_nulls").get<bool>());
-  if (j.contains("use_query_cache"))
+  }
+  if (j.contains("use_query_cache")) {
     q.set_use_query_cache(j.at("use_query_cache").get<bool>());
-  if (j.contains("use_legacy_sql"))
+  }
+  if (j.contains("use_legacy_sql")) {
     q.set_use_legacy_sql(j.at("use_legacy_sql").get<bool>());
-  if (j.contains("create_session"))
+  }
+  if (j.contains("create_session")) {
     q.set_create_session(j.at("create_session").get<bool>());
-  if (j.contains("max_results"))
+  }
+  if (j.contains("max_results")) {
     q.set_max_results(j.at("max_results").get<std::uint32_t>());
-  if (j.contains("maximum_bytes_billed"))
+  }
+  if (j.contains("maximum_bytes_billed")) {
     q.set_maximum_bytes_billed(
         j.at("maximum_bytes_billed").get<std::int64_t>());
-  if (j.contains("connection_properties"))
+  }
+  if (j.contains("connection_properties")) {
     q.set_connection_properties(
         j.at("connection_properties").get<std::vector<ConnectionProperty>>());
-  if (j.contains("query_parameters"))
+  }
+  if (j.contains("query_parameters")) {
     q.set_query_parameters(
         j.at("query_parameters").get<std::vector<QueryParameter>>());
-  if (j.contains("default_dataset"))
+  }
+  if (j.contains("default_dataset")) {
     q.set_default_dataset(j.at("default_dataset").get<DatasetReference>());
-  if (j.contains("format_options"))
+  }
+  if (j.contains("format_options")) {
     q.set_format_options(j.at("format_options").get<DataFormatOptions>());
-  if (j.contains("labels"))
+  }
+  if (j.contains("labels")) {
     q.set_labels(j.at("labels").get<std::map<std::string, std::string>>());
+  }
 
   std::chrono::milliseconds timeout;
   FromJson(timeout, j, "timeout");
