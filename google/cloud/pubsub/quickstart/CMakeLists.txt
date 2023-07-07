@@ -27,6 +27,8 @@ else ()
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 endif ()
 
-# Once the pubsub_client package is found, define new targets.
+# Once the pubsub_client package is found, define new targets and link them.
 add_executable(quickstart quickstart.cc)
 target_link_libraries(quickstart google-cloud-cpp::pubsub)
+add_executable(subscriber_quickstart subscriber_quickstart.cc)
+target_link_libraries(subscriber_quickstart google-cloud-cpp::pubsub)
