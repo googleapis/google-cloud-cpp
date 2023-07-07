@@ -27,6 +27,7 @@ int main(int argc, char* argv[]) try {
 
   // Create a namespace alias to make the code easier to read.
   namespace pubsub = ::google::cloud::pubsub;
+
   auto publisher = pubsub::Publisher(
       pubsub::MakePublisherConnection(pubsub::Topic(project_id, topic_id)));
   auto id =
@@ -34,11 +35,11 @@ int main(int argc, char* argv[]) try {
           .Publish(pubsub::MessageBuilder{}.SetData("Hello World!").Build())
           .get();
   if (!id) throw std::move(id).status();
-  std::cout << "Hello World published with id=" << *id << "\n";
+  std::cout << "Hello World published with id=" << *id << std::endl;
 
   return 0;
 } catch (google::cloud::Status const& status) {
-  std::cerr << "google::cloud::Status thrown: " << status << "\n";
+  std::cerr << "google::cloud::Status thrown: " << status << std::endl;
   return 1;
 }
 //! [END pubsub_quickstart_publisher] [all]
