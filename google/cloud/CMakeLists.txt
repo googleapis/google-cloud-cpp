@@ -14,6 +14,10 @@
 # limitations under the License.
 # ~~~
 
+if (GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON)
+    return()
+endif ()
+
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
