@@ -41,8 +41,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
 using ::testing::HasSubstr;
-using ::testing::IsEmpty;
-using ::testing::Not;
+using ::testing::MatchesRegex;
 using ::testing::NotNull;
 using ::testing::Return;
 
@@ -264,10 +263,12 @@ TEST_F(BigtableStubFactory, FeaturesFlags) {
         EXPECT_CALL(*mock, MutateRow)
             .WillOnce([](grpc::ClientContext& context,
                          google::bigtable::v2::MutateRowRequest const&) {
+              auto constexpr kWebSafeBase64Regex = "[A-Z0-9_-]+";
               ValidateMetadataFixture fixture;
               auto headers = fixture.GetMetadata(context);
               EXPECT_THAT(headers,
-                          Contains(Pair("bigtable-features", Not(IsEmpty()))));
+                          Contains(Pair("bigtable-features",
+                                        MatchesRegex(kWebSafeBase64Regex))));
               return internal::AbortedError("fail");
             });
         return mock;
