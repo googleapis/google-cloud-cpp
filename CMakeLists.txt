@@ -161,7 +161,7 @@ option(
 Use a pre-installed version of the common libraries and proto files.
 
 This option is required to support package maintainers that split
-`google-cloud-cpp` into multiple (hopefully smaller) packages.
+`google-cloud-cpp` into multiple packages.
 ]==]
     OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON)
