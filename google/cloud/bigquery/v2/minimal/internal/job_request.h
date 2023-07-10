@@ -298,7 +298,8 @@ class CancelJobRequest {
 };
 
 struct DataFormatOptions {
-  bool use_int64_timestamp;
+  DataFormatOptions() = default;
+  bool use_int64_timestamp = false;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
