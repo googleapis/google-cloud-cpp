@@ -38,13 +38,16 @@ int main(int argc, char* argv[]) try {
             std::cout << "Received message " << m << std::endl;
             std::move(h).ack();
           })
-          .then([](auto f) { throw f.get(); });
+          .then([](auto f) {
+            auto status = f.get();
+            if (!status.ok()) throw status;
+          });
 
   std::cout << "Waiting for messages on " + subscription_id + "..."
             << std::endl;
 
   // Blocks indefinitely, unless an exception is thrown, since Subscribe should
-  // be used in a long running operation.
+  // be used in a long running application.
   session.wait();
 
   return 0;
