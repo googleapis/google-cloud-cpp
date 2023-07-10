@@ -116,7 +116,7 @@ inline std::string UrlsafeBase64Encode(Collection const& bytes) {
   std::replace(b64str.begin(), b64str.end(), '+', '-');
   std::replace(b64str.begin(), b64str.end(), '/', '_');
   auto end_pos = b64str.find_last_not_of('=');
-  if (std::string::npos != end_pos) {
+  if (end_pos != std::string::npos) {
     b64str.resize(end_pos + 1);
   }
   return b64str;
