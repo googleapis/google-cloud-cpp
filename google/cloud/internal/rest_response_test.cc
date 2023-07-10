@@ -43,8 +43,9 @@ TEST_P(MapHttpCodeToStatusTest, CorrectMapping) {
 INSTANTIATE_TEST_SUITE_P(
     MappingPairs, MapHttpCodeToStatusTest,
     testing::Values(
-        std::make_pair(HttpStatusCode::kContinue, StatusCode::kOk),
-        std::make_pair(static_cast<HttpStatusCode>(102), StatusCode::kOk),
+        std::make_pair(HttpStatusCode::kContinue, StatusCode::kUnavailable),
+        std::make_pair(static_cast<HttpStatusCode>(102),
+                       StatusCode::kUnavailable),
         std::make_pair(HttpStatusCode::kOk, StatusCode::kOk),
         std::make_pair(HttpStatusCode::kCreated, StatusCode::kOk),
         std::make_pair(static_cast<HttpStatusCode>(202), StatusCode::kOk),

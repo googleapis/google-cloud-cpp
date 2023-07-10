@@ -26,9 +26,11 @@ StatusCode MapHttpCodeToStatus0xx(std::int32_t) {
 }
 
 StatusCode MapHttpCodeToStatus1xx(std::int32_t) {
-  // We treat the 100s (e.g. 100 Continue) as OK results. They normally are
-  // ignored by libcurl, so we do not really expect to see them.
-  return StatusCode::kOk;
+  // Even though the 100s (e.g. 100 Continue) are an indication that the client
+  // request is continuing, we treat them as UNAVAILABLE, because the response
+  // is incomplete. In practice, they are ignored by libcurl, so we do not
+  // expect to see them.
+  return StatusCode::kUnavailable;
 }
 
 StatusCode MapHttpCodeToStatus2xx(std::int32_t) {
