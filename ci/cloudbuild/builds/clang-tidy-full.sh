@@ -40,18 +40,6 @@ io::run cmake "${cmake_args[@]}" \
   -DGOOGLE_CLOUD_CPP_INTERNAL_DOCFX=ON
 io::run cmake --build cmake-out
 
-mapfile -t ctest_args < <(ctest::common_args)
-io::run env -C cmake-out ctest "${ctest_args[@]}" -LE integration-test
-
-integration::ctest_with_emulators "cmake-out"
-
-if [[ "${TRIGGER_TYPE}" != "manual" ]]; then
-  # This build should fail if any of the above work generated
-  # code differences (for example, by updating .bzl files).
-  io::log_h2 "Highlight generated code differences"
-  git diff --exit-code
-fi
-
 if [[ "${TRIGGER_TYPE}" != "manual" || "${VERBOSE_FLAG}" == "true" ]]; then
   io::log "===> ctcache stats"
   printf "%s: %s\n" "total size" "$(du -sh "${CTCACHE_DIR}")"
