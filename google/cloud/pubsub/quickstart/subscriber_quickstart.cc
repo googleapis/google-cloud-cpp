@@ -54,5 +54,4 @@ int main(int argc, char* argv[]) try {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
-
 //! [END pubsub_quickstart_subscriber] [all]
