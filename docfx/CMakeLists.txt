@@ -14,6 +14,9 @@
 # limitations under the License.
 # ~~~
 
+if (NOT GOOGLE_CLOUD_CPP_INTERNAL_DOCFX)
+    return()
+endif ()
 if (APPLE OR WIN32)
     message(STATUS "The docfx directory is only used and tested on Linux")
     return()

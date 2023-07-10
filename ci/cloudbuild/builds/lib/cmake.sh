@@ -49,13 +49,17 @@ if command -v sccache >/dev/null 2>&1; then
 fi
 
 function cmake::common_args() {
+  local binary="cmake-out"
+  if [[ $# -ge 1 ]]; then
+    binary="$1"
+  fi
   local args
   args=(
     -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF
     -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON
     -GNinja
     -S .
-    -B cmake-out
+    -B "${binary}"
   )
   if command -v /usr/local/bin/sccache >/dev/null 2>&1; then
     args+=(

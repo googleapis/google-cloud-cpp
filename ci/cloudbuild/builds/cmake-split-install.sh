@@ -1,0 +1,69 @@
+#!/bin/bash
+#
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+set -euo pipefail
+
+source "$(dirname "$0")/../../lib/init.sh"
+source module ci/cloudbuild/builds/lib/cmake.sh
+source module ci/cloudbuild/builds/lib/features.sh
+source module ci/cloudbuild/builds/lib/quickstart.sh
+source module ci/lib/io.sh
+
+read -r ENABLED_FEATURES < <(features::list_full_cmake)
+readonly ENABLED_FEATURES
+
+# Compiles and installs the core libraries.
+INSTALL_PREFIX="$(mktemp -d)"
+readonly INSTALL_PREFIX
+
+install_args=(
+  # Avoid per-file install logs.
+  -DCMAKE_INSTALL_MESSAGE=NEVER
+  # Do not compile the tests or examples when testing install rules.
+  -DBUILD_TESTING=OFF
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+  # Test with shared libraries because the problems are more obvious with them.
+  -DBUILD_SHARED_LIBS=ON
+)
+io::log_h2 "Building and installing core libraries"
+# We need a custom build directory
+mapfile -t core_cmake_args < <(cmake::common_args cmake-out/core-libraries)
+io::run cmake "${core_cmake_args[@]}" "${install_args[@]}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE="bigtable,iam,pubsub,storage,spanner"
+io::run cmake --build cmake-out/core-libraries
+io::run cmake --install cmake-out/core-libraries --prefix "${INSTALL_PREFIX}"
+
+io::log_h2 "Building and installing all feature"
+# We need a custom build directory
+mapfile -t feature_cmake_args < <(cmake::common_args cmake-out/features)
+io::run cmake "${feature_cmake_args[@]}" "${install_args[@]}" \
+  -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
+  -DGOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON=ON \
+  -DGOOGLE_CLOUD_CPP_ENABLE="__ga_libraries__,-bigtable,-iam,-pubsub,-storage,-spanner"
+io::run cmake --build cmake-out/features
+io::run cmake --install cmake-out/features --prefix "${INSTALL_PREFIX}"
+
+# Tests the installed artifacts by building all the quickstarts.
+# shellcheck disable=SC2046
+mapfile -t feature_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-libraries.cmake 2>&1)
+FEATURES=$(printf ";%s" "${feature_list[@]}")
+FEATURES="${FEATURES:1}"
+cmake -G Ninja \
+  -S "${PROJECT_ROOT}/ci/verify_quickstart" \
+  -B "${PROJECT_ROOT}/cmake-out/quickstart" \
+  "-DCMAKE_PREFIX_PATH=${INSTALL_PREFIX}" \
+  "-DFEATURES=${FEATURES}"
+cmake --build "${PROJECT_ROOT}/cmake-out/quickstart"
