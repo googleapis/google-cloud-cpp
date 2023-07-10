@@ -135,6 +135,14 @@ cc_library(
 )
 
 cc_library(
+    name = "oauth2",
+    testonly = True,
+    deps = [
+        "//google/cloud:google_cloud_cpp_oauth2",
+    ],
+)
+
+cc_library(
     name = "experimental-opentelemetry",
     deps = [
         "//google/cloud/opentelemetry:google_cloud_cpp_opentelemetry",
