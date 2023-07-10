@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) try {
   auto session =
       subscriber
           .Subscribe([&](pubsub::Message const& m, pubsub::AckHandler h) {
-            std::cout << "Received message " << m << std::endl;
+            std::cout << "Received message " << m << "\n";
             std::move(h).ack();
           })
           .then([](auto f) {
@@ -43,8 +43,7 @@ int main(int argc, char* argv[]) try {
             if (!status.ok()) throw status;
           });
 
-  std::cout << "Waiting for messages on " + subscription_id + "..."
-            << std::endl;
+  std::cout << "Waiting for messages on " + subscription_id + "...\n";
 
   // Blocks indefinitely, unless an exception is thrown, since Subscribe should
   // be used in a long running application.
