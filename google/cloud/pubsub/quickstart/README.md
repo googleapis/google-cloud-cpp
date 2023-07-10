@@ -50,8 +50,7 @@ Setting this environment variable is the recommended way to configure the
 authentication preferences, though if the environment variable is not set, the
 library searches for a credentials file in the same location as the [Cloud
 SDK](https://cloud.google.com/sdk/). For more information about *Application
-Default Credentials*, see
-<https://cloud.google.com/docs/authentication/production>
+Default Credentials*, see https://cloud.google.com/docs/authentication/production
 
 ## Using with Bazel
 
