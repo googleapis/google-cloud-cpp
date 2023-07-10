@@ -151,22 +151,6 @@ StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
       {buffer.begin(), std::next(buffer.begin(), actual_len)});
 }
 
-StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(
-    std::string const& str) {
-  if (str.empty()) return std::vector<std::uint8_t>{};
-  std::string b64str = str;
-  std::replace(b64str.begin(), b64str.end(), '-', '+');
-  std::replace(b64str.begin(), b64str.end(), '_', '/');
-  // To restore the padding there are only two cases:
-  //    https://en.wikipedia.org/wiki/Base64#Decoding_Base64_without_padding
-  if (b64str.length() % 4 == 2) {
-    b64str.append("==");
-  } else if (b64str.length() % 4 == 3) {
-    b64str.append("=");
-  }
-  return Base64DecodeToBytes(b64str);
-}
-
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
