@@ -22,7 +22,7 @@ CXXFLAGS=
 CXXLD=$(CXX)
 BIN=.
 
-all: $(BIN)/quickstart
+all: $(BIN)/quickstart $(BIN)/subscriber_quickstart
 
 # Configuration variables to compile and link against the Cloud Pub/Sub C++
 # client library.
@@ -31,6 +31,9 @@ PUBSUB_CXXFLAGS   := $(shell pkg-config $(PUBSUB_DEPS) --cflags)
 PUBSUB_CXXLDFLAGS := $(shell pkg-config $(PUBSUB_DEPS) --libs-only-L)
 PUBSUB_LIBS       := $(shell pkg-config $(PUBSUB_DEPS) --libs-only-l)
 
-# A target using the Cloud Pub/Sub C++ client library.
+# Define 2 targets, one for the publisher and one for the subscriber, using the Cloud Pub/Sub C++ client library.
 $(BIN)/quickstart: quickstart.cc
+	$(CXXLD) $(CXXFLAGS) $(PUBSUB_CXXFLAGS) $(PUBSUB_CXXLDFLAGS) -o $@ $^ $(PUBSUB_LIBS)
+
+$(BIN)/subscriber_quickstart: subscriber_quickstart.cc
 	$(CXXLD) $(CXXFLAGS) $(PUBSUB_CXXFLAGS) $(PUBSUB_CXXLDFLAGS) -o $@ $^ $(PUBSUB_LIBS)
