@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_TESTING_JOB_QUERY_TEST_UTILS_H
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
 #include "google/cloud/log.h"
 #include <gmock/gmock.h>
 
@@ -32,6 +33,12 @@ void AssertEquals(bigquery_v2_minimal_internal::QueryRequest const& lhs,
 
 void AssertEquals(bigquery_v2_minimal_internal::PostQueryRequest const& lhs,
                   bigquery_v2_minimal_internal::PostQueryRequest const& rhs);
+
+std::string MakeQueryResponsePayload();
+bigquery_v2_minimal_internal::QueryResults MakeQueryResults();
+
+void AssertEquals(bigquery_v2_minimal_internal::QueryResults const& lhs,
+                  bigquery_v2_minimal_internal::QueryResults const& rhs);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_testing
