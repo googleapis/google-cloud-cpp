@@ -39,14 +39,14 @@ io::run cmake "${cmake_args[@]}" \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}" \
   -DCMAKE_CXX_FLAGS="-Og -Wno-maybe-uninitialized"
 io::run cmake --build cmake-out
-io::run cmake --install cmake-out >/dev/null
+io::run cmake --install cmake-out #>/dev/null
 
 if [ "${GOOGLE_CLOUD_CPP_CHECK_API:-}" ]; then
   IFS=',' read -ra library_list <<<"${GOOGLE_CLOUD_CPP_CHECK_API}"
 else
   mapfile -t library_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-libraries.cmake 2>&1)
   # These libraries are not "features", but they are part of the public API
-  library_list+=("common" "grpc_utils")
+  library_list+=("common" "grpc_utils" "oauth2")
 fi
 
 # Uses `abi-dumper` to dump the ABI for the given library, which should
@@ -64,7 +64,7 @@ function check_abi() {
   local shortlib="${library#google_cloud_cpp_}"
   local public_headers="${prefix}/include/google/cloud/${shortlib}"
   # These two are special
-  if [[ "${shortlib}" == "common" || "${shortlib}" == "grpc_utils" ]]; then
+  if [[ "${shortlib}" == "common" || "${shortlib}" == "grpc_utils" || "${shortlib}" == "oauth2" ]]; then
     public_headers="${prefix}/include/google/cloud"
   fi
 
