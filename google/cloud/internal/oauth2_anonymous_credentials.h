@@ -44,7 +44,7 @@ class AnonymousCredentials : public oauth2_internal::Credentials {
    * Authorization HTTP header from this method, this class always returns an
    * empty string as its value.
    */
-  StatusOr<internal::AccessToken> GetToken(
+  StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
 };
 

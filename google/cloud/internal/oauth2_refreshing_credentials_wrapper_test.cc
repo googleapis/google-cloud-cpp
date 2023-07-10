@@ -40,7 +40,7 @@ TEST(RefreshingCredentialsWrapper, IsValid) {
   std::pair<std::string, std::string> const auth_token =
       std::make_pair("Authorization", "foo");
   auto refresh_fn = [&] {
-    internal::AccessToken token;
+    AccessToken token;
     token.token = auth_token.second;
     token.expiration = now + minutes(60);
     return make_status_or(token);
@@ -68,10 +68,10 @@ TEST(RefreshingCredentialsWrapper, RefreshTokenSuccess) {
 
   // Test that we only call the refresh_fn on the first call to
   // AuthorizationHeader.
-  testing::MockFunction<absl::FunctionRef<StatusOr<internal::AccessToken>()>>
+  testing::MockFunction<absl::FunctionRef<StatusOr<AccessToken>()>>
       mock_refresh_fn;
   EXPECT_CALL(mock_refresh_fn, Call()).WillOnce([&] {
-    internal::AccessToken token;
+    AccessToken token;
     token.token = auth_token.second;
     token.expiration = now + minutes(60);
     return make_status_or(token);
@@ -86,7 +86,7 @@ TEST(RefreshingCredentialsWrapper, RefreshTokenSuccess) {
 }
 
 TEST(RefreshingCredentialsWrapper, RefreshTokenFailure) {
-  auto refresh_fn = [&]() -> StatusOr<internal::AccessToken> {
+  auto refresh_fn = [&]() -> StatusOr<AccessToken> {
     return Status(StatusCode::kInvalidArgument, {}, {});
   };
   RefreshingCredentialsWrapper w;
@@ -112,14 +112,14 @@ TEST(RefreshingCredentialsWrapper, RefreshTokenFailureValidToken) {
       std::make_pair("Authorization", "foo");
   RefreshingCredentialsWrapper w(mock_current_time_fn.AsStdFunction());
   auto refresh_fn = [&] {
-    internal::AccessToken token;
+    AccessToken token;
     token.token = auth_token.second;
     token.expiration = expire_time;
     return make_status_or(token);
   };
   auto token = w.AuthorizationHeader(refresh_fn);
 
-  auto failing_refresh_fn = []() -> StatusOr<internal::AccessToken> {
+  auto failing_refresh_fn = []() -> StatusOr<AccessToken> {
     return Status(StatusCode::kInvalidArgument, {}, {});
   };
   token = w.AuthorizationHeader(failing_refresh_fn);
@@ -140,14 +140,14 @@ TEST(RefreshingCredentialsWrapper, RefreshTokenFailureInvalidToken) {
       std::make_pair("Authorization", "foo");
   RefreshingCredentialsWrapper w(mock_current_time_fn.AsStdFunction());
   auto refresh_fn = [&] {
-    internal::AccessToken token;
+    AccessToken token;
     token.token = auth_token.second;
     token.expiration = expire_time;
     return make_status_or(token);
   };
   auto token = w.AuthorizationHeader(refresh_fn);
 
-  auto failing_refresh_fn = [&]() -> StatusOr<internal::AccessToken> {
+  auto failing_refresh_fn = [&]() -> StatusOr<AccessToken> {
     return Status(StatusCode::kInvalidArgument, {}, {});
   };
   token = w.AuthorizationHeader(failing_refresh_fn);

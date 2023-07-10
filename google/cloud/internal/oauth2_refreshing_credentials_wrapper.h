@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_REFRESHING_CREDENTIALS_WRAPPER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_REFRESHING_CREDENTIALS_WRAPPER_H
 
-#include "google/cloud/internal/access_token.h"
+#include "google/cloud/access_token.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -41,7 +41,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class RefreshingCredentialsWrapper {
  public:
-  using RefreshFunctor = absl::FunctionRef<StatusOr<internal::AccessToken>()>;
+  using RefreshFunctor = absl::FunctionRef<StatusOr<AccessToken>()>;
   using CurrentTimeFn =
       std::function<std::chrono::time_point<std::chrono::system_clock>()>;
 
@@ -84,7 +84,7 @@ class RefreshingCredentialsWrapper {
   bool IsExpired() const;
   bool NeedsRefresh() const;
 
-  mutable internal::AccessToken token_;
+  mutable AccessToken token_;
   CurrentTimeFn current_time_fn_;
 };
 

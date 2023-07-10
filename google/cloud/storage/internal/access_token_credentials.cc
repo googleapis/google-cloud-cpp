@@ -21,7 +21,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 AccessTokenCredentials::AccessTokenCredentials(
-    google::cloud::internal::AccessToken const& access_token)
+    google::cloud::AccessToken const& access_token)
     : header_("Authorization: Bearer " + access_token.token) {}
 
 StatusOr<std::string> AccessTokenCredentials::AuthorizationHeader() {

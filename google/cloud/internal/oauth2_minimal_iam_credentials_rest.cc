@@ -42,7 +42,7 @@ MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
       options_(std::move(options)),
       client_factory_(std::move(client_factory)) {}
 
-StatusOr<google::cloud::internal::AccessToken>
+StatusOr<google::cloud::AccessToken>
 MinimalIamCredentialsRestStub::GenerateAccessToken(
     GenerateAccessTokenRequest const& request) {
   auto auth_header = AuthorizationHeader(*credentials_);
@@ -81,7 +81,7 @@ MinimalIamCredentialsRestLogging::MinimalIamCredentialsRestLogging(
     std::shared_ptr<MinimalIamCredentialsRest> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::internal::AccessToken>
+StatusOr<google::cloud::AccessToken>
 MinimalIamCredentialsRestLogging::GenerateAccessToken(
     GenerateAccessTokenRequest const& request) {
   GCP_LOG(INFO) << __func__
@@ -102,7 +102,7 @@ MinimalIamCredentialsRestLogging::GenerateAccessToken(
   return response;
 }
 
-StatusOr<internal::AccessToken> ParseGenerateAccessTokenResponse(
+StatusOr<AccessToken> ParseGenerateAccessTokenResponse(
     rest_internal::RestResponse& response,
     google::cloud::internal::ErrorContext const& ec) {
   if (IsHttpError(response)) return AsStatus(std::move(response));
@@ -127,7 +127,7 @@ StatusOr<internal::AccessToken> ParseGenerateAccessTokenResponse(
         "response`",
         GCP_ERROR_INFO().WithContext(ec));
   }
-  return google::cloud::internal::AccessToken{*std::move(token), *expire_time};
+  return google::cloud::AccessToken{*std::move(token), *expire_time};
 }
 
 std::shared_ptr<MinimalIamCredentialsRest> MakeMinimalIamCredentialsRestStub(

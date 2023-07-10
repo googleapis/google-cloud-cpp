@@ -21,12 +21,12 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-inline bool ExpiringSoon(internal::AccessToken const& token,
+inline bool ExpiringSoon(AccessToken const& token,
                          std::chrono::system_clock::time_point now) {
   return now + GoogleOAuthAccessTokenExpirationSlack() >= token.expiration;
 }
 
-inline bool Expired(internal::AccessToken const& token,
+inline bool Expired(AccessToken const& token,
                     std::chrono::system_clock::time_point now) {
   return now >= token.expiration;
 }
@@ -38,7 +38,7 @@ CachedCredentials::CachedCredentials(std::shared_ptr<Credentials> impl)
 
 CachedCredentials::~CachedCredentials() = default;
 
-StatusOr<internal::AccessToken> CachedCredentials::GetToken(
+StatusOr<AccessToken> CachedCredentials::GetToken(
     std::chrono::system_clock::time_point now) {
   std::lock_guard<std::mutex> lk(mu_);
   if (!ExpiringSoon(token_, now)) return token_;

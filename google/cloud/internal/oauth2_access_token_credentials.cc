@@ -20,10 +20,10 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessTokenCredentials::AccessTokenCredentials(
-    google::cloud::internal::AccessToken access_token)
+    google::cloud::AccessToken access_token)
     : access_token_(std::move(access_token)) {}
 
-StatusOr<internal::AccessToken> AccessTokenCredentials::GetToken(
+StatusOr<AccessToken> AccessTokenCredentials::GetToken(
     std::chrono::system_clock::time_point /*tp*/) {
   return access_token_;
 }

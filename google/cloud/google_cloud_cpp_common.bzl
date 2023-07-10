@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_common - DO NOT EDIT."""
 
 google_cloud_cpp_common_hdrs = [
+    "access_token.h",
     "backoff_policy.h",
     "common_options.h",
     "credentials.h",
@@ -28,7 +29,6 @@ google_cloud_cpp_common_hdrs = [
     "internal/absl_str_cat_quiet.h",
     "internal/absl_str_join_quiet.h",
     "internal/absl_str_replace_quiet.h",
-    "internal/access_token.h",
     "internal/algorithm.h",
     "internal/api_client_header.h",
     "internal/attributes.h",
@@ -105,8 +105,8 @@ google_cloud_cpp_common_hdrs = [
 ]
 
 google_cloud_cpp_common_srcs = [
+    "access_token.cc",
     "credentials.cc",
-    "internal/access_token.cc",
     "internal/api_client_header.cc",
     "internal/auth_header_error.cc",
     "internal/backoff_policy.cc",

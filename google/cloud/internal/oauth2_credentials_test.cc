@@ -30,7 +30,7 @@ using ::testing::Return;
 
 class MockCredentials : public Credentials {
  public:
-  MOCK_METHOD(StatusOr<internal::AccessToken>, GetToken,
+  MOCK_METHOD(StatusOr<AccessToken>, GetToken,
               (std::chrono::system_clock::time_point), (override));
 };
 
@@ -39,7 +39,7 @@ TEST(Credentials, AuthorizationHeaderSuccess) {
   auto const now = std::chrono::system_clock::now();
   auto const expiration = now + std::chrono::seconds(3600);
   EXPECT_CALL(mock, GetToken(now))
-      .WillOnce(Return(internal::AccessToken{"test-token", expiration}));
+      .WillOnce(Return(AccessToken{"test-token", expiration}));
   auto actual = AuthorizationHeader(mock, now);
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, Pair("Authorization", "Bearer test-token"));
@@ -50,7 +50,7 @@ TEST(Credentials, AuthorizationHeaderJoinedSuccess) {
   auto const now = std::chrono::system_clock::now();
   auto const expiration = now + std::chrono::seconds(3600);
   EXPECT_CALL(mock, GetToken(now))
-      .WillOnce(Return(internal::AccessToken{"test-token", expiration}));
+      .WillOnce(Return(AccessToken{"test-token", expiration}));
   auto actual = AuthorizationHeaderJoined(mock, now);
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, "Authorization: Bearer test-token");
@@ -61,7 +61,7 @@ TEST(Credentials, AuthorizationHeaderJoinedEmpty) {
   auto const now = std::chrono::system_clock::now();
   auto const expiration = now + std::chrono::seconds(3600);
   EXPECT_CALL(mock, GetToken(now))
-      .WillOnce(Return(internal::AccessToken{"", expiration}));
+      .WillOnce(Return(AccessToken{"", expiration}));
   auto actual = AuthorizationHeaderJoined(mock, now);
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, IsEmpty());

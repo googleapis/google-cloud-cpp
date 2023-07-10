@@ -80,12 +80,12 @@ class ExternalAccountCredentials : public oauth2_internal::Credentials {
                              Options options = {});
   ~ExternalAccountCredentials() override = default;
 
-  StatusOr<internal::AccessToken> GetToken(
+  StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
 
  private:
-  StatusOr<internal::AccessToken> GetTokenImpersonation(
-      std::string const& access_token, internal::ErrorContext const& ec);
+  StatusOr<AccessToken> GetTokenImpersonation(std::string const& access_token,
+                                              internal::ErrorContext const& ec);
 
   ExternalAccountInfo info_;
   HttpClientFactory client_factory_;

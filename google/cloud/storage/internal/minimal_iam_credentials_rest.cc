@@ -43,7 +43,7 @@ class MinimalIamCredentialsRestImpl : public MinimalIamCredentialsRest {
         x_goog_api_client_header_("x-goog-api-client: " + x_goog_api_client()),
         options_(std::move(options)) {}
 
-  StatusOr<google::cloud::internal::AccessToken> GenerateAccessToken(
+  StatusOr<google::cloud::AccessToken> GenerateAccessToken(
       GenerateAccessTokenRequest const& request) override {
     auto auth_header = credentials_->AuthorizationHeader();
     if (!auth_header) return std::move(auth_header).status();
@@ -74,8 +74,8 @@ class MinimalIamCredentialsRestImpl : public MinimalIamCredentialsRest {
     auto expire_time = google::cloud::internal::ParseRfc3339(
         parsed["expireTime"].get<std::string>());
     if (!expire_time) return std::move(expire_time).status();
-    return google::cloud::internal::AccessToken{
-        parsed["accessToken"].get<std::string>(), *expire_time};
+    return google::cloud::AccessToken{parsed["accessToken"].get<std::string>(),
+                                      *expire_time};
   }
 
  private:
@@ -102,7 +102,7 @@ class MinimalIamCredentialsRestLogging : public MinimalIamCredentialsRest {
       std::shared_ptr<MinimalIamCredentialsRest> child)
       : child_(std::move(child)) {}
 
-  StatusOr<google::cloud::internal::AccessToken> GenerateAccessToken(
+  StatusOr<google::cloud::AccessToken> GenerateAccessToken(
       GenerateAccessTokenRequest const& request) override {
     GCP_LOG(INFO) << __func__
                   << "() << {service_account=" << request.service_account

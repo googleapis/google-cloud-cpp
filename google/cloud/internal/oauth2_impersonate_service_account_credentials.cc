@@ -47,7 +47,7 @@ ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     std::shared_ptr<MinimalIamCredentialsRest> stub)
     : stub_(std::move(stub)), request_(MakeRequest(config)) {}
 
-StatusOr<internal::AccessToken> ImpersonateServiceAccountCredentials::GetToken(
+StatusOr<AccessToken> ImpersonateServiceAccountCredentials::GetToken(
     std::chrono::system_clock::time_point /*tp*/) {
   return stub_->GenerateAccessToken(request_);
 }

@@ -43,7 +43,7 @@ class CachedCredentials : public Credentials {
   explicit CachedCredentials(std::shared_ptr<Credentials> impl);
   ~CachedCredentials() override;
 
-  StatusOr<internal::AccessToken> GetToken(
+  StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point now) override;
   StatusOr<std::vector<std::uint8_t>> SignBlob(
       absl::optional<std::string> const& signing_service_account,
@@ -54,7 +54,7 @@ class CachedCredentials : public Credentials {
  private:
   std::shared_ptr<Credentials> impl_;
   std::mutex mu_;
-  internal::AccessToken token_;
+  AccessToken token_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

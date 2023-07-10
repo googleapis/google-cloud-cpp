@@ -22,7 +22,7 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::internal::AccessToken;
+using ::google::cloud::AccessToken;
 
 TEST(AccessTokenCredentials, Simple) {
   auto const now = std::chrono::system_clock::now();

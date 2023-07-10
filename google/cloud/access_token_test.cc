@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/access_token.h"
+#include "google/cloud/access_token.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
 #include <sstream>
@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 using ::testing::HasSubstr;
 
@@ -56,7 +55,6 @@ TEST(AccessToken, Stream) {
   EXPECT_THAT(actual, HasSubstr("expiration=" + expiration));
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
