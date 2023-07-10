@@ -1491,6 +1491,7 @@ void ResumeOrderingKey(google::cloud::pubsub::Publisher publisher,
 void Subscribe(google::cloud::pubsub::Subscriber subscriber,
                std::vector<std::string> const&) {
   auto const initial = EventCounter::Instance().Current();
+  //! [START pubsub_quickstart_subscriber]
   //! [START pubsub_subscriber_async_pull] [subscribe]
   namespace pubsub = ::google::cloud::pubsub;
   auto sample = [](pubsub::Subscriber subscriber) {
@@ -1502,6 +1503,7 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
         });
   };
   //! [END pubsub_subscriber_async_pull] [subscribe]
+  //! [END pubsub_quickstart_subscriber]
   EventCounter::Instance().Wait(
       [initial](std::int64_t count) { return count > initial; },
       sample(std::move(subscriber)), __func__);
