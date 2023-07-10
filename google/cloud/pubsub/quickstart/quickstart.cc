@@ -35,11 +35,11 @@ int main(int argc, char* argv[]) try {
           .Publish(pubsub::MessageBuilder{}.SetData("Hello World!").Build())
           .get();
   if (!id) throw std::move(id).status();
-  std::cout << "Hello World published with id=" << *id << std::endl;
+  std::cout << "Hello World published with id=" << *id << "\n";
 
   return 0;
 } catch (google::cloud::Status const& status) {
-  std::cerr << "google::cloud::Status thrown: " << status << std::endl;
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 //! [END pubsub_quickstart_publisher] [all]
