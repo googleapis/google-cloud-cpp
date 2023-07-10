@@ -26,6 +26,8 @@ int main(int argc, char* argv[]) try {
   std::string const project_id = argv[1];
   std::string const subscription_id = argv[2];
 
+  auto constexpr kWaitTimeout = std::chrono::seconds(30);
+
   // Create a namespace alias to make the code easier to read.
   namespace pubsub = ::google::cloud::pubsub;
 
@@ -33,21 +35,19 @@ int main(int argc, char* argv[]) try {
       pubsub::Subscription(project_id, subscription_id)));
 
   auto session =
-      subscriber
-          .Subscribe([&](pubsub::Message const& m, pubsub::AckHandler h) {
-            std::cout << "Received message " << m << "\n";
-            std::move(h).ack();
-          })
-          .then([](auto f) {
-            auto status = f.get();
-            if (!status.ok()) throw status;
-          });
+      subscriber.Subscribe([&](pubsub::Message const& m, pubsub::AckHandler h) {
+        std::cout << "Received message " << m << "\n";
+        std::move(h).ack();
+      });
 
   std::cout << "Waiting for messages on " + subscription_id + "...\n";
 
-  // Blocks indefinitely, unless an exception is thrown, since Subscribe should
-  // be used in a long running application.
-  session.wait();
+  // Blocks until the timeout is reached.
+  auto result = session.wait_for(kWaitTimeout);
+  if (result == std::future_status::timeout) {
+    std::cout << "timeout reached, ending session\n";
+    session.cancel();
+  }
 
   return 0;
 } catch (google::cloud::Status const& status) {
