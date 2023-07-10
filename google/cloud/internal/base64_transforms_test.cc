@@ -25,6 +25,7 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ContainsRegex;
 using ::testing::ElementsAre;
+using ::testing::ElementsAreArray;
 using ::testing::Not;
 
 TEST(Base64, RoundTrip) {
