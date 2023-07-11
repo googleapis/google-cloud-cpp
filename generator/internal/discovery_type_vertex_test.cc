@@ -25,6 +25,7 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::NotNull;
 
 TEST(DiscoveryTypeVertexTest, DetermineIntroducerEmpty) {
@@ -689,16 +690,16 @@ message FieldsOnly {
 }
 
 message ReservedOnly {
-  reserved 25, 6 to 4;
+  reserved 25, 4 to 6;
 }
 
 message FieldHighest {
-  reserved 25, 6 to 4;
+  reserved 25, 4 to 6;
   string field26 = 26;
 }
 
 message ReservedHighest {
-  reserved 25, 6 to 4;
+  reserved 25, 4 to 6;
   string field7 = 7;
 }
 )""";
@@ -714,18 +715,23 @@ message ReservedHighest {
       DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
           *message_descriptor);
   EXPECT_THAT(message_properties.max_field_number, Eq(2));
+  EXPECT_THAT(message_properties.reserved_numbers, IsEmpty());
 
   message_descriptor = file_descriptor->FindMessageTypeByName("ReservedOnly");
   ASSERT_THAT(message_descriptor, NotNull());
   message_properties = DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
       *message_descriptor);
   EXPECT_THAT(message_properties.max_field_number, Eq(25));
+  EXPECT_THAT(message_properties.reserved_numbers,
+              testing::ElementsAre(4, 5, 6, 25));
 
   message_descriptor = file_descriptor->FindMessageTypeByName("FieldHighest");
   ASSERT_THAT(message_descriptor, NotNull());
   message_properties = DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
       *message_descriptor);
   EXPECT_THAT(message_properties.max_field_number, Eq(26));
+  EXPECT_THAT(message_properties.reserved_numbers,
+              testing::ElementsAre(4, 5, 6, 25));
 
   message_descriptor =
       file_descriptor->FindMessageTypeByName("ReservedHighest");
@@ -733,6 +739,8 @@ message ReservedHighest {
   message_properties = DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
       *message_descriptor);
   EXPECT_THAT(message_properties.max_field_number, Eq(25));
+  EXPECT_THAT(message_properties.reserved_numbers,
+              testing::ElementsAre(4, 5, 6, 25));
 }
 
 }  // namespace

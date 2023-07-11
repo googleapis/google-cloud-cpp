@@ -189,7 +189,7 @@ DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
   MessageProperties message_properties{{}, 0};
   for (auto r = 0; r != message_descriptor.reserved_range_count(); ++r) {
     auto const* reserved_range = message_descriptor.reserved_range(r);
-    for (int j = reserved_range->start; j <= reserved_range->end; ++j) {
+    for (int j = reserved_range->start; j < reserved_range->end; ++j) {
       message_properties.reserved_numbers.insert(j);
     }
     // google::protobuf::ReservedRange.end returns the next available value, not
