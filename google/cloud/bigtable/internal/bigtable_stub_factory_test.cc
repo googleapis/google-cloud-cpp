@@ -264,11 +264,11 @@ TEST_F(BigtableStubFactory, AsyncMutateRow) {
 TEST_F(BigtableStubFactory, FeaturesFlags) {
   MockFactory factory;
   EXPECT_CALL(factory, Call)
-      .WillOnce([=](std::shared_ptr<grpc::Channel> const&) {
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, MutateRow)
-            .WillOnce([=](grpc::ClientContext& context,
-                          google::bigtable::v2::MutateRowRequest const&) {
+            .WillOnce([](grpc::ClientContext& context,
+                         google::bigtable::v2::MutateRowRequest const&) {
               ValidateMetadataFixture fixture;
               auto headers = fixture.GetMetadata(context);
               EXPECT_THAT(headers, Contains(Pair("bigtable-features",
