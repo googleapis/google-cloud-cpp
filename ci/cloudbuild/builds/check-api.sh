@@ -39,7 +39,7 @@ io::run cmake "${cmake_args[@]}" \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}" \
   -DCMAKE_CXX_FLAGS="-Og -Wno-maybe-uninitialized"
 io::run cmake --build cmake-out
-io::run cmake --install cmake-out #>/dev/null
+io::run cmake --install cmake-out >/dev/null
 
 if [ "${GOOGLE_CLOUD_CPP_CHECK_API:-}" ]; then
   IFS=',' read -ra library_list <<<"${GOOGLE_CLOUD_CPP_CHECK_API}"
