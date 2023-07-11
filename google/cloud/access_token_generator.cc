@@ -23,22 +23,23 @@ namespace {
 class AccessTokenGeneratorImpl : public AccessTokenGenerator {
  public:
   explicit AccessTokenGeneratorImpl(
-      std::shared_ptr<google::cloud::oauth2_internal::Credentials> impl)
-      : impl_(std::move(impl)) {}
+      std::shared_ptr<google::cloud::oauth2_internal::Credentials> creds)
+      : creds_(std::move(creds)) {}
   ~AccessTokenGeneratorImpl() override = default;
 
   StatusOr<AccessToken> GetToken() override {
-    return impl_->GetToken(std::chrono::system_clock::now());
+    return creds_->GetToken(std::chrono::system_clock::now());
   }
 
  private:
-  std::shared_ptr<google::cloud::oauth2_internal::Credentials> impl_;
+  std::shared_ptr<google::cloud::oauth2_internal::Credentials> creds_;
 };
 
 }  // namespace
 
 std::shared_ptr<AccessTokenGenerator> MakeAccessTokenGenerator(
-    std::shared_ptr<Credentials> credentials) {  // NOLINT
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    std::shared_ptr<Credentials> credentials) {
   return std::make_shared<AccessTokenGeneratorImpl>(
       rest_internal::MapCredentials(credentials));
 }
