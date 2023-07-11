@@ -42,12 +42,14 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::Not;
 using ::testing::NotNull;
 using ::testing::Pair;
 using ::testing::Return;
 
 MATCHER(IsWebSafeBase64, "") {
-  std::regex regex(R"re([A-Z0-9_-]+)re");
+  std::regex regex(R"re([A-Z0-9_-]*)re");
   return std::regex_match(arg, regex);
 }
 
@@ -271,8 +273,10 @@ TEST_F(BigtableStubFactory, FeaturesFlags) {
                          google::bigtable::v2::MutateRowRequest const&) {
               ValidateMetadataFixture fixture;
               auto headers = fixture.GetMetadata(context);
-              EXPECT_THAT(headers, Contains(Pair("bigtable-features",
-                                                 IsWebSafeBase64())));
+              EXPECT_THAT(
+                  headers,
+                  Contains(Pair("bigtable-features",
+                                AllOf(Not(IsEmpty()), IsWebSafeBase64()))));
               return internal::AbortedError("fail");
             });
         return mock;
