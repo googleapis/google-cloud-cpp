@@ -17,6 +17,8 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <opentelemetry/sdk/trace/batch_span_processor_factory.h>
+#include <opentelemetry/sdk/trace/batch_span_processor_options.h>
+#include <opentelemetry/sdk/trace/processor.h>
 #include <opentelemetry/sdk/trace/tracer_provider_factory.h>
 #include <opentelemetry/trace/provider.h>
 #include <string>
