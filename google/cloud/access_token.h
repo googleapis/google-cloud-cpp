@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ACCESS_TOKEN_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ACCESS_TOKEN_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESS_TOKEN_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESS_TOKEN_H
 
 #include "google/cloud/version.h"
 #include <chrono>
@@ -23,7 +23,6 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 /// Represents an access token with a known expiration time.
 struct AccessToken {
@@ -39,9 +38,8 @@ inline bool operator!=(AccessToken const& lhs, AccessToken const& rhs) {
   return !(lhs == rhs);
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ACCESS_TOKEN_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESS_TOKEN_H

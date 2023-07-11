@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/access_token.h"
+#include "google/cloud/access_token.h"
 #include "absl/time/time.h"
 #include <ostream>
 #include <tuple>
@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 std::ostream& operator<<(std::ostream& os, AccessToken const& rhs) {
   // Tokens are truncated because they contain security secrets.
@@ -33,7 +32,6 @@ bool operator==(AccessToken const& lhs, AccessToken const& rhs) {
          std::tie(rhs.token, rhs.expiration);
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -24,8 +24,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::AccessToken;
 using ::google::cloud::AccessTokenLifetimeOption;
-using ::google::cloud::internal::AccessToken;
 using ::google::cloud::testing_util::IsOk;
 using ::std::chrono::minutes;
 using ::testing::EndsWith;
@@ -34,9 +34,8 @@ using ::testing::StartsWith;
 
 class MockMinimalIamCredentialsRest : public MinimalIamCredentialsRest {
  public:
-  MOCK_METHOD(StatusOr<google::cloud::internal::AccessToken>,
-              GenerateAccessToken, (GenerateAccessTokenRequest const&),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::AccessToken>, GenerateAccessToken,
+              (GenerateAccessTokenRequest const&), (override));
 };
 
 TEST(ImpersonateServiceAccountCredentialsTest, Basic) {

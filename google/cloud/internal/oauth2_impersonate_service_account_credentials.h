@@ -45,7 +45,7 @@ class ImpersonateServiceAccountCredentials
       google::cloud::internal::ImpersonateServiceAccountConfig const& config,
       std::shared_ptr<MinimalIamCredentialsRest> stub);
 
-  StatusOr<internal::AccessToken> GetToken(
+  StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
 
  private:

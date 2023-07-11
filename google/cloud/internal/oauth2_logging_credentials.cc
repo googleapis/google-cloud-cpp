@@ -31,7 +31,7 @@ LoggingCredentials::LoggingCredentials(std::string phase,
 
 LoggingCredentials::~LoggingCredentials() = default;
 
-StatusOr<internal::AccessToken> LoggingCredentials::GetToken(
+StatusOr<AccessToken> LoggingCredentials::GetToken(
     std::chrono::system_clock::time_point now) {
   auto token = impl_->GetToken(now);
   if (!token) {

@@ -29,6 +29,8 @@ configure_file(internal/build_info.cc.in internal/build_info.cc)
 add_library(
     google_cloud_cpp_common # cmake-format: sort
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
+    access_token.cc
+    access_token.h
     backoff_policy.h
     common_options.h
     credentials.cc
@@ -41,8 +43,6 @@ add_library(
     internal/absl_str_cat_quiet.h
     internal/absl_str_join_quiet.h
     internal/absl_str_replace_quiet.h
-    internal/access_token.cc
-    internal/access_token.h
     internal/algorithm.h
     internal/api_client_header.cc
     internal/api_client_header.h
@@ -323,13 +323,13 @@ if (BUILD_TESTING)
 
     set(google_cloud_cpp_common_unit_tests
         # cmake-format: sort
+        access_token_test.cc
         common_options_test.cc
         future_coroutines_test.cc
         future_generic_test.cc
         future_generic_then_test.cc
         future_void_test.cc
         future_void_then_test.cc
-        internal/access_token_test.cc
         internal/algorithm_test.cc
         internal/api_client_header_test.cc
         internal/backoff_policy_test.cc

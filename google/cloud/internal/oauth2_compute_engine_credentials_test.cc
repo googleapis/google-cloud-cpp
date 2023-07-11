@@ -127,8 +127,8 @@ TEST(ComputeEngineCredentialsTest,
       alias, Options{}, mock_http_client_factory.AsStdFunction());
   // Calls Refresh to obtain the access token for our authorization header.
   auto const now = std::chrono::system_clock::now();
-  auto const expected_token = internal::AccessToken{
-      "mysupersecrettoken", now + std::chrono::seconds(3600)};
+  auto const expected_token =
+      AccessToken{"mysupersecrettoken", now + std::chrono::seconds(3600)};
   EXPECT_EQ(expected_token, credentials.GetToken(now).value());
   // Make sure we obtain the scopes and email from the metadata server.
   EXPECT_EQ(email, credentials.service_account_email());

@@ -59,7 +59,7 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
       credentials.value("token_uri", default_token_uri)};
 }
 
-StatusOr<internal::AccessToken> ParseAuthorizedUserRefreshResponse(
+StatusOr<AccessToken> ParseAuthorizedUserRefreshResponse(
     rest_internal::RestResponse& response,
     std::chrono::system_clock::time_point now) {
   auto status_code = response.StatusCode();
@@ -78,8 +78,7 @@ StatusOr<internal::AccessToken> ParseAuthorizedUserRefreshResponse(
     return AsStatus(status_code, error_payload);
   }
   auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
-  return internal::AccessToken{access_token.value("access_token", ""),
-                               now + expires_in};
+  return AccessToken{access_token.value("access_token", ""), now + expires_in};
 }
 
 AuthorizedUserCredentials::AuthorizedUserCredentials(
@@ -89,7 +88,7 @@ AuthorizedUserCredentials::AuthorizedUserCredentials(
       options_(std::move(options)),
       client_factory_(std::move(client_factory)) {}
 
-StatusOr<internal::AccessToken> AuthorizedUserCredentials::GetToken(
+StatusOr<AccessToken> AuthorizedUserCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
   rest_internal::RestRequest request;
   request.SetPath(info_.token_uri);
