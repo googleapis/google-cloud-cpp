@@ -194,15 +194,15 @@ DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
     }
     // google::protobuf::ReservedRange.end returns the next available value, not
     // the actual end reserved value.
-    message_properties.max_field_number =
-        std::max(message_properties.max_field_number,
-                 message_descriptor.reserved_range(r)->end - 1);
+    message_properties.next_available_field_number =
+        std::max(message_properties.next_available_field_number,
+                 message_descriptor.reserved_range(r)->end);
   }
 
   for (auto i = 0; i != message_descriptor.field_count(); ++i) {
-    message_properties.max_field_number =
-        std::max(message_properties.max_field_number,
-                 message_descriptor.field(i)->number());
+    message_properties.next_available_field_number =
+        std::max(message_properties.next_available_field_number,
+                 message_descriptor.field(i)->number() + 1);
   }
 
   return message_properties;

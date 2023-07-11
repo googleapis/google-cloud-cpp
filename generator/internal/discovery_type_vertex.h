@@ -73,11 +73,12 @@ class DiscoveryTypeVertex {
 
   struct MessageProperties {
     std::set<int> reserved_numbers;
-    int max_field_number;
+    int next_available_field_number;
   };
 
-  // Examines the message Descriptor to determined the reserved field numbers
-  // and the max field number either in use or reserved.
+  // Examines the message Descriptor to determine the reserved field numbers
+  // and the next available field number based on the currently used and/or
+  // reserved field numbers.
   static MessageProperties DetermineReservedAndMaxFieldNumbers(
       google::protobuf::Descriptor const& message_descriptor);
 

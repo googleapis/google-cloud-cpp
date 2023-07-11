@@ -714,14 +714,14 @@ message ReservedHighest {
   auto message_properties =
       DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
           *message_descriptor);
-  EXPECT_THAT(message_properties.max_field_number, Eq(2));
+  EXPECT_THAT(message_properties.next_available_field_number, Eq(3));
   EXPECT_THAT(message_properties.reserved_numbers, IsEmpty());
 
   message_descriptor = file_descriptor->FindMessageTypeByName("ReservedOnly");
   ASSERT_THAT(message_descriptor, NotNull());
   message_properties = DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
       *message_descriptor);
-  EXPECT_THAT(message_properties.max_field_number, Eq(25));
+  EXPECT_THAT(message_properties.next_available_field_number, Eq(26));
   EXPECT_THAT(message_properties.reserved_numbers,
               testing::ElementsAre(4, 5, 6, 25));
 
@@ -729,7 +729,7 @@ message ReservedHighest {
   ASSERT_THAT(message_descriptor, NotNull());
   message_properties = DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
       *message_descriptor);
-  EXPECT_THAT(message_properties.max_field_number, Eq(26));
+  EXPECT_THAT(message_properties.next_available_field_number, Eq(27));
   EXPECT_THAT(message_properties.reserved_numbers,
               testing::ElementsAre(4, 5, 6, 25));
 
@@ -738,7 +738,7 @@ message ReservedHighest {
   ASSERT_THAT(message_descriptor, NotNull());
   message_properties = DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
       *message_descriptor);
-  EXPECT_THAT(message_properties.max_field_number, Eq(25));
+  EXPECT_THAT(message_properties.next_available_field_number, Eq(26));
   EXPECT_THAT(message_properties.reserved_numbers,
               testing::ElementsAre(4, 5, 6, 25));
 }
