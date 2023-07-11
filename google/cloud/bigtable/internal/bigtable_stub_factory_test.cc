@@ -27,6 +27,7 @@
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <regex>
 
 namespace google {
 namespace cloud {
@@ -41,9 +42,14 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
 using ::testing::HasSubstr;
-using ::testing::MatchesRegex;
 using ::testing::NotNull;
+using ::testing::Pair;
 using ::testing::Return;
+
+MATCHER(IsWebSafeBase64, "") {
+  std::regex regex(R"re([A-Z0-9_-]+)re");
+  return std::regex_match(arg, regex);
+}
 
 // The point of these tests is to verify that the `CreateBigtableStub` factory
 // function injects the right decorators. We do this by observing the
@@ -256,7 +262,6 @@ TEST_F(BigtableStubFactory, AsyncMutateRow) {
 }
 
 TEST_F(BigtableStubFactory, FeaturesFlags) {
-  auto constexpr kWebSafeBase64Regex = "[A-Z0-9_-]+";
   MockFactory factory;
   EXPECT_CALL(factory, Call)
       .WillOnce([=](std::shared_ptr<grpc::Channel> const&) {
@@ -266,9 +271,8 @@ TEST_F(BigtableStubFactory, FeaturesFlags) {
                           google::bigtable::v2::MutateRowRequest const&) {
               ValidateMetadataFixture fixture;
               auto headers = fixture.GetMetadata(context);
-              EXPECT_THAT(headers,
-                          Contains(Pair("bigtable-features",
-                                        MatchesRegex(kWebSafeBase64Regex))));
+              EXPECT_THAT(headers, Contains(Pair("bigtable-features",
+                                                 IsWebSafeBase64())));
               return internal::AbortedError("fail");
             });
         return mock;
