@@ -45,7 +45,7 @@ substitutions:
   _LOGS_BUCKET: 'cloud-cpp-community-publiclogs'
   _TAG1: 'team-only'
 
-timeout: 12600s
+timeout: 36000s
 tags: [
   '${_TRIGGER_TYPE}',
   '${_BUILD_NAME}',
