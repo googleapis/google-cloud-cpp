@@ -55,7 +55,7 @@ class UnifiedRestCredentialsTest : public ::testing::Test {
 };
 
 TEST_F(UnifiedRestCredentialsTest, Insecure) {
-  auto credentials = MapCredentials(MakeInsecureCredentials());
+  auto credentials = MapCredentials(*MakeInsecureCredentials());
   auto header = credentials->AuthorizationHeader();
   ASSERT_THAT(header, IsOk());
   EXPECT_THAT(*header, IsEmpty());
@@ -63,7 +63,7 @@ TEST_F(UnifiedRestCredentialsTest, Insecure) {
 
 TEST_F(UnifiedRestCredentialsTest, AccessToken) {
   auto credentials = MapCredentials(
-      MakeAccessTokenCredentials("token1", std::chrono::system_clock::now()));
+      *MakeAccessTokenCredentials("token1", std::chrono::system_clock::now()));
   for (std::string expected : {"token1", "token1", "token1"}) {
     auto header = credentials->AuthorizationHeader();
     ASSERT_THAT(header, IsOk());
@@ -77,7 +77,7 @@ TEST_F(UnifiedRestCredentialsTest, LoadError) {
   auto const filename = TempKeyFileName();
   ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", filename);
 
-  auto credentials = MapCredentials(MakeGoogleDefaultCredentials());
+  auto credentials = MapCredentials(*MakeGoogleDefaultCredentials());
   EXPECT_THAT(credentials->AuthorizationHeader(), Not(IsOk()));
 }
 
@@ -107,7 +107,7 @@ TEST_F(UnifiedRestCredentialsTest, LoadSuccess) {
 
   ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", filename);
 
-  auto credentials = MapCredentials(MakeGoogleDefaultCredentials());
+  auto credentials = MapCredentials(*MakeGoogleDefaultCredentials());
   // Calling AuthorizationHeader() makes RPCs which would turn this into an
   // integration test, fortunately there are easier ways to verify the file was
   // loaded correctly:
