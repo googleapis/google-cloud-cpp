@@ -229,6 +229,15 @@ void from_json(nlohmann::json const& j, SystemVariables& s) {
   if (j.contains("values")) j.at("values").get_to(s.values);
 }
 
+bool operator==(ErrorProto const& lhs, ErrorProto const& rhs) {
+  return (lhs.message == rhs.message) && (lhs.reason == rhs.reason) &&
+         (lhs.location == rhs.location);
+}
+
+bool operator==(Struct const& lhs, Struct const& rhs) {
+  return std::equal(lhs.fields.begin(), lhs.fields.end(), rhs.fields.begin());
+}
+
 bool operator==(ConnectionProperty const& lhs, ConnectionProperty const& rhs) {
   return (lhs.key == rhs.key) && (lhs.value == rhs.value);
 }

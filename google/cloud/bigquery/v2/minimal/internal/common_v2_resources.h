@@ -43,6 +43,7 @@ struct ErrorProto {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ErrorProto, reason, location,
                                                 message);
+bool operator==(ErrorProto const& lhs, ErrorProto const& rhs);
 
 struct TableReference {
   std::string project_id;
@@ -312,6 +313,7 @@ struct Struct {
 };
 void to_json(nlohmann::json& j, Struct const& s);
 void from_json(nlohmann::json const& j, Struct& s);
+bool operator==(Struct const& lhs, Struct const& rhs);
 
 // Represents the system variables that can be given to a query job.
 // System variables can be used to check information during query execution.

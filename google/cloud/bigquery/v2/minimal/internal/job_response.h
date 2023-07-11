@@ -16,16 +16,21 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_RESPONSE_H
 
 #include "google/cloud/bigquery/v2/minimal/internal/bigquery_http_response.h"
+#include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job.h"
+#include "google/cloud/bigquery/v2/minimal/internal/table_schema.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+using namespace nlohmann::literals;  // NOLINT
 
 // Parses the BigQueryHttpResponse and builds a GetJobResponse.
 class GetJobResponse {
@@ -89,6 +94,57 @@ class CancelJobResponse {
 
   std::string kind;
   Job job;
+
+  BigQueryHttpResponse http_response;
+};
+
+struct SessionInfo {
+  std::string session_id;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(SessionInfo, session_id);
+
+struct QueryResults {
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+
+  std::string kind;
+  std::string page_token;
+
+  std::uint64_t total_rows = 0;
+  std::int64_t total_bytes_processed = 0;
+  std::int64_t num_dml_affected_rows = 0;
+
+  bool job_complete = false;
+  bool cache_hit = false;
+
+  TableSchema schema;
+  JobReference job_reference;
+  std::vector<Struct> rows;
+  std::vector<ErrorProto> errors;
+  SessionInfo session_info;
+  DmlStats dml_stats;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
+    QueryResults, kind, page_token, total_rows, total_bytes_processed,
+    num_dml_affected_rows, job_complete, cache_hit, schema, job_reference, rows,
+    errors, session_info, dml_stats);
+
+class QueryResponse {
+ public:
+  QueryResponse() = default;
+  static StatusOr<QueryResponse> BuildFromHttpResponse(
+      BigQueryHttpResponse const& http_response);
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+
+  QueryResults query_results;
 
   BigQueryHttpResponse http_response;
 };

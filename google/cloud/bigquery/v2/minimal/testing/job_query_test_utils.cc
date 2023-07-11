@@ -15,6 +15,7 @@
 #include "google/cloud/bigquery/v2/minimal/testing/job_query_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
 #include "google/cloud/bigquery/v2/minimal/testing/common_v2_test_utils.h"
+#include "google/cloud/bigquery/v2/minimal/testing/table_test_utils.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -29,10 +30,16 @@ using ::google::cloud::bigquery_v2_minimal_internal::DataFormatOptions;
 using ::google::cloud::bigquery_v2_minimal_internal::PostQueryRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryParameter;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::QueryResults;
 
 using ::google::cloud::bigquery_v2_minimal_testing::MakeConnectionProperty;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeDatasetReference;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryParameter;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeSystemVariables;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeTable;
+
+using ::testing::IsEmpty;
+using ::testing::Not;
 
 QueryRequest MakeQueryRequest() {
   QueryRequest expected;
@@ -118,6 +125,64 @@ void AssertEquals(bigquery_v2_minimal_internal::PostQueryRequest const& lhs,
   AssertEquals(lhs.query_request(), rhs.query_request());
 }
 
+QueryResults MakeQueryResults() {
+  QueryResults expected;
+
+  expected.cache_hit = true;
+  expected.dml_stats.deleted_row_count = 10;
+  expected.dml_stats.inserted_row_count = 10;
+  expected.dml_stats.updated_row_count = 10;
+  expected.session_info.session_id = "123";
+  expected.job_complete = true;
+
+  expected.job_reference.project_id = "p123";
+  expected.job_reference.location = "useast";
+  expected.job_reference.job_id = "j123";
+
+  expected.kind = "query-kind";
+  expected.num_dml_affected_rows = 5;
+  expected.page_token = "np123";
+  expected.rows.push_back(MakeSystemVariables().values);
+
+  expected.schema = MakeTable().schema;
+  expected.total_bytes_processed = 1000;
+  expected.total_rows = 1000;
+
+  return expected;
+}
+
+std::string MakeQueryResponsePayload() {
+  auto query_results = MakeQueryResults();
+  nlohmann::json j;
+  to_json(j, query_results);
+  return j.dump();
+}
+
+void AssertEquals(bigquery_v2_minimal_internal::QueryResults const& lhs,
+                  bigquery_v2_minimal_internal::QueryResults const& rhs) {
+  EXPECT_EQ(lhs.cache_hit, rhs.cache_hit);
+  EXPECT_EQ(lhs.dml_stats, rhs.dml_stats);
+  EXPECT_EQ(lhs.job_complete, rhs.job_complete);
+  EXPECT_EQ(lhs.job_reference.job_id, rhs.job_reference.job_id);
+  EXPECT_EQ(lhs.job_reference.project_id, rhs.job_reference.project_id);
+  EXPECT_EQ(lhs.job_reference.location, rhs.job_reference.location);
+  EXPECT_EQ(lhs.kind, rhs.kind);
+  EXPECT_EQ(lhs.num_dml_affected_rows, rhs.num_dml_affected_rows);
+  EXPECT_EQ(lhs.page_token, rhs.page_token);
+
+  ASSERT_THAT(lhs.schema.fields, Not(IsEmpty()));
+  ASSERT_THAT(rhs.schema.fields, Not(IsEmpty()));
+  EXPECT_EQ(lhs.schema.fields.size(), rhs.schema.fields.size());
+
+  EXPECT_EQ(lhs.session_info.session_id, rhs.session_info.session_id);
+  EXPECT_EQ(lhs.total_bytes_processed, rhs.total_bytes_processed);
+  EXPECT_EQ(lhs.total_rows, rhs.total_rows);
+
+  EXPECT_TRUE(
+      std::equal(lhs.errors.begin(), lhs.errors.end(), rhs.errors.begin()));
+
+  EXPECT_TRUE(std::equal(lhs.rows.begin(), lhs.rows.end(), rhs.rows.begin()));
+}
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_testing
 }  // namespace cloud

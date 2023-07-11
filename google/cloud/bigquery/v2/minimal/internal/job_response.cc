@@ -185,6 +185,85 @@ std::string CancelJobResponse::DebugString(absl::string_view name,
       .Build();
 }
 
+std::string SessionInfo::DebugString(absl::string_view name,
+                                     TracingOptions const& options,
+                                     int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("session_id", session_id)
+      .Build();
+}
+
+std::string QueryResults::DebugString(absl::string_view name,
+                                      TracingOptions const& options,
+                                      int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("kind", kind)
+      .StringField("page_token", page_token)
+      .Field("total_rows", total_rows)
+      .Field("total_bytes_processed", total_bytes_processed)
+      .Field("num_dml_affected_rows", num_dml_affected_rows)
+      .Field("job_complete", job_complete)
+      .Field("cache_hit", cache_hit)
+      .Field("rows", rows)
+      .Field("errors", errors)
+      .SubMessage("schema", schema)
+      .SubMessage("job_reference", job_reference)
+      .SubMessage("session_info", session_info)
+      .SubMessage("dml_stats", dml_stats)
+      .Build();
+}
+
+std::string QueryResponse::DebugString(absl::string_view name,
+                                       TracingOptions const& options,
+                                       int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .SubMessage("http_response", http_response)
+      .SubMessage("query_results", query_results)
+      .Build();
+}
+
+StatusOr<QueryResponse> QueryResponse::BuildFromHttpResponse(
+    BigQueryHttpResponse const& http_response) {
+  auto json = parse_json(http_response.payload);
+  if (!json) return std::move(json).status();
+
+  QueryResults query_results;
+  query_results.kind = json->value("kind", "");
+  query_results.page_token = json->value("page_token", "");
+  query_results.total_rows = json->at("total_rows").get<std::uint64_t>();
+  query_results.total_bytes_processed =
+      json->at("total_bytes_processed").get<std::int64_t>();
+  query_results.num_dml_affected_rows =
+      json->at("num_dml_affected_rows").get<std::int64_t>();
+
+  query_results.job_complete = json->at("job_complete").get<bool>();
+  query_results.cache_hit = json->at("cache_hit").get<bool>();
+
+  query_results.schema = json->at("schema").get<TableSchema>();
+  query_results.job_reference = json->at("job_reference").get<JobReference>();
+
+  for (auto const& kv : json->at("rows").items()) {
+    auto const& json_struct_obj = kv.value();
+    auto const& row = json_struct_obj.get<Struct>();
+    query_results.rows.push_back(row);
+  }
+
+  for (auto const& kv : json->at("errors").items()) {
+    auto const& json_error_proto_obj = kv.value();
+    auto const& error = json_error_proto_obj.get<ErrorProto>();
+    query_results.errors.push_back(error);
+  }
+
+  query_results.session_info = json->at("session_info").get<SessionInfo>();
+  query_results.dml_stats = json->at("dml_stats").get<DmlStats>();
+
+  QueryResponse response;
+  response.http_response = http_response;
+  response.query_results = query_results;
+
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
