@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_TYPE_VERTEX_H
 
 #include "google/cloud/status_or.h"
+#include <google/protobuf/descriptor.h>
 #include <nlohmann/json.hpp>
 #include <set>
 #include <string>
@@ -69,6 +70,16 @@ class DiscoveryTypeVertex {
   // that defines the type.
   static StatusOr<TypeInfo> DetermineTypeAndSynthesis(
       nlohmann::json const& v, std::string const& field_name);
+
+  struct MessageProperties {
+    std::set<int> reserved_numbers;
+    int max_field_number;
+  };
+
+  // Examines the message Descriptor to determined the reserved field numbers
+  // and the max field number either in use or reserved.
+  static MessageProperties DetermineReservedAndMaxFieldNumbers(
+      google::protobuf::Descriptor const& message_descriptor);
 
   // Formats the properties of the json into proto message fields.
   StatusOr<std::vector<std::string>> FormatProperties(
