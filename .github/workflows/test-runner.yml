@@ -1,0 +1,49 @@
+name: "Test"
+
+# Build on pull requests and pushes to `main`. The PR builds will be
+# non-blocking for now, but that is configured elsewhere.
+on:
+  push:
+    branches: [ 'main', 'ci-gha**' ]
+  pull_request:
+  pull_request_target:
+
+jobs:
+  pre-flight:
+    # Avoid running tests twice on PR updates.  If the PR is coming from our
+    # repository, it's safe and we can use `pull_request`.  Otherwise, we should
+    # use `pull_request_target`.
+    if: |
+      (github.event_name != 'pull_request' &&
+       github.event_name != 'pull_request_target' &&
+       github.event.repository.full_name == 'googleapis/google-cloud-cpp') ||
+      (github.event_name == 'pull_request' &&
+       github.event.pull_request.head.repo.full_name == 'googleapis/google-cloud-cpp') ||
+      (github.event_name == 'pull_request_target' &&
+       github.event.pull_request.head.repo.full_name != 'googleapis/google-cloud-cpp')
+    name: Check for Safety
+    runs-on: ubuntu-latest
+    outputs:
+      checkout-sha: ${{ steps.safe-checkout.outputs.sha }}
+    steps:
+      - name: Save Pull Request
+        id: save-pull-request
+        run: >
+          ${{ github.event_name != 'pull_request_target' }} ||
+          echo "sha=${{ github.event.pull_request.head.sha  }}"  >> $GITHUB_OUTPUT
+
+  macos:
+    name: macOS
+    needs: [pre-flight]
+    uses: ./.github/workflows/macos.yml
+    with:
+      safe-checkout: ${{ needs.pre-flight.outputs.checkout-sha }}
+    secrets: inherit
+
+  external-account-integration:
+    name: External Account Integration
+    needs: [pre-flight]
+    uses: ./.github/workflows/external-account-integration.yml
+    with:
+      safe-checkout: ${{ needs.pre-flight.outputs.checkout-sha }}
+    secrets: inherit

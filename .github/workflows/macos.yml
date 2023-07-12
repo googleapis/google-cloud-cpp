@@ -1,0 +1,37 @@
+name: "Unit Tests"
+
+on:
+  workflow_call:
+    inputs:
+      safe-checkout:
+        required: true
+        description: "The SHA key for the commit we want to run over"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  macOS-bazel:
+    name: macOS-bazel
+    runs-on: macos-12
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - run: brew install bash
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.safe-checkout }}
+    - uses: bazelbuild/setup-bazelisk@v2
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        create_credentials_file: true
+        credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    - run: /usr/local/bin/bash ci/gha/builds/macos-bazel.sh
+      env:
+        _CACHE_BUCKET: cloud-cpp-gha-cache
+        BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ github.job }}
+        USE_BAZEL_VERSION: 6.2.1
