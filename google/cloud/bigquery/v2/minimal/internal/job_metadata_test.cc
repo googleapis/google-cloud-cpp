@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_metadata.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/testing/job_query_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/job_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/metadata_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_job_rest_stub.h"
@@ -29,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::GetMetadataOptions;
 using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryRequest;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResponsePayload;
 using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
 using ::google::cloud::bigquery_v2_minimal_testing::VerifyMetadataContext;
 
@@ -196,6 +199,35 @@ TEST(JobMetadataTest, CancelJob) {
   internal::OptionsSpan span(GetMetadataOptions());
 
   auto result = metadata->CancelJob(context, request);
+  ASSERT_STATUS_OK(result);
+  VerifyMetadataContext(context, "bigquery_v2_job");
+}
+
+TEST(JobMetadataTest, Query) {
+  auto mock_stub = std::make_shared<MockBigQueryJobRestStub>();
+  auto expected_payload = MakeQueryResponsePayload();
+
+  EXPECT_CALL(*mock_stub, Query)
+      .WillOnce(
+          [&](rest_internal::RestContext&,
+              PostQueryRequest const& request) -> StatusOr<QueryResponse> {
+            EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+            BigQueryHttpResponse http_response;
+            http_response.payload = expected_payload;
+            return QueryResponse::BuildFromHttpResponse(
+                std::move(http_response));
+          });
+
+  auto metadata = CreateMockJobMetadata(std::move(mock_stub));
+
+  PostQueryRequest job_request;
+  job_request.set_project_id("p123");
+  job_request.set_query_request(MakeQueryRequest());
+
+  rest_internal::RestContext context;
+  internal::OptionsSpan span(GetMetadataOptions());
+
+  auto result = metadata->Query(context, job_request);
   ASSERT_STATUS_OK(result);
   VerifyMetadataContext(context, "bigquery_v2_job");
 }

@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_logging.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/testing/job_query_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/job_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_job_rest_stub.h"
 #include "google/cloud/common_options.h"
@@ -28,6 +29,8 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryRequest;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResponsePayload;
 using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
 using ::google::cloud::testing_util::ScopedLog;
 using ::testing::Contains;
@@ -267,6 +270,52 @@ TEST(JobLoggingClientTest, CancelJob) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "j123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "jkind")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(etag: "jtag")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(Context)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-2")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-2")")));
+}
+
+TEST(JobLoggingClientTest, Query) {
+  ScopedLog log;
+
+  auto mock_stub = std::make_shared<MockBigQueryJobRestStub>();
+  auto expected_payload = MakeQueryResponsePayload();
+
+  EXPECT_CALL(*mock_stub, Query)
+      .WillOnce(
+          [&](rest_internal::RestContext&,
+              PostQueryRequest const& request) -> StatusOr<QueryResponse> {
+            EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+            BigQueryHttpResponse http_response;
+            http_response.payload = expected_payload;
+            return QueryResponse::BuildFromHttpResponse(
+                std::move(http_response));
+          });
+
+  auto client = CreateMockJobLogging(std::move(mock_stub));
+
+  PostQueryRequest job_request;
+  job_request.set_project_id("p123");
+  job_request.set_query_request(MakeQueryRequest());
+
+  rest_internal::RestContext context;
+  context.AddHeader("header-1", "value-1");
+  context.AddHeader("header-2", "value-2");
+
+  client->Query(context, job_request);
+
+  auto actual_lines = log.ExtractLines();
+
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(" << ")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(PostQueryRequest)")));
+  EXPECT_THAT(actual_lines,
+              Contains(HasSubstr(R"(project_id: "p123")")).Times(2));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(QueryResponse)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "query-kind")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(job_id: "j123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(page_token: "np123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(Context)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-1")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-1")")));
