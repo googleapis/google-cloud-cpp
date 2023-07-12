@@ -1,0 +1,26 @@
+name: "External Account Integration"
+
+# Build on pull requests and pushes to `main`. The PR builds will be
+# non-blocking for now, but that is configured elsewhere.
+on:
+  pull_request:
+  push:
+    branches: [ 'main', 'ci-gha.*' ]
+
+jobs:
+  macOS-bazel:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    name: macOS-bazel
+    runs-on: macos-latest
+    steps:
+    - uses: 'actions/checkout@v3'
+    - uses: bazelbuild/setup-bazelisk@v2
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        create_credentials_file: true
+        credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    - run: bazel version
