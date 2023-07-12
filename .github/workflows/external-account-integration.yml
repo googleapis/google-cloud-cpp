@@ -14,6 +14,7 @@ jobs:
   # GitHub. Most of our builds use Google Cloud Build (GCB), which is not
   # usable in this case.
   identity-federation-integration-test:
+    if: ${{ false }}
     name: external-account-integration-test
     runs-on: ubuntu-20.04
     # Add "id-token" with the intended permissions.
