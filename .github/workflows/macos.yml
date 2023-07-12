@@ -1,4 +1,4 @@
-name: "External Account Integration"
+name: "Unit Tests"
 
 # Build on pull requests and pushes to `main`. The PR builds will be
 # non-blocking for now, but that is configured elsewhere.
@@ -16,6 +16,9 @@ jobs:
       id-token: 'write'
 
     steps:
+    - run: |
+        brew install bash
+        sudo mv /usr/local/bin/bash /bin/bash
     - uses: 'actions/checkout@v3'
     - uses: bazelbuild/setup-bazelisk@v2
     - id: 'auth'
