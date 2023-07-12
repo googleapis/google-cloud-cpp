@@ -72,7 +72,7 @@ class WrapRestCredentials : public oauth2::Credentials {
 }  // namespace
 
 std::shared_ptr<oauth2::Credentials> MapCredentials(
-    std::shared_ptr<google::cloud::Credentials> const& credentials) {
+    google::cloud::Credentials const& credentials) {
   class RestVisitor : public CredentialsVisitor {
    public:
     explicit RestVisitor(oauth2_internal::HttpClientFactory client_factory)
@@ -80,10 +80,10 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
 
     std::shared_ptr<oauth2::Credentials> result;
 
-    void visit(InsecureCredentialsConfig&) override {
+    void visit(InsecureCredentialsConfig const&) override {
       result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
     }
-    void visit(GoogleDefaultCredentialsConfig& cfg) override {
+    void visit(GoogleDefaultCredentialsConfig const& cfg) override {
       auto credentials = oauth2_internal::GoogleDefaultCredentials(
           cfg.options(), std::move(client_factory_));
       if (credentials) {
@@ -93,13 +93,13 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
       }
       result = MakeErrorCredentials(std::move(credentials).status());
     }
-    void visit(AccessTokenConfig& cfg) override {
+    void visit(AccessTokenConfig const& cfg) override {
       result = std::make_shared<AccessTokenCredentials>(cfg.access_token());
     }
-    void visit(ImpersonateServiceAccountConfig& config) override {
+    void visit(ImpersonateServiceAccountConfig const& config) override {
       result = std::make_shared<ImpersonateServiceAccountCredentials>(config);
     }
-    void visit(ServiceAccountConfig& cfg) override {
+    void visit(ServiceAccountConfig const& cfg) override {
       auto info = oauth2::ParseServiceAccountCredentials(cfg.json_object(), {});
       if (!info) {
         result = MakeErrorCredentials(std::move(info).status());
@@ -112,7 +112,7 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
           std::make_shared<WrapRestCredentials>(WithCaching(std::move(impl)));
     }
 
-    void visit(ExternalAccountConfig& cfg) override {
+    void visit(ExternalAccountConfig const& cfg) override {
       auto const ec = google::cloud::internal::ErrorContext();
       auto info = oauth2_internal::ParseExternalAccountConfiguration(
           cfg.json_object(), ec);
@@ -133,7 +133,7 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
   RestVisitor visitor([](Options const& o) {
     return rest_internal::MakeDefaultRestClient(std::string{}, o);
   });
-  CredentialsVisitor::dispatch(*credentials, visitor);
+  CredentialsVisitor::dispatch(credentials, visitor);
   return std::move(visitor.result);
 }
 

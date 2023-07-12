@@ -41,7 +41,7 @@ Options PopulateAuthOptions(Options options) {
       std::move(options));
 }
 
-void CredentialsVisitor::dispatch(Credentials& credentials,
+void CredentialsVisitor::dispatch(Credentials const& credentials,
                                   CredentialsVisitor& visitor) {
   credentials.dispatch(visitor);
 }

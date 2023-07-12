@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/discovery_type_vertex.h"
+#include "generator/testing/descriptor_pool_fixture.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -24,6 +25,8 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::NotNull;
 
 TEST(DiscoveryTypeVertexTest, DetermineIntroducerEmpty) {
   auto constexpr kOptionalEmptyFieldJson = R"""({})""";
@@ -671,6 +674,73 @@ message TestSchema {
   auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
+class DiscoveryTypeVertexDescriptorTest
+    : public generator_testing::DescriptorPoolFixture {};
+
+TEST_F(DiscoveryTypeVertexDescriptorTest, DetermineReservedAndMaxFieldNumbers) {
+  auto constexpr kProtoFile = R"""(
+syntax = "proto3";
+package generator.test;
+
+message FieldsOnly {
+  string field1 = 1;
+  string field2 = 2;
+}
+
+message ReservedOnly {
+  reserved 25, 4 to 6;
+}
+
+message FieldHighest {
+  reserved 25, 4 to 6;
+  string field26 = 26;
+}
+
+message ReservedHighest {
+  reserved 25, 4 to 6;
+  string field7 = 7;
+}
+)""";
+
+  ASSERT_TRUE(AddProtoFile("test.proto", kProtoFile));
+  auto const* file_descriptor = pool().FindFileByName("test.proto");
+  ASSERT_THAT(file_descriptor, NotNull());
+
+  auto const* message_descriptor =
+      file_descriptor->FindMessageTypeByName("FieldsOnly");
+  ASSERT_THAT(message_descriptor, NotNull());
+  auto message_properties =
+      DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
+          *message_descriptor);
+  EXPECT_THAT(message_properties.next_available_field_number, Eq(3));
+  EXPECT_THAT(message_properties.reserved_numbers, IsEmpty());
+
+  message_descriptor = file_descriptor->FindMessageTypeByName("ReservedOnly");
+  ASSERT_THAT(message_descriptor, NotNull());
+  message_properties = DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
+      *message_descriptor);
+  EXPECT_THAT(message_properties.next_available_field_number, Eq(26));
+  EXPECT_THAT(message_properties.reserved_numbers,
+              testing::ElementsAre(4, 5, 6, 25));
+
+  message_descriptor = file_descriptor->FindMessageTypeByName("FieldHighest");
+  ASSERT_THAT(message_descriptor, NotNull());
+  message_properties = DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
+      *message_descriptor);
+  EXPECT_THAT(message_properties.next_available_field_number, Eq(27));
+  EXPECT_THAT(message_properties.reserved_numbers,
+              testing::ElementsAre(4, 5, 6, 25));
+
+  message_descriptor =
+      file_descriptor->FindMessageTypeByName("ReservedHighest");
+  ASSERT_THAT(message_descriptor, NotNull());
+  message_properties = DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
+      *message_descriptor);
+  EXPECT_THAT(message_properties.next_available_field_number, Eq(26));
+  EXPECT_THAT(message_properties.reserved_numbers,
+              testing::ElementsAre(4, 5, 6, 25));
 }
 
 }  // namespace

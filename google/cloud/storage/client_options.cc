@@ -282,16 +282,16 @@ Options DefaultOptionsWithCredentials(Options opts) {
   }
   if (opts.has<UnifiedCredentialsOption>()) {
     auto credentials =
-        internal::MapCredentials(opts.get<UnifiedCredentialsOption>());
+        internal::MapCredentials(*opts.get<UnifiedCredentialsOption>());
     return internal::DefaultOptions(std::move(credentials), std::move(opts));
   }
   if (GetEmulator().has_value()) {
     return internal::DefaultOptions(
-        internal::MapCredentials(google::cloud::MakeInsecureCredentials()),
+        internal::MapCredentials(*google::cloud::MakeInsecureCredentials()),
         std::move(opts));
   }
   return internal::DefaultOptions(
-      internal::MapCredentials(google::cloud::MakeGoogleDefaultCredentials()),
+      internal::MapCredentials(*google::cloud::MakeGoogleDefaultCredentials()),
       std::move(opts));
 }
 

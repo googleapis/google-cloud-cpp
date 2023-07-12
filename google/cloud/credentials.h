@@ -57,7 +57,7 @@ class Credentials {
 
  private:
   friend class internal::CredentialsVisitor;
-  virtual void dispatch(internal::CredentialsVisitor& visitor) = 0;
+  virtual void dispatch(internal::CredentialsVisitor& visitor) const = 0;
 };
 
 /**
