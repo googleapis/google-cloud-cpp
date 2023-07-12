@@ -29,7 +29,7 @@ using ::google::iam::credentials::v1::GenerateAccessTokenResponse;
 AsyncAccessTokenSource MakeSource(ImpersonateServiceAccountConfig const& config,
                                   CompletionQueue cq, Options const& options) {
   auto stub = MakeMinimalIamCredentialsStub(
-      CreateAuthenticationStrategy(config.base_credentials(), std::move(cq),
+      CreateAuthenticationStrategy(*config.base_credentials(), std::move(cq),
                                    options),
       MakeMinimalIamCredentialsOptions(options));
 

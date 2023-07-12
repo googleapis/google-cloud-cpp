@@ -39,7 +39,7 @@ ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     HttpClientFactory client_factory)
     : ImpersonateServiceAccountCredentials(
           config, MakeMinimalIamCredentialsRestStub(
-                      rest_internal::MapCredentials(config.base_credentials()),
+                      rest_internal::MapCredentials(*config.base_credentials()),
                       config.options(), std::move(client_factory))) {}
 
 ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(

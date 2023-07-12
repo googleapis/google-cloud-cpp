@@ -42,14 +42,15 @@ class ExternalAccountConfig;
 class CredentialsVisitor {
  public:
   virtual ~CredentialsVisitor() = default;
-  virtual void visit(InsecureCredentialsConfig&) = 0;
-  virtual void visit(GoogleDefaultCredentialsConfig&) = 0;
-  virtual void visit(AccessTokenConfig&) = 0;
-  virtual void visit(ImpersonateServiceAccountConfig&) = 0;
-  virtual void visit(ServiceAccountConfig&) = 0;
-  virtual void visit(ExternalAccountConfig&) = 0;
+  virtual void visit(InsecureCredentialsConfig const&) = 0;
+  virtual void visit(GoogleDefaultCredentialsConfig const&) = 0;
+  virtual void visit(AccessTokenConfig const&) = 0;
+  virtual void visit(ImpersonateServiceAccountConfig const&) = 0;
+  virtual void visit(ServiceAccountConfig const&) = 0;
+  virtual void visit(ExternalAccountConfig const&) = 0;
 
-  static void dispatch(Credentials& credentials, CredentialsVisitor& visitor);
+  static void dispatch(Credentials const& credentials,
+                       CredentialsVisitor& visitor);
 };
 
 class InsecureCredentialsConfig : public Credentials {
@@ -60,7 +61,7 @@ class InsecureCredentialsConfig : public Credentials {
   Options const& options() const { return options_; }
 
  private:
-  void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
+  void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
   Options options_;
 };
@@ -73,7 +74,7 @@ class GoogleDefaultCredentialsConfig : public Credentials {
   Options const& options() const { return options_; }
 
  private:
-  void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
+  void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
   Options options_;
 };
@@ -89,7 +90,7 @@ class AccessTokenConfig : public Credentials {
   Options const& options() const { return options_; }
 
  private:
-  void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
+  void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
   AccessToken access_token_;
   Options options_;
@@ -113,7 +114,7 @@ class ImpersonateServiceAccountConfig : public Credentials {
   Options const& options() const { return options_; }
 
  private:
-  void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
+  void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
   std::shared_ptr<Credentials> base_credentials_;
   std::string target_service_account_;
@@ -128,7 +129,7 @@ class ServiceAccountConfig : public Credentials {
   Options const& options() const { return options_; }
 
  private:
-  void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
+  void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
   std::string json_object_;
   Options options_;
@@ -142,7 +143,7 @@ class ExternalAccountConfig : public Credentials {
   Options const& options() const { return options_; }
 
  private:
-  void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
+  void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
   std::string json_object_;
   Options options_;

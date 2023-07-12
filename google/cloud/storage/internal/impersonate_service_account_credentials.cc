@@ -40,7 +40,7 @@ ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     google::cloud::internal::ImpersonateServiceAccountConfig const& config)
     : ImpersonateServiceAccountCredentials(
           config, MakeMinimalIamCredentialsRestStub(
-                      MapCredentials(config.base_credentials()))) {}
+                      MapCredentials(*config.base_credentials()))) {}
 
 ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     google::cloud::internal::ImpersonateServiceAccountConfig const& config,

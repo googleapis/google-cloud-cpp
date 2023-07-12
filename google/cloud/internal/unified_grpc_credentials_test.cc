@@ -67,7 +67,7 @@ TEST(UnifiedGrpcCredentialsTest, WithGrpcCredentials) {
 
 TEST(UnifiedGrpcCredentialsTest, WithInsecureCredentials) {
   CompletionQueue cq;
-  auto result = CreateAuthenticationStrategy(MakeInsecureCredentials(), cq);
+  auto result = CreateAuthenticationStrategy(*MakeInsecureCredentials(), cq);
   ASSERT_NE(nullptr, result.get());
   grpc::ClientContext context;
   auto status = result->ConfigureContext(context);
@@ -83,7 +83,7 @@ TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentials) {
 
   CompletionQueue cq;
   auto result =
-      CreateAuthenticationStrategy(MakeGoogleDefaultCredentials(), cq);
+      CreateAuthenticationStrategy(*MakeGoogleDefaultCredentials(), cq);
   ASSERT_NE(nullptr, result.get());
   grpc::ClientContext context;
   auto status = result->ConfigureContext(context);
@@ -96,7 +96,7 @@ TEST(UnifiedGrpcCredentialsTest, WithAccessTokenCredentials) {
       std::chrono::system_clock::now() + std::chrono::hours(1);
   CompletionQueue cq;
   auto result = CreateAuthenticationStrategy(
-      MakeAccessTokenCredentials("test-token", expiration), cq);
+      *MakeAccessTokenCredentials("test-token", expiration), cq);
   ASSERT_NE(nullptr, result.get());
   grpc::ClientContext context;
   auto status = result->ConfigureContext(context);

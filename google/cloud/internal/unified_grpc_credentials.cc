@@ -51,7 +51,7 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     google::cloud::CompletionQueue cq, Options const& options) {
   if (options.has<google::cloud::UnifiedCredentialsOption>()) {
     return google::cloud::internal::CreateAuthenticationStrategy(
-        options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
+        *options.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
         options);
   }
   return google::cloud::internal::CreateAuthenticationStrategy(
@@ -59,8 +59,7 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
 }
 
 std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
-    std::shared_ptr<Credentials> const& credentials, CompletionQueue cq,
-    Options options) {
+    Credentials const& credentials, CompletionQueue cq, Options options) {
   struct Visitor : public CredentialsVisitor {
     CompletionQueue cq;
     Options options;
@@ -69,27 +68,27 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     Visitor(CompletionQueue c, Options o)
         : cq(std::move(c)), options(std::move(o)) {}
 
-    void visit(InsecureCredentialsConfig&) override {
+    void visit(InsecureCredentialsConfig const&) override {
       result = std::make_unique<GrpcChannelCredentialsAuthentication>(
           grpc::InsecureChannelCredentials());
     }
-    void visit(GoogleDefaultCredentialsConfig&) override {
+    void visit(GoogleDefaultCredentialsConfig const&) override {
       result = std::make_unique<GrpcChannelCredentialsAuthentication>(
           grpc::GoogleDefaultCredentials());
     }
-    void visit(AccessTokenConfig& cfg) override {
+    void visit(AccessTokenConfig const& cfg) override {
       result = std::make_unique<GrpcAccessTokenAuthentication>(
           cfg.access_token(), std::move(options));
     }
-    void visit(ImpersonateServiceAccountConfig& cfg) override {
+    void visit(ImpersonateServiceAccountConfig const& cfg) override {
       result = GrpcImpersonateServiceAccount::Create(std::move(cq), cfg,
                                                      std::move(options));
     }
-    void visit(ServiceAccountConfig& cfg) override {
+    void visit(ServiceAccountConfig const& cfg) override {
       result = std::make_unique<GrpcServiceAccountAuthentication>(
           cfg.json_object(), std::move(options));
     }
-    void visit(ExternalAccountConfig& cfg) override {
+    void visit(ExternalAccountConfig const& cfg) override {
       result = std::make_unique<GrpcChannelCredentialsAuthentication>(
           grpc::CompositeChannelCredentials(
               grpc::SslCredentials(grpc::SslCredentialsOptions()),
@@ -97,7 +96,7 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     }
   } visitor(std::move(cq), std::move(options));
 
-  CredentialsVisitor::dispatch(*credentials, visitor);
+  CredentialsVisitor::dispatch(credentials, visitor);
   return std::move(visitor.result);
 }
 
