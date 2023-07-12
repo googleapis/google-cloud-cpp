@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/access_token_generator.h"
+#include "google/cloud/oauth2/access_token_generator.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
 
 namespace google {
 namespace cloud {
+namespace oauth2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -44,5 +45,6 @@ std::shared_ptr<AccessTokenGenerator> MakeAccessTokenGenerator(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace oauth2
 }  // namespace cloud
 }  // namespace google

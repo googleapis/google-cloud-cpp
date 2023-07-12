@@ -138,7 +138,7 @@ cc_library(
     name = "oauth2",
     testonly = True,
     deps = [
-        "//google/cloud:google_cloud_cpp_oauth2",
+        "//google/cloud/oauth2:google_cloud_cpp_oauth2",
     ],
 )
 

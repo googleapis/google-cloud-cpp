@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/access_token_generator.h"
+#include "google/cloud/oauth2/access_token_generator.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
+namespace oauth2 {
 namespace {
 
 using ::google::cloud::testing_util::IsOkAndHolds;
@@ -32,5 +33,6 @@ TEST(AccessTokenGeneratorTest, Basic) {
 }
 
 }  // namespace
+}  // namespace oauth2
 }  // namespace cloud
 }  // namespace google

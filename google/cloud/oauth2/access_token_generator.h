@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESS_TOKEN_GENERATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESS_TOKEN_GENERATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OAUTH2_ACCESS_TOKEN_GENERATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OAUTH2_ACCESS_TOKEN_GENERATOR_H
 
 #include "google/cloud/access_token.h"
 #include "google/cloud/credentials.h"
@@ -25,6 +25,7 @@
 
 namespace google {
 namespace cloud {
+namespace oauth2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
@@ -75,7 +76,8 @@ std::shared_ptr<AccessTokenGenerator> MakeAccessTokenGenerator(
     Credentials const& credentials);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace oauth2
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESS_TOKEN_GENERATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OAUTH2_ACCESS_TOKEN_GENERATOR_H

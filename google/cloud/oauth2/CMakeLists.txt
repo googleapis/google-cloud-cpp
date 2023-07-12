@@ -14,7 +14,13 @@
 # limitations under the License.
 # ~~~
 
-# the library
+include(GoogleCloudCppCommon)
+set(DOXYGEN_PROJECT_NAME "OAuth2 Access Token Generation Library")
+set(DOXYGEN_PROJECT_BRIEF
+    "Create OAuth2 Access Tokens for any GCP authentication mechanism")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+
 add_library(google_cloud_cpp_oauth2 # cmake-format: sort
             access_token_generator.cc access_token_generator.h)
 target_link_libraries(
@@ -55,14 +61,12 @@ install(
 google_cloud_cpp_install_headers(google_cloud_cpp_oauth2 include/google/cloud)
 
 google_cloud_cpp_add_pkgconfig(
-    oauth2 "OAuth2 helpers with Google Cloud C++ Client Library"
-    "Provides components to create OAuth2 access tokens."
+    oauth2 "${DOXYGEN_PROJECT_NAME}" "${DOXYGEN_PROJECT_BRIEF}"
     "google_cloud_cpp_rest_internal" "google_cloud_cpp_common")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
-configure_file("config-oauth2.cmake.in" "google_cloud_cpp_oauth2-config.cmake"
-               @ONLY)
+configure_file("config.cmake.in" "google_cloud_cpp_oauth2-config.cmake" @ONLY)
 write_basic_package_version_file(
     "google_cloud_cpp_oauth2-config-version.cmake"
     VERSION ${PROJECT_VERSION}
@@ -88,7 +92,7 @@ if (NOT BUILD_TESTING)
 endif ()
 
 foreach (fname IN LISTS google_cloud_cpp_oauth2_unit_tests)
-    google_cloud_cpp_add_executable(target "common" "${fname}")
+    google_cloud_cpp_add_executable(target "oauth2" "${fname}")
     target_link_libraries(
         ${target}
         PRIVATE google-cloud-cpp::oauth2

@@ -25,8 +25,6 @@ load(":google_cloud_cpp_grpc_utils_integration_tests.bzl", "google_cloud_cpp_grp
 load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils_unit_tests")
 load(":google_cloud_cpp_grpc_utils.bzl", "google_cloud_cpp_grpc_utils_hdrs", "google_cloud_cpp_grpc_utils_srcs")
 load(":google_cloud_cpp_mocks.bzl", "google_cloud_cpp_mocks_hdrs")
-load(":google_cloud_cpp_oauth2_unit_tests.bzl", "google_cloud_cpp_oauth2_unit_tests")
-load(":google_cloud_cpp_oauth2.bzl", "google_cloud_cpp_oauth2_hdrs", "google_cloud_cpp_oauth2_srcs")
 load(":google_cloud_cpp_rest_internal_benchmarks.bzl", "google_cloud_cpp_rest_internal_benchmarks")
 load(":google_cloud_cpp_rest_internal_emulator_integration_tests.bzl", "google_cloud_cpp_rest_internal_emulator_integration_tests")
 load(":google_cloud_cpp_rest_internal_production_integration_tests.bzl", "google_cloud_cpp_rest_internal_production_integration_tests")
@@ -339,28 +337,6 @@ cc_library(
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_protobuf_internal_unit_tests]
-
-cc_library(
-    name = "google_cloud_cpp_oauth2",
-    srcs = google_cloud_cpp_oauth2_srcs,
-    hdrs = google_cloud_cpp_oauth2_hdrs,
-    visibility = ["//:__subpackages__"],
-    deps = [
-        ":google_cloud_cpp_common",
-        ":google_cloud_cpp_rest_internal",
-    ],
-)
-
-[cc_test(
-    name = test.replace("/", "_").replace(".cc", ""),
-    srcs = [test],
-    deps = [
-        ":google_cloud_cpp_oauth2",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
-        "@com_google_googletest//:gtest_main",
-    ],
-) for test in google_cloud_cpp_oauth2_unit_tests]
 
 [cc_test(
     name = sample.replace("/", "_").replace(".cc", ""),
