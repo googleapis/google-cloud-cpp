@@ -257,9 +257,9 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "io_opentelemetry_cpp",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/io_opentelemetry_cpp/v1.9.1.tar.gz",
-            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.1.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/io_opentelemetry_cpp/v1.10.0.tar.gz",
+            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.10.0.tar.gz",
         ],
-        sha256 = "668de24f81c8d36d75092ad9dcb02a97cd41473adbe72485ece05e336db48249",
-        strip_prefix = "opentelemetry-cpp-1.9.1",
+        sha256 = "19e8ade04a674c8cf7f0dc6da1f7b0583a27d2cf4dbc03df87894a16a4547834",
+        strip_prefix = "opentelemetry-cpp-1.10.0",
     )
