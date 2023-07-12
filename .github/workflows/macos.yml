@@ -9,12 +9,12 @@ on:
 
 jobs:
   macOS-bazel:
+    name: macOS-bazel
+    runs-on: macos-12
     permissions:
       contents: 'read'
       id-token: 'write'
 
-    name: macOS-bazel
-    runs-on: macos-latest
     steps:
     - uses: 'actions/checkout@v3'
     - uses: bazelbuild/setup-bazelisk@v2
