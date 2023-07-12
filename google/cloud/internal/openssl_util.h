@@ -15,10 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENSSL_UTIL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENSSL_UTIL_H
 
-#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <algorithm>
 #include <string>
 #include <vector>
 
