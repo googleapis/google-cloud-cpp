@@ -183,6 +183,31 @@ StatusOr<std::string> DiscoveryTypeVertex::FormatMessage(
                       absl::StrJoin(*lines, "\n\n"), "\n", indent, "}");
 }
 
+DiscoveryTypeVertex::MessageProperties
+DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
+    google::protobuf::Descriptor const& message_descriptor) {
+  MessageProperties message_properties{{}, 0};
+  for (auto r = 0; r != message_descriptor.reserved_range_count(); ++r) {
+    auto const* reserved_range = message_descriptor.reserved_range(r);
+    for (int j = reserved_range->start; j < reserved_range->end; ++j) {
+      message_properties.reserved_numbers.insert(j);
+    }
+    // google::protobuf::ReservedRange.end returns the next available value, not
+    // the actual end reserved value.
+    message_properties.next_available_field_number =
+        std::max(message_properties.next_available_field_number,
+                 message_descriptor.reserved_range(r)->end);
+  }
+
+  for (auto i = 0; i != message_descriptor.field_count(); ++i) {
+    message_properties.next_available_field_number =
+        std::max(message_properties.next_available_field_number,
+                 message_descriptor.field(i)->number() + 1);
+  }
+
+  return message_properties;
+}
+
 // NOLINTNEXTLINE(misc-no-recursion)
 StatusOr<std::vector<std::string>> DiscoveryTypeVertex::FormatProperties(
     std::map<std::string, DiscoveryTypeVertex> const& types,
