@@ -14,6 +14,11 @@
 # limitations under the License.
 # ~~~
 
+if (APPLE OR WIN32)
+    message(STATUS "The generator directory is only used and tested on Linux")
+    return()
+endif ()
+
 set(DOXYGEN_EXCLUDE_SYMBOLS "generator_internal")
 set(DOXYGEN_EXAMPLE_PATH "")
 

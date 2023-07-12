@@ -17,11 +17,18 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 load(":google_cloud_cpp_generator.bzl", "google_cloud_cpp_generator_hdrs", "google_cloud_cpp_generator_srcs")
+load(":google_cloud_cpp_generator_testing.bzl", "google_cloud_cpp_generator_testing_hdrs", "google_cloud_cpp_generator_testing_srcs")
+load(":google_cloud_cpp_generator_unit_tests.bzl", "google_cloud_cpp_generator_unit_tests")
 
 cc_library(
     name = "google_cloud_cpp_generator",
     srcs = google_cloud_cpp_generator_srcs,
     hdrs = google_cloud_cpp_generator_hdrs,
+    target_compatible_with = select({
+        "@platforms//os:macos": ["@platforms//:incompatible"],
+        "@platforms//os:windows": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
     deps = [
         ":generator_config_cc_proto",
         "//:common",
@@ -39,13 +46,16 @@ cc_library(
     ],
 )
 
-load(":google_cloud_cpp_generator_testing.bzl", "google_cloud_cpp_generator_testing_hdrs", "google_cloud_cpp_generator_testing_srcs")
-
 cc_library(
     name = "google_cloud_cpp_generator_testing",
     testonly = True,
     srcs = google_cloud_cpp_generator_testing_srcs,
     hdrs = google_cloud_cpp_generator_testing_hdrs,
+    target_compatible_with = select({
+        "@platforms//os:macos": ["@platforms//:incompatible"],
+        "@platforms//os:windows": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
     deps = [
         ":google_cloud_cpp_generator",
         "//:common",
@@ -55,11 +65,14 @@ cc_library(
     ],
 )
 
-load(":google_cloud_cpp_generator_unit_tests.bzl", "google_cloud_cpp_generator_unit_tests")
-
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    target_compatible_with = select({
+        "@platforms//os:macos": ["@platforms//:incompatible"],
+        "@platforms//os:windows": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
     deps = [
         ":google_cloud_cpp_generator",
         ":google_cloud_cpp_generator_testing",
@@ -70,6 +83,11 @@ load(":google_cloud_cpp_generator_unit_tests.bzl", "google_cloud_cpp_generator_u
 cc_binary(
     name = "protoc-gen-cpp_codegen",
     srcs = ["plugin_main.cc"],
+    target_compatible_with = select({
+        "@platforms//os:macos": ["@platforms//:incompatible"],
+        "@platforms//os:windows": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
     visibility = ["//visibility:public"],
     deps = [":google_cloud_cpp_generator"],
 )
@@ -87,6 +105,11 @@ cc_proto_library(
 cc_binary(
     name = "google-cloud-cpp-codegen",
     srcs = ["standalone_main.cc"],
+    target_compatible_with = select({
+        "@platforms//os:macos": ["@platforms//:incompatible"],
+        "@platforms//os:windows": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
     visibility = ["//visibility:public"],
     deps = [
         ":generator_config_cc_proto",
