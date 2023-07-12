@@ -18,6 +18,7 @@
 #include "absl/time/clock.h"
 #include <google/rpc/code.pb.h>
 #include <gmock/gmock.h>
+#include <opentelemetry/sdk/resource/resource.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
 
 namespace google {

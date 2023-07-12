@@ -15,6 +15,7 @@
 #include "google/cloud/opentelemetry/configure_basic_tracing.h"
 #include "google/cloud/opentelemetry/trace_exporter.h"
 #include <opentelemetry/sdk/trace/batch_span_processor.h>
+#include <opentelemetry/sdk/trace/batch_span_processor_options.h>
 #include <opentelemetry/sdk/trace/samplers/trace_id_ratio_factory.h>
 #include <opentelemetry/sdk/trace/tracer_provider.h>
 #include <opentelemetry/trace/provider.h>
