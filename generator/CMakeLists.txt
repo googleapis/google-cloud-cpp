@@ -15,7 +15,7 @@
 # ~~~
 
 if (APPLE OR WIN32)
-    message(STATUS "The docfx directory is only used and tested on Linux")
+    message(STATUS "The generator directory is only used and tested on Linux")
     return()
 endif ()
 
