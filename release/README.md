@@ -171,7 +171,7 @@ Please note that we use more strict settings for release branches than for
   ```shell
   git commit -m"[google-cloud-cpp] update to latest release (v2.13.0)" ports
   ```
-- Update the version information (you readlly do need two commits)
+- Update the version information (you really do need two commits)
   ```shell
   ./vcpkg x-add-version --all --overwrite-version
   git commit --amend ---no-edit .
