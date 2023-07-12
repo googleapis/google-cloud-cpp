@@ -20,4 +20,9 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/gha/builds/lib/bazel.sh
 
 mapfile -t args < <(bazel::common_args)
-io::run bazel build "${args[@]}" //:common
+# Do not run the integration tests
+args+=(--test_tag_filters=-integration-test)
+TIMEFORMAT="==> 🕑 unit tests done in %R seconds"
+time {
+    io::run bazel test "${args[@]}" -- //google/cloud:all
+}
