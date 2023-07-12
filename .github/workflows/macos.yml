@@ -23,4 +23,8 @@ jobs:
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
-    - run: bazel version
+    - run: ci/gha/builds/macos-bazel.sh
+      env:
+        _CACHE_BUCKET: cloud-cpp-gha-cache
+        BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ github.job }}
+        USE_BAZEL_VERSION: 6.2.1
