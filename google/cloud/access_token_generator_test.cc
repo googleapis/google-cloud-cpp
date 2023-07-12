@@ -26,7 +26,7 @@ TEST(AccessTokenGeneratorTest, Basic) {
   auto const expiration =
       std::chrono::system_clock::now() + std::chrono::minutes(15);
   auto credentials = MakeAccessTokenCredentials("test-token", expiration);
-  auto generator = MakeAccessTokenGenerator(credentials);
+  auto generator = MakeAccessTokenGenerator(*credentials);
   auto token = generator->GetToken();
   EXPECT_THAT(token, IsOkAndHolds(AccessToken{"test-token", expiration}));
 }

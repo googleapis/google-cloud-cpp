@@ -38,8 +38,7 @@ class AccessTokenGeneratorImpl : public AccessTokenGenerator {
 }  // namespace
 
 std::shared_ptr<AccessTokenGenerator> MakeAccessTokenGenerator(
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<Credentials> credentials) {
+    Credentials const& credentials) {
   return std::make_shared<AccessTokenGeneratorImpl>(
       rest_internal::MapCredentials(credentials));
 }

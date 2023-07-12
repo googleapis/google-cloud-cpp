@@ -72,7 +72,7 @@ class AccessTokenGenerator {
 
 /// Returns a token generator based on @p credentials.
 std::shared_ptr<AccessTokenGenerator> MakeAccessTokenGenerator(
-    std::shared_ptr<Credentials> credentials);
+    Credentials const& credentials);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
