@@ -20,6 +20,4 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/gha/builds/lib/bazel.sh
 
 mapfile -t args < <(bazel::common_args)
-bazel version
-
 print "%s\n" "${args[@]}"

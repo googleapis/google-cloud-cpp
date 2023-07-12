@@ -16,9 +16,7 @@ jobs:
       id-token: 'write'
 
     steps:
-    - run: |
-        brew install bash
-        sudo mv /usr/local/bin/bash /bin/bash
+    - run: brew install bash
     - uses: 'actions/checkout@v3'
     - uses: bazelbuild/setup-bazelisk@v2
     - id: 'auth'
@@ -26,7 +24,7 @@ jobs:
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
-    - run: ci/gha/builds/macos-bazel.sh
+    - run: /usr/local/bin/bash ci/gha/builds/macos-bazel.sh
       env:
         _CACHE_BUCKET: cloud-cpp-gha-cache
         BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ github.job }}
