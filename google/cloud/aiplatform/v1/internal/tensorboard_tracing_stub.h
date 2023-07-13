@@ -48,12 +48,6 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
       google::cloud::aiplatform::v1::GetTensorboardRequest const& request)
       override;
 
-  StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-  ReadTensorboardUsage(
-      grpc::ClientContext& context,
-      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request)
-      override;
-
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTensorboard(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -69,6 +63,12 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request)
+      override;
+
+  StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+  ReadTensorboardUsage(
+      grpc::ClientContext& context,
+      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>

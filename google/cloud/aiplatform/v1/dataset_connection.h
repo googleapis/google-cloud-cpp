@@ -221,6 +221,11 @@ class DatasetServiceConnection {
   ListSavedQueries(
       google::cloud::aiplatform::v1::ListSavedQueriesRequest request);
 
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteSavedQuery(
+      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request);
+
   virtual StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
   GetAnnotationSpec(
       google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request);

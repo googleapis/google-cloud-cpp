@@ -313,6 +313,36 @@ DatasetServiceConnectionImpl::ListSavedQueries(
       });
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceConnectionImpl::DeleteSavedQuery(
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&
+                 request) {
+        return stub->AsyncDeleteSavedQuery(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteSavedQuery(request), polling_policy(),
+      __func__);
+}
+
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DatasetServiceConnectionImpl::GetAnnotationSpec(
     google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) {

@@ -1955,7 +1955,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchPredictionJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/batch_prediction_job.proto#L389}
+  /// [google.cloud.aiplatform.v1.BatchPredictionJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/batch_prediction_job.proto#L394}
   /// [google.cloud.aiplatform.v1.CancelBatchPredictionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1116}
   /// [google.cloud.aiplatform.v1.JobService.GetBatchPredictionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L311}
   ///
@@ -1995,7 +1995,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchPredictionJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/batch_prediction_job.proto#L389}
+  /// [google.cloud.aiplatform.v1.BatchPredictionJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/batch_prediction_job.proto#L394}
   /// [google.cloud.aiplatform.v1.CancelBatchPredictionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1116}
   /// [google.cloud.aiplatform.v1.JobService.GetBatchPredictionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L311}
   ///

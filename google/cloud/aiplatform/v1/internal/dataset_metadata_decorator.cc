@@ -120,6 +120,15 @@ DatasetServiceMetadata::ListSavedQueries(
   return child_->ListSavedQueries(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DatasetServiceMetadata::AsyncDeleteSavedQuery(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeleteSavedQuery(cq, std::move(context), request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DatasetServiceMetadata::GetAnnotationSpec(
     grpc::ClientContext& context,

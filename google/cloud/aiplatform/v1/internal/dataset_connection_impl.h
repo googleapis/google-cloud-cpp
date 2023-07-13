@@ -87,6 +87,10 @@ class DatasetServiceConnectionImpl
   StreamRange<google::cloud::aiplatform::v1::SavedQuery> ListSavedQueries(
       google::cloud::aiplatform::v1::ListSavedQueriesRequest request) override;
 
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&
+                       request) override;
+
   StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
       google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request)
       override;

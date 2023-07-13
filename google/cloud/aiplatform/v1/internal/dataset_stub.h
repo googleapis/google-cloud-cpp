@@ -84,6 +84,13 @@ class DatasetServiceStub {
                    google::cloud::aiplatform::v1::ListSavedQueriesRequest const&
                        request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteSavedQuery(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
   GetAnnotationSpec(
       grpc::ClientContext& context,
@@ -166,6 +173,12 @@ class DefaultDatasetServiceStub : public DatasetServiceStub {
   ListSavedQueries(grpc::ClientContext& client_context,
                    google::cloud::aiplatform::v1::ListSavedQueriesRequest const&
                        request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteSavedQuery(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
       grpc::ClientContext& client_context,

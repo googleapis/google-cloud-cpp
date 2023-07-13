@@ -50,15 +50,6 @@ TensorboardServiceTracingConnection::GetTensorboard(
   return internal::EndSpan(*span, child_->GetTensorboard(request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-TensorboardServiceTracingConnection::ReadTensorboardUsage(
-    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::TensorboardServiceConnection::ReadTensorboardUsage");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->ReadTensorboardUsage(request));
-}
-
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceTracingConnection::UpdateTensorboard(
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
@@ -87,6 +78,15 @@ TensorboardServiceTracingConnection::DeleteTensorboard(
       "aiplatform_v1::TensorboardServiceConnection::DeleteTensorboard");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTensorboard(request));
+}
+
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+TensorboardServiceTracingConnection::ReadTensorboardUsage(
+    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::ReadTensorboardUsage");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ReadTensorboardUsage(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>

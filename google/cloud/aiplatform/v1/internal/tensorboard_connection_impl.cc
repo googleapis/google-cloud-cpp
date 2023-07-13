@@ -86,20 +86,6 @@ TensorboardServiceConnectionImpl::GetTensorboard(
       request, __func__);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-TensorboardServiceConnectionImpl::ReadTensorboardUsage(
-    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
-  return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReadTensorboardUsage(request),
-      [this](grpc::ClientContext& context,
-             google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
-                 request) {
-        return stub_->ReadTensorboardUsage(context, request);
-      },
-      request, __func__);
-}
-
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceConnectionImpl::UpdateTensorboard(
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
@@ -192,6 +178,20 @@ TensorboardServiceConnectionImpl::DeleteTensorboard(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteTensorboard(request), polling_policy(),
       __func__);
+}
+
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+TensorboardServiceConnectionImpl::ReadTensorboardUsage(
+    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ReadTensorboardUsage(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
+                 request) {
+        return stub_->ReadTensorboardUsage(context, request);
+      },
+      request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>

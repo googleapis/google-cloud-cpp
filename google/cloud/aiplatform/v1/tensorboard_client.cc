@@ -68,23 +68,6 @@ TensorboardServiceClient::GetTensorboard(
   return connection_->GetTensorboard(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-TensorboardServiceClient::ReadTensorboardUsage(std::string const& tensorboard,
-                                               Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::aiplatform::v1::ReadTensorboardUsageRequest request;
-  request.set_tensorboard(tensorboard);
-  return connection_->ReadTensorboardUsage(request);
-}
-
-StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-TensorboardServiceClient::ReadTensorboardUsage(
-    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReadTensorboardUsage(request);
-}
-
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceClient::UpdateTensorboard(
     google::cloud::aiplatform::v1::Tensorboard const& tensorboard,
@@ -136,6 +119,23 @@ TensorboardServiceClient::DeleteTensorboard(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTensorboard(request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+TensorboardServiceClient::ReadTensorboardUsage(std::string const& tensorboard,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::ReadTensorboardUsageRequest request;
+  request.set_tensorboard(tensorboard);
+  return connection_->ReadTensorboardUsage(request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+TensorboardServiceClient::ReadTensorboardUsage(
+    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReadTensorboardUsage(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>

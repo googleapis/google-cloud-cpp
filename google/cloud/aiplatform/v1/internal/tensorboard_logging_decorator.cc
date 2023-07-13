@@ -63,19 +63,6 @@ TensorboardServiceLogging::GetTensorboard(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-TensorboardServiceLogging::ReadTensorboardUsage(
-    grpc::ClientContext& context,
-    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
-                 request) {
-        return child_->ReadTensorboardUsage(context, request);
-      },
-      context, request, __func__, tracing_options_);
-}
-
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceLogging::AsyncUpdateTensorboard(
     google::cloud::CompletionQueue& cq,
@@ -117,6 +104,19 @@ TensorboardServiceLogging::AsyncDeleteTensorboard(
         return child_->AsyncDeleteTensorboard(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+TensorboardServiceLogging::ReadTensorboardUsage(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
+                 request) {
+        return child_->ReadTensorboardUsage(context, request);
+      },
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>

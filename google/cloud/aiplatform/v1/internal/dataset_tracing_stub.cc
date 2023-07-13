@@ -162,6 +162,21 @@ DatasetServiceTracingStub::ListSavedQueries(
                            child_->ListSavedQueries(context, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DatasetServiceTracingStub::AsyncDeleteSavedQuery(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.DatasetService", "DeleteSavedQuery");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncDeleteSavedQuery(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DatasetServiceTracingStub::GetAnnotationSpec(
     grpc::ClientContext& context,

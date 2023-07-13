@@ -58,15 +58,6 @@ TensorboardServiceAuth::GetTensorboard(
   return child_->GetTensorboard(context, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-TensorboardServiceAuth::ReadTensorboardUsage(
-    grpc::ClientContext& context,
-    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->ReadTensorboardUsage(context, request);
-}
-
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceAuth::AsyncUpdateTensorboard(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +103,15 @@ TensorboardServiceAuth::AsyncDeleteTensorboard(
         }
         return child->AsyncDeleteTensorboard(cq, *std::move(context), request);
       });
+}
+
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+TensorboardServiceAuth::ReadTensorboardUsage(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ReadTensorboardUsage(context, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>

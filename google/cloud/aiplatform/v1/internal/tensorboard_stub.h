@@ -48,12 +48,6 @@ class TensorboardServiceStub {
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetTensorboardRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-  ReadTensorboardUsage(
-      grpc::ClientContext& context,
-      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
-          request) = 0;
-
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateTensorboard(
       google::cloud::CompletionQueue& cq,
@@ -71,6 +65,12 @@ class TensorboardServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+  ReadTensorboardUsage(
+      grpc::ClientContext& context,
+      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
@@ -256,12 +256,6 @@ class DefaultTensorboardServiceStub : public TensorboardServiceStub {
       google::cloud::aiplatform::v1::GetTensorboardRequest const& request)
       override;
 
-  StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-  ReadTensorboardUsage(
-      grpc::ClientContext& client_context,
-      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request)
-      override;
-
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTensorboard(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -277,6 +271,12 @@ class DefaultTensorboardServiceStub : public TensorboardServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request)
+      override;
+
+  StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+  ReadTensorboardUsage(
+      grpc::ClientContext& client_context,
+      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>

@@ -99,6 +99,12 @@ class MockDatasetServiceConnection
               (override));
 
   MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteSavedQuery,
+      (google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>,
       GetAnnotationSpec,
       (google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request),

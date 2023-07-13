@@ -159,6 +159,25 @@ DatasetServiceAuth::ListSavedQueries(
   return child_->ListSavedQueries(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DatasetServiceAuth::AsyncDeleteSavedQuery(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteSavedQuery(cq, *std::move(context), request);
+      });
+}
+
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DatasetServiceAuth::GetAnnotationSpec(
     grpc::ClientContext& context,

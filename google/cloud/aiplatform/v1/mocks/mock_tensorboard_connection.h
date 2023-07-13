@@ -59,13 +59,6 @@ class MockTensorboardServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>,
-      ReadTensorboardUsage,
-      (google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>,
       UpdateTensorboard,
       (google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request),
@@ -80,6 +73,13 @@ class MockTensorboardServiceConnection
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteTensorboard,
       (google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>,
+      ReadTensorboardUsage,
+      (google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
+           request),
       (override));
 
   MOCK_METHOD(

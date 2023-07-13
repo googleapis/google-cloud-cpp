@@ -67,6 +67,9 @@ class DatasetServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListSavedQueries(
       google::cloud::aiplatform::v1::ListSavedQueriesRequest request);
 
+  virtual google::cloud::Idempotency DeleteSavedQuery(
+      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request);
+
   virtual google::cloud::Idempotency GetAnnotationSpec(
       google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request);
 

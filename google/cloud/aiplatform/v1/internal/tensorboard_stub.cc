@@ -60,19 +60,6 @@ DefaultTensorboardServiceStub::GetTensorboard(
   return response;
 }
 
-StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-DefaultTensorboardServiceStub::ReadTensorboardUsage(
-    grpc::ClientContext& client_context,
-    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
-  google::cloud::aiplatform::v1::ReadTensorboardUsageResponse response;
-  auto status =
-      grpc_stub_->ReadTensorboardUsage(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
-}
-
 future<StatusOr<google::longrunning::Operation>>
 DefaultTensorboardServiceStub::AsyncUpdateTensorboard(
     google::cloud::CompletionQueue& cq,
@@ -120,6 +107,19 @@ DefaultTensorboardServiceStub::AsyncDeleteTensorboard(
         return grpc_stub_->AsyncDeleteTensorboard(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+DefaultTensorboardServiceStub::ReadTensorboardUsage(
+    grpc::ClientContext& client_context,
+    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
+  google::cloud::aiplatform::v1::ReadTensorboardUsageResponse response;
+  auto status =
+      grpc_stub_->ReadTensorboardUsage(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>

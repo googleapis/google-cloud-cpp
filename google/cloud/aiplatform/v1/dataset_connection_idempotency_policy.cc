@@ -84,6 +84,11 @@ Idempotency DatasetServiceConnectionIdempotencyPolicy::ListSavedQueries(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DatasetServiceConnectionIdempotencyPolicy::DeleteSavedQuery(
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DatasetServiceConnectionIdempotencyPolicy::GetAnnotationSpec(
     google::cloud::aiplatform::v1::GetAnnotationSpecRequest const&) {
   return Idempotency::kIdempotent;
