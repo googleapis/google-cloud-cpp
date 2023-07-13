@@ -19,11 +19,6 @@ compile_commands.json
 # Backup files for Emacs
 *~
 
-# Ignore IDEA / IntelliJ files
-.idea/
-cmake-build-*/
-.clwb/
-
 # Ignore Visual Studio Code files
 .vsbuild/
 .vscode/
