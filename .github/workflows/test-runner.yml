@@ -1,0 +1,29 @@
+name: "Test"
+
+# Build on pull requests and pushes to `main`. The PR builds will be
+# non-blocking for now, but that is configured elsewhere.
+on:
+  push:
+    branches: [ 'main', 'ci-gha.*' ]
+  pull_request:
+
+jobs:
+  pre-flight:
+    name: Check for Safety
+    runs-on: ubuntu-latest
+    outputs:
+      checkout-sha: ${{ steps.safe-checkout.outputs.sha }}
+    steps:
+      - name: Save Pull Request
+        id: save-pull-request
+        run: >
+          ${{ github.event_name != 'pull_request_target' }} ||
+          echo "sha=${{ github.event.pull_request.head.sha  }}"  >> $GITHUB_OUTPUT
+
+  macos:
+    name: macOS
+    needs: [pre-flight]
+    uses: ./.github/workflows/macos.yml
+    with:
+      safe-checkout: ${{ needs.pre-flight.outputs.checkout-sha }}
+    secrets: inherit

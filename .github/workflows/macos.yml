@@ -1,11 +1,15 @@
 name: "Unit Tests"
 
-# Build on pull requests and pushes to `main`. The PR builds will be
-# non-blocking for now, but that is configured elsewhere.
 on:
-  pull_request:
-  push:
-    branches: [ 'main', 'ci-gha.*' ]
+  workflow_call:
+    inputs:
+      safe-checkout:
+        required: true
+        description: "The SHA key for the commit we want to run over"
+        type: string
+
+permissions:
+  contents: read
 
 jobs:
   macOS-bazel:
@@ -17,7 +21,9 @@ jobs:
 
     steps:
     - run: brew install bash
-    - uses: 'actions/checkout@v3'
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.safe-checkout }}
     - uses: bazelbuild/setup-bazelisk@v2
     - id: 'auth'
       uses: 'google-github-actions/auth@v1'
