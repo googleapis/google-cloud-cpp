@@ -16,11 +16,11 @@ jobs:
     if: |
       (github.event_name != 'pull_request' &&
        github.event_name != 'pull_request_target' &&
-       github.event.repository.full_name == 'googleapis/google-cloud-cpp') ||
+       github.event.repository.full_name == github.repository) ||
       (github.event_name == 'pull_request' &&
-       github.event.pull_request.head.repo.full_name == 'googleapis/google-cloud-cpp') ||
+       github.event.pull_request.head.repo.full_name == github.repository) ||
       (github.event_name == 'pull_request_target' &&
-       github.event.pull_request.head.repo.full_name != 'googleapis/google-cloud-cpp')
+       github.event.pull_request.head.repo.full_name != github.repository)
     name: Check for Safety
     runs-on: ubuntu-latest
     outputs:
