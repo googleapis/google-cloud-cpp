@@ -16,9 +16,6 @@ compile_commands.json
 # clangd writes index files here
 .cache
 
-# Backup files for Emacs
-*~
-
 # Ignore Visual Studio Code files
 .vsbuild/
 .vscode/
