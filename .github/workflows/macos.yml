@@ -28,6 +28,7 @@ jobs:
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    - run: brew install sccache
     # - run: brew install bash
     # - uses: bazelbuild/setup-bazelisk@v2
     # - run: /usr/local/bin/bash ci/gha/builds/macos-bazel.sh
