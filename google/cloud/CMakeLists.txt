@@ -61,6 +61,7 @@ endif ()
 
 if (GOOGLE_CLOUD_CPP_ENABLE_REST)
     include("${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_rest_internal.cmake")
+    add_subdirectory(oauth2)
 endif ()
 
 if (GOOGLE_CLOUD_CPP_ENABLE_REST AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)

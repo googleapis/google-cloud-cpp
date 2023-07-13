@@ -21,7 +21,6 @@
 #include <openssl/md5.h>
 #include <openssl/opensslv.h>
 #include <openssl/pem.h>
-#include <algorithm>
 #include <array>
 #include <memory>
 #include <type_traits>

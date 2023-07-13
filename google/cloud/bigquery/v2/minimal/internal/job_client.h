@@ -92,6 +92,19 @@ class JobClient {
    */
   StatusOr<Job> CancelJob(CancelJobRequest const& request, Options opts = {});
 
+  /**
+   * Runs a BigQuery SQL query synchronously and returns query results if the
+   * query completes within a specified timeout.
+   *
+   * For more details on query request fields, please see:
+   * https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query#request-body
+   *
+   * For more details on query reqsponse fields, please see:
+   * https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query#response-body
+   */
+  StatusOr<QueryResults> Query(PostQueryRequest const& request,
+                               Options opts = {});
+
  private:
   std::shared_ptr<BigQueryJobConnection> connection_;
   Options options_;
