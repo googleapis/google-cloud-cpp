@@ -2354,6 +2354,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const exactly_once_subscription_id = RandomSubscriptionId(generator);
   auto const filtered_subscription_id = RandomSubscriptionId(generator);
   auto const push_subscription_id = RandomSubscriptionId(generator);
+  auto const cloud_storage_subscription_id = RandomSubscriptionId(generator);
   auto const bigquery_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_topic_id = "ordering-" + RandomTopicId(generator);
@@ -2412,6 +2413,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateSubscription() sample [2]" << std::endl;
   CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
+
+  auto const bucket_id = project_id + "-pubsub-bucket";
+  std::cout << "\nRunning CreateCloudStorageSubscription() sample" << std::endl;
+  CreateCloudStorageSubscription(
+      subscription_admin_client,
+      {project_id, topic_id, cloud_storage_subscription_id, bucket_id});
 
   std::cout << "\nRunning CreateFilteredSubscription() sample [1]" << std::endl;
   CreateFilteredSubscription(subscription_admin_client,
@@ -2685,6 +2692,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DeleteSubscription() sample [6] " << std::endl;
   DeleteSubscription(subscription_admin_client,
                      {project_id, bigquery_subscription_id});
+
+  std::cout << "\nRunning DeleteSubscription() for sample [7] " << std::endl;
+  DeleteSubscription(subscription_admin_client,
+                     {project_id, cloud_storage_subscription_id});
 
   std::cout << "\nRunning DeleteTopic() sample [1]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, dead_letter_topic_id});
