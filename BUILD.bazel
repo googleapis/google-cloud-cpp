@@ -149,6 +149,13 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "experimental-bigquery-rest",
+    deps = [
+        "//google/cloud/bigquery:google_cloud_cpp_bigquery_rest",
+    ],
+)
+
 bool_flag(
     name = "enable-experimental-opentelemetry",
     build_setting_default = False,
