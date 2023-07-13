@@ -9,7 +9,7 @@ on:
 
 jobs:
   pre-flight:
-    environment: ${{ (github.event_name != 'pull_request_target' && '') || (github.event.pull_request.head.repo.full_name == github.repository && '') || (contains(fromJSON(vars.TRUSTED_FORKS), github.actor) && '') || 'external' }}
+    environment: ${{ (github.event_name != 'pull_request_target' && 'internal') || (github.event.pull_request.head.repo.full_name == github.repository && 'internal') || (contains(fromJSON(vars.TRUSTED_FORKS), github.actor) && 'internal') || 'external' }}
     name: Check for Safety
     runs-on: ubuntu-latest
     outputs:
