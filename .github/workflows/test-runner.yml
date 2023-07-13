@@ -9,7 +9,7 @@ on:
 
 jobs:
   pre-flight:
-    environment: ${{ (github.event_name != 'pull_request_target' && '') || (github.event.pull_request.head.repo.full_name == github.repository && '') || (contains(fromJSON(vars.TRUSTED_FORKS), github.actor) || '') || 'external' }}
+    environment: ${{ (github.event_name != 'pull_request_target' && '') || (github.event.pull_request.head.repo.full_name == github.repository && '') || (contains(fromJSON(vars.TRUSTED_FORKS), github.actor) && '') || 'external' }}
     name: Check for Safety
     runs-on: ubuntu-latest
     outputs:
@@ -18,8 +18,7 @@ jobs:
       - name: Save Pull Request
         id: save-pull-request
         run: >
-          ${{ github.event_name != 'pull_request_target' }} ||
-          echo "sha=${{ github.event.pull_request.head.sha  }}"  >> $GITHUB_OUTPUT
+          echo "sha=${{ github.event.pull_request.head.sha || github.ref }}"  >> $GITHUB_OUTPUT
 
   macos:
     name: macOS
