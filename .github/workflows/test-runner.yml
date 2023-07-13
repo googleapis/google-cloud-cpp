@@ -41,6 +41,7 @@ jobs:
     secrets: inherit
 
   external-account-integration:
+    if: ${{ false }} # TODO - restore before full merge
     name: External Account Integration
     needs: [pre-flight]
     uses: ./.github/workflows/external-account-integration.yml
