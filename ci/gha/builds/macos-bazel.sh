@@ -25,5 +25,5 @@ mapfile -t args < <(bazel::common_args)
 args+=(--test_tag_filters=-integration-test)
 TIMEFORMAT="==> 🕑 unit tests done in %R seconds"
 time {
-    io::run bazel test "${args[@]}" -- //google/cloud:all
+    io::run bazel test "${args[@]}" -- //...
 }
