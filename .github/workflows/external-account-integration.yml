@@ -1,11 +1,15 @@
 name: "External Account Integration"
 
-# Build on pull requests and pushes to `main`. The PR builds will be
-# non-blocking for now, but that is configured elsewhere.
 on:
-  pull_request:
-  push:
-    branches: [ 'main' ]
+  workflow_call:
+    inputs:
+      safe-checkout:
+        required: true
+        description: "The SHA key for the commit we want to run over"
+        type: string
+
+permissions:
+  contents: read
 
 jobs:
   # A minimal build to validate external account (aka Workload/Workforce
@@ -14,7 +18,7 @@ jobs:
   # GitHub. Most of our builds use Google Cloud Build (GCB), which is not
   # usable in this case.
   identity-federation-integration-test:
-    if: ${{ false }}
+    # if: ${{ false }} # Disable during development of macOS build TODO TODO
     name: external-account-integration-test
     runs-on: ubuntu-20.04
     # Add "id-token" with the intended permissions.
@@ -25,7 +29,9 @@ jobs:
     steps:
       - name: install ninja
         run: sudo apt install ninja-build
-      - uses: 'actions/checkout@v3'
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.safe-checkout }}
       - name: vcpkg-version
         id: vcpkg-version
         run: |
