@@ -5,7 +5,6 @@ name: "Test"
 on:
   push:
     branches: [ 'main', 'ci-gha**' ]
-  pull_request:
   pull_request_target:
 
 jobs:
