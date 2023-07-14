@@ -18,6 +18,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <thread>
