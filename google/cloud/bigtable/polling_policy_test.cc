@@ -51,18 +51,19 @@ auto const kLimitedTimeTolerance = 20_ms;
  * @test Verify that a polling policy configured to run for 50ms
  * works correctly.
  */
-void CheckLimitedTime(PollingPolicy& tested) {
+void CheckLimitedTime(PollingPolicy& tested, char const* where) {
   testing_util::CheckPredicateBecomesFalse(
       [&tested] { return tested.OnFailure(GrpcTransientError()); },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
-      kLimitedTimeTolerance);
+      kLimitedTimeTolerance, where);
 }
 
-void CheckLimitedTime(std::unique_ptr<google::cloud::PollingPolicy> common) {
+void CheckLimitedTime(std::unique_ptr<google::cloud::PollingPolicy> common,
+                      char const* where) {
   testing_util::CheckPredicateBecomesFalse(
       [&common] { return common->OnFailure(TransientError()); },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
-      kLimitedTimeTolerance);
+      kLimitedTimeTolerance, where);
 }
 
 /// @test A simple test for the GenericPollingPolicy.
@@ -70,10 +71,10 @@ TEST(GenericPollingPolicy, Simple) {
   LimitedTimeRetryPolicy retry(kLimitedTimeTestPeriod);
   ExponentialBackoffPolicy backoff(10_ms, 50_ms);
   GenericPollingPolicy<> tested(retry, backoff);
-  CheckLimitedTime(tested);
+  CheckLimitedTime(tested, __func__);
 
   auto common = bigtable_internal::MakeCommonPollingPolicy(tested.clone());
-  CheckLimitedTime(std::move(common));
+  CheckLimitedTime(std::move(common), __func__);
 }
 
 /// @test Test cloning for GenericPollingPolicy.
