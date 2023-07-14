@@ -144,11 +144,11 @@ bool ThereIsAnActiveSpan() {
   return opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid();
 }
 
-std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData>
-InstallSpanCatcher() {
+SpanCatcher::SpanCatcher()
+    : previous_(opentelemetry::trace::Provider::GetTracerProvider()) {
   auto exporter =
       std::make_unique<opentelemetry::exporter::memory::InMemorySpanExporter>();
-  auto span_data = exporter->GetData();
+  span_data_ = exporter->GetData();
   auto processor =
       std::make_unique<opentelemetry::sdk::trace::SimpleSpanProcessor>(
           std::move(exporter));
@@ -156,7 +156,19 @@ InstallSpanCatcher() {
       opentelemetry::sdk::trace::TracerProviderFactory::Create(
           std::move(processor));
   opentelemetry::trace::Provider::SetTracerProvider(provider);
-  return span_data;
+}
+
+SpanCatcher::~SpanCatcher() {
+  opentelemetry::trace::Provider::SetTracerProvider(std::move(previous_));
+}
+
+std::vector<std::unique_ptr<opentelemetry::sdk::trace::SpanData>>
+SpanCatcher::GetSpans() {
+  return span_data_->GetSpans();
+}
+
+std::shared_ptr<SpanCatcher> InstallSpanCatcher() {
+  return std::make_shared<SpanCatcher>();
 }
 
 std::shared_ptr<MockTextMapPropagator> InstallMockPropagator() {

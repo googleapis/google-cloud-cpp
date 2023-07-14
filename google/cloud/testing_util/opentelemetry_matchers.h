@@ -26,6 +26,7 @@
 #include <opentelemetry/trace/span.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/tracer.h>
+#include <opentelemetry/trace/tracer_provider.h>
 #include <iosfwd>
 #include <memory>
 #include <string>
@@ -184,6 +185,19 @@ template <typename... Args>
   return SpanEventsAreImpl(::testing::ElementsAre(matchers...));
 }
 
+class SpanCatcher {
+ public:
+  SpanCatcher();
+  ~SpanCatcher();
+
+  std::vector<std::unique_ptr<opentelemetry::sdk::trace::SpanData>> GetSpans();
+
+ private:
+  std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData> span_data_;
+  opentelemetry::nostd::shared_ptr<opentelemetry::trace::TracerProvider>
+      previous_;
+};
+
 /**
  * Provides access to created spans.
  *
@@ -198,8 +212,7 @@ template <typename... Args>
  * 1. a new exporter is installed for each test
  * 2. the tests within a fixture do not execute in parallel
  */
-std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData>
-InstallSpanCatcher();
+std::shared_ptr<SpanCatcher> InstallSpanCatcher();
 
 class MockTextMapPropagator
     : public opentelemetry::context::propagation::TextMapPropagator {
