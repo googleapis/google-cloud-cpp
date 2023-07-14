@@ -1,0 +1,407 @@
+name: Windows-Builds
+
+on:
+  workflow_call:
+    inputs:
+      checkout-ref:
+        required: true
+        description: "The ref we want to compile"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  bazel:
+    name: bazel + ${{ matrix.os }} + ${{ matrix.compilation_mode }} + ${{ matrix.shard }}
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    strategy:
+      # Continue other builds even if one fails
+      fail-fast: false
+      matrix:
+        os: [ windows-2019 ] # TODO(coryan) - add windows-2022
+        # - dbg creates very large debugging files and GHA has limited storage.
+        # - fastbuild also takes too much storage.
+        compilation_mode: [ opt ]
+        shard: [ Common, Bigtable, PubSub, Spanner, Storage, Compute, Larger Libraries, Other ]
+        include:
+        - shard: Common
+          targets:
+          - //google/cloud:all
+        - shard: Bigtable
+          targets:
+          - //google/cloud/bigtable/...
+        - shard: PubSub
+          targets:
+          - //google/cloud/pubsub/...
+        - shard: Spanner
+          targets:
+          - //google/cloud/spanner/...
+        - shard: Storage
+          targets:
+          - //google/cloud/storage/...
+        - shard: Compute
+          targets:
+          - //google/cloud/compute/...
+        - shard: Larger Libraries
+          targets:
+          # Run this:
+          #
+          # for file in google/cloud/*/v*/*_client.h; do
+          #     echo $(dirname $(dirname $file));
+          # done | sort | uniq -c | sort -n  | awk '{ s += $1; print s, $0}'
+          #
+          # and pick the approximate midpoint
+          - //google/cloud/containeranalysis/...
+          - +//google/cloud/iam/...
+          - +//google/cloud/iap/...
+          - +//google/cloud/kms/...
+          - +//google/cloud/metastore/...
+          - +//google/cloud/notebooks/...
+          - +//google/cloud/run/...
+          - +//google/cloud/servicedirectory/...
+          - +//google/cloud/speech/...
+          - +//google/cloud/tpu/...
+          - +//google/cloud/trace/...
+          - +//google/cloud/vision/...
+          - +//google/cloud/binaryauthorization/...
+          - +//google/cloud/datacatalog/...
+          - +//google/cloud/dataplex/...
+          - +//google/cloud/gkemulticloud/...
+          - +//google/cloud/resourcemanager/...
+          - +//google/cloud/servicecontrol/...
+          - +//google/cloud/support/...
+          - +//google/cloud/contentwarehouse/...
+          - +//google/cloud/dataproc/...
+          - +//google/cloud/talent/...
+          - +//google/cloud/retail/...
+          - +//google/cloud/monitoring/...
+          - +//google/cloud/appengine/...
+          - +//google/cloud/sql/...
+          - +//google/cloud/aiplatform/...
+        - shard: Other
+          targets:
+          - //...
+          # From Core
+          - -//generator/...
+          - -//docfx/...
+          - -//google/cloud:all
+          - -//google/cloud/bigtable/...
+          - -//google/cloud/pubsub/...
+          - -//google/cloud/spanner/...
+          - -//google/cloud/storage/...
+          - -//examples/...
+          # From Compute
+          - -//google/cloud/compute/...
+          # From Large Libraries
+          - -//google/cloud/containeranalysis/...
+          - -//google/cloud/iam/...
+          - -//google/cloud/iap/...
+          - -//google/cloud/kms/...
+          - -//google/cloud/metastore/...
+          - -//google/cloud/notebooks/...
+          - -//google/cloud/run/...
+          - -//google/cloud/servicedirectory/...
+          - -//google/cloud/speech/...
+          - -//google/cloud/tpu/...
+          - -//google/cloud/trace/...
+          - -//google/cloud/vision/...
+          - -//google/cloud/binaryauthorization/...
+          - -//google/cloud/datacatalog/...
+          - -//google/cloud/dataplex/...
+          - -//google/cloud/gkemulticloud/...
+          - -//google/cloud/resourcemanager/...
+          - -//google/cloud/servicecontrol/...
+          - -//google/cloud/support/...
+          - -//google/cloud/contentwarehouse/...
+          - -//google/cloud/dataproc/...
+          - -//google/cloud/talent/...
+          - -//google/cloud/retail/...
+          - -//google/cloud/monitoring/...
+          - -//google/cloud/appengine/...
+          - -//google/cloud/sql/...
+          - -//google/cloud/aiplatform/...
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.checkout-ref }}
+    - uses: google-github-actions/auth@v1
+      with:
+        create_credentials_file: true
+        credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    # go/github-actions#gha-bestpractices explains why we use a SHA instead of
+    # a named version for this runner. We could avoid using this runner with the
+    # ideas from:
+    #   https://github.com/microsoft/vswhere/wiki/Find-VC
+    # Note that in other runners the publisher is GitHub. If we trust GitHub
+    # to run the VM, we should trust their runners.
+    - uses: ilammy/msvc-dev-cmd@cec98b9d092141f74527d0afa6feb2af698cfe89 # @v1.21.1
+    - run: Get-PSDrive # TODO(coryan) - remove DEBUG DEBUG
+    - name: Build google-cloud-cpp
+      shell: bash
+      run: |
+        # Having `/usr/bin/link` in the path will conflict with the MSVC linker.
+        rm -f /usr/bin/link >/dev/null 2>&1
+        # Bazel creates really long paths, sometimes exceeding the MSVC limits.
+        # Using a short name like this avoids the problem in most cases.
+        mkdir -p 'c:\b' || true
+        export BAZEL_ROOT='c:\b'
+        ci/gha/builds/windows-bazel.sh ${{ matrix.compilation_mode }} ${{ join(matrix.targets, ' ') }}
+    - run: Get-PSDrive # TODO(coryan) - remove DEBUG DEBUG
+    env:
+      USE_BAZEL_VERSION: 6.2.1
+      BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.os }}/${{ matrix.compliation_mode }}
+
+  cmake:
+    name: cmake + ${{ matrix.os }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    strategy:
+      # Continue other builds even if one fails
+      fail-fast: false
+      matrix:
+        os: [ windows-2019, windows-2022 ]
+        build_type: [ Debug, Release ]
+        vcpkg_triplet: [ x64-windows ]
+        shard:
+        - Bigtable
+        - Pubsub
+        - Spanner
+        - Storage
+        - AIPlatform
+        - Shard 1
+        - Shard 2
+        - Other
+        include:
+        - shard: Bigtable
+          features:
+          - bigtable
+        - shard: Pubsub
+          features:
+          - pubsub
+          - pubsublite
+        - shard: Spanner
+          features:
+          - spanner
+        - shard: Storage
+          features:
+          - storage
+        - shard: AIPlatform
+          features:
+          - aiplatform
+        - shard: Shard 1
+          features:
+          - containeranalysis
+          - iam
+          - iap
+          - kms
+          - metastore
+          - notebooks
+          - run
+          - servicedirectory
+          - speech
+          - tpu
+          - trace
+          - vision
+          - binaryauthorization
+          - datacatalog
+          - dataplex
+          - gkemulticloud
+          - resourcemanager
+          - servicecontrol
+          - support
+          - contentwarehouse
+          - dataproc
+          - talent
+          - retail
+          - monitoring
+          - appengine
+          - sql
+        - shard: Shard 2
+          features:
+          - optimization
+          - orgpolicy
+          - osconfig
+          - oslogin
+          - policytroubleshooter
+          - privateca
+          - profiler
+          - rapidmigrationassessment
+          - recaptchaenterprise
+          - recommender
+          - redis
+          - resourcesettings
+          - scheduler
+          - secretmanager
+          - securitycenter
+          - servicemanagement
+          - serviceusage
+          - shell
+          - storageinsights
+          - storagetransfer
+          - tasks
+          - texttospeech
+          - timeseriesinsights
+          - translate
+          - videointelligence
+          - vmmigration
+          - vmwareengine
+          - vpcaccess
+          - webrisk
+          - websecurityscanner
+          - workflows
+          - workstations
+          - automl
+          - billing
+          - cloudbuild
+          - composer
+        - shard: Other
+          features:
+          - __ga_libraries__
+          - __experimental_libraries__
+          - -bigtable
+          - -pubsub
+          - -pubsublite
+          - -spanner
+          - -storage
+          - -compute
+          - -aiplatform
+          - -containeranalysis
+          - -iam
+          - -iap
+          - -kms
+          - -metastore
+          - -notebooks
+          - -run
+          - -servicedirectory
+          - -speech
+          - -tpu
+          - -trace
+          - -vision
+          - -binaryauthorization
+          - -datacatalog
+          - -dataplex
+          - -gkemulticloud
+          - -resourcemanager
+          - -servicecontrol
+          - -support
+          - -contentwarehouse
+          - -dataproc
+          - -talent
+          - -retail
+          - -monitoring
+          - -appengine
+          - -sql
+          - -optimization
+          - -orgpolicy
+          - -osconfig
+          - -oslogin
+          - -policytroubleshooter
+          - -privateca
+          - -profiler
+          - -rapidmigrationassessment
+          - -recaptchaenterprise
+          - -recommender
+          - -redis
+          - -resourcesettings
+          - -scheduler
+          - -secretmanager
+          - -securitycenter
+          - -servicemanagement
+          - -serviceusage
+          - -shell
+          - -storageinsights
+          - -storagetransfer
+          - -tasks
+          - -texttospeech
+          - -timeseriesinsights
+          - -translate
+          - -videointelligence
+          - -vmmigration
+          - -vmwareengine
+          - -vpcaccess
+          - -webrisk
+          - -websecurityscanner
+          - -workflows
+          - -workstations
+          - -automl
+          - -billing
+          - -cloudbuild
+          - -composer
+          # We use vcpkg in this build, which ships with Protobuf v21.x.
+          # These require Protobuf >= 23.x to compile on Windows.
+          - -asset
+          - -channel
+        # Compute is too large to compile in Debug mode. MSVC uses COFF:
+        #     https://en.wikipedia.org/wiki/COFF
+        # and COFF offsets are 32-bits. No library or program can exceed this
+        # limit:
+        #     https://learn.microsoft.com/en-us/cpp/error-messages/tool-errors/linker-tools-error-lnk1248
+        # - build_type: Release
+        #   shard: Compute
+        #   features:
+        #   - compute
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.checkout-ref }}
+    - uses: google-github-actions/auth@v1
+      with:
+        create_credentials_file: true
+        credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    - uses: actions/setup-python@v4
+      id: py311
+      with:
+        python-version: '3.11'
+    - uses: google-github-actions/setup-gcloud@v1
+    - name: Get vcpkg Version
+      id: vcpkg-version
+      shell: bash
+      run: |
+        echo "version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
+    - name: Download and Install sccache
+      working-directory: "${{runner.temp}}"
+      shell: bash
+      run: |
+        curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-pc-windows-msvc.tar.gz | \
+          tar -zxf - --strip-components=1
+        chmod +x sccache.exe
+        mv sccache.exe /c/Users/runneradmin/.cargo/bin
+    - name: Download and Install vcpkg
+      shell: bash
+      run: |
+        cd "${TEMP}"
+        mkdir -p .build/vcpkg
+        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.vcpkg-version.outputs.version }}.tar.gz" |
+            tar -C .build/vcpkg --strip-components=1 -zxf -
+        .build/vcpkg/bootstrap-vcpkg.sh -disableMetrics
+    # go/github-actions#gha-bestpractices explains why we use a SHA instead of
+    # a named version for this runner. We could avoid using this runner with the
+    # ideas from:
+    #   https://github.com/microsoft/vswhere/wiki/Find-VC
+    # Note that in other runners the publisher is GitHub. If we trust GitHub
+    # to run the VM, we should trust their runners.
+    - uses: ilammy/msvc-dev-cmd@cec98b9d092141f74527d0afa6feb2af698cfe89 # @v1.21.1
+    - run: Get-PSDrive # TODO(coryan) - remove DEBUG DEBUG
+    - name: Build google-cloud-cpp
+      shell: bash
+      run: |
+        export VCPKG_ROOT="${TEMP}/.build/vcpkg"
+        export CLOUDSDK_PYTHON="${{ steps.py311.outputs.python-path }}"
+        # Put the CMake output in a directory with more space and keep it short
+        # to avoid running into the MSVC limits.
+        export CMAKE_OUT='c:\b'
+        ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ join(matrix.features, ',') }}
+    - run: Get-PSDrive # TODO(coryan) - remove DEBUG DEBUG
+    env:
+      SCCACHE_GCS_BUCKET: cloud-cpp-gha-cache
+      SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.os }}/${{ matrix.build_type }}
+      SCCACHE_GCS_RW_MODE: READ_WRITE
+      SCCACHE_IGNORE_SERVER_IO_ERROR: 1
+      VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-gha-cache/vcpkg-cache/${{ matrix.os }},readwrite
+      VCPKG_TRIPLET: ${{ matrix.vcpkg_triplet }}

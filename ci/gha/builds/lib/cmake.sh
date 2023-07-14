@@ -55,6 +55,9 @@ function cmake::common_args() {
       -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
     )
   fi
+  if [[ -n "${VCPKG_TRIPLET:-}" ]]; then
+    args+=("-DVCPKG_TARGET_TRIPLET=${VCPKG_TRIPLET}")
+  fi
   printf "%s\n" "${args[@]}"
 }
 

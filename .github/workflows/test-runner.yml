@@ -51,3 +51,12 @@ jobs:
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
+  windows:
+    # TODO(#12123) - enable GHA Windows builds on PRs
+    if: ${{ github.event == 'push' }}
+    name: Windows
+    needs: [pre-flight]
+    uses: ./.github/workflows/windows.yml
+    with:
+      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+    secrets: inherit
