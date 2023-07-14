@@ -207,10 +207,8 @@ class SpanCatcher {
  * To extract the spans, call `InMemorySpanData::GetSpans()`. Note that each
  * call to `GetSpans()` will clear the previously collected spans.
  *
- * Also note that this sets the global trace exporter, which will persist from
- * one test in a test fixture to the next. Thus it is important that:
- * 1. a new exporter is installed for each test
- * 2. the tests within a fixture do not execute in parallel
+ * Also note that this sets the global trace exporter. Thus it is important that
+ * the tests within a fixture do not execute in parallel.
  */
 std::shared_ptr<SpanCatcher> InstallSpanCatcher();
 
