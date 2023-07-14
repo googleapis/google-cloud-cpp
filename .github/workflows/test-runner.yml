@@ -37,14 +37,6 @@ jobs:
   # in separate files to keep the size of this file under control. Note how
   # the additional jobs inherit any secrets needed to use the remote caches and
   # receive what version to checkout as an input.
-  macos:
-    name: macOS
-    needs: [pre-flight]
-    uses: ./.github/workflows/macos.yml
-    with:
-      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-    secrets: inherit
-
   external-account-integration:
     name: External Account Integration
     needs: [pre-flight]
