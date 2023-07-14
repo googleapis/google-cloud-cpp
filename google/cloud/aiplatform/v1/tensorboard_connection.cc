@@ -50,12 +50,6 @@ TensorboardServiceConnection::GetTensorboard(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-TensorboardServiceConnection::ReadTensorboardUsage(
-    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceConnection::UpdateTensorboard(
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const&) {
@@ -78,6 +72,12 @@ TensorboardServiceConnection::DeleteTensorboard(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+TensorboardServiceConnection::ReadTensorboardUsage(
+    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>

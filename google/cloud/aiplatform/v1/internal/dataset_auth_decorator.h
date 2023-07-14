@@ -90,6 +90,12 @@ class DatasetServiceAuth : public DatasetServiceStub {
                    google::cloud::aiplatform::v1::ListSavedQueriesRequest const&
                        request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteSavedQuery(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request)

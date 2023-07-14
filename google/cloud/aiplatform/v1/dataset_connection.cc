@@ -112,6 +112,14 @@ DatasetServiceConnection::ListSavedQueries(
       StreamRange<google::cloud::aiplatform::v1::SavedQuery>>();
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceConnection::DeleteSavedQuery(
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DatasetServiceConnection::GetAnnotationSpec(
     google::cloud::aiplatform::v1::GetAnnotationSpecRequest const&) {

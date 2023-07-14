@@ -53,14 +53,6 @@ TensorboardServiceMetadata::GetTensorboard(
   return child_->GetTensorboard(context, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-TensorboardServiceMetadata::ReadTensorboardUsage(
-    grpc::ClientContext& context,
-    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
-  SetMetadata(context, "tensorboard=" + request.tensorboard());
-  return child_->ReadTensorboardUsage(context, request);
-}
-
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceMetadata::AsyncUpdateTensorboard(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +77,14 @@ TensorboardServiceMetadata::AsyncDeleteTensorboard(
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteTensorboard(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+TensorboardServiceMetadata::ReadTensorboardUsage(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
+  SetMetadata(context, "tensorboard=" + request.tensorboard());
+  return child_->ReadTensorboardUsage(context, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>

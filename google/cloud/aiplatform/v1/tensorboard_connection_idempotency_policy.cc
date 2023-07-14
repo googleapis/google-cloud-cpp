@@ -44,11 +44,6 @@ Idempotency TensorboardServiceConnectionIdempotencyPolicy::GetTensorboard(
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::ReadTensorboardUsage(
-    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&) {
-  return Idempotency::kIdempotent;
-}
-
 Idempotency TensorboardServiceConnectionIdempotencyPolicy::UpdateTensorboard(
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -62,6 +57,11 @@ Idempotency TensorboardServiceConnectionIdempotencyPolicy::ListTensorboards(
 Idempotency TensorboardServiceConnectionIdempotencyPolicy::DeleteTensorboard(
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::ReadTensorboardUsage(
+    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&) {
+  return Idempotency::kIdempotent;
 }
 
 Idempotency

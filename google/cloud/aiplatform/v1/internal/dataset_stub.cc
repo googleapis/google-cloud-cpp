@@ -172,6 +172,24 @@ DefaultDatasetServiceStub::ListSavedQueries(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultDatasetServiceStub::AsyncDeleteSavedQuery(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteSavedQueryRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteSavedQuery(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DefaultDatasetServiceStub::GetAnnotationSpec(
     grpc::ClientContext& client_context,

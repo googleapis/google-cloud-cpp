@@ -189,7 +189,7 @@ class KeyTrackingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.inventory.v1.ProtectedResource]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L156}
+  /// [google.cloud.kms.inventory.v1.ProtectedResource]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L172}
   /// [google.cloud.kms.inventory.v1.SearchProtectedResourcesRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L111}
   ///
   // clang-format on
@@ -231,7 +231,7 @@ class KeyTrackingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.inventory.v1.ProtectedResource]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L156}
+  /// [google.cloud.kms.inventory.v1.ProtectedResource]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L172}
   /// [google.cloud.kms.inventory.v1.SearchProtectedResourcesRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L111}
   ///
   // clang-format on

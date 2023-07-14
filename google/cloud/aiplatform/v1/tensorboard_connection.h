@@ -196,11 +196,6 @@ class TensorboardServiceConnection {
   virtual StatusOr<google::cloud::aiplatform::v1::Tensorboard> GetTensorboard(
       google::cloud::aiplatform::v1::GetTensorboardRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-  ReadTensorboardUsage(
-      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
-          request);
-
   virtual future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
   UpdateTensorboard(
       google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request);
@@ -213,6 +208,11 @@ class TensorboardServiceConnection {
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteTensorboard(
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request);
+
+  virtual StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+  ReadTensorboardUsage(
+      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
+          request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
   CreateTensorboardExperiment(

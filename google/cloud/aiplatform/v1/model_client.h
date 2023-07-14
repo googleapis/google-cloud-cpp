@@ -488,7 +488,7 @@ class ModelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.UpdateExplanationDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L504}
-  /// [google.cloud.aiplatform.v1.UpdateExplanationDatasetResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L628}
+  /// [google.cloud.aiplatform.v1.UpdateExplanationDatasetResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L653}
   ///
   // clang-format on
   future<
@@ -526,7 +526,7 @@ class ModelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.UpdateExplanationDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L504}
-  /// [google.cloud.aiplatform.v1.UpdateExplanationDatasetResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L628}
+  /// [google.cloud.aiplatform.v1.UpdateExplanationDatasetResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L653}
   ///
   // clang-format on
   future<

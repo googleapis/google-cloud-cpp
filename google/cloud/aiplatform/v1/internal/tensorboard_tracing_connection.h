@@ -49,11 +49,6 @@ class TensorboardServiceTracingConnection
       google::cloud::aiplatform::v1::GetTensorboardRequest const& request)
       override;
 
-  StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-  ReadTensorboardUsage(
-      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request)
-      override;
-
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
   UpdateTensorboard(
       google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request)
@@ -65,6 +60,11 @@ class TensorboardServiceTracingConnection
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteTensorboard(
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request)
+      override;
+
+  StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+  ReadTensorboardUsage(
+      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>

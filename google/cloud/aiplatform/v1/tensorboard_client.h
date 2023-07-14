@@ -226,67 +226,6 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// Returns a list of monthly active users for a given TensorBoard instance.
-  ///
-  /// @param tensorboard  Required. The name of the Tensorboard resource.
-  ///  Format:
-  ///  `projects/{project}/locations/{location}/tensorboards/{tensorboard}`
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.cloud.aiplatform.v1.ReadTensorboardUsageResponse])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ReadTensorboardUsageRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L395}
-  /// [google.cloud.aiplatform.v1.ReadTensorboardUsageResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L409}
-  ///
-  // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-  ReadTensorboardUsage(std::string const& tensorboard, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Returns a list of monthly active users for a given TensorBoard instance.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.aiplatform.v1.ReadTensorboardUsageRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.cloud.aiplatform.v1.ReadTensorboardUsageResponse])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ReadTensorboardUsageRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L395}
-  /// [google.cloud.aiplatform.v1.ReadTensorboardUsageResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L409}
-  ///
-  // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-  ReadTensorboardUsage(
-      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
   /// Updates a Tensorboard.
   ///
   /// @param tensorboard  Required. The Tensorboard's `name` field is used to identify the
@@ -319,7 +258,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Tensorboard]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard.proto#L35}
-  /// [google.cloud.aiplatform.v1.UpdateTensorboardRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L482}
+  /// [google.cloud.aiplatform.v1.UpdateTensorboardRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L447}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
@@ -358,7 +297,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Tensorboard]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard.proto#L35}
-  /// [google.cloud.aiplatform.v1.UpdateTensorboardRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L482}
+  /// [google.cloud.aiplatform.v1.UpdateTensorboardRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L447}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
@@ -396,7 +335,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListTensorboardsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L431}
+  /// [google.cloud.aiplatform.v1.ListTensorboardsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L396}
   /// [google.cloud.aiplatform.v1.Tensorboard]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard.proto#L35}
   ///
   // clang-format on
@@ -436,7 +375,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListTensorboardsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L431}
+  /// [google.cloud.aiplatform.v1.ListTensorboardsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L396}
   /// [google.cloud.aiplatform.v1.Tensorboard]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard.proto#L35}
   ///
   // clang-format on
@@ -472,7 +411,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteTensorboardRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L500}
+  /// [google.cloud.aiplatform.v1.DeleteTensorboardRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L465}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -509,12 +448,73 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteTensorboardRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L500}
+  /// [google.cloud.aiplatform.v1.DeleteTensorboardRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L465}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteTensorboard(
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns a list of monthly active users for a given TensorBoard instance.
+  ///
+  /// @param tensorboard  Required. The name of the Tensorboard resource.
+  ///  Format:
+  ///  `projects/{project}/locations/{location}/tensorboards/{tensorboard}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.aiplatform.v1.ReadTensorboardUsageResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.ReadTensorboardUsageRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L479}
+  /// [google.cloud.aiplatform.v1.ReadTensorboardUsageResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L493}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+  ReadTensorboardUsage(std::string const& tensorboard, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns a list of monthly active users for a given TensorBoard instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.ReadTensorboardUsageRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.aiplatform.v1.ReadTensorboardUsageResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.ReadTensorboardUsageRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L479}
+  /// [google.cloud.aiplatform.v1.ReadTensorboardUsageResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L493}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
+  ReadTensorboardUsage(
+      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -544,7 +544,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L514}
+  /// [google.cloud.aiplatform.v1.CreateTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L515}
   /// [google.cloud.aiplatform.v1.TensorboardExperiment]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_experiment.proto#L33}
   ///
   // clang-format on
@@ -579,7 +579,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L514}
+  /// [google.cloud.aiplatform.v1.CreateTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L515}
   /// [google.cloud.aiplatform.v1.TensorboardExperiment]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_experiment.proto#L33}
   ///
   // clang-format on
@@ -610,7 +610,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L538}
+  /// [google.cloud.aiplatform.v1.GetTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L539}
   /// [google.cloud.aiplatform.v1.TensorboardExperiment]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_experiment.proto#L33}
   ///
   // clang-format on
@@ -641,7 +641,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L538}
+  /// [google.cloud.aiplatform.v1.GetTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L539}
   /// [google.cloud.aiplatform.v1.TensorboardExperiment]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_experiment.proto#L33}
   ///
   // clang-format on
@@ -679,7 +679,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.TensorboardExperiment]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_experiment.proto#L33}
-  /// [google.cloud.aiplatform.v1.UpdateTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L603}
+  /// [google.cloud.aiplatform.v1.UpdateTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L604}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
@@ -713,7 +713,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.TensorboardExperiment]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_experiment.proto#L33}
-  /// [google.cloud.aiplatform.v1.UpdateTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L603}
+  /// [google.cloud.aiplatform.v1.UpdateTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L604}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
@@ -752,7 +752,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListTensorboardExperimentsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L552}
+  /// [google.cloud.aiplatform.v1.ListTensorboardExperimentsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L553}
   /// [google.cloud.aiplatform.v1.TensorboardExperiment]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_experiment.proto#L33}
   ///
   // clang-format on
@@ -792,7 +792,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListTensorboardExperimentsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L552}
+  /// [google.cloud.aiplatform.v1.ListTensorboardExperimentsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L553}
   /// [google.cloud.aiplatform.v1.TensorboardExperiment]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_experiment.proto#L33}
   ///
   // clang-format on
@@ -829,7 +829,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L622}
+  /// [google.cloud.aiplatform.v1.DeleteTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L623}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -866,7 +866,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L622}
+  /// [google.cloud.aiplatform.v1.DeleteTensorboardExperimentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L623}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -902,7 +902,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L664}
+  /// [google.cloud.aiplatform.v1.CreateTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L665}
   /// [google.cloud.aiplatform.v1.TensorboardRun]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_run.proto#L33}
   ///
   // clang-format on
@@ -935,7 +935,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L664}
+  /// [google.cloud.aiplatform.v1.CreateTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L665}
   /// [google.cloud.aiplatform.v1.TensorboardRun]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_run.proto#L33}
   ///
   // clang-format on
@@ -968,8 +968,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardRunsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L636}
-  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardRunsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L657}
+  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardRunsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L637}
+  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardRunsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L658}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
@@ -1004,8 +1004,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardRunsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L636}
-  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardRunsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L657}
+  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardRunsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L637}
+  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardRunsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L658}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
@@ -1035,7 +1035,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L688}
+  /// [google.cloud.aiplatform.v1.GetTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L689}
   /// [google.cloud.aiplatform.v1.TensorboardRun]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_run.proto#L33}
   ///
   // clang-format on
@@ -1066,7 +1066,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L688}
+  /// [google.cloud.aiplatform.v1.GetTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L689}
   /// [google.cloud.aiplatform.v1.TensorboardRun]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_run.proto#L33}
   ///
   // clang-format on
@@ -1102,7 +1102,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.TensorboardRun]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_run.proto#L33}
-  /// [google.cloud.aiplatform.v1.UpdateTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L777}
+  /// [google.cloud.aiplatform.v1.UpdateTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L778}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardRun> UpdateTensorboardRun(
@@ -1134,7 +1134,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.TensorboardRun]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_run.proto#L33}
-  /// [google.cloud.aiplatform.v1.UpdateTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L777}
+  /// [google.cloud.aiplatform.v1.UpdateTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L778}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardRun> UpdateTensorboardRun(
@@ -1171,7 +1171,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListTensorboardRunsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L726}
+  /// [google.cloud.aiplatform.v1.ListTensorboardRunsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L727}
   /// [google.cloud.aiplatform.v1.TensorboardRun]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_run.proto#L33}
   ///
   // clang-format on
@@ -1211,7 +1211,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListTensorboardRunsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L726}
+  /// [google.cloud.aiplatform.v1.ListTensorboardRunsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L727}
   /// [google.cloud.aiplatform.v1.TensorboardRun]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_run.proto#L33}
   ///
   // clang-format on
@@ -1248,7 +1248,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L795}
+  /// [google.cloud.aiplatform.v1.DeleteTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L796}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -1285,7 +1285,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L795}
+  /// [google.cloud.aiplatform.v1.DeleteTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L796}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -1320,8 +1320,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L809}
-  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardTimeSeriesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L832}
+  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L810}
+  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardTimeSeriesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L833}
   ///
   // clang-format on
   StatusOr<
@@ -1356,8 +1356,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L809}
-  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardTimeSeriesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L832}
+  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L810}
+  /// [google.cloud.aiplatform.v1.BatchCreateTensorboardTimeSeriesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L833}
   ///
   // clang-format on
   StatusOr<
@@ -1390,7 +1390,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L839}
+  /// [google.cloud.aiplatform.v1.CreateTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L840}
   /// [google.cloud.aiplatform.v1.TensorboardTimeSeries]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_time_series.proto#L32}
   ///
   // clang-format on
@@ -1425,7 +1425,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L839}
+  /// [google.cloud.aiplatform.v1.CreateTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L840}
   /// [google.cloud.aiplatform.v1.TensorboardTimeSeries]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_time_series.proto#L32}
   ///
   // clang-format on
@@ -1456,7 +1456,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L865}
+  /// [google.cloud.aiplatform.v1.GetTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L866}
   /// [google.cloud.aiplatform.v1.TensorboardTimeSeries]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_time_series.proto#L32}
   ///
   // clang-format on
@@ -1487,7 +1487,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L865}
+  /// [google.cloud.aiplatform.v1.GetTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L866}
   /// [google.cloud.aiplatform.v1.TensorboardTimeSeries]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_time_series.proto#L32}
   ///
   // clang-format on
@@ -1526,7 +1526,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.TensorboardTimeSeries]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_time_series.proto#L32}
-  /// [google.cloud.aiplatform.v1.UpdateTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L930}
+  /// [google.cloud.aiplatform.v1.UpdateTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L931}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
@@ -1560,7 +1560,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.TensorboardTimeSeries]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_time_series.proto#L32}
-  /// [google.cloud.aiplatform.v1.UpdateTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L930}
+  /// [google.cloud.aiplatform.v1.UpdateTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L931}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
@@ -1599,7 +1599,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L879}
+  /// [google.cloud.aiplatform.v1.ListTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L880}
   /// [google.cloud.aiplatform.v1.TensorboardTimeSeries]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_time_series.proto#L32}
   ///
   // clang-format on
@@ -1639,7 +1639,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L879}
+  /// [google.cloud.aiplatform.v1.ListTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L880}
   /// [google.cloud.aiplatform.v1.TensorboardTimeSeries]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_time_series.proto#L32}
   ///
   // clang-format on
@@ -1676,7 +1676,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L950}
+  /// [google.cloud.aiplatform.v1.DeleteTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L951}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -1713,7 +1713,7 @@ class TensorboardServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L950}
+  /// [google.cloud.aiplatform.v1.DeleteTensorboardTimeSeriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L951}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -1750,8 +1750,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchReadTensorboardTimeSeriesDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L964}
-  /// [google.cloud.aiplatform.v1.BatchReadTensorboardTimeSeriesDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L991}
+  /// [google.cloud.aiplatform.v1.BatchReadTensorboardTimeSeriesDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L965}
+  /// [google.cloud.aiplatform.v1.BatchReadTensorboardTimeSeriesDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L992}
   ///
   // clang-format on
   StatusOr<
@@ -1787,8 +1787,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchReadTensorboardTimeSeriesDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L964}
-  /// [google.cloud.aiplatform.v1.BatchReadTensorboardTimeSeriesDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L991}
+  /// [google.cloud.aiplatform.v1.BatchReadTensorboardTimeSeriesDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L965}
+  /// [google.cloud.aiplatform.v1.BatchReadTensorboardTimeSeriesDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L992}
   ///
   // clang-format on
   StatusOr<
@@ -1823,8 +1823,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ReadTensorboardTimeSeriesDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L998}
-  /// [google.cloud.aiplatform.v1.ReadTensorboardTimeSeriesDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1021}
+  /// [google.cloud.aiplatform.v1.ReadTensorboardTimeSeriesDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L999}
+  /// [google.cloud.aiplatform.v1.ReadTensorboardTimeSeriesDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1022}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
@@ -1859,8 +1859,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ReadTensorboardTimeSeriesDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L998}
-  /// [google.cloud.aiplatform.v1.ReadTensorboardTimeSeriesDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1021}
+  /// [google.cloud.aiplatform.v1.ReadTensorboardTimeSeriesDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L999}
+  /// [google.cloud.aiplatform.v1.ReadTensorboardTimeSeriesDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1022}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
@@ -1893,8 +1893,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ReadTensorboardBlobDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L702}
-  /// [google.cloud.aiplatform.v1.ReadTensorboardBlobDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L719}
+  /// [google.cloud.aiplatform.v1.ReadTensorboardBlobDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L703}
+  /// [google.cloud.aiplatform.v1.ReadTensorboardBlobDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L720}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>
@@ -1927,8 +1927,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ReadTensorboardBlobDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L702}
-  /// [google.cloud.aiplatform.v1.ReadTensorboardBlobDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L719}
+  /// [google.cloud.aiplatform.v1.ReadTensorboardBlobDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L703}
+  /// [google.cloud.aiplatform.v1.ReadTensorboardBlobDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L720}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>
@@ -1960,8 +1960,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.WriteTensorboardExperimentDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1028}
-  /// [google.cloud.aiplatform.v1.WriteTensorboardExperimentDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1046}
+  /// [google.cloud.aiplatform.v1.WriteTensorboardExperimentDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1029}
+  /// [google.cloud.aiplatform.v1.WriteTensorboardExperimentDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1047}
   ///
   // clang-format on
   StatusOr<
@@ -1998,8 +1998,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.WriteTensorboardExperimentDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1028}
-  /// [google.cloud.aiplatform.v1.WriteTensorboardExperimentDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1046}
+  /// [google.cloud.aiplatform.v1.WriteTensorboardExperimentDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1029}
+  /// [google.cloud.aiplatform.v1.WriteTensorboardExperimentDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1047}
   ///
   // clang-format on
   StatusOr<
@@ -2036,8 +2036,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.WriteTensorboardRunDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1050}
-  /// [google.cloud.aiplatform.v1.WriteTensorboardRunDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1072}
+  /// [google.cloud.aiplatform.v1.WriteTensorboardRunDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1051}
+  /// [google.cloud.aiplatform.v1.WriteTensorboardRunDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1073}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
@@ -2072,8 +2072,8 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.WriteTensorboardRunDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1050}
-  /// [google.cloud.aiplatform.v1.WriteTensorboardRunDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1072}
+  /// [google.cloud.aiplatform.v1.WriteTensorboardRunDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1051}
+  /// [google.cloud.aiplatform.v1.WriteTensorboardRunDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1073}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
@@ -2113,7 +2113,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ExportTensorboardTimeSeriesDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1076}
+  /// [google.cloud.aiplatform.v1.ExportTensorboardTimeSeriesDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1077}
   /// [google.cloud.aiplatform.v1.TimeSeriesDataPoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_data.proto#L51}
   ///
   // clang-format on
@@ -2155,7 +2155,7 @@ class TensorboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ExportTensorboardTimeSeriesDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1076}
+  /// [google.cloud.aiplatform.v1.ExportTensorboardTimeSeriesDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1077}
   /// [google.cloud.aiplatform.v1.TimeSeriesDataPoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_data.proto#L51}
   ///
   // clang-format on

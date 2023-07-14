@@ -167,6 +167,21 @@ DatasetServiceLogging::ListSavedQueries(
       context, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DatasetServiceLogging::AsyncDeleteSavedQuery(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&
+                 request) {
+        return child_->AsyncDeleteSavedQuery(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DatasetServiceLogging::GetAnnotationSpec(
     grpc::ClientContext& context,

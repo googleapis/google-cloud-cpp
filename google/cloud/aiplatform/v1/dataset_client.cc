@@ -198,6 +198,22 @@ DatasetServiceClient::ListSavedQueries(
   return connection_->ListSavedQueries(std::move(request));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceClient::DeleteSavedQuery(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteSavedQueryRequest request;
+  request.set_name(name);
+  return connection_->DeleteSavedQuery(request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceClient::DeleteSavedQuery(
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSavedQuery(request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DatasetServiceClient::GetAnnotationSpec(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

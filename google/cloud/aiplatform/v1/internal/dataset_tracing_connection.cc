@@ -132,6 +132,15 @@ DatasetServiceTracingConnection::ListSavedQueries(
                                                  std::move(sr));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceTracingConnection::DeleteSavedQuery(
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::DeleteSavedQuery");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteSavedQuery(request));
+}
+
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DatasetServiceTracingConnection::GetAnnotationSpec(
     google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) {

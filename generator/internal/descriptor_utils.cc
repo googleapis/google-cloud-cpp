@@ -405,10 +405,6 @@ ParameterCommentSubstitution substitutions[] = {
     {"fields. Some eligible fields are:", "fields."},
     {" The allowable fields to\n update are:", ""},
 
-    // This appears in aiplatform/v1/featurestore_service.proto
-    {R"""(`projects/{project}/locations/{location}'`)""",
-     R"""(`projects/{project}/locations/{location}`)"""},
-
     // These appear in google/api/servicemanagement/v1/servicemanager.proto
     // Doxygen gets confused by single quotes in code spans:
     //    https://www.doxygen.nl/manual/markdown.html#mddox_code_spans

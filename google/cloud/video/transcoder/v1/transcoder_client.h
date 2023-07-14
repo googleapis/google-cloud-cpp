@@ -366,7 +366,7 @@ class TranscoderServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.transcoder.v1.CreateJobTemplateRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L194}
-  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   ///
   // clang-format on
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
@@ -399,7 +399,7 @@ class TranscoderServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.transcoder.v1.CreateJobTemplateRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L194}
-  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   ///
   // clang-format on
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
@@ -436,7 +436,7 @@ class TranscoderServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   /// [google.cloud.video.transcoder.v1.ListJobTemplatesRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L216}
   ///
   // clang-format on
@@ -476,7 +476,7 @@ class TranscoderServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   /// [google.cloud.video.transcoder.v1.ListJobTemplatesRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L216}
   ///
   // clang-format on
@@ -507,7 +507,7 @@ class TranscoderServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.transcoder.v1.GetJobTemplateRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L243}
-  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   ///
   // clang-format on
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
@@ -538,7 +538,7 @@ class TranscoderServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.transcoder.v1.GetJobTemplateRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L243}
-  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   ///
   // clang-format on
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
