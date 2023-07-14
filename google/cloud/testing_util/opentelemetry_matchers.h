@@ -204,7 +204,7 @@ class SpanCatcher {
  * Calling this method will install an in-memory trace exporter. It returns a
  * type that provides access to captured spans.
  *
- * To extract the spans, call `InMemorySpanData::GetSpans()`. Note that each
+ * To extract the spans, call `SpanCatcher::GetSpans()`. Note that each
  * call to `GetSpans()` will clear the previously collected spans.
  *
  * Also note that this sets the global trace exporter. Thus it is important that
