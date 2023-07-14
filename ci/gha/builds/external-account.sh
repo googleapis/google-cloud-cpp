@@ -30,10 +30,10 @@ mapfile -t ctest_args < <(ctest::common_args)
 # The External Accounts feature is sometimes known as Workload Identity
 # Federation, and sometimes BYOID (Bring Your Own ID).
 features=(
-    # Enable the smallest set of libraries libraries that will compile gRPC and
-    # REST-based authentication components
-    storage
-    iam
+  # Enable the smallest set of libraries libraries that will compile gRPC and
+  # REST-based authentication components
+  storage
+  iam
 )
 enable=$(printf ";%s" "${features[@]}")
 enable=${enable:1}
@@ -41,14 +41,14 @@ enable=${enable:1}
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 CMake configuration done in %R seconds"
 time {
-    # Always run //google/cloud:status_test in case the list of targets has
-    # no unit tests.
-    io::run cmake "${args[@]}" "${vcpkg_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE="${enable}"
+  # Always run //google/cloud:status_test in case the list of targets has
+  # no unit tests.
+  io::run cmake "${args[@]}" "${vcpkg_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE="${enable}"
 }
 
 TIMEFORMAT="==> 🕑 CMake build done in %R seconds"
 time {
-    # Always run //google/cloud:status_test in case the list of targets has
-    # no unit tests.
-    io::run cmake --build cmake-out --target common_internal_external_account_integration_test
+  # Always run //google/cloud:status_test in case the list of targets has
+  # no unit tests.
+  io::run cmake --build cmake-out --target common_internal_external_account_integration_test
 }
