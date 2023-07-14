@@ -241,6 +241,7 @@ TEST(ThroughputOptions, ReadSize) {
 TEST(ThroughputOptions, Validate) {
   EXPECT_FALSE(ParseThroughputOptions({"self-test"}));
   EXPECT_FALSE(ParseThroughputOptions({"self-test", "unused-1", "unused-2"}));
+  EXPECT_FALSE(ParseThroughputOptions({"self-test", "--unknown-option"}));
   EXPECT_FALSE(ParseThroughputOptions({
       "self-test",
       "--region=r",
