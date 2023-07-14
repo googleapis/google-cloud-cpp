@@ -44,3 +44,10 @@ jobs:
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
+  macos:
+    name: macOS
+    needs: [pre-flight]
+    uses: ./.github/workflows/macos.yml
+    with:
+      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+    secrets: inherit
