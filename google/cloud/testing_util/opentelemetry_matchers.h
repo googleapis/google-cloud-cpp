@@ -26,6 +26,7 @@
 #include <opentelemetry/trace/span.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/tracer.h>
+#include <opentelemetry/trace/tracer_provider.h>
 #include <iosfwd>
 #include <memory>
 #include <string>
@@ -184,22 +185,32 @@ template <typename... Args>
   return SpanEventsAreImpl(::testing::ElementsAre(matchers...));
 }
 
+class SpanCatcher {
+ public:
+  SpanCatcher();
+  ~SpanCatcher();
+
+  std::vector<std::unique_ptr<opentelemetry::sdk::trace::SpanData>> GetSpans();
+
+ private:
+  std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData> span_data_;
+  opentelemetry::nostd::shared_ptr<opentelemetry::trace::TracerProvider>
+      previous_;
+};
+
 /**
  * Provides access to created spans.
  *
  * Calling this method will install an in-memory trace exporter. It returns a
  * type that provides access to captured spans.
  *
- * To extract the spans, call `InMemorySpanData::GetSpans()`. Note that each
+ * To extract the spans, call `SpanCatcher::GetSpans()`. Note that each
  * call to `GetSpans()` will clear the previously collected spans.
  *
- * Also note that this sets the global trace exporter, which will persist from
- * one test in a test fixture to the next. Thus it is important that:
- * 1. a new exporter is installed for each test
- * 2. the tests within a fixture do not execute in parallel
+ * Also note that this sets the global trace exporter. Thus it is important that
+ * the tests within a fixture do not execute in parallel.
  */
-std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData>
-InstallSpanCatcher();
+std::shared_ptr<SpanCatcher> InstallSpanCatcher();
 
 class MockTextMapPropagator
     : public opentelemetry::context::propagation::TextMapPropagator {
