@@ -6,7 +6,7 @@ on:
   # Start these builds on pushes (think "after the merge") too. Normally there
   # are no `ci-gha**` branches in our repository. The contributors to the repo
   # can create such branches when testing or troubleshooting builds. In such
-  # branch we can disable builds (to speed up the testing) or add new ones,
+  # branches we can disable builds (to speed up the testing) or add new ones,
   # without impacting the rest of the team.
   push:
     branches: [ 'main', 'v[2-9]**', 'ci-gha**' ]

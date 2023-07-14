@@ -24,9 +24,9 @@ mapfile -t args < <(cmake::common_args)
 mapfile -t vcpkg_args < <(cmake::vcpkg_args)
 mapfile -t ctest_args < <(ctest::common_args)
 
-# This is a build to test External Accounts, this is a feature to use accounts
+# This is a build to test External Accounts. This is a feature to use accounts
 # from providers other than Google to access Google services. In this case we
-# using "GitHub Actions" as the provider.
+# are using "GitHub Actions" as the provider.
 # The External Accounts feature is sometimes known as Workload Identity
 # Federation, and sometimes BYOID (Bring Your Own ID).
 features=(
@@ -41,14 +41,11 @@ enable=${enable:1}
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 CMake configuration done in %R seconds"
 time {
-  # Always run //google/cloud:status_test in case the list of targets has
-  # no unit tests.
   io::run cmake "${args[@]}" "${vcpkg_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE="${enable}"
 }
 
 TIMEFORMAT="==> 🕑 CMake build done in %R seconds"
 time {
-  # Always run //google/cloud:status_test in case the list of targets has
-  # no unit tests.
+  # Compile only the integration test we need for this build
   io::run cmake --build cmake-out --target common_internal_external_account_integration_test
 }
