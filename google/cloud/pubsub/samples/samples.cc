@@ -442,7 +442,7 @@ void CreateCloudStorageSubscription(
         pubsub::Subscription(project_id, std::move(subscription_id)),
         pubsub::SubscriptionBuilder{}.set_cloud_storage_config(
             pubsub::CloudStorageConfigBuilder{}.set_bucket(bucket)));
-    if (!sub.ok()) {
+    if (!sub) {
       if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
         std::cout << "The subscription already exists\n";
         return;
