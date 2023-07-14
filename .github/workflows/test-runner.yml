@@ -51,3 +51,10 @@ jobs:
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
+  windows:
+    name: Windows
+    needs: [pre-flight]
+    uses: ./.github/workflows/windows.yml
+    with:
+      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+    secrets: inherit
