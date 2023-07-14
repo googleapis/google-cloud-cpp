@@ -86,7 +86,7 @@ function bazel::prefetch() {
   )
   local os_rules
   mapfile -t os_rules < <(os::prefetch)
-  "ci/retry-command.sh" 3 120 bazelisk "${args[@]}" fetch  "${common_rules[@]}" "${os_rules[@]}"
+  "ci/retry-command.sh" 3 120 bazelisk "${args[@]}" fetch "${common_rules[@]}" "${os_rules[@]}"
 }
 
 TIMEFORMAT="==> 🕑 prefetching done in %R seconds"
