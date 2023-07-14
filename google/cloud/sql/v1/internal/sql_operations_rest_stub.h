@@ -43,6 +43,10 @@ class SqlOperationsServiceRestStub {
   virtual StatusOr<google::cloud::sql::v1::OperationsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlOperationsListRequest const& request) = 0;
+
+  virtual Status Cancel(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlOperationsCancelRequest const& request) = 0;
 };
 
 class DefaultSqlOperationsServiceRestStub
@@ -61,6 +65,10 @@ class DefaultSqlOperationsServiceRestStub
   StatusOr<google::cloud::sql::v1::OperationsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlOperationsListRequest const& request) override;
+
+  Status Cancel(google::cloud::rest_internal::RestContext& rest_context,
+                google::cloud::sql::v1::SqlOperationsCancelRequest const&
+                    request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

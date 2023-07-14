@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_CREDENTIALS_H
 
-#include "google/cloud/internal/access_token.h"
+#include "google/cloud/access_token.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -55,7 +55,7 @@ class Credentials {
    *     `std::chrono::system_clock::now()`. In tests, other value may be
    *     considered.
    */
-  virtual StatusOr<internal::AccessToken> GetToken(
+  virtual StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) = 0;
 
   /**

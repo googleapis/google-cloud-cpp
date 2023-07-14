@@ -134,7 +134,7 @@ class DataprocMetastoreFederationClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.metastore.v1.Federation]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L112}
-  /// [google.cloud.metastore.v1.ListFederationsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L210}
+  /// [google.cloud.metastore.v1.ListFederationsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L213}
   ///
   // clang-format on
   StreamRange<google::cloud::metastore::v1::Federation> ListFederations(
@@ -174,7 +174,7 @@ class DataprocMetastoreFederationClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.metastore.v1.Federation]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L112}
-  /// [google.cloud.metastore.v1.ListFederationsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L210}
+  /// [google.cloud.metastore.v1.ListFederationsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L213}
   ///
   // clang-format on
   StreamRange<google::cloud::metastore::v1::Federation> ListFederations(
@@ -204,7 +204,7 @@ class DataprocMetastoreFederationClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.metastore.v1.Federation]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L112}
-  /// [google.cloud.metastore.v1.GetFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L260}
+  /// [google.cloud.metastore.v1.GetFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L263}
   ///
   // clang-format on
   StatusOr<google::cloud::metastore::v1::Federation> GetFederation(
@@ -235,7 +235,7 @@ class DataprocMetastoreFederationClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.metastore.v1.Federation]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L112}
-  /// [google.cloud.metastore.v1.GetFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L260}
+  /// [google.cloud.metastore.v1.GetFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L263}
   ///
   // clang-format on
   StatusOr<google::cloud::metastore::v1::Federation> GetFederation(
@@ -279,7 +279,7 @@ class DataprocMetastoreFederationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.CreateFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L274}
+  /// [google.cloud.metastore.v1.CreateFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L277}
   /// [google.cloud.metastore.v1.Federation]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L112}
   ///
   // clang-format on
@@ -318,7 +318,7 @@ class DataprocMetastoreFederationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.CreateFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L274}
+  /// [google.cloud.metastore.v1.CreateFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L277}
   /// [google.cloud.metastore.v1.Federation]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L112}
   ///
   // clang-format on
@@ -360,7 +360,7 @@ class DataprocMetastoreFederationClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.metastore.v1.Federation]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L112}
-  /// [google.cloud.metastore.v1.UpdateFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L315}
+  /// [google.cloud.metastore.v1.UpdateFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L318}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Federation>> UpdateFederation(
@@ -398,7 +398,7 @@ class DataprocMetastoreFederationClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.metastore.v1.Federation]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L112}
-  /// [google.cloud.metastore.v1.UpdateFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L315}
+  /// [google.cloud.metastore.v1.UpdateFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L318}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Federation>> UpdateFederation(
@@ -433,8 +433,8 @@ class DataprocMetastoreFederationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.DeleteFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L346}
-  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1383}
+  /// [google.cloud.metastore.v1.DeleteFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L349}
+  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1444}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -470,8 +470,8 @@ class DataprocMetastoreFederationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.metastore.v1.DeleteFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L346}
-  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1383}
+  /// [google.cloud.metastore.v1.DeleteFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L349}
+  /// [google.cloud.metastore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/metastore/v1/metastore.proto#L1444}
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>

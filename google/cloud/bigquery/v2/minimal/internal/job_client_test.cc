@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_client.h"
 #include "google/cloud/bigquery/v2/minimal/mocks/mock_job_connection.h"
+#include "google/cloud/bigquery/v2/minimal/testing/job_query_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/job_test_utils.h"
 #include "google/cloud/mocks/mock_stream_range.h"
 #include "google/cloud/internal/make_status.h"
@@ -29,6 +30,8 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryRequest;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResults;
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
@@ -124,6 +127,78 @@ TEST(JobClientTest, InsertJobFailure) {
   JobClient job_client(mock_job_connection);
 
   auto result = job_client.InsertJob(InsertJobRequest());
+  EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("bad-request-error")));
+}
+
+TEST(JobClientTest, CancelJobSuccess) {
+  auto job = MakePartialJob();
+  auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
+
+  EXPECT_CALL(*mock_job_connection, CancelJob)
+      .WillOnce([&](CancelJobRequest const& request) {
+        EXPECT_EQ("p123", request.project_id());
+        EXPECT_EQ("j123", request.job_id());
+        return make_status_or(job);
+      });
+
+  JobClient job_client(mock_job_connection);
+
+  CancelJobRequest request("p123", "j123");
+
+  auto actual_job = job_client.CancelJob(request);
+
+  ASSERT_STATUS_OK(actual_job);
+  bigquery_v2_minimal_testing::AssertEqualsPartial(job, *actual_job);
+}
+
+TEST(JobClientTest, CancelJobFailure) {
+  auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
+
+  EXPECT_CALL(*mock_job_connection, CancelJob)
+      .WillOnce(Return(rest_internal::AsStatus(HttpStatusCode::kBadRequest,
+                                               "bad-request-error")));
+
+  JobClient job_client(mock_job_connection);
+
+  auto result = job_client.CancelJob(CancelJobRequest());
+  EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("bad-request-error")));
+}
+
+TEST(JobClientTest, QuerySuccess) {
+  auto query_results = MakeQueryResults();
+  auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
+
+  EXPECT_CALL(*mock_job_connection, Query)
+      .WillOnce([&](PostQueryRequest const& request) {
+        EXPECT_EQ("p123", request.project_id());
+        return make_status_or(query_results);
+      });
+
+  JobClient job_client(mock_job_connection);
+
+  PostQueryRequest job_request;
+  job_request.set_project_id("p123");
+  job_request.set_query_request(MakeQueryRequest());
+
+  auto actual_query_results = job_client.Query(job_request);
+
+  ASSERT_STATUS_OK(actual_query_results);
+  bigquery_v2_minimal_testing::AssertEquals(query_results,
+                                            *actual_query_results);
+}
+
+TEST(JobClientTest, QueryFailure) {
+  auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
+
+  EXPECT_CALL(*mock_job_connection, Query)
+      .WillOnce(Return(rest_internal::AsStatus(HttpStatusCode::kBadRequest,
+                                               "bad-request-error")));
+
+  JobClient job_client(mock_job_connection);
+
+  auto result = job_client.Query(PostQueryRequest());
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("bad-request-error")));
 }

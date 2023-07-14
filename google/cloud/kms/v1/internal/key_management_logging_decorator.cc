@@ -295,6 +295,30 @@ KeyManagementServiceLogging::Decrypt(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::kms::v1::RawEncryptResponse>
+KeyManagementServiceLogging::RawEncrypt(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::RawEncryptRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::kms::v1::RawEncryptRequest const& request) {
+        return child_->RawEncrypt(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::kms::v1::RawDecryptResponse>
+KeyManagementServiceLogging::RawDecrypt(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::RawDecryptRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::kms::v1::RawDecryptRequest const& request) {
+        return child_->RawDecrypt(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
 KeyManagementServiceLogging::AsymmetricSign(
     grpc::ClientContext& context,

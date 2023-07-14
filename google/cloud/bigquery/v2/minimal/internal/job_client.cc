@@ -44,6 +44,18 @@ StatusOr<Job> JobClient::InsertJob(InsertJobRequest const& request,
   return connection_->InsertJob(request);
 }
 
+StatusOr<Job> JobClient::CancelJob(CancelJobRequest const& request,
+                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelJob(request);
+}
+
+StatusOr<QueryResults> JobClient::Query(PostQueryRequest const& request,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Query(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

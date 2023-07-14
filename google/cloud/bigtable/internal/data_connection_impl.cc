@@ -178,7 +178,7 @@ bigtable::RowReader DataConnectionImpl::ReadRowsFull(
   auto impl = std::make_shared<DefaultRowReader>(
       stub_, std::move(params.app_profile_id), std::move(params.table_name),
       std::move(params.row_set), params.rows_limit, std::move(params.filter),
-      retry_policy(), backoff_policy());
+      params.reverse, retry_policy(), backoff_policy());
   return MakeRowReader(std::move(impl));
 }
 
@@ -374,10 +374,11 @@ void DataConnectionImpl::AsyncReadRows(
     std::function<future<bool>(bigtable::Row)> on_row,
     std::function<void(Status)> on_finish, bigtable::RowSet row_set,
     std::int64_t rows_limit, bigtable::Filter filter) {
+  auto reverse = internal::CurrentOptions().get<bigtable::ReverseScanOption>();
   bigtable_internal::AsyncRowReader::Create(
       background_->cq(), stub_, app_profile_id(), table_name, std::move(on_row),
       std::move(on_finish), std::move(row_set), rows_limit, std::move(filter),
-      retry_policy(), backoff_policy());
+      reverse, retry_policy(), backoff_policy());
 }
 
 future<StatusOr<std::pair<bool, bigtable::Row>>>

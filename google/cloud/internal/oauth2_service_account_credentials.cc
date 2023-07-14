@@ -142,7 +142,7 @@ CreateServiceAccountRefreshPayload(ServiceAccountCredentialsInfo const& info,
           {"assertion", MakeJWTAssertion(header, payload, info.private_key)}};
 }
 
-StatusOr<internal::AccessToken> ParseServiceAccountRefreshResponse(
+StatusOr<AccessToken> ParseServiceAccountRefreshResponse(
     rest_internal::RestResponse& response,
     std::chrono::system_clock::time_point now) {
   auto status_code = response.StatusCode();
@@ -161,8 +161,7 @@ StatusOr<internal::AccessToken> ParseServiceAccountRefreshResponse(
   }
 
   auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
-  return internal::AccessToken{access_token.value("access_token", ""),
-                               now + expires_in};
+  return AccessToken{access_token.value("access_token", ""), now + expires_in};
 }
 
 StatusOr<std::string> MakeSelfSignedJWT(
@@ -207,7 +206,7 @@ ServiceAccountCredentials::ServiceAccountCredentials(
               info_.token_uri))),
       client_factory_(std::move(client_factory)) {}
 
-StatusOr<internal::AccessToken> ServiceAccountCredentials::GetToken(
+StatusOr<AccessToken> ServiceAccountCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
   if (UseOAuth()) return GetTokenOAuth(tp);
   return GetTokenSelfSigned(tp);
@@ -349,7 +348,7 @@ bool ServiceAccountCredentials::UseOAuth() {
   return ServiceAccountUseOAuth(info_);
 }
 
-StatusOr<internal::AccessToken> ServiceAccountCredentials::GetTokenOAuth(
+StatusOr<AccessToken> ServiceAccountCredentials::GetTokenOAuth(
     std::chrono::system_clock::time_point tp) const {
   auto client = client_factory_(options_);
   rest_internal::RestRequest request;
@@ -362,11 +361,11 @@ StatusOr<internal::AccessToken> ServiceAccountCredentials::GetTokenOAuth(
   return ParseServiceAccountRefreshResponse(**response, tp);
 }
 
-StatusOr<internal::AccessToken> ServiceAccountCredentials::GetTokenSelfSigned(
+StatusOr<AccessToken> ServiceAccountCredentials::GetTokenSelfSigned(
     std::chrono::system_clock::time_point tp) const {
   auto token = MakeSelfSignedJWT(info_, tp);
   if (!token) return std::move(token).status();
-  return internal::AccessToken{*token, tp + GoogleOAuthAccessTokenLifetime()};
+  return AccessToken{*token, tp + GoogleOAuthAccessTokenLifetime()};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

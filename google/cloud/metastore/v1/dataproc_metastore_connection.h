@@ -23,6 +23,7 @@
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -37,17 +38,135 @@ namespace cloud {
 namespace metastore_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using DataprocMetastoreRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        metastore_v1_internal::DataprocMetastoreRetryTraits>;
+/// The retry policy for `DataprocMetastoreConnection`.
+class DataprocMetastoreRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<DataprocMetastoreRetryPolicy> clone() const = 0;
+};
 
-using DataprocMetastoreLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        metastore_v1_internal::DataprocMetastoreRetryTraits>;
+/**
+ * A retry policy for `DataprocMetastoreConnection` based on counting errors.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - More than a prescribed number of transient failures is detected.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class DataprocMetastoreLimitedErrorCountRetryPolicy
+    : public DataprocMetastoreRetryPolicy {
+ public:
+  /**
+   * Create an instance that tolerates up to @p maximum_failures transient
+   * errors.
+   *
+   * @note Disable the retry loop by providing an instance of this policy with
+   *     @p maximum_failures == 0.
+   */
+  explicit DataprocMetastoreLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using DataprocMetastoreLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        metastore_v1_internal::DataprocMetastoreRetryTraits>;
+  DataprocMetastoreLimitedErrorCountRetryPolicy(
+      DataprocMetastoreLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : DataprocMetastoreLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+  DataprocMetastoreLimitedErrorCountRetryPolicy(
+      DataprocMetastoreLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : DataprocMetastoreLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<DataprocMetastoreRetryPolicy> clone() const override {
+    return std::make_unique<DataprocMetastoreLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = DataprocMetastoreRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      metastore_v1_internal::DataprocMetastoreRetryTraits>
+      impl_;
+};
+
+/**
+ * A retry policy for `DataprocMetastoreConnection` based on elapsed time.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - The elapsed time in the retry loop exceeds a prescribed duration.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class DataprocMetastoreLimitedTimeRetryPolicy
+    : public DataprocMetastoreRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the underlying
+   *     arithmetic type used to store the number of ticks. For our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`. For our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires.
+   *     While the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit DataprocMetastoreLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  DataprocMetastoreLimitedTimeRetryPolicy(
+      DataprocMetastoreLimitedTimeRetryPolicy&& rhs) noexcept
+      : DataprocMetastoreLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataprocMetastoreLimitedTimeRetryPolicy(
+      DataprocMetastoreLimitedTimeRetryPolicy const& rhs) noexcept
+      : DataprocMetastoreLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<DataprocMetastoreRetryPolicy> clone() const override {
+    return std::make_unique<DataprocMetastoreLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = DataprocMetastoreRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      metastore_v1_internal::DataprocMetastoreRetryTraits>
+      impl_;
+};
 
 /**
  * The `DataprocMetastoreConnection` object for `DataprocMetastoreClient`.
@@ -119,6 +238,21 @@ class DataprocMetastoreConnection {
   virtual future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteBackup(
       google::cloud::metastore::v1::DeleteBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
+  QueryMetadata(
+      google::cloud::metastore::v1::QueryMetadataRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
+  MoveTableToDatabase(
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
+  AlterMetadataResourceLocation(
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+          request);
 };
 
 /**

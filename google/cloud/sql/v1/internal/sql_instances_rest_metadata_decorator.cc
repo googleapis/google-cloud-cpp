@@ -84,6 +84,14 @@ SqlInstancesServiceRestMetadata::Failover(
   return child_->Failover(rest_context, request);
 }
 
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestMetadata::Reencrypt(
+    rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
+  SetMetadata(rest_context);
+  return child_->Reencrypt(rest_context, request);
+}
+
 StatusOr<google::cloud::sql::v1::DatabaseInstance>
 SqlInstancesServiceRestMetadata::Get(
     rest_internal::RestContext& rest_context,
@@ -238,6 +246,33 @@ SqlInstancesServiceRestMetadata::StartExternalSync(
         request) {
   SetMetadata(rest_context);
   return child_->StartExternalSync(rest_context, request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestMetadata::PerformDiskShrink(
+    rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+        request) {
+  SetMetadata(rest_context);
+  return child_->PerformDiskShrink(rest_context, request);
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
+SqlInstancesServiceRestMetadata::GetDiskShrinkConfig(
+    rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+        request) {
+  SetMetadata(rest_context);
+  return child_->GetDiskShrinkConfig(rest_context, request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestMetadata::ResetReplicaSize(
+    rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
+        request) {
+  SetMetadata(rest_context);
+  return child_->ResetReplicaSize(rest_context, request);
 }
 
 void SqlInstancesServiceRestMetadata::SetMetadata(

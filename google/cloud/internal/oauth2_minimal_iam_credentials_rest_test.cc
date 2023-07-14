@@ -48,7 +48,7 @@ using ::testing::Return;
 
 class MockCredentials : public google::cloud::oauth2_internal::Credentials {
  public:
-  MOCK_METHOD(StatusOr<internal::AccessToken>, GetToken,
+  MOCK_METHOD(StatusOr<AccessToken>, GetToken,
               (std::chrono::system_clock::time_point), (override));
 };
 
@@ -248,7 +248,7 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
 
   auto mock_credentials = std::make_shared<MockCredentials>();
   EXPECT_CALL(*mock_credentials, GetToken).WillOnce([lifetime](auto tp) {
-    return internal::AccessToken{"test-token", tp + lifetime};
+    return AccessToken{"test-token", tp + lifetime};
   });
 
   auto stub =

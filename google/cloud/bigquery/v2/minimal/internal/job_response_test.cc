@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
+#include "google/cloud/bigquery/v2/minimal/testing/job_query_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/job_test_utils.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -24,6 +25,8 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::MakeJob;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResponsePayload;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResults;
 
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::StatusIs;
@@ -1955,6 +1958,173 @@ TEST(CancelJobResponseTest, DebugString) {
         metadata_cache_statistics {
         }
       }
+    }
+  }
+})");
+}
+
+TEST(QueryResponseTest, Success) {
+  BigQueryHttpResponse http_response;
+  http_response.payload = MakeQueryResponsePayload();
+  auto const response = QueryResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(response);
+  EXPECT_FALSE(response->http_response.payload.empty());
+
+  auto expected_equery_results = MakeQueryResults();
+  auto actual_query_results = response->query_results;
+
+  bigquery_v2_minimal_testing::AssertEquals(expected_equery_results,
+                                            actual_query_results);
+}
+
+TEST(QueryResponseTest, EmptyPayload) {
+  BigQueryHttpResponse http_response;
+  auto const response = QueryResponse::BuildFromHttpResponse(http_response);
+  EXPECT_THAT(response, StatusIs(StatusCode::kInternal,
+                                 HasSubstr("Empty payload in HTTP response")));
+}
+
+TEST(QueryResponseTest, InvalidJson) {
+  BigQueryHttpResponse http_response;
+  http_response.payload = "Help! I am not json";
+  auto const response = QueryResponse::BuildFromHttpResponse(http_response);
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("Error parsing Json from response payload")));
+}
+
+TEST(QueryResponseTest, DebugString) {
+  BigQueryHttpResponse http_response;
+  http_response.payload = MakeQueryResponsePayload();
+  auto const response = QueryResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(response);
+
+  EXPECT_EQ(
+      response->DebugString("QueryResponse", TracingOptions{}),
+      R"(QueryResponse {)"
+      R"( http_response {)"
+      R"( status_code: 200)"
+      R"( payload: REDACTED)"
+      R"( })"
+      R"( query_results {)"
+      R"( kind: "query-kind")"
+      R"( page_token: "np123")"
+      R"( total_rows: 1000)"
+      R"( total_bytes_processed: 1000)"
+      R"( num_dml_affected_rows: 5)"
+      R"( job_complete: true)"
+      R"( cache_hit: true)"
+      R"( rows { fields {)"
+      R"( key: "bool-key")"
+      R"( value { value_kind: true } })"
+      R"( fields { key: "double-key")"
+      R"( value { value_kind: 3.4 })"
+      R"( } fields { key: "string-key" value { value_kind: "val3" } } })"
+      R"( schema { fields {)"
+      R"( name: "fname-1" type: "" mode: "fmode" description: "")"
+      R"( collation: "" default_value_expression: "" max_length: 0)"
+      R"( precision: 0 scale: 0 is_measure: true)"
+      R"( categories { } policy_tags { } data_classification_tags { })"
+      R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
+      R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
+      R"( session_info { session_id: "123" })"
+      R"( dml_stats { inserted_row_count: 10 deleted_row_count: 10 updated_row_count: 10 } } })");
+
+  EXPECT_EQ(
+      response->DebugString(
+          "QueryResponse",
+          TracingOptions{}.SetOptions("truncate_string_field_longer_than=7")),
+      R"(QueryResponse { http_response {)"
+      R"( status_code: 200 payload: REDACTED })"
+      R"( query_results { kind: "query-k...<truncated>...")"
+      R"( page_token: "np123" total_rows: 1000)"
+      R"( total_bytes_processed: 1000 num_dml_affected_rows: 5)"
+      R"( job_complete: true cache_hit: true)"
+      R"( rows { fields { key: "bool-key" value { value_kind: true } })"
+      R"( fields { key: "double-key" value { value_kind: 3.4 } })"
+      R"( fields { key: "string-key" value { value_kind: "val3" } } })"
+      R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
+      R"( description: "" collation: "" default_value_expression: "")"
+      R"( max_length: 0 precision: 0 scale: 0 is_measure: true categories { })"
+      R"( policy_tags { } data_classification_tags { })"
+      R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
+      R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
+      R"( session_info { session_id: "123" } dml_stats { inserted_row_count: 10)"
+      R"( deleted_row_count: 10 updated_row_count: 10 } } })");
+
+  EXPECT_EQ(response->DebugString("QueryResponse", TracingOptions{}.SetOptions(
+                                                       "single_line_mode=F")),
+            R"(QueryResponse {
+  http_response {
+    status_code: 200
+    payload: REDACTED
+  }
+  query_results {
+    kind: "query-kind"
+    page_token: "np123"
+    total_rows: 1000
+    total_bytes_processed: 1000
+    num_dml_affected_rows: 5
+    job_complete: true
+    cache_hit: true
+    rows {
+      fields {
+        key: "bool-key"
+        value {
+          value_kind: true
+        }
+      }
+      fields {
+        key: "double-key"
+        value {
+          value_kind: 3.4
+        }
+      }
+      fields {
+        key: "string-key"
+        value {
+          value_kind: "val3"
+        }
+      }
+    }
+    schema {
+      fields {
+        name: "fname-1"
+        type: ""
+        mode: "fmode"
+        description: ""
+        collation: ""
+        default_value_expression: ""
+        max_length: 0
+        precision: 0
+        scale: 0
+        is_measure: true
+        categories {
+        }
+        policy_tags {
+        }
+        data_classification_tags {
+        }
+        rounding_mode {
+          value: ""
+        }
+        range_element_type {
+          type: ""
+        }
+      }
+    }
+    job_reference {
+      project_id: "p123"
+      job_id: "j123"
+      location: "useast"
+    }
+    session_info {
+      session_id: "123"
+    }
+    dml_stats {
+      inserted_row_count: 10
+      deleted_row_count: 10
+      updated_row_count: 10
     }
   }
 })");

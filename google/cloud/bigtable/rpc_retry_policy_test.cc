@@ -212,14 +212,6 @@ TEST(CommonRetryPolicy, IsExhaustedBestEffort) {
   EXPECT_TRUE(common->IsExhausted());
 }
 
-/// @test Verify that certain known internal errors are retryable.
-TEST(TransientInternalError, RstStreamRetried) {
-  EXPECT_FALSE(internal::SafeGrpcRetry::IsTransientFailure(
-      Status(StatusCode::kInternal, "non-retryable")));
-  EXPECT_TRUE(internal::SafeGrpcRetry::IsTransientFailure(
-      Status(StatusCode::kInternal, "RST_STREAM")));
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

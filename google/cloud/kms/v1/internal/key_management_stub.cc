@@ -293,6 +293,30 @@ DefaultKeyManagementServiceStub::Decrypt(
   return response;
 }
 
+StatusOr<google::cloud::kms::v1::RawEncryptResponse>
+DefaultKeyManagementServiceStub::RawEncrypt(
+    grpc::ClientContext& client_context,
+    google::cloud::kms::v1::RawEncryptRequest const& request) {
+  google::cloud::kms::v1::RawEncryptResponse response;
+  auto status = grpc_stub_->RawEncrypt(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::kms::v1::RawDecryptResponse>
+DefaultKeyManagementServiceStub::RawDecrypt(
+    grpc::ClientContext& client_context,
+    google::cloud::kms::v1::RawDecryptRequest const& request) {
+  google::cloud::kms::v1::RawDecryptResponse response;
+  auto status = grpc_stub_->RawDecrypt(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
 DefaultKeyManagementServiceStub::AsymmetricSign(
     grpc::ClientContext& client_context,

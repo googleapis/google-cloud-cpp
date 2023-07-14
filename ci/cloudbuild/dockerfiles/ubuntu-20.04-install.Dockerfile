@@ -19,7 +19,6 @@ RUN apt-get update && \
     apt-get --no-install-recommends install -y \
         automake \
         build-essential \
-        ccache \
         clang \
         cmake \
         curl \
@@ -83,7 +82,7 @@ RUN curl -fsSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/benchmark
-RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
+RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE="Release" \
@@ -122,7 +121,7 @@ RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -146,7 +145,7 @@ RUN curl -fsSL https://github.com/c-ares/c-ares/archive/refs/tags/cares-1_17_1.t
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/re2
-RUN curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
+RUN curl -fsSL https://github.com/google/re2/archive/2023-07-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -157,7 +156,7 @@ RUN curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -198,3 +197,13 @@ WORKDIR /var/tmp/downloads
 RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
+
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache
+
+# Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
+RUN ldconfig /usr/local/lib*

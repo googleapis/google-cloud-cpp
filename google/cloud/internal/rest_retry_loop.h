@@ -16,12 +16,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_RETRY_LOOP_H
 
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/retry_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <chrono>
@@ -60,7 +61,7 @@ template <
     typename std::enable_if<google::cloud::internal::is_invocable<
                                 Functor, RestContext&, Request const&>::value,
                             int>::type = 0>
-auto RestRetryLoopImpl(std::unique_ptr<internal::RetryPolicy> retry_policy,
+auto RestRetryLoopImpl(std::unique_ptr<RetryPolicy> retry_policy,
                        std::unique_ptr<BackoffPolicy> backoff_policy,
                        Idempotency idempotency, Functor&& functor,
                        Request const& request, char const* location,
@@ -103,7 +104,7 @@ template <
     typename std::enable_if<google::cloud::internal::is_invocable<
                                 Functor, RestContext&, Request const&>::value,
                             int>::type = 0>
-auto RestRetryLoop(std::unique_ptr<internal::RetryPolicy> retry_policy,
+auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
                    std::unique_ptr<BackoffPolicy> backoff_policy,
                    Idempotency idempotency, Functor&& functor,
                    Request const& request, char const* location)

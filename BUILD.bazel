@@ -135,9 +135,24 @@ cc_library(
 )
 
 cc_library(
+    name = "oauth2",
+    testonly = True,
+    deps = [
+        "//google/cloud/oauth2:google_cloud_cpp_oauth2",
+    ],
+)
+
+cc_library(
     name = "experimental-opentelemetry",
     deps = [
         "//google/cloud/opentelemetry:google_cloud_cpp_opentelemetry",
+    ],
+)
+
+cc_library(
+    name = "experimental-bigquery-rest",
+    deps = [
+        "//google/cloud/bigquery:google_cloud_cpp_bigquery_rest",
     ],
 )
 

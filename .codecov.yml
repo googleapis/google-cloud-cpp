@@ -7,6 +7,15 @@ coverage:
 
 # Ignore generated code that lives with handcrafted code.
 ignore:
+  - "google/cloud/bigquery/analyticshub"
+  - "google/cloud/bigquery/biglake"
+  - "google/cloud/bigquery/connection"
+  - "google/cloud/bigquery/datapolicies"
+  - "google/cloud/bigquery/datatransfer"
+  - "google/cloud/bigquery/migration"
+  - "google/cloud/bigquery/reservation"
+  - "google/cloud/bigquery/samples"
+  - "google/cloud/bigquery/storage"
   - "google/cloud/bigtable/internal/*_decorator.cc"
   - "google/cloud/bigtable/internal/*_decorator.h"
   - "google/cloud/bigtable/internal/*_stub.cc"

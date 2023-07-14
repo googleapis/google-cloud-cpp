@@ -21,7 +21,6 @@
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/invoke_result.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status.h"
 #include <string>
 #include <vector>

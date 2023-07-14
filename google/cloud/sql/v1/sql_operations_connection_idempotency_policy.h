@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_OPERATIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_operations.pb.h>
 #include <memory>
@@ -43,6 +42,9 @@ class SqlOperationsServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency List(
       google::cloud::sql::v1::SqlOperationsListRequest request);
+
+  virtual google::cloud::Idempotency Cancel(
+      google::cloud::sql::v1::SqlOperationsCancelRequest const& request);
 };
 
 std::unique_ptr<SqlOperationsServiceConnectionIdempotencyPolicy>

@@ -52,6 +52,13 @@ SqlOperationsServiceRestMetadata::List(
   return child_->List(rest_context, request);
 }
 
+Status SqlOperationsServiceRestMetadata::Cancel(
+    rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
+  SetMetadata(rest_context);
+  return child_->Cancel(rest_context, request);
+}
+
 void SqlOperationsServiceRestMetadata::SetMetadata(
     rest_internal::RestContext& rest_context,
     std::vector<std::string> const& params) {

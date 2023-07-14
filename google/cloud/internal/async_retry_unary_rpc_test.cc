@@ -14,7 +14,7 @@
 
 #include "google/cloud/internal/async_retry_unary_rpc.h"
 #include "google/cloud/internal/backoff_policy.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"

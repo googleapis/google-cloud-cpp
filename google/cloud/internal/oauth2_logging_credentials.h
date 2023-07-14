@@ -47,7 +47,7 @@ class LoggingCredentials : public Credentials {
                      std::shared_ptr<Credentials> impl);
   ~LoggingCredentials() override;
 
-  StatusOr<internal::AccessToken> GetToken(
+  StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point now) override;
   StatusOr<std::vector<std::uint8_t>> SignBlob(
       absl::optional<std::string> const& signing_service_account,

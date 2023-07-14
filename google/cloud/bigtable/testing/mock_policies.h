@@ -36,7 +36,7 @@ class MockDataRetryPolicy : public bigtable::DataRetryPolicy {
   MOCK_METHOD(std::unique_ptr<bigtable::DataRetryPolicy>, clone, (),
               (const, override));
   MOCK_METHOD(bool, OnFailure, (Status const&), (override));
-  MOCK_METHOD(void, OnFailureImpl, (), (override));
+  MOCK_METHOD(bool, IsPermanentFailure, (Status const&), (const, override));
   MOCK_METHOD(bool, IsExhausted, (), (const, override));
 };
 

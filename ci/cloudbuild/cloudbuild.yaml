@@ -45,7 +45,7 @@ substitutions:
   _LOGS_BUCKET: 'cloud-cpp-community-publiclogs'
   _TAG1: 'team-only'
 
-timeout: 12600s
+timeout: 36000s
 tags: [
   '${_TRIGGER_TYPE}',
   '${_BUILD_NAME}',
@@ -63,7 +63,7 @@ logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COM
 
 steps:
   # Builds the docker image that will be used by the main build step.
-- name: 'gcr.io/kaniko-project/executor:v1.11.0'
+- name: 'gcr.io/kaniko-project/executor:v1.12.1'
   args: [
     '--log-format=text',
     '--context=dir:///workspace/ci',
@@ -101,6 +101,9 @@ steps:
   secretEnv: ['CODECOV_TOKEN']
   env: [
     'BAZEL_REMOTE_CACHE=https://storage.googleapis.com/${_CACHE_BUCKET}/bazel-cache/${_DISTRO}-${_BUILD_NAME}',
+    'SCCACHE_GCS_BUCKET=${_CACHE_BUCKET}',
+    'SCCACHE_GCS_KEY_PREFIX=sccache/${_DISTRO}-${_BUILD_NAME}',
+    'SCCACHE_GCS_RW_MODE=READ_WRITE',
     'VCPKG_BINARY_SOURCES=x-gcs,gs://${_CACHE_BUCKET}/vcpkg-cache/${_DISTRO}-${_BUILD_NAME},readwrite'
   ]
 
@@ -116,9 +119,7 @@ steps:
       /workspace/ci/cloudbuild/cache.sh save
       --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
       --key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h
-      --path=.ccache
       --path=.cache/bazelisk
-      --path=.cache/ccache
       --path=.cache/ctcache
       --path=.cache/vcpkg
       --path=.cache/google-cloud-cpp

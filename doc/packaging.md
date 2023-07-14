@@ -145,7 +145,7 @@ Install the minimal development tools, libcurl, and OpenSSL:
 
 ```bash
 apk update && \
-    apk add bash ca-certificates ccache cmake curl git \
+    apk add bash ca-certificates cmake curl git \
         gcc g++ make tar unzip zip zlib-dev
 ```
 
@@ -224,7 +224,7 @@ Install the minimal development tools:
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y ccache cmake curl findutils gcc-c++ git make ninja-build \
+sudo dnf install -y cmake curl findutils gcc-c++ git make ninja-build \
         openssl-devel patch unzip tar wget zip zlib-devel
 ```
 
@@ -325,7 +325,7 @@ workstation or build server.
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install --allow-downgrade -y automake ccache cmake curl \
+sudo zypper install --allow-downgrade -y automake cmake curl \
         gcc gcc-c++ git gzip libcurl-devel libopenssl-devel \
         libtool make patch re2-devel tar wget which zlib zlib-devel-static
 ```
@@ -377,7 +377,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -411,7 +411,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -500,7 +500,7 @@ Install the minimal development tools, libcurl, OpenSSL and libc-ares:
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ccache cmake ca-certificates curl git \
+        automake build-essential cmake ca-certificates curl git \
         gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
         libssl-dev m4 make pkg-config tar wget zlib1g-dev
 ```
@@ -542,7 +542,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -562,7 +562,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -651,7 +651,7 @@ Install the minimal development tools, libcurl, OpenSSL and libc-ares:
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ccache cmake ca-certificates curl git \
+        automake build-essential cmake ca-certificates curl git \
         gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
         libssl-dev m4 make pkg-config tar wget zlib1g-dev
 ```
@@ -692,7 +692,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -713,7 +713,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-07-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -731,7 +731,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -819,7 +819,7 @@ Install the minimal development tools, libcurl, OpenSSL and libc-ares:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ccache cmake ca-certificates curl git \
+        automake build-essential cmake ca-certificates curl git \
         gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 \
         make pkg-config tar wget zlib1g-dev
 ```
@@ -860,7 +860,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -879,7 +879,7 @@ We need a newer version of RE2 than the system package provides.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-07-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -897,7 +897,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -985,7 +985,7 @@ Install the minimal development tools, libcurl, and OpenSSL:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ca-certificates ccache cmake curl git \
+        automake build-essential ca-certificates cmake curl git \
         gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
         libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
 ```
@@ -1059,7 +1059,7 @@ Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1079,7 +1079,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-07-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1096,7 +1096,7 @@ Finally, we build gRPC from source:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1141,7 +1141,7 @@ Install the minimal development tools, libcurl, and OpenSSL:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ca-certificates ccache cmake curl git \
+        automake build-essential ca-certificates cmake curl git \
         gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
         libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
 ```
@@ -1226,7 +1226,7 @@ Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1246,7 +1246,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-07-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1263,7 +1263,7 @@ Finally, we build gRPC from source:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1311,7 +1311,7 @@ sudo dnf makecache && \
 sudo dnf update -y && \
 sudo dnf install -y epel-release && \
 sudo dnf makecache && \
-sudo dnf install -y ccache cmake curl findutils gcc-c++ git make openssl-devel \
+sudo dnf install -y cmake curl findutils gcc-c++ git make openssl-devel \
         patch zlib-devel libcurl-devel c-ares-devel tar wget which
 ```
 
@@ -1379,7 +1379,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1400,7 +1400,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-07-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1418,7 +1418,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1509,7 +1509,7 @@ sudo dnf makecache && \
 sudo dnf update -y && \
 sudo dnf install -y epel-release && \
 sudo dnf makecache && \
-sudo dnf install -y ccache cmake findutils gcc-c++ git make openssl-devel \
+sudo dnf install -y cmake findutils gcc-c++ git make openssl-devel \
         patch zlib-devel libcurl-devel c-ares-devel tar wget which
 ```
 
@@ -1580,7 +1580,7 @@ install Protobuf (and any downstream packages) from source.
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1601,7 +1601,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-07-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1621,7 +1621,7 @@ manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=17 \
@@ -1715,7 +1715,7 @@ sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch
 sudo yum install -y centos-release-scl yum-utils
 sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
 sudo yum makecache && \
-sudo yum install -y automake ccache cmake3 curl-devel devtoolset-7 gcc gcc-c++ \
+sudo yum install -y automake cmake3 curl-devel devtoolset-7 gcc gcc-c++ \
         git libtool make openssl-devel patch re2-devel tar wget which zlib-devel
 sudo ln -sf /usr/bin/cmake3 /usr/bin/cmake && sudo ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
@@ -1793,7 +1793,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1827,7 +1827,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \

@@ -45,7 +45,6 @@ essentialcontacts
 eventarc
 filestore
 functions
-gameservices
 gkebackup
 gkehub
 gkemulticloud
@@ -75,6 +74,7 @@ privateca
 profiler
 pubsub
 pubsublite
+rapidmigrationassessment
 recaptchaenterprise
 recommender
 redis

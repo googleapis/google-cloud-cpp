@@ -50,8 +50,7 @@ Setting this environment variable is the recommended way to configure the
 authentication preferences, though if the environment variable is not set, the
 library searches for a credentials file in the same location as the [Cloud
 SDK](https://cloud.google.com/sdk/). For more information about *Application
-Default Credentials*, see
-https://cloud.google.com/docs/authentication/production
+Default Credentials*, see https://cloud.google.com/docs/authentication/production
 
 ## Using with Bazel
 
@@ -71,10 +70,16 @@ https://cloud.google.com/docs/authentication/production
    Note that, as it is often the case with C++ libraries, compiling these
    dependencies may take several minutes.
 
-1. Run the example, changing the placeholder(s) to appropriate values:
+1. Publish messages by running the example, changing the placeholder(s) to appropriate values:
 
    ```bash
    bazel run :quickstart -- [GCP PROJECT ID] [PUB/SUB TOPIC ID]
+   ```
+
+1. Subscribe to messages by running the example, changing the placeholder(s) to appropriate values:
+
+   ```bash
+   bazel run :subscriber_quickstart -- [GCP PROJECT ID] [PUB/SUB SUBSCRIPTION ID]
    ```
 
 ## Using with CMake
@@ -108,10 +113,16 @@ https://cloud.google.com/docs/authentication/production
    cmake --build .build
    ```
 
-1. Run the example, changing the placeholder(s) to appropriate values:
+1. Publish messages by running the example, changing the placeholder(s) to appropriate values:
 
    ```bash
-   .build/quickstart [GCP PROJECT ID] [PUB/SUB TOPIC ID]
+      .build/quickstart [GCP PROJECT ID] [PUB/SUB TOPIC ID]
+   ```
+
+1. Subscribe to messages by running the example, changing the placeholder(s) to appropriate values:
+
+   ```bash
+      .build/subscriber_quickstart [GCP PROJECT ID] [PUB/SUB SUBSCRIPTION ID]
    ```
 
 ## Platform Specific Notes
@@ -152,4 +163,4 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
-[pubsub-quickstart-link]: https://cloud.google.com/pubsub/docs/quickstart-console
+[pubsub-quickstart-link]: https://cloud.google.com/pubsub/docs/publish-receive-messages-client-library

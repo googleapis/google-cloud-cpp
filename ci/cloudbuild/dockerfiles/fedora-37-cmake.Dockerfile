@@ -21,7 +21,7 @@ ARG ARCH=amd64
 # tools to compile the dependencies:
 RUN dnf makecache && \
     dnf install -y abi-compliance-checker autoconf automake \
-        ccache clang clang-analyzer clang-tools-extra \
+        clang clang-analyzer clang-tools-extra \
         cmake diffutils doxygen findutils gcc-c++ git \
         libcurl-devel llvm make ninja-build \
         openssl-devel patch python python3 \
@@ -106,7 +106,7 @@ RUN curl -fsSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
+RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
@@ -142,7 +142,7 @@ RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -157,7 +157,7 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz 
 # files. This may be fixed in Fedora:38, but until then it is easier to just
 # install the source code.
 WORKDIR /var/tmp/build/re2
-RUN curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
+RUN curl -fsSL https://github.com/google/re2/archive/2023-07-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -169,7 +169,7 @@ RUN curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
 
 WORKDIR /var/tmp/build/grpc
 RUN dnf makecache && dnf install -y c-ares-devel
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -240,11 +240,12 @@ RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 
-# The check-api build uses bazelisk
-RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.17.0/bazelisk-linux-${ARCH}" && \
-    chmod +x /usr/bin/bazelisk && \
-    ln -s /usr/bin/bazelisk /usr/bin/bazel
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache
 
-# Some of the above libraries may have installed in /usr/local, so make sure
-# those library directories will be found.
+# Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*

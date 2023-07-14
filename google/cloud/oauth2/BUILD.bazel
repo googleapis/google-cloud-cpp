@@ -1,0 +1,42 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+package(default_visibility = ["//visibility:private"])
+
+licenses(["notice"])  # Apache 2.0
+
+load(":google_cloud_cpp_oauth2_unit_tests.bzl", "google_cloud_cpp_oauth2_unit_tests")
+load(":google_cloud_cpp_oauth2.bzl", "google_cloud_cpp_oauth2_hdrs", "google_cloud_cpp_oauth2_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_oauth2",
+    srcs = google_cloud_cpp_oauth2_srcs,
+    hdrs = google_cloud_cpp_oauth2_hdrs,
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//:common",
+        "//google/cloud:google_cloud_cpp_rest_internal",
+    ],
+)
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":google_cloud_cpp_oauth2",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in google_cloud_cpp_oauth2_unit_tests]

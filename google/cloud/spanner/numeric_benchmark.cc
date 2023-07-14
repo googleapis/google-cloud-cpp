@@ -47,8 +47,7 @@ namespace {
 void BM_NumericFromStringCanonical(benchmark::State& state) {
   std::string s = "99999999999999999999999999999.999999999";
   for (auto _ : state) {
-    auto unused = MakeNumeric(s);
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(MakeNumeric(s));
   }
 }
 BENCHMARK(BM_NumericFromStringCanonical);
@@ -56,8 +55,7 @@ BENCHMARK(BM_NumericFromStringCanonical);
 void BM_NumericFromString(benchmark::State& state) {
   std::string s = "+9999999999999999999999999999.9999999999e1";
   for (auto _ : state) {
-    auto unused = MakeNumeric(s);
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(MakeNumeric(s));
   }
 }
 BENCHMARK(BM_NumericFromString);
@@ -65,8 +63,7 @@ BENCHMARK(BM_NumericFromString);
 void BM_NumericFromDouble(benchmark::State& state) {
   double d = 9.999999999999999e+28;
   for (auto _ : state) {
-    auto unused = MakeNumeric(d);
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(MakeNumeric(d));
   }
 }
 BENCHMARK(BM_NumericFromDouble);
@@ -74,8 +71,7 @@ BENCHMARK(BM_NumericFromDouble);
 void BM_NumericFromUnsigned(benchmark::State& state) {
   auto u = std::numeric_limits<std::uint64_t>::max();
   for (auto _ : state) {
-    auto unused = MakeNumeric(u);
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(MakeNumeric(u));
   }
 }
 BENCHMARK(BM_NumericFromUnsigned);
@@ -83,8 +79,7 @@ BENCHMARK(BM_NumericFromUnsigned);
 void BM_NumericFromInteger(benchmark::State& state) {
   auto i = std::numeric_limits<std::int64_t>::min();
   for (auto _ : state) {
-    auto unused = MakeNumeric(i);
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(MakeNumeric(i));
   }
 }
 BENCHMARK(BM_NumericFromInteger);
@@ -94,7 +89,7 @@ void BM_NumericToString(benchmark::State& state) {
   Numeric n = MakeNumeric(s).value();
   for (auto _ : state) {
     auto unused = n.ToString();
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(std::move(unused));
   }
 }
 BENCHMARK(BM_NumericToString);
@@ -103,8 +98,7 @@ void BM_NumericToDouble(benchmark::State& state) {
   double d = 9.999999999999999e+28;
   Numeric n = MakeNumeric(d).value();
   for (auto _ : state) {
-    auto unused = ToDouble(n);
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(ToDouble(n));
   }
 }
 BENCHMARK(BM_NumericToDouble);
@@ -113,8 +107,7 @@ void BM_NumericToUnsigned(benchmark::State& state) {
   auto u = std::numeric_limits<std::uint64_t>::max();
   Numeric n = MakeNumeric(u).value();
   for (auto _ : state) {
-    auto unused = ToInteger<std::uint64_t>(n);
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(ToInteger<std::uint64_t>(n));
   }
 }
 BENCHMARK(BM_NumericToUnsigned);
@@ -123,8 +116,7 @@ void BM_NumericToInteger(benchmark::State& state) {
   auto i = std::numeric_limits<std::int64_t>::min();
   Numeric n = MakeNumeric(i).value();
   for (auto _ : state) {
-    auto unused = ToInteger<std::int64_t>(n);
-    benchmark::DoNotOptimize(unused);
+    benchmark::DoNotOptimize(ToInteger<std::int64_t>(n));
   }
 }
 BENCHMARK(BM_NumericToInteger);

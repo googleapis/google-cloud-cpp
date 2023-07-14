@@ -81,7 +81,6 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "eventarc"
     "filestore"
     "functions"
-    "gameservices"
     "gkebackup"
     "gkehub"
     "gkemulticloud"
@@ -110,6 +109,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "privateca"
     "profiler"
     "pubsub"
+    "rapidmigrationassessment"
     "recaptchaenterprise"
     "recommender"
     "redis"
@@ -156,43 +156,51 @@ export_list_to_bazel(
 # Handle the dependencies between features. That is, if feature "X" is enabled
 # also enable feature "Y" because "X" depends on "Y".
 function (google_cloud_cpp_enable_deps)
+    set(enabled_features ${GOOGLE_CLOUD_CPP_ENABLE})
+    list(FILTER enabled_features EXCLUDE REGEX "^-")
+    list(FILTER enabled_features EXCLUDE REGEX "^__")
     if (__ga_libraries__ IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE __ga_libraries__)
-        list(APPEND GOOGLE_CLOUD_CPP_ENABLE ${GOOGLE_CLOUD_CPP_GA_LIBRARIES})
-        list(APPEND GOOGLE_CLOUD_CPP_ENABLE
-             ${GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES})
+        list(APPEND enabled_features ${GOOGLE_CLOUD_CPP_GA_LIBRARIES})
+        list(APPEND enabled_features ${GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES})
     endif ()
     if (__experimental_libraries__ IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE __experimental_libraries__)
-        list(APPEND GOOGLE_CLOUD_CPP_ENABLE
-             ${GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES})
+        list(APPEND enabled_features ${GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES})
     endif ()
-    if (asset IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 accesscontextmanager osconfig)
+
+    set(disabled_features ${GOOGLE_CLOUD_CPP_ENABLE})
+    list(FILTER disabled_features INCLUDE REGEX "^-")
+    foreach (disabled IN LISTS disabled_features)
+        string(SUBSTRING "${disabled}" 1 -1 feature)
+        list(REMOVE_ITEM enabled_features "${feature}")
+    endforeach ()
+
+    if (asset IN_LIST enabled_features)
+        list(INSERT enabled_features 0 accesscontextmanager osconfig)
     endif ()
-    if (binaryauthorization IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 grafeas)
+    if (binaryauthorization IN_LIST enabled_features)
+        list(INSERT enabled_features 0 grafeas)
     endif ()
-    if (containeranalysis IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 grafeas)
+    if (containeranalysis IN_LIST enabled_features)
+        list(INSERT enabled_features 0 grafeas)
     endif ()
-    if (contentwarehouse IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 documentai)
+    if (contentwarehouse IN_LIST enabled_features)
+        list(INSERT enabled_features 0 documentai)
     endif ()
-    if (pubsublite IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 pubsub)
+    if (pubsublite IN_LIST enabled_features)
+        list(INSERT enabled_features 0 pubsub)
     endif ()
-    if (pubsub IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 iam)
+    if (pubsub IN_LIST enabled_features)
+        list(INSERT enabled_features 0 iam)
     endif ()
     if (experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 storage)
+        list(INSERT enabled_features 0 storage)
     endif ()
     if (experimental-opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 trace)
+        list(INSERT enabled_features 0 trace)
     endif ()
+
     set(GOOGLE_CLOUD_CPP_ENABLE
-        "${GOOGLE_CLOUD_CPP_ENABLE}"
+        "${enabled_features}"
         PARENT_SCOPE)
 endfunction ()
 

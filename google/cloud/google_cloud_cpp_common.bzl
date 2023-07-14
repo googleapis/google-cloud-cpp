@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_common - DO NOT EDIT."""
 
 google_cloud_cpp_common_hdrs = [
+    "access_token.h",
     "backoff_policy.h",
     "common_options.h",
     "credentials.h",
@@ -28,7 +29,6 @@ google_cloud_cpp_common_hdrs = [
     "internal/absl_str_cat_quiet.h",
     "internal/absl_str_join_quiet.h",
     "internal/absl_str_replace_quiet.h",
-    "internal/access_token.h",
     "internal/algorithm.h",
     "internal/api_client_header.h",
     "internal/attributes.h",
@@ -71,7 +71,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/port_platform.h",
     "internal/random.h",
     "internal/retry_loop_helpers.h",
-    "internal/retry_policy.h",
+    "internal/retry_policy_impl.h",
     "internal/sha256_hash.h",
     "internal/sha256_hmac.h",
     "internal/sha256_type.h",
@@ -95,6 +95,7 @@ google_cloud_cpp_common_hdrs = [
     "options.h",
     "polling_policy.h",
     "project.h",
+    "retry_policy.h",
     "status.h",
     "status_or.h",
     "stream_range.h",
@@ -104,8 +105,8 @@ google_cloud_cpp_common_hdrs = [
 ]
 
 google_cloud_cpp_common_srcs = [
+    "access_token.cc",
     "credentials.cc",
-    "internal/access_token.cc",
     "internal/api_client_header.cc",
     "internal/auth_header_error.cc",
     "internal/backoff_policy.cc",
@@ -128,7 +129,7 @@ google_cloud_cpp_common_srcs = [
     "internal/populate_common_options.cc",
     "internal/random.cc",
     "internal/retry_loop_helpers.cc",
-    "internal/retry_policy.cc",
+    "internal/retry_policy_impl.cc",
     "internal/sha256_hash.cc",
     "internal/sha256_hmac.cc",
     "internal/status_payload_keys.cc",

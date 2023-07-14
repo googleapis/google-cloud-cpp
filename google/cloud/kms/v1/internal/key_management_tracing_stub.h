@@ -130,6 +130,14 @@ class KeyManagementServiceTracingStub : public KeyManagementServiceStub {
       grpc::ClientContext& context,
       google::cloud::kms::v1::DecryptRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::RawEncryptResponse> RawEncrypt(
+      grpc::ClientContext& context,
+      google::cloud::kms::v1::RawEncryptRequest const& request) override;
+
+  StatusOr<google::cloud::kms::v1::RawDecryptResponse> RawDecrypt(
+      grpc::ClientContext& context,
+      google::cloud::kms::v1::RawDecryptRequest const& request) override;
+
   StatusOr<google::cloud::kms::v1::AsymmetricSignResponse> AsymmetricSign(
       grpc::ClientContext& context,
       google::cloud::kms::v1::AsymmetricSignRequest const& request) override;

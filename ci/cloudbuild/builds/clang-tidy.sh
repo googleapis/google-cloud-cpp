@@ -57,7 +57,7 @@ if [[ "${TRIGGER_TYPE}" != "manual" ]]; then
 fi
 
 if [[ "${TRIGGER_TYPE}" != "manual" || "${VERBOSE_FLAG}" == "true" ]]; then
-  io::log_h2 "ctcache stats"
+  io::log "===> ctcache stats"
   printf "%s: %s\n" "total size" "$(du -sh "${CTCACHE_DIR}")"
   printf "%s: %s\n" " num files" "$(find "${CTCACHE_DIR}" | wc -l)"
   echo

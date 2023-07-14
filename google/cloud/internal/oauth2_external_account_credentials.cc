@@ -133,7 +133,7 @@ ExternalAccountCredentials::ExternalAccountCredentials(
       client_factory_(std::move(client_factory)),
       options_(std::move(options)) {}
 
-StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
+StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
   auto subject_token = (info_.token_source)(client_factory_, options_);
   if (!subject_token) return std::move(subject_token).status();
@@ -197,11 +197,10 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
   auto expires_in =
       ValidateIntField(access, "expires_in", "token-exchange-response", ec);
   if (!expires_in) return std::move(expires_in).status();
-  return internal::AccessToken{*token, tp + std::chrono::seconds(*expires_in)};
+  return AccessToken{*token, tp + std::chrono::seconds(*expires_in)};
 }
 
-StatusOr<internal::AccessToken>
-ExternalAccountCredentials::GetTokenImpersonation(
+StatusOr<AccessToken> ExternalAccountCredentials::GetTokenImpersonation(
     std::string const& access_token, internal::ErrorContext const& ec) {
   auto request = rest_internal::RestRequest(info_.impersonation_config->url);
   request.AddHeader("Authorization", absl::StrCat("Bearer ", access_token));

@@ -21,7 +21,7 @@ ARG NCPU=4
 
 # ```bash
 RUN apk update && \
-    apk add bash ca-certificates ccache cmake curl git \
+    apk add bash ca-certificates cmake curl git \
         gcc g++ make tar unzip zip zlib-dev
 # ```
 
@@ -75,3 +75,10 @@ RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
 # ```
 
 ## [DONE packaging.md]
+
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache

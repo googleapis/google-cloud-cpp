@@ -23,7 +23,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::internal::AccessToken;
+using ::google::cloud::AccessToken;
 
 TEST(AccessTokenCredentials, Simple) {
   auto const expiration =

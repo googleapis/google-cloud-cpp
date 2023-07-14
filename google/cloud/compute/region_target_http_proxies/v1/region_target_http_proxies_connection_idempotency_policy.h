@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_TARGET_HTTP_PROXIES_V1_REGION_TARGET_HTTP_PROXIES_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.pb.h>
 #include <memory>

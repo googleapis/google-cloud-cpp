@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/bigquery/v2/minimal/internal/rest_stub_utils.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -247,11 +248,11 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
     return internal::InvalidArgumentError(
         "Invalid CancelJobRequest: Job Id is empty", GCP_ERROR_INFO());
   }
+
   // Builds CancelJob request path based on endpoint provided.
   std::string endpoint = GetBaseEndpoint(opts);
-
   std::string path = absl::StrCat(endpoint, "/projects/", r.project_id(),
-                                  "/jobs/", r.job_id());
+                                  "/jobs/", r.job_id(), "/cancel");
   request.SetPath(std::move(path));
 
   // Add query params.
@@ -268,6 +269,175 @@ std::string CancelJobRequest::DebugString(absl::string_view name,
       .StringField("project_id", project_id_)
       .StringField("job_id", job_id_)
       .StringField("location", location_)
+      .Build();
+}
+
+void to_json(nlohmann::json& j, PostQueryRequest const& q) {
+  j = nlohmann::json{{"project_id", q.project_id()},
+                     {"query_request", q.query_request()}};
+}
+
+void to_json(nlohmann::json& j, QueryRequest const& q) {
+  j = nlohmann::json{{"query", q.query()},
+                     {"kind", q.kind()},
+                     {"parameter_mode", q.parameter_mode()},
+                     {"location", q.location()},
+                     {"request_id", q.request_id()},
+                     {"dry_run", q.dry_run()},
+                     {"preserve_nulls", q.preserve_nulls()},
+                     {"use_query_cache", q.use_query_cache()},
+                     {"use_legacy_sql", q.use_legacy_sql()},
+                     {"create_session", q.create_session()},
+                     {"max_results", q.max_results()},
+                     {"maximum_bytes_billed", q.maximum_bytes_billed()},
+                     {"connection_properties", q.connection_properties()},
+                     {"query_parameters", q.query_parameters()},
+                     {"default_dataset", q.default_dataset()},
+                     {"format_options", q.format_options()},
+                     {"labels", q.labels()}};
+
+  ToJson(q.timeout(), j, "timeout");
+}
+
+void from_json(nlohmann::json const& j, PostQueryRequest& q) {
+  if (j.contains("project_id")) {
+    q.set_project_id(j.at("project_id").value("project_id", ""));
+  }
+  if (j.contains("query_request")) {
+    q.set_query_request(j.at("query_request").get<QueryRequest>());
+  }
+}
+
+void from_json(nlohmann::json const& j, QueryRequest& q) {
+  if (j.contains("query")) q.set_query(j.at("query").get<std::string>());
+  if (j.contains("kind")) q.set_kind(j.at("kind").get<std::string>());
+  if (j.contains("parameter_mode")) {
+    q.set_parameter_mode(j.at("parameter_mode").get<std::string>());
+  }
+  if (j.contains("location")) {
+    q.set_location(j.at("location").get<std::string>());
+  }
+  if (j.contains("request_id")) {
+    q.set_request_id(j.at("request_id").get<std::string>());
+  }
+  if (j.contains("dry_run")) q.set_dry_run(j.at("dry_run").get<bool>());
+  if (j.contains("preserve_nulls")) {
+    q.set_preserve_nulls(j.at("preserve_nulls").get<bool>());
+  }
+  if (j.contains("use_query_cache")) {
+    q.set_use_query_cache(j.at("use_query_cache").get<bool>());
+  }
+  if (j.contains("use_legacy_sql")) {
+    q.set_use_legacy_sql(j.at("use_legacy_sql").get<bool>());
+  }
+  if (j.contains("create_session")) {
+    q.set_create_session(j.at("create_session").get<bool>());
+  }
+  if (j.contains("max_results")) {
+    q.set_max_results(j.at("max_results").get<std::uint32_t>());
+  }
+  if (j.contains("maximum_bytes_billed")) {
+    q.set_maximum_bytes_billed(
+        j.at("maximum_bytes_billed").get<std::int64_t>());
+  }
+  if (j.contains("connection_properties")) {
+    q.set_connection_properties(
+        j.at("connection_properties").get<std::vector<ConnectionProperty>>());
+  }
+  if (j.contains("query_parameters")) {
+    q.set_query_parameters(
+        j.at("query_parameters").get<std::vector<QueryParameter>>());
+  }
+  if (j.contains("default_dataset")) {
+    q.set_default_dataset(j.at("default_dataset").get<DatasetReference>());
+  }
+  if (j.contains("format_options")) {
+    q.set_format_options(j.at("format_options").get<DataFormatOptions>());
+  }
+  if (j.contains("labels")) {
+    q.set_labels(j.at("labels").get<std::map<std::string, std::string>>());
+  }
+
+  std::chrono::milliseconds timeout;
+  FromJson(timeout, j, "timeout");
+  q.set_timeout(timeout);
+}
+
+StatusOr<rest_internal::RestRequest> BuildRestRequest(
+    PostQueryRequest const& r) {
+  auto const& opts = internal::CurrentOptions();
+  rest_internal::RestRequest request;
+
+  if (r.project_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid PostQueryRequest: Project Id is empty", GCP_ERROR_INFO());
+  }
+
+  // Builds PostQueryRequest path based on endpoint provided.
+  std::string endpoint = GetBaseEndpoint(opts);
+  std::string path =
+      absl::StrCat(endpoint, "/projects/", r.project_id(), "/queries");
+  request.SetPath(std::move(path));
+
+  // Validate request body is a valid json QueryRequest payload.
+  nlohmann::json json_payload;
+  to_json(json_payload, r.query_request());
+
+  if (!json_payload.is_object()) {
+    return internal::InvalidArgumentError(
+        "Invalid PostQueryRequest: Invalid json payload", GCP_ERROR_INFO());
+  }
+
+  auto const& query_request = json_payload.get<QueryRequest>();
+
+  if (query_request.query().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid PostQueryRequest: Missing required query field",
+        GCP_ERROR_INFO());
+  }
+
+  return request;
+}
+
+std::string PostQueryRequest::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id())
+      .SubMessage("query_request", query_request())
+      .Build();
+}
+
+std::string DataFormatOptions::DebugString(absl::string_view name,
+                                           TracingOptions const& options,
+                                           int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("use_int64_timestamp", use_int64_timestamp)
+      .Build();
+}
+
+std::string QueryRequest::DebugString(absl::string_view name,
+                                      TracingOptions const& options,
+                                      int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("query", query())
+      .StringField("kind", kind())
+      .StringField("parameter_mode", parameter_mode())
+      .StringField("location", location())
+      .StringField("request_id", request_id())
+      .Field("dry_run", dry_run())
+      .Field("preserver_nulls", preserve_nulls())
+      .Field("use_query_cache", use_query_cache())
+      .Field("use_legacy_sql", use_legacy_sql())
+      .Field("create_session", create_session())
+      .Field("max_results", max_results())
+      .Field("maximum_bytes_biller", maximum_bytes_billed())
+      .Field("timeout", timeout())
+      .Field("connection_properties", connection_properties())
+      .Field("query_parameters", query_parameters())
+      .Field("labels", labels())
+      .SubMessage("default_dataset", default_dataset())
+      .SubMessage("format_options", format_options())
       .Build();
 }
 

@@ -47,6 +47,18 @@ DefaultSqlUsersServiceRestStub::Delete(
       "/v1/projects/{project}/instances/{instance}/users");
 }
 
+StatusOr<google::cloud::sql::v1::User> DefaultSqlUsersServiceRestStub::Get(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+  return rest_internal::Get<google::cloud::sql::v1::User>(
+      *service_, rest_context, request,
+      "/v1/projects/{project}/instances/{instance}/users/{name}",
+      {std::make_pair("instance", request.instance()),
+       std::make_pair("name", request.name()),
+       std::make_pair("project", request.project()),
+       std::make_pair("host", request.host())});
+}
+
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlUsersServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,

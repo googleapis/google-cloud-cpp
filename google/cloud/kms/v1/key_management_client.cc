@@ -390,6 +390,20 @@ KeyManagementServiceClient::Decrypt(
   return connection_->Decrypt(request);
 }
 
+StatusOr<google::cloud::kms::v1::RawEncryptResponse>
+KeyManagementServiceClient::RawEncrypt(
+    google::cloud::kms::v1::RawEncryptRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RawEncrypt(request);
+}
+
+StatusOr<google::cloud::kms::v1::RawDecryptResponse>
+KeyManagementServiceClient::RawDecrypt(
+    google::cloud::kms::v1::RawDecryptRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RawDecrypt(request);
+}
+
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
 KeyManagementServiceClient::AsymmetricSign(
     std::string const& name, google::cloud::kms::v1::Digest const& digest,

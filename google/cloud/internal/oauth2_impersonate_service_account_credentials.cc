@@ -39,7 +39,7 @@ ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     HttpClientFactory client_factory)
     : ImpersonateServiceAccountCredentials(
           config, MakeMinimalIamCredentialsRestStub(
-                      rest_internal::MapCredentials(config.base_credentials()),
+                      rest_internal::MapCredentials(*config.base_credentials()),
                       config.options(), std::move(client_factory))) {}
 
 ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
@@ -47,7 +47,7 @@ ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     std::shared_ptr<MinimalIamCredentialsRest> stub)
     : stub_(std::move(stub)), request_(MakeRequest(config)) {}
 
-StatusOr<internal::AccessToken> ImpersonateServiceAccountCredentials::GetToken(
+StatusOr<AccessToken> ImpersonateServiceAccountCredentials::GetToken(
     std::chrono::system_clock::time_point /*tp*/) {
   return stub_->GenerateAccessToken(request_);
 }

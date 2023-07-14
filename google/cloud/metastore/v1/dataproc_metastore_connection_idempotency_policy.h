@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_DATAPROC_METASTORE_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/metastore/v1/metastore.grpc.pb.h>
 #include <memory>
@@ -82,6 +81,16 @@ class DataprocMetastoreConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteBackup(
       google::cloud::metastore::v1::DeleteBackupRequest const& request);
+
+  virtual google::cloud::Idempotency QueryMetadata(
+      google::cloud::metastore::v1::QueryMetadataRequest const& request);
+
+  virtual google::cloud::Idempotency MoveTableToDatabase(
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request);
+
+  virtual google::cloud::Idempotency AlterMetadataResourceLocation(
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+          request);
 };
 
 std::unique_ptr<DataprocMetastoreConnectionIdempotencyPolicy>

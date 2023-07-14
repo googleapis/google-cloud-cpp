@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_KEY_MANAGEMENT_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/kms/v1/service.grpc.pb.h>
 #include <memory>
@@ -101,6 +100,12 @@ class KeyManagementServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency Decrypt(
       google::cloud::kms::v1::DecryptRequest const& request);
+
+  virtual google::cloud::Idempotency RawEncrypt(
+      google::cloud::kms::v1::RawEncryptRequest const& request);
+
+  virtual google::cloud::Idempotency RawDecrypt(
+      google::cloud::kms::v1::RawDecryptRequest const& request);
 
   virtual google::cloud::Idempotency AsymmetricSign(
       google::cloud::kms::v1::AsymmetricSignRequest const& request);

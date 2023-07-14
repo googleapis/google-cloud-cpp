@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_INSTANCES_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_instances.pb.h>
 #include <memory>
@@ -55,6 +54,9 @@ class SqlInstancesServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency Failover(
       google::cloud::sql::v1::SqlInstancesFailoverRequest const& request);
+
+  virtual google::cloud::Idempotency Reencrypt(
+      google::cloud::sql::v1::SqlInstancesReencryptRequest const& request);
 
   virtual google::cloud::Idempotency Get(
       google::cloud::sql::v1::SqlInstancesGetRequest const& request);
@@ -115,6 +117,18 @@ class SqlInstancesServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency StartExternalSync(
       google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
+          request);
+
+  virtual google::cloud::Idempotency PerformDiskShrink(
+      google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetDiskShrinkConfig(
+      google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ResetReplicaSize(
+      google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
           request);
 };
 

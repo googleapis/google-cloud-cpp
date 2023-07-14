@@ -16,9 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_RETRY_UNARY_RPC_H
 
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/completion_queue_impl.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/internal/setup_context.h"
+#include "google/cloud/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/protobuf/empty.pb.h>
 #include <chrono>

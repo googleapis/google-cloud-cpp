@@ -17,6 +17,7 @@
 
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <algorithm>
 #include <array>
 #include <cstddef>
 #include <cstdint>
@@ -100,6 +101,32 @@ Status ValidateBase64String(std::string const& input);
 
 StatusOr<std::vector<std::uint8_t>> Base64DecodeToBytes(
     std::string const& input);
+
+/**
+ * Returns a Base64-encoded version of @p bytes. Using the URL- and
+ * filesystem-safe alphabet, making these adjustments:
+ * -  Replace '+' with '-'
+ * -  Replace '/' with '_'
+ * -  Right-trim '=' characters
+ */
+template <typename Collection>
+inline std::string UrlsafeBase64Encode(Collection const& bytes) {
+  Base64Encoder encoder;
+  for (auto c : bytes) encoder.PushBack(c);
+  std::string b64str = std::move(encoder).FlushAndPad();
+  std::replace(b64str.begin(), b64str.end(), '+', '-');
+  std::replace(b64str.begin(), b64str.end(), '/', '_');
+  auto end_pos = b64str.find_last_not_of('=');
+  if (end_pos != std::string::npos) {
+    b64str.resize(end_pos + 1);
+  }
+  return b64str;
+}
+
+/**
+ * Decodes a Url-safe Base64-encoded string.
+ */
+StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(std::string const& str);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

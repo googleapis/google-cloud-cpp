@@ -20,7 +20,6 @@
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "absl/types/optional.h"
 #include <functional>
 #include <memory>

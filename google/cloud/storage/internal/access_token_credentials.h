@@ -29,7 +29,7 @@ namespace internal {
 class AccessTokenCredentials : public oauth2::Credentials {
  public:
   explicit AccessTokenCredentials(
-      google::cloud::internal::AccessToken const& access_token);
+      google::cloud::AccessToken const& access_token);
 
   StatusOr<std::string> AuthorizationHeader() override;
 

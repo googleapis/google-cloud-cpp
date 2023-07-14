@@ -17,13 +17,13 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_common_unit_tests = [
+    "access_token_test.cc",
     "common_options_test.cc",
     "future_coroutines_test.cc",
     "future_generic_test.cc",
     "future_generic_then_test.cc",
     "future_void_test.cc",
     "future_void_then_test.cc",
-    "internal/access_token_test.cc",
     "internal/algorithm_test.cc",
     "internal/api_client_header_test.cc",
     "internal/backoff_policy_test.cc",
@@ -50,7 +50,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/populate_common_options_test.cc",
     "internal/random_test.cc",
     "internal/retry_loop_helpers_test.cc",
-    "internal/retry_policy_test.cc",
+    "internal/retry_policy_impl_test.cc",
     "internal/sha256_hash_test.cc",
     "internal/sha256_hmac_test.cc",
     "internal/status_payload_keys_test.cc",

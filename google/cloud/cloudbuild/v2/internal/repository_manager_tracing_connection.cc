@@ -163,6 +163,15 @@ RepositoryManagerTracingConnection::FetchLinkableRepositories(
                                                     std::move(sr));
 }
 
+StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
+RepositoryManagerTracingConnection::FetchGitRefs(
+    google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "cloudbuild_v2::RepositoryManagerConnection::FetchGitRefs");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FetchGitRefs(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<cloudbuild_v2::RepositoryManagerConnection>

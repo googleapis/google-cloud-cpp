@@ -70,6 +70,12 @@ SqlInstancesServiceConnection::Failover(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceConnection::Reencrypt(
+    google::cloud::sql::v1::SqlInstancesReencryptRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::sql::v1::DatabaseInstance>
 SqlInstancesServiceConnection::Get(
     google::cloud::sql::v1::SqlInstancesGetRequest const&) {
@@ -184,6 +190,24 @@ SqlInstancesServiceConnection::VerifyExternalSyncSettings(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceConnection::StartExternalSync(
     google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceConnection::PerformDiskShrink(
+    google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
+SqlInstancesServiceConnection::GetDiskShrinkConfig(
+    google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceConnection::ResetReplicaSize(
+    google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

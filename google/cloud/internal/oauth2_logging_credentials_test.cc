@@ -35,7 +35,7 @@ using ::testing::Return;
 
 class MockCredentials : public Credentials {
  public:
-  MOCK_METHOD(StatusOr<internal::AccessToken>, GetToken,
+  MOCK_METHOD(StatusOr<AccessToken>, GetToken,
               (std::chrono::system_clock::time_point), (override));
   MOCK_METHOD(StatusOr<std::vector<std::uint8_t>>, SignBlob,
               (absl::optional<std::string> const&, std::string const&),
@@ -48,7 +48,7 @@ TEST(LoggingCredentials, GetTokenSuccess) {
   auto mock = std::make_shared<MockCredentials>();
   auto const now = std::chrono::system_clock::now();
   auto const expiration = now + std::chrono::hours(1);
-  auto const expected = internal::AccessToken{"test-token", expiration};
+  auto const expected = AccessToken{"test-token", expiration};
   auto const tp = now + std::chrono::seconds(123);
   EXPECT_CALL(*mock, GetToken(tp)).WillOnce(Return(expected));
   ScopedLog log;
@@ -66,7 +66,7 @@ TEST(LoggingCredentials, GetTokenExpired) {
   auto mock = std::make_shared<MockCredentials>();
   auto const now = std::chrono::system_clock::now();
   auto const expiration = now + std::chrono::hours(1);
-  auto const expected = internal::AccessToken{"test-token", expiration};
+  auto const expected = AccessToken{"test-token", expiration};
   auto const tp = now + std::chrono::hours(1) + std::chrono::minutes(1);
   EXPECT_CALL(*mock, GetToken(tp)).WillOnce(Return(expected));
   ScopedLog log;

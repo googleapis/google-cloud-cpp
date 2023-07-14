@@ -66,7 +66,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
 /// Parses a refresh response JSON string to create an access token.
-StatusOr<internal::AccessToken> ParseServiceAccountRefreshResponse(
+StatusOr<AccessToken> ParseServiceAccountRefreshResponse(
     rest_internal::RestResponse& response,
     std::chrono::system_clock::time_point now);
 
@@ -208,7 +208,7 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
   /**
    * Returns a key value pair for an "Authorization" header.
    */
-  StatusOr<internal::AccessToken> GetToken(
+  StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
 
   /**
@@ -232,9 +232,9 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
 
  private:
   bool UseOAuth();
-  StatusOr<internal::AccessToken> GetTokenOAuth(
+  StatusOr<AccessToken> GetTokenOAuth(
       std::chrono::system_clock::time_point tp) const;
-  StatusOr<internal::AccessToken> GetTokenSelfSigned(
+  StatusOr<AccessToken> GetTokenSelfSigned(
       std::chrono::system_clock::time_point tp) const;
 
   ServiceAccountCredentialsInfo info_;

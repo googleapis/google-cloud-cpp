@@ -44,6 +44,17 @@ StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceRestLogging::Delete(
       rest_context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::sql::v1::User> SqlUsersServiceRestLogging::Get(
+    rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+        return child_->Get(rest_context, request);
+      },
+      rest_context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceRestLogging::Insert(
     rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersInsertRequest const& request) {

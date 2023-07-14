@@ -2081,38 +2081,6 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
-# Game Services
-service {
-  service_proto_path: "google/cloud/gaming/v1/game_server_clusters_service.proto"
-  product_path: "google/cloud/gameservices/v1"
-  forwarding_product_path: "google/cloud/gameservices"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-service {
-  service_proto_path: "google/cloud/gaming/v1/game_server_configs_service.proto"
-  product_path: "google/cloud/gameservices/v1"
-  forwarding_product_path: "google/cloud/gameservices"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-service {
-  service_proto_path: "google/cloud/gaming/v1/game_server_deployments_service.proto"
-  product_path: "google/cloud/gameservices/v1"
-  forwarding_product_path: "google/cloud/gameservices"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-service {
-  service_proto_path: "google/cloud/gaming/v1/realms_service.proto"
-  product_path: "google/cloud/gameservices/v1"
-  forwarding_product_path: "google/cloud/gameservices"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
-}
 
 # GKE Backup
 service {
@@ -2586,6 +2554,14 @@ service {
   initial_copyright_year: "2022"
   retryable_status_codes: ["kInternal", "kUnavailable"]
   omit_repo_metadata: true
+}
+
+# Rapid Migration Assessment
+service {
+  service_proto_path: "google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto"
+  product_path: "google/cloud/rapidmigrationassessment/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # reCAPTCHA Enterprise

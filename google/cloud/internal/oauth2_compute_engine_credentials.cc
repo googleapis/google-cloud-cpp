@@ -76,7 +76,7 @@ ServiceAccountMetadata ParseMetadataServerResponse(std::string const& payload) {
   return ServiceAccountMetadata{scopes(), email()};
 }
 
-StatusOr<internal::AccessToken> ParseComputeEngineRefreshResponse(
+StatusOr<AccessToken> ParseComputeEngineRefreshResponse(
     rest_internal::RestResponse& response,
     std::chrono::system_clock::time_point now) {
   // Response should have the attributes "access_token", "expires_in", and
@@ -97,8 +97,7 @@ StatusOr<internal::AccessToken> ParseComputeEngineRefreshResponse(
   auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
   auto new_expiration = now + expires_in;
 
-  return internal::AccessToken{access_token.value("access_token", ""),
-                               new_expiration};
+  return AccessToken{access_token.value("access_token", ""), new_expiration};
 }
 
 ComputeEngineCredentials::ComputeEngineCredentials(
@@ -113,7 +112,7 @@ ComputeEngineCredentials::ComputeEngineCredentials(
       client_factory_(std::move(client_factory)),
       service_account_email_(std::move(service_account_email)) {}
 
-StatusOr<internal::AccessToken> ComputeEngineCredentials::GetToken(
+StatusOr<AccessToken> ComputeEngineCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
   // Ignore failures fetching the account metadata. We can still get a token
   // using the initial `service_account_email_` value.

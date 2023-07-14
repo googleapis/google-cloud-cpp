@@ -16,6 +16,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
@@ -51,7 +52,7 @@ struct TestRetryablePolicy {
 };
 
 auto constexpr kMaxRetries = 5;
-std::unique_ptr<internal::RetryPolicy> TestRetryPolicy() {
+std::unique_ptr<RetryPolicy> TestRetryPolicy() {
   return internal::LimitedErrorCountRetryPolicy<TestRetryablePolicy>(
              kMaxRetries)
       .clone();

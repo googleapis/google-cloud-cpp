@@ -81,6 +81,30 @@ class JobClient {
    */
   StatusOr<Job> InsertJob(InsertJobRequest const& request, Options opts = {});
 
+  /**
+   * Requests that a job be cancelled. This call will return immediately, and
+   * the client will need to poll for the job status to see if the cancel
+   * completed successfully. Cancelled jobs may still incur costs.
+   *
+   * For more details on BigQuery jobs, please refer to:
+   *
+   * https://cloud.google.com/bigquery/docs/jobs-overview
+   */
+  StatusOr<Job> CancelJob(CancelJobRequest const& request, Options opts = {});
+
+  /**
+   * Runs a BigQuery SQL query synchronously and returns query results if the
+   * query completes within a specified timeout.
+   *
+   * For more details on query request fields, please see:
+   * https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query#request-body
+   *
+   * For more details on query reqsponse fields, please see:
+   * https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query#response-body
+   */
+  StatusOr<QueryResults> Query(PostQueryRequest const& request,
+                               Options opts = {});
+
  private:
   std::shared_ptr<BigQueryJobConnection> connection_;
   Options options_;

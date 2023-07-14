@@ -157,11 +157,12 @@ def main():
             exec(compile(f.read(), bzl, "exec"), exec_globals, exec_locals)
     except Exception as e:
         sys.exit(f"{bzl}: {e}")
-    google_cloud_cpp_deps = exec_locals.get("google_cloud_cpp_deps")
-    try:
-        google_cloud_cpp_deps(name="deps-cache")  # execute .bzl definitions
-    except Exception as e:
-        sys.exit(f"google_cloud_cpp_deps(): {e}")
+    for f in ["google_cloud_cpp_development_deps", "google_cloud_cpp_deps"]:
+        func = exec_locals.get(f)
+        try:
+            func(name="deps-cache")  # execute .bzl definitions
+        except Exception as e:
+            sys.exit(f"{func}(): {e}")
     with tempfile.TemporaryDirectory() as tmpdir:
         for archive in archives:
             download(tmpdir, **archive)

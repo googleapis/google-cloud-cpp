@@ -167,6 +167,35 @@ DataprocMetastoreMetadata::AsyncDeleteBackup(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DataprocMetastoreMetadata::AsyncQueryMetadata(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::metastore::v1::QueryMetadataRequest const& request) {
+  SetMetadata(*context, "service=" + request.service());
+  return child_->AsyncQueryMetadata(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataprocMetastoreMetadata::AsyncMoveTableToDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
+  SetMetadata(*context, "service=" + request.service());
+  return child_->AsyncMoveTableToDatabase(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataprocMetastoreMetadata::AsyncAlterMetadataResourceLocation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+        request) {
+  SetMetadata(*context, "service=" + request.service());
+  return child_->AsyncAlterMetadataResourceLocation(cq, std::move(context),
+                                                    request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

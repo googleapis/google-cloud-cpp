@@ -260,6 +260,61 @@ DefaultDataprocMetastoreStub::AsyncDeleteBackup(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultDataprocMetastoreStub::AsyncQueryMetadata(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::metastore::v1::QueryMetadataRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::metastore::v1::QueryMetadataRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::metastore::v1::QueryMetadataRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncQueryMetadata(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDataprocMetastoreStub::AsyncMoveTableToDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::metastore::v1::MoveTableToDatabaseRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncMoveTableToDatabase(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDataprocMetastoreStub::AsyncAlterMetadataResourceLocation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::metastore::v1::
+                 AlterMetadataResourceLocationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncAlterMetadataResourceLocation(context, request,
+                                                              cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

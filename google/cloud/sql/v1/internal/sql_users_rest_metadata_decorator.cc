@@ -43,6 +43,13 @@ StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceRestMetadata::Delete(
   return child_->Delete(rest_context, request);
 }
 
+StatusOr<google::cloud::sql::v1::User> SqlUsersServiceRestMetadata::Get(
+    rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+  SetMetadata(rest_context);
+  return child_->Get(rest_context, request);
+}
+
 StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceRestMetadata::Insert(
     rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersInsertRequest const& request) {

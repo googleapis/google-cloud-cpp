@@ -24,6 +24,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -37,17 +38,135 @@ namespace cloud {
 namespace compute_firewall_policies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using FirewallPoliciesRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        compute_firewall_policies_v1_internal::FirewallPoliciesRetryTraits>;
+/// The retry policy for `FirewallPoliciesConnection`.
+class FirewallPoliciesRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<FirewallPoliciesRetryPolicy> clone() const = 0;
+};
 
-using FirewallPoliciesLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        compute_firewall_policies_v1_internal::FirewallPoliciesRetryTraits>;
+/**
+ * A retry policy for `FirewallPoliciesConnection` based on counting errors.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - More than a prescribed number of transient failures is detected.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class FirewallPoliciesLimitedErrorCountRetryPolicy
+    : public FirewallPoliciesRetryPolicy {
+ public:
+  /**
+   * Create an instance that tolerates up to @p maximum_failures transient
+   * errors.
+   *
+   * @note Disable the retry loop by providing an instance of this policy with
+   *     @p maximum_failures == 0.
+   */
+  explicit FirewallPoliciesLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using FirewallPoliciesLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        compute_firewall_policies_v1_internal::FirewallPoliciesRetryTraits>;
+  FirewallPoliciesLimitedErrorCountRetryPolicy(
+      FirewallPoliciesLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : FirewallPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+  FirewallPoliciesLimitedErrorCountRetryPolicy(
+      FirewallPoliciesLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : FirewallPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<FirewallPoliciesRetryPolicy> clone() const override {
+    return std::make_unique<FirewallPoliciesLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = FirewallPoliciesRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_firewall_policies_v1_internal::FirewallPoliciesRetryTraits>
+      impl_;
+};
+
+/**
+ * A retry policy for `FirewallPoliciesConnection` based on elapsed time.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - The elapsed time in the retry loop exceeds a prescribed duration.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class FirewallPoliciesLimitedTimeRetryPolicy
+    : public FirewallPoliciesRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the underlying
+   *     arithmetic type used to store the number of ticks. For our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`. For our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires.
+   *     While the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit FirewallPoliciesLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  FirewallPoliciesLimitedTimeRetryPolicy(
+      FirewallPoliciesLimitedTimeRetryPolicy&& rhs) noexcept
+      : FirewallPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FirewallPoliciesLimitedTimeRetryPolicy(
+      FirewallPoliciesLimitedTimeRetryPolicy const& rhs) noexcept
+      : FirewallPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<FirewallPoliciesRetryPolicy> clone() const override {
+    return std::make_unique<FirewallPoliciesLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = FirewallPoliciesRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_firewall_policies_v1_internal::FirewallPoliciesRetryTraits>
+      impl_;
+};
 
 /**
  * The `FirewallPoliciesConnection` object for `FirewallPoliciesClient`.

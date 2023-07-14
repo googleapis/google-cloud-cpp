@@ -47,6 +47,18 @@ Idempotency BigQueryJobIdempotencyPolicy::CancelJob(CancelJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency BigQueryJobIdempotencyPolicy::Query(
+    PostQueryRequest const& request) {
+  // Query requests containing request_id maybe considered idempotent.
+  // Please see the rules here:
+  // https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query#queryrequest
+  if (!request.query_request().request_id().empty()) {
+    return Idempotency::kIdempotent;
+  }
+
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<BigQueryJobIdempotencyPolicy>
 MakeDefaultBigQueryJobIdempotencyPolicy() {
   return std::make_unique<BigQueryJobIdempotencyPolicy>();

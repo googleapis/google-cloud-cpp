@@ -40,7 +40,7 @@ struct GenerateAccessTokenRequest {
 };
 
 /// Parse the HTTP response from a `GenerateAccessToken()` call.
-StatusOr<google::cloud::internal::AccessToken> ParseGenerateAccessTokenResponse(
+StatusOr<google::cloud::AccessToken> ParseGenerateAccessTokenResponse(
     rest_internal::RestResponse& response,
     google::cloud::internal::ErrorContext const& ec);
 
@@ -52,7 +52,7 @@ class MinimalIamCredentialsRest {
  public:
   virtual ~MinimalIamCredentialsRest() = default;
 
-  virtual StatusOr<google::cloud::internal::AccessToken> GenerateAccessToken(
+  virtual StatusOr<google::cloud::AccessToken> GenerateAccessToken(
       GenerateAccessTokenRequest const& request) = 0;
 };
 
@@ -72,7 +72,7 @@ class MinimalIamCredentialsRestStub : public MinimalIamCredentialsRest {
       std::shared_ptr<oauth2_internal::Credentials> credentials,
       Options options, HttpClientFactory client_factory);
 
-  StatusOr<google::cloud::internal::AccessToken> GenerateAccessToken(
+  StatusOr<google::cloud::AccessToken> GenerateAccessToken(
       GenerateAccessTokenRequest const& request) override;
 
  private:
@@ -91,7 +91,7 @@ class MinimalIamCredentialsRestLogging : public MinimalIamCredentialsRest {
   explicit MinimalIamCredentialsRestLogging(
       std::shared_ptr<MinimalIamCredentialsRest> child);
 
-  StatusOr<google::cloud::internal::AccessToken> GenerateAccessToken(
+  StatusOr<google::cloud::AccessToken> GenerateAccessToken(
       GenerateAccessTokenRequest const& request) override;
 
  private:

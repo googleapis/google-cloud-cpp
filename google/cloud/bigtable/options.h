@@ -39,6 +39,7 @@
  */
 
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/backoff_policy.h"
@@ -74,6 +75,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 struct AppProfileIdOption {
   using Type = std::string;
+};
+
+/**
+ * Read rows in reverse order.
+ *
+ * The rows will be streamed in reverse lexicographic order of the keys. This is
+ * particularly useful to get the last N records before a key.
+ *
+ * This option does not affect the contents of the rows, just the order that
+ * the rows are returned.
+ *
+ * @note When using this option, the order of row keys in a `bigtable::RowRange`
+ * does not change. The row keys still must be supplied in lexicographic order.
+ *
+ * @snippet read_snippets.cc reverse scan
+ *
+ * @see https://cloud.google.com/bigtable/docs/reads#reverse-scan
+ *
+ * @ingroup bigtable-options
+ */
+struct ReverseScanOption {
+  using Type = bool;
 };
 
 /**
@@ -139,17 +162,6 @@ using ClientOptionList =
     OptionList<DataEndpointOption, AdminEndpointOption,
                InstanceAdminEndpointOption, MinConnectionRefreshOption,
                MaxConnectionRefreshOption>;
-
-using DataRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    bigtable::internal::SafeGrpcRetry>;
-
-using DataLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigtable::internal::SafeGrpcRetry>;
-
-using DataLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigtable::internal::SafeGrpcRetry>;
 
 /**
  * Option to configure the retry policy used by `Table`.

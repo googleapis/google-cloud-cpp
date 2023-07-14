@@ -673,13 +673,6 @@
 ./include/google/cloud/functions/v1
 ./include/google/cloud/functions/v1/internal
 ./include/google/cloud/functions/v1/mocks
-./include/google/cloud/gameservices
-./include/google/cloud/gameservices/mocks
-./include/google/cloud/gameservices/v1
-./include/google/cloud/gameservices/v1/internal
-./include/google/cloud/gameservices/v1/mocks
-./include/google/cloud/gaming
-./include/google/cloud/gaming/v1
 ./include/google/cloud/gkebackup
 ./include/google/cloud/gkebackup/v1
 ./include/google/cloud/gkebackup/v1/internal
@@ -847,6 +840,10 @@
 ./include/google/cloud/pubsublite/internal
 ./include/google/cloud/pubsublite/mocks
 ./include/google/cloud/pubsublite/v1
+./include/google/cloud/rapidmigrationassessment
+./include/google/cloud/rapidmigrationassessment/v1
+./include/google/cloud/rapidmigrationassessment/v1/internal
+./include/google/cloud/rapidmigrationassessment/v1/mocks
 ./include/google/cloud/recaptchaenterprise
 ./include/google/cloud/recaptchaenterprise/v1
 ./include/google/cloud/recaptchaenterprise/v1/internal
@@ -1159,7 +1156,6 @@
 ./lib64/cmake/google_cloud_cpp_eventarc
 ./lib64/cmake/google_cloud_cpp_filestore
 ./lib64/cmake/google_cloud_cpp_functions
-./lib64/cmake/google_cloud_cpp_gameservices
 ./lib64/cmake/google_cloud_cpp_gkebackup
 ./lib64/cmake/google_cloud_cpp_gkehub
 ./lib64/cmake/google_cloud_cpp_gkemulticloud
@@ -1189,6 +1185,7 @@
 ./lib64/cmake/google_cloud_cpp_profiler
 ./lib64/cmake/google_cloud_cpp_pubsub
 ./lib64/cmake/google_cloud_cpp_pubsublite
+./lib64/cmake/google_cloud_cpp_rapidmigrationassessment
 ./lib64/cmake/google_cloud_cpp_recaptchaenterprise
 ./lib64/cmake/google_cloud_cpp_recommender
 ./lib64/cmake/google_cloud_cpp_redis

@@ -86,6 +86,15 @@ SqlInstancesServiceTracingConnection::Failover(
   return internal::EndSpan(*span, child_->Failover(request));
 }
 
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceTracingConnection::Reencrypt(
+    google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Reencrypt");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Reencrypt(request));
+}
+
 StatusOr<google::cloud::sql::v1::DatabaseInstance>
 SqlInstancesServiceTracingConnection::Get(
     google::cloud::sql::v1::SqlInstancesGetRequest const& request) {
@@ -259,6 +268,36 @@ SqlInstancesServiceTracingConnection::StartExternalSync(
       "sql_v1::SqlInstancesServiceConnection::StartExternalSync");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->StartExternalSync(request));
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceTracingConnection::PerformDiskShrink(
+    google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::PerformDiskShrink");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->PerformDiskShrink(request));
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
+SqlInstancesServiceTracingConnection::GetDiskShrinkConfig(
+    google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::GetDiskShrinkConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDiskShrinkConfig(request));
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceTracingConnection::ResetReplicaSize(
+    google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::ResetReplicaSize");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ResetReplicaSize(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

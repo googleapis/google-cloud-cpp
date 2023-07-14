@@ -24,6 +24,8 @@ namespace {
 
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ContainsRegex;
+using ::testing::ElementsAre;
+using ::testing::ElementsAreArray;
 using ::testing::Not;
 
 TEST(Base64, RoundTrip) {
@@ -139,6 +141,47 @@ TEST(Base64, ValidateBase64StringFailures) {
     EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk),
                                  ContainsRegex("Invalid base64.*at offset 0")));
   }
+}
+
+TEST(Base64, UrlsafeBase64Encode) {
+  // Produced input using:
+  //     echo 'TG9yZ+W0gaXBz/dW1cMACg==' | openssl base64 -d | od -t x1
+  std::vector<std::uint8_t> input{
+      0x4c, 0x6f, 0x72, 0x67, 0xe5, 0xb4, 0x81, 0xa5,
+      0xc1, 0xcf, 0xf7, 0x56, 0xd5, 0xc3, 0x00, 0x0a,
+  };
+  EXPECT_EQ("TG9yZ-W0gaXBz_dW1cMACg", UrlsafeBase64Encode(input));
+}
+
+TEST(Base64, Base64Decode) {
+  // Produced input using:
+  //     echo 'TG9yZ+W0gaXBz/dW1cMACg==' | openssl base64 -d | od -t x1
+  std::vector<std::uint8_t> expected{
+      0x4c, 0x6f, 0x72, 0x67, 0xe5, 0xb4, 0x81, 0xa5,
+      0xc1, 0xcf, 0xf7, 0x56, 0xd5, 0xc3, 0x00, 0x0a,
+  };
+  EXPECT_THAT(UrlsafeBase64Decode("TG9yZ-W0gaXBz_dW1cMACg").value(),
+              ElementsAreArray(expected));
+}
+
+TEST(Base64, Base64DecodePadding) {
+  // Produced input using:
+  // cSpell:disable
+  // $ echo -n 'A' | openssl base64 -e
+  // QQ==
+  // $ echo -n 'AB' | openssl base64 -e
+  // QUI=
+  // $ echo -n 'ABC' | openssl base64 -e
+  // QUJD
+  // $ echo -n 'ABCD' | openssl base64 -e
+  // QUJDRAo=
+  // cSpell:enable
+
+  EXPECT_THAT(UrlsafeBase64Decode("QQ").value(), ElementsAre('A'));
+  EXPECT_THAT(UrlsafeBase64Decode("QUI").value(), ElementsAre('A', 'B'));
+  EXPECT_THAT(UrlsafeBase64Decode("QUJD").value(), ElementsAre('A', 'B', 'C'));
+  EXPECT_THAT(UrlsafeBase64Decode("QUJDRA").value(),
+              ElementsAre('A', 'B', 'C', 'D'));
 }
 
 }  // namespace

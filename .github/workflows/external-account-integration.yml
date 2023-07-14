@@ -44,7 +44,7 @@ jobs:
           path: |
             ~/.cache/vcpkg
           key: |
-            vcpkg-${{ steps.vcpkg-version.outputs.version }}-${{ hashFiles('vcpkg.json') }}
+            vcpkg-${{ steps.vcpkg-version.outputs.version }}-${{ hashFiles('vcpkg.json', '/usr/bin/g++', '/usr/bin/gcc') }}
           restore-keys: |
             vcpkg-${{ steps.vcpkg-version.outputs.version }}-
 
@@ -55,6 +55,13 @@ jobs:
           cmake -G Ninja -S . -B "${{runner.temp}}/build" \
               -DGOOGLE_CLOUD_CPP_ENABLE=storage,iam \
               -DCMAKE_TOOLCHAIN_FILE="${{runner.temp}}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+
+      - uses: actions/cache/save@v3
+        if: always()
+        with:
+          path: |
+            ~/.cache/vcpkg
+          key: vcpkg-${{ steps.vcpkg-version.outputs.version }}-${{ hashFiles('vcpkg.json', '/usr/bin/g++', '/usr/bin/gcc') }}
 
       - name: build
         run: |

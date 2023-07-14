@@ -21,7 +21,7 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::pair<std::string, std::string> MakeHeader(internal::AccessToken const& t) {
+std::pair<std::string, std::string> MakeHeader(AccessToken const& t) {
   return {"Authorization", t.token};
 }
 

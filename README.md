@@ -230,9 +230,6 @@ See each library's `README.md` file for more information about:
 - [Cloud Functions API](google/cloud/functions/README.md)
   [\[quickstart\]](google/cloud/functions/quickstart/README.md)
   [\[reference\]](https://cloud.google.com/cpp/docs/reference/functions/latest)
-- [Game Services API](google/cloud/gameservices/README.md)
-  [\[quickstart\]](google/cloud/gameservices/quickstart/README.md)
-  [\[reference\]](https://cloud.google.com/cpp/docs/reference/gameservices/latest)
 - [Backup for GKE API](google/cloud/gkebackup/README.md)
   [\[quickstart\]](google/cloud/gkebackup/quickstart/README.md)
   [\[reference\]](https://cloud.google.com/cpp/docs/reference/gkebackup/latest)
@@ -317,6 +314,9 @@ See each library's `README.md` file for more information about:
 - [Google Cloud Pub/Sub](google/cloud/pubsub/README.md)
   [\[quickstart\]](google/cloud/pubsub/quickstart/README.md)
   [\[reference\]](https://cloud.google.com/cpp/docs/reference/pubsub/latest)
+- [Rapid Migration Assessment API](google/cloud/rapidmigrationassessment/README.md)
+  [\[quickstart\]](google/cloud/rapidmigrationassessment/quickstart/README.md)
+  [\[reference\]](https://cloud.google.com/cpp/docs/reference/rapidmigrationassessment/latest)
 - [reCAPTCHA Enterprise API](google/cloud/recaptchaenterprise/README.md)
   [\[quickstart\]](google/cloud/recaptchaenterprise/quickstart/README.md)
   [\[reference\]](https://cloud.google.com/cpp/docs/reference/recaptchaenterprise/latest)
@@ -496,167 +496,22 @@ The binary artifacts, such as examples, will be placed in `cmake-out/`.
 
 ## Public API and API Breaking Changes
 
-This project follows Google's [OSS Library Breaking Change Policy][breaking-change-policy].
+This project follows Google's [OSS Library Breaking Change Policy].
 
-In general, we avoid making backwards incompatible changes to our C++ APIs (see
-below for the definition of "API"). Sometimes such changes yield benefits to
+In general, we avoid making backwards incompatible changes to our
+[public API](/doc/public-api.md). Sometimes such changes yield benefits to
 our customers, in the form of better performance, easier-to-understand APIs,
 and/or more consistent APIs across services. When these benefits warrant it, we
-will announce these changes prominently in our `CHANGELOG.md` file and in the
-affected release's notes. Nevertheless, though we take commercially reasonable
-efforts to prevent this, it is possible that backwards incompatible changes go
-undetected and, therefore, undocumented. We apologize if this is the case and
-welcome feedback or bug reports to rectify the problem.
+will:
 
-By "API" we mean the C++ API exposed by public header files in this repo. We
-are not talking about the gRPC or REST APIs exposed by Google Cloud servers. We
-are also talking only about A**P**I stability -- the ABI is subject to change
-without notice. You should not assume that binary artifacts (e.g. static
-libraries, shared objects, dynamically loaded libraries, object files) created
-with one version of the library are usable with newer/older versions of the
-library. The ABI may, and does, change on "minor revisions", and even patch
-releases.
+- Announce these changes prominently in our `CHANGELOG.md` file and in the
+  affected release's notes.
+- Increase the major version for `google-cloud-cpp`.
 
-We request that our customers adhere to the following guidelines to avoid
-accidentally depending on parts of the library we do not consider to be part of
-the public API and therefore may change (including removal) without notice:
-
-Previous versions of the library will remain available on the [GitHub Releases
-page](https://github.com/googleapis/google-cloud-cpp/releases). In many cases,
-you will be able to use an older version even if a newer version has changes
-that you are unable (or do not have time) to adopt.
-
-Note that this document has no bearing on the Google Cloud Platform deprecation
-policy described at https://cloud.google.com/terms.
-
-### C++ Symbols and Files
-
-- You should only include headers matching the `google/cloud/${library}/*.h`,
-  `google/cloud/${library}/mock/*.h` or `google/cloud/*.h` patterns.
-- You should **NOT** directly include headers in any subdirectories, such as
-  `google/cloud/${library}/internal`.
-- The files *included from* our public headers are **not part of our public
-  API**. Depending on indirect includes may break your build in the future, as
-  we may change a header `"foo.h"` to stop including `"bar.h"` if `"foo.h"` no
-  longer needs the symbols in `"bar.h"`. To avoid having your code broken, you
-  should directly include the public headers that define all the symbols you
-  use (this is sometimes known as
-  [include-what-you-use](https://include-what-you-use.org/)).
-- Any file or symbol that lives within a directory or namespace containing
-  `internal`, `impl`, `test`, `detail`, `benchmark`, `sample`, or `example`, is
-  explicitly **not part of our public API**.
-- Any file or symbol with `Impl` or `impl` in its name is **not part of our
-  public API**.
-- Any symbol with `experimental` in its name is not part of the public API.
-- You should avoid naming our inline namespaces (even avoid spelling the
-  preprocessor names like `GOOGLE_CLOUD_CPP_NS`) and instead rely on them being
-  a transparent versioning mechanism that you almost certainly don't care
-  about. If you do spell out specific inline namespace names, your code will be
-  tightly coupled with that specific version and will likely break when
-  upgrading to a new version of our library.
-
-## Beyond the C++ API
-
-Applications developers interact with a C++ library through more than just
-the C++ symbols and headers. They also need to reference the name of the
-library in their build scripts. Depending on the build system they use
-this may be a CMake target, a Bazel rule, a pkg-config module, or just the
-name of some object in the file system.
-
-As with the C++ API, we try to avoid breaking changes to these interface
-points. Sometimes such changes yield benefits to our customers, in the form of
-bug fixes, increased consistency across services, or easier to understand names.
-When these benefits warrant it, we will announce these changes prominently in
-our `CHANGELOG.md` file and in the affected release's notes.  Nevertheless,
-though we take commercially reasonable efforts to prevent this, it is possible
-that backwards incompatible changes go undetected and, therefore, undocumented.
-We apologize if this is the case and welcome feedback or bug reports to rectify
-the problem.
-
-### Experimental Libraries
-
-From time to time we add libraries to `google-cloud-cpp` to validate new
-designs, expose experimental (or otherwise not generally available) GCP
-features, or simply because a library is not yet complete. Such libraries
-will have `experimental` in their CMake target and Bazel rule names. The
-README file for these libraries will also document that they are experimental.
-Such libraries are subject to change, including removal, without notice.
-This includes, but it is not limited to, all their symbols, pre-processor
-macros, files, targets, rules, and installed artifacts.
-
-### Bazel rules
-
-Only the rules exported at the top-level directory are intended for customer
-use, e.g.,`//:spanner`. Experimental rules have `experimental` in their name,
-e.g. `//:experimental-logging`. As previously stated, experimental rules are
-subject to change or removal without notice.
-
-### CMake targets and packages
-
-Only CMake packages starting with the `google_cloud_cpp_` prefix are intended
-for customer use. Only targets starting with `google-cloud-cpp::`, are intended
-for customer use. Experimental targets have `experimental` in their name (e.g.
-`google-cloud-cpp::experimental-logging`). As previously stated, experimental
-targets are subject to change or removal without notice.
-
-### pkg-config modules
-
-Only modules starting with `google_cloud_cpp_` are intended for customer use.
-
-### Unsupported use cases
-
-We try to provide stable names for the previously described mechanisms:
-
-- Bazel rules,
-- CMake targets loaded via `find_package()`,
-- pkg-config modules
-
-It is certainly possible to use the library using other approaches. While
-these may work, we may accidentally break these from time to time. Examples of
-such, and the recommended alternatives, include:
-
-- CMake's `FetchContent` and/or git submodules: in these approaches the
-  `google-cloud-cpp` library becomes a subdirectory of a larger CMake build
-  We do not test `google-cloud-cpp` in these  configurations, and we find them
-  brittle as **all** CMake targets become visible to the larger project.
-  This is both prone to conflicts, and makes it impossible to enforce that
-  some targets are only for testing or are implementation details.
-  Applications may want to consider source package managers, such as
-  `vcpkg`, or CMake super builds via `ExternalProject_Add()` as alternatives.
-
-- Using library names directly: applications should not use the
-  library names, e.g., by using `-lgoogle_cloud_cpp_bigtable`
-  in build scripts. We may need to split or merge libraries over time,
-  making such names unstable. Applications should use CMake targets,
-  e.g., `google-cloud-cpp::bigtable`, or pkg-config modules, e.g.,
-  `$(pkg-config google_cloud_cpp_bigtable --libs)` instead.
-
-### Environment Variables
-
-Environment variables referenced in our documentation come with the same
-guarantees as our public APIs. That is, we are committed to supporting their
-behavior unless the behavior affects experimental components, or the environment
-variable itself is experimental.
-
-### Telemetry Data
-
-The library can be configured to produce telemetry data, such as logs or traces.
-We make no guarantees around the **contents** of such data. For example, we may
-change the format of our logs, or the names of our spans without notice.
-
-The APIs to programmatically enable logging and tracing have the same guarantees
-as any other public APIs in our libraries.
-
-### Documentation and Comments
-
-The documentation (and its links) is intended for human consumption and not
-third party websites, or automation (such as scripts scraping the contents). The
-contents and links of our documentation may change without notice.
-
-### Other Interface Points
-
-We think this covers all interface points, if we missed something please
-file a [GitHub issue][github-issue].
+Nevertheless, though we take commercially reasonable efforts to prevent this,
+it is possible that backwards incompatible changes go undetected and, therefore,
+undocumented. We apologize if this is the case and welcome feedback or bug
+reports to rectify the problem.
 
 ## Contact us
 
@@ -673,7 +528,6 @@ properly format your code.
 
 Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 
-[breaking-change-policy]: https://opensource.google/documentation/policies/library-breaking-change
 [changelog]: /CHANGELOG.md
 [codecov-link]: https://codecov.io/gh/googleapis/google-cloud-cpp
 [codecov-shield]: https://codecov.io/gh/googleapis/google-cloud-cpp/branch/main/graph/badge.svg
@@ -683,7 +537,6 @@ Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 [gcb-clang-tidy-shield]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/clang-tidy.svg
 [github discussions]: https://github.com/googleapis/google-cloud-cpp/discussions
 [github issues]: https://github.com/googleapis/google-cloud-cpp/issues
-[github-issue]: https://github.com/googleapis/google-cloud-cpp/issues/new/choose
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [kokoro-macos-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel-link.html
 [kokoro-macos-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel.svg
@@ -693,5 +546,6 @@ Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 [kokoro-windows-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-bazel.svg
 [kokoro-windows-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake-link.html
 [kokoro-windows-cmake-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake.svg
+[oss library breaking change policy]: https://opensource.google/documentation/policies/library-breaking-change
 [support-matrix]: https://github.com/google/oss-policies-info/blob/main/foundational-cxx-support-matrix.md
 [support-policy]: https://opensource.google/documentation/policies/cplusplus-support

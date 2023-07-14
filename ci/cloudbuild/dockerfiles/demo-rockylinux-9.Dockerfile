@@ -25,7 +25,7 @@ RUN dnf makecache && \
     dnf update -y && \
     dnf install -y epel-release && \
     dnf makecache && \
-    dnf install -y ccache cmake findutils gcc-c++ git make openssl-devel \
+    dnf install -y cmake findutils gcc-c++ git make openssl-devel \
         patch zlib-devel libcurl-devel c-ares-devel tar wget which
 # ```
 
@@ -96,7 +96,7 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | 
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -117,7 +117,7 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz 
 
 # ```bash
 WORKDIR /var/tmp/build/re2
-RUN curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
+RUN curl -fsSL https://github.com/google/re2/archive/2023-07-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -137,7 +137,7 @@ RUN curl -fsSL https://github.com/google/re2/archive/2023-06-02.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=17 \
@@ -201,6 +201,12 @@ RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
 
 ## [DONE packaging.md]
 
-# Some of the above libraries may have installed in /usr/local, so make sure
-# those library directories will be found.
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache
+
+# Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*

@@ -22,6 +22,7 @@
 #include "google/cloud/monitoring/v3/internal/service_monitoring_retry_traits.h"
 #include "google/cloud/monitoring/v3/service_monitoring_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -34,17 +35,145 @@ namespace cloud {
 namespace monitoring_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ServiceMonitoringServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        monitoring_v3_internal::ServiceMonitoringServiceRetryTraits>;
+/// The retry policy for `ServiceMonitoringServiceConnection`.
+class ServiceMonitoringServiceRetryPolicy
+    : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<ServiceMonitoringServiceRetryPolicy> clone()
+      const = 0;
+};
 
-using ServiceMonitoringServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        monitoring_v3_internal::ServiceMonitoringServiceRetryTraits>;
+/**
+ * A retry policy for `ServiceMonitoringServiceConnection` based on counting
+ * errors.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - More than a prescribed number of transient failures is detected.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class ServiceMonitoringServiceLimitedErrorCountRetryPolicy
+    : public ServiceMonitoringServiceRetryPolicy {
+ public:
+  /**
+   * Create an instance that tolerates up to @p maximum_failures transient
+   * errors.
+   *
+   * @note Disable the retry loop by providing an instance of this policy with
+   *     @p maximum_failures == 0.
+   */
+  explicit ServiceMonitoringServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using ServiceMonitoringServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        monitoring_v3_internal::ServiceMonitoringServiceRetryTraits>;
+  ServiceMonitoringServiceLimitedErrorCountRetryPolicy(
+      ServiceMonitoringServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : ServiceMonitoringServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+  ServiceMonitoringServiceLimitedErrorCountRetryPolicy(
+      ServiceMonitoringServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : ServiceMonitoringServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<ServiceMonitoringServiceRetryPolicy> clone() const override {
+    return std::make_unique<
+        ServiceMonitoringServiceLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = ServiceMonitoringServiceRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      monitoring_v3_internal::ServiceMonitoringServiceRetryTraits>
+      impl_;
+};
+
+/**
+ * A retry policy for `ServiceMonitoringServiceConnection` based on elapsed
+ * time.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - The elapsed time in the retry loop exceeds a prescribed duration.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class ServiceMonitoringServiceLimitedTimeRetryPolicy
+    : public ServiceMonitoringServiceRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the underlying
+   *     arithmetic type used to store the number of ticks. For our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`. For our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires.
+   *     While the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit ServiceMonitoringServiceLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  ServiceMonitoringServiceLimitedTimeRetryPolicy(
+      ServiceMonitoringServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : ServiceMonitoringServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
+  }
+  ServiceMonitoringServiceLimitedTimeRetryPolicy(
+      ServiceMonitoringServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : ServiceMonitoringServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
+  }
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<ServiceMonitoringServiceRetryPolicy> clone() const override {
+    return std::make_unique<ServiceMonitoringServiceLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = ServiceMonitoringServiceRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      monitoring_v3_internal::ServiceMonitoringServiceRetryTraits>
+      impl_;
+};
 
 /**
  * The `ServiceMonitoringServiceConnection` object for

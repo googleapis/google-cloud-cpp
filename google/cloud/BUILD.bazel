@@ -17,6 +17,21 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 load(":capture_build_info.bzl", "capture_build_info")
+load(":google_cloud_cpp_common_benchmarks.bzl", "google_cloud_cpp_common_benchmarks")
+load(":google_cloud_cpp_common_unit_tests.bzl", "google_cloud_cpp_common_unit_tests")
+load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")
+load(":google_cloud_cpp_grpc_utils_benchmarks.bzl", "google_cloud_cpp_grpc_utils_benchmarks")
+load(":google_cloud_cpp_grpc_utils_integration_tests.bzl", "google_cloud_cpp_grpc_utils_integration_tests")
+load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils_unit_tests")
+load(":google_cloud_cpp_grpc_utils.bzl", "google_cloud_cpp_grpc_utils_hdrs", "google_cloud_cpp_grpc_utils_srcs")
+load(":google_cloud_cpp_mocks.bzl", "google_cloud_cpp_mocks_hdrs")
+load(":google_cloud_cpp_rest_internal_benchmarks.bzl", "google_cloud_cpp_rest_internal_benchmarks")
+load(":google_cloud_cpp_rest_internal_emulator_integration_tests.bzl", "google_cloud_cpp_rest_internal_emulator_integration_tests")
+load(":google_cloud_cpp_rest_internal_production_integration_tests.bzl", "google_cloud_cpp_rest_internal_production_integration_tests")
+load(":google_cloud_cpp_rest_internal_unit_tests.bzl", "google_cloud_cpp_rest_internal_unit_tests")
+load(":google_cloud_cpp_rest_internal.bzl", "google_cloud_cpp_rest_internal_hdrs", "google_cloud_cpp_rest_internal_srcs")
+load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cpp_rest_protobuf_internal_unit_tests")
+load(":google_cloud_cpp_rest_protobuf_internal.bzl", "google_cloud_cpp_rest_protobuf_internal_hdrs", "google_cloud_cpp_rest_protobuf_internal_srcs")
 
 capture_build_info(
     name = "generate_build_info",
@@ -41,8 +56,6 @@ config_setting(
         "//:enable-experimental-opentelemetry": "false",
     },
 )
-
-load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")
 
 cc_library(
     name = "google_cloud_cpp_common_private",
@@ -105,11 +118,6 @@ cc_library(
     deps = [":google_cloud_cpp_common_private"],
 )
 
-load(
-    ":google_cloud_cpp_common_unit_tests.bzl",
-    "google_cloud_cpp_common_unit_tests",
-)
-
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
@@ -125,8 +133,6 @@ load(
     ],
 ) for test in google_cloud_cpp_common_unit_tests]
 
-load(":google_cloud_cpp_common_benchmarks.bzl", "google_cloud_cpp_common_benchmarks")
-
 [cc_test(
     name = benchmark.replace("/", "_").replace(".cc", ""),
     srcs = [benchmark],
@@ -136,8 +142,6 @@ load(":google_cloud_cpp_common_benchmarks.bzl", "google_cloud_cpp_common_benchma
         "@com_google_benchmark//:benchmark_main",
     ],
 ) for benchmark in google_cloud_cpp_common_benchmarks]
-
-load(":google_cloud_cpp_grpc_utils.bzl", "google_cloud_cpp_grpc_utils_hdrs", "google_cloud_cpp_grpc_utils_srcs")
 
 cc_library(
     name = "google_cloud_cpp_grpc_utils_private",
@@ -177,8 +181,6 @@ cc_library(
     deps = [":google_cloud_cpp_grpc_utils_private"],
 )
 
-load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils_unit_tests")
-
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
@@ -193,8 +195,6 @@ load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_grpc_utils_unit_tests]
-
-load(":google_cloud_cpp_grpc_utils_integration_tests.bzl", "google_cloud_cpp_grpc_utils_integration_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
@@ -214,8 +214,6 @@ load(":google_cloud_cpp_grpc_utils_integration_tests.bzl", "google_cloud_cpp_grp
     ],
 ) for test in google_cloud_cpp_grpc_utils_integration_tests]
 
-load(":google_cloud_cpp_grpc_utils_benchmarks.bzl", "google_cloud_cpp_grpc_utils_benchmarks")
-
 [cc_binary(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
@@ -228,8 +226,6 @@ load(":google_cloud_cpp_grpc_utils_benchmarks.bzl", "google_cloud_cpp_grpc_utils
         "@com_google_googleapis//google/spanner/v1:spanner_cc_grpc",
     ],
 ) for test in google_cloud_cpp_grpc_utils_benchmarks]
-
-load(":google_cloud_cpp_mocks.bzl", "google_cloud_cpp_mocks_hdrs")
 
 cc_library(
     name = "google_cloud_cpp_mocks",
@@ -244,8 +240,6 @@ cc_library(
         ":google_cloud_cpp_common",
     ],
 )
-
-load(":google_cloud_cpp_rest_internal.bzl", "google_cloud_cpp_rest_internal_hdrs", "google_cloud_cpp_rest_internal_srcs")
 
 cc_library(
     name = "google_cloud_cpp_rest_internal",
@@ -271,8 +265,6 @@ cc_library(
     ],
 )
 
-load(":google_cloud_cpp_rest_internal_unit_tests.bzl", "google_cloud_cpp_rest_internal_unit_tests")
-
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
@@ -283,8 +275,6 @@ load(":google_cloud_cpp_rest_internal_unit_tests.bzl", "google_cloud_cpp_rest_in
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_internal_unit_tests]
-
-load(":google_cloud_cpp_rest_internal_emulator_integration_tests.bzl", "google_cloud_cpp_rest_internal_emulator_integration_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
@@ -299,8 +289,6 @@ load(":google_cloud_cpp_rest_internal_emulator_integration_tests.bzl", "google_c
     ],
 ) for test in google_cloud_cpp_rest_internal_emulator_integration_tests]
 
-load(":google_cloud_cpp_rest_internal_production_integration_tests.bzl", "google_cloud_cpp_rest_internal_production_integration_tests")
-
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
@@ -314,8 +302,6 @@ load(":google_cloud_cpp_rest_internal_production_integration_tests.bzl", "google
     ],
 ) for test in google_cloud_cpp_rest_internal_production_integration_tests]
 
-load(":google_cloud_cpp_rest_internal_benchmarks.bzl", "google_cloud_cpp_rest_internal_benchmarks")
-
 [cc_binary(
     name = benchmark.replace("/", "_").replace(".cc", ""),
     srcs = [benchmark],
@@ -325,8 +311,6 @@ load(":google_cloud_cpp_rest_internal_benchmarks.bzl", "google_cloud_cpp_rest_in
         "@com_google_benchmark//:benchmark_main",
     ],
 ) for benchmark in google_cloud_cpp_rest_internal_benchmarks]
-
-load(":google_cloud_cpp_rest_protobuf_internal.bzl", "google_cloud_cpp_rest_protobuf_internal_hdrs", "google_cloud_cpp_rest_protobuf_internal_srcs")
 
 cc_library(
     name = "google_cloud_cpp_rest_protobuf_internal",
@@ -339,8 +323,6 @@ cc_library(
         ":google_cloud_cpp_rest_internal",
     ],
 )
-
-load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cpp_rest_protobuf_internal_unit_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),

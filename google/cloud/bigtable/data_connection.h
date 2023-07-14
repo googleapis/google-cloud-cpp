@@ -49,6 +49,7 @@ struct ReadRowsParams {
   RowSet row_set;
   std::int64_t rows_limit;
   Filter filter = Filter::PassAllFilter();
+  bool reverse = false;
 };
 
 /**

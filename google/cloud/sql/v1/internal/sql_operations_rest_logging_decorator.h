@@ -49,6 +49,10 @@ class SqlOperationsServiceRestLogging : public SqlOperationsServiceRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlOperationsListRequest const& request) override;
 
+  Status Cancel(google::cloud::rest_internal::RestContext& rest_context,
+                google::cloud::sql::v1::SqlOperationsCancelRequest const&
+                    request) override;
+
  private:
   std::shared_ptr<SqlOperationsServiceRestStub> child_;
   TracingOptions tracing_options_;

@@ -33,6 +33,7 @@ using ::std::chrono::duration_cast;
 using ::std::chrono::microseconds;
 using ::std::chrono::milliseconds;
 using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 
 class DataIntegrationTest : public TableIntegrationTest,
@@ -240,6 +241,30 @@ TEST_P(DataIntegrationTest, TableReadRowsPartialRows) {
     auto reader = table.ReadRows(std::move(rows), Filter::PassAllFilter());
     CheckEqualUnordered(expected, MoveCellsFromReader(reader));
   }
+}
+
+TEST_P(DataIntegrationTest, TableReadRowsReverseScan) {
+  if (GetParam() == "with-data-client") GTEST_SKIP();
+  // The emulator does not yet support reverse scans.
+  if (UsingCloudBigtableEmulator()) GTEST_SKIP();
+  auto table = GetTable(GetParam());
+
+  std::vector<Cell> created{{"row-key-1", kFamily4, "c1", 1000, "a"},
+                            {"row-key-1", kFamily4, "c2", 2000, "b"},
+                            {"row-key-2", kFamily4, "c1", 3000, "c"},
+                            {"row-key-3", kFamily4, "c1", 4000, "d"}};
+
+  CreateCells(table, created);
+
+  auto reader = table.ReadRows(RowSet(), Filter::PassAllFilter(),
+                               Options{}.set<ReverseScanOption>(true));
+  auto cells = MoveCellsFromReader(reader);
+  CheckEqualUnordered(created, cells);
+  std::vector<RowKeyType> rows(cells.size());
+  std::transform(cells.begin(), cells.end(), rows.begin(),
+                 [](Cell const& cell) { return cell.row_key(); });
+  EXPECT_THAT(rows,
+              ElementsAre("row-key-3", "row-key-2", "row-key-1", "row-key-1"));
 }
 
 TEST_P(DataIntegrationTest, TableReadRowsNoRows) {

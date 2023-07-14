@@ -44,7 +44,7 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
 /// Parses a refresh response JSON string into an access token.
-StatusOr<internal::AccessToken> ParseAuthorizedUserRefreshResponse(
+StatusOr<AccessToken> ParseAuthorizedUserRefreshResponse(
     rest_internal::RestResponse& response,
     std::chrono::system_clock::time_point now);
 
@@ -81,7 +81,7 @@ class AuthorizedUserCredentials : public Credentials {
   /**
    * Returns a key value pair for an "Authorization" header.
    */
-  StatusOr<internal::AccessToken> GetToken(
+  StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
 
  private:

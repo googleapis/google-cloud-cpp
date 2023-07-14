@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_STREAM_RETRY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_STREAM_RETRY_POLICY_H
 
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/retry_policy.h"
 #include "google/cloud/status.h"
 #include <functional>
 #include <unordered_set>
@@ -25,7 +25,7 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class StreamRetryPolicy : public google::cloud::internal::RetryPolicy {
+class StreamRetryPolicy : public google::cloud::RetryPolicy {
  public:
   bool OnFailure(Status const& s) override {
     return retryable_codes_.find(s.code()) != retryable_codes_.end();

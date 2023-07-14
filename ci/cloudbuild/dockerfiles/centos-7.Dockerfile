@@ -23,7 +23,7 @@ RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.
 RUN yum install -y centos-release-scl yum-utils
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
 RUN yum makecache && \
-    yum install -y automake ccache cmake3 curl-devel devtoolset-7 gcc gcc-c++ \
+    yum install -y automake cmake3 curl-devel devtoolset-7 gcc gcc-c++ \
         git libtool make ninja-build openssl-devel patch re2-devel tar wget \
         which zlib-devel
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
@@ -76,7 +76,7 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | 
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.3.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -96,7 +96,7 @@ RUN curl -fsSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -154,7 +154,7 @@ RUN curl -fsSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
 
 # Download and compile Google microbenchmark support library:
 WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
+RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE="Release" \
@@ -180,4 +180,12 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache
+
+# Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*

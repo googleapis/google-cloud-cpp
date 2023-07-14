@@ -103,7 +103,7 @@ CurlRestClient::CurlRestClient(std::string endpoint_address,
                                 google::cloud::internal::ApiClientHeader()),
       options_(std::move(options)) {
   if (options_.has<UnifiedCredentialsOption>()) {
-    credentials_ = MapCredentials(options_.get<UnifiedCredentialsOption>());
+    credentials_ = MapCredentials(*options_.get<UnifiedCredentialsOption>());
   }
 }
 

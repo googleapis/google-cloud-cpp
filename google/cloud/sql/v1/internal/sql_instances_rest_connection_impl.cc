@@ -114,6 +114,20 @@ SqlInstancesServiceRestConnectionImpl::Failover(
       request, __func__);
 }
 
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestConnectionImpl::Reencrypt(
+    google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->Reencrypt(request),
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
+        return stub_->Reencrypt(rest_context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::sql::v1::DatabaseInstance>
 SqlInstancesServiceRestConnectionImpl::Get(
     google::cloud::sql::v1::SqlInstancesGetRequest const& request) {
@@ -383,6 +397,52 @@ SqlInstancesServiceRestConnectionImpl::StartExternalSync(
              google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
                  request) {
         return stub_->StartExternalSync(rest_context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestConnectionImpl::PerformDiskShrink(
+    google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+        request) {
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->PerformDiskShrink(request),
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+                 request) {
+        return stub_->PerformDiskShrink(rest_context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
+SqlInstancesServiceRestConnectionImpl::GetDiskShrinkConfig(
+    google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+        request) {
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetDiskShrinkConfig(request),
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+              request) {
+        return stub_->GetDiskShrinkConfig(rest_context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestConnectionImpl::ResetReplicaSize(
+    google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
+        request) {
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ResetReplicaSize(request),
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
+                 request) {
+        return stub_->ResetReplicaSize(rest_context, request);
       },
       request, __func__);
 }

@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/async_rest_long_running_operation.h"
 #include "google/cloud/internal/extract_long_running_result.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -72,7 +73,7 @@ struct TestRetryablePolicy {
   }
 };
 
-std::unique_ptr<internal::RetryPolicy> TestRetryPolicy() {
+std::unique_ptr<RetryPolicy> TestRetryPolicy() {
   return internal::LimitedErrorCountRetryPolicy<TestRetryablePolicy>(5).clone();
 }
 

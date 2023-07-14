@@ -25,7 +25,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_internal::Clustering;
 using ::google::cloud::bigquery_v2_minimal_internal::ComputeMode;
-using ::google::cloud::bigquery_v2_minimal_internal::ConnectionProperty;
 using ::google::cloud::bigquery_v2_minimal_internal::DatasetReference;
 using ::google::cloud::bigquery_v2_minimal_internal::DmlStats;
 using ::google::cloud::bigquery_v2_minimal_internal::EncryptionConfiguration;
@@ -58,6 +57,9 @@ using ::google::cloud::bigquery_v2_minimal_internal::SearchStatistics;
 using ::google::cloud::bigquery_v2_minimal_internal::TableMetadataCacheUsage;
 using ::google::cloud::bigquery_v2_minimal_internal::TableReference;
 using ::google::cloud::bigquery_v2_minimal_internal::TimePartitioning;
+
+using ::google::cloud::bigquery_v2_minimal_testing::MakeConnectionProperty;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeDatasetReference;
 
 using ::testing::IsEmpty;
 using ::testing::Not;
@@ -151,14 +153,6 @@ RoutineReference MakeRoutineReference() {
   return r;
 }
 
-DatasetReference MakeDatasetReference() {
-  DatasetReference d;
-  d.dataset_id = "1";
-  d.project_id = "2";
-
-  return d;
-}
-
 SearchStatistics MakeSearchStatistics() {
   SearchStatistics s;
 
@@ -245,14 +239,6 @@ EncryptionConfiguration MakeEncryptionConfiguration() {
   e.kms_key_name = "encryption-key-name";
 
   return e;
-}
-
-ConnectionProperty MakeConnectionProperty() {
-  ConnectionProperty cp;
-  cp.key = "conn-prop-key";
-  cp.value = "conn-prop-val";
-
-  return cp;
 }
 
 TimePartitioning MakeTimePartitioning() {

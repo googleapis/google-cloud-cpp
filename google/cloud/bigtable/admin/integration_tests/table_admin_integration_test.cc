@@ -22,7 +22,6 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/project.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/scoped_environment.h"

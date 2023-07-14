@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
+#include "google/cloud/bigquery/v2/minimal/testing/job_query_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/job_test_utils.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -28,6 +29,7 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::MakeJob;
+using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryRequest;
 
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
@@ -981,7 +983,7 @@ TEST(CancelJobRequestTest, SuccessWithLocation) {
 
   rest_internal::RestRequest expected;
   expected.SetPath(
-      "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2");
+      "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2/cancel");
   expected.AddQueryParameter("location", "useast");
   EXPECT_EQ(expected, *actual);
 }
@@ -996,7 +998,7 @@ TEST(CancelJobRequestTest, SuccessWithoutLocation) {
 
   rest_internal::RestRequest expected;
   expected.SetPath(
-      "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2");
+      "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2/cancel");
   EXPECT_EQ(expected, *actual);
 }
 
@@ -1008,13 +1010,13 @@ TEST(CancelJobRequestTest, SuccessWithDifferentEndpoints) {
     std::string expected;
   } cases[] = {
       {"https://myendpoint.google.com",
-       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2/cancel"},
       {"http://myendpoint.google.com",
-       "http://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+       "http://myendpoint.google.com/bigquery/v2/projects/1/jobs/2/cancel"},
       {"myendpoint.google.com",
-       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2/cancel"},
       {"https://myendpoint.google.com/",
-       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2/cancel"},
   };
 
   for (auto const& test : cases) {
@@ -1076,6 +1078,142 @@ TEST(CancelJobRequestTest, DebugString) {
   project_id: "test-project-id"
   job_id: "test-job-id"
   location: "test-location"
+})");
+}
+
+TEST(PostQueryRequestTest, Success) {
+  auto const& request = MakePostQueryRequest();
+
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto actual = BuildRestRequest(request);
+  ASSERT_STATUS_OK(actual);
+
+  rest_internal::RestRequest expected;
+  expected.SetPath(
+      "https://bigquery.googleapis.com/bigquery/v2/projects/test-project-id/"
+      "queries");
+  EXPECT_EQ(expected, *actual);
+}
+
+TEST(PostQueryRequestTest, EmptyProjectId) {
+  PostQueryRequest request("");
+
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto actual = BuildRestRequest(request);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("Project Id is empty")));
+}
+
+TEST(PostQueryRequestTest, MissingQuery) {
+  PostQueryRequest request("1234");
+
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto actual = BuildRestRequest(request);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("Missing required query field")));
+}
+
+TEST(PostQueryRequestTest, DebugString) {
+  auto const& request = MakePostQueryRequest();
+
+  EXPECT_EQ(
+      request.DebugString("PostQueryRequest", TracingOptions{}),
+      R"(PostQueryRequest { project_id: "test-project-id" query_request {)"
+      R"( query: "select 1;" kind: "query-kind" parameter_mode: "parameter-mode")"
+      R"( location: "useast1" request_id: "1234" dry_run: true)"
+      R"( preserver_nulls: true use_query_cache: true use_legacy_sql: true)"
+      R"( create_session: true max_results: 10 maximum_bytes_biller: 100000)"
+      R"( timeout { "10ms" } connection_properties { key: "conn-prop-key")"
+      R"( value: "conn-prop-val" } query_parameters { name: "query-parameter-name")"
+      R"( parameter_type { type: "query-parameter-type" struct_types {)"
+      R"( name: "qp-struct-name" description: "qp-struct-description" } })"
+      R"( parameter_value { value: "query-parameter-value" } })"
+      R"( labels { key: "lk1" value: "lv1" } labels { key: "lk2" value: "lv2" })"
+      R"( default_dataset { project_id: "2" dataset_id: "1" })"
+      R"( format_options { use_int64_timestamp: true } } })");
+
+  EXPECT_EQ(
+      request.DebugString(
+          "PostQueryRequest",
+          TracingOptions{}.SetOptions("truncate_string_field_longer_than=7")),
+      R"(PostQueryRequest { project_id: "test-pr...<truncated>...")"
+      R"( query_request { query: "select ...<truncated>...")"
+      R"( kind: "query-k...<truncated>..." parameter_mode: "paramet...<truncated>...")"
+      R"( location: "useast1" request_id: "1234" dry_run: true preserver_nulls: true)"
+      R"( use_query_cache: true use_legacy_sql: true create_session: true)"
+      R"( max_results: 10 maximum_bytes_biller: 100000 timeout { "10ms" })"
+      R"( connection_properties { key: "conn-pr...<truncated>...")"
+      R"( value: "conn-pr...<truncated>..." } query_parameters {)"
+      R"( name: "query-p...<truncated>..." parameter_type {)"
+      R"( type: "query-p...<truncated>..." struct_types {)"
+      R"( name: "qp-stru...<truncated>..." description: "qp-stru...<truncated>..." } })"
+      R"( parameter_value { value: "query-p...<truncated>..." } })"
+      R"( labels { key: "lk1" value: "lv1" } labels { key: "lk2" value: "lv2" })"
+      R"( default_dataset { project_id: "2" dataset_id: "1" })"
+      R"( format_options { use_int64_timestamp: true } } })");
+
+  EXPECT_EQ(request.DebugString("PostQueryRequest", TracingOptions{}.SetOptions(
+                                                        "single_line_mode=F")),
+            R"(PostQueryRequest {
+  project_id: "test-project-id"
+  query_request {
+    query: "select 1;"
+    kind: "query-kind"
+    parameter_mode: "parameter-mode"
+    location: "useast1"
+    request_id: "1234"
+    dry_run: true
+    preserver_nulls: true
+    use_query_cache: true
+    use_legacy_sql: true
+    create_session: true
+    max_results: 10
+    maximum_bytes_biller: 100000
+    timeout {
+      "10ms"
+    }
+    connection_properties {
+      key: "conn-prop-key"
+      value: "conn-prop-val"
+    }
+    query_parameters {
+      name: "query-parameter-name"
+      parameter_type {
+        type: "query-parameter-type"
+        struct_types {
+          name: "qp-struct-name"
+          description: "qp-struct-description"
+        }
+      }
+      parameter_value {
+        value: "query-parameter-value"
+      }
+    }
+    labels {
+      key: "lk1"
+      value: "lv1"
+    }
+    labels {
+      key: "lk2"
+      value: "lv2"
+    }
+    default_dataset {
+      project_id: "2"
+      dataset_id: "1"
+    }
+    format_options {
+      use_int64_timestamp: true
+    }
+  }
 })");
 }
 

@@ -27,6 +27,7 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
 /**
  * Transforms a stream of chunks as returned by the ReadRows streaming
  * RPC into a sequence of rows.
@@ -51,7 +52,7 @@ namespace internal {
  */
 class ReadRowsParser {
  public:
-  ReadRowsParser() = default;
+  explicit ReadRowsParser(bool reverse) : reverse_(reverse) {}
 
   virtual ~ReadRowsParser() = default;
 
@@ -90,6 +91,9 @@ class ReadRowsParser {
     std::vector<std::string> labels;
   };
 
+  /// If true, we expect row keys in reverse order.
+  bool reverse_;
+
   /**
    * Moves partial results into a Cell class.
    *
@@ -127,10 +131,11 @@ class ReadRowsParserFactory {
   virtual ~ReadRowsParserFactory() = default;
 
   /// Returns a newly created parser instance.
-  virtual std::unique_ptr<ReadRowsParser> Create() {
-    return std::make_unique<ReadRowsParser>();
+  virtual std::unique_ptr<ReadRowsParser> Create(bool reverse) {
+    return std::make_unique<ReadRowsParser>(reverse);
   }
 };
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
