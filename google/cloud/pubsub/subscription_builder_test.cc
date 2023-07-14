@@ -55,7 +55,7 @@ TEST(SubscriptionBuilder, MakeNoWrapper) {
   auto const actual = PushConfigBuilder::MakeNoWrapper(true);
   google::pubsub::v1::PushConfig::NoWrapper expected;
   std::string const text = R"pb(
-    no_wrapper: "true"
+    write_metadata: true
   )pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
