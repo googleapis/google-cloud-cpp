@@ -56,29 +56,30 @@ auto const kLimitedTimeTolerance = 20_ms;
  *
  * This eliminates some amount of code duplication in the following tests.
  */
-void CheckLimitedTime(RPCRetryPolicy& tested) {
+void CheckLimitedTime(RPCRetryPolicy& tested, char const* where) {
   google::cloud::testing_util::CheckPredicateBecomesFalse(
       [&tested] { return tested.OnFailure(GrpcTransientError()); },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
-      kLimitedTimeTolerance);
+      kLimitedTimeTolerance, where);
 }
 
 void CheckLimitedTime(
-    std::unique_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy> common) {
+    std::unique_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy> common,
+    char const* where) {
   google::cloud::testing_util::CheckPredicateBecomesFalse(
       [&common] { return common->OnFailure(TransientError()); },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
-      kLimitedTimeTolerance);
+      kLimitedTimeTolerance, where);
 }
 
 /// @test A simple test for the LimitedTimeRetryPolicy.
 TEST(LimitedTimeRetryPolicy, Simple) {
   LimitedTimeRetryPolicy tested(kLimitedTimeTestPeriod);
-  CheckLimitedTime(tested);
+  CheckLimitedTime(tested, __func__);
 
   auto common = bigtable_internal::MakeCommonRetryPolicy<
       bigtable_admin::BigtableInstanceAdminRetryPolicy>(tested.clone());
-  CheckLimitedTime(std::move(common));
+  CheckLimitedTime(std::move(common), __func__);
 }
 
 /// @test A simple test for grpc::StatusCode::OK is not Permanent Error.
@@ -99,11 +100,11 @@ TEST(LimitedTimeRetryPolicy, PermanentFailureCheck) {
 TEST(LimitedTimeRetryPolicy, Clone) {
   LimitedTimeRetryPolicy original(kLimitedTimeTestPeriod);
   auto tested = original.clone();
-  CheckLimitedTime(*tested);
+  CheckLimitedTime(*tested, __func__);
 
   auto common = bigtable_internal::MakeCommonRetryPolicy<
       bigtable_admin::BigtableInstanceAdminRetryPolicy>(original.clone());
-  CheckLimitedTime(common->clone());
+  CheckLimitedTime(common->clone(), __func__);
 }
 
 /// @test Verify that non-retryable errors cause an immediate failure.

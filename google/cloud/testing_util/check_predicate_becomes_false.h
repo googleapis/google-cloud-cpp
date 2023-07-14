@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHECK_PREDICATE_BECOMES_FALSE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHECK_PREDICATE_BECOMES_FALSE_H
 
+#include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -33,7 +34,8 @@ namespace testing_util {
 template <typename Predicate>
 void CheckPredicateBecomesFalse(Predicate&& predicate,
                                 std::chrono::system_clock::time_point deadline,
-                                std::chrono::milliseconds tolerance) {
+                                std::chrono::milliseconds tolerance,
+                                char const* where) {
   // This is one of those tests that can get annoyingly flaky, it is based on
   // time.  Basically we want to know that the policy will accept failures
   // until around its prescribed deadline (50ms in this test).  Instead of
@@ -56,12 +58,22 @@ void CheckPredicateBecomesFalse(Predicate&& predicate,
     auto actual = predicate();
     auto iteration_end = std::chrono::system_clock::now();
     if (iteration_end < must_be_true_before) {
-      EXPECT_TRUE(actual);
+      EXPECT_TRUE(actual) << "deadline=" << deadline
+                          << ", tolerance=" << tolerance
+                          << ", iteration_start=" << iteration_start
+                          << ", iteration_end=" << iteration_end
+                          << ", must_be_true_before=" << must_be_true_before
+                          << ", where=" << where;
       if (actual) {
         ++true_count;
       }
     } else if (must_be_false_after < iteration_start) {
-      EXPECT_FALSE(actual);
+      EXPECT_FALSE(actual) << "deadline=" << deadline
+                           << ", tolerance=" << tolerance
+                           << ", iteration_start=" << iteration_start
+                           << ", iteration_end=" << iteration_end
+                           << ", must_be_true_before=" << must_be_true_before
+                           << ", where=" << where;
       if (!actual) {
         // Terminate the loop early if we can.
         ++false_count;

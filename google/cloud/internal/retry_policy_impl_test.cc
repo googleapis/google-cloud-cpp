@@ -51,24 +51,24 @@ auto const kLimitedTimeTolerance = std::chrono::milliseconds(20);
  *
  * This eliminates some amount of code duplication in the following tests.
  */
-void CheckLimitedTime(RetryPolicy& tested) {
+void CheckLimitedTime(RetryPolicy& tested, char const* where) {
   google::cloud::testing_util::CheckPredicateBecomesFalse(
       [&tested] { return tested.OnFailure(CreateTransientError()); },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
-      kLimitedTimeTolerance);
+      kLimitedTimeTolerance, where);
 }
 
 /// @test A simple test for the LimitedTimeRetryPolicy.
 TEST(LimitedTimeRetryPolicy, Simple) {
   LimitedTimeRetryPolicyForTest tested(kLimitedTimeTestPeriod);
-  CheckLimitedTime(tested);
+  CheckLimitedTime(tested, __func__);
 }
 
 /// @test Test cloning for LimitedTimeRetryPolicy.
 TEST(LimitedTimeRetryPolicy, Clone) {
   LimitedTimeRetryPolicyForTest original(kLimitedTimeTestPeriod);
   auto cloned = original.clone();
-  CheckLimitedTime(*cloned);
+  CheckLimitedTime(*cloned, __func__);
 }
 
 /// @test Verify that non-retryable errors cause an immediate failure.
