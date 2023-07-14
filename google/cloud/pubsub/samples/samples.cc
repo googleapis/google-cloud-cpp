@@ -414,11 +414,13 @@ void CreateBigQuerySubscription(
         pubsub::Subscription(project_id, std::move(subscription_id)),
         pubsub::SubscriptionBuilder{}.set_bigquery_config(
             pubsub::BigQueryConfigBuilder{}.set_table(table_id)));
-    if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The subscription already exists\n";
-      return;
+    if (!sub) {
+      if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+        std::cout << "The subscription already exists\n";
+        return;
+      }
+      throw std::move(sub).status();
     }
-    if (!sub) throw std::move(sub).status();
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
