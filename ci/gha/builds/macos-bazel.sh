@@ -26,9 +26,13 @@ mapfile -t test_args < <(bazel::test_args)
 test_args+=(--test_tag_filters=-integration-test)
 TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
 
+io::log_h1 "Compute targets"
+echo bazelisk "${args[@]}" query -- "$@"
+mapfile -t targets < <(bazelisk "${args[@]}" query -- "$@")
+
 io::log_h1 "Starting Build"
 time {
   # Always run //google/cloud:status_test in case the list of targets has
   # no unit tests.
-  io::run bazelisk "${args[@]}" test "${test_args[@]}" -- "$@" //google/cloud:status_test
+  io::run bazelisk "${args[@]}" test "${test_args[@]}" -- //google/cloud:status_test "${targets[@]}"
 }
