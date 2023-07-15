@@ -159,7 +159,7 @@ RUN curl -fsSL https://github.com/google/re2/archive/2023-07-01.tar.gz | \
     ldconfig
 
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.1.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \
