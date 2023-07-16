@@ -230,13 +230,10 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   OpenSSL_add_all_algorithms();
 
   PKCS12* p12_raw = [](std::string const& source) {
-    FILE* fp = std::fopen(source.c_str(), "rb");
-    if (fp == nullptr) {
-      return static_cast<PKCS12*>(nullptr);
-    }
-    auto* result = d2i_PKCS12_fp(fp, nullptr);
-    fclose(fp);
-    return result;
+    auto bio = std::unique_ptr<BIO, decltype(&BIO_free)>(
+        BIO_new_file(source.c_str(), "rb"), &BIO_free);
+    if (!bio) return static_cast<PKCS12*>(nullptr);
+    return d2i_PKCS12_bio(bio.get(), nullptr);
   }(source);
 
   std::unique_ptr<PKCS12, decltype(&PKCS12_free)> p12(p12_raw, &PKCS12_free);
