@@ -156,6 +156,10 @@ google_cloud_cpp_proto_library(
     "${PROJECT_SOURCE_DIR}")
 external_googleapis_set_version_and_alias(compute_protos)
 target_link_libraries(google_cloud_cpp_compute_protos PUBLIC ${proto_deps})
+# Some files are too big for the MSVC defaults.
+if (MSVC)
+    target_compile_options(google_cloud_cpp_compute_protos PRIVATE "/bigobj")
+endif ()
 
 file(
     GLOB source_files
@@ -175,6 +179,10 @@ target_link_libraries(
            google-cloud-cpp::rest_internal
            google-cloud-cpp::rest_protobuf_internal
            google-cloud-cpp::compute_protos)
+# Some files are too big for the MSVC defaults.
+if (MSVC)
+    target_compile_options(google_cloud_cpp_compute PRIVATE "/bigobj")
+endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_compute)
 set_target_properties(
     google_cloud_cpp_compute
