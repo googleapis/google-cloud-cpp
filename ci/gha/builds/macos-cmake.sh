@@ -20,7 +20,7 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/gha/builds/lib/macos.sh
 source module ci/gha/builds/lib/cmake.sh
 
-# Usage: macos-cmake.sh <valuee for GOOGLE_CLOUD_CPP_ENABLE>
+# Usage: macos-cmake.sh <value for GOOGLE_CLOUD_CPP_ENABLE>
 #
 # The singular argument is provided as a value for the GOOGLE_CLOUD_CPP_ENABLE
 # CMake configuration option. See /doc/compile-time-configuration.md for more
