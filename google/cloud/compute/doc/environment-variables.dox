@@ -10,9 +10,369 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_COMPUTE_ENDPOINT=...` overrides the
+- `GOOGLE_CLOUD_CPP_ACCELERATOR_TYPES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
-  used by `MakeConfidentialComputingConnection()`.
+  used by `MakeAcceleratorTypesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_ADDRESSES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeAddressesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_AUTOSCALERS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeAutoscalersConnection()`.
+
+- `GOOGLE_CLOUD_CPP_BACKEND_BUCKETS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeBackendBucketsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_BACKEND_SERVICES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeBackendServicesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_DISKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeDisksConnection()`.
+
+- `GOOGLE_CLOUD_CPP_DISK_TYPES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeDiskTypesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_EXTERNAL_VPN_GATEWAYS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeExternalVpnGatewaysConnection()`.
+
+- `GOOGLE_CLOUD_CPP_FIREWALLS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeFirewallsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_FIREWALL_POLICIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeFirewallPoliciesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_FORWARDING_RULES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeForwardingRulesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_GLOBAL_ADDRESSES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeGlobalAddressesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_GLOBAL_FORWARDING_RULES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeGlobalForwardingRulesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_GLOBAL_NETWORK_ENDPOINT_GROUPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeGlobalNetworkEndpointGroupsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_GLOBAL_OPERATIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeGlobalOperationsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_GLOBAL_ORGANIZATION_OPERATIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeGlobalOrganizationOperationsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_GLOBAL_PUBLIC_DELEGATED_PREFIXES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeGlobalPublicDelegatedPrefixesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_HEALTH_CHECKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeHealthChecksConnection()`.
+
+- `GOOGLE_CLOUD_CPP_HTTPS_HEALTH_CHECKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeHttpsHealthChecksConnection()`.
+
+- `GOOGLE_CLOUD_CPP_HTTP_HEALTH_CHECKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeHttpHealthChecksConnection()`.
+
+- `GOOGLE_CLOUD_CPP_IMAGES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeImagesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_IMAGE_FAMILY_VIEWS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeImageFamilyViewsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_INSTANCES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInstancesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_INSTANCE_GROUPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInstanceGroupsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_INSTANCE_GROUP_MANAGERS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInstanceGroupManagersConnection()`.
+
+- `GOOGLE_CLOUD_CPP_INSTANCE_TEMPLATES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInstanceTemplatesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_INTERCONNECTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInterconnectsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_INTERCONNECT_ATTACHMENTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInterconnectAttachmentsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_INTERCONNECT_LOCATIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInterconnectLocationsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_LICENSES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeLicensesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_LICENSE_CODES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeLicenseCodesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_MACHINE_IMAGES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeMachineImagesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_MACHINE_TYPES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeMachineTypesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_NETWORKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeNetworksConnection()`.
+
+- `GOOGLE_CLOUD_CPP_NETWORK_ATTACHMENTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeNetworkAttachmentsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_NETWORK_EDGE_SECURITY_SERVICES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeNetworkEdgeSecurityServicesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_NETWORK_ENDPOINT_GROUPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeNetworkEndpointGroupsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_NETWORK_FIREWALL_POLICIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeNetworkFirewallPoliciesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_NODE_GROUPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeNodeGroupsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_NODE_TEMPLATES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeNodeTemplatesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_NODE_TYPES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeNodeTypesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_PACKET_MIRRORINGS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakePacketMirroringsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_PROJECTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeProjectsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_PUBLIC_ADVERTISED_PREFIXES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakePublicAdvertisedPrefixesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_PUBLIC_DELEGATED_PREFIXES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakePublicDelegatedPrefixesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_AUTOSCALERS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionAutoscalersConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_BACKEND_SERVICES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionBackendServicesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_COMMITMENTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionCommitmentsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_DISKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionDisksConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_DISK_TYPES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionDiskTypesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_HEALTH_CHECKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionHealthChecksConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_HEALTH_CHECK_SERVICES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionHealthCheckServicesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_INSTANCES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionInstancesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_INSTANCE_GROUPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionInstanceGroupsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_INSTANCE_GROUP_MANAGERS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionInstanceGroupManagersConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_INSTANCE_TEMPLATES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionInstanceTemplatesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_NETWORK_ENDPOINT_GROUPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionNetworkEndpointGroupsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_NETWORK_FIREWALL_POLICIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionNetworkFirewallPoliciesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_NOTIFICATION_ENDPOINTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionNotificationEndpointsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_OPERATIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionOperationsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_SECURITY_POLICIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionSecurityPoliciesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_SSL_CERTIFICATES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionSslCertificatesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_SSL_POLICIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionSslPoliciesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_TARGET_HTTPS_PROXIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionTargetHttpsProxiesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_TARGET_HTTP_PROXIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionTargetHttpProxiesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_TARGET_TCP_PROXIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionTargetTcpProxiesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_URL_MAPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionUrlMapsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_RESERVATIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeReservationsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_RESOURCE_POLICIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeResourcePoliciesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_ROUTERS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRoutersConnection()`.
+
+- `GOOGLE_CLOUD_CPP_ROUTES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRoutesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SECURITY_POLICIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeSecurityPoliciesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SERVICE_ATTACHMENTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeServiceAttachmentsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SNAPSHOTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeSnapshotsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SSL_CERTIFICATES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeSslCertificatesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SSL_POLICIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeSslPoliciesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SUBNETWORKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeSubnetworksConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TARGET_GRPC_PROXIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeTargetGrpcProxiesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TARGET_HTTPS_PROXIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeTargetHttpsProxiesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TARGET_HTTP_PROXIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeTargetHttpProxiesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TARGET_INSTANCES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeTargetInstancesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TARGET_POOLS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeTargetPoolsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TARGET_SSL_PROXIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeTargetSslProxiesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TARGET_TCP_PROXIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeTargetTcpProxiesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TARGET_VPN_GATEWAYS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeTargetVpnGatewaysConnection()`.
+
+- `GOOGLE_CLOUD_CPP_URL_MAPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeUrlMapsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_VPN_GATEWAYS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeVpnGatewaysConnection()`.
+
+- `GOOGLE_CLOUD_CPP_VPN_TUNNELS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeVpnTunnelsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_ZONES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeZonesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_ZONE_OPERATIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeZoneOperationsConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->
 

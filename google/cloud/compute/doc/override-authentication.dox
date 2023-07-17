@@ -9,7 +9,101 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
-@snippet disks_client_samples.cc with-service-account
+@snippet accelerator_types_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c compute_accelerator_types_v1::AcceleratorTypesClient](@ref compute_accelerator_types_v1::AcceleratorTypesClient-service-account-snippet)
+- [\c compute_addresses_v1::AddressesClient](@ref compute_addresses_v1::AddressesClient-service-account-snippet)
+- [\c compute_autoscalers_v1::AutoscalersClient](@ref compute_autoscalers_v1::AutoscalersClient-service-account-snippet)
+- [\c compute_backend_buckets_v1::BackendBucketsClient](@ref compute_backend_buckets_v1::BackendBucketsClient-service-account-snippet)
+- [\c compute_backend_services_v1::BackendServicesClient](@ref compute_backend_services_v1::BackendServicesClient-service-account-snippet)
+- [\c compute_disk_types_v1::DiskTypesClient](@ref compute_disk_types_v1::DiskTypesClient-service-account-snippet)
+- [\c compute_disks_v1::DisksClient](@ref compute_disks_v1::DisksClient-service-account-snippet)
+- [\c compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient](@ref compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient-service-account-snippet)
+- [\c compute_firewall_policies_v1::FirewallPoliciesClient](@ref compute_firewall_policies_v1::FirewallPoliciesClient-service-account-snippet)
+- [\c compute_firewalls_v1::FirewallsClient](@ref compute_firewalls_v1::FirewallsClient-service-account-snippet)
+- [\c compute_forwarding_rules_v1::ForwardingRulesClient](@ref compute_forwarding_rules_v1::ForwardingRulesClient-service-account-snippet)
+- [\c compute_global_addresses_v1::GlobalAddressesClient](@ref compute_global_addresses_v1::GlobalAddressesClient-service-account-snippet)
+- [\c compute_global_forwarding_rules_v1::GlobalForwardingRulesClient](@ref compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-service-account-snippet)
+- [\c compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient](@ref compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-service-account-snippet)
+- [\c compute_global_operations_v1::GlobalOperationsClient](@ref compute_global_operations_v1::GlobalOperationsClient-service-account-snippet)
+- [\c compute_global_organization_operations_v1::GlobalOrganizationOperationsClient](@ref compute_global_organization_operations_v1::GlobalOrganizationOperationsClient-service-account-snippet)
+- [\c compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient](@ref compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient-service-account-snippet)
+- [\c compute_health_checks_v1::HealthChecksClient](@ref compute_health_checks_v1::HealthChecksClient-service-account-snippet)
+- [\c compute_http_health_checks_v1::HttpHealthChecksClient](@ref compute_http_health_checks_v1::HttpHealthChecksClient-service-account-snippet)
+- [\c compute_https_health_checks_v1::HttpsHealthChecksClient](@ref compute_https_health_checks_v1::HttpsHealthChecksClient-service-account-snippet)
+- [\c compute_image_family_views_v1::ImageFamilyViewsClient](@ref compute_image_family_views_v1::ImageFamilyViewsClient-service-account-snippet)
+- [\c compute_images_v1::ImagesClient](@ref compute_images_v1::ImagesClient-service-account-snippet)
+- [\c compute_instance_group_managers_v1::InstanceGroupManagersClient](@ref compute_instance_group_managers_v1::InstanceGroupManagersClient-service-account-snippet)
+- [\c compute_instance_groups_v1::InstanceGroupsClient](@ref compute_instance_groups_v1::InstanceGroupsClient-service-account-snippet)
+- [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-service-account-snippet)
+- [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-service-account-snippet)
+- [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-service-account-snippet)
+- [\c compute_interconnect_locations_v1::InterconnectLocationsClient](@ref compute_interconnect_locations_v1::InterconnectLocationsClient-service-account-snippet)
+- [\c compute_interconnects_v1::InterconnectsClient](@ref compute_interconnects_v1::InterconnectsClient-service-account-snippet)
+- [\c compute_license_codes_v1::LicenseCodesClient](@ref compute_license_codes_v1::LicenseCodesClient-service-account-snippet)
+- [\c compute_licenses_v1::LicensesClient](@ref compute_licenses_v1::LicensesClient-service-account-snippet)
+- [\c compute_machine_images_v1::MachineImagesClient](@ref compute_machine_images_v1::MachineImagesClient-service-account-snippet)
+- [\c compute_machine_types_v1::MachineTypesClient](@ref compute_machine_types_v1::MachineTypesClient-service-account-snippet)
+- [\c compute_network_attachments_v1::NetworkAttachmentsClient](@ref compute_network_attachments_v1::NetworkAttachmentsClient-service-account-snippet)
+- [\c compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient](@ref compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient-service-account-snippet)
+- [\c compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient](@ref compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient-service-account-snippet)
+- [\c compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient](@ref compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient-service-account-snippet)
+- [\c compute_networks_v1::NetworksClient](@ref compute_networks_v1::NetworksClient-service-account-snippet)
+- [\c compute_node_groups_v1::NodeGroupsClient](@ref compute_node_groups_v1::NodeGroupsClient-service-account-snippet)
+- [\c compute_node_templates_v1::NodeTemplatesClient](@ref compute_node_templates_v1::NodeTemplatesClient-service-account-snippet)
+- [\c compute_node_types_v1::NodeTypesClient](@ref compute_node_types_v1::NodeTypesClient-service-account-snippet)
+- [\c compute_packet_mirrorings_v1::PacketMirroringsClient](@ref compute_packet_mirrorings_v1::PacketMirroringsClient-service-account-snippet)
+- [\c compute_projects_v1::ProjectsClient](@ref compute_projects_v1::ProjectsClient-service-account-snippet)
+- [\c compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient](@ref compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-service-account-snippet)
+- [\c compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient](@ref compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-service-account-snippet)
+- [\c compute_region_autoscalers_v1::RegionAutoscalersClient](@ref compute_region_autoscalers_v1::RegionAutoscalersClient-service-account-snippet)
+- [\c compute_region_backend_services_v1::RegionBackendServicesClient](@ref compute_region_backend_services_v1::RegionBackendServicesClient-service-account-snippet)
+- [\c compute_region_commitments_v1::RegionCommitmentsClient](@ref compute_region_commitments_v1::RegionCommitmentsClient-service-account-snippet)
+- [\c compute_region_disk_types_v1::RegionDiskTypesClient](@ref compute_region_disk_types_v1::RegionDiskTypesClient-service-account-snippet)
+- [\c compute_region_disks_v1::RegionDisksClient](@ref compute_region_disks_v1::RegionDisksClient-service-account-snippet)
+- [\c compute_region_health_check_services_v1::RegionHealthCheckServicesClient](@ref compute_region_health_check_services_v1::RegionHealthCheckServicesClient-service-account-snippet)
+- [\c compute_region_health_checks_v1::RegionHealthChecksClient](@ref compute_region_health_checks_v1::RegionHealthChecksClient-service-account-snippet)
+- [\c compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient](@ref compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient-service-account-snippet)
+- [\c compute_region_instance_groups_v1::RegionInstanceGroupsClient](@ref compute_region_instance_groups_v1::RegionInstanceGroupsClient-service-account-snippet)
+- [\c compute_region_instance_templates_v1::RegionInstanceTemplatesClient](@ref compute_region_instance_templates_v1::RegionInstanceTemplatesClient-service-account-snippet)
+- [\c compute_region_instances_v1::RegionInstancesClient](@ref compute_region_instances_v1::RegionInstancesClient-service-account-snippet)
+- [\c compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient](@ref compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient-service-account-snippet)
+- [\c compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient](@ref compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient-service-account-snippet)
+- [\c compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient](@ref compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient-service-account-snippet)
+- [\c compute_region_operations_v1::RegionOperationsClient](@ref compute_region_operations_v1::RegionOperationsClient-service-account-snippet)
+- [\c compute_region_security_policies_v1::RegionSecurityPoliciesClient](@ref compute_region_security_policies_v1::RegionSecurityPoliciesClient-service-account-snippet)
+- [\c compute_region_ssl_certificates_v1::RegionSslCertificatesClient](@ref compute_region_ssl_certificates_v1::RegionSslCertificatesClient-service-account-snippet)
+- [\c compute_region_ssl_policies_v1::RegionSslPoliciesClient](@ref compute_region_ssl_policies_v1::RegionSslPoliciesClient-service-account-snippet)
+- [\c compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient](@ref compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient-service-account-snippet)
+- [\c compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient](@ref compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient-service-account-snippet)
+- [\c compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient](@ref compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient-service-account-snippet)
+- [\c compute_region_url_maps_v1::RegionUrlMapsClient](@ref compute_region_url_maps_v1::RegionUrlMapsClient-service-account-snippet)
+- [\c compute_regions_v1::RegionsClient](@ref compute_regions_v1::RegionsClient-service-account-snippet)
+- [\c compute_reservations_v1::ReservationsClient](@ref compute_reservations_v1::ReservationsClient-service-account-snippet)
+- [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref compute_resource_policies_v1::ResourcePoliciesClient-service-account-snippet)
+- [\c compute_routers_v1::RoutersClient](@ref compute_routers_v1::RoutersClient-service-account-snippet)
+- [\c compute_routes_v1::RoutesClient](@ref compute_routes_v1::RoutesClient-service-account-snippet)
+- [\c compute_security_policies_v1::SecurityPoliciesClient](@ref compute_security_policies_v1::SecurityPoliciesClient-service-account-snippet)
+- [\c compute_service_attachments_v1::ServiceAttachmentsClient](@ref compute_service_attachments_v1::ServiceAttachmentsClient-service-account-snippet)
+- [\c compute_snapshots_v1::SnapshotsClient](@ref compute_snapshots_v1::SnapshotsClient-service-account-snippet)
+- [\c compute_ssl_certificates_v1::SslCertificatesClient](@ref compute_ssl_certificates_v1::SslCertificatesClient-service-account-snippet)
+- [\c compute_ssl_policies_v1::SslPoliciesClient](@ref compute_ssl_policies_v1::SslPoliciesClient-service-account-snippet)
+- [\c compute_subnetworks_v1::SubnetworksClient](@ref compute_subnetworks_v1::SubnetworksClient-service-account-snippet)
+- [\c compute_target_grpc_proxies_v1::TargetGrpcProxiesClient](@ref compute_target_grpc_proxies_v1::TargetGrpcProxiesClient-service-account-snippet)
+- [\c compute_target_http_proxies_v1::TargetHttpProxiesClient](@ref compute_target_http_proxies_v1::TargetHttpProxiesClient-service-account-snippet)
+- [\c compute_target_https_proxies_v1::TargetHttpsProxiesClient](@ref compute_target_https_proxies_v1::TargetHttpsProxiesClient-service-account-snippet)
+- [\c compute_target_instances_v1::TargetInstancesClient](@ref compute_target_instances_v1::TargetInstancesClient-service-account-snippet)
+- [\c compute_target_pools_v1::TargetPoolsClient](@ref compute_target_pools_v1::TargetPoolsClient-service-account-snippet)
+- [\c compute_target_ssl_proxies_v1::TargetSslProxiesClient](@ref compute_target_ssl_proxies_v1::TargetSslProxiesClient-service-account-snippet)
+- [\c compute_target_tcp_proxies_v1::TargetTcpProxiesClient](@ref compute_target_tcp_proxies_v1::TargetTcpProxiesClient-service-account-snippet)
+- [\c compute_target_vpn_gateways_v1::TargetVpnGatewaysClient](@ref compute_target_vpn_gateways_v1::TargetVpnGatewaysClient-service-account-snippet)
+- [\c compute_url_maps_v1::UrlMapsClient](@ref compute_url_maps_v1::UrlMapsClient-service-account-snippet)
+- [\c compute_vpn_gateways_v1::VpnGatewaysClient](@ref compute_vpn_gateways_v1::VpnGatewaysClient-service-account-snippet)
+- [\c compute_vpn_tunnels_v1::VpnTunnelsClient](@ref compute_vpn_tunnels_v1::VpnTunnelsClient-service-account-snippet)
+- [\c compute_zone_operations_v1::ZoneOperationsClient](@ref compute_zone_operations_v1::ZoneOperationsClient-service-account-snippet)
+- [\c compute_zones_v1::ZonesClient](@ref compute_zones_v1::ZonesClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -27,10 +121,549 @@ guide for more details.
 
 // <!-- inject-authentication-pages-start -->
 
+/*! @page compute_accelerator_types_v1::AcceleratorTypesClient-service-account-snippet Override compute_accelerator_types_v1::AcceleratorTypesClient Authentication Defaults
+
+@snippet google/cloud/compute/accelerator_types/v1/samples/accelerator_types_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_addresses_v1::AddressesClient-service-account-snippet Override compute_addresses_v1::AddressesClient Authentication Defaults
+
+@snippet google/cloud/compute/addresses/v1/samples/addresses_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_autoscalers_v1::AutoscalersClient-service-account-snippet Override compute_autoscalers_v1::AutoscalersClient Authentication Defaults
+
+@snippet google/cloud/compute/autoscalers/v1/samples/autoscalers_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_backend_buckets_v1::BackendBucketsClient-service-account-snippet Override compute_backend_buckets_v1::BackendBucketsClient Authentication Defaults
+
+@snippet google/cloud/compute/backend_buckets/v1/samples/backend_buckets_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_backend_services_v1::BackendServicesClient-service-account-snippet Override compute_backend_services_v1::BackendServicesClient Authentication Defaults
+
+@snippet google/cloud/compute/backend_services/v1/samples/backend_services_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_disk_types_v1::DiskTypesClient-service-account-snippet Override compute_disk_types_v1::DiskTypesClient Authentication Defaults
+
+@snippet google/cloud/compute/disk_types/v1/samples/disk_types_client_samples.cc with-service-account
+
+*/
+
 /*! @page compute_disks_v1::DisksClient-service-account-snippet Override compute_disks_v1::DisksClient Authentication Defaults
 
 @snippet google/cloud/compute/disks/v1/samples/disks_client_samples.cc with-service-account
 
 */
 
+/*! @page compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient-service-account-snippet Override compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient Authentication Defaults
+
+@snippet google/cloud/compute/external_vpn_gateways/v1/samples/external_vpn_gateways_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_firewall_policies_v1::FirewallPoliciesClient-service-account-snippet Override compute_firewall_policies_v1::FirewallPoliciesClient Authentication Defaults
+
+@snippet google/cloud/compute/firewall_policies/v1/samples/firewall_policies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_firewalls_v1::FirewallsClient-service-account-snippet Override compute_firewalls_v1::FirewallsClient Authentication Defaults
+
+@snippet google/cloud/compute/firewalls/v1/samples/firewalls_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_forwarding_rules_v1::ForwardingRulesClient-service-account-snippet Override compute_forwarding_rules_v1::ForwardingRulesClient Authentication Defaults
+
+@snippet google/cloud/compute/forwarding_rules/v1/samples/forwarding_rules_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_global_addresses_v1::GlobalAddressesClient-service-account-snippet Override compute_global_addresses_v1::GlobalAddressesClient Authentication Defaults
+
+@snippet google/cloud/compute/global_addresses/v1/samples/global_addresses_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-service-account-snippet Override compute_global_forwarding_rules_v1::GlobalForwardingRulesClient Authentication Defaults
+
+@snippet google/cloud/compute/global_forwarding_rules/v1/samples/global_forwarding_rules_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-service-account-snippet Override compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient Authentication Defaults
+
+@snippet google/cloud/compute/global_network_endpoint_groups/v1/samples/global_network_endpoint_groups_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_global_operations_v1::GlobalOperationsClient-service-account-snippet Override compute_global_operations_v1::GlobalOperationsClient Authentication Defaults
+
+@snippet google/cloud/compute/global_operations/v1/samples/global_operations_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_global_organization_operations_v1::GlobalOrganizationOperationsClient-service-account-snippet Override compute_global_organization_operations_v1::GlobalOrganizationOperationsClient Authentication Defaults
+
+@snippet google/cloud/compute/global_organization_operations/v1/samples/global_organization_operations_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient-service-account-snippet Override compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient Authentication Defaults
+
+@snippet google/cloud/compute/global_public_delegated_prefixes/v1/samples/global_public_delegated_prefixes_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_health_checks_v1::HealthChecksClient-service-account-snippet Override compute_health_checks_v1::HealthChecksClient Authentication Defaults
+
+@snippet google/cloud/compute/health_checks/v1/samples/health_checks_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_http_health_checks_v1::HttpHealthChecksClient-service-account-snippet Override compute_http_health_checks_v1::HttpHealthChecksClient Authentication Defaults
+
+@snippet google/cloud/compute/http_health_checks/v1/samples/http_health_checks_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_https_health_checks_v1::HttpsHealthChecksClient-service-account-snippet Override compute_https_health_checks_v1::HttpsHealthChecksClient Authentication Defaults
+
+@snippet google/cloud/compute/https_health_checks/v1/samples/https_health_checks_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_image_family_views_v1::ImageFamilyViewsClient-service-account-snippet Override compute_image_family_views_v1::ImageFamilyViewsClient Authentication Defaults
+
+@snippet google/cloud/compute/image_family_views/v1/samples/image_family_views_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_images_v1::ImagesClient-service-account-snippet Override compute_images_v1::ImagesClient Authentication Defaults
+
+@snippet google/cloud/compute/images/v1/samples/images_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_instance_group_managers_v1::InstanceGroupManagersClient-service-account-snippet Override compute_instance_group_managers_v1::InstanceGroupManagersClient Authentication Defaults
+
+@snippet google/cloud/compute/instance_group_managers/v1/samples/instance_group_managers_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_instance_groups_v1::InstanceGroupsClient-service-account-snippet Override compute_instance_groups_v1::InstanceGroupsClient Authentication Defaults
+
+@snippet google/cloud/compute/instance_groups/v1/samples/instance_groups_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_instance_templates_v1::InstanceTemplatesClient-service-account-snippet Override compute_instance_templates_v1::InstanceTemplatesClient Authentication Defaults
+
+@snippet google/cloud/compute/instance_templates/v1/samples/instance_templates_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_instances_v1::InstancesClient-service-account-snippet Override compute_instances_v1::InstancesClient Authentication Defaults
+
+@snippet google/cloud/compute/instances/v1/samples/instances_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_interconnect_attachments_v1::InterconnectAttachmentsClient-service-account-snippet Override compute_interconnect_attachments_v1::InterconnectAttachmentsClient Authentication Defaults
+
+@snippet google/cloud/compute/interconnect_attachments/v1/samples/interconnect_attachments_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_interconnect_locations_v1::InterconnectLocationsClient-service-account-snippet Override compute_interconnect_locations_v1::InterconnectLocationsClient Authentication Defaults
+
+@snippet google/cloud/compute/interconnect_locations/v1/samples/interconnect_locations_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_interconnects_v1::InterconnectsClient-service-account-snippet Override compute_interconnects_v1::InterconnectsClient Authentication Defaults
+
+@snippet google/cloud/compute/interconnects/v1/samples/interconnects_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_license_codes_v1::LicenseCodesClient-service-account-snippet Override compute_license_codes_v1::LicenseCodesClient Authentication Defaults
+
+@snippet google/cloud/compute/license_codes/v1/samples/license_codes_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_licenses_v1::LicensesClient-service-account-snippet Override compute_licenses_v1::LicensesClient Authentication Defaults
+
+@snippet google/cloud/compute/licenses/v1/samples/licenses_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_machine_images_v1::MachineImagesClient-service-account-snippet Override compute_machine_images_v1::MachineImagesClient Authentication Defaults
+
+@snippet google/cloud/compute/machine_images/v1/samples/machine_images_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_machine_types_v1::MachineTypesClient-service-account-snippet Override compute_machine_types_v1::MachineTypesClient Authentication Defaults
+
+@snippet google/cloud/compute/machine_types/v1/samples/machine_types_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_network_attachments_v1::NetworkAttachmentsClient-service-account-snippet Override compute_network_attachments_v1::NetworkAttachmentsClient Authentication Defaults
+
+@snippet google/cloud/compute/network_attachments/v1/samples/network_attachments_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient-service-account-snippet Override compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient Authentication Defaults
+
+@snippet google/cloud/compute/network_edge_security_services/v1/samples/network_edge_security_services_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient-service-account-snippet Override compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient Authentication Defaults
+
+@snippet google/cloud/compute/network_endpoint_groups/v1/samples/network_endpoint_groups_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient-service-account-snippet Override compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient Authentication Defaults
+
+@snippet google/cloud/compute/network_firewall_policies/v1/samples/network_firewall_policies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_networks_v1::NetworksClient-service-account-snippet Override compute_networks_v1::NetworksClient Authentication Defaults
+
+@snippet google/cloud/compute/networks/v1/samples/networks_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_node_groups_v1::NodeGroupsClient-service-account-snippet Override compute_node_groups_v1::NodeGroupsClient Authentication Defaults
+
+@snippet google/cloud/compute/node_groups/v1/samples/node_groups_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_node_templates_v1::NodeTemplatesClient-service-account-snippet Override compute_node_templates_v1::NodeTemplatesClient Authentication Defaults
+
+@snippet google/cloud/compute/node_templates/v1/samples/node_templates_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_node_types_v1::NodeTypesClient-service-account-snippet Override compute_node_types_v1::NodeTypesClient Authentication Defaults
+
+@snippet google/cloud/compute/node_types/v1/samples/node_types_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_packet_mirrorings_v1::PacketMirroringsClient-service-account-snippet Override compute_packet_mirrorings_v1::PacketMirroringsClient Authentication Defaults
+
+@snippet google/cloud/compute/packet_mirrorings/v1/samples/packet_mirrorings_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_projects_v1::ProjectsClient-service-account-snippet Override compute_projects_v1::ProjectsClient Authentication Defaults
+
+@snippet google/cloud/compute/projects/v1/samples/projects_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-service-account-snippet Override compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient Authentication Defaults
+
+@snippet google/cloud/compute/public_advertised_prefixes/v1/samples/public_advertised_prefixes_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-service-account-snippet Override compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient Authentication Defaults
+
+@snippet google/cloud/compute/public_delegated_prefixes/v1/samples/public_delegated_prefixes_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_autoscalers_v1::RegionAutoscalersClient-service-account-snippet Override compute_region_autoscalers_v1::RegionAutoscalersClient Authentication Defaults
+
+@snippet google/cloud/compute/region_autoscalers/v1/samples/region_autoscalers_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_backend_services_v1::RegionBackendServicesClient-service-account-snippet Override compute_region_backend_services_v1::RegionBackendServicesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_backend_services/v1/samples/region_backend_services_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_commitments_v1::RegionCommitmentsClient-service-account-snippet Override compute_region_commitments_v1::RegionCommitmentsClient Authentication Defaults
+
+@snippet google/cloud/compute/region_commitments/v1/samples/region_commitments_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_disk_types_v1::RegionDiskTypesClient-service-account-snippet Override compute_region_disk_types_v1::RegionDiskTypesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_disk_types/v1/samples/region_disk_types_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_disks_v1::RegionDisksClient-service-account-snippet Override compute_region_disks_v1::RegionDisksClient Authentication Defaults
+
+@snippet google/cloud/compute/region_disks/v1/samples/region_disks_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_health_check_services_v1::RegionHealthCheckServicesClient-service-account-snippet Override compute_region_health_check_services_v1::RegionHealthCheckServicesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_health_check_services/v1/samples/region_health_check_services_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_health_checks_v1::RegionHealthChecksClient-service-account-snippet Override compute_region_health_checks_v1::RegionHealthChecksClient Authentication Defaults
+
+@snippet google/cloud/compute/region_health_checks/v1/samples/region_health_checks_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient-service-account-snippet Override compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient Authentication Defaults
+
+@snippet google/cloud/compute/region_instance_group_managers/v1/samples/region_instance_group_managers_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_instance_groups_v1::RegionInstanceGroupsClient-service-account-snippet Override compute_region_instance_groups_v1::RegionInstanceGroupsClient Authentication Defaults
+
+@snippet google/cloud/compute/region_instance_groups/v1/samples/region_instance_groups_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_instance_templates_v1::RegionInstanceTemplatesClient-service-account-snippet Override compute_region_instance_templates_v1::RegionInstanceTemplatesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_instance_templates/v1/samples/region_instance_templates_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_instances_v1::RegionInstancesClient-service-account-snippet Override compute_region_instances_v1::RegionInstancesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_instances/v1/samples/region_instances_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient-service-account-snippet Override compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient Authentication Defaults
+
+@snippet google/cloud/compute/region_network_endpoint_groups/v1/samples/region_network_endpoint_groups_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient-service-account-snippet Override compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_network_firewall_policies/v1/samples/region_network_firewall_policies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient-service-account-snippet Override compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient Authentication Defaults
+
+@snippet google/cloud/compute/region_notification_endpoints/v1/samples/region_notification_endpoints_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_operations_v1::RegionOperationsClient-service-account-snippet Override compute_region_operations_v1::RegionOperationsClient Authentication Defaults
+
+@snippet google/cloud/compute/region_operations/v1/samples/region_operations_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_security_policies_v1::RegionSecurityPoliciesClient-service-account-snippet Override compute_region_security_policies_v1::RegionSecurityPoliciesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_security_policies/v1/samples/region_security_policies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_ssl_certificates_v1::RegionSslCertificatesClient-service-account-snippet Override compute_region_ssl_certificates_v1::RegionSslCertificatesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_ssl_certificates/v1/samples/region_ssl_certificates_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_ssl_policies_v1::RegionSslPoliciesClient-service-account-snippet Override compute_region_ssl_policies_v1::RegionSslPoliciesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_ssl_policies/v1/samples/region_ssl_policies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient-service-account-snippet Override compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_target_http_proxies/v1/samples/region_target_http_proxies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient-service-account-snippet Override compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_target_https_proxies/v1/samples/region_target_https_proxies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient-service-account-snippet Override compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient Authentication Defaults
+
+@snippet google/cloud/compute/region_target_tcp_proxies/v1/samples/region_target_tcp_proxies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_url_maps_v1::RegionUrlMapsClient-service-account-snippet Override compute_region_url_maps_v1::RegionUrlMapsClient Authentication Defaults
+
+@snippet google/cloud/compute/region_url_maps/v1/samples/region_url_maps_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_regions_v1::RegionsClient-service-account-snippet Override compute_regions_v1::RegionsClient Authentication Defaults
+
+@snippet google/cloud/compute/regions/v1/samples/regions_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_reservations_v1::ReservationsClient-service-account-snippet Override compute_reservations_v1::ReservationsClient Authentication Defaults
+
+@snippet google/cloud/compute/reservations/v1/samples/reservations_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_resource_policies_v1::ResourcePoliciesClient-service-account-snippet Override compute_resource_policies_v1::ResourcePoliciesClient Authentication Defaults
+
+@snippet google/cloud/compute/resource_policies/v1/samples/resource_policies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_routers_v1::RoutersClient-service-account-snippet Override compute_routers_v1::RoutersClient Authentication Defaults
+
+@snippet google/cloud/compute/routers/v1/samples/routers_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_routes_v1::RoutesClient-service-account-snippet Override compute_routes_v1::RoutesClient Authentication Defaults
+
+@snippet google/cloud/compute/routes/v1/samples/routes_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_security_policies_v1::SecurityPoliciesClient-service-account-snippet Override compute_security_policies_v1::SecurityPoliciesClient Authentication Defaults
+
+@snippet google/cloud/compute/security_policies/v1/samples/security_policies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_service_attachments_v1::ServiceAttachmentsClient-service-account-snippet Override compute_service_attachments_v1::ServiceAttachmentsClient Authentication Defaults
+
+@snippet google/cloud/compute/service_attachments/v1/samples/service_attachments_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_snapshots_v1::SnapshotsClient-service-account-snippet Override compute_snapshots_v1::SnapshotsClient Authentication Defaults
+
+@snippet google/cloud/compute/snapshots/v1/samples/snapshots_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_ssl_certificates_v1::SslCertificatesClient-service-account-snippet Override compute_ssl_certificates_v1::SslCertificatesClient Authentication Defaults
+
+@snippet google/cloud/compute/ssl_certificates/v1/samples/ssl_certificates_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_ssl_policies_v1::SslPoliciesClient-service-account-snippet Override compute_ssl_policies_v1::SslPoliciesClient Authentication Defaults
+
+@snippet google/cloud/compute/ssl_policies/v1/samples/ssl_policies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_subnetworks_v1::SubnetworksClient-service-account-snippet Override compute_subnetworks_v1::SubnetworksClient Authentication Defaults
+
+@snippet google/cloud/compute/subnetworks/v1/samples/subnetworks_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_target_grpc_proxies_v1::TargetGrpcProxiesClient-service-account-snippet Override compute_target_grpc_proxies_v1::TargetGrpcProxiesClient Authentication Defaults
+
+@snippet google/cloud/compute/target_grpc_proxies/v1/samples/target_grpc_proxies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_target_http_proxies_v1::TargetHttpProxiesClient-service-account-snippet Override compute_target_http_proxies_v1::TargetHttpProxiesClient Authentication Defaults
+
+@snippet google/cloud/compute/target_http_proxies/v1/samples/target_http_proxies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_target_https_proxies_v1::TargetHttpsProxiesClient-service-account-snippet Override compute_target_https_proxies_v1::TargetHttpsProxiesClient Authentication Defaults
+
+@snippet google/cloud/compute/target_https_proxies/v1/samples/target_https_proxies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_target_instances_v1::TargetInstancesClient-service-account-snippet Override compute_target_instances_v1::TargetInstancesClient Authentication Defaults
+
+@snippet google/cloud/compute/target_instances/v1/samples/target_instances_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_target_pools_v1::TargetPoolsClient-service-account-snippet Override compute_target_pools_v1::TargetPoolsClient Authentication Defaults
+
+@snippet google/cloud/compute/target_pools/v1/samples/target_pools_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_target_ssl_proxies_v1::TargetSslProxiesClient-service-account-snippet Override compute_target_ssl_proxies_v1::TargetSslProxiesClient Authentication Defaults
+
+@snippet google/cloud/compute/target_ssl_proxies/v1/samples/target_ssl_proxies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_target_tcp_proxies_v1::TargetTcpProxiesClient-service-account-snippet Override compute_target_tcp_proxies_v1::TargetTcpProxiesClient Authentication Defaults
+
+@snippet google/cloud/compute/target_tcp_proxies/v1/samples/target_tcp_proxies_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_target_vpn_gateways_v1::TargetVpnGatewaysClient-service-account-snippet Override compute_target_vpn_gateways_v1::TargetVpnGatewaysClient Authentication Defaults
+
+@snippet google/cloud/compute/target_vpn_gateways/v1/samples/target_vpn_gateways_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_url_maps_v1::UrlMapsClient-service-account-snippet Override compute_url_maps_v1::UrlMapsClient Authentication Defaults
+
+@snippet google/cloud/compute/url_maps/v1/samples/url_maps_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_vpn_gateways_v1::VpnGatewaysClient-service-account-snippet Override compute_vpn_gateways_v1::VpnGatewaysClient Authentication Defaults
+
+@snippet google/cloud/compute/vpn_gateways/v1/samples/vpn_gateways_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_vpn_tunnels_v1::VpnTunnelsClient-service-account-snippet Override compute_vpn_tunnels_v1::VpnTunnelsClient Authentication Defaults
+
+@snippet google/cloud/compute/vpn_tunnels/v1/samples/vpn_tunnels_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_zone_operations_v1::ZoneOperationsClient-service-account-snippet Override compute_zone_operations_v1::ZoneOperationsClient Authentication Defaults
+
+@snippet google/cloud/compute/zone_operations/v1/samples/zone_operations_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_zones_v1::ZonesClient-service-account-snippet Override compute_zones_v1::ZonesClient Authentication Defaults
+
+@snippet google/cloud/compute/zones/v1/samples/zones_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->
