@@ -441,6 +441,108 @@ std::string QueryRequest::DebugString(absl::string_view name,
       .Build();
 }
 
+void to_json(nlohmann::json& j, GetQueryResultsRequest const& q) {
+  j = nlohmann::json{
+      {"project_id", q.project_id()},        {"job_id", q.job_id()},
+      {"page_token", q.page_token()},        {"location", q.location()},
+      {"start_index", q.start_index()},      {"max_results", q.max_results()},
+      {"format_options", q.format_options()}};
+
+  ToJson(q.timeout(), j, "timeout");
+}
+
+void from_json(nlohmann::json const& j, GetQueryResultsRequest& q) {
+  if (j.contains("project_id")) {
+    q.set_project_id(j.at("project_id").value("project_id", ""));
+  }
+  if (j.contains("job_id")) {
+    q.set_job_id(j.at("job_id").value("job_id", ""));
+  }
+  if (j.contains("page_token")) {
+    q.set_page_token(j.at("page_token").value("page_token", ""));
+  }
+  if (j.contains("location")) {
+    q.set_location(j.at("location").value("location", ""));
+  }
+  if (j.contains("start_index")) {
+    q.set_start_index(j.at("start_index").get<std::uint64_t>());
+  }
+  if (j.contains("max_results")) {
+    q.set_max_results(j.at("max_results").get<std::uint32_t>());
+  }
+  if (j.contains("format_options")) {
+    q.set_format_options(j.at("format_options").get<DataFormatOptions>());
+  }
+
+  std::chrono::milliseconds timeout;
+  FromJson(timeout, j, "timeout");
+  q.set_timeout(timeout);
+}
+
+StatusOr<rest_internal::RestRequest> BuildRestRequest(
+    GetQueryResultsRequest const& r) {
+  auto const& opts = internal::CurrentOptions();
+  rest_internal::RestRequest request;
+
+  if (r.project_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid GetQueryResultsRequest: Project Id is empty",
+        GCP_ERROR_INFO());
+  }
+  if (r.job_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid GetQueryResultsRequest: Job Id is empty", GCP_ERROR_INFO());
+  }
+
+  // Builds GetQueryResultsRequest path based on endpoint provided.
+  std::string endpoint = GetBaseEndpoint(opts);
+  std::string path = absl::StrCat(endpoint, "/projects/", r.project_id(),
+                                  "/queries/", r.job_id());
+  request.SetPath(std::move(path));
+
+  // Add query params.
+  // https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/getQueryResults#query-parameters
+  auto if_not_empty_add = [&](char const* key, auto const& v) {
+    if (v.empty()) return;
+    request.AddQueryParameter(key, v);
+  };
+  if_not_empty_add("pageToken", r.page_token());
+  if_not_empty_add("location", r.location());
+
+  request.AddQueryParameter("startIndex", std::to_string(r.start_index()));
+  if (r.max_results() > 0) {
+    request.AddQueryParameter("maxResults", std::to_string(r.max_results()));
+  }
+  if (r.timeout() > std::chrono::milliseconds(0)) {
+    request.AddQueryParameter("timeoutMs", std::to_string(r.timeout().count()));
+  }
+
+  std::string format_options;
+  if (r.format_options().use_int64_timestamp) {
+    absl::StrAppend(&format_options, "{\"useInt64Timestamp\":true}");
+  } else {
+    absl::StrAppend(&format_options, "{\"useInt64Timestamp\":false}");
+  }
+  request.AddQueryParameter("formatOptions", format_options);
+
+  return request;
+}
+
+std::string GetQueryResultsRequest::DebugString(absl::string_view name,
+                                                TracingOptions const& options,
+                                                int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id())
+      .StringField("job_id", job_id())
+      .StringField("page_token", page_token())
+      .StringField("location", location())
+      .Field("start_index", start_index())
+      .Field("max_results", max_results())
+      .Field("timeout", timeout())
+      .SubMessage("format_options", format_options())
+      .Build();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

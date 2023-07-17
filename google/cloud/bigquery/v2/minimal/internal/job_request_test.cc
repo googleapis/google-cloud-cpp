@@ -28,6 +28,8 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::
+    MakeFullGetQueryResultsRequest;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeJob;
 using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryRequest;
 
@@ -1213,6 +1215,141 @@ TEST(PostQueryRequestTest, DebugString) {
     format_options {
       use_int64_timestamp: true
     }
+  }
+})");
+}
+
+TEST(GetQueryResultsRequestTest, SuccessWithDifferentEndpoints) {
+  GetQueryResultsRequest request("1", "2");
+
+  struct EndpointTest {
+    std::string endpoint;
+    std::string expected;
+  } cases[] = {
+      {"https://myendpoint.google.com",
+       "https://myendpoint.google.com/bigquery/v2/projects/1/queries/2"},
+      {"http://myendpoint.google.com",
+       "http://myendpoint.google.com/bigquery/v2/projects/1/queries/2"},
+      {"myendpoint.google.com",
+       "https://myendpoint.google.com/bigquery/v2/projects/1/queries/2"},
+      {"https://myendpoint.google.com/",
+       "https://myendpoint.google.com/bigquery/v2/projects/1/queries/2"},
+  };
+
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing for endpoint: " + test.endpoint +
+                 ", expected: " + test.expected);
+    Options opts;
+    opts.set<EndpointOption>(test.endpoint);
+    internal::OptionsSpan span(opts);
+
+    auto actual = BuildRestRequest(request);
+    ASSERT_STATUS_OK(actual);
+    EXPECT_EQ(test.expected, actual->path());
+  }
+}
+
+TEST(GetQueryResultsRequestTest, SuccessWithQueryParameters) {
+  auto request = MakeFullGetQueryResultsRequest();
+
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto actual = BuildRestRequest(request);
+  ASSERT_STATUS_OK(actual);
+
+  rest_internal::RestRequest expected;
+  expected.SetPath(
+      "https://bigquery.googleapis.com/bigquery/v2/projects/1/queries/2");
+  expected.AddQueryParameter("pageToken", "npt123");
+  expected.AddQueryParameter("location", "useast");
+  expected.AddQueryParameter("startIndex", "1");
+  expected.AddQueryParameter("maxResults", "10");
+  expected.AddQueryParameter("timeoutMs", "30");
+  expected.AddQueryParameter("formatOptions", R"({"useInt64Timestamp":true})");
+
+  EXPECT_EQ(expected, *actual);
+}
+
+TEST(GetQueryResultsRequestTest, SuccessWithoutQueryParameters) {
+  GetQueryResultsRequest request("1", "2");
+
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto actual = BuildRestRequest(request);
+  ASSERT_STATUS_OK(actual);
+
+  rest_internal::RestRequest expected;
+  expected.SetPath(
+      "https://bigquery.googleapis.com/bigquery/v2/projects/1/queries/2");
+  expected.AddQueryParameter("startIndex", "0");
+  expected.AddQueryParameter("formatOptions", R"({"useInt64Timestamp":false})");
+
+  EXPECT_EQ(expected, *actual);
+}
+
+TEST(GetQueryResultsRequestTest, EmptyProjectId) {
+  GetQueryResultsRequest request("", "test-job-id");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto rest_request = BuildRestRequest(request);
+  EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
+                                     HasSubstr("Project Id is empty")));
+}
+
+TEST(GetQueryResultsRequestTest, EmptyJobId) {
+  GetQueryResultsRequest request("test-project-id", "");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  internal::OptionsSpan span(opts);
+
+  auto rest_request = BuildRestRequest(request);
+  EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
+                                     HasSubstr("Job Id is empty")));
+}
+
+TEST(GetQueryResultsRequestTest, DebugString) {
+  auto request = MakeFullGetQueryResultsRequest();
+
+  EXPECT_EQ(request.DebugString("GetQueryResultsRequest", TracingOptions{}),
+            R"(GetQueryResultsRequest {)"
+            R"( project_id: "1" job_id: "2")"
+            R"( page_token: "npt123" location: "useast")"
+            R"( start_index: 1 max_results: 10)"
+            R"( timeout { "30ms" })"
+            R"( format_options { use_int64_timestamp: true })"
+            R"( })");
+
+  EXPECT_EQ(request.DebugString("GetQueryResultsRequest",
+                                TracingOptions{}.SetOptions(
+                                    "truncate_string_field_longer_than=7")),
+            R"(GetQueryResultsRequest {)"
+            R"( project_id: "1" job_id: "2" page_token: "npt123")"
+            R"( location: "useast" start_index: 1 max_results: 10)"
+            R"( timeout { "30ms" })"
+            R"( format_options { use_int64_timestamp: true })"
+            R"( })");
+
+  EXPECT_EQ(
+      request.DebugString("GetQueryResultsRequest",
+                          TracingOptions{}.SetOptions("single_line_mode=F")),
+      R"(GetQueryResultsRequest {
+  project_id: "1"
+  job_id: "2"
+  page_token: "npt123"
+  location: "useast"
+  start_index: 1
+  max_results: 10
+  timeout {
+    "30ms"
+  }
+  format_options {
+    use_int64_timestamp: true
   }
 })");
 }

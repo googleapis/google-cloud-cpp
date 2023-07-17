@@ -27,6 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_internal::ConnectionProperty;
 using ::google::cloud::bigquery_v2_minimal_internal::DataFormatOptions;
+using ::google::cloud::bigquery_v2_minimal_internal::GetQueryResultsRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::PostQueryRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryParameter;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryRequest;
@@ -85,6 +86,21 @@ PostQueryRequest MakePostQueryRequest() {
       .set_query_request(MakeQueryRequest());
 
   return expected;
+}
+
+GetQueryResultsRequest MakeFullGetQueryResultsRequest() {
+  DataFormatOptions format_options;
+  format_options.use_int64_timestamp = true;
+
+  GetQueryResultsRequest request("1", "2");
+  request.set_max_results(10)
+      .set_page_token("npt123")
+      .set_start_index(1)
+      .set_timeout(std::chrono::milliseconds(30))
+      .set_format_options(format_options)
+      .set_location("useast");
+
+  return request;
 }
 
 void AssertEquals(QueryRequest const& lhs, QueryRequest const& rhs) {
