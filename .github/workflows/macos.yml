@@ -23,19 +23,36 @@ jobs:
       fail-fast: false
       matrix:
         os: [ macos-12 ]
-        shard: [ 'Core', 'Compute', 'Larger Libraries', 'Other' ]
+        shard:
+        - Core
+        - Bigtable
+        - Pub/Sub
+        - Spanner
+        - Storage
+        - Compute
+        - Larger Libraries
+        - Other
         include:
         - shard: Core
           targets:
           - //google/cloud:all
           # - //generator/...  # Does not build on macOS
           # - //docfx/...      # Does not build on macOS
-          - +//google/cloud/bigtable/...
-          - +//google/cloud/pubsub/...
-          - +//google/cloud/spanner/...
-          - +//google/cloud/storage/...
-          # Include the top-level examples because they require the libs anyway.
           - +//examples/...
+        - shard: Bigtable
+          targets:
+          - //google/cloud/bigtable/...
+        - shard: Pub/Sub
+          targets:
+          - //google/cloud/pubsub/...
+          - +//google/cloud/pubsublite/...
+        - shard: Spanner
+          targets:
+          - //google/cloud/spanner/...
+        - shard: Storage
+          targets:
+          - //google/cloud/storage/...
+          # Include the top-level examples because they require the libs anyway.
         - shard: Compute
           targets:
           - //google/cloud/compute/...
@@ -74,11 +91,16 @@ jobs:
           - -//generator/...
           - -//docfx/...
           - -//google/cloud:all
-          - -//google/cloud/bigtable/...
-          - -//google/cloud/pubsub/...
-          - -//google/cloud/spanner/...
-          - -//google/cloud/storage/...
           - -//examples/...
+          # From Bigtable
+          - -//google/cloud/bigtable/...
+          # From Pub/Sub
+          - -//google/cloud/pubsub/...
+          - -//google/cloud/pubsublite/...
+          # From Spanner
+          - -//google/cloud/spanner/...
+          # From Storage
+          - -//google/cloud/storage/...
           # From Compute
           - -//google/cloud/compute/...
           # From Large Libraries
@@ -128,12 +150,19 @@ jobs:
       fail-fast: false
       matrix:
         os: [ macos-12 ]
-        shard: [ 'Core', 'Compute', 'Larger Libraries', 'Other' ]
+        shard:
+        - Core
+        - Compute
+        - Larger Libraries
+        - Other
         include:
         - shard: Core
           features:
+          # CMake can compile this shard under 20m, so we don't shard the
+          # libraries any more than needed.
           - bigtable
           - pubsub
+          - pubsublite
           - spanner
           - storage
         - shard: Compute
@@ -166,6 +195,7 @@ jobs:
           - __experimental_libraries__
           - -bigtable
           - -pubsub
+          - -pubsublite
           - -spanner
           - -storage
           - -compute
