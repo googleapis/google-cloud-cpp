@@ -20,6 +20,12 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/gha/builds/lib/macos.sh
 source module ci/gha/builds/lib/cmake.sh
 
+# Usage: macos-cmake.sh <valuee for GOOGLE_CLOUD_CPP_ENABLE>
+#
+# The singular argument is provided as a value for the GOOGLE_CLOUD_CPP_ENABLE
+# CMake configuration option. See /doc/compile-time-configuration.md for more
+# details.
+
 mapfile -t args < <(cmake::common_args)
 args+=(
   # This build uses vcpkg, we can turn off the warning about using the
@@ -32,15 +38,11 @@ mapfile -t ctest_args < <(ctest::common_args)
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 CMake configuration done in %R seconds"
 time {
-  # Always run //google/cloud:status_test in case the list of targets has
-  # no unit tests.
   io::run cmake "${args[@]}" "${vcpkg_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE="$*"
 }
 
 TIMEFORMAT="==> 🕑 CMake build done in %R seconds"
 time {
-  # Always run //google/cloud:status_test in case the list of targets has
-  # no unit tests.
   io::run cmake --build cmake-out
 }
 

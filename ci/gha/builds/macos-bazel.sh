@@ -20,14 +20,23 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/gha/builds/lib/macos.sh
 source module ci/gha/builds/lib/bazel.sh
 
+# Usage: macos-bazel.sh [bazel query expression]
+#
+# The build compiles the targets found via `bazel query`. Recall that:
+#    bazel query //a/...
+# returns the targets matching the pattern `//a/...`.` Furthermore, the
+# expressions can be combined using `+` and `-`, so:
+#    bazel query //a/... +//b/... -//a/c/...
+# Returns the targets that match `//a/...` or `//b/...`, but not `//a/c/...`.
+#
+
 mapfile -t args < <(bazel::common_args)
 mapfile -t test_args < <(bazel::test_args)
 # Do not run the integration tests
 test_args+=(--test_tag_filters=-integration-test)
 TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
 
-io::log_h1 "Compute targets"
-echo bazelisk "${args[@]}" query -- "$@"
+io::log_h1 "Get target list for: " "$@"
 mapfile -t targets < <(bazelisk "${args[@]}" query -- "$@")
 
 io::log_h1 "Starting Build"
