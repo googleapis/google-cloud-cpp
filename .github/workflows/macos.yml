@@ -142,33 +142,24 @@ jobs:
         - shard: Larger Libraries
           features:
           # See above
-          - containeranalysis
-          - iam
-          - iap
-          - kms
-          - metastore
-          - notebooks
-          - run
-          - servicedirectory
-          - speech
-          - tpu
-          - trace
-          - vision
-          - binaryauthorization
-          - datacatalog
-          - dataplex
-          - gkemulticloud
-          - resourcemanager
           - servicecontrol
           - support
+          - video
+          - datacatalog
+          - iam
+          - kms
+          - beyondcorp
           - contentwarehouse
           - dataproc
           - talent
           - retail
-          - monitoring
+          - bigquery
           - appengine
+          - monitoring
           - sql
+          - dialogflow_cx
           - aiplatform
+          - dialogflow_es
         - shard: Other
           features:
           - __ga_libraries__
@@ -178,33 +169,24 @@ jobs:
           - -spanner
           - -storage
           - -compute
-          - -containeranalysis
-          - -iam
-          - -iap
-          - -kms
-          - -metastore
-          - -notebooks
-          - -run
-          - -servicedirectory
-          - -speech
-          - -tpu
-          - -trace
-          - -vision
-          - -binaryauthorization
-          - -datacatalog
-          - -dataplex
-          - -gkemulticloud
-          - -resourcemanager
           - -servicecontrol
           - -support
+          - -video
+          - -datacatalog
+          - -iam
+          - -kms
+          - -beyondcorp
           - -contentwarehouse
           - -dataproc
           - -talent
           - -retail
-          - -monitoring
+          - -bigquery
           - -appengine
+          - -monitoring
           - -sql
+          - -dialogflow_cx
           - -aiplatform
+          - -dialogflow_es
           # Disabled on macOS because GID_MAX is (1) a system macro, (2) not
           # protected with Protobuf v21
           - -storagetransfer
