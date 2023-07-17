@@ -30,7 +30,9 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::AllOf;
 using ::testing::AnyOf;
+using ::testing::HasSubstr;
 using ::testing::NotNull;
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedElementsAreArray;
@@ -1074,6 +1076,284 @@ TEST_F(PgClientIntegrationTest, FineGrainedAccessControl) {
       admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
           .get();
   ASSERT_STATUS_OK(metadata);
+}
+
+/// @test Verify "FOREIGN KEY" "ON DELETE CASCADE".
+TEST_F(ClientIntegrationTest, ForeignKeyDeleteCascade) {
+  if (UsingEmulator()) GTEST_SKIP();
+
+  spanner_admin::DatabaseAdminClient admin_client(
+      spanner_admin::MakeDatabaseAdminConnection());
+
+  // CREATE TABLE with ON DELETE CASCADE.
+  std::vector<std::string> statements;
+  statements.emplace_back(R"""(
+      CREATE TABLE Customers (
+          CustomerId   INT64 NOT NULL,
+          CustomerName STRING(62) NOT NULL
+      ) PRIMARY KEY (CustomerId))""");
+  statements.emplace_back(R"""(
+      CREATE TABLE ShoppingCarts (
+          CartId       INT64 NOT NULL,
+          CustomerId   INT64 NOT NULL,
+          CustomerName STRING(62) NOT NULL,
+          CONSTRAINT FKShoppingCartsCustomerId
+              FOREIGN KEY (CustomerId)
+              REFERENCES Customers (CustomerId)
+              ON DELETE CASCADE
+      ) PRIMARY KEY (CartId))""");
+  auto create_metadata =
+      admin_client
+          .UpdateDatabaseDdl(GetDatabase().FullName(), std::move(statements))
+          .get();
+  ASSERT_STATUS_OK(create_metadata);
+
+  // ALTER TABLE with ON DELETE CASCADE.
+  statements.clear();
+  statements.emplace_back(R"""(
+      ALTER TABLE ShoppingCarts
+      ADD CONSTRAINT FKShoppingCartsCustomerName
+          FOREIGN KEY (CustomerName)
+          REFERENCES Customers (CustomerName)
+          ON DELETE CASCADE)""");
+  auto add_metadata =
+      admin_client
+          .UpdateDatabaseDdl(GetDatabase().FullName(), std::move(statements))
+          .get();
+  ASSERT_STATUS_OK(add_metadata);
+
+  // Insert a row into the referenced table, and then a referencing row into
+  // the referencing table.
+  auto insert_commit = client_->Commit(
+      Mutations{MakeInsertMutation("Customers", {"CustomerId", "CustomerName"},
+                                   1, "FKCustomer"),
+                MakeInsertMutation("ShoppingCarts",
+                                   {"CartId", "CustomerId", "CustomerName"},  //
+                                   1, 1, "FKCustomer")});
+  ASSERT_STATUS_OK(insert_commit);
+
+  // Cannot insert a row into the referencing table when the key is not
+  // present in the referenced table.
+  auto bad_key = client_->Commit(Mutations{MakeInsertMutation(
+      "ShoppingCarts", {"CartId", "CustomerId", "CustomerName"},  //
+      2, 2, "FKCustomer")});
+  EXPECT_THAT(bad_key, StatusIs(StatusCode::kFailedPrecondition,
+                                AllOf(HasSubstr("Foreign key constraint"),
+                                      HasSubstr("FKShoppingCartsCustomerId"),
+                                      HasSubstr("ShoppingCarts"),
+                                      HasSubstr("Customers(CustomerId)"))));
+
+  // Delete a row in the referenced table. All rows referencing that key
+  // from the referencing table will also be deleted.
+  auto delete_commit = client_->Commit(
+      Mutations{MakeDeleteMutation("Customers", KeySet().AddKey(MakeKey(1)))});
+  ASSERT_STATUS_OK(delete_commit);
+  auto carts =
+      client_->ExecuteQuery(SqlStatement("SELECT CartId FROM ShoppingCarts"));
+  for (auto& cart : StreamOf<std::tuple<std::int64_t>>(carts)) {
+    EXPECT_THAT(cart, IsOk());
+    if (!cart) break;
+    EXPECT_FALSE(true) << "Unexpected cart " << std::get<0>(*cart);
+  }
+
+  // Conflicting operation: insert and delete referenced key within the
+  // same mutation.
+  auto conflict_commit = client_->Commit(
+      Mutations{MakeInsertMutation("Customers", {"CustomerId", "CustomerName"},
+                                   1, "FKCustomer1"),
+                MakeDeleteMutation("Customers", KeySet().AddKey(MakeKey(1)))});
+  EXPECT_THAT(conflict_commit,
+              StatusIs(StatusCode::kFailedPrecondition,
+                       AllOf(HasSubstr("Cannot write a value"),
+                             HasSubstr("Customers.CustomerId"),
+                             HasSubstr("and delete it"),
+                             HasSubstr("in the same transaction"))));
+
+  // Conflicting operation: reference foreign key in referencing table
+  // and delete key from referenced table in the same mutation.
+  auto reinsert_commit = client_->Commit(
+      Mutations{MakeInsertMutation("Customers", {"CustomerId", "CustomerName"},
+                                   1, "FKCustomer1"),
+                MakeInsertMutation("Customers", {"CustomerId", "CustomerName"},
+                                   2, "FKCustomer2"),
+                MakeInsertMutation("ShoppingCarts",
+                                   {"CartId", "CustomerId", "CustomerName"},  //
+                                   1, 1, "FKCustomer1")});
+  ASSERT_STATUS_OK(reinsert_commit);
+  auto reconflict_commit = client_->Commit(
+      Mutations{MakeInsertMutation("ShoppingCarts",
+                                   {"CartId", "CustomerId", "CustomerName"},  //
+                                   1, 2, "FKCustomer2"),
+                MakeDeleteMutation("Customers", KeySet().AddKey(MakeKey(1)))});
+  EXPECT_THAT(reconflict_commit,
+              StatusIs(StatusCode::kFailedPrecondition,
+                       AllOf(HasSubstr("Cannot modify a row"),
+                             HasSubstr("ShoppingCarts"),
+                             HasSubstr("referential action is deleting it"),
+                             HasSubstr("in the same transaction"))));
+
+  // Query INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS and validate DELETE_RULE.
+  auto delete_rules = client_->ExecuteQuery(SqlStatement(R"""(
+        SELECT c.DELETE_RULE
+        FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS c
+        WHERE c.CONSTRAINT_NAME = "FKShoppingCartsCustomerId"
+      )"""));
+  using RowType = std::tuple<std::string>;
+  for (auto& delete_rule : StreamOf<RowType>(delete_rules)) {
+    EXPECT_THAT(delete_rule, IsOk());
+    if (!delete_rule) break;
+    EXPECT_EQ("CASCADE", std::get<0>(*delete_rule));
+  }
+
+  // Drop ON DELETE CASCADE constraint.
+  statements.clear();
+  statements.emplace_back(R"""(
+      ALTER TABLE ShoppingCarts
+      DROP CONSTRAINT FKShoppingCartsCustomerName)""");
+  auto drop_metadata =
+      admin_client
+          .UpdateDatabaseDdl(GetDatabase().FullName(), std::move(statements))
+          .get();
+  ASSERT_STATUS_OK(drop_metadata);
+}
+
+/// @test Verify "FOREIGN KEY" "ON DELETE CASCADE".
+TEST_F(PgClientIntegrationTest, ForeignKeyDeleteCascade) {
+  if (UsingEmulator()) GTEST_SKIP();
+
+  spanner_admin::DatabaseAdminClient admin_client(
+      spanner_admin::MakeDatabaseAdminConnection());
+
+  // CREATE TABLE with ON DELETE CASCADE.
+  std::vector<std::string> statements;
+  statements.emplace_back(R"""(
+      CREATE TABLE Customers (
+          CustomerId   BIGINT NOT NULL PRIMARY KEY,
+          CustomerName CHARACTER VARYING(62) NOT NULL
+      ))""");
+  statements.emplace_back(R"""(
+      CREATE TABLE ShoppingCarts (
+          CartId       BIGINT NOT NULL PRIMARY KEY,
+          CustomerId   BIGINT NOT NULL,
+          CustomerName CHARACTER VARYING(62) NOT NULL,
+          CONSTRAINT FKShoppingCartsCustomerId
+              FOREIGN KEY (CustomerId)
+              REFERENCES Customers (CustomerId)
+              ON DELETE CASCADE
+      ))""");
+  auto create_metadata =
+      admin_client
+          .UpdateDatabaseDdl(GetDatabase().FullName(), std::move(statements))
+          .get();
+  ASSERT_STATUS_OK(create_metadata);
+
+  // ALTER TABLE with ON DELETE CASCADE.
+  statements.clear();
+  statements.emplace_back(R"""(
+      ALTER TABLE ShoppingCarts
+      ADD CONSTRAINT FKShoppingCartsCustomerName
+          FOREIGN KEY (CustomerName)
+          REFERENCES Customers (CustomerName)
+          ON DELETE CASCADE)""");
+  auto add_metadata =
+      admin_client
+          .UpdateDatabaseDdl(GetDatabase().FullName(), std::move(statements))
+          .get();
+  ASSERT_STATUS_OK(add_metadata);
+
+  // Insert a row into the referenced table, and then a referencing row into
+  // the referencing table.
+  auto insert_commit = client_->Commit(
+      Mutations{MakeInsertMutation("Customers", {"CustomerId", "CustomerName"},
+                                   1, "FKCustomer"),
+                MakeInsertMutation("ShoppingCarts",
+                                   {"CartId", "CustomerId", "CustomerName"},  //
+                                   1, 1, "FKCustomer")});
+  ASSERT_STATUS_OK(insert_commit);
+
+  // Cannot insert a row into the referencing table when the key is not
+  // present in the referenced table.
+  auto bad_key = client_->Commit(Mutations{MakeInsertMutation(
+      "ShoppingCarts", {"CartId", "CustomerId", "CustomerName"},  //
+      2, 2, "FKCustomer")});
+  EXPECT_THAT(bad_key, StatusIs(StatusCode::kFailedPrecondition,
+                                AllOf(HasSubstr("Foreign key constraint"),
+                                      HasSubstr("fkshoppingcartscustomerid"),
+                                      HasSubstr("shoppingcarts"),
+                                      HasSubstr("customers(customerid)"))));
+
+  // Delete a row in the referenced table. All rows referencing that key
+  // from the referencing table will also be deleted.
+  auto delete_commit = client_->Commit(
+      Mutations{MakeDeleteMutation("Customers", KeySet().AddKey(MakeKey(1)))});
+  ASSERT_STATUS_OK(delete_commit);
+  auto carts =
+      client_->ExecuteQuery(SqlStatement("SELECT CartId FROM ShoppingCarts"));
+  for (auto& cart : StreamOf<std::tuple<std::int64_t>>(carts)) {
+    EXPECT_THAT(cart, IsOk());
+    if (!cart) break;
+    EXPECT_FALSE(true) << "Unexpected cart " << std::get<0>(*cart);
+  }
+
+  // Conflicting operation: insert and delete referenced key within the
+  // same mutation.
+  auto conflict_commit = client_->Commit(
+      Mutations{MakeInsertMutation("Customers", {"CustomerId", "CustomerName"},
+                                   1, "FKCustomer1"),
+                MakeDeleteMutation("Customers", KeySet().AddKey(MakeKey(1)))});
+  EXPECT_THAT(conflict_commit,
+              StatusIs(StatusCode::kFailedPrecondition,
+                       AllOf(HasSubstr("Cannot write a value"),
+                             HasSubstr("customers.customerid"),
+                             HasSubstr("and delete it"),
+                             HasSubstr("in the same transaction"))));
+
+  // Conflicting operation: reference foreign key in referencing table
+  // and delete key from referenced table in the same mutation.
+  auto reinsert_commit = client_->Commit(
+      Mutations{MakeInsertMutation("Customers", {"CustomerId", "CustomerName"},
+                                   1, "FKCustomer1"),
+                MakeInsertMutation("Customers", {"CustomerId", "CustomerName"},
+                                   2, "FKCustomer2"),
+                MakeInsertMutation("ShoppingCarts",
+                                   {"CartId", "CustomerId", "CustomerName"},  //
+                                   1, 1, "FKCustomer1")});
+  ASSERT_STATUS_OK(reinsert_commit);
+  auto reconflict_commit = client_->Commit(
+      Mutations{MakeInsertMutation("ShoppingCarts",
+                                   {"CartId", "CustomerId", "CustomerName"},  //
+                                   1, 2, "FKCustomer2"),
+                MakeDeleteMutation("Customers", KeySet().AddKey(MakeKey(1)))});
+  EXPECT_THAT(reconflict_commit,
+              StatusIs(StatusCode::kFailedPrecondition,
+                       AllOf(HasSubstr("Cannot modify a row"),
+                             HasSubstr("shoppingcarts"),
+                             HasSubstr("referential action is deleting it"),
+                             HasSubstr("in the same transaction"))));
+
+  // Query INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS and validate DELETE_RULE.
+  auto delete_rules = client_->ExecuteQuery(SqlStatement(R"""(
+        SELECT c.DELETE_RULE
+        FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS c
+        WHERE c.CONSTRAINT_NAME = 'fkshoppingcartscustomerid'
+      )"""));
+  using RowType = std::tuple<std::string>;
+  for (auto& delete_rule : StreamOf<RowType>(delete_rules)) {
+    EXPECT_THAT(delete_rule, IsOk());
+    if (!delete_rule) break;
+    EXPECT_EQ("CASCADE", std::get<0>(*delete_rule));
+  }
+
+  // Drop ON DELETE CASCADE constraint.
+  statements.clear();
+  statements.emplace_back(R"""(
+      ALTER TABLE ShoppingCarts
+      DROP CONSTRAINT FKShoppingCartsCustomerName)""");
+  auto drop_metadata =
+      admin_client
+          .UpdateDatabaseDdl(GetDatabase().FullName(), std::move(statements))
+          .get();
+  ASSERT_STATUS_OK(drop_metadata);
 }
 
 /// @test Verify version_retention_period is returned in information schema.
