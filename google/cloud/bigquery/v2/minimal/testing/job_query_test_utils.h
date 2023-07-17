@@ -27,6 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 bigquery_v2_minimal_internal::QueryRequest MakeQueryRequest();
 bigquery_v2_minimal_internal::PostQueryRequest MakePostQueryRequest();
+bigquery_v2_minimal_internal::GetQueryResultsRequest
+MakeFullGetQueryResultsRequest();
 
 void AssertEquals(bigquery_v2_minimal_internal::QueryRequest const& lhs,
                   bigquery_v2_minimal_internal::QueryRequest const& rhs);

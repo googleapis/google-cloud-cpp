@@ -561,6 +561,109 @@ class PostQueryRequest {
 void to_json(nlohmann::json& j, PostQueryRequest const& q);
 void from_json(nlohmann::json const& j, PostQueryRequest& q);
 
+class GetQueryResultsRequest {
+ public:
+  GetQueryResultsRequest() = default;
+  explicit GetQueryResultsRequest(std::string project_id, std::string job_id)
+      : project_id_(std::move(project_id)), job_id_(std::move(job_id)) {}
+
+  std::string const& project_id() const { return project_id_; }
+  std::string const& job_id() const { return job_id_; }
+  std::string const& page_token() const { return page_token_; }
+  std::string const& location() const { return location_; }
+
+  std::uint64_t const& start_index() const { return start_index_; }
+  std::uint32_t const& max_results() const { return max_results_; }
+
+  std::chrono::milliseconds const& timeout() const { return timeout_; }
+  DataFormatOptions const& format_options() const { return format_options_; }
+
+  GetQueryResultsRequest& set_project_id(std::string project_id) & {
+    project_id_ = std::move(project_id);
+    return *this;
+  }
+  GetQueryResultsRequest&& set_project_id(std::string project_id) && {
+    return std::move(set_project_id(std::move(project_id)));
+  }
+
+  GetQueryResultsRequest& set_job_id(std::string job_id) & {
+    job_id_ = std::move(job_id);
+    return *this;
+  }
+  GetQueryResultsRequest&& set_job_id(std::string job_id) && {
+    return std::move(set_job_id(std::move(job_id)));
+  }
+
+  GetQueryResultsRequest& set_page_token(std::string page_token) & {
+    page_token_ = std::move(page_token);
+    return *this;
+  }
+  GetQueryResultsRequest&& set_page_token(std::string page_token) && {
+    return std::move(set_page_token(std::move(page_token)));
+  }
+
+  GetQueryResultsRequest& set_location(std::string location) & {
+    location_ = std::move(location);
+    return *this;
+  }
+  GetQueryResultsRequest&& set_location(std::string location) && {
+    return std::move(set_location(std::move(location)));
+  }
+
+  GetQueryResultsRequest& set_start_index(std::uint64_t start_index) & {
+    start_index_ = std::move(start_index);
+    return *this;
+  }
+  GetQueryResultsRequest&& set_start_index(std::uint64_t start_index) && {
+    return std::move(set_start_index(std::move(start_index)));
+  }
+
+  GetQueryResultsRequest& set_max_results(std::uint32_t max_results) & {
+    max_results_ = std::move(max_results);
+    return *this;
+  }
+  GetQueryResultsRequest&& set_max_results(std::uint32_t max_results) && {
+    return std::move(set_max_results(std::move(max_results)));
+  }
+
+  GetQueryResultsRequest& set_timeout(std::chrono::milliseconds timeout) & {
+    timeout_ = std::move(timeout);
+    return *this;
+  }
+  GetQueryResultsRequest&& set_timeout(std::chrono::milliseconds timeout) && {
+    return std::move(set_timeout(std::move(timeout)));
+  }
+
+  GetQueryResultsRequest& set_format_options(
+      DataFormatOptions format_options) & {
+    format_options_ = std::move(format_options);
+    return *this;
+  }
+  GetQueryResultsRequest&& set_format_options(
+      DataFormatOptions format_options) && {
+    return std::move(set_format_options(std::move(format_options)));
+  }
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+
+ private:
+  std::string project_id_;
+  std::string job_id_;
+  std::string page_token_;
+  std::string location_;
+
+  std::uint64_t start_index_ = 0;
+  std::uint32_t max_results_ = 0;
+
+  std::chrono::milliseconds timeout_ = std::chrono::milliseconds(0);
+
+  DataFormatOptions format_options_;
+};
+void to_json(nlohmann::json& j, GetQueryResultsRequest const& q);
+void from_json(nlohmann::json const& j, GetQueryResultsRequest& q);
+
 // Builds RestRequest from GetJobRequest.
 StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r);
 // Builds RestRequest from ListJobsRequest.
@@ -574,6 +677,9 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
 // Builds RestRequest from PostQueryRequest.
 StatusOr<rest_internal::RestRequest> BuildRestRequest(
     PostQueryRequest const& r);
+// Builds RestRequest from GetQueryResultsRequest.
+StatusOr<rest_internal::RestRequest> BuildRestRequest(
+    GetQueryResultsRequest const& r);
 
 std::ostream& operator<<(std::ostream& os, GetJobRequest const& request);
 std::ostream& operator<<(std::ostream& os, ListJobsRequest const& request);
