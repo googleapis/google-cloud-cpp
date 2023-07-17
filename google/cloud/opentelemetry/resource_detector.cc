@@ -25,10 +25,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::unique_ptr<opentelemetry::sdk::resource::ResourceDetector>
 MakeResourceDetector(Options options) {
   auto retry = internal::LimitedTimeRetryPolicy<otel_internal::StatusTraits>(
-      std::chrono::seconds(60));
+      std::chrono::seconds(10));
   auto backoff =
       ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-                               std::chrono::seconds(30), 2.0, 2.0);
+                               std::chrono::seconds(5), 2.0, 2.0);
   return otel_internal::MakeResourceDetector(
       [](Options const& options) {
         return rest_internal::MakeDefaultRestClient("", options);
