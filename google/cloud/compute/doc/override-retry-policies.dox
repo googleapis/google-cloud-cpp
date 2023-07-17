@@ -68,16 +68,108 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section compute-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
-For example, this will override the retry policies for `iam_admin_v1::IAMClient`:
+For example, this will override the retry policies for `compute_accelerator_types_v1::AcceleratorTypesClient`:
 
-@snippet iam_client_samples.cc set-retry-policy
+@snippet accelerator_types_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet accelerator_types_client_samples.cc custom-idempotency-policy
+
 
 Follow these links to find examples for other \c *Client classes:
 
-- [\c iam_admin_v1::IAMClient](@ref iam_admin_v1::IAMClient-retry-snippet)
-- [\c iam_credentials_v1::IAMCredentialsClient](@ref iam_credentials_v1::IAMCredentialsClient-retry-snippet)
-- [\c iam_v1::IAMPolicyClient](@ref iam_v1::IAMPolicyClient-retry-snippet)
-- [\c iam_v2::PoliciesClient](@ref iam_v2::PoliciesClient-retry-snippet)
+- [\c compute_accelerator_types_v1::AcceleratorTypesClient](@ref compute_accelerator_types_v1::AcceleratorTypesClient-retry-snippet)
+- [\c compute_addresses_v1::AddressesClient](@ref compute_addresses_v1::AddressesClient-retry-snippet)
+- [\c compute_autoscalers_v1::AutoscalersClient](@ref compute_autoscalers_v1::AutoscalersClient-retry-snippet)
+- [\c compute_backend_buckets_v1::BackendBucketsClient](@ref compute_backend_buckets_v1::BackendBucketsClient-retry-snippet)
+- [\c compute_backend_services_v1::BackendServicesClient](@ref compute_backend_services_v1::BackendServicesClient-retry-snippet)
+- [\c compute_disk_types_v1::DiskTypesClient](@ref compute_disk_types_v1::DiskTypesClient-retry-snippet)
+- [\c compute_disks_v1::DisksClient](@ref compute_disks_v1::DisksClient-retry-snippet)
+- [\c compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient](@ref compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient-retry-snippet)
+- [\c compute_firewall_policies_v1::FirewallPoliciesClient](@ref compute_firewall_policies_v1::FirewallPoliciesClient-retry-snippet)
+- [\c compute_firewalls_v1::FirewallsClient](@ref compute_firewalls_v1::FirewallsClient-retry-snippet)
+- [\c compute_forwarding_rules_v1::ForwardingRulesClient](@ref compute_forwarding_rules_v1::ForwardingRulesClient-retry-snippet)
+- [\c compute_global_addresses_v1::GlobalAddressesClient](@ref compute_global_addresses_v1::GlobalAddressesClient-retry-snippet)
+- [\c compute_global_forwarding_rules_v1::GlobalForwardingRulesClient](@ref compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-retry-snippet)
+- [\c compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient](@ref compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-retry-snippet)
+- [\c compute_global_operations_v1::GlobalOperationsClient](@ref compute_global_operations_v1::GlobalOperationsClient-retry-snippet)
+- [\c compute_global_organization_operations_v1::GlobalOrganizationOperationsClient](@ref compute_global_organization_operations_v1::GlobalOrganizationOperationsClient-retry-snippet)
+- [\c compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient](@ref compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient-retry-snippet)
+- [\c compute_health_checks_v1::HealthChecksClient](@ref compute_health_checks_v1::HealthChecksClient-retry-snippet)
+- [\c compute_http_health_checks_v1::HttpHealthChecksClient](@ref compute_http_health_checks_v1::HttpHealthChecksClient-retry-snippet)
+- [\c compute_https_health_checks_v1::HttpsHealthChecksClient](@ref compute_https_health_checks_v1::HttpsHealthChecksClient-retry-snippet)
+- [\c compute_image_family_views_v1::ImageFamilyViewsClient](@ref compute_image_family_views_v1::ImageFamilyViewsClient-retry-snippet)
+- [\c compute_images_v1::ImagesClient](@ref compute_images_v1::ImagesClient-retry-snippet)
+- [\c compute_instance_group_managers_v1::InstanceGroupManagersClient](@ref compute_instance_group_managers_v1::InstanceGroupManagersClient-retry-snippet)
+- [\c compute_instance_groups_v1::InstanceGroupsClient](@ref compute_instance_groups_v1::InstanceGroupsClient-retry-snippet)
+- [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-retry-snippet)
+- [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-retry-snippet)
+- [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-retry-snippet)
+- [\c compute_interconnect_locations_v1::InterconnectLocationsClient](@ref compute_interconnect_locations_v1::InterconnectLocationsClient-retry-snippet)
+- [\c compute_interconnects_v1::InterconnectsClient](@ref compute_interconnects_v1::InterconnectsClient-retry-snippet)
+- [\c compute_license_codes_v1::LicenseCodesClient](@ref compute_license_codes_v1::LicenseCodesClient-retry-snippet)
+- [\c compute_licenses_v1::LicensesClient](@ref compute_licenses_v1::LicensesClient-retry-snippet)
+- [\c compute_machine_images_v1::MachineImagesClient](@ref compute_machine_images_v1::MachineImagesClient-retry-snippet)
+- [\c compute_machine_types_v1::MachineTypesClient](@ref compute_machine_types_v1::MachineTypesClient-retry-snippet)
+- [\c compute_network_attachments_v1::NetworkAttachmentsClient](@ref compute_network_attachments_v1::NetworkAttachmentsClient-retry-snippet)
+- [\c compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient](@ref compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient-retry-snippet)
+- [\c compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient](@ref compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient-retry-snippet)
+- [\c compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient](@ref compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient-retry-snippet)
+- [\c compute_networks_v1::NetworksClient](@ref compute_networks_v1::NetworksClient-retry-snippet)
+- [\c compute_node_groups_v1::NodeGroupsClient](@ref compute_node_groups_v1::NodeGroupsClient-retry-snippet)
+- [\c compute_node_templates_v1::NodeTemplatesClient](@ref compute_node_templates_v1::NodeTemplatesClient-retry-snippet)
+- [\c compute_node_types_v1::NodeTypesClient](@ref compute_node_types_v1::NodeTypesClient-retry-snippet)
+- [\c compute_packet_mirrorings_v1::PacketMirroringsClient](@ref compute_packet_mirrorings_v1::PacketMirroringsClient-retry-snippet)
+- [\c compute_projects_v1::ProjectsClient](@ref compute_projects_v1::ProjectsClient-retry-snippet)
+- [\c compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient](@ref compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-retry-snippet)
+- [\c compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient](@ref compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-retry-snippet)
+- [\c compute_region_autoscalers_v1::RegionAutoscalersClient](@ref compute_region_autoscalers_v1::RegionAutoscalersClient-retry-snippet)
+- [\c compute_region_backend_services_v1::RegionBackendServicesClient](@ref compute_region_backend_services_v1::RegionBackendServicesClient-retry-snippet)
+- [\c compute_region_commitments_v1::RegionCommitmentsClient](@ref compute_region_commitments_v1::RegionCommitmentsClient-retry-snippet)
+- [\c compute_region_disk_types_v1::RegionDiskTypesClient](@ref compute_region_disk_types_v1::RegionDiskTypesClient-retry-snippet)
+- [\c compute_region_disks_v1::RegionDisksClient](@ref compute_region_disks_v1::RegionDisksClient-retry-snippet)
+- [\c compute_region_health_check_services_v1::RegionHealthCheckServicesClient](@ref compute_region_health_check_services_v1::RegionHealthCheckServicesClient-retry-snippet)
+- [\c compute_region_health_checks_v1::RegionHealthChecksClient](@ref compute_region_health_checks_v1::RegionHealthChecksClient-retry-snippet)
+- [\c compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient](@ref compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient-retry-snippet)
+- [\c compute_region_instance_groups_v1::RegionInstanceGroupsClient](@ref compute_region_instance_groups_v1::RegionInstanceGroupsClient-retry-snippet)
+- [\c compute_region_instance_templates_v1::RegionInstanceTemplatesClient](@ref compute_region_instance_templates_v1::RegionInstanceTemplatesClient-retry-snippet)
+- [\c compute_region_instances_v1::RegionInstancesClient](@ref compute_region_instances_v1::RegionInstancesClient-retry-snippet)
+- [\c compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient](@ref compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient-retry-snippet)
+- [\c compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient](@ref compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient-retry-snippet)
+- [\c compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient](@ref compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient-retry-snippet)
+- [\c compute_region_operations_v1::RegionOperationsClient](@ref compute_region_operations_v1::RegionOperationsClient-retry-snippet)
+- [\c compute_region_security_policies_v1::RegionSecurityPoliciesClient](@ref compute_region_security_policies_v1::RegionSecurityPoliciesClient-retry-snippet)
+- [\c compute_region_ssl_certificates_v1::RegionSslCertificatesClient](@ref compute_region_ssl_certificates_v1::RegionSslCertificatesClient-retry-snippet)
+- [\c compute_region_ssl_policies_v1::RegionSslPoliciesClient](@ref compute_region_ssl_policies_v1::RegionSslPoliciesClient-retry-snippet)
+- [\c compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient](@ref compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient-retry-snippet)
+- [\c compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient](@ref compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient-retry-snippet)
+- [\c compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient](@ref compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient-retry-snippet)
+- [\c compute_region_url_maps_v1::RegionUrlMapsClient](@ref compute_region_url_maps_v1::RegionUrlMapsClient-retry-snippet)
+- [\c compute_regions_v1::RegionsClient](@ref compute_regions_v1::RegionsClient-retry-snippet)
+- [\c compute_reservations_v1::ReservationsClient](@ref compute_reservations_v1::ReservationsClient-retry-snippet)
+- [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref compute_resource_policies_v1::ResourcePoliciesClient-retry-snippet)
+- [\c compute_routers_v1::RoutersClient](@ref compute_routers_v1::RoutersClient-retry-snippet)
+- [\c compute_routes_v1::RoutesClient](@ref compute_routes_v1::RoutesClient-retry-snippet)
+- [\c compute_security_policies_v1::SecurityPoliciesClient](@ref compute_security_policies_v1::SecurityPoliciesClient-retry-snippet)
+- [\c compute_service_attachments_v1::ServiceAttachmentsClient](@ref compute_service_attachments_v1::ServiceAttachmentsClient-retry-snippet)
+- [\c compute_snapshots_v1::SnapshotsClient](@ref compute_snapshots_v1::SnapshotsClient-retry-snippet)
+- [\c compute_ssl_certificates_v1::SslCertificatesClient](@ref compute_ssl_certificates_v1::SslCertificatesClient-retry-snippet)
+- [\c compute_ssl_policies_v1::SslPoliciesClient](@ref compute_ssl_policies_v1::SslPoliciesClient-retry-snippet)
+- [\c compute_subnetworks_v1::SubnetworksClient](@ref compute_subnetworks_v1::SubnetworksClient-retry-snippet)
+- [\c compute_target_grpc_proxies_v1::TargetGrpcProxiesClient](@ref compute_target_grpc_proxies_v1::TargetGrpcProxiesClient-retry-snippet)
+- [\c compute_target_http_proxies_v1::TargetHttpProxiesClient](@ref compute_target_http_proxies_v1::TargetHttpProxiesClient-retry-snippet)
+- [\c compute_target_https_proxies_v1::TargetHttpsProxiesClient](@ref compute_target_https_proxies_v1::TargetHttpsProxiesClient-retry-snippet)
+- [\c compute_target_instances_v1::TargetInstancesClient](@ref compute_target_instances_v1::TargetInstancesClient-retry-snippet)
+- [\c compute_target_pools_v1::TargetPoolsClient](@ref compute_target_pools_v1::TargetPoolsClient-retry-snippet)
+- [\c compute_target_ssl_proxies_v1::TargetSslProxiesClient](@ref compute_target_ssl_proxies_v1::TargetSslProxiesClient-retry-snippet)
+- [\c compute_target_tcp_proxies_v1::TargetTcpProxiesClient](@ref compute_target_tcp_proxies_v1::TargetTcpProxiesClient-retry-snippet)
+- [\c compute_target_vpn_gateways_v1::TargetVpnGatewaysClient](@ref compute_target_vpn_gateways_v1::TargetVpnGatewaysClient-retry-snippet)
+- [\c compute_url_maps_v1::UrlMapsClient](@ref compute_url_maps_v1::UrlMapsClient-retry-snippet)
+- [\c compute_vpn_gateways_v1::VpnGatewaysClient](@ref compute_vpn_gateways_v1::VpnGatewaysClient-retry-snippet)
+- [\c compute_vpn_tunnels_v1::VpnTunnelsClient](@ref compute_vpn_tunnels_v1::VpnTunnelsClient-retry-snippet)
+- [\c compute_zone_operations_v1::ZoneOperationsClient](@ref compute_zone_operations_v1::ZoneOperationsClient-retry-snippet)
+- [\c compute_zones_v1::ZonesClient](@ref compute_zones_v1::ZonesClient-retry-snippet)
 
 <!-- inject-retry-snippet-end -->
 
@@ -93,27 +185,1095 @@ Follow these links to find examples for other \c *Client classes:
 
 // <!-- inject-retry-pages-start -->
 
-/*! @page iam_admin_v1::IAMClient-retry-snippet Override iam_admin_v1::IAMClient Retry Policies
+/*! @page compute_accelerator_types_v1::AcceleratorTypesClient-retry-snippet Override compute_accelerator_types_v1::AcceleratorTypesClient Retry Policies
 
-@snippet google/cloud/iam/admin/v1/samples/iam_client_samples.cc set-retry-policy
+This shows how to override the retry policies for compute_accelerator_types_v1::AcceleratorTypesClient:
 
-*/
+@snippet google/cloud/compute/accelerator_types/v1/samples/accelerator_types_client_samples.cc set-retry-policy
 
-/*! @page iam_credentials_v1::IAMCredentialsClient-retry-snippet Override iam_credentials_v1::IAMCredentialsClient Retry Policies
+Assuming you have created a custom idempotency policy. Such as:
 
-@snippet google/cloud/iam/credentials/v1/samples/iam_credentials_client_samples.cc set-retry-policy
-
-*/
-
-/*! @page iam_v1::IAMPolicyClient-retry-snippet Override iam_v1::IAMPolicyClient Retry Policies
-
-@snippet google/cloud/iam/v1/samples/iam_policy_client_samples.cc set-retry-policy
+@snippet google/cloud/compute/accelerator_types/v1/samples/accelerator_types_client_samples.cc custom-idempotency-policy
 
 */
 
-/*! @page iam_v2::PoliciesClient-retry-snippet Override iam_v2::PoliciesClient Retry Policies
+/*! @page compute_addresses_v1::AddressesClient-retry-snippet Override compute_addresses_v1::AddressesClient Retry Policies
 
-@snippet google/cloud/iam/v2/samples/policies_client_samples.cc set-retry-policy
+This shows how to override the retry policies for compute_addresses_v1::AddressesClient:
+
+@snippet google/cloud/compute/addresses/v1/samples/addresses_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/addresses/v1/samples/addresses_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_autoscalers_v1::AutoscalersClient-retry-snippet Override compute_autoscalers_v1::AutoscalersClient Retry Policies
+
+This shows how to override the retry policies for compute_autoscalers_v1::AutoscalersClient:
+
+@snippet google/cloud/compute/autoscalers/v1/samples/autoscalers_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/autoscalers/v1/samples/autoscalers_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_backend_buckets_v1::BackendBucketsClient-retry-snippet Override compute_backend_buckets_v1::BackendBucketsClient Retry Policies
+
+This shows how to override the retry policies for compute_backend_buckets_v1::BackendBucketsClient:
+
+@snippet google/cloud/compute/backend_buckets/v1/samples/backend_buckets_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/backend_buckets/v1/samples/backend_buckets_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_backend_services_v1::BackendServicesClient-retry-snippet Override compute_backend_services_v1::BackendServicesClient Retry Policies
+
+This shows how to override the retry policies for compute_backend_services_v1::BackendServicesClient:
+
+@snippet google/cloud/compute/backend_services/v1/samples/backend_services_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/backend_services/v1/samples/backend_services_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_disk_types_v1::DiskTypesClient-retry-snippet Override compute_disk_types_v1::DiskTypesClient Retry Policies
+
+This shows how to override the retry policies for compute_disk_types_v1::DiskTypesClient:
+
+@snippet google/cloud/compute/disk_types/v1/samples/disk_types_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/disk_types/v1/samples/disk_types_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_disks_v1::DisksClient-retry-snippet Override compute_disks_v1::DisksClient Retry Policies
+
+This shows how to override the retry policies for compute_disks_v1::DisksClient:
+
+@snippet google/cloud/compute/disks/v1/samples/disks_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/disks/v1/samples/disks_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient-retry-snippet Override compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient Retry Policies
+
+This shows how to override the retry policies for compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient:
+
+@snippet google/cloud/compute/external_vpn_gateways/v1/samples/external_vpn_gateways_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/external_vpn_gateways/v1/samples/external_vpn_gateways_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_firewall_policies_v1::FirewallPoliciesClient-retry-snippet Override compute_firewall_policies_v1::FirewallPoliciesClient Retry Policies
+
+This shows how to override the retry policies for compute_firewall_policies_v1::FirewallPoliciesClient:
+
+@snippet google/cloud/compute/firewall_policies/v1/samples/firewall_policies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/firewall_policies/v1/samples/firewall_policies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_firewalls_v1::FirewallsClient-retry-snippet Override compute_firewalls_v1::FirewallsClient Retry Policies
+
+This shows how to override the retry policies for compute_firewalls_v1::FirewallsClient:
+
+@snippet google/cloud/compute/firewalls/v1/samples/firewalls_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/firewalls/v1/samples/firewalls_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_forwarding_rules_v1::ForwardingRulesClient-retry-snippet Override compute_forwarding_rules_v1::ForwardingRulesClient Retry Policies
+
+This shows how to override the retry policies for compute_forwarding_rules_v1::ForwardingRulesClient:
+
+@snippet google/cloud/compute/forwarding_rules/v1/samples/forwarding_rules_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/forwarding_rules/v1/samples/forwarding_rules_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_global_addresses_v1::GlobalAddressesClient-retry-snippet Override compute_global_addresses_v1::GlobalAddressesClient Retry Policies
+
+This shows how to override the retry policies for compute_global_addresses_v1::GlobalAddressesClient:
+
+@snippet google/cloud/compute/global_addresses/v1/samples/global_addresses_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/global_addresses/v1/samples/global_addresses_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-retry-snippet Override compute_global_forwarding_rules_v1::GlobalForwardingRulesClient Retry Policies
+
+This shows how to override the retry policies for compute_global_forwarding_rules_v1::GlobalForwardingRulesClient:
+
+@snippet google/cloud/compute/global_forwarding_rules/v1/samples/global_forwarding_rules_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/global_forwarding_rules/v1/samples/global_forwarding_rules_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-retry-snippet Override compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient Retry Policies
+
+This shows how to override the retry policies for compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient:
+
+@snippet google/cloud/compute/global_network_endpoint_groups/v1/samples/global_network_endpoint_groups_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/global_network_endpoint_groups/v1/samples/global_network_endpoint_groups_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_global_operations_v1::GlobalOperationsClient-retry-snippet Override compute_global_operations_v1::GlobalOperationsClient Retry Policies
+
+This shows how to override the retry policies for compute_global_operations_v1::GlobalOperationsClient:
+
+@snippet google/cloud/compute/global_operations/v1/samples/global_operations_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/global_operations/v1/samples/global_operations_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_global_organization_operations_v1::GlobalOrganizationOperationsClient-retry-snippet Override compute_global_organization_operations_v1::GlobalOrganizationOperationsClient Retry Policies
+
+This shows how to override the retry policies for compute_global_organization_operations_v1::GlobalOrganizationOperationsClient:
+
+@snippet google/cloud/compute/global_organization_operations/v1/samples/global_organization_operations_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/global_organization_operations/v1/samples/global_organization_operations_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient-retry-snippet Override compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient Retry Policies
+
+This shows how to override the retry policies for compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient:
+
+@snippet google/cloud/compute/global_public_delegated_prefixes/v1/samples/global_public_delegated_prefixes_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/global_public_delegated_prefixes/v1/samples/global_public_delegated_prefixes_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_health_checks_v1::HealthChecksClient-retry-snippet Override compute_health_checks_v1::HealthChecksClient Retry Policies
+
+This shows how to override the retry policies for compute_health_checks_v1::HealthChecksClient:
+
+@snippet google/cloud/compute/health_checks/v1/samples/health_checks_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/health_checks/v1/samples/health_checks_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_http_health_checks_v1::HttpHealthChecksClient-retry-snippet Override compute_http_health_checks_v1::HttpHealthChecksClient Retry Policies
+
+This shows how to override the retry policies for compute_http_health_checks_v1::HttpHealthChecksClient:
+
+@snippet google/cloud/compute/http_health_checks/v1/samples/http_health_checks_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/http_health_checks/v1/samples/http_health_checks_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_https_health_checks_v1::HttpsHealthChecksClient-retry-snippet Override compute_https_health_checks_v1::HttpsHealthChecksClient Retry Policies
+
+This shows how to override the retry policies for compute_https_health_checks_v1::HttpsHealthChecksClient:
+
+@snippet google/cloud/compute/https_health_checks/v1/samples/https_health_checks_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/https_health_checks/v1/samples/https_health_checks_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_image_family_views_v1::ImageFamilyViewsClient-retry-snippet Override compute_image_family_views_v1::ImageFamilyViewsClient Retry Policies
+
+This shows how to override the retry policies for compute_image_family_views_v1::ImageFamilyViewsClient:
+
+@snippet google/cloud/compute/image_family_views/v1/samples/image_family_views_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/image_family_views/v1/samples/image_family_views_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_images_v1::ImagesClient-retry-snippet Override compute_images_v1::ImagesClient Retry Policies
+
+This shows how to override the retry policies for compute_images_v1::ImagesClient:
+
+@snippet google/cloud/compute/images/v1/samples/images_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/images/v1/samples/images_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_instance_group_managers_v1::InstanceGroupManagersClient-retry-snippet Override compute_instance_group_managers_v1::InstanceGroupManagersClient Retry Policies
+
+This shows how to override the retry policies for compute_instance_group_managers_v1::InstanceGroupManagersClient:
+
+@snippet google/cloud/compute/instance_group_managers/v1/samples/instance_group_managers_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/instance_group_managers/v1/samples/instance_group_managers_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_instance_groups_v1::InstanceGroupsClient-retry-snippet Override compute_instance_groups_v1::InstanceGroupsClient Retry Policies
+
+This shows how to override the retry policies for compute_instance_groups_v1::InstanceGroupsClient:
+
+@snippet google/cloud/compute/instance_groups/v1/samples/instance_groups_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/instance_groups/v1/samples/instance_groups_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_instance_templates_v1::InstanceTemplatesClient-retry-snippet Override compute_instance_templates_v1::InstanceTemplatesClient Retry Policies
+
+This shows how to override the retry policies for compute_instance_templates_v1::InstanceTemplatesClient:
+
+@snippet google/cloud/compute/instance_templates/v1/samples/instance_templates_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/instance_templates/v1/samples/instance_templates_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_instances_v1::InstancesClient-retry-snippet Override compute_instances_v1::InstancesClient Retry Policies
+
+This shows how to override the retry policies for compute_instances_v1::InstancesClient:
+
+@snippet google/cloud/compute/instances/v1/samples/instances_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/instances/v1/samples/instances_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_interconnect_attachments_v1::InterconnectAttachmentsClient-retry-snippet Override compute_interconnect_attachments_v1::InterconnectAttachmentsClient Retry Policies
+
+This shows how to override the retry policies for compute_interconnect_attachments_v1::InterconnectAttachmentsClient:
+
+@snippet google/cloud/compute/interconnect_attachments/v1/samples/interconnect_attachments_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/interconnect_attachments/v1/samples/interconnect_attachments_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_interconnect_locations_v1::InterconnectLocationsClient-retry-snippet Override compute_interconnect_locations_v1::InterconnectLocationsClient Retry Policies
+
+This shows how to override the retry policies for compute_interconnect_locations_v1::InterconnectLocationsClient:
+
+@snippet google/cloud/compute/interconnect_locations/v1/samples/interconnect_locations_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/interconnect_locations/v1/samples/interconnect_locations_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_interconnects_v1::InterconnectsClient-retry-snippet Override compute_interconnects_v1::InterconnectsClient Retry Policies
+
+This shows how to override the retry policies for compute_interconnects_v1::InterconnectsClient:
+
+@snippet google/cloud/compute/interconnects/v1/samples/interconnects_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/interconnects/v1/samples/interconnects_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_license_codes_v1::LicenseCodesClient-retry-snippet Override compute_license_codes_v1::LicenseCodesClient Retry Policies
+
+This shows how to override the retry policies for compute_license_codes_v1::LicenseCodesClient:
+
+@snippet google/cloud/compute/license_codes/v1/samples/license_codes_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/license_codes/v1/samples/license_codes_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_licenses_v1::LicensesClient-retry-snippet Override compute_licenses_v1::LicensesClient Retry Policies
+
+This shows how to override the retry policies for compute_licenses_v1::LicensesClient:
+
+@snippet google/cloud/compute/licenses/v1/samples/licenses_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/licenses/v1/samples/licenses_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_machine_images_v1::MachineImagesClient-retry-snippet Override compute_machine_images_v1::MachineImagesClient Retry Policies
+
+This shows how to override the retry policies for compute_machine_images_v1::MachineImagesClient:
+
+@snippet google/cloud/compute/machine_images/v1/samples/machine_images_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/machine_images/v1/samples/machine_images_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_machine_types_v1::MachineTypesClient-retry-snippet Override compute_machine_types_v1::MachineTypesClient Retry Policies
+
+This shows how to override the retry policies for compute_machine_types_v1::MachineTypesClient:
+
+@snippet google/cloud/compute/machine_types/v1/samples/machine_types_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/machine_types/v1/samples/machine_types_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_network_attachments_v1::NetworkAttachmentsClient-retry-snippet Override compute_network_attachments_v1::NetworkAttachmentsClient Retry Policies
+
+This shows how to override the retry policies for compute_network_attachments_v1::NetworkAttachmentsClient:
+
+@snippet google/cloud/compute/network_attachments/v1/samples/network_attachments_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/network_attachments/v1/samples/network_attachments_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient-retry-snippet Override compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient Retry Policies
+
+This shows how to override the retry policies for compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient:
+
+@snippet google/cloud/compute/network_edge_security_services/v1/samples/network_edge_security_services_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/network_edge_security_services/v1/samples/network_edge_security_services_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient-retry-snippet Override compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient Retry Policies
+
+This shows how to override the retry policies for compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient:
+
+@snippet google/cloud/compute/network_endpoint_groups/v1/samples/network_endpoint_groups_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/network_endpoint_groups/v1/samples/network_endpoint_groups_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient-retry-snippet Override compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient Retry Policies
+
+This shows how to override the retry policies for compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient:
+
+@snippet google/cloud/compute/network_firewall_policies/v1/samples/network_firewall_policies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/network_firewall_policies/v1/samples/network_firewall_policies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_networks_v1::NetworksClient-retry-snippet Override compute_networks_v1::NetworksClient Retry Policies
+
+This shows how to override the retry policies for compute_networks_v1::NetworksClient:
+
+@snippet google/cloud/compute/networks/v1/samples/networks_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/networks/v1/samples/networks_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_node_groups_v1::NodeGroupsClient-retry-snippet Override compute_node_groups_v1::NodeGroupsClient Retry Policies
+
+This shows how to override the retry policies for compute_node_groups_v1::NodeGroupsClient:
+
+@snippet google/cloud/compute/node_groups/v1/samples/node_groups_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/node_groups/v1/samples/node_groups_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_node_templates_v1::NodeTemplatesClient-retry-snippet Override compute_node_templates_v1::NodeTemplatesClient Retry Policies
+
+This shows how to override the retry policies for compute_node_templates_v1::NodeTemplatesClient:
+
+@snippet google/cloud/compute/node_templates/v1/samples/node_templates_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/node_templates/v1/samples/node_templates_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_node_types_v1::NodeTypesClient-retry-snippet Override compute_node_types_v1::NodeTypesClient Retry Policies
+
+This shows how to override the retry policies for compute_node_types_v1::NodeTypesClient:
+
+@snippet google/cloud/compute/node_types/v1/samples/node_types_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/node_types/v1/samples/node_types_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_packet_mirrorings_v1::PacketMirroringsClient-retry-snippet Override compute_packet_mirrorings_v1::PacketMirroringsClient Retry Policies
+
+This shows how to override the retry policies for compute_packet_mirrorings_v1::PacketMirroringsClient:
+
+@snippet google/cloud/compute/packet_mirrorings/v1/samples/packet_mirrorings_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/packet_mirrorings/v1/samples/packet_mirrorings_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_projects_v1::ProjectsClient-retry-snippet Override compute_projects_v1::ProjectsClient Retry Policies
+
+This shows how to override the retry policies for compute_projects_v1::ProjectsClient:
+
+@snippet google/cloud/compute/projects/v1/samples/projects_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/projects/v1/samples/projects_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-retry-snippet Override compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient Retry Policies
+
+This shows how to override the retry policies for compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient:
+
+@snippet google/cloud/compute/public_advertised_prefixes/v1/samples/public_advertised_prefixes_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/public_advertised_prefixes/v1/samples/public_advertised_prefixes_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-retry-snippet Override compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient Retry Policies
+
+This shows how to override the retry policies for compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient:
+
+@snippet google/cloud/compute/public_delegated_prefixes/v1/samples/public_delegated_prefixes_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/public_delegated_prefixes/v1/samples/public_delegated_prefixes_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_autoscalers_v1::RegionAutoscalersClient-retry-snippet Override compute_region_autoscalers_v1::RegionAutoscalersClient Retry Policies
+
+This shows how to override the retry policies for compute_region_autoscalers_v1::RegionAutoscalersClient:
+
+@snippet google/cloud/compute/region_autoscalers/v1/samples/region_autoscalers_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_autoscalers/v1/samples/region_autoscalers_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_backend_services_v1::RegionBackendServicesClient-retry-snippet Override compute_region_backend_services_v1::RegionBackendServicesClient Retry Policies
+
+This shows how to override the retry policies for compute_region_backend_services_v1::RegionBackendServicesClient:
+
+@snippet google/cloud/compute/region_backend_services/v1/samples/region_backend_services_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_backend_services/v1/samples/region_backend_services_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_commitments_v1::RegionCommitmentsClient-retry-snippet Override compute_region_commitments_v1::RegionCommitmentsClient Retry Policies
+
+This shows how to override the retry policies for compute_region_commitments_v1::RegionCommitmentsClient:
+
+@snippet google/cloud/compute/region_commitments/v1/samples/region_commitments_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_commitments/v1/samples/region_commitments_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_disk_types_v1::RegionDiskTypesClient-retry-snippet Override compute_region_disk_types_v1::RegionDiskTypesClient Retry Policies
+
+This shows how to override the retry policies for compute_region_disk_types_v1::RegionDiskTypesClient:
+
+@snippet google/cloud/compute/region_disk_types/v1/samples/region_disk_types_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_disk_types/v1/samples/region_disk_types_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_disks_v1::RegionDisksClient-retry-snippet Override compute_region_disks_v1::RegionDisksClient Retry Policies
+
+This shows how to override the retry policies for compute_region_disks_v1::RegionDisksClient:
+
+@snippet google/cloud/compute/region_disks/v1/samples/region_disks_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_disks/v1/samples/region_disks_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_health_check_services_v1::RegionHealthCheckServicesClient-retry-snippet Override compute_region_health_check_services_v1::RegionHealthCheckServicesClient Retry Policies
+
+This shows how to override the retry policies for compute_region_health_check_services_v1::RegionHealthCheckServicesClient:
+
+@snippet google/cloud/compute/region_health_check_services/v1/samples/region_health_check_services_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_health_check_services/v1/samples/region_health_check_services_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_health_checks_v1::RegionHealthChecksClient-retry-snippet Override compute_region_health_checks_v1::RegionHealthChecksClient Retry Policies
+
+This shows how to override the retry policies for compute_region_health_checks_v1::RegionHealthChecksClient:
+
+@snippet google/cloud/compute/region_health_checks/v1/samples/region_health_checks_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_health_checks/v1/samples/region_health_checks_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient-retry-snippet Override compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient Retry Policies
+
+This shows how to override the retry policies for compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient:
+
+@snippet google/cloud/compute/region_instance_group_managers/v1/samples/region_instance_group_managers_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_instance_group_managers/v1/samples/region_instance_group_managers_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_instance_groups_v1::RegionInstanceGroupsClient-retry-snippet Override compute_region_instance_groups_v1::RegionInstanceGroupsClient Retry Policies
+
+This shows how to override the retry policies for compute_region_instance_groups_v1::RegionInstanceGroupsClient:
+
+@snippet google/cloud/compute/region_instance_groups/v1/samples/region_instance_groups_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_instance_groups/v1/samples/region_instance_groups_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_instance_templates_v1::RegionInstanceTemplatesClient-retry-snippet Override compute_region_instance_templates_v1::RegionInstanceTemplatesClient Retry Policies
+
+This shows how to override the retry policies for compute_region_instance_templates_v1::RegionInstanceTemplatesClient:
+
+@snippet google/cloud/compute/region_instance_templates/v1/samples/region_instance_templates_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_instance_templates/v1/samples/region_instance_templates_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_instances_v1::RegionInstancesClient-retry-snippet Override compute_region_instances_v1::RegionInstancesClient Retry Policies
+
+This shows how to override the retry policies for compute_region_instances_v1::RegionInstancesClient:
+
+@snippet google/cloud/compute/region_instances/v1/samples/region_instances_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_instances/v1/samples/region_instances_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient-retry-snippet Override compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient Retry Policies
+
+This shows how to override the retry policies for compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient:
+
+@snippet google/cloud/compute/region_network_endpoint_groups/v1/samples/region_network_endpoint_groups_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_network_endpoint_groups/v1/samples/region_network_endpoint_groups_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient-retry-snippet Override compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient Retry Policies
+
+This shows how to override the retry policies for compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient:
+
+@snippet google/cloud/compute/region_network_firewall_policies/v1/samples/region_network_firewall_policies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_network_firewall_policies/v1/samples/region_network_firewall_policies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient-retry-snippet Override compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient Retry Policies
+
+This shows how to override the retry policies for compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient:
+
+@snippet google/cloud/compute/region_notification_endpoints/v1/samples/region_notification_endpoints_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_notification_endpoints/v1/samples/region_notification_endpoints_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_operations_v1::RegionOperationsClient-retry-snippet Override compute_region_operations_v1::RegionOperationsClient Retry Policies
+
+This shows how to override the retry policies for compute_region_operations_v1::RegionOperationsClient:
+
+@snippet google/cloud/compute/region_operations/v1/samples/region_operations_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_operations/v1/samples/region_operations_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_security_policies_v1::RegionSecurityPoliciesClient-retry-snippet Override compute_region_security_policies_v1::RegionSecurityPoliciesClient Retry Policies
+
+This shows how to override the retry policies for compute_region_security_policies_v1::RegionSecurityPoliciesClient:
+
+@snippet google/cloud/compute/region_security_policies/v1/samples/region_security_policies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_security_policies/v1/samples/region_security_policies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_ssl_certificates_v1::RegionSslCertificatesClient-retry-snippet Override compute_region_ssl_certificates_v1::RegionSslCertificatesClient Retry Policies
+
+This shows how to override the retry policies for compute_region_ssl_certificates_v1::RegionSslCertificatesClient:
+
+@snippet google/cloud/compute/region_ssl_certificates/v1/samples/region_ssl_certificates_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_ssl_certificates/v1/samples/region_ssl_certificates_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_ssl_policies_v1::RegionSslPoliciesClient-retry-snippet Override compute_region_ssl_policies_v1::RegionSslPoliciesClient Retry Policies
+
+This shows how to override the retry policies for compute_region_ssl_policies_v1::RegionSslPoliciesClient:
+
+@snippet google/cloud/compute/region_ssl_policies/v1/samples/region_ssl_policies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_ssl_policies/v1/samples/region_ssl_policies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient-retry-snippet Override compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient Retry Policies
+
+This shows how to override the retry policies for compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient:
+
+@snippet google/cloud/compute/region_target_http_proxies/v1/samples/region_target_http_proxies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_target_http_proxies/v1/samples/region_target_http_proxies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient-retry-snippet Override compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient Retry Policies
+
+This shows how to override the retry policies for compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient:
+
+@snippet google/cloud/compute/region_target_https_proxies/v1/samples/region_target_https_proxies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_target_https_proxies/v1/samples/region_target_https_proxies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient-retry-snippet Override compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient Retry Policies
+
+This shows how to override the retry policies for compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient:
+
+@snippet google/cloud/compute/region_target_tcp_proxies/v1/samples/region_target_tcp_proxies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_target_tcp_proxies/v1/samples/region_target_tcp_proxies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_region_url_maps_v1::RegionUrlMapsClient-retry-snippet Override compute_region_url_maps_v1::RegionUrlMapsClient Retry Policies
+
+This shows how to override the retry policies for compute_region_url_maps_v1::RegionUrlMapsClient:
+
+@snippet google/cloud/compute/region_url_maps/v1/samples/region_url_maps_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/region_url_maps/v1/samples/region_url_maps_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_regions_v1::RegionsClient-retry-snippet Override compute_regions_v1::RegionsClient Retry Policies
+
+This shows how to override the retry policies for compute_regions_v1::RegionsClient:
+
+@snippet google/cloud/compute/regions/v1/samples/regions_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/regions/v1/samples/regions_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_reservations_v1::ReservationsClient-retry-snippet Override compute_reservations_v1::ReservationsClient Retry Policies
+
+This shows how to override the retry policies for compute_reservations_v1::ReservationsClient:
+
+@snippet google/cloud/compute/reservations/v1/samples/reservations_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/reservations/v1/samples/reservations_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_resource_policies_v1::ResourcePoliciesClient-retry-snippet Override compute_resource_policies_v1::ResourcePoliciesClient Retry Policies
+
+This shows how to override the retry policies for compute_resource_policies_v1::ResourcePoliciesClient:
+
+@snippet google/cloud/compute/resource_policies/v1/samples/resource_policies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/resource_policies/v1/samples/resource_policies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_routers_v1::RoutersClient-retry-snippet Override compute_routers_v1::RoutersClient Retry Policies
+
+This shows how to override the retry policies for compute_routers_v1::RoutersClient:
+
+@snippet google/cloud/compute/routers/v1/samples/routers_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/routers/v1/samples/routers_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_routes_v1::RoutesClient-retry-snippet Override compute_routes_v1::RoutesClient Retry Policies
+
+This shows how to override the retry policies for compute_routes_v1::RoutesClient:
+
+@snippet google/cloud/compute/routes/v1/samples/routes_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/routes/v1/samples/routes_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_security_policies_v1::SecurityPoliciesClient-retry-snippet Override compute_security_policies_v1::SecurityPoliciesClient Retry Policies
+
+This shows how to override the retry policies for compute_security_policies_v1::SecurityPoliciesClient:
+
+@snippet google/cloud/compute/security_policies/v1/samples/security_policies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/security_policies/v1/samples/security_policies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_service_attachments_v1::ServiceAttachmentsClient-retry-snippet Override compute_service_attachments_v1::ServiceAttachmentsClient Retry Policies
+
+This shows how to override the retry policies for compute_service_attachments_v1::ServiceAttachmentsClient:
+
+@snippet google/cloud/compute/service_attachments/v1/samples/service_attachments_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/service_attachments/v1/samples/service_attachments_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_snapshots_v1::SnapshotsClient-retry-snippet Override compute_snapshots_v1::SnapshotsClient Retry Policies
+
+This shows how to override the retry policies for compute_snapshots_v1::SnapshotsClient:
+
+@snippet google/cloud/compute/snapshots/v1/samples/snapshots_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/snapshots/v1/samples/snapshots_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_ssl_certificates_v1::SslCertificatesClient-retry-snippet Override compute_ssl_certificates_v1::SslCertificatesClient Retry Policies
+
+This shows how to override the retry policies for compute_ssl_certificates_v1::SslCertificatesClient:
+
+@snippet google/cloud/compute/ssl_certificates/v1/samples/ssl_certificates_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/ssl_certificates/v1/samples/ssl_certificates_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_ssl_policies_v1::SslPoliciesClient-retry-snippet Override compute_ssl_policies_v1::SslPoliciesClient Retry Policies
+
+This shows how to override the retry policies for compute_ssl_policies_v1::SslPoliciesClient:
+
+@snippet google/cloud/compute/ssl_policies/v1/samples/ssl_policies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/ssl_policies/v1/samples/ssl_policies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_subnetworks_v1::SubnetworksClient-retry-snippet Override compute_subnetworks_v1::SubnetworksClient Retry Policies
+
+This shows how to override the retry policies for compute_subnetworks_v1::SubnetworksClient:
+
+@snippet google/cloud/compute/subnetworks/v1/samples/subnetworks_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/subnetworks/v1/samples/subnetworks_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_target_grpc_proxies_v1::TargetGrpcProxiesClient-retry-snippet Override compute_target_grpc_proxies_v1::TargetGrpcProxiesClient Retry Policies
+
+This shows how to override the retry policies for compute_target_grpc_proxies_v1::TargetGrpcProxiesClient:
+
+@snippet google/cloud/compute/target_grpc_proxies/v1/samples/target_grpc_proxies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/target_grpc_proxies/v1/samples/target_grpc_proxies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_target_http_proxies_v1::TargetHttpProxiesClient-retry-snippet Override compute_target_http_proxies_v1::TargetHttpProxiesClient Retry Policies
+
+This shows how to override the retry policies for compute_target_http_proxies_v1::TargetHttpProxiesClient:
+
+@snippet google/cloud/compute/target_http_proxies/v1/samples/target_http_proxies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/target_http_proxies/v1/samples/target_http_proxies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_target_https_proxies_v1::TargetHttpsProxiesClient-retry-snippet Override compute_target_https_proxies_v1::TargetHttpsProxiesClient Retry Policies
+
+This shows how to override the retry policies for compute_target_https_proxies_v1::TargetHttpsProxiesClient:
+
+@snippet google/cloud/compute/target_https_proxies/v1/samples/target_https_proxies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/target_https_proxies/v1/samples/target_https_proxies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_target_instances_v1::TargetInstancesClient-retry-snippet Override compute_target_instances_v1::TargetInstancesClient Retry Policies
+
+This shows how to override the retry policies for compute_target_instances_v1::TargetInstancesClient:
+
+@snippet google/cloud/compute/target_instances/v1/samples/target_instances_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/target_instances/v1/samples/target_instances_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_target_pools_v1::TargetPoolsClient-retry-snippet Override compute_target_pools_v1::TargetPoolsClient Retry Policies
+
+This shows how to override the retry policies for compute_target_pools_v1::TargetPoolsClient:
+
+@snippet google/cloud/compute/target_pools/v1/samples/target_pools_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/target_pools/v1/samples/target_pools_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_target_ssl_proxies_v1::TargetSslProxiesClient-retry-snippet Override compute_target_ssl_proxies_v1::TargetSslProxiesClient Retry Policies
+
+This shows how to override the retry policies for compute_target_ssl_proxies_v1::TargetSslProxiesClient:
+
+@snippet google/cloud/compute/target_ssl_proxies/v1/samples/target_ssl_proxies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/target_ssl_proxies/v1/samples/target_ssl_proxies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_target_tcp_proxies_v1::TargetTcpProxiesClient-retry-snippet Override compute_target_tcp_proxies_v1::TargetTcpProxiesClient Retry Policies
+
+This shows how to override the retry policies for compute_target_tcp_proxies_v1::TargetTcpProxiesClient:
+
+@snippet google/cloud/compute/target_tcp_proxies/v1/samples/target_tcp_proxies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/target_tcp_proxies/v1/samples/target_tcp_proxies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_target_vpn_gateways_v1::TargetVpnGatewaysClient-retry-snippet Override compute_target_vpn_gateways_v1::TargetVpnGatewaysClient Retry Policies
+
+This shows how to override the retry policies for compute_target_vpn_gateways_v1::TargetVpnGatewaysClient:
+
+@snippet google/cloud/compute/target_vpn_gateways/v1/samples/target_vpn_gateways_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/target_vpn_gateways/v1/samples/target_vpn_gateways_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_url_maps_v1::UrlMapsClient-retry-snippet Override compute_url_maps_v1::UrlMapsClient Retry Policies
+
+This shows how to override the retry policies for compute_url_maps_v1::UrlMapsClient:
+
+@snippet google/cloud/compute/url_maps/v1/samples/url_maps_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/url_maps/v1/samples/url_maps_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_vpn_gateways_v1::VpnGatewaysClient-retry-snippet Override compute_vpn_gateways_v1::VpnGatewaysClient Retry Policies
+
+This shows how to override the retry policies for compute_vpn_gateways_v1::VpnGatewaysClient:
+
+@snippet google/cloud/compute/vpn_gateways/v1/samples/vpn_gateways_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/vpn_gateways/v1/samples/vpn_gateways_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_vpn_tunnels_v1::VpnTunnelsClient-retry-snippet Override compute_vpn_tunnels_v1::VpnTunnelsClient Retry Policies
+
+This shows how to override the retry policies for compute_vpn_tunnels_v1::VpnTunnelsClient:
+
+@snippet google/cloud/compute/vpn_tunnels/v1/samples/vpn_tunnels_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/vpn_tunnels/v1/samples/vpn_tunnels_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_zone_operations_v1::ZoneOperationsClient-retry-snippet Override compute_zone_operations_v1::ZoneOperationsClient Retry Policies
+
+This shows how to override the retry policies for compute_zone_operations_v1::ZoneOperationsClient:
+
+@snippet google/cloud/compute/zone_operations/v1/samples/zone_operations_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/zone_operations/v1/samples/zone_operations_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_zones_v1::ZonesClient-retry-snippet Override compute_zones_v1::ZonesClient Retry Policies
+
+This shows how to override the retry policies for compute_zones_v1::ZonesClient:
+
+@snippet google/cloud/compute/zones/v1/samples/zones_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/zones/v1/samples/zones_client_samples.cc custom-idempotency-policy
 
 */
 // <!-- inject-retry-pages-end -->

@@ -7,13 +7,103 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `compute_disks_v1::DisksClient`:
+For example, this will override the default endpoint for `compute_accelerator_types_v1::AcceleratorTypesClient`:
 
-@snippet disks_client_samples.cc set-client-endpoint
+@snippet accelerator_types_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c compute_accelerator_types_v1::AcceleratorTypesClient](@ref compute_accelerator_types_v1::AcceleratorTypesClient-endpoint-snippet)
+- [\c compute_addresses_v1::AddressesClient](@ref compute_addresses_v1::AddressesClient-endpoint-snippet)
+- [\c compute_autoscalers_v1::AutoscalersClient](@ref compute_autoscalers_v1::AutoscalersClient-endpoint-snippet)
+- [\c compute_backend_buckets_v1::BackendBucketsClient](@ref compute_backend_buckets_v1::BackendBucketsClient-endpoint-snippet)
+- [\c compute_backend_services_v1::BackendServicesClient](@ref compute_backend_services_v1::BackendServicesClient-endpoint-snippet)
+- [\c compute_disk_types_v1::DiskTypesClient](@ref compute_disk_types_v1::DiskTypesClient-endpoint-snippet)
 - [\c compute_disks_v1::DisksClient](@ref compute_disks_v1::DisksClient-endpoint-snippet)
+- [\c compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient](@ref compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient-endpoint-snippet)
+- [\c compute_firewall_policies_v1::FirewallPoliciesClient](@ref compute_firewall_policies_v1::FirewallPoliciesClient-endpoint-snippet)
+- [\c compute_firewalls_v1::FirewallsClient](@ref compute_firewalls_v1::FirewallsClient-endpoint-snippet)
+- [\c compute_forwarding_rules_v1::ForwardingRulesClient](@ref compute_forwarding_rules_v1::ForwardingRulesClient-endpoint-snippet)
+- [\c compute_global_addresses_v1::GlobalAddressesClient](@ref compute_global_addresses_v1::GlobalAddressesClient-endpoint-snippet)
+- [\c compute_global_forwarding_rules_v1::GlobalForwardingRulesClient](@ref compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-endpoint-snippet)
+- [\c compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient](@ref compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-endpoint-snippet)
+- [\c compute_global_operations_v1::GlobalOperationsClient](@ref compute_global_operations_v1::GlobalOperationsClient-endpoint-snippet)
+- [\c compute_global_organization_operations_v1::GlobalOrganizationOperationsClient](@ref compute_global_organization_operations_v1::GlobalOrganizationOperationsClient-endpoint-snippet)
+- [\c compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient](@ref compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient-endpoint-snippet)
+- [\c compute_health_checks_v1::HealthChecksClient](@ref compute_health_checks_v1::HealthChecksClient-endpoint-snippet)
+- [\c compute_http_health_checks_v1::HttpHealthChecksClient](@ref compute_http_health_checks_v1::HttpHealthChecksClient-endpoint-snippet)
+- [\c compute_https_health_checks_v1::HttpsHealthChecksClient](@ref compute_https_health_checks_v1::HttpsHealthChecksClient-endpoint-snippet)
+- [\c compute_image_family_views_v1::ImageFamilyViewsClient](@ref compute_image_family_views_v1::ImageFamilyViewsClient-endpoint-snippet)
+- [\c compute_images_v1::ImagesClient](@ref compute_images_v1::ImagesClient-endpoint-snippet)
+- [\c compute_instance_group_managers_v1::InstanceGroupManagersClient](@ref compute_instance_group_managers_v1::InstanceGroupManagersClient-endpoint-snippet)
+- [\c compute_instance_groups_v1::InstanceGroupsClient](@ref compute_instance_groups_v1::InstanceGroupsClient-endpoint-snippet)
+- [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-endpoint-snippet)
+- [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-endpoint-snippet)
+- [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-endpoint-snippet)
+- [\c compute_interconnect_locations_v1::InterconnectLocationsClient](@ref compute_interconnect_locations_v1::InterconnectLocationsClient-endpoint-snippet)
+- [\c compute_interconnects_v1::InterconnectsClient](@ref compute_interconnects_v1::InterconnectsClient-endpoint-snippet)
+- [\c compute_license_codes_v1::LicenseCodesClient](@ref compute_license_codes_v1::LicenseCodesClient-endpoint-snippet)
+- [\c compute_licenses_v1::LicensesClient](@ref compute_licenses_v1::LicensesClient-endpoint-snippet)
+- [\c compute_machine_images_v1::MachineImagesClient](@ref compute_machine_images_v1::MachineImagesClient-endpoint-snippet)
+- [\c compute_machine_types_v1::MachineTypesClient](@ref compute_machine_types_v1::MachineTypesClient-endpoint-snippet)
+- [\c compute_network_attachments_v1::NetworkAttachmentsClient](@ref compute_network_attachments_v1::NetworkAttachmentsClient-endpoint-snippet)
+- [\c compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient](@ref compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient-endpoint-snippet)
+- [\c compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient](@ref compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient-endpoint-snippet)
+- [\c compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient](@ref compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient-endpoint-snippet)
+- [\c compute_networks_v1::NetworksClient](@ref compute_networks_v1::NetworksClient-endpoint-snippet)
+- [\c compute_node_groups_v1::NodeGroupsClient](@ref compute_node_groups_v1::NodeGroupsClient-endpoint-snippet)
+- [\c compute_node_templates_v1::NodeTemplatesClient](@ref compute_node_templates_v1::NodeTemplatesClient-endpoint-snippet)
+- [\c compute_node_types_v1::NodeTypesClient](@ref compute_node_types_v1::NodeTypesClient-endpoint-snippet)
+- [\c compute_packet_mirrorings_v1::PacketMirroringsClient](@ref compute_packet_mirrorings_v1::PacketMirroringsClient-endpoint-snippet)
+- [\c compute_projects_v1::ProjectsClient](@ref compute_projects_v1::ProjectsClient-endpoint-snippet)
+- [\c compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient](@ref compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-endpoint-snippet)
+- [\c compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient](@ref compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-endpoint-snippet)
+- [\c compute_region_autoscalers_v1::RegionAutoscalersClient](@ref compute_region_autoscalers_v1::RegionAutoscalersClient-endpoint-snippet)
+- [\c compute_region_backend_services_v1::RegionBackendServicesClient](@ref compute_region_backend_services_v1::RegionBackendServicesClient-endpoint-snippet)
+- [\c compute_region_commitments_v1::RegionCommitmentsClient](@ref compute_region_commitments_v1::RegionCommitmentsClient-endpoint-snippet)
+- [\c compute_region_disk_types_v1::RegionDiskTypesClient](@ref compute_region_disk_types_v1::RegionDiskTypesClient-endpoint-snippet)
+- [\c compute_region_disks_v1::RegionDisksClient](@ref compute_region_disks_v1::RegionDisksClient-endpoint-snippet)
+- [\c compute_region_health_check_services_v1::RegionHealthCheckServicesClient](@ref compute_region_health_check_services_v1::RegionHealthCheckServicesClient-endpoint-snippet)
+- [\c compute_region_health_checks_v1::RegionHealthChecksClient](@ref compute_region_health_checks_v1::RegionHealthChecksClient-endpoint-snippet)
+- [\c compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient](@ref compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient-endpoint-snippet)
+- [\c compute_region_instance_groups_v1::RegionInstanceGroupsClient](@ref compute_region_instance_groups_v1::RegionInstanceGroupsClient-endpoint-snippet)
+- [\c compute_region_instance_templates_v1::RegionInstanceTemplatesClient](@ref compute_region_instance_templates_v1::RegionInstanceTemplatesClient-endpoint-snippet)
+- [\c compute_region_instances_v1::RegionInstancesClient](@ref compute_region_instances_v1::RegionInstancesClient-endpoint-snippet)
+- [\c compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient](@ref compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient-endpoint-snippet)
+- [\c compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient](@ref compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient-endpoint-snippet)
+- [\c compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient](@ref compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient-endpoint-snippet)
+- [\c compute_region_operations_v1::RegionOperationsClient](@ref compute_region_operations_v1::RegionOperationsClient-endpoint-snippet)
+- [\c compute_region_security_policies_v1::RegionSecurityPoliciesClient](@ref compute_region_security_policies_v1::RegionSecurityPoliciesClient-endpoint-snippet)
+- [\c compute_region_ssl_certificates_v1::RegionSslCertificatesClient](@ref compute_region_ssl_certificates_v1::RegionSslCertificatesClient-endpoint-snippet)
+- [\c compute_region_ssl_policies_v1::RegionSslPoliciesClient](@ref compute_region_ssl_policies_v1::RegionSslPoliciesClient-endpoint-snippet)
+- [\c compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient](@ref compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient-endpoint-snippet)
+- [\c compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient](@ref compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient-endpoint-snippet)
+- [\c compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient](@ref compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient-endpoint-snippet)
+- [\c compute_region_url_maps_v1::RegionUrlMapsClient](@ref compute_region_url_maps_v1::RegionUrlMapsClient-endpoint-snippet)
+- [\c compute_regions_v1::RegionsClient](@ref compute_regions_v1::RegionsClient-endpoint-snippet)
+- [\c compute_reservations_v1::ReservationsClient](@ref compute_reservations_v1::ReservationsClient-endpoint-snippet)
+- [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref compute_resource_policies_v1::ResourcePoliciesClient-endpoint-snippet)
+- [\c compute_routers_v1::RoutersClient](@ref compute_routers_v1::RoutersClient-endpoint-snippet)
+- [\c compute_routes_v1::RoutesClient](@ref compute_routes_v1::RoutesClient-endpoint-snippet)
+- [\c compute_security_policies_v1::SecurityPoliciesClient](@ref compute_security_policies_v1::SecurityPoliciesClient-endpoint-snippet)
+- [\c compute_service_attachments_v1::ServiceAttachmentsClient](@ref compute_service_attachments_v1::ServiceAttachmentsClient-endpoint-snippet)
+- [\c compute_snapshots_v1::SnapshotsClient](@ref compute_snapshots_v1::SnapshotsClient-endpoint-snippet)
+- [\c compute_ssl_certificates_v1::SslCertificatesClient](@ref compute_ssl_certificates_v1::SslCertificatesClient-endpoint-snippet)
+- [\c compute_ssl_policies_v1::SslPoliciesClient](@ref compute_ssl_policies_v1::SslPoliciesClient-endpoint-snippet)
+- [\c compute_subnetworks_v1::SubnetworksClient](@ref compute_subnetworks_v1::SubnetworksClient-endpoint-snippet)
+- [\c compute_target_grpc_proxies_v1::TargetGrpcProxiesClient](@ref compute_target_grpc_proxies_v1::TargetGrpcProxiesClient-endpoint-snippet)
+- [\c compute_target_http_proxies_v1::TargetHttpProxiesClient](@ref compute_target_http_proxies_v1::TargetHttpProxiesClient-endpoint-snippet)
+- [\c compute_target_https_proxies_v1::TargetHttpsProxiesClient](@ref compute_target_https_proxies_v1::TargetHttpsProxiesClient-endpoint-snippet)
+- [\c compute_target_instances_v1::TargetInstancesClient](@ref compute_target_instances_v1::TargetInstancesClient-endpoint-snippet)
+- [\c compute_target_pools_v1::TargetPoolsClient](@ref compute_target_pools_v1::TargetPoolsClient-endpoint-snippet)
+- [\c compute_target_ssl_proxies_v1::TargetSslProxiesClient](@ref compute_target_ssl_proxies_v1::TargetSslProxiesClient-endpoint-snippet)
+- [\c compute_target_tcp_proxies_v1::TargetTcpProxiesClient](@ref compute_target_tcp_proxies_v1::TargetTcpProxiesClient-endpoint-snippet)
+- [\c compute_target_vpn_gateways_v1::TargetVpnGatewaysClient](@ref compute_target_vpn_gateways_v1::TargetVpnGatewaysClient-endpoint-snippet)
+- [\c compute_url_maps_v1::UrlMapsClient](@ref compute_url_maps_v1::UrlMapsClient-endpoint-snippet)
+- [\c compute_vpn_gateways_v1::VpnGatewaysClient](@ref compute_vpn_gateways_v1::VpnGatewaysClient-endpoint-snippet)
+- [\c compute_vpn_tunnels_v1::VpnTunnelsClient](@ref compute_vpn_tunnels_v1::VpnTunnelsClient-endpoint-snippet)
+- [\c compute_zone_operations_v1::ZoneOperationsClient](@ref compute_zone_operations_v1::ZoneOperationsClient-endpoint-snippet)
+- [\c compute_zones_v1::ZonesClient](@ref compute_zones_v1::ZonesClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -21,10 +111,549 @@ Follow these links to find examples for other \c *Client classes:
 
 // <!-- inject-endpoint-pages-start -->
 
+/*! @page compute_accelerator_types_v1::AcceleratorTypesClient-endpoint-snippet Override compute_accelerator_types_v1::AcceleratorTypesClient Endpoint Configuration
+
+@snippet google/cloud/compute/accelerator_types/v1/samples/accelerator_types_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_addresses_v1::AddressesClient-endpoint-snippet Override compute_addresses_v1::AddressesClient Endpoint Configuration
+
+@snippet google/cloud/compute/addresses/v1/samples/addresses_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_autoscalers_v1::AutoscalersClient-endpoint-snippet Override compute_autoscalers_v1::AutoscalersClient Endpoint Configuration
+
+@snippet google/cloud/compute/autoscalers/v1/samples/autoscalers_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_backend_buckets_v1::BackendBucketsClient-endpoint-snippet Override compute_backend_buckets_v1::BackendBucketsClient Endpoint Configuration
+
+@snippet google/cloud/compute/backend_buckets/v1/samples/backend_buckets_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_backend_services_v1::BackendServicesClient-endpoint-snippet Override compute_backend_services_v1::BackendServicesClient Endpoint Configuration
+
+@snippet google/cloud/compute/backend_services/v1/samples/backend_services_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_disk_types_v1::DiskTypesClient-endpoint-snippet Override compute_disk_types_v1::DiskTypesClient Endpoint Configuration
+
+@snippet google/cloud/compute/disk_types/v1/samples/disk_types_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page compute_disks_v1::DisksClient-endpoint-snippet Override compute_disks_v1::DisksClient Endpoint Configuration
 
 @snippet google/cloud/compute/disks/v1/samples/disks_client_samples.cc set-client-endpoint
 
 */
 
+/*! @page compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient-endpoint-snippet Override compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient Endpoint Configuration
+
+@snippet google/cloud/compute/external_vpn_gateways/v1/samples/external_vpn_gateways_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_firewall_policies_v1::FirewallPoliciesClient-endpoint-snippet Override compute_firewall_policies_v1::FirewallPoliciesClient Endpoint Configuration
+
+@snippet google/cloud/compute/firewall_policies/v1/samples/firewall_policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_firewalls_v1::FirewallsClient-endpoint-snippet Override compute_firewalls_v1::FirewallsClient Endpoint Configuration
+
+@snippet google/cloud/compute/firewalls/v1/samples/firewalls_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_forwarding_rules_v1::ForwardingRulesClient-endpoint-snippet Override compute_forwarding_rules_v1::ForwardingRulesClient Endpoint Configuration
+
+@snippet google/cloud/compute/forwarding_rules/v1/samples/forwarding_rules_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_global_addresses_v1::GlobalAddressesClient-endpoint-snippet Override compute_global_addresses_v1::GlobalAddressesClient Endpoint Configuration
+
+@snippet google/cloud/compute/global_addresses/v1/samples/global_addresses_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-endpoint-snippet Override compute_global_forwarding_rules_v1::GlobalForwardingRulesClient Endpoint Configuration
+
+@snippet google/cloud/compute/global_forwarding_rules/v1/samples/global_forwarding_rules_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-endpoint-snippet Override compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient Endpoint Configuration
+
+@snippet google/cloud/compute/global_network_endpoint_groups/v1/samples/global_network_endpoint_groups_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_global_operations_v1::GlobalOperationsClient-endpoint-snippet Override compute_global_operations_v1::GlobalOperationsClient Endpoint Configuration
+
+@snippet google/cloud/compute/global_operations/v1/samples/global_operations_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_global_organization_operations_v1::GlobalOrganizationOperationsClient-endpoint-snippet Override compute_global_organization_operations_v1::GlobalOrganizationOperationsClient Endpoint Configuration
+
+@snippet google/cloud/compute/global_organization_operations/v1/samples/global_organization_operations_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient-endpoint-snippet Override compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient Endpoint Configuration
+
+@snippet google/cloud/compute/global_public_delegated_prefixes/v1/samples/global_public_delegated_prefixes_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_health_checks_v1::HealthChecksClient-endpoint-snippet Override compute_health_checks_v1::HealthChecksClient Endpoint Configuration
+
+@snippet google/cloud/compute/health_checks/v1/samples/health_checks_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_http_health_checks_v1::HttpHealthChecksClient-endpoint-snippet Override compute_http_health_checks_v1::HttpHealthChecksClient Endpoint Configuration
+
+@snippet google/cloud/compute/http_health_checks/v1/samples/http_health_checks_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_https_health_checks_v1::HttpsHealthChecksClient-endpoint-snippet Override compute_https_health_checks_v1::HttpsHealthChecksClient Endpoint Configuration
+
+@snippet google/cloud/compute/https_health_checks/v1/samples/https_health_checks_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_image_family_views_v1::ImageFamilyViewsClient-endpoint-snippet Override compute_image_family_views_v1::ImageFamilyViewsClient Endpoint Configuration
+
+@snippet google/cloud/compute/image_family_views/v1/samples/image_family_views_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_images_v1::ImagesClient-endpoint-snippet Override compute_images_v1::ImagesClient Endpoint Configuration
+
+@snippet google/cloud/compute/images/v1/samples/images_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_instance_group_managers_v1::InstanceGroupManagersClient-endpoint-snippet Override compute_instance_group_managers_v1::InstanceGroupManagersClient Endpoint Configuration
+
+@snippet google/cloud/compute/instance_group_managers/v1/samples/instance_group_managers_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_instance_groups_v1::InstanceGroupsClient-endpoint-snippet Override compute_instance_groups_v1::InstanceGroupsClient Endpoint Configuration
+
+@snippet google/cloud/compute/instance_groups/v1/samples/instance_groups_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_instance_templates_v1::InstanceTemplatesClient-endpoint-snippet Override compute_instance_templates_v1::InstanceTemplatesClient Endpoint Configuration
+
+@snippet google/cloud/compute/instance_templates/v1/samples/instance_templates_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_instances_v1::InstancesClient-endpoint-snippet Override compute_instances_v1::InstancesClient Endpoint Configuration
+
+@snippet google/cloud/compute/instances/v1/samples/instances_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_interconnect_attachments_v1::InterconnectAttachmentsClient-endpoint-snippet Override compute_interconnect_attachments_v1::InterconnectAttachmentsClient Endpoint Configuration
+
+@snippet google/cloud/compute/interconnect_attachments/v1/samples/interconnect_attachments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_interconnect_locations_v1::InterconnectLocationsClient-endpoint-snippet Override compute_interconnect_locations_v1::InterconnectLocationsClient Endpoint Configuration
+
+@snippet google/cloud/compute/interconnect_locations/v1/samples/interconnect_locations_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_interconnects_v1::InterconnectsClient-endpoint-snippet Override compute_interconnects_v1::InterconnectsClient Endpoint Configuration
+
+@snippet google/cloud/compute/interconnects/v1/samples/interconnects_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_license_codes_v1::LicenseCodesClient-endpoint-snippet Override compute_license_codes_v1::LicenseCodesClient Endpoint Configuration
+
+@snippet google/cloud/compute/license_codes/v1/samples/license_codes_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_licenses_v1::LicensesClient-endpoint-snippet Override compute_licenses_v1::LicensesClient Endpoint Configuration
+
+@snippet google/cloud/compute/licenses/v1/samples/licenses_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_machine_images_v1::MachineImagesClient-endpoint-snippet Override compute_machine_images_v1::MachineImagesClient Endpoint Configuration
+
+@snippet google/cloud/compute/machine_images/v1/samples/machine_images_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_machine_types_v1::MachineTypesClient-endpoint-snippet Override compute_machine_types_v1::MachineTypesClient Endpoint Configuration
+
+@snippet google/cloud/compute/machine_types/v1/samples/machine_types_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_network_attachments_v1::NetworkAttachmentsClient-endpoint-snippet Override compute_network_attachments_v1::NetworkAttachmentsClient Endpoint Configuration
+
+@snippet google/cloud/compute/network_attachments/v1/samples/network_attachments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient-endpoint-snippet Override compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient Endpoint Configuration
+
+@snippet google/cloud/compute/network_edge_security_services/v1/samples/network_edge_security_services_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient-endpoint-snippet Override compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient Endpoint Configuration
+
+@snippet google/cloud/compute/network_endpoint_groups/v1/samples/network_endpoint_groups_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient-endpoint-snippet Override compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient Endpoint Configuration
+
+@snippet google/cloud/compute/network_firewall_policies/v1/samples/network_firewall_policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_networks_v1::NetworksClient-endpoint-snippet Override compute_networks_v1::NetworksClient Endpoint Configuration
+
+@snippet google/cloud/compute/networks/v1/samples/networks_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_node_groups_v1::NodeGroupsClient-endpoint-snippet Override compute_node_groups_v1::NodeGroupsClient Endpoint Configuration
+
+@snippet google/cloud/compute/node_groups/v1/samples/node_groups_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_node_templates_v1::NodeTemplatesClient-endpoint-snippet Override compute_node_templates_v1::NodeTemplatesClient Endpoint Configuration
+
+@snippet google/cloud/compute/node_templates/v1/samples/node_templates_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_node_types_v1::NodeTypesClient-endpoint-snippet Override compute_node_types_v1::NodeTypesClient Endpoint Configuration
+
+@snippet google/cloud/compute/node_types/v1/samples/node_types_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_packet_mirrorings_v1::PacketMirroringsClient-endpoint-snippet Override compute_packet_mirrorings_v1::PacketMirroringsClient Endpoint Configuration
+
+@snippet google/cloud/compute/packet_mirrorings/v1/samples/packet_mirrorings_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_projects_v1::ProjectsClient-endpoint-snippet Override compute_projects_v1::ProjectsClient Endpoint Configuration
+
+@snippet google/cloud/compute/projects/v1/samples/projects_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-endpoint-snippet Override compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient Endpoint Configuration
+
+@snippet google/cloud/compute/public_advertised_prefixes/v1/samples/public_advertised_prefixes_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-endpoint-snippet Override compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient Endpoint Configuration
+
+@snippet google/cloud/compute/public_delegated_prefixes/v1/samples/public_delegated_prefixes_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_autoscalers_v1::RegionAutoscalersClient-endpoint-snippet Override compute_region_autoscalers_v1::RegionAutoscalersClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_autoscalers/v1/samples/region_autoscalers_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_backend_services_v1::RegionBackendServicesClient-endpoint-snippet Override compute_region_backend_services_v1::RegionBackendServicesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_backend_services/v1/samples/region_backend_services_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_commitments_v1::RegionCommitmentsClient-endpoint-snippet Override compute_region_commitments_v1::RegionCommitmentsClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_commitments/v1/samples/region_commitments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_disk_types_v1::RegionDiskTypesClient-endpoint-snippet Override compute_region_disk_types_v1::RegionDiskTypesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_disk_types/v1/samples/region_disk_types_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_disks_v1::RegionDisksClient-endpoint-snippet Override compute_region_disks_v1::RegionDisksClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_disks/v1/samples/region_disks_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_health_check_services_v1::RegionHealthCheckServicesClient-endpoint-snippet Override compute_region_health_check_services_v1::RegionHealthCheckServicesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_health_check_services/v1/samples/region_health_check_services_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_health_checks_v1::RegionHealthChecksClient-endpoint-snippet Override compute_region_health_checks_v1::RegionHealthChecksClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_health_checks/v1/samples/region_health_checks_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient-endpoint-snippet Override compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_instance_group_managers/v1/samples/region_instance_group_managers_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_instance_groups_v1::RegionInstanceGroupsClient-endpoint-snippet Override compute_region_instance_groups_v1::RegionInstanceGroupsClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_instance_groups/v1/samples/region_instance_groups_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_instance_templates_v1::RegionInstanceTemplatesClient-endpoint-snippet Override compute_region_instance_templates_v1::RegionInstanceTemplatesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_instance_templates/v1/samples/region_instance_templates_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_instances_v1::RegionInstancesClient-endpoint-snippet Override compute_region_instances_v1::RegionInstancesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_instances/v1/samples/region_instances_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient-endpoint-snippet Override compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_network_endpoint_groups/v1/samples/region_network_endpoint_groups_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient-endpoint-snippet Override compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_network_firewall_policies/v1/samples/region_network_firewall_policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient-endpoint-snippet Override compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_notification_endpoints/v1/samples/region_notification_endpoints_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_operations_v1::RegionOperationsClient-endpoint-snippet Override compute_region_operations_v1::RegionOperationsClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_operations/v1/samples/region_operations_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_security_policies_v1::RegionSecurityPoliciesClient-endpoint-snippet Override compute_region_security_policies_v1::RegionSecurityPoliciesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_security_policies/v1/samples/region_security_policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_ssl_certificates_v1::RegionSslCertificatesClient-endpoint-snippet Override compute_region_ssl_certificates_v1::RegionSslCertificatesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_ssl_certificates/v1/samples/region_ssl_certificates_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_ssl_policies_v1::RegionSslPoliciesClient-endpoint-snippet Override compute_region_ssl_policies_v1::RegionSslPoliciesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_ssl_policies/v1/samples/region_ssl_policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient-endpoint-snippet Override compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_target_http_proxies/v1/samples/region_target_http_proxies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient-endpoint-snippet Override compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_target_https_proxies/v1/samples/region_target_https_proxies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient-endpoint-snippet Override compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_target_tcp_proxies/v1/samples/region_target_tcp_proxies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_url_maps_v1::RegionUrlMapsClient-endpoint-snippet Override compute_region_url_maps_v1::RegionUrlMapsClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_url_maps/v1/samples/region_url_maps_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_regions_v1::RegionsClient-endpoint-snippet Override compute_regions_v1::RegionsClient Endpoint Configuration
+
+@snippet google/cloud/compute/regions/v1/samples/regions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_reservations_v1::ReservationsClient-endpoint-snippet Override compute_reservations_v1::ReservationsClient Endpoint Configuration
+
+@snippet google/cloud/compute/reservations/v1/samples/reservations_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_resource_policies_v1::ResourcePoliciesClient-endpoint-snippet Override compute_resource_policies_v1::ResourcePoliciesClient Endpoint Configuration
+
+@snippet google/cloud/compute/resource_policies/v1/samples/resource_policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_routers_v1::RoutersClient-endpoint-snippet Override compute_routers_v1::RoutersClient Endpoint Configuration
+
+@snippet google/cloud/compute/routers/v1/samples/routers_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_routes_v1::RoutesClient-endpoint-snippet Override compute_routes_v1::RoutesClient Endpoint Configuration
+
+@snippet google/cloud/compute/routes/v1/samples/routes_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_security_policies_v1::SecurityPoliciesClient-endpoint-snippet Override compute_security_policies_v1::SecurityPoliciesClient Endpoint Configuration
+
+@snippet google/cloud/compute/security_policies/v1/samples/security_policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_service_attachments_v1::ServiceAttachmentsClient-endpoint-snippet Override compute_service_attachments_v1::ServiceAttachmentsClient Endpoint Configuration
+
+@snippet google/cloud/compute/service_attachments/v1/samples/service_attachments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_snapshots_v1::SnapshotsClient-endpoint-snippet Override compute_snapshots_v1::SnapshotsClient Endpoint Configuration
+
+@snippet google/cloud/compute/snapshots/v1/samples/snapshots_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_ssl_certificates_v1::SslCertificatesClient-endpoint-snippet Override compute_ssl_certificates_v1::SslCertificatesClient Endpoint Configuration
+
+@snippet google/cloud/compute/ssl_certificates/v1/samples/ssl_certificates_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_ssl_policies_v1::SslPoliciesClient-endpoint-snippet Override compute_ssl_policies_v1::SslPoliciesClient Endpoint Configuration
+
+@snippet google/cloud/compute/ssl_policies/v1/samples/ssl_policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_subnetworks_v1::SubnetworksClient-endpoint-snippet Override compute_subnetworks_v1::SubnetworksClient Endpoint Configuration
+
+@snippet google/cloud/compute/subnetworks/v1/samples/subnetworks_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_target_grpc_proxies_v1::TargetGrpcProxiesClient-endpoint-snippet Override compute_target_grpc_proxies_v1::TargetGrpcProxiesClient Endpoint Configuration
+
+@snippet google/cloud/compute/target_grpc_proxies/v1/samples/target_grpc_proxies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_target_http_proxies_v1::TargetHttpProxiesClient-endpoint-snippet Override compute_target_http_proxies_v1::TargetHttpProxiesClient Endpoint Configuration
+
+@snippet google/cloud/compute/target_http_proxies/v1/samples/target_http_proxies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_target_https_proxies_v1::TargetHttpsProxiesClient-endpoint-snippet Override compute_target_https_proxies_v1::TargetHttpsProxiesClient Endpoint Configuration
+
+@snippet google/cloud/compute/target_https_proxies/v1/samples/target_https_proxies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_target_instances_v1::TargetInstancesClient-endpoint-snippet Override compute_target_instances_v1::TargetInstancesClient Endpoint Configuration
+
+@snippet google/cloud/compute/target_instances/v1/samples/target_instances_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_target_pools_v1::TargetPoolsClient-endpoint-snippet Override compute_target_pools_v1::TargetPoolsClient Endpoint Configuration
+
+@snippet google/cloud/compute/target_pools/v1/samples/target_pools_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_target_ssl_proxies_v1::TargetSslProxiesClient-endpoint-snippet Override compute_target_ssl_proxies_v1::TargetSslProxiesClient Endpoint Configuration
+
+@snippet google/cloud/compute/target_ssl_proxies/v1/samples/target_ssl_proxies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_target_tcp_proxies_v1::TargetTcpProxiesClient-endpoint-snippet Override compute_target_tcp_proxies_v1::TargetTcpProxiesClient Endpoint Configuration
+
+@snippet google/cloud/compute/target_tcp_proxies/v1/samples/target_tcp_proxies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_target_vpn_gateways_v1::TargetVpnGatewaysClient-endpoint-snippet Override compute_target_vpn_gateways_v1::TargetVpnGatewaysClient Endpoint Configuration
+
+@snippet google/cloud/compute/target_vpn_gateways/v1/samples/target_vpn_gateways_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_url_maps_v1::UrlMapsClient-endpoint-snippet Override compute_url_maps_v1::UrlMapsClient Endpoint Configuration
+
+@snippet google/cloud/compute/url_maps/v1/samples/url_maps_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_vpn_gateways_v1::VpnGatewaysClient-endpoint-snippet Override compute_vpn_gateways_v1::VpnGatewaysClient Endpoint Configuration
+
+@snippet google/cloud/compute/vpn_gateways/v1/samples/vpn_gateways_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_vpn_tunnels_v1::VpnTunnelsClient-endpoint-snippet Override compute_vpn_tunnels_v1::VpnTunnelsClient Endpoint Configuration
+
+@snippet google/cloud/compute/vpn_tunnels/v1/samples/vpn_tunnels_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_zone_operations_v1::ZoneOperationsClient-endpoint-snippet Override compute_zone_operations_v1::ZoneOperationsClient Endpoint Configuration
+
+@snippet google/cloud/compute/zone_operations/v1/samples/zone_operations_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_zones_v1::ZonesClient-endpoint-snippet Override compute_zones_v1::ZonesClient Endpoint Configuration
+
+@snippet google/cloud/compute/zones/v1/samples/zones_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

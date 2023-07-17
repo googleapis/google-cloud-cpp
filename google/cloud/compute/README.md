@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) try {
       google::cloud::ExperimentalTag{},
       disks::MakeDisksConnectionRest(google::cloud::ExperimentalTag{}));
 
-  for (auto const& disk : client.ListDisks(argv[1], argv[2])) {
+  for (auto disk : client.ListDisks(argv[1], argv[2])) {
     if (!disk) throw std::move(disk).status();
     std::cout << disk->DebugString() << "\n";
   }
