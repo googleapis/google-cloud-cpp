@@ -3445,6 +3445,90 @@ void DeleteUsingDmlReturning(google::cloud::spanner::Client client) {
 }
 // [END spanner_delete_dml_returning]
 
+// [START spanner_create_table_with_foreign_key_delete_cascade]
+void CreateTableWithForeignKeyDeleteCascade(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::vector<std::string> statements;
+  statements.emplace_back(R"""(
+      CREATE TABLE Customers (
+          CustomerId   INT64 NOT NULL,
+          CustomerName STRING(62) NOT NULL
+      ) PRIMARY KEY (CustomerId))""");
+  statements.emplace_back(R"""(
+      CREATE TABLE ShoppingCarts (
+          CartId       INT64 NOT NULL,
+          CustomerId   INT64 NOT NULL,
+          CustomerName STRING(62) NOT NULL,
+          CONSTRAINT FKShoppingCartsCustomerId
+              FOREIGN KEY (CustomerId)
+              REFERENCES Customers (CustomerId)
+              ON DELETE CASCADE
+      ) PRIMARY KEY (CartId))""");
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), std::move(statements))
+          .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
+  std::cout << "Created Customers and ShoppingCarts tables"
+            << " with FKShoppingCartsCustomerId foreign key constraint"
+            << " on " << database.FullName() << "\n";
+}
+// [END spanner_create_table_with_foreign_key_delete_cascade]
+
+// [START spanner_alter_table_with_foreign_key_delete_cascade]
+void AlterTableWithForeignKeyDeleteCascade(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::vector<std::string> statements;
+  statements.emplace_back(R"""(
+      ALTER TABLE ShoppingCarts
+      ADD CONSTRAINT FKShoppingCartsCustomerName
+          FOREIGN KEY (CustomerName)
+          REFERENCES Customers(CustomerName)
+          ON DELETE CASCADE)""");
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), std::move(statements))
+          .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
+  std::cout << "Altered ShoppingCarts table"
+            << " with FKShoppingCartsCustomerName foreign key constraint"
+            << " on " << database.FullName() << "\n";
+}
+// [END spanner_alter_table_with_foreign_key_delete_cascade]
+
+// [START spanner_drop_foreign_key_constraint_delete_cascade]
+void DropForeignKeyConstraintDeleteCascade(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::vector<std::string> statements;
+  statements.emplace_back(R"""(
+      ALTER TABLE ShoppingCarts
+      DROP CONSTRAINT FKShoppingCartsCustomerName)""");
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), std::move(statements))
+          .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
+  std::cout << "Altered ShoppingCarts table"
+            << " to drop FKShoppingCartsCustomerName foreign key constraint"
+            << " on " << database.FullName() << "\n";
+}
+// [END spanner_drop_foreign_key_constraint_delete_cascade]
+
 void ExampleStatusOr(google::cloud::spanner::Client client) {
   //! [example-status-or]
   namespace spanner = ::google::cloud::spanner;
@@ -4783,6 +4867,20 @@ void RunAll(bool emulator) {
   if (!emulator) {
     SampleBanner("spanner_query_information_schema_database_options");
     QueryInformationSchemaDatabaseOptions(client);
+  }
+
+  if (!emulator) {
+    SampleBanner("spanner_create_table_with_foreign_key_delete_cascade");
+    CreateTableWithForeignKeyDeleteCascade(database_admin_client, project_id,
+                                           instance_id, database_id);
+
+    SampleBanner("spanner_alter_table_with_foreign_key_delete_cascade");
+    AlterTableWithForeignKeyDeleteCascade(database_admin_client, project_id,
+                                          instance_id, database_id);
+
+    SampleBanner("spanner_drop_foreign_key_constraint_delete_cascade");
+    DropForeignKeyConstraintDeleteCascade(database_admin_client, project_id,
+                                          instance_id, database_id);
   }
 
   SampleBanner("spanner_drop_database");
