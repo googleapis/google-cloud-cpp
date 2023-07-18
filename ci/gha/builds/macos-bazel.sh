@@ -45,6 +45,7 @@ time {
   # no unit tests.
   # See https://github.com/bazelbuild/bazel/issues/18965 we need to retry
   # because Bazel crashes sometimes.
+  export -f io::run
   ci/retry-command.sh 3 1 \
     io::run bazelisk "${args[@]}" test "${test_args[@]}" -- //google/cloud:status_test "${targets[@]}"
 }
