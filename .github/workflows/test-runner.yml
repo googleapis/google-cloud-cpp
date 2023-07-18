@@ -31,7 +31,7 @@ jobs:
         id: save-pull-request
         run: |
           echo ============ Event
-          cat <'_EOF_'
+          cat <<'_EOF_'
           ${{ toJSON(github.event) }}
           _EOF_
           echo ============
