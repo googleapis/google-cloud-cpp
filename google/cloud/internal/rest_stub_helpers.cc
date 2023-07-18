@@ -47,8 +47,10 @@ Status RestResponseToProto(google::protobuf::Message& destination,
 
 Status ProtoRequestToJsonPayload(google::protobuf::Message const& request,
                                  std::string& json_payload) {
-  auto proto_to_json_status =
-      google::protobuf::util::MessageToJsonString(request, &json_payload);
+  google::protobuf::util::JsonPrintOptions print_options;
+  print_options.preserve_proto_field_names = true;
+  auto proto_to_json_status = google::protobuf::util::MessageToJsonString(
+      request, &json_payload, print_options);
   if (!proto_to_json_status.ok()) {
     return internal::InternalError(
         std::string(proto_to_json_status.message()),
