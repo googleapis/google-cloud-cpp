@@ -38,6 +38,12 @@ features=(
 enable=$(printf ";%s" "${features[@]}")
 enable=${enable:1}
 
+echo "DEBUG DEBUG"
+echo "DEBUG DEBUG"
+echo "DEBUG DEBUG"
+echo "DEBUG DEBUG"
+echo "DEBUG DEBUG"
+
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 CMake configuration done in %R seconds"
 time {
