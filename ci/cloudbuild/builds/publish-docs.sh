@@ -101,27 +101,7 @@ python3 -m pip install --upgrade --quiet --disable-pip-version-check \
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 
-# Uses the doc uploader to upload docs to a GCS bucket. Requires the package
-# name and the path to the doxygen's "html" folder.
-function upload_docs() {
-  local package="$1"
-  local docs_dir="$2"
-  if [[ ! -d "${docs_dir}" ]]; then
-    io::log_red "Directory not found: ${docs_dir}, skipping"
-    return 0
-  fi
-
-  io::log "docs_dir=${docs_dir}"
-
-  env -C "${docs_dir}" "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
-    python3 -m docuploader create-metadata \
-    --name "${package}" \
-    --version "${version}" \
-    --language cpp
-  env -C "${docs_dir}" "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
-    python3 -m docuploader upload . --staging-bucket "${bucket}"
-}
-
+# Stage documentation in DocFX format for processing. go/cloud-rad for details.
 function stage_docfx() {
   local package="$1"
   local docfx_dir="$2"
@@ -153,25 +133,6 @@ for feature in common "${FEATURE_LIST[@]}"; do
   io::log_h2 "Uploading docfx docs: ${feature}"
   # These uploads are extremely noisy. Just print their output on error.
   if ! mapfile -t LOG < <(stage_docfx "google-cloud-${feature}" "${path}" 2>&1); then
-    for line in "${LOG[@]}"; do echo "${line}"; done
-    exit_status=1
-  fi
-done
-
-io::log_h2 "Publishing docs"
-io::log "version: ${version}"
-io::log "branch:  ${BRANCH_NAME}"
-io::log "bucket:  gs://${bucket}"
-
-for feature in common "${FEATURE_LIST[@]}"; do
-  if [[ "${feature}" == "experimental-storage-grpc" ]]; then continue; fi
-  if [[ "${feature}" == "grafeas" ]]; then continue; fi
-  if [[ "${feature}" == "experimental-opentelemetry" ]]; then feature="opentelemetry"; fi
-  # These uploads are extremely noisy. Just print their output on error.
-  path="cmake-out/google/cloud/${feature}/html"
-  if [[ "${feature}" == "common" ]]; then path="cmake-out/google/cloud/cloud/html"; fi
-  io::log_h2 "Uploading docs: ${feature}"
-  if ! mapfile -t LOG < <(upload_docs "google-cloud-${feature}" "${path}" 2>&1); then
     for line in "${LOG[@]}"; do echo "${line}"; done
     exit_status=1
   fi
