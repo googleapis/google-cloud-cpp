@@ -20,6 +20,7 @@
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_option_defaults.h"
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_rest_connection_impl.h"
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_rest_stub_factory.h"
+#include "google/cloud/compute/node_groups/v1/internal/node_groups_tracing_connection.h"
 #include "google/cloud/compute/node_groups/v1/node_groups_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -42,9 +43,10 @@ std::shared_ptr<NodeGroupsConnection> MakeNodeGroupsConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       compute_node_groups_v1_internal::CreateDefaultNodeGroupsRestStub(options);
-  return std::make_shared<
-      compute_node_groups_v1_internal::NodeGroupsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_node_groups_v1_internal::MakeNodeGroupsTracingConnection(
+      std::make_shared<
+          compute_node_groups_v1_internal::NodeGroupsRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

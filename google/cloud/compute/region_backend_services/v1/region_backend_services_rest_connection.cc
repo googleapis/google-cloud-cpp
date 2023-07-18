@@ -21,6 +21,7 @@
 #include "google/cloud/compute/region_backend_services/v1/internal/region_backend_services_option_defaults.h"
 #include "google/cloud/compute/region_backend_services/v1/internal/region_backend_services_rest_connection_impl.h"
 #include "google/cloud/compute/region_backend_services/v1/internal/region_backend_services_rest_stub_factory.h"
+#include "google/cloud/compute/region_backend_services/v1/internal/region_backend_services_tracing_connection.h"
 #include "google/cloud/compute/region_backend_services/v1/region_backend_services_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ MakeRegionBackendServicesConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_region_backend_services_v1_internal::
       CreateDefaultRegionBackendServicesRestStub(options);
-  return std::make_shared<compute_region_backend_services_v1_internal::
-                              RegionBackendServicesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_region_backend_services_v1_internal::
+      MakeRegionBackendServicesTracingConnection(
+          std::make_shared<compute_region_backend_services_v1_internal::
+                               RegionBackendServicesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

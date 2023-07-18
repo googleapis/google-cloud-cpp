@@ -21,6 +21,7 @@
 #include "google/cloud/compute/network_firewall_policies/v1/internal/network_firewall_policies_option_defaults.h"
 #include "google/cloud/compute/network_firewall_policies/v1/internal/network_firewall_policies_rest_connection_impl.h"
 #include "google/cloud/compute/network_firewall_policies/v1/internal/network_firewall_policies_rest_stub_factory.h"
+#include "google/cloud/compute/network_firewall_policies/v1/internal/network_firewall_policies_tracing_connection.h"
 #include "google/cloud/compute/network_firewall_policies/v1/network_firewall_policies_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ MakeNetworkFirewallPoliciesConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_network_firewall_policies_v1_internal::
       CreateDefaultNetworkFirewallPoliciesRestStub(options);
-  return std::make_shared<compute_network_firewall_policies_v1_internal::
-                              NetworkFirewallPoliciesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_network_firewall_policies_v1_internal::
+      MakeNetworkFirewallPoliciesTracingConnection(
+          std::make_shared<compute_network_firewall_policies_v1_internal::
+                               NetworkFirewallPoliciesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

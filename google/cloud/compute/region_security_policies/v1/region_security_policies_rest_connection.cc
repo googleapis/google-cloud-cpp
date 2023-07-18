@@ -21,6 +21,7 @@
 #include "google/cloud/compute/region_security_policies/v1/internal/region_security_policies_option_defaults.h"
 #include "google/cloud/compute/region_security_policies/v1/internal/region_security_policies_rest_connection_impl.h"
 #include "google/cloud/compute/region_security_policies/v1/internal/region_security_policies_rest_stub_factory.h"
+#include "google/cloud/compute/region_security_policies/v1/internal/region_security_policies_tracing_connection.h"
 #include "google/cloud/compute/region_security_policies/v1/region_security_policies_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ MakeRegionSecurityPoliciesConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_region_security_policies_v1_internal::
       CreateDefaultRegionSecurityPoliciesRestStub(options);
-  return std::make_shared<compute_region_security_policies_v1_internal::
-                              RegionSecurityPoliciesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_region_security_policies_v1_internal::
+      MakeRegionSecurityPoliciesTracingConnection(
+          std::make_shared<compute_region_security_policies_v1_internal::
+                               RegionSecurityPoliciesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

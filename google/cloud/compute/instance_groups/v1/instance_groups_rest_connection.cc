@@ -21,6 +21,7 @@
 #include "google/cloud/compute/instance_groups/v1/internal/instance_groups_option_defaults.h"
 #include "google/cloud/compute/instance_groups/v1/internal/instance_groups_rest_connection_impl.h"
 #include "google/cloud/compute/instance_groups/v1/internal/instance_groups_rest_stub_factory.h"
+#include "google/cloud/compute/instance_groups/v1/internal/instance_groups_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -44,9 +45,11 @@ std::shared_ptr<InstanceGroupsConnection> MakeInstanceGroupsConnectionRest(
   auto stub =
       compute_instance_groups_v1_internal::CreateDefaultInstanceGroupsRestStub(
           options);
-  return std::make_shared<
-      compute_instance_groups_v1_internal::InstanceGroupsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_instance_groups_v1_internal::
+      MakeInstanceGroupsTracingConnection(
+          std::make_shared<compute_instance_groups_v1_internal::
+                               InstanceGroupsRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

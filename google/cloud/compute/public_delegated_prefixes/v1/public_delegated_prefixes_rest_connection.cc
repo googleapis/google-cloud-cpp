@@ -21,6 +21,7 @@
 #include "google/cloud/compute/public_delegated_prefixes/v1/internal/public_delegated_prefixes_option_defaults.h"
 #include "google/cloud/compute/public_delegated_prefixes/v1/internal/public_delegated_prefixes_rest_connection_impl.h"
 #include "google/cloud/compute/public_delegated_prefixes/v1/internal/public_delegated_prefixes_rest_stub_factory.h"
+#include "google/cloud/compute/public_delegated_prefixes/v1/internal/public_delegated_prefixes_tracing_connection.h"
 #include "google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ MakePublicDelegatedPrefixesConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_public_delegated_prefixes_v1_internal::
       CreateDefaultPublicDelegatedPrefixesRestStub(options);
-  return std::make_shared<compute_public_delegated_prefixes_v1_internal::
-                              PublicDelegatedPrefixesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_public_delegated_prefixes_v1_internal::
+      MakePublicDelegatedPrefixesTracingConnection(
+          std::make_shared<compute_public_delegated_prefixes_v1_internal::
+                               PublicDelegatedPrefixesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

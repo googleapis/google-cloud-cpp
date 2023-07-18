@@ -21,6 +21,7 @@
 #include "google/cloud/compute/target_https_proxies/v1/internal/target_https_proxies_option_defaults.h"
 #include "google/cloud/compute/target_https_proxies/v1/internal/target_https_proxies_rest_connection_impl.h"
 #include "google/cloud/compute/target_https_proxies/v1/internal/target_https_proxies_rest_stub_factory.h"
+#include "google/cloud/compute/target_https_proxies/v1/internal/target_https_proxies_tracing_connection.h"
 #include "google/cloud/compute/target_https_proxies/v1/target_https_proxies_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ MakeTargetHttpsProxiesConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_target_https_proxies_v1_internal::
       CreateDefaultTargetHttpsProxiesRestStub(options);
-  return std::make_shared<compute_target_https_proxies_v1_internal::
-                              TargetHttpsProxiesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_target_https_proxies_v1_internal::
+      MakeTargetHttpsProxiesTracingConnection(
+          std::make_shared<compute_target_https_proxies_v1_internal::
+                               TargetHttpsProxiesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

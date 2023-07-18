@@ -21,6 +21,7 @@
 #include "google/cloud/compute/region_instance_templates/v1/internal/region_instance_templates_option_defaults.h"
 #include "google/cloud/compute/region_instance_templates/v1/internal/region_instance_templates_rest_connection_impl.h"
 #include "google/cloud/compute/region_instance_templates/v1/internal/region_instance_templates_rest_stub_factory.h"
+#include "google/cloud/compute/region_instance_templates/v1/internal/region_instance_templates_tracing_connection.h"
 #include "google/cloud/compute/region_instance_templates/v1/region_instance_templates_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ MakeRegionInstanceTemplatesConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_region_instance_templates_v1_internal::
       CreateDefaultRegionInstanceTemplatesRestStub(options);
-  return std::make_shared<compute_region_instance_templates_v1_internal::
-                              RegionInstanceTemplatesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_region_instance_templates_v1_internal::
+      MakeRegionInstanceTemplatesTracingConnection(
+          std::make_shared<compute_region_instance_templates_v1_internal::
+                               RegionInstanceTemplatesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

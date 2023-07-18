@@ -20,6 +20,7 @@
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_option_defaults.h"
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_rest_connection_impl.h"
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_rest_stub_factory.h"
+#include "google/cloud/compute/security_policies/v1/internal/security_policies_tracing_connection.h"
 #include "google/cloud/compute/security_policies/v1/security_policies_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ std::shared_ptr<SecurityPoliciesConnection> MakeSecurityPoliciesConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_security_policies_v1_internal::
       CreateDefaultSecurityPoliciesRestStub(options);
-  return std::make_shared<compute_security_policies_v1_internal::
-                              SecurityPoliciesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_security_policies_v1_internal::
+      MakeSecurityPoliciesTracingConnection(
+          std::make_shared<compute_security_policies_v1_internal::
+                               SecurityPoliciesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

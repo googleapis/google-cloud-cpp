@@ -20,6 +20,7 @@
 #include "google/cloud/compute/node_types/v1/internal/node_types_option_defaults.h"
 #include "google/cloud/compute/node_types/v1/internal/node_types_rest_connection_impl.h"
 #include "google/cloud/compute/node_types/v1/internal/node_types_rest_stub_factory.h"
+#include "google/cloud/compute/node_types/v1/internal/node_types_tracing_connection.h"
 #include "google/cloud/compute/node_types/v1/node_types_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -42,9 +43,10 @@ std::shared_ptr<NodeTypesConnection> MakeNodeTypesConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       compute_node_types_v1_internal::CreateDefaultNodeTypesRestStub(options);
-  return std::make_shared<
-      compute_node_types_v1_internal::NodeTypesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_node_types_v1_internal::MakeNodeTypesTracingConnection(
+      std::make_shared<
+          compute_node_types_v1_internal::NodeTypesRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

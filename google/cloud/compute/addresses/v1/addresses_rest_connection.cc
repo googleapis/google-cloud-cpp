@@ -21,6 +21,7 @@
 #include "google/cloud/compute/addresses/v1/internal/addresses_option_defaults.h"
 #include "google/cloud/compute/addresses/v1/internal/addresses_rest_connection_impl.h"
 #include "google/cloud/compute/addresses/v1/internal/addresses_rest_stub_factory.h"
+#include "google/cloud/compute/addresses/v1/internal/addresses_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -42,9 +43,10 @@ std::shared_ptr<AddressesConnection> MakeAddressesConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       compute_addresses_v1_internal::CreateDefaultAddressesRestStub(options);
-  return std::make_shared<
-      compute_addresses_v1_internal::AddressesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_addresses_v1_internal::MakeAddressesTracingConnection(
+      std::make_shared<
+          compute_addresses_v1_internal::AddressesRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

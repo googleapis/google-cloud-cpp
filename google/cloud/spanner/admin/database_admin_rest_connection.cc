@@ -21,6 +21,7 @@
 #include "google/cloud/spanner/admin/internal/database_admin_option_defaults.h"
 #include "google/cloud/spanner/admin/internal/database_admin_rest_connection_impl.h"
 #include "google/cloud/spanner/admin/internal/database_admin_rest_stub_factory.h"
+#include "google/cloud/spanner/admin/internal/database_admin_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -43,9 +44,9 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       spanner_admin_internal::CreateDefaultDatabaseAdminRestStub(options);
-  return std::make_shared<
-      spanner_admin_internal::DatabaseAdminRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return spanner_admin_internal::MakeDatabaseAdminTracingConnection(
+      std::make_shared<spanner_admin_internal::DatabaseAdminRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

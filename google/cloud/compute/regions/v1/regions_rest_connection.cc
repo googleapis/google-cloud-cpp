@@ -20,6 +20,7 @@
 #include "google/cloud/compute/regions/v1/internal/regions_option_defaults.h"
 #include "google/cloud/compute/regions/v1/internal/regions_rest_connection_impl.h"
 #include "google/cloud/compute/regions/v1/internal/regions_rest_stub_factory.h"
+#include "google/cloud/compute/regions/v1/internal/regions_tracing_connection.h"
 #include "google/cloud/compute/regions/v1/regions_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -42,9 +43,9 @@ std::shared_ptr<RegionsConnection> MakeRegionsConnectionRest(ExperimentalTag,
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       compute_regions_v1_internal::CreateDefaultRegionsRestStub(options);
-  return std::make_shared<
-      compute_regions_v1_internal::RegionsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_regions_v1_internal::MakeRegionsTracingConnection(
+      std::make_shared<compute_regions_v1_internal::RegionsRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

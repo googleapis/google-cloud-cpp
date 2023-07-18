@@ -20,6 +20,7 @@
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_option_defaults.h"
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_rest_connection_impl.h"
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_rest_stub_factory.h"
+#include "google/cloud/compute/snapshots/v1/internal/snapshots_tracing_connection.h"
 #include "google/cloud/compute/snapshots/v1/snapshots_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -42,9 +43,10 @@ std::shared_ptr<SnapshotsConnection> MakeSnapshotsConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       compute_snapshots_v1_internal::CreateDefaultSnapshotsRestStub(options);
-  return std::make_shared<
-      compute_snapshots_v1_internal::SnapshotsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_snapshots_v1_internal::MakeSnapshotsTracingConnection(
+      std::make_shared<
+          compute_snapshots_v1_internal::SnapshotsRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

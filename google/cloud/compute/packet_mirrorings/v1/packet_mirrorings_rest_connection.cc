@@ -20,6 +20,7 @@
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_option_defaults.h"
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_rest_connection_impl.h"
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_rest_stub_factory.h"
+#include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_tracing_connection.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ std::shared_ptr<PacketMirroringsConnection> MakePacketMirroringsConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_packet_mirrorings_v1_internal::
       CreateDefaultPacketMirroringsRestStub(options);
-  return std::make_shared<compute_packet_mirrorings_v1_internal::
-                              PacketMirroringsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_packet_mirrorings_v1_internal::
+      MakePacketMirroringsTracingConnection(
+          std::make_shared<compute_packet_mirrorings_v1_internal::
+                               PacketMirroringsRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

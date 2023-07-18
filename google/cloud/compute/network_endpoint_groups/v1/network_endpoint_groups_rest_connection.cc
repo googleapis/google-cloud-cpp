@@ -21,6 +21,7 @@
 #include "google/cloud/compute/network_endpoint_groups/v1/internal/network_endpoint_groups_option_defaults.h"
 #include "google/cloud/compute/network_endpoint_groups/v1/internal/network_endpoint_groups_rest_connection_impl.h"
 #include "google/cloud/compute/network_endpoint_groups/v1/internal/network_endpoint_groups_rest_stub_factory.h"
+#include "google/cloud/compute/network_endpoint_groups/v1/internal/network_endpoint_groups_tracing_connection.h"
 #include "google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ MakeNetworkEndpointGroupsConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_network_endpoint_groups_v1_internal::
       CreateDefaultNetworkEndpointGroupsRestStub(options);
-  return std::make_shared<compute_network_endpoint_groups_v1_internal::
-                              NetworkEndpointGroupsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_network_endpoint_groups_v1_internal::
+      MakeNetworkEndpointGroupsTracingConnection(
+          std::make_shared<compute_network_endpoint_groups_v1_internal::
+                               NetworkEndpointGroupsRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

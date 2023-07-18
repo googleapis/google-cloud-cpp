@@ -21,6 +21,7 @@
 #include "google/cloud/compute/health_checks/v1/internal/health_checks_option_defaults.h"
 #include "google/cloud/compute/health_checks/v1/internal/health_checks_rest_connection_impl.h"
 #include "google/cloud/compute/health_checks/v1/internal/health_checks_rest_stub_factory.h"
+#include "google/cloud/compute/health_checks/v1/internal/health_checks_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -44,9 +45,10 @@ std::shared_ptr<HealthChecksConnection> MakeHealthChecksConnectionRest(
   auto stub =
       compute_health_checks_v1_internal::CreateDefaultHealthChecksRestStub(
           options);
-  return std::make_shared<
-      compute_health_checks_v1_internal::HealthChecksRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_health_checks_v1_internal::MakeHealthChecksTracingConnection(
+      std::make_shared<
+          compute_health_checks_v1_internal::HealthChecksRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

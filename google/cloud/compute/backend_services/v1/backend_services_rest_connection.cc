@@ -21,6 +21,7 @@
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_option_defaults.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_rest_connection_impl.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_rest_stub_factory.h"
+#include "google/cloud/compute/backend_services/v1/internal/backend_services_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -43,9 +44,11 @@ std::shared_ptr<BackendServicesConnection> MakeBackendServicesConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_backend_services_v1_internal::
       CreateDefaultBackendServicesRestStub(options);
-  return std::make_shared<
-      compute_backend_services_v1_internal::BackendServicesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_backend_services_v1_internal::
+      MakeBackendServicesTracingConnection(
+          std::make_shared<compute_backend_services_v1_internal::
+                               BackendServicesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

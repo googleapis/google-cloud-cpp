@@ -21,6 +21,7 @@
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_option_defaults.h"
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_rest_connection_impl.h"
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_rest_stub_factory.h"
+#include "google/cloud/compute/instance_templates/v1/internal/instance_templates_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -44,9 +45,11 @@ MakeInstanceTemplatesConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_instance_templates_v1_internal::
       CreateDefaultInstanceTemplatesRestStub(options);
-  return std::make_shared<compute_instance_templates_v1_internal::
-                              InstanceTemplatesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_instance_templates_v1_internal::
+      MakeInstanceTemplatesTracingConnection(
+          std::make_shared<compute_instance_templates_v1_internal::
+                               InstanceTemplatesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
