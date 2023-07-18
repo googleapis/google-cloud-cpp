@@ -42,7 +42,7 @@ jobs:
     needs: [pre-flight]
     uses: ./.github/workflows/external-account-integration.yml
     with:
-      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      checkout-ref: ${{ needs.pre-flight.outputs.sha }}
     secrets: inherit
   macos:
     name: macOS
@@ -58,5 +58,5 @@ jobs:
     needs: [pre-flight]
     uses: ./.github/workflows/windows.yml
     with:
-      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      checkout-ref: ${{ needs.pre-flight.outputs.sha }}
     secrets: inherit
