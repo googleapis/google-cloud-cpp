@@ -31,7 +31,9 @@ jobs:
         id: save-pull-request
         run: |
           echo ============ Event
-          echo ${{ toJSON(github.event) }}
+          cat <'_EOF_'
+          ${{ toJSON(github.event) }}
+          _EOF_
           echo ============
           echo "sha=${{ github.event.pull_request.head.sha || github.ref }}" >> $GITHUB_OUTPUT
 
