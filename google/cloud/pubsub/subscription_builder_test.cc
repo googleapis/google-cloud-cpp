@@ -51,6 +51,16 @@ TEST(SubscriptionBuilder, MakeOidcTokenWithAudience) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(SubscriptionBuilder, MakeNoWrapper) {
+  auto const actual = PushConfigBuilder::MakeNoWrapper(true);
+  google::pubsub::v1::PushConfig::NoWrapper expected;
+  std::string const text = R"pb(
+    write_metadata: true
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(SubscriptionBuilder, Empty) {
   auto const actual = PushConfigBuilder().BuildModifyPushConfig(
       Subscription("test-project", "test-subscription"));

@@ -125,6 +125,24 @@ class PushConfigBuilder {
       google::pubsub::v1::PushConfig::OidcToken token) && {
     return std::move(set_authentication(std::move(token)));
   }
+
+  static google::pubsub::v1::PushConfig::NoWrapper MakeNoWrapper(
+      bool write_metadata) {
+    google::pubsub::v1::PushConfig::NoWrapper proto;
+    proto.set_write_metadata(std::move(write_metadata));
+    return proto;
+  }
+
+  PushConfigBuilder& set_wrapper(
+      google::pubsub::v1::PushConfig::NoWrapper wrapper) & {
+    *proto_.mutable_no_wrapper() = std::move(wrapper);
+    paths_.insert("no_wrapper");
+    return *this;
+  }
+  PushConfigBuilder&& set_wrapper(
+      google::pubsub::v1::PushConfig::NoWrapper wrapper) && {
+    return std::move(set_wrapper(std::move(wrapper)));
+  }
   ///@}
 
  private:
