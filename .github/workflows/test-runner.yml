@@ -30,9 +30,17 @@ jobs:
       - name: Save Pull Request
         id: save-pull-request
         run: |
+          echo ============ Event Name
+          cat <<'_EOF_'
+          ${{ toJSON(github.event_name) }}
+          _EOF_
           echo ============ Event
           cat <<'_EOF_'
           ${{ toJSON(github.event) }}
+          _EOF_
+          echo ============ GitHub
+          cat <<'_EOF_'
+          ${{ toJSON(github) }}
           _EOF_
           echo ============
           echo "sha=${{ github.event.pull_request.head.sha || github.ref }}" >> $GITHUB_OUTPUT
@@ -50,6 +58,7 @@ jobs:
       checkout-ref: ${{ needs.pre-flight.outputs.sha }}
     secrets: inherit
   macos:
+    if: ${{ false }} # TODO(coryan) - DEBUG DEBUB
     name: macOS
     needs: [pre-flight]
     uses: ./.github/workflows/macos.yml
@@ -57,8 +66,7 @@ jobs:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
   windows:
-    # TODO(#12123) - enable GHA Windows builds on PRs
-    if: ${{ github.event == 'push' }}
+    if: ${{ false }} # TODO(coryan) - DEBUG DEBUB
     name: Windows
     needs: [pre-flight]
     uses: ./.github/workflows/windows.yml
