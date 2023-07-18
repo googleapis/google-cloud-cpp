@@ -28,9 +28,10 @@ into your project.
 - @ref spanner-env for environment variables affecting the library. Some of
   these environment variables enable logging to the console. This can be an
   effective approach to diagnose runtime problems.
+- @ref spanner-retry-policies to learn how to override the default retry
+  policies used by the library.
 - @ref spanner-endpoint-example
 - @ref spanner-auth-example
-- @ref spanner-retry-example
 - @ref spanner-mocking
 - The [Setting up your development environment] guide describes how to set up
   a C++ development environment in various platforms, including the Google Cloud
@@ -82,29 +83,6 @@ Follow these links to find examples for other `*Client` classes:
 - [`DatabaseAdminClient`](@ref DatabaseAdminClient-with-service-account-snippet)
 - [`InstanceAdminClient`](@ref InstanceAdminClient-with-service-account-snippet)
 
-*/
-
-/**
-@page spanner-retry-example Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-follows the recommended practices with respect to backoff between retries.
-Application developers can override the default
-[retry](@ref google::cloud::spanner::RetryPolicy) and
-[backoff](@ref google::cloud::spanner::BackoffPolicy) policies.
-
-The default policies are to continue retrying for up to 15 minutes, and to
-use truncated (at 5 minutes) exponential backoff, doubling the maximum backoff
-period between retries.
-
-@snippet samples.cc custom-retry-policy
-
-@see [`LimitedTimeRetryPolicy`](@ref google::cloud::spanner::LimitedTimeRetryPolicy)
-   and [`LimitedErrorCountRetryPolicy`](@ref google::cloud::spanner::LimitedErrorCountRetryPolicy)
-   for alternative retry policies.
-
-@see [`ExponentialBackoffPolicy`](@ref google::cloud::spanner::ExponentialBackoffPolicy)
-   to configure different parameters for the exponential backoff policy.
 */
 
 
