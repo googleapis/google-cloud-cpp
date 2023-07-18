@@ -1,4 +1,4 @@
-name: "Test"
+name: "gha: macOS & Windows"
 
 # Build on pull requests and pushes to `main`. The PR builds will be
 # non-blocking for now, but that is configured elsewhere.
