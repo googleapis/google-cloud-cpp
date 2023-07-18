@@ -1,4 +1,4 @@
-name: "Test"
+name: "gha: macOS & Windows"
 
 # Build on pull requests and pushes to `main`. The PR builds will be
 # non-blocking for now, but that is configured elsewhere.
@@ -25,7 +25,7 @@ jobs:
     name: Require Approval for External PRs
     runs-on: ubuntu-latest
     outputs:
-      checkout-sha: ${{ steps.safe-checkout.outputs.sha }}
+      checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
     steps:
       - name: Save Pull Request
         id: save-pull-request
@@ -48,6 +48,13 @@ jobs:
     name: macOS
     needs: [pre-flight]
     uses: ./.github/workflows/macos.yml
+    with:
+      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+    secrets: inherit
+  windows:
+    name: Windows
+    needs: [pre-flight]
+    uses: ./.github/workflows/windows.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
