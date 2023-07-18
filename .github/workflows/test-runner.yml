@@ -34,6 +34,10 @@ jobs:
           cat <<'_EOF_'
           ${{ toJSON(github.event_name) }}
           _EOF_
+          echo ============ github.event.pull_request
+          cat <<'_EOF_'
+          ${{ toJSON(github.event.pull_request.head) }}
+          _EOF_
           echo ============ Event
           cat <<'_EOF_'
           ${{ toJSON(github.event) }}
@@ -55,7 +59,7 @@ jobs:
     needs: [pre-flight]
     uses: ./.github/workflows/external-account-integration.yml
     with:
-      checkout-ref: ${{ needs.pre-flight.outputs.sha }}
+      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
   macos:
     if: ${{ false }} # TODO(coryan) - DEBUG DEBUB
@@ -71,5 +75,5 @@ jobs:
     needs: [pre-flight]
     uses: ./.github/workflows/windows.yml
     with:
-      checkout-ref: ${{ needs.pre-flight.outputs.sha }}
+      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
