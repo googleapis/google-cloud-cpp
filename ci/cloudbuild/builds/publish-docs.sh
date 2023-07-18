@@ -128,6 +128,7 @@ io::log "bucket:  gs://${docfx_bucket}"
 for feature in common "${FEATURE_LIST[@]}"; do
   if [[ "${feature}" == "experimental-storage-grpc" ]]; then continue; fi
   if [[ "${feature}" == "grafeas" ]]; then continue; fi
+  if [[ "${feature}" == "experimental-opentelemetry" ]]; then feature="opentelemetry"; fi
   path="cmake-out/google/cloud/${feature}/docfx"
   if [[ "${feature}" == "common" ]]; then path="cmake-out/google/cloud/docfx"; fi
   io::log_h2 "Uploading docfx docs: ${feature}"
