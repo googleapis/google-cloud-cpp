@@ -44,6 +44,12 @@ if command -v sccache >/dev/null 2>&1; then
     -DCMAKE_PROJECT_google-cloud-cpp_INCLUDE="$(dirname "$0")/cmake/windows-sccache.cmake"
   )
 fi
+# Disable manifest [[1]] generation.  These are known to cause flakes in CI
+# systems [[2]], and we do not need manifests for our purposes.
+#
+# [1]: https://learn.microsoft.com/en-us/windows/win32/sbscs/manifests
+# [2]: https://stackoverflow.com/questions/3775406
+args+=("-DCMAKE_EXE_LINKER_FLAGS=/MANIFEST:NO")
 
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 CMake configuration done in %R seconds"
