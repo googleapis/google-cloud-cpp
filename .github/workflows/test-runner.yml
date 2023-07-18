@@ -16,6 +16,13 @@ on:
   # caches (Bazel and sccache).
   pull_request_target:
 
+# Cancel in-progress runs of the workflow if somebody adds a new commit to the
+# PR or branch. That reduces billing, but it creates more noise about cancelled
+# jobs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.label || github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   pre-flight:
     # For external contributors, run the build in the `external` environment.
