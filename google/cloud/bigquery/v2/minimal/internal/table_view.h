@@ -88,7 +88,7 @@ struct MaterializedViewStatus {
 struct TableMetadataView {
   static TableMetadataView UnSpecified();
   static TableMetadataView Basic();
-  static TableMetadataView StrorageStats();
+  static TableMetadataView StorageStats();
   static TableMetadataView Full();
 
   std::string value;

@@ -30,7 +30,7 @@ TableMetadataView TableMetadataView::Basic() {
   return TableMetadataView{"BASIC"};
 }
 
-TableMetadataView TableMetadataView::StrorageStats() {
+TableMetadataView TableMetadataView::StorageStats() {
   return TableMetadataView{"STORAGE_STATS"};
 }
 

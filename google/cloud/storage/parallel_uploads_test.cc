@@ -750,7 +750,7 @@ TEST_F(ParallelUploadTest, UnreadableFile) {
 #endif  // __linux__
 }
 
-TEST_F(ParallelUploadTest, FileOneStreamFailsUponCration) {
+TEST_F(ParallelUploadTest, FileOneStreamFailsUponCreation) {
   // The expectations need to be reversed.
   ExpectCreateSessionFailure(kPrefix + ".upload_shard_1", PermanentError());
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111);
@@ -1355,7 +1355,7 @@ TEST_F(ParallelUploadTest, Resume) {
   ASSERT_STATUS_OK(state->EagerCleanup());
 }
 
-TEST_F(ParallelUploadTest, ResumableOneStreamFailsUponCration) {
+TEST_F(ParallelUploadTest, ResumableOneStreamFailsUponCreation) {
   int const num_shards = 3;
   // The expectations need to be reversed.
   ExpectCreateSessionFailure(kPrefix + ".upload_shard_1", PermanentError());
@@ -1567,7 +1567,7 @@ TEST_F(ParallelUploadTest, ResumeFailsOnBadState) {
   EXPECT_THAT(state, StatusIs(StatusCode::kInternal));
 }
 
-TEST_F(ParallelUploadTest, ResumableOneStreamFailsUponCrationOnResume) {
+TEST_F(ParallelUploadTest, ResumableOneStreamFailsUponCreationOnResume) {
   int const num_shards = 1;
   // The expectations need to be reversed.
   auto const id_0 = ExpectResumeSessionFailure(

@@ -1,11 +1,15 @@
 [files]
 extend-exclude = [
+    # It does not like "intoto_*.proto"
+    "external/googleapis/protolists/grafeas.list",
     # The discovery docs have one or more typos in their comments and enum
     # fields. These typos can be propagated to the generated .h files.
     # TODO(#11736): Try and get typos fixed upstream.
     "generator/discovery/compute_public_google_rest_v1.json",
     "google/cloud/compute/*/*/*.proto",
     "google/cloud/compute/*/*/*.h",
+    # Truncates strings, which might not form valid words.
+    "google/cloud/internal/debug_string_protobuf_test.cc",
     # Testing input file
     "google/cloud/testing_util/rest_testing_large_json.json",
     # Test files
@@ -14,6 +18,7 @@ extend-exclude = [
     "google/cloud/bigtable/internal/readrowsparser_acceptance_tests.inc",
     # The source proto files have one or more typos in their comments
     "google/cloud/asset/v1/asset_client.h",
+    "google/cloud/automl/v1/auto_ml_client.h",
     "google/cloud/channel/v1/cloud_channel_client.h",
     "google/cloud/cloudbuild/v2/repository_manager_client.h",
     "google/cloud/managedidentities/v1/managed_identities_client.h",
@@ -43,4 +48,12 @@ extend-exclude = [
     "docfx/testing/inputs.cc",
     # Some of the tests also contain the same long hex strings.
     "docfx/doxygen2toc_test.cc",
+]
+
+[default]
+extend-ignore-identifiers-re = [
+  # This pattern can be found in long hex strings.
+  "[0-9]caf[0-9]",
+  # This is a GCS dual-region name.
+  "NAM4"
 ]
