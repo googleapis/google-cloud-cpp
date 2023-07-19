@@ -36,7 +36,7 @@ using ::testing::Return;
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
-using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -89,7 +89,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, GenerateAccessToken) {
               "golden_v1::GoldenKitchenSinkConnection::GenerateAccessToken"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, GenerateIdToken) {
@@ -114,7 +114,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, GenerateIdToken) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::GenerateIdToken"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, WriteLogEntries) {
@@ -139,7 +139,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, WriteLogEntries) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::WriteLogEntries"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, ListLogs) {
@@ -168,7 +168,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ListLogs) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::ListLogs"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, ListServiceAccountKeys) {
@@ -194,7 +194,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ListServiceAccountKeys) {
               "golden_v1::GoldenKitchenSinkConnection::ListServiceAccountKeys"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, DoNothing) {
@@ -219,7 +219,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, DoNothing) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::DoNothing"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, Deprecated2) {
@@ -244,7 +244,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, Deprecated2) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::Deprecated2"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, StreamingRead) {
@@ -271,7 +271,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, StreamingRead) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::StreamingRead"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, AsyncStreamingReadWrite) {
@@ -313,7 +313,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ExplicitRouting1) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::ExplicitRouting1"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, ExplicitRouting2) {
@@ -338,7 +338,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ExplicitRouting2) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::ExplicitRouting2"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(MakeGoldenKitchenSinkTracingConnection, TracingEnabled) {

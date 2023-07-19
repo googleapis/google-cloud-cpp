@@ -38,7 +38,7 @@ using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockHttpPayload;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
-using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::testing::_;
 using ::testing::ByMove;
 using ::testing::Contains;
@@ -120,7 +120,7 @@ TEST(ResourceDetector, RetriesTransientConnectionError) {
 
   EXPECT_THAT(
       attributes,
-      Not(Contains(SpanAttribute<std::string>(sc::kCloudProvider, "gcp"))));
+      Not(Contains(OTelAttribute<std::string>(sc::kCloudProvider, "gcp"))));
 
   EXPECT_THAT(
       log.ExtractLines(),
@@ -144,7 +144,7 @@ TEST(ResourceDetector, PermanentConnectionError) {
 
   EXPECT_THAT(
       attributes,
-      Not(Contains(SpanAttribute<std::string>(sc::kCloudProvider, "gcp"))));
+      Not(Contains(OTelAttribute<std::string>(sc::kCloudProvider, "gcp"))));
 
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr("Could not query the metadata server"),
@@ -174,7 +174,7 @@ TEST(ResourceDetector, HttpError) {
 
   EXPECT_THAT(
       attributes,
-      Not(Contains(SpanAttribute<std::string>(sc::kCloudProvider, "gcp"))));
+      Not(Contains(OTelAttribute<std::string>(sc::kCloudProvider, "gcp"))));
 
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr("Could not query the metadata server"),
@@ -211,7 +211,7 @@ TEST(ResourceDetector, ValidatesHeaders) {
 
     EXPECT_THAT(
         attributes,
-        Not(Contains(SpanAttribute<std::string>(sc::kCloudProvider, "gcp"))));
+        Not(Contains(OTelAttribute<std::string>(sc::kCloudProvider, "gcp"))));
 
     EXPECT_THAT(
         log.ExtractLines(),
@@ -248,7 +248,7 @@ TEST(ResourceDetector, PayloadReadError) {
 
   EXPECT_THAT(
       attributes,
-      Not(Contains(SpanAttribute<std::string>(sc::kCloudProvider, "gcp"))));
+      Not(Contains(OTelAttribute<std::string>(sc::kCloudProvider, "gcp"))));
 
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr("Could not query the metadata server"),
@@ -304,13 +304,13 @@ TEST(ResourceDetector, GkeRegion) {
   EXPECT_THAT(
       attributes,
       IsSupersetOf({
-          SpanAttribute<std::string>(sc::kCloudProvider, "gcp"),
-          SpanAttribute<std::string>(sc::kCloudAccountId, "test-project"),
-          SpanAttribute<std::string>(sc::kCloudPlatform,
+          OTelAttribute<std::string>(sc::kCloudProvider, "gcp"),
+          OTelAttribute<std::string>(sc::kCloudAccountId, "test-project"),
+          OTelAttribute<std::string>(sc::kCloudPlatform,
                                      "gcp_kubernetes_engine"),
-          SpanAttribute<std::string>(sc::kK8sClusterName, "test-cluster"),
-          SpanAttribute<std::string>(sc::kHostId, "1020304050607080900"),
-          SpanAttribute<std::string>(sc::kCloudRegion, "us-central1"),
+          OTelAttribute<std::string>(sc::kK8sClusterName, "test-cluster"),
+          OTelAttribute<std::string>(sc::kHostId, "1020304050607080900"),
+          OTelAttribute<std::string>(sc::kCloudRegion, "us-central1"),
       }));
 }
 
@@ -336,13 +336,13 @@ TEST(ResourceDetector, GkeZone) {
   EXPECT_THAT(
       attributes,
       IsSupersetOf({
-          SpanAttribute<std::string>(sc::kCloudProvider, "gcp"),
-          SpanAttribute<std::string>(sc::kCloudAccountId, "test-project"),
-          SpanAttribute<std::string>(sc::kCloudPlatform,
+          OTelAttribute<std::string>(sc::kCloudProvider, "gcp"),
+          OTelAttribute<std::string>(sc::kCloudAccountId, "test-project"),
+          OTelAttribute<std::string>(sc::kCloudPlatform,
                                      "gcp_kubernetes_engine"),
-          SpanAttribute<std::string>(sc::kK8sClusterName, "test-cluster"),
-          SpanAttribute<std::string>(sc::kHostId, "1020304050607080900"),
-          SpanAttribute<std::string>(sc::kCloudAvailabilityZone,
+          OTelAttribute<std::string>(sc::kK8sClusterName, "test-cluster"),
+          OTelAttribute<std::string>(sc::kHostId, "1020304050607080900"),
+          OTelAttribute<std::string>(sc::kCloudAvailabilityZone,
                                      "us-central1-a"),
       }));
 }
@@ -368,12 +368,12 @@ TEST(ResourceDetector, CloudFunctions) {
   EXPECT_THAT(
       attributes,
       IsSupersetOf({
-          SpanAttribute<std::string>(sc::kCloudProvider, "gcp"),
-          SpanAttribute<std::string>(sc::kCloudAccountId, "test-project"),
-          SpanAttribute<std::string>(sc::kCloudPlatform, "gcp_cloud_functions"),
-          SpanAttribute<std::string>(sc::kFaasName, "test-service"),
-          SpanAttribute<std::string>(sc::kFaasVersion, "test-version"),
-          SpanAttribute<std::string>(sc::kFaasInstance, "1020304050607080900"),
+          OTelAttribute<std::string>(sc::kCloudProvider, "gcp"),
+          OTelAttribute<std::string>(sc::kCloudAccountId, "test-project"),
+          OTelAttribute<std::string>(sc::kCloudPlatform, "gcp_cloud_functions"),
+          OTelAttribute<std::string>(sc::kFaasName, "test-service"),
+          OTelAttribute<std::string>(sc::kFaasVersion, "test-version"),
+          OTelAttribute<std::string>(sc::kFaasInstance, "1020304050607080900"),
       }));
 }
 
@@ -399,12 +399,12 @@ TEST(ResourceDetector, CloudRun) {
   EXPECT_THAT(
       attributes,
       IsSupersetOf({
-          SpanAttribute<std::string>(sc::kCloudProvider, "gcp"),
-          SpanAttribute<std::string>(sc::kCloudAccountId, "test-project"),
-          SpanAttribute<std::string>(sc::kCloudPlatform, "gcp_cloud_run"),
-          SpanAttribute<std::string>(sc::kFaasName, "test-service"),
-          SpanAttribute<std::string>(sc::kFaasVersion, "test-version"),
-          SpanAttribute<std::string>(sc::kFaasInstance, "1020304050607080900"),
+          OTelAttribute<std::string>(sc::kCloudProvider, "gcp"),
+          OTelAttribute<std::string>(sc::kCloudAccountId, "test-project"),
+          OTelAttribute<std::string>(sc::kCloudPlatform, "gcp_cloud_run"),
+          OTelAttribute<std::string>(sc::kFaasName, "test-service"),
+          OTelAttribute<std::string>(sc::kFaasVersion, "test-version"),
+          OTelAttribute<std::string>(sc::kFaasInstance, "1020304050607080900"),
       }));
 }
 
@@ -431,15 +431,15 @@ TEST(ResourceDetector, Gae) {
   EXPECT_THAT(
       attributes,
       IsSupersetOf({
-          SpanAttribute<std::string>(sc::kCloudProvider, "gcp"),
-          SpanAttribute<std::string>(sc::kCloudAccountId, "test-project"),
-          SpanAttribute<std::string>(sc::kCloudPlatform, "gcp_app_engine"),
-          SpanAttribute<std::string>(sc::kFaasName, "test-service"),
-          SpanAttribute<std::string>(sc::kFaasVersion, "test-version"),
-          SpanAttribute<std::string>(sc::kFaasInstance, "test-instance"),
-          SpanAttribute<std::string>(sc::kCloudAvailabilityZone,
+          OTelAttribute<std::string>(sc::kCloudProvider, "gcp"),
+          OTelAttribute<std::string>(sc::kCloudAccountId, "test-project"),
+          OTelAttribute<std::string>(sc::kCloudPlatform, "gcp_app_engine"),
+          OTelAttribute<std::string>(sc::kFaasName, "test-service"),
+          OTelAttribute<std::string>(sc::kFaasVersion, "test-version"),
+          OTelAttribute<std::string>(sc::kFaasInstance, "test-instance"),
+          OTelAttribute<std::string>(sc::kCloudAvailabilityZone,
                                      "us-central1-a"),
-          SpanAttribute<std::string>(sc::kCloudRegion, "us-central1"),
+          OTelAttribute<std::string>(sc::kCloudRegion, "us-central1"),
       }));
 }
 
@@ -467,15 +467,15 @@ TEST(ResourceDetector, Gce) {
   EXPECT_THAT(
       attributes,
       IsSupersetOf({
-          SpanAttribute<std::string>(sc::kCloudProvider, "gcp"),
-          SpanAttribute<std::string>(sc::kCloudAccountId, "test-project"),
-          SpanAttribute<std::string>(sc::kCloudPlatform, "gcp_compute_engine"),
-          SpanAttribute<std::string>(sc::kHostType, "c2d-standard-16"),
-          SpanAttribute<std::string>(sc::kHostId, "1020304050607080900"),
-          SpanAttribute<std::string>(sc::kHostName, "test-instance"),
-          SpanAttribute<std::string>(sc::kCloudAvailabilityZone,
+          OTelAttribute<std::string>(sc::kCloudProvider, "gcp"),
+          OTelAttribute<std::string>(sc::kCloudAccountId, "test-project"),
+          OTelAttribute<std::string>(sc::kCloudPlatform, "gcp_compute_engine"),
+          OTelAttribute<std::string>(sc::kHostType, "c2d-standard-16"),
+          OTelAttribute<std::string>(sc::kHostId, "1020304050607080900"),
+          OTelAttribute<std::string>(sc::kHostName, "test-instance"),
+          OTelAttribute<std::string>(sc::kCloudAvailabilityZone,
                                      "us-central1-a"),
-          SpanAttribute<std::string>(sc::kCloudRegion, "us-central1"),
+          OTelAttribute<std::string>(sc::kCloudRegion, "us-central1"),
       }));
 }
 
