@@ -114,6 +114,10 @@ info, see [#7463] and [#5976].
 
 The library has been expanded to include the Reporting API.
 
+### [Compute Engine OS Config](/google/cloud/osconfig/README.md)
+
+The library has been expanded to include the Zonal OS Config API.
+
 ## v2.13.0 - 2023-07
 
 ### New Libraries
