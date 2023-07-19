@@ -20,6 +20,7 @@
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_option_defaults.h"
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_rest_connection_impl.h"
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_rest_stub_factory.h"
+#include "google/cloud/compute/machine_types/v1/internal/machine_types_tracing_connection.h"
 #include "google/cloud/compute/machine_types/v1/machine_types_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,10 @@ std::shared_ptr<MachineTypesConnection> MakeMachineTypesConnectionRest(
   auto stub =
       compute_machine_types_v1_internal::CreateDefaultMachineTypesRestStub(
           options);
-  return std::make_shared<
-      compute_machine_types_v1_internal::MachineTypesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_machine_types_v1_internal::MakeMachineTypesTracingConnection(
+      std::make_shared<
+          compute_machine_types_v1_internal::MachineTypesRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

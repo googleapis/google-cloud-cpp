@@ -22,6 +22,7 @@
 #include "google/cloud/compute/interconnect_locations/v1/internal/interconnect_locations_option_defaults.h"
 #include "google/cloud/compute/interconnect_locations/v1/internal/interconnect_locations_rest_connection_impl.h"
 #include "google/cloud/compute/interconnect_locations/v1/internal/interconnect_locations_rest_stub_factory.h"
+#include "google/cloud/compute/interconnect_locations/v1/internal/interconnect_locations_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -44,9 +45,11 @@ MakeInterconnectLocationsConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_interconnect_locations_v1_internal::
       CreateDefaultInterconnectLocationsRestStub(options);
-  return std::make_shared<compute_interconnect_locations_v1_internal::
-                              InterconnectLocationsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_interconnect_locations_v1_internal::
+      MakeInterconnectLocationsTracingConnection(
+          std::make_shared<compute_interconnect_locations_v1_internal::
+                               InterconnectLocationsRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

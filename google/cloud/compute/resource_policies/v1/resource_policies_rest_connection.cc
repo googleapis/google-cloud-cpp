@@ -20,6 +20,7 @@
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_option_defaults.h"
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_rest_connection_impl.h"
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_rest_stub_factory.h"
+#include "google/cloud/compute/resource_policies/v1/internal/resource_policies_tracing_connection.h"
 #include "google/cloud/compute/resource_policies/v1/resource_policies_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ std::shared_ptr<ResourcePoliciesConnection> MakeResourcePoliciesConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_resource_policies_v1_internal::
       CreateDefaultResourcePoliciesRestStub(options);
-  return std::make_shared<compute_resource_policies_v1_internal::
-                              ResourcePoliciesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_resource_policies_v1_internal::
+      MakeResourcePoliciesTracingConnection(
+          std::make_shared<compute_resource_policies_v1_internal::
+                               ResourcePoliciesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -20,6 +20,7 @@
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_option_defaults.h"
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_rest_connection_impl.h"
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_rest_stub_factory.h"
+#include "google/cloud/compute/target_pools/v1/internal/target_pools_tracing_connection.h"
 #include "google/cloud/compute/target_pools/v1/target_pools_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,10 @@ std::shared_ptr<TargetPoolsConnection> MakeTargetPoolsConnectionRest(
   auto stub =
       compute_target_pools_v1_internal::CreateDefaultTargetPoolsRestStub(
           options);
-  return std::make_shared<
-      compute_target_pools_v1_internal::TargetPoolsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_target_pools_v1_internal::MakeTargetPoolsTracingConnection(
+      std::make_shared<
+          compute_target_pools_v1_internal::TargetPoolsRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

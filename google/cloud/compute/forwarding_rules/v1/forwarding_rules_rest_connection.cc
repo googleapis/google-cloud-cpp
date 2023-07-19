@@ -21,6 +21,7 @@
 #include "google/cloud/compute/forwarding_rules/v1/internal/forwarding_rules_option_defaults.h"
 #include "google/cloud/compute/forwarding_rules/v1/internal/forwarding_rules_rest_connection_impl.h"
 #include "google/cloud/compute/forwarding_rules/v1/internal/forwarding_rules_rest_stub_factory.h"
+#include "google/cloud/compute/forwarding_rules/v1/internal/forwarding_rules_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -43,9 +44,11 @@ std::shared_ptr<ForwardingRulesConnection> MakeForwardingRulesConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_forwarding_rules_v1_internal::
       CreateDefaultForwardingRulesRestStub(options);
-  return std::make_shared<
-      compute_forwarding_rules_v1_internal::ForwardingRulesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_forwarding_rules_v1_internal::
+      MakeForwardingRulesTracingConnection(
+          std::make_shared<compute_forwarding_rules_v1_internal::
+                               ForwardingRulesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

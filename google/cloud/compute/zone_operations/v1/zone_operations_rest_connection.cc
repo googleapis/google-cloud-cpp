@@ -20,6 +20,7 @@
 #include "google/cloud/compute/zone_operations/v1/internal/zone_operations_option_defaults.h"
 #include "google/cloud/compute/zone_operations/v1/internal/zone_operations_rest_connection_impl.h"
 #include "google/cloud/compute/zone_operations/v1/internal/zone_operations_rest_stub_factory.h"
+#include "google/cloud/compute/zone_operations/v1/internal/zone_operations_tracing_connection.h"
 #include "google/cloud/compute/zone_operations/v1/zone_operations_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ std::shared_ptr<ZoneOperationsConnection> MakeZoneOperationsConnectionRest(
   auto stub =
       compute_zone_operations_v1_internal::CreateDefaultZoneOperationsRestStub(
           options);
-  return std::make_shared<
-      compute_zone_operations_v1_internal::ZoneOperationsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_zone_operations_v1_internal::
+      MakeZoneOperationsTracingConnection(
+          std::make_shared<compute_zone_operations_v1_internal::
+                               ZoneOperationsRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

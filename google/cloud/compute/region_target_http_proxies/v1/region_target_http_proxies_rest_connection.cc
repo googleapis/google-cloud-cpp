@@ -21,6 +21,7 @@
 #include "google/cloud/compute/region_target_http_proxies/v1/internal/region_target_http_proxies_option_defaults.h"
 #include "google/cloud/compute/region_target_http_proxies/v1/internal/region_target_http_proxies_rest_connection_impl.h"
 #include "google/cloud/compute/region_target_http_proxies/v1/internal/region_target_http_proxies_rest_stub_factory.h"
+#include "google/cloud/compute/region_target_http_proxies/v1/internal/region_target_http_proxies_tracing_connection.h"
 #include "google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ MakeRegionTargetHttpProxiesConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_region_target_http_proxies_v1_internal::
       CreateDefaultRegionTargetHttpProxiesRestStub(options);
-  return std::make_shared<compute_region_target_http_proxies_v1_internal::
-                              RegionTargetHttpProxiesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_region_target_http_proxies_v1_internal::
+      MakeRegionTargetHttpProxiesTracingConnection(
+          std::make_shared<compute_region_target_http_proxies_v1_internal::
+                               RegionTargetHttpProxiesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

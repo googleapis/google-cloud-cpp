@@ -21,6 +21,7 @@
 #include "google/cloud/compute/region_notification_endpoints/v1/internal/region_notification_endpoints_option_defaults.h"
 #include "google/cloud/compute/region_notification_endpoints/v1/internal/region_notification_endpoints_rest_connection_impl.h"
 #include "google/cloud/compute/region_notification_endpoints/v1/internal/region_notification_endpoints_rest_stub_factory.h"
+#include "google/cloud/compute/region_notification_endpoints/v1/internal/region_notification_endpoints_tracing_connection.h"
 #include "google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -45,9 +46,11 @@ MakeRegionNotificationEndpointsConnectionRest(ExperimentalTag,
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_region_notification_endpoints_v1_internal::
       CreateDefaultRegionNotificationEndpointsRestStub(options);
-  return std::make_shared<compute_region_notification_endpoints_v1_internal::
-                              RegionNotificationEndpointsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_region_notification_endpoints_v1_internal::
+      MakeRegionNotificationEndpointsTracingConnection(
+          std::make_shared<compute_region_notification_endpoints_v1_internal::
+                               RegionNotificationEndpointsRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

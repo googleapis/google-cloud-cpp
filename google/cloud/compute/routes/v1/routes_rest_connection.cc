@@ -20,6 +20,7 @@
 #include "google/cloud/compute/routes/v1/internal/routes_option_defaults.h"
 #include "google/cloud/compute/routes/v1/internal/routes_rest_connection_impl.h"
 #include "google/cloud/compute/routes/v1/internal/routes_rest_stub_factory.h"
+#include "google/cloud/compute/routes/v1/internal/routes_tracing_connection.h"
 #include "google/cloud/compute/routes/v1/routes_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -41,8 +42,9 @@ std::shared_ptr<RoutesConnection> MakeRoutesConnectionRest(ExperimentalTag,
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_routes_v1_internal::CreateDefaultRoutesRestStub(options);
-  return std::make_shared<compute_routes_v1_internal::RoutesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_routes_v1_internal::MakeRoutesTracingConnection(
+      std::make_shared<compute_routes_v1_internal::RoutesRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

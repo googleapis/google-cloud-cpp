@@ -22,6 +22,7 @@
 #include "google/cloud/compute/global_organization_operations/v1/internal/global_organization_operations_option_defaults.h"
 #include "google/cloud/compute/global_organization_operations/v1/internal/global_organization_operations_rest_connection_impl.h"
 #include "google/cloud/compute/global_organization_operations/v1/internal/global_organization_operations_rest_stub_factory.h"
+#include "google/cloud/compute/global_organization_operations/v1/internal/global_organization_operations_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -45,9 +46,11 @@ MakeGlobalOrganizationOperationsConnectionRest(ExperimentalTag,
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_global_organization_operations_v1_internal::
       CreateDefaultGlobalOrganizationOperationsRestStub(options);
-  return std::make_shared<compute_global_organization_operations_v1_internal::
-                              GlobalOrganizationOperationsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_global_organization_operations_v1_internal::
+      MakeGlobalOrganizationOperationsTracingConnection(
+          std::make_shared<compute_global_organization_operations_v1_internal::
+                               GlobalOrganizationOperationsRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

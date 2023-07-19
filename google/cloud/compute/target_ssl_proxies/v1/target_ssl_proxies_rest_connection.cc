@@ -20,6 +20,7 @@
 #include "google/cloud/compute/target_ssl_proxies/v1/internal/target_ssl_proxies_option_defaults.h"
 #include "google/cloud/compute/target_ssl_proxies/v1/internal/target_ssl_proxies_rest_connection_impl.h"
 #include "google/cloud/compute/target_ssl_proxies/v1/internal/target_ssl_proxies_rest_stub_factory.h"
+#include "google/cloud/compute/target_ssl_proxies/v1/internal/target_ssl_proxies_tracing_connection.h"
 #include "google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ std::shared_ptr<TargetSslProxiesConnection> MakeTargetSslProxiesConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_target_ssl_proxies_v1_internal::
       CreateDefaultTargetSslProxiesRestStub(options);
-  return std::make_shared<compute_target_ssl_proxies_v1_internal::
-                              TargetSslProxiesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_target_ssl_proxies_v1_internal::
+      MakeTargetSslProxiesTracingConnection(
+          std::make_shared<compute_target_ssl_proxies_v1_internal::
+                               TargetSslProxiesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

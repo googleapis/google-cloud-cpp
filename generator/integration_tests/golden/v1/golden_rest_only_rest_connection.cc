@@ -21,6 +21,7 @@
 #include "generator/integration_tests/golden/v1/internal/golden_rest_only_option_defaults.h"
 #include "generator/integration_tests/golden/v1/internal/golden_rest_only_rest_connection_impl.h"
 #include "generator/integration_tests/golden/v1/internal/golden_rest_only_rest_stub_factory.h"
+#include "generator/integration_tests/golden/v1/internal/golden_rest_only_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -41,9 +42,11 @@ std::shared_ptr<GoldenRestOnlyConnection> MakeGoldenRestOnlyConnectionRest(
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = golden_v1_internal::CreateDefaultGoldenRestOnlyRestStub(
-    options);
-  return std::make_shared<golden_v1_internal::GoldenRestOnlyRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+      options);
+  return golden_v1_internal::MakeGoldenRestOnlyTracingConnection(
+      std::make_shared<
+          golden_v1_internal::GoldenRestOnlyRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

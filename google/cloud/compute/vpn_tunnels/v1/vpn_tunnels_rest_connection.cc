@@ -20,6 +20,7 @@
 #include "google/cloud/compute/vpn_tunnels/v1/internal/vpn_tunnels_option_defaults.h"
 #include "google/cloud/compute/vpn_tunnels/v1/internal/vpn_tunnels_rest_connection_impl.h"
 #include "google/cloud/compute/vpn_tunnels/v1/internal/vpn_tunnels_rest_stub_factory.h"
+#include "google/cloud/compute/vpn_tunnels/v1/internal/vpn_tunnels_tracing_connection.h"
 #include "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -42,9 +43,10 @@ std::shared_ptr<VpnTunnelsConnection> MakeVpnTunnelsConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       compute_vpn_tunnels_v1_internal::CreateDefaultVpnTunnelsRestStub(options);
-  return std::make_shared<
-      compute_vpn_tunnels_v1_internal::VpnTunnelsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_vpn_tunnels_v1_internal::MakeVpnTunnelsTracingConnection(
+      std::make_shared<
+          compute_vpn_tunnels_v1_internal::VpnTunnelsRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

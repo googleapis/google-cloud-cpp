@@ -20,6 +20,7 @@
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_option_defaults.h"
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_rest_connection_impl.h"
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_rest_stub_factory.h"
+#include "google/cloud/compute/service_attachments/v1/internal/service_attachments_tracing_connection.h"
 #include "google/cloud/compute/service_attachments/v1/service_attachments_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ MakeServiceAttachmentsConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_service_attachments_v1_internal::
       CreateDefaultServiceAttachmentsRestStub(options);
-  return std::make_shared<compute_service_attachments_v1_internal::
-                              ServiceAttachmentsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_service_attachments_v1_internal::
+      MakeServiceAttachmentsTracingConnection(
+          std::make_shared<compute_service_attachments_v1_internal::
+                               ServiceAttachmentsRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

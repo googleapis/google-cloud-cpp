@@ -20,6 +20,7 @@
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_option_defaults.h"
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_rest_connection_impl.h"
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_rest_stub_factory.h"
+#include "google/cloud/compute/machine_images/v1/internal/machine_images_tracing_connection.h"
 #include "google/cloud/compute/machine_images/v1/machine_images_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,10 @@ std::shared_ptr<MachineImagesConnection> MakeMachineImagesConnectionRest(
   auto stub =
       compute_machine_images_v1_internal::CreateDefaultMachineImagesRestStub(
           options);
-  return std::make_shared<
-      compute_machine_images_v1_internal::MachineImagesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_machine_images_v1_internal::MakeMachineImagesTracingConnection(
+      std::make_shared<
+          compute_machine_images_v1_internal::MachineImagesRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -22,6 +22,7 @@
 #include "google/cloud/compute/interconnect_attachments/v1/internal/interconnect_attachments_option_defaults.h"
 #include "google/cloud/compute/interconnect_attachments/v1/internal/interconnect_attachments_rest_connection_impl.h"
 #include "google/cloud/compute/interconnect_attachments/v1/internal/interconnect_attachments_rest_stub_factory.h"
+#include "google/cloud/compute/interconnect_attachments/v1/internal/interconnect_attachments_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -44,9 +45,11 @@ MakeInterconnectAttachmentsConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_interconnect_attachments_v1_internal::
       CreateDefaultInterconnectAttachmentsRestStub(options);
-  return std::make_shared<compute_interconnect_attachments_v1_internal::
-                              InterconnectAttachmentsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_interconnect_attachments_v1_internal::
+      MakeInterconnectAttachmentsTracingConnection(
+          std::make_shared<compute_interconnect_attachments_v1_internal::
+                               InterconnectAttachmentsRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

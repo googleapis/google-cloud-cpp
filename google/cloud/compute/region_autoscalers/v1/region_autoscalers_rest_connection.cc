@@ -20,6 +20,7 @@
 #include "google/cloud/compute/region_autoscalers/v1/internal/region_autoscalers_option_defaults.h"
 #include "google/cloud/compute/region_autoscalers/v1/internal/region_autoscalers_rest_connection_impl.h"
 #include "google/cloud/compute/region_autoscalers/v1/internal/region_autoscalers_rest_stub_factory.h"
+#include "google/cloud/compute/region_autoscalers/v1/internal/region_autoscalers_tracing_connection.h"
 #include "google/cloud/compute/region_autoscalers/v1/region_autoscalers_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ MakeRegionAutoscalersConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_region_autoscalers_v1_internal::
       CreateDefaultRegionAutoscalersRestStub(options);
-  return std::make_shared<compute_region_autoscalers_v1_internal::
-                              RegionAutoscalersRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_region_autoscalers_v1_internal::
+      MakeRegionAutoscalersTracingConnection(
+          std::make_shared<compute_region_autoscalers_v1_internal::
+                               RegionAutoscalersRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

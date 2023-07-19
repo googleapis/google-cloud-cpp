@@ -20,6 +20,7 @@
 #include "google/cloud/compute/url_maps/v1/internal/url_maps_option_defaults.h"
 #include "google/cloud/compute/url_maps/v1/internal/url_maps_rest_connection_impl.h"
 #include "google/cloud/compute/url_maps/v1/internal/url_maps_rest_stub_factory.h"
+#include "google/cloud/compute/url_maps/v1/internal/url_maps_tracing_connection.h"
 #include "google/cloud/compute/url_maps/v1/url_maps_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -42,9 +43,9 @@ std::shared_ptr<UrlMapsConnection> MakeUrlMapsConnectionRest(ExperimentalTag,
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       compute_url_maps_v1_internal::CreateDefaultUrlMapsRestStub(options);
-  return std::make_shared<
-      compute_url_maps_v1_internal::UrlMapsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_url_maps_v1_internal::MakeUrlMapsTracingConnection(
+      std::make_shared<compute_url_maps_v1_internal::UrlMapsRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

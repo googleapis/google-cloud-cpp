@@ -21,6 +21,7 @@
 #include "google/cloud/compute/disks/v1/internal/disks_option_defaults.h"
 #include "google/cloud/compute/disks/v1/internal/disks_rest_connection_impl.h"
 #include "google/cloud/compute/disks/v1/internal/disks_rest_stub_factory.h"
+#include "google/cloud/compute/disks/v1/internal/disks_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -40,8 +41,9 @@ std::shared_ptr<DisksConnection> MakeDisksConnectionRest(ExperimentalTag,
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_disks_v1_internal::CreateDefaultDisksRestStub(options);
-  return std::make_shared<compute_disks_v1_internal::DisksRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_disks_v1_internal::MakeDisksTracingConnection(
+      std::make_shared<compute_disks_v1_internal::DisksRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

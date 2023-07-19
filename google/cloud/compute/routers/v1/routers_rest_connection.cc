@@ -20,6 +20,7 @@
 #include "google/cloud/compute/routers/v1/internal/routers_option_defaults.h"
 #include "google/cloud/compute/routers/v1/internal/routers_rest_connection_impl.h"
 #include "google/cloud/compute/routers/v1/internal/routers_rest_stub_factory.h"
+#include "google/cloud/compute/routers/v1/internal/routers_tracing_connection.h"
 #include "google/cloud/compute/routers/v1/routers_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -42,9 +43,9 @@ std::shared_ptr<RoutersConnection> MakeRoutersConnectionRest(ExperimentalTag,
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       compute_routers_v1_internal::CreateDefaultRoutersRestStub(options);
-  return std::make_shared<
-      compute_routers_v1_internal::RoutersRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_routers_v1_internal::MakeRoutersTracingConnection(
+      std::make_shared<compute_routers_v1_internal::RoutersRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

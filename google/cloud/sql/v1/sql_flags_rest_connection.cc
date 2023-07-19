@@ -20,6 +20,7 @@
 #include "google/cloud/sql/v1/internal/sql_flags_option_defaults.h"
 #include "google/cloud/sql/v1/internal/sql_flags_rest_connection_impl.h"
 #include "google/cloud/sql/v1/internal/sql_flags_rest_stub_factory.h"
+#include "google/cloud/sql/v1/internal/sql_flags_tracing_connection.h"
 #include "google/cloud/sql/v1/sql_flags_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -41,8 +42,9 @@ std::shared_ptr<SqlFlagsServiceConnection> MakeSqlFlagsServiceConnectionRest(
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = sql_v1_internal::CreateDefaultSqlFlagsServiceRestStub(options);
-  return std::make_shared<sql_v1_internal::SqlFlagsServiceRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return sql_v1_internal::MakeSqlFlagsServiceTracingConnection(
+      std::make_shared<sql_v1_internal::SqlFlagsServiceRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

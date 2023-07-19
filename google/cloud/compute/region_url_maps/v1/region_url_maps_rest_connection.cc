@@ -20,6 +20,7 @@
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_option_defaults.h"
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_rest_connection_impl.h"
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_rest_stub_factory.h"
+#include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_tracing_connection.h"
 #include "google/cloud/compute/region_url_maps/v1/region_url_maps_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,11 @@ std::shared_ptr<RegionUrlMapsConnection> MakeRegionUrlMapsConnectionRest(
   auto stub =
       compute_region_url_maps_v1_internal::CreateDefaultRegionUrlMapsRestStub(
           options);
-  return std::make_shared<
-      compute_region_url_maps_v1_internal::RegionUrlMapsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_region_url_maps_v1_internal::
+      MakeRegionUrlMapsTracingConnection(
+          std::make_shared<compute_region_url_maps_v1_internal::
+                               RegionUrlMapsRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

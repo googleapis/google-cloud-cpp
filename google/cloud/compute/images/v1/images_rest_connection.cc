@@ -21,6 +21,7 @@
 #include "google/cloud/compute/images/v1/internal/images_option_defaults.h"
 #include "google/cloud/compute/images/v1/internal/images_rest_connection_impl.h"
 #include "google/cloud/compute/images/v1/internal/images_rest_stub_factory.h"
+#include "google/cloud/compute/images/v1/internal/images_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -41,8 +42,9 @@ std::shared_ptr<ImagesConnection> MakeImagesConnectionRest(ExperimentalTag,
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_images_v1_internal::CreateDefaultImagesRestStub(options);
-  return std::make_shared<compute_images_v1_internal::ImagesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_images_v1_internal::MakeImagesTracingConnection(
+      std::make_shared<compute_images_v1_internal::ImagesRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

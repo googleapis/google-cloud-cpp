@@ -20,6 +20,7 @@
 #include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_option_defaults.h"
 #include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_rest_connection_impl.h"
 #include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_rest_stub_factory.h"
+#include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_tracing_connection.h"
 #include "google/cloud/compute/ssl_certificates/v1/ssl_certificates_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -43,9 +44,11 @@ std::shared_ptr<SslCertificatesConnection> MakeSslCertificatesConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_ssl_certificates_v1_internal::
       CreateDefaultSslCertificatesRestStub(options);
-  return std::make_shared<
-      compute_ssl_certificates_v1_internal::SslCertificatesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_ssl_certificates_v1_internal::
+      MakeSslCertificatesTracingConnection(
+          std::make_shared<compute_ssl_certificates_v1_internal::
+                               SslCertificatesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

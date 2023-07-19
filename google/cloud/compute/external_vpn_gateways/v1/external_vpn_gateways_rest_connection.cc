@@ -22,6 +22,7 @@
 #include "google/cloud/compute/external_vpn_gateways/v1/internal/external_vpn_gateways_option_defaults.h"
 #include "google/cloud/compute/external_vpn_gateways/v1/internal/external_vpn_gateways_rest_connection_impl.h"
 #include "google/cloud/compute/external_vpn_gateways/v1/internal/external_vpn_gateways_rest_stub_factory.h"
+#include "google/cloud/compute/external_vpn_gateways/v1/internal/external_vpn_gateways_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -44,9 +45,11 @@ MakeExternalVpnGatewaysConnectionRest(ExperimentalTag, Options options) {
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_external_vpn_gateways_v1_internal::
       CreateDefaultExternalVpnGatewaysRestStub(options);
-  return std::make_shared<compute_external_vpn_gateways_v1_internal::
-                              ExternalVpnGatewaysRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_external_vpn_gateways_v1_internal::
+      MakeExternalVpnGatewaysTracingConnection(
+          std::make_shared<compute_external_vpn_gateways_v1_internal::
+                               ExternalVpnGatewaysRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

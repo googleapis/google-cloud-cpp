@@ -21,6 +21,7 @@
 #include "google/cloud/compute/firewalls/v1/internal/firewalls_option_defaults.h"
 #include "google/cloud/compute/firewalls/v1/internal/firewalls_rest_connection_impl.h"
 #include "google/cloud/compute/firewalls/v1/internal/firewalls_rest_stub_factory.h"
+#include "google/cloud/compute/firewalls/v1/internal/firewalls_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -42,9 +43,10 @@ std::shared_ptr<FirewallsConnection> MakeFirewallsConnectionRest(
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       compute_firewalls_v1_internal::CreateDefaultFirewallsRestStub(options);
-  return std::make_shared<
-      compute_firewalls_v1_internal::FirewallsRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_firewalls_v1_internal::MakeFirewallsTracingConnection(
+      std::make_shared<
+          compute_firewalls_v1_internal::FirewallsRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

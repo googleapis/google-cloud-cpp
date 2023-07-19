@@ -21,6 +21,7 @@
 #include "google/cloud/compute/network_edge_security_services/v1/internal/network_edge_security_services_option_defaults.h"
 #include "google/cloud/compute/network_edge_security_services/v1/internal/network_edge_security_services_rest_connection_impl.h"
 #include "google/cloud/compute/network_edge_security_services/v1/internal/network_edge_security_services_rest_stub_factory.h"
+#include "google/cloud/compute/network_edge_security_services/v1/internal/network_edge_security_services_tracing_connection.h"
 #include "google/cloud/compute/network_edge_security_services/v1/network_edge_security_services_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -45,9 +46,11 @@ MakeNetworkEdgeSecurityServicesConnectionRest(ExperimentalTag,
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = compute_network_edge_security_services_v1_internal::
       CreateDefaultNetworkEdgeSecurityServicesRestStub(options);
-  return std::make_shared<compute_network_edge_security_services_v1_internal::
-                              NetworkEdgeSecurityServicesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_network_edge_security_services_v1_internal::
+      MakeNetworkEdgeSecurityServicesTracingConnection(
+          std::make_shared<compute_network_edge_security_services_v1_internal::
+                               NetworkEdgeSecurityServicesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

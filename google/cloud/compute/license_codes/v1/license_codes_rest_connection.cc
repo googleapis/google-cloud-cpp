@@ -20,6 +20,7 @@
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_option_defaults.h"
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_rest_connection_impl.h"
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_rest_stub_factory.h"
+#include "google/cloud/compute/license_codes/v1/internal/license_codes_tracing_connection.h"
 #include "google/cloud/compute/license_codes/v1/license_codes_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -44,9 +45,10 @@ std::shared_ptr<LicenseCodesConnection> MakeLicenseCodesConnectionRest(
   auto stub =
       compute_license_codes_v1_internal::CreateDefaultLicenseCodesRestStub(
           options);
-  return std::make_shared<
-      compute_license_codes_v1_internal::LicenseCodesRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return compute_license_codes_v1_internal::MakeLicenseCodesTracingConnection(
+      std::make_shared<
+          compute_license_codes_v1_internal::LicenseCodesRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
