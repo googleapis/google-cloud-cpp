@@ -77,6 +77,11 @@ This assumes you have created a custom idempotency policy. Such as:
 @snippet cloud_channel_client_samples.cc custom-idempotency-policy
 
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c channel_v1::CloudChannelServiceClient](@ref channel_v1::CloudChannelServiceClient-retry-snippet)
+- [\c channel_v1::CloudChannelReportsServiceClient](@ref channel_v1::CloudChannelReportsServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section channel-override-retry-more-information More Information
@@ -100,6 +105,18 @@ This shows how to override the retry policies for channel_v1::CloudChannelServic
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/channel/v1/samples/cloud_channel_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page channel_v1::CloudChannelReportsServiceClient-retry-snippet Override channel_v1::CloudChannelReportsServiceClient Retry Policies
+
+This shows how to override the retry policies for channel_v1::CloudChannelReportsServiceClient:
+
+@snippet google/cloud/channel/v1/samples/cloud_channel_reports_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/channel/v1/samples/cloud_channel_reports_client_samples.cc custom-idempotency-policy
 
 */
 // <!-- inject-retry-pages-end -->

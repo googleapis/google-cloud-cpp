@@ -110,6 +110,10 @@ info, see [#7463] and [#5976].
 
 ## v2.14.0 - TBD
 
+### [Channel Services](/google/cloud/channel/README.md)
+
+The library has been expanded to include the Reporting API.
+
 ## v2.13.0 - 2023-07
 
 ### New Libraries
