@@ -118,9 +118,25 @@ The library has been expanded to include the Reporting API.
 
 The library has been expanded to include the [Snooze][monitoring-snooze] API.
 
+### [Cloud Run](/google/cloud/run/README.md)
+
+The library has been expanded to include the
+[Job Executions][cloud-run-jobs] API.
+
 ### [Compute Engine OS Config](/google/cloud/osconfig/README.md)
 
 The library has been expanded to include the Zonal OS Config API.
+
+### [Dataproc](/google/cloud/dataproc/README.md)
+
+The library has been expanded to include the [Node Groups][dataproc-node-groups]
+API.
+
+### [Logging](/google/cloud/logging/README.md)
+
+The library has been expanded to include the
+[Log-based Metrics][logging-metrics] API and the [Log Router][logging-config]
+API.
 
 ### [Retail](/google/cloud/retail/README.md)
 
@@ -3668,6 +3684,8 @@ releases.  The relevant notes are:
 [cloud bigtable admin api]: https://cloud.google.com/bigtable/docs/reference/admin/rpc
 [cloud tasks]: /google/cloud/tasks/README.md
 [cloud-debugger-deprecated]: https://cloud.google.com/debugger/docs/deprecations
+[cloud-run-jobs]: https://cloud.google.com/run/docs/managing/job-executions
+[dataproc-node-groups]: https://cloud.google.com/dataproc/docs/guides/node-groups/dataproc-driver-node-groups
 [github-cpp-common]: https://github.com/googleapis/google-cloud-cpp-common
 [google.pubsub.v1.schemaserviceclient]: https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#google.pubsub.v1.SchemaService
 [guac-dox]: https://cloud.google.com/cpp/docs/reference/common/latest/group__guac
@@ -3675,6 +3693,8 @@ releases.  The relevant notes are:
 [iam-conditions-link]: https://cloud.google.com/iam/docs/conditions-overview
 [iam-policy-link]: https://cloud.google.com/iam/docs/manage-access-other-resources
 [issue-2567]: https://github.com/googleapis/google-cloud-cpp/issues/2567
+[logging-config]: https://cloud.google.com/logging/docs/routing/overview
+[logging-metrics]: https://cloud.google.com/logging/docs/logs-based-metrics
 [modern-table-ctor]: https://github.com/googleapis/google-cloud-cpp/blob/62740c8e9180056db77d4dd3e80a6fa7ae71295a/google/cloud/bigtable/table.h#L182-L214
 [monitoring-snooze]: https://cloud.google.com/monitoring/alerts/snooze
 [nlohmann-json-gh]: https://github.com/nlohmann/json.git
