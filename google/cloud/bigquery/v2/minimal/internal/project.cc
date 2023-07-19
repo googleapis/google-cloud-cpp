@@ -25,7 +25,7 @@ std::string ProjectReference::DebugString(absl::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", project_id)
+      .StringField("project_id", projectId)
       .Build();
 }
 
@@ -35,9 +35,9 @@ std::string Project::DebugString(absl::string_view name,
   return internal::DebugFormatter(name, options, indent)
       .StringField("kind", kind)
       .StringField("id", id)
-      .StringField("friendly_name", friendly_name)
-      .SubMessage("project_reference", project_reference)
-      .Field("numeric_id", numeric_id)
+      .StringField("friendly_name", friendlyName)
+      .SubMessage("project_reference", projectReference)
+      .Field("numeric_id", numericId)
       .Build();
 }
 
