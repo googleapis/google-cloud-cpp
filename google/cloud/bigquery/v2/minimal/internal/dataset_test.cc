@@ -48,14 +48,14 @@ Access MakeAccess(std::string role, std::string project_id,
   access.routine.routine_id = std::move(routine_id);
   access.dataset.dataset =
       MakeDatasetReference(std::move(project_id), std::move(dataset_id));
-  access.dataset.target_types.push_back(std::move(type));
+  access.dataset.targetTypes.push_back(std::move(type));
   return access;
 }
 
 GcpTag MakeGcpTag(std::string key, std::string value) {
   GcpTag tag;
-  tag.tag_key = std::move(key);
-  tag.tag_value = std::move(value);
+  tag.tagKey = std::move(key);
+  tag.tagValue = std::move(value);
   return tag;
 }
 
@@ -89,9 +89,7 @@ Dataset MakeDataset() {
   expected.access = access;
   expected.tags = tags;
   expected.dataset_reference = dataset_ref;
-  expected.linked_dataset_source.source_dataset = dataset_ref;
-  expected.external_dataset_reference.hive_database.catalog_id = "c1";
-  expected.external_dataset_reference.hive_database.database = "d1";
+  expected.linked_dataset_source.sourceDataset = dataset_ref;
   expected.default_rounding_mode = RoundingMode::RoundHalfEven();
   expected.storage_billing_model = StorageBillingModel::Logical();
 
@@ -122,10 +120,10 @@ void AssertEquals(Dataset const& lhs, Dataset const& rhs) {
   EXPECT_EQ(lhs.access.size(), rhs.access.size());
   EXPECT_EQ(lhs.access[0].role, rhs.access[0].role);
   EXPECT_EQ(lhs.access[0].domain, rhs.access[0].domain);
-  EXPECT_EQ(lhs.access[0].group_by_email, rhs.access[0].group_by_email);
-  EXPECT_EQ(lhs.access[0].iam_member, rhs.access[0].iam_member);
-  EXPECT_EQ(lhs.access[0].special_group, rhs.access[0].special_group);
-  EXPECT_EQ(lhs.access[0].user_by_email, rhs.access[0].user_by_email);
+  EXPECT_EQ(lhs.access[0].groupByEmail, rhs.access[0].groupByEmail);
+  EXPECT_EQ(lhs.access[0].iamMember, rhs.access[0].iamMember);
+  EXPECT_EQ(lhs.access[0].specialGroup, rhs.access[0].specialGroup);
+  EXPECT_EQ(lhs.access[0].userByEmail, rhs.access[0].userByEmail);
 
   EXPECT_EQ(lhs.access[0].view.dataset_id, rhs.access[0].view.dataset_id);
   EXPECT_EQ(lhs.access[0].view.project_id, rhs.access[0].view.project_id);
@@ -138,22 +136,16 @@ void AssertEquals(Dataset const& lhs, Dataset const& rhs) {
   ASSERT_THAT(lhs.tags, Not(IsEmpty()));
   ASSERT_THAT(rhs.tags, Not(IsEmpty()));
   EXPECT_EQ(lhs.tags.size(), rhs.tags.size());
-  EXPECT_EQ(lhs.tags[0].tag_key, rhs.tags[0].tag_key);
-  EXPECT_EQ(lhs.tags[0].tag_value, rhs.tags[0].tag_value);
+  EXPECT_EQ(lhs.tags[0].tagKey, rhs.tags[0].tagKey);
+  EXPECT_EQ(lhs.tags[0].tagValue, rhs.tags[0].tagValue);
 
   EXPECT_EQ(lhs.dataset_reference.dataset_id, rhs.dataset_reference.dataset_id);
   EXPECT_EQ(lhs.dataset_reference.project_id, rhs.dataset_reference.project_id);
 
-  EXPECT_EQ(lhs.linked_dataset_source.source_dataset.dataset_id,
-            rhs.linked_dataset_source.source_dataset.dataset_id);
-  EXPECT_EQ(lhs.linked_dataset_source.source_dataset.project_id,
-            rhs.linked_dataset_source.source_dataset.project_id);
-
-  EXPECT_EQ(lhs.external_dataset_reference.hive_database.catalog_id,
-            rhs.external_dataset_reference.hive_database.catalog_id);
-
-  EXPECT_EQ(lhs.external_dataset_reference.hive_database.database,
-            rhs.external_dataset_reference.hive_database.database);
+  EXPECT_EQ(lhs.linked_dataset_source.sourceDataset.dataset_id,
+            rhs.linked_dataset_source.sourceDataset.dataset_id);
+  EXPECT_EQ(lhs.linked_dataset_source.sourceDataset.project_id,
+            rhs.linked_dataset_source.sourceDataset.project_id);
 
   EXPECT_EQ(lhs.default_rounding_mode.value, rhs.default_rounding_mode.value);
   EXPECT_EQ(lhs.storage_billing_model.value, rhs.storage_billing_model.value);
@@ -162,59 +154,48 @@ void AssertEquals(Dataset const& lhs, Dataset const& rhs) {
 std::string MakeDatasetJsonText() {
   return R"({"access":[
     {"dataset":{
-         "dataset":{"datasetId":"d123","projectId":"p123"},
-         "target_types":[{"value":"VIEWS"}]},
-         "domain":"","group_by_email":"",
-         "iam_member":"",
+         "dataset":{"dataset_id":"d123","project_id":"p123"},
+         "targetTypes":[{"value":"VIEWS"}]},
+         "domain":"",
+         "groupByEmail":"",
+         "iamMember":"",
          "role":"accessrole",
-         "routine":{"datasetId":"d123","projectId":"p123","routineId":"r123"},
-         "special_group":"",
-         "user_by_email":"",
-         "view":{"datasetId":"d123","projectId":"p123","tableId":"t123"}
+         "routine":{"dataset_id":"d123","project_id":"p123","routine_id":"r123"},
+         "specialGroup":"",
+         "userByEmail":"",
+         "view":{"dataset_id":"d123","project_id":"p123","table_id":"t123"}
     }],
-    "creation_time":0,
-    "dataset_reference":{"datasetId":"d123","projectId":"p123"},
-    "default_collation":"ddefaultcollation",
-    "default_partition_expiration":0,
-    "default_rounding_mode":{"value":"ROUND_HALF_EVEN"},
-    "default_table_expiration":0,
+    "creationTime":0,
+    "datasetReference":{"dataset_id":"d123","project_id":"p123"},
+    "defaultCollation":"ddefaultcollation",
+    "defaultPartitionExpirationMs":0,
+    "defaultRoundingMode":{"value":"ROUND_HALF_EVEN"},
+    "defaultTableExpirationMs":0,
     "description":"ddescription",
     "etag":"detag",
-    "external_dataset_reference":{
-        "hive_database":{
-            "catalog_id":"c1",
-            "database":"d1",
-            "metadata_connectivity":{
-                "access_uri":"",
-                "access_uri_type":"",
-                "metadata_connection":"",
-                "storage_connection":""
-            }
-       }
-    },
-    "friendly_name":"dfriendlyname",
+    "friendlyName":"dfriendlyname",
     "id":"did",
-    "is_case_insensitive":true,
+    "isCaseInsensitive":true,
     "kind":"dkind",
     "labels":{"l1":"v1","l2":"v2"},
-    "last_modified_time":0,
-    "linked_dataset_source":{"source_dataset":{
-        "datasetId":"d123",
-        "projectId":"p123"
+    "lastModifiedTime":0,
+    "linkedDatasetSource":{"sourceDataset":{
+        "dataset_id":"d123",
+        "project_id":"p123"
     }},
     "location":"dlocation",
-    "max_time_travel":0,
+    "maxTimeTravelHours":0,
     "published":false,
-    "self_link":"dselflink",
-    "storage_billing_model":{"value":"LOGICAL"},
-    "tags":[{"tag_key":"t1","tag_value":"t2"}],
+    "selfLink":"dselflink",
+    "storageBillingModel":{"value":"LOGICAL"},
+    "tags":[{"tagKey":"t1","tagValue":"t2"}],
     "type":"dtype"})";
 }
 
 void AssertEquals(ListFormatDataset const& lhs, ListFormatDataset const& rhs) {
   EXPECT_EQ(lhs.kind, rhs.kind);
   EXPECT_EQ(lhs.id, rhs.id);
-  EXPECT_EQ(lhs.friendly_name, rhs.friendly_name);
+  EXPECT_EQ(lhs.friendlyName, rhs.friendlyName);
   EXPECT_EQ(lhs.type, rhs.type);
   EXPECT_EQ(lhs.location, rhs.location);
 
@@ -224,18 +205,18 @@ void AssertEquals(ListFormatDataset const& lhs, ListFormatDataset const& rhs) {
   EXPECT_EQ(lhs.labels.find("l1")->second, rhs.labels.find("l1")->second);
   EXPECT_EQ(lhs.labels.find("l2")->second, rhs.labels.find("l2")->second);
 
-  EXPECT_EQ(lhs.dataset_reference.dataset_id, rhs.dataset_reference.dataset_id);
-  EXPECT_EQ(lhs.dataset_reference.project_id, rhs.dataset_reference.project_id);
+  EXPECT_EQ(lhs.datasetReference.dataset_id, rhs.datasetReference.dataset_id);
+  EXPECT_EQ(lhs.datasetReference.project_id, rhs.datasetReference.project_id);
 }
 
 std::string MakeListFormatDatasetJsonText() {
   return R"({
     "kind":"dkind",
     "id":"did",
-    "friendly_name":"dfriendlyname",
+    "friendlyName":"dfriendlyname",
     "location":"dlocation",
     "type":"DEFAULT",
-    "dataset_reference": {"projectId":"p123", "datasetId":"d123"},
+    "datasetReference": {"project_id":"p123", "dataset_id":"d123"},
     "labels":{"l1":"v1","l2":"v2"}
 })";
 }
@@ -250,12 +231,12 @@ ListFormatDataset MakeListFormatDataset() {
   ListFormatDataset expected;
   expected.kind = "dkind";
   expected.id = "did";
-  expected.friendly_name = "dfriendlyname";
+  expected.friendlyName = "dfriendlyname";
   expected.location = "dlocation";
   expected.type = "DEFAULT";
   expected.location = "dlocation";
   expected.labels = labels;
-  expected.dataset_reference = dataset_ref;
+  expected.datasetReference = dataset_ref;
 
   return expected;
 }
@@ -356,18 +337,6 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( linked_dataset_source {)"
       R"( source_dataset { project_id: "p123" dataset_id: "d123" })"
       R"( })"
-      R"( external_dataset_reference {)"
-      R"( hive_database {)"
-      R"( catalog_id: "c1")"
-      R"( database: "d1")"
-      R"( metadata_connectivity {)"
-      R"( access_uri_type: "")"
-      R"( access_uri: "")"
-      R"( metadata_connection: "")"
-      R"( storage_connection: "")"
-      R"( })"
-      R"( })"
-      R"( })"
       R"( default_rounding_mode {)"
       R"( value: "ROUND_HALF_EVEN")"
       R"( })"
@@ -414,18 +383,6 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( dataset_reference { project_id: "p123" dataset_id: "d123" })"
       R"( linked_dataset_source {)"
       R"( source_dataset { project_id: "p123" dataset_id: "d123" })"
-      R"( })"
-      R"( external_dataset_reference {)"
-      R"( hive_database {)"
-      R"( catalog_id: "c1")"
-      R"( database: "d1")"
-      R"( metadata_connectivity {)"
-      R"( access_uri_type: "")"
-      R"( access_uri: "")"
-      R"( metadata_connection: "")"
-      R"( storage_connection: "")"
-      R"( })"
-      R"( })"
       R"( })"
       R"( default_rounding_mode {)"
       R"( value: "ROUND_H...<truncated>...")"
@@ -509,18 +466,6 @@ TEST(DatasetTest, DatasetDebugString) {
     source_dataset {
       project_id: "p123"
       dataset_id: "d123"
-    }
-  }
-  external_dataset_reference {
-    hive_database {
-      catalog_id: "c1"
-      database: "d1"
-      metadata_connectivity {
-        access_uri_type: ""
-        access_uri: ""
-        metadata_connection: ""
-        storage_connection: ""
-      }
     }
   }
   default_rounding_mode {

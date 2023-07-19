@@ -54,9 +54,9 @@ TEST(DatasetStubTest, GetDatasetSuccess) {
       R"({"kind": "d-kind",
           "etag": "d-tag",
           "id": "d-id",
-          "self_link": "d-selfLink",
-          "friendly_name": "d-friendly-name",
-          "dataset_reference": {"project_id": "p-id", "dataset_id": "d-id"}
+          "selfLink": "d-selfLink",
+          "friendlyName": "d-friendly-name",
+          "datasetReference": {"project_id": "p-id", "dataset_id": "d-id"}
     })";
   auto mock_response = std::make_unique<MockRestResponse>();
 
@@ -128,14 +128,13 @@ TEST(DatasetStubTest, ListDatasetsSuccess) {
   std::string payload =
       R"({"etag": "tag-1",
           "kind": "kind-1",
-          "next_page_token": "npt-123",
+          "nextPageToken": "npt-123",
           "datasets": [
               {
                 "id": "1",
                 "kind": "kind-2",
-                "dataset_reference": {"project_id": "p123", "dataset_id": "d123"},
-
-                "friendly_name": "friendly-name",
+                "datasetReference": {"project_id": "p123", "dataset_id": "d123"},
+                "friendlyName": "friendly-name",
                 "location": "location",
                 "type": "DEFAULT"
               }

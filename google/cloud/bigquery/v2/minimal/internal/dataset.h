@@ -61,33 +61,33 @@ struct TargetType {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TargetType, value);
 
 struct LinkedDatasetSource {
-  DatasetReference source_dataset;
+  DatasetReference sourceDataset;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(LinkedDatasetSource,
-                                                source_dataset);
+                                                sourceDataset);
 
 struct DatasetAccessEntry {
   DatasetReference dataset;
-  std::vector<TargetType> target_types;
+  std::vector<TargetType> targetTypes;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DatasetAccessEntry, dataset,
-                                                target_types);
+                                                targetTypes);
 
 struct Access {
   std::string role;
-  std::string user_by_email;
-  std::string group_by_email;
+  std::string userByEmail;
+  std::string groupByEmail;
   std::string domain;
-  std::string special_group;
-  std::string iam_member;
+  std::string specialGroup;
+  std::string iamMember;
 
   TableReference view;
   RoutineReference routine;
@@ -97,59 +97,20 @@ struct Access {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Access, role, user_by_email,
-                                                group_by_email, domain,
-                                                special_group, iam_member, view,
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Access, role, userByEmail,
+                                                groupByEmail, domain,
+                                                specialGroup, iamMember, view,
                                                 routine, dataset);
 
-struct HiveMetastoreConnectivity {
-  std::string access_uri_type;
-  std::string access_uri;
-  std::string metadata_connection;
-  std::string storage_connection;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(HiveMetastoreConnectivity,
-                                                access_uri_type, access_uri,
-                                                metadata_connection,
-                                                storage_connection);
-
-struct HiveDatabaseReference {
-  std::string catalog_id;
-  std::string database;
-
-  HiveMetastoreConnectivity metadata_connectivity;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(HiveDatabaseReference,
-                                                catalog_id, database,
-                                                metadata_connectivity);
-
-struct ExternalDatasetReference {
-  HiveDatabaseReference hive_database;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ExternalDatasetReference,
-                                                hive_database);
-
 struct GcpTag {
-  std::string tag_key;
-  std::string tag_value;
+  std::string tagKey;
+  std::string tagValue;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(GcpTag, tag_key, tag_value);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(GcpTag, tagKey, tagValue);
 
 struct Dataset {
   std::string kind;
@@ -179,7 +140,6 @@ struct Dataset {
 
   DatasetReference dataset_reference;
   LinkedDatasetSource linked_dataset_source;
-  ExternalDatasetReference external_dataset_reference;
   RoundingMode default_rounding_mode;
 
   StorageBillingModel storage_billing_model;
@@ -192,11 +152,11 @@ struct Dataset {
 struct ListFormatDataset {
   std::string kind;
   std::string id;
-  std::string friendly_name;
+  std::string friendlyName;
   std::string location;
   std::string type;
 
-  DatasetReference dataset_reference;
+  DatasetReference datasetReference;
   std::map<std::string, std::string> labels;
 
   std::string DebugString(absl::string_view name,
@@ -204,8 +164,8 @@ struct ListFormatDataset {
                           int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ListFormatDataset, kind, id,
-                                                friendly_name, location, type,
-                                                dataset_reference, labels);
+                                                friendlyName, location, type,
+                                                datasetReference, labels);
 
 void to_json(nlohmann::json& j, Dataset const& d);
 void from_json(nlohmann::json const& j, Dataset& d);

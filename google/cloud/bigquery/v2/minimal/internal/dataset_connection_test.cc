@@ -59,9 +59,9 @@ TEST(DatasetConnectionTest, GetDatasetSuccess) {
       R"({"kind": "d-kind",
           "etag": "d-tag",
           "id": "d-id",
-          "self_link": "d-selfLink",
-          "friendly_name": "d-friendly-name",
-          "dataset_reference": {"projectId": "p-id", "datasetId": "d-id"}
+          "selfLink": "d-selfLink",
+          "friendlyName": "d-friendly-name",
+          "datasetReference": {"project_id": "p-id", "dataset_id": "d-id"}
     })";
 
   EXPECT_CALL(*mock, GetDataset)
