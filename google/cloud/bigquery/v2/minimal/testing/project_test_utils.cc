@@ -25,9 +25,9 @@ bigquery_v2_minimal_internal::Project MakeProject() {
   bigquery_v2_minimal_internal::Project expected;
   expected.kind = "p-kind";
   expected.id = "p-id";
-  expected.friendly_name = "p-friendly-name";
-  expected.numeric_id = 123;
-  expected.project_reference.project_id = "p-project-id";
+  expected.friendlyName = "p-friendly-name";
+  expected.numericId = 123;
+  expected.projectReference.projectId = "p-project-id";
 
   return expected;
 }
@@ -36,18 +36,18 @@ void AssertEquals(bigquery_v2_minimal_internal::Project const& lhs,
                   bigquery_v2_minimal_internal::Project const& rhs) {
   EXPECT_EQ(lhs.kind, rhs.kind);
   EXPECT_EQ(lhs.id, rhs.id);
-  EXPECT_EQ(lhs.friendly_name, rhs.friendly_name);
-  EXPECT_EQ(lhs.numeric_id, rhs.numeric_id);
-  EXPECT_EQ(lhs.project_reference.project_id, rhs.project_reference.project_id);
+  EXPECT_EQ(lhs.friendlyName, rhs.friendlyName);
+  EXPECT_EQ(lhs.numericId, rhs.numericId);
+  EXPECT_EQ(lhs.projectReference.projectId, rhs.projectReference.projectId);
 }
 
 std::string MakeProjectJsonText() {
   return R"({"kind":"p-kind")"
          R"(,"id":"p-id")"
-         R"(,"friendly_name":"p-friendly-name")"
-         R"(,"numeric_id":123)"
-         R"(,"project_reference":{)"
-         R"("project_id":"p-project-id")"
+         R"(,"friendlyName":"p-friendly-name")"
+         R"(,"numericId":123)"
+         R"(,"projectReference":{)"
+         R"("projectId":"p-project-id")"
          R"(})"
          R"(})";
 }
@@ -56,8 +56,8 @@ std::string MakeListProjectsResponseJsonText() {
   auto projects_json_txt = MakeProjectJsonText();
   return R"({"etag": "tag-1",
           "kind": "kind-1",
-          "next_page_token": "npt-123",
-          "total_items": "1",
+          "nextPageToken": "npt-123",
+          "totalItems": "1",
           "projects": [)" +
          projects_json_txt + R"(]})";
 }

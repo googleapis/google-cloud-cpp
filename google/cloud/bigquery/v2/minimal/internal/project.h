@@ -32,30 +32,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using namespace nlohmann::literals;  // NOLINT
 
 struct ProjectReference {
-  std::string project_id;
+  std::string projectId;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ProjectReference, project_id);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ProjectReference, projectId);
 
 struct Project {
   std::string kind;
   std::string id;
-  std::string friendly_name;
+  std::string friendlyName;
 
-  std::int64_t numeric_id;
+  std::int64_t numericId;
 
-  ProjectReference project_reference;
+  ProjectReference projectReference;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Project, kind, id,
-                                                friendly_name, numeric_id,
-                                                project_reference);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Project, kind, id, friendlyName,
+                                                numericId, projectReference);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

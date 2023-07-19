@@ -87,8 +87,8 @@ TEST(ListProjectsResponseTest, InvalidProject) {
   http_response.payload =
       R"({"etag": "tag-1",
           "kind": "kind-1",
-          "next_page_token": "npt-123",
-          "total_items": "1",
+          "nextPageToken": "npt-123",
+          "totalItems": "1",
           "projects": [
               {
                 "id": "1",
@@ -106,13 +106,13 @@ TEST(ListProjectsResponseTest, InvalidTotalItems) {
   http_response.payload =
       R"({"etag": "tag-1",
           "kind": "kind-1",
-          "next_page_token": "npt-123",
-          "total_items": "invalid",
+          "nextPageToken": "npt-123",
+          "totalItems": "invalid",
           "projects": []})";
   auto const response =
       ListProjectsResponse::BuildFromHttpResponse(http_response);
   EXPECT_THAT(response, StatusIs(StatusCode::kInternal,
-                                 HasSubstr("Invalid value for total_items")));
+                                 HasSubstr("Invalid value for totalItems")));
 }
 
 TEST(ListProjectsResponseTest, DebugString) {
