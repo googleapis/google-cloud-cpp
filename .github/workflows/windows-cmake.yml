@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   cmake:
-    name: cmake + ${{ matrix.msvc }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
+    name: cmake + ${{ matrix.msvc }} + ${{ matrix.arch }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
     runs-on:
       group: cpp-runners
       labels: ${{ endsWith(matrix.msvc, '-2019') && 'windows-2019' || 'windows-2022' }}
@@ -31,7 +31,7 @@ jobs:
         exclude-from-full-trick: [ true ]
         msvc: [ msvc-2022, msvc-2019 ]
         build_type: [ Debug, Release ]
-        vcpkg_triplet: [ x64-windows ]
+        arch: [ x64, x86 ]
         shard: [Core, Compute, Other]
         exclude:
         # Do not run MSVC 2019 builds with pull requests. Running builds is
@@ -51,6 +51,12 @@ jobs:
         #     https://learn.microsoft.com/en-us/cpp/error-messages/tool-errors/linker-tools-error-lnk1248
         - build_type: Debug
           shard: Compute
+        # No need to duplicate testing with x86 mode and MSVC 2019
+        - arch: x86
+          msvc: msvc-2019
+        # No need to duplicate testing with x86 mode and Debug mode
+        - arch: x86
+          build_type: Debug
     steps:
     - uses: actions/checkout@v3
       with:
@@ -108,6 +114,8 @@ jobs:
     # Note that in other runners the publisher is GitHub. If we trust GitHub
     # to run the VM, we should trust their runners.
     - uses: ilammy/msvc-dev-cmd@cec98b9d092141f74527d0afa6feb2af698cfe89 # @v1.21.1
+      with:
+        arch: ${{ matrix.arch }}
     - name: Build google-cloud-cpp
       shell: bash
       run: |
@@ -119,8 +127,8 @@ jobs:
         ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ steps.dynamic.outputs.features }}
     env:
       SCCACHE_GCS_BUCKET: cloud-cpp-gha-cache
-      SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.msvc }}/${{ matrix.build_type }}
+      SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.msvc }}/${{ matrix.arch}}/${{ matrix.build_type }}
       SCCACHE_GCS_RW_MODE: READ_WRITE
       SCCACHE_IGNORE_SERVER_IO_ERROR: 1
       VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-gha-cache/vcpkg-cache/${{ matrix.msvc }},readwrite
-      VCPKG_TRIPLET: ${{ matrix.vcpkg_triplet }}
+      VCPKG_TRIPLET: ${{ matrix.arch }}-windows
