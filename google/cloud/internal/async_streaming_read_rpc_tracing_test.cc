@@ -27,7 +27,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::EventNamed;
-using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanNamed;
@@ -100,7 +100,7 @@ TEST(AsyncStreamingReadRpcTracing, Start) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, ElementsAre(AllOf(SpanNamed("span"),
-                                       SpanHasAttributes(SpanAttribute<bool>(
+                                       SpanHasAttributes(OTelAttribute<bool>(
                                            "gcloud.stream_started", true)))));
 }
 
@@ -134,16 +134,16 @@ TEST(AsyncStreamingReadRpcTracing, Read) {
           SpanEventsAre(
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "RECEIVED"),
-                        SpanAttribute<int>("message.id", 1))),
+                        OTelAttribute<std::string>("message.type", "RECEIVED"),
+                        OTelAttribute<int>("message.id", 1))),
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "RECEIVED"),
-                        SpanAttribute<int>("message.id", 2))),
+                        OTelAttribute<std::string>("message.type", "RECEIVED"),
+                        OTelAttribute<int>("message.id", 2))),
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "RECEIVED"),
-                        SpanAttribute<int>("message.id", 3)))))));
+                        OTelAttribute<std::string>("message.type", "RECEIVED"),
+                        OTelAttribute<int>("message.id", 3)))))));
 }
 
 TEST(AsyncStreamingReadRpcTracing, Finish) {
@@ -163,7 +163,7 @@ TEST(AsyncStreamingReadRpcTracing, Finish) {
       spans,
       ElementsAre(AllOf(
           SpanNamed("span"),
-          SpanHasAttributes(SpanAttribute<std::string>("grpc.peer", _)),
+          SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"))));
 }
 

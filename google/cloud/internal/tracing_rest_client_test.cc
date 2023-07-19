@@ -36,7 +36,7 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
-using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
@@ -101,15 +101,15 @@ TEST(TracingRestClient, Delete) {
           AllOf(SpanNamed("HTTP/DELETE"), SpanHasInstrumentationScope(),
                 SpanKindIsClient(),
                 SpanHasAttributes(
-                    SpanAttribute<std::string>(sc::kNetTransport,
+                    OTelAttribute<std::string>(sc::kNetTransport,
                                                sc::NetTransportValues::kIpTcp),
-                    SpanAttribute<std::string>(sc::kHttpMethod, "DELETE"),
-                    SpanAttribute<std::string>(sc::kHttpUrl, kUrl),
-                    SpanAttribute<std::string>(
+                    OTelAttribute<std::string>(sc::kHttpMethod, "DELETE"),
+                    OTelAttribute<std::string>(sc::kHttpUrl, kUrl),
+                    OTelAttribute<std::string>(
                         "http.request.header.x-test-header-3", "value3"),
-                    SpanAttribute<std::string>(
+                    OTelAttribute<std::string>(
                         "http.response.header.x-test-header-1", "value1"),
-                    SpanAttribute<std::string>(
+                    OTelAttribute<std::string>(
                         "http.response.header.x-test-header-2", "value2"))),
           SpanNamed("SendRequest"), SpanNamed("Read"), SpanNamed("Read")));
 }
@@ -152,7 +152,7 @@ TEST(TracingRestClient, HasScope) {
       UnorderedElementsAre(
           AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
                 SpanKindIsClient(),
-                SpanHasAttributes(SpanAttribute<std::string>("test.attribute",
+                SpanHasAttributes(OTelAttribute<std::string>("test.attribute",
                                                              "test.value"))),
           SpanNamed("SendRequest"), SpanNamed("Read"), SpanNamed("Read")));
 }
@@ -296,17 +296,17 @@ TEST(TracingRestClient, WithRestContextDetails) {
       UnorderedElementsAre(
           AllOf(SpanNamed("HTTP/POST"),
                 SpanHasAttributes(
-                    SpanAttribute<std::string>(sc::kNetTransport,
+                    OTelAttribute<std::string>(sc::kNetTransport,
                                                sc::NetTransportValues::kIpTcp),
-                    SpanAttribute<std::string>(sc::kHttpMethod, "POST"),
-                    SpanAttribute<std::string>(sc::kHttpUrl, kUrl),
-                    SpanAttribute<std::string>(sc::kNetPeerName, "192.168.1.1"),
-                    SpanAttribute<std::int32_t>(sc::kNetPeerPort, 443),
-                    SpanAttribute<std::string>(sc::kNetHostName, "127.0.0.1"),
-                    SpanAttribute<std::int32_t>(sc::kNetHostPort, 32000))),
+                    OTelAttribute<std::string>(sc::kHttpMethod, "POST"),
+                    OTelAttribute<std::string>(sc::kHttpUrl, kUrl),
+                    OTelAttribute<std::string>(sc::kNetPeerName, "192.168.1.1"),
+                    OTelAttribute<std::int32_t>(sc::kNetPeerPort, 443),
+                    OTelAttribute<std::string>(sc::kNetHostName, "127.0.0.1"),
+                    OTelAttribute<std::int32_t>(sc::kNetHostPort, 32000))),
           AllOf(SpanNamed("SendRequest"),
                 SpanHasAttributes(
-                    SpanAttribute<bool>("gcloud-cpp.cached_connection", false)),
+                    OTelAttribute<bool>("gcloud-cpp.cached_connection", false)),
                 SpanHasEvents(EventNamed("curl.namelookup"),
                               EventNamed("curl.connected"),
                               EventNamed("curl.ssl.handshake"))),
@@ -347,7 +347,7 @@ TEST(TracingRestClient, CachedConnection) {
   EXPECT_THAT(spans, UnorderedElementsAre(
                          SpanNamed("HTTP/PUT"),
                          AllOf(SpanNamed("SendRequest"),
-                               SpanHasAttributes(SpanAttribute<bool>(
+                               SpanHasAttributes(OTelAttribute<bool>(
                                    "gcloud-cpp.cached_connection", true)),
                                SpanHasEvents(EventNamed("curl.connected"))),
                          SpanNamed("Read"), SpanNamed("Read")));

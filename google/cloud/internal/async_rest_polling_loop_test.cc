@@ -681,7 +681,7 @@ TEST(AsyncRestPollingLoopTest, PollThenSuccessWithBespokeOperationTypes) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::IsActive;
-using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
@@ -813,7 +813,7 @@ TEST(AsyncRestPollingLoopTest, TraceCapturesOperationName) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans,
               ElementsAre(AllOf(SpanNamed("span"),
-                                SpanHasAttributes(SpanAttribute<std::string>(
+                                SpanHasAttributes(OTelAttribute<std::string>(
                                     "gcloud.LRO_name", "test-op-name")))));
 }
 
