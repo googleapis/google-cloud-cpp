@@ -193,6 +193,9 @@ Otherwise, if you are generating an experimental library, add it to
 `GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES` and note in a comment when the library
 was generated.
 
+Update `libraries.bzl` to include the new library. While this can be done by
+running a cmake-based build, it is fastest to edit the file manually.
+
 ### Update the quickstart
 
 The generated quickstart will need some editing. Use a simple operation, maybe
@@ -216,7 +219,6 @@ running while you work on tweaks to the quickstart and documentation.
 
 ```shell
 env GOOGLE_CLOUD_CPP_CHECK_API=${library} ci/cloudbuild/build.sh -t check-api-pr
-git add ci/abi-dumps
 git commit -m"Add API baseline" ci/abi-dumps/
 ```
 
@@ -312,6 +314,7 @@ api_name=... # e.g. BigLake API
 - Add the new `*_cc_grpc` dependency to
   `//google/cloud/${library}:${library}_client` in
   `google/cloud/${library}/BUILD.bazel`
+- Review the `google/cloud/${library}/**/.repo-metadata.json` file
 - Announce the new API in the `CHANGELOG.md`
   - e.g. `The library has been expanded to include the ${api_name}.`
 - Commit the manual changes
@@ -321,10 +324,17 @@ api_name=... # e.g. BigLake API
 
 ```shell
 ci/cloudbuild/build.sh -t generate-libraries-pr
-env GOOGLE_CLOUD_CPP_CHECK_API ${library} ci/cloudbuild/build.sh -t check-api-pr
+env GOOGLE_CLOUD_CPP_CHECK_API=${library} ci/cloudbuild/build.sh -t check-api-pr
 git add .
 ci/cloudbuild/build.sh -t checkers-pr
 git commit -am "generated changes"
+```
+
+### Verify everything compiles
+
+```shell
+bazel build //google/cloud/${library}/...
+ci/cloudbuild/build.sh -t cmake-install-pr
 ```
 
 [#10237]: https://github.com/googleapis/google-cloud-cpp/issues/10237
