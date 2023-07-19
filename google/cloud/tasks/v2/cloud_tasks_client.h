@@ -115,8 +115,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.ListQueuesRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L308}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.ListQueuesRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L317}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
   StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
@@ -157,8 +157,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.ListQueuesRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L308}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.ListQueuesRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L317}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
   StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
@@ -184,8 +184,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.GetQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L369}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.GetQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L380}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> GetQueue(std::string const& name,
@@ -215,8 +215,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.GetQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L369}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.GetQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L380}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
@@ -228,8 +228,8 @@ class CloudTasksClient {
   /// Creates a queue.
   ///
   /// Queues created with this method allow tasks to live for a maximum of 31
-  /// days. After a task is 31 days old, the task will be deleted regardless of whether
-  /// it was dispatched or not.
+  /// days. After a task is 31 days old, the task will be deleted regardless of
+  /// whether it was dispatched or not.
   ///
   /// WARNING: Using this method may have unintended side effects if you are
   /// using an App Engine `queue.yaml` or `queue.xml` file to manage your queues.
@@ -246,7 +246,8 @@ class CloudTasksClient {
   ///  [ListLocations][google.cloud.location.Locations.ListLocations].
   /// @param queue  Required. The queue to create.
   ///  @n
-  ///  [Queue's name][google.cloud.tasks.v2.Queue.name] cannot be the same as an existing queue.
+  ///  [Queue's name][google.cloud.tasks.v2.Queue.name] cannot be the same as an
+  ///  existing queue.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -261,8 +262,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CreateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L381}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.CreateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L393}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
@@ -274,8 +275,8 @@ class CloudTasksClient {
   /// Creates a queue.
   ///
   /// Queues created with this method allow tasks to live for a maximum of 31
-  /// days. After a task is 31 days old, the task will be deleted regardless of whether
-  /// it was dispatched or not.
+  /// days. After a task is 31 days old, the task will be deleted regardless of
+  /// whether it was dispatched or not.
   ///
   /// WARNING: Using this method may have unintended side effects if you are
   /// using an App Engine `queue.yaml` or `queue.xml` file to manage your queues.
@@ -304,8 +305,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CreateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L381}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.CreateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L393}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
@@ -320,8 +321,8 @@ class CloudTasksClient {
   /// the queue if it does exist.
   ///
   /// Queues created with this method allow tasks to live for a maximum of 31
-  /// days. After a task is 31 days old, the task will be deleted regardless of whether
-  /// it was dispatched or not.
+  /// days. After a task is 31 days old, the task will be deleted regardless of
+  /// whether it was dispatched or not.
   ///
   /// WARNING: Using this method may have unintended side effects if you are
   /// using an App Engine `queue.yaml` or `queue.xml` file to manage your queues.
@@ -354,8 +355,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
-  /// [google.cloud.tasks.v2.UpdateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L402}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.UpdateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L416}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
@@ -370,8 +371,8 @@ class CloudTasksClient {
   /// the queue if it does exist.
   ///
   /// Queues created with this method allow tasks to live for a maximum of 31
-  /// days. After a task is 31 days old, the task will be deleted regardless of whether
-  /// it was dispatched or not.
+  /// days. After a task is 31 days old, the task will be deleted regardless of
+  /// whether it was dispatched or not.
   ///
   /// WARNING: Using this method may have unintended side effects if you are
   /// using an App Engine `queue.yaml` or `queue.xml` file to manage your queues.
@@ -400,8 +401,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
-  /// [google.cloud.tasks.v2.UpdateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L402}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.UpdateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L416}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
@@ -438,7 +439,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.DeleteQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L419}
+  /// [google.cloud.tasks.v2.DeleteQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L434}
   ///
   // clang-format on
   Status DeleteQueue(std::string const& name, Options opts = {});
@@ -477,7 +478,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.DeleteQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L419}
+  /// [google.cloud.tasks.v2.DeleteQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L434}
   ///
   // clang-format on
   Status DeleteQueue(
@@ -509,8 +510,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.PurgeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L431}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.PurgeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L447}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(std::string const& name,
@@ -545,8 +546,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.PurgeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L431}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.PurgeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L447}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
@@ -559,9 +560,10 @@ class CloudTasksClient {
   ///
   /// If a queue is paused then the system will stop dispatching tasks
   /// until the queue is resumed via
-  /// [ResumeQueue][google.cloud.tasks.v2.CloudTasks.ResumeQueue]. Tasks can still be added
-  /// when the queue is paused. A queue is paused if its
-  /// [state][google.cloud.tasks.v2.Queue.state] is [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED].
+  /// [ResumeQueue][google.cloud.tasks.v2.CloudTasks.ResumeQueue]. Tasks can
+  /// still be added when the queue is paused. A queue is paused if its
+  /// [state][google.cloud.tasks.v2.Queue.state] is
+  /// [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED].
   ///
   /// @param name  Required. The queue name. For example:
   ///  `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`
@@ -579,11 +581,11 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CloudTasks.ResumeQueue]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L166}
-  /// [google.cloud.tasks.v2.PauseQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L443}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
-  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L57}
-  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L161}
+  /// [google.cloud.tasks.v2.CloudTasks.ResumeQueue]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L168}
+  /// [google.cloud.tasks.v2.PauseQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L460}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L56}
+  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L160}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(std::string const& name,
@@ -595,9 +597,10 @@ class CloudTasksClient {
   ///
   /// If a queue is paused then the system will stop dispatching tasks
   /// until the queue is resumed via
-  /// [ResumeQueue][google.cloud.tasks.v2.CloudTasks.ResumeQueue]. Tasks can still be added
-  /// when the queue is paused. A queue is paused if its
-  /// [state][google.cloud.tasks.v2.Queue.state] is [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED].
+  /// [ResumeQueue][google.cloud.tasks.v2.CloudTasks.ResumeQueue]. Tasks can
+  /// still be added when the queue is paused. A queue is paused if its
+  /// [state][google.cloud.tasks.v2.Queue.state] is
+  /// [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED].
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -619,11 +622,11 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CloudTasks.ResumeQueue]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L166}
-  /// [google.cloud.tasks.v2.PauseQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L443}
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
-  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L57}
-  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L161}
+  /// [google.cloud.tasks.v2.CloudTasks.ResumeQueue]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L168}
+  /// [google.cloud.tasks.v2.PauseQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L460}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L56}
+  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L160}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
@@ -636,9 +639,10 @@ class CloudTasksClient {
   ///
   /// This method resumes a queue after it has been
   /// [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED] or
-  /// [DISABLED][google.cloud.tasks.v2.Queue.State.DISABLED]. The state of a queue is stored
-  /// in the queue's [state][google.cloud.tasks.v2.Queue.state]; after calling this method it
-  /// will be set to [RUNNING][google.cloud.tasks.v2.Queue.State.RUNNING].
+  /// [DISABLED][google.cloud.tasks.v2.Queue.State.DISABLED]. The state of a
+  /// queue is stored in the queue's [state][google.cloud.tasks.v2.Queue.state];
+  /// after calling this method it will be set to
+  /// [RUNNING][google.cloud.tasks.v2.Queue.State.RUNNING].
   ///
   /// WARNING: Resuming many high-QPS queues at the same time can
   /// lead to target overloading. If you are resuming high-QPS
@@ -662,12 +666,12 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
-  /// [google.cloud.tasks.v2.Queue.State.DISABLED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L73}
-  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L57}
-  /// [google.cloud.tasks.v2.Queue.State.RUNNING]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L52}
-  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L161}
-  /// [google.cloud.tasks.v2.ResumeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.Queue.State.DISABLED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L72}
+  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L56}
+  /// [google.cloud.tasks.v2.Queue.State.RUNNING]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L51}
+  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L160}
+  /// [google.cloud.tasks.v2.ResumeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L473}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(std::string const& name,
@@ -679,9 +683,10 @@ class CloudTasksClient {
   ///
   /// This method resumes a queue after it has been
   /// [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED] or
-  /// [DISABLED][google.cloud.tasks.v2.Queue.State.DISABLED]. The state of a queue is stored
-  /// in the queue's [state][google.cloud.tasks.v2.Queue.state]; after calling this method it
-  /// will be set to [RUNNING][google.cloud.tasks.v2.Queue.State.RUNNING].
+  /// [DISABLED][google.cloud.tasks.v2.Queue.State.DISABLED]. The state of a
+  /// queue is stored in the queue's [state][google.cloud.tasks.v2.Queue.state];
+  /// after calling this method it will be set to
+  /// [RUNNING][google.cloud.tasks.v2.Queue.State.RUNNING].
   ///
   /// WARNING: Resuming many high-QPS queues at the same time can
   /// lead to target overloading. If you are resuming high-QPS
@@ -709,12 +714,12 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
-  /// [google.cloud.tasks.v2.Queue.State.DISABLED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L73}
-  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L57}
-  /// [google.cloud.tasks.v2.Queue.State.RUNNING]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L52}
-  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L161}
-  /// [google.cloud.tasks.v2.ResumeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
+  /// [google.cloud.tasks.v2.Queue.State.DISABLED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L72}
+  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L56}
+  /// [google.cloud.tasks.v2.Queue.State.RUNNING]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L51}
+  /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L160}
+  /// [google.cloud.tasks.v2.ResumeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L473}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
@@ -749,7 +754,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
@@ -789,7 +794,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
@@ -799,8 +804,8 @@ class CloudTasksClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy for a [Queue][google.cloud.tasks.v2.Queue]. Replaces any existing
-  /// policy.
+  /// Sets the access control policy for a [Queue][google.cloud.tasks.v2.Queue].
+  /// Replaces any existing policy.
   ///
   /// Note: The Cloud Console does not check queue-level IAM permissions yet.
   /// Project-level permissions are required to use the Cloud Console.
@@ -831,7 +836,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
@@ -866,8 +871,8 @@ class CloudTasksClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy for a [Queue][google.cloud.tasks.v2.Queue]. Replaces any existing
-  /// policy.
+  /// Sets the access control policy for a [Queue][google.cloud.tasks.v2.Queue].
+  /// Replaces any existing policy.
   ///
   /// Note: The Cloud Console does not check queue-level IAM permissions yet.
   /// Project-level permissions are required to use the Cloud Console.
@@ -898,7 +903,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
@@ -908,9 +913,10 @@ class CloudTasksClient {
 
   // clang-format off
   ///
-  /// Returns permissions that a caller has on a [Queue][google.cloud.tasks.v2.Queue].
-  /// If the resource does not exist, this will return an empty set of
-  /// permissions, not a [NOT_FOUND][google.rpc.Code.NOT_FOUND] error.
+  /// Returns permissions that a caller has on a
+  /// [Queue][google.cloud.tasks.v2.Queue]. If the resource does not exist, this
+  /// will return an empty set of permissions, not a
+  /// [NOT_FOUND][google.rpc.Code.NOT_FOUND] error.
   ///
   /// Note: This operation is designed to be used for building permission-aware
   /// UIs and command-line tools, not for authorization checking. This operation
@@ -936,7 +942,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
@@ -947,9 +953,10 @@ class CloudTasksClient {
 
   // clang-format off
   ///
-  /// Returns permissions that a caller has on a [Queue][google.cloud.tasks.v2.Queue].
-  /// If the resource does not exist, this will return an empty set of
-  /// permissions, not a [NOT_FOUND][google.rpc.Code.NOT_FOUND] error.
+  /// Returns permissions that a caller has on a
+  /// [Queue][google.cloud.tasks.v2.Queue]. If the resource does not exist, this
+  /// will return an empty set of permissions, not a
+  /// [NOT_FOUND][google.rpc.Code.NOT_FOUND] error.
   ///
   /// Note: This operation is designed to be used for building permission-aware
   /// UIs and command-line tools, not for authorization checking. This operation
@@ -975,7 +982,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
@@ -988,10 +995,10 @@ class CloudTasksClient {
   ///
   /// Lists the tasks in a queue.
   ///
-  /// By default, only the [BASIC][google.cloud.tasks.v2.Task.View.BASIC] view is retrieved
-  /// due to performance considerations;
-  /// [response_view][google.cloud.tasks.v2.ListTasksRequest.response_view] controls the
-  /// subset of information which is returned.
+  /// By default, only the [BASIC][google.cloud.tasks.v2.Task.View.BASIC] view is
+  /// retrieved due to performance considerations;
+  /// [response_view][google.cloud.tasks.v2.ListTasksRequest.response_view]
+  /// controls the subset of information which is returned.
   ///
   /// The tasks may be returned in any order. The ordering may change at any
   /// time.
@@ -1021,10 +1028,10 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.ListTasksRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L467}
-  /// [google.cloud.tasks.v2.ListTasksRequest.response_view]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L489}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
-  /// [google.cloud.tasks.v2.Task.View.BASIC]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L58}
+  /// [google.cloud.tasks.v2.ListTasksRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L486}
+  /// [google.cloud.tasks.v2.ListTasksRequest.response_view]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L508}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
+  /// [google.cloud.tasks.v2.Task.View.BASIC]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L57}
   ///
   // clang-format on
   StreamRange<google::cloud::tasks::v2::Task> ListTasks(
@@ -1034,10 +1041,10 @@ class CloudTasksClient {
   ///
   /// Lists the tasks in a queue.
   ///
-  /// By default, only the [BASIC][google.cloud.tasks.v2.Task.View.BASIC] view is retrieved
-  /// due to performance considerations;
-  /// [response_view][google.cloud.tasks.v2.ListTasksRequest.response_view] controls the
-  /// subset of information which is returned.
+  /// By default, only the [BASIC][google.cloud.tasks.v2.Task.View.BASIC] view is
+  /// retrieved due to performance considerations;
+  /// [response_view][google.cloud.tasks.v2.ListTasksRequest.response_view]
+  /// controls the subset of information which is returned.
   ///
   /// The tasks may be returned in any order. The ordering may change at any
   /// time.
@@ -1071,10 +1078,10 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.ListTasksRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L467}
-  /// [google.cloud.tasks.v2.ListTasksRequest.response_view]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L489}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
-  /// [google.cloud.tasks.v2.Task.View.BASIC]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L58}
+  /// [google.cloud.tasks.v2.ListTasksRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L486}
+  /// [google.cloud.tasks.v2.ListTasksRequest.response_view]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L508}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
+  /// [google.cloud.tasks.v2.Task.View.BASIC]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L57}
   ///
   // clang-format on
   StreamRange<google::cloud::tasks::v2::Task> ListTasks(
@@ -1100,8 +1107,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.GetTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L529}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
+  /// [google.cloud.tasks.v2.GetTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L550}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Task> GetTask(std::string const& name,
@@ -1131,8 +1138,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.GetTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L529}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
+  /// [google.cloud.tasks.v2.GetTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L550}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Task> GetTask(
@@ -1168,8 +1175,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CreateTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L555}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
+  /// [google.cloud.tasks.v2.CreateTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L575}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Task> CreateTask(
@@ -1204,8 +1211,8 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CreateTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L555}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
+  /// [google.cloud.tasks.v2.CreateTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L575}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Task> CreateTask(
@@ -1234,7 +1241,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L619}
+  /// [google.cloud.tasks.v2.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L639}
   ///
   // clang-format on
   Status DeleteTask(std::string const& name, Options opts = {});
@@ -1265,7 +1272,7 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L619}
+  /// [google.cloud.tasks.v2.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L639}
   ///
   // clang-format on
   Status DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request,
@@ -1276,13 +1283,14 @@ class CloudTasksClient {
   /// Forces a task to run now.
   ///
   /// When this method is called, Cloud Tasks will dispatch the task, even if
-  /// the task is already running, the queue has reached its [RateLimits][google.cloud.tasks.v2.RateLimits] or
-  /// is [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED].
+  /// the task is already running, the queue has reached its
+  /// [RateLimits][google.cloud.tasks.v2.RateLimits] or is
+  /// [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED].
   ///
   /// This command is meant to be used for manual debugging. For
-  /// example, [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] can be used to retry a failed
-  /// task after a fix has been made or to manually force a task to be
-  /// dispatched now.
+  /// example, [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] can be used to
+  /// retry a failed task after a fix has been made or to manually force a task
+  /// to be dispatched now.
   ///
   /// The dispatched task is returned. That is, the task that is returned
   /// contains the [status][Task.status] after the task is dispatched but
@@ -1290,9 +1298,10 @@ class CloudTasksClient {
   ///
   /// If Cloud Tasks receives a successful response from the task's
   /// target, then the task will be deleted; otherwise the task's
-  /// [schedule_time][google.cloud.tasks.v2.Task.schedule_time] will be reset to the time that
-  /// [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] was called plus the retry delay specified
-  /// in the queue's [RetryConfig][google.cloud.tasks.v2.RetryConfig].
+  /// [schedule_time][google.cloud.tasks.v2.Task.schedule_time] will be reset to
+  /// the time that [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] was
+  /// called plus the retry delay specified in the queue's
+  /// [RetryConfig][google.cloud.tasks.v2.RetryConfig].
   ///
   /// [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] returns
   /// [NOT_FOUND][google.rpc.Code.NOT_FOUND] when it is called on a
@@ -1314,13 +1323,13 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CloudTasks.RunTask]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L298}
-  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L57}
-  /// [google.cloud.tasks.v2.RateLimits]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L191}
-  /// [google.cloud.tasks.v2.RetryConfig]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L261}
-  /// [google.cloud.tasks.v2.RunTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L632}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
-  /// [google.cloud.tasks.v2.Task.schedule_time]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L109}
+  /// [google.cloud.tasks.v2.CloudTasks.RunTask]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L306}
+  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L56}
+  /// [google.cloud.tasks.v2.RateLimits]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L190}
+  /// [google.cloud.tasks.v2.RetryConfig]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L260}
+  /// [google.cloud.tasks.v2.RunTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L650}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
+  /// [google.cloud.tasks.v2.Task.schedule_time]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L108}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Task> RunTask(std::string const& name,
@@ -1331,13 +1340,14 @@ class CloudTasksClient {
   /// Forces a task to run now.
   ///
   /// When this method is called, Cloud Tasks will dispatch the task, even if
-  /// the task is already running, the queue has reached its [RateLimits][google.cloud.tasks.v2.RateLimits] or
-  /// is [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED].
+  /// the task is already running, the queue has reached its
+  /// [RateLimits][google.cloud.tasks.v2.RateLimits] or is
+  /// [PAUSED][google.cloud.tasks.v2.Queue.State.PAUSED].
   ///
   /// This command is meant to be used for manual debugging. For
-  /// example, [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] can be used to retry a failed
-  /// task after a fix has been made or to manually force a task to be
-  /// dispatched now.
+  /// example, [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] can be used to
+  /// retry a failed task after a fix has been made or to manually force a task
+  /// to be dispatched now.
   ///
   /// The dispatched task is returned. That is, the task that is returned
   /// contains the [status][Task.status] after the task is dispatched but
@@ -1345,9 +1355,10 @@ class CloudTasksClient {
   ///
   /// If Cloud Tasks receives a successful response from the task's
   /// target, then the task will be deleted; otherwise the task's
-  /// [schedule_time][google.cloud.tasks.v2.Task.schedule_time] will be reset to the time that
-  /// [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] was called plus the retry delay specified
-  /// in the queue's [RetryConfig][google.cloud.tasks.v2.RetryConfig].
+  /// [schedule_time][google.cloud.tasks.v2.Task.schedule_time] will be reset to
+  /// the time that [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] was
+  /// called plus the retry delay specified in the queue's
+  /// [RetryConfig][google.cloud.tasks.v2.RetryConfig].
   ///
   /// [RunTask][google.cloud.tasks.v2.CloudTasks.RunTask] returns
   /// [NOT_FOUND][google.rpc.Code.NOT_FOUND] when it is called on a
@@ -1373,13 +1384,13 @@ class CloudTasksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tasks.v2.CloudTasks.RunTask]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L298}
-  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L57}
-  /// [google.cloud.tasks.v2.RateLimits]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L191}
-  /// [google.cloud.tasks.v2.RetryConfig]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L261}
-  /// [google.cloud.tasks.v2.RunTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L632}
-  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
-  /// [google.cloud.tasks.v2.Task.schedule_time]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L109}
+  /// [google.cloud.tasks.v2.CloudTasks.RunTask]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L306}
+  /// [google.cloud.tasks.v2.Queue.State.PAUSED]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L56}
+  /// [google.cloud.tasks.v2.RateLimits]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L190}
+  /// [google.cloud.tasks.v2.RetryConfig]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L260}
+  /// [google.cloud.tasks.v2.RunTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L650}
+  /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
+  /// [google.cloud.tasks.v2.Task.schedule_time]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L108}
   ///
   // clang-format on
   StatusOr<google::cloud::tasks::v2::Task> RunTask(

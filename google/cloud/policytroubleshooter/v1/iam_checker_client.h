@@ -87,8 +87,9 @@ class IamCheckerClient {
 
   // clang-format off
   ///
-  /// Checks whether a member has a specific permission for a specific resource,
-  /// and explains why the member does or does not have that permission.
+  /// Checks whether a principal has a specific permission for a specific
+  /// resource, and explains why the principal does or does not have that
+  /// permission.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -110,8 +111,8 @@ class IamCheckerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.policytroubleshooter.v1.TroubleshootIamPolicyRequest]: @googleapis_reference_link{google/cloud/policytroubleshooter/v1/checker.proto#L51}
-  /// [google.cloud.policytroubleshooter.v1.TroubleshootIamPolicyResponse]: @googleapis_reference_link{google/cloud/policytroubleshooter/v1/checker.proto#L58}
+  /// [google.cloud.policytroubleshooter.v1.TroubleshootIamPolicyRequest]: @googleapis_reference_link{google/cloud/policytroubleshooter/v1/checker.proto#L56}
+  /// [google.cloud.policytroubleshooter.v1.TroubleshootIamPolicyResponse]: @googleapis_reference_link{google/cloud/policytroubleshooter/v1/checker.proto#L64}
   ///
   // clang-format on
   StatusOr<
