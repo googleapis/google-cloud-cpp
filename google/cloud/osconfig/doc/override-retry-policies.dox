@@ -81,6 +81,7 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c osconfig_agentendpoint_v1::AgentEndpointServiceClient](@ref osconfig_agentendpoint_v1::AgentEndpointServiceClient-retry-snippet)
 - [\c osconfig_v1::OsConfigServiceClient](@ref osconfig_v1::OsConfigServiceClient-retry-snippet)
+- [\c osconfig_v1::OsConfigZonalServiceClient](@ref osconfig_v1::OsConfigZonalServiceClient-retry-snippet)
 
 <!-- inject-retry-snippet-end -->
 
@@ -117,6 +118,18 @@ This shows how to override the retry policies for osconfig_v1::OsConfigServiceCl
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/osconfig/v1/samples/os_config_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page osconfig_v1::OsConfigZonalServiceClient-retry-snippet Override osconfig_v1::OsConfigZonalServiceClient Retry Policies
+
+This shows how to override the retry policies for osconfig_v1::OsConfigZonalServiceClient:
+
+@snippet google/cloud/osconfig/v1/samples/os_config_zonal_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/osconfig/v1/samples/os_config_zonal_client_samples.cc custom-idempotency-policy
 
 */
 // <!-- inject-retry-pages-end -->
