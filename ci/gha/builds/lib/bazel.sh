@@ -53,22 +53,22 @@ function bazel::test_args() {
 # Outputs a list of args that should be given when using bazel and MSVC.
 function bazel::msvc_args() {
   local args=(
-    # "--keep_going",
-    # We want to enable all warnings and treat warnings as errors in our code
-    "--per_file_copt=^//google/cloud@-W3"
-    "--per_file_copt=^//google/cloud@-WX"
-    # Unfortunately this would break our build if any header from a different
-    # project generated warnings with MSVC (and they do). This is the motivation
-    # to include external headers with angle brackets: we can turn off warnings
-    # for them.
-    "--per_file_copt=^//google/cloud@-experimental:external"
-    "--per_file_copt=^//google/cloud@-external:W0"
-    "--per_file_copt=^//google/cloud@-external:anglebrackets"
-    # Disable warnings on generated proto files.
-    "--per_file_copt=.*\.pb\.cc@/wd4244"
-    # Disable warnings on generated upb files.
-    "--per_file_copt=.*\.upb\.c@/wd4090"
-    "--per_file_copt=.*\.upbdefs\.c@/wd4090"
+    '--keep_going'
+    # Disable warnings on "external" headers. These are non-actionable, or at
+    # least not urgent, as they are in generated code or code we do not control.
+    # This is the motivation to include things outside the project with angle
+    # brackets. There is no other succinct way to tell MSVC what is "external".
+    '--per_file_copt=^//google/cloud@-experimental:external'
+    '--per_file_copt=^//google/cloud@-external:W0'
+    '--per_file_copt=^//google/cloud@-external:anglebrackets'
+    # Disable warnings in generated proto and upb files. This is not strictly
+    # needed, but reduces some of the noise in the build logs. Note that the
+    # headers for these files continue to emit warnings. They are included by
+    # files in gRPC and Protobuf.
+    '--per_file_copt=.*\.pb\.cc@-wd4244'
+    '--per_file_copt=.*\.pb\.cc@-wd4267'
+    '--per_file_copt=.*\.upb\.c@-wd4090'
+    '--per_file_copt=.*\.upbdefs\.c@-wd4090'
   )
   printf "%s\n" "${args[@]}"
 }
