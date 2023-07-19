@@ -34,44 +34,42 @@ using namespace nlohmann::literals;  // NOLINT
 
 struct JobConfigurationQuery {
   std::string query;
-  std::string create_disposition;
-  std::string write_disposition;
+  std::string createDisposition;
+  std::string writeDisposition;
   std::string priority;
-  std::string parameter_mode;
-  bool preserve_nulls = false;
-  bool allow_large_results = false;
-  bool use_query_cache = false;
-  bool flatten_results = false;
-  bool use_legacy_sql = false;
-  bool create_session = false;
-  bool continuous = false;
-  std::int64_t maximum_bytes_billed = 0;
+  std::string parameterMode;
+  bool preserveNulls = false;
+  bool allowLargeResults = false;
+  bool useQueryCache = false;
+  bool flattenResults = false;
+  bool useLegacySql = false;
+  bool createSession = false;
+  std::int64_t maximumBytesBilled = 0;
 
-  std::vector<QueryParameter> query_parameters;
-  std::vector<std::string> schema_update_options;
-  std::vector<ConnectionProperty> connection_properties;
+  std::vector<QueryParameter> queryParameters;
+  std::vector<std::string> schemaUpdateOptions;
+  std::vector<ConnectionProperty> connectionProperties;
 
-  DatasetReference default_dataset;
-  TableReference destination_table;
-  TimePartitioning time_partitioning;
-  RangePartitioning range_partitioning;
+  DatasetReference defaultDataset;
+  TableReference destinationTable;
+  TimePartitioning timePartitioning;
+  RangePartitioning rangePartitioning;
   Clustering clustering;
-  EncryptionConfiguration destination_encryption_configuration;
-  ScriptOptions script_options;
-  SystemVariables system_variables;
+  EncryptionConfiguration destinationEncryptionConfiguration;
+  ScriptOptions scriptOptions;
+  SystemVariables systemVariables;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
-    JobConfigurationQuery, query, create_disposition, write_disposition,
-    priority, parameter_mode, preserve_nulls, allow_large_results,
-    use_query_cache, flatten_results, use_legacy_sql, create_session,
-    continuous, maximum_bytes_billed, query_parameters, schema_update_options,
-    connection_properties, default_dataset, destination_table,
-    time_partitioning, range_partitioning, clustering,
-    destination_encryption_configuration, script_options, system_variables);
+    JobConfigurationQuery, query, createDisposition, writeDisposition, priority,
+    parameterMode, preserveNulls, allowLargeResults, useQueryCache,
+    flattenResults, useLegacySql, createSession, maximumBytesBilled,
+    queryParameters, schemaUpdateOptions, connectionProperties, defaultDataset,
+    destinationTable, timePartitioning, rangePartitioning, clustering,
+    destinationEncryptionConfiguration, scriptOptions, systemVariables);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 

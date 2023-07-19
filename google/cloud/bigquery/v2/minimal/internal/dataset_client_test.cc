@@ -39,8 +39,8 @@ Dataset MakeTestDataset() {
   dataset.id = "d-id";
   dataset.self_link = "d-self-link";
   dataset.friendly_name = "d-friendly-name";
-  dataset.dataset_reference.project_id = "p-id";
-  dataset.dataset_reference.dataset_id = "d-id";
+  dataset.dataset_reference.projectId = "p-id";
+  dataset.dataset_reference.datasetId = "d-id";
   return dataset;
 }
 
@@ -68,8 +68,8 @@ TEST(DatasetClientTest, GetDatasetSuccess) {
   EXPECT_EQ(dataset->id, "d-id");
   EXPECT_EQ(dataset->self_link, "d-self-link");
   EXPECT_EQ(dataset->friendly_name, "d-friendly-name");
-  EXPECT_EQ(dataset->dataset_reference.project_id, "p-id");
-  EXPECT_EQ(dataset->dataset_reference.dataset_id, "d-id");
+  EXPECT_EQ(dataset->dataset_reference.projectId, "p-id");
+  EXPECT_EQ(dataset->dataset_reference.datasetId, "d-id");
 }
 
 TEST(DatasetClientTest, GetDatasetFailure) {

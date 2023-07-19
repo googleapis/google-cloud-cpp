@@ -61,7 +61,7 @@ TEST(DatasetConnectionTest, GetDatasetSuccess) {
           "id": "d-id",
           "self_link": "d-selfLink",
           "friendly_name": "d-friendly-name",
-          "dataset_reference": {"project_id": "p-id", "dataset_id": "d-id"}
+          "dataset_reference": {"projectId": "p-id", "datasetId": "d-id"}
     })";
 
   EXPECT_CALL(*mock, GetDataset)
@@ -90,8 +90,8 @@ TEST(DatasetConnectionTest, GetDatasetSuccess) {
   EXPECT_EQ(dataset_result->id, "d-id");
   EXPECT_EQ(dataset_result->self_link, "d-selfLink");
   EXPECT_EQ(dataset_result->friendly_name, "d-friendly-name");
-  EXPECT_EQ(dataset_result->dataset_reference.project_id, "p-id");
-  EXPECT_EQ(dataset_result->dataset_reference.dataset_id, "d-id");
+  EXPECT_EQ(dataset_result->dataset_reference.projectId, "p-id");
+  EXPECT_EQ(dataset_result->dataset_reference.datasetId, "d-id");
 }
 
 TEST(DatasetConnectionTest, ListDatasetsSuccess) {

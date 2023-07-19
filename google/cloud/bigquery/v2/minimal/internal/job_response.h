@@ -98,41 +98,34 @@ class CancelJobResponse {
   BigQueryHttpResponse http_response;
 };
 
-struct SessionInfo {
-  std::string session_id;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(SessionInfo, session_id);
-
 struct QueryResults {
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
   std::string kind;
-  std::string page_token;
+  std::string pageToken;
 
-  std::uint64_t total_rows = 0;
-  std::int64_t total_bytes_processed = 0;
-  std::int64_t num_dml_affected_rows = 0;
+  std::uint64_t totalRows = 0;
+  std::int64_t totalBytesProcessed = 0;
+  std::int64_t numDmlAffectedRows = 0;
 
-  bool job_complete = false;
-  bool cache_hit = false;
+  bool jobComplete = false;
+  bool cacheHit = false;
 
   TableSchema schema;
-  JobReference job_reference;
+  JobReference jobReference;
   std::vector<Struct> rows;
   std::vector<ErrorProto> errors;
-  SessionInfo session_info;
-  DmlStats dml_stats;
+  SessionInfo sessionInfo;
+  DmlStats dmlStats;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
-    QueryResults, kind, page_token, total_rows, total_bytes_processed,
-    num_dml_affected_rows, job_complete, cache_hit, schema, job_reference, rows,
-    errors, session_info, dml_stats);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(QueryResults, kind, pageToken,
+                                                totalRows, totalBytesProcessed,
+                                                numDmlAffectedRows, jobComplete,
+                                                cacheHit, schema, jobReference,
+                                                rows, errors, sessionInfo,
+                                                dmlStats)
 
 class QueryResponse {
  public:

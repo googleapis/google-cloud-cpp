@@ -33,20 +33,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using namespace nlohmann::literals;  // NOLINT
 
 struct JobConfiguration {
-  std::string job_type;
-  bool dry_run = false;
-  std::int64_t job_timeout_ms = 0;
+  std::string jobType;
+  bool dryRun = false;
+  std::int64_t jobTimeoutMs = 0;
   std::map<std::string, std::string> labels;
 
-  JobConfigurationQuery query_config;
+  JobConfigurationQuery query;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobConfiguration, job_type,
-                                                query_config, dry_run,
-                                                job_timeout_ms, labels);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobConfiguration, jobType,
+                                                query, dryRun, jobTimeoutMs,
+                                                labels);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 

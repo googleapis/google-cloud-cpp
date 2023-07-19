@@ -341,7 +341,7 @@ TEST(InsertJobRequest, DebugString) {
       R"( parameter_mode: "job-param-mode" preserve_nulls: true)"
       R"( allow_large_results: true use_query_cache: true)"
       R"( flatten_results: true use_legacy_sql: true create_session: true)"
-      R"( continuous: true maximum_bytes_billed: 0)"
+      R"( maximum_bytes_billed: 0)"
       R"( schema_update_options: "job-update-options")"
       R"( connection_properties { key: "conn-prop-key" value: "conn-prop-val" })"
       R"( query_parameters { name: "query-parameter-name" parameter_type {)"
@@ -371,7 +371,7 @@ TEST(InsertJobRequest, DebugString) {
       R"( statistics { creation_time { "10ms" } start_time { "10ms" })"
       R"( end_time { "10ms" } total_slot_time { "10ms" })"
       R"( final_execution_duration { "10ms" } total_bytes_processed: 1234)"
-      R"( num_child_jobs: 1234 total_modified_partitions: 1234)"
+      R"( num_child_jobs: 1234)"
       R"( row_level_security_applied: true data_masking_applied: true)"
       R"( completion_ratio: 1234.12 quota_deferments: "quota-defer-1")"
       R"( parent_job_id: "parent-job-123" session_id: "session-id-123")"
@@ -410,7 +410,6 @@ TEST(InsertJobRequest, DebugString) {
       R"( data_classification_tags { } rounding_mode { value: "" })"
       R"( range_element_type { type: "" } } } dml_stats { inserted_row_count: 1234)"
       R"( deleted_row_count: 1234 updated_row_count: 1234 } ddl_target_table {)"
-      R"( project_id: "2" dataset_id: "1" table_id: "3" } ddl_destination_table {)"
       R"( project_id: "2" dataset_id: "1" table_id: "3" })"
       R"( ddl_target_row_access_policy { project_id: "1234" dataset_id: "1")"
       R"( table_id: "2" policy_id: "3" } ddl_target_routine { project_id: "2")"
@@ -448,7 +447,7 @@ TEST(InsertJobRequest, DebugString) {
       R"( parameter_mode: "job-param-...<truncated>...")"
       R"( preserve_nulls: true allow_large_results: true)"
       R"( use_query_cache: true flatten_results: true use_legacy_sql: true)"
-      R"( create_session: true continuous: true maximum_bytes_billed: 0)"
+      R"( create_session: true maximum_bytes_billed: 0)"
       R"( schema_update_options: "job-update...<truncated>...")"
       R"( connection_properties { key: "conn-prop-...<truncated>...")"
       R"( value: "conn-prop-...<truncated>..." } query_parameters {)"
@@ -481,7 +480,7 @@ TEST(InsertJobRequest, DebugString) {
       R"( error_result { reason: "" location: "" message: "" } } statistics {)"
       R"( creation_time { "10ms" } start_time { "10ms" } end_time { "10ms" })"
       R"( total_slot_time { "10ms" } final_execution_duration { "10ms" })"
-      R"( total_bytes_processed: 1234 num_child_jobs: 1234 total_modified_partitions: 1234)"
+      R"( total_bytes_processed: 1234 num_child_jobs: 1234)"
       R"( row_level_security_applied: true data_masking_applied: true)"
       R"( completion_ratio: 1234.12 quota_deferments: "quota-defe...<truncated>...")"
       R"( parent_job_id: "parent-job...<truncated>...")"
@@ -527,7 +526,6 @@ TEST(InsertJobRequest, DebugString) {
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( dml_stats { inserted_row_count: 1234 deleted_row_count: 1234)"
       R"( updated_row_count: 1234 } ddl_target_table { project_id: "2")"
-      R"( dataset_id: "1" table_id: "3" } ddl_destination_table { project_id: "2")"
       R"( dataset_id: "1" table_id: "3" } ddl_target_row_access_policy {)"
       R"( project_id: "1234" dataset_id: "1" table_id: "2" policy_id: "3" })"
       R"( ddl_target_routine { project_id: "2" dataset_id: "1" routine_id: "3" })"
@@ -582,7 +580,6 @@ TEST(InsertJobRequest, DebugString) {
         flatten_results: true
         use_legacy_sql: true
         create_session: true
-        continuous: true
         maximum_bytes_billed: 0
         schema_update_options: "job-update-options"
         connection_properties {
@@ -719,7 +716,6 @@ TEST(InsertJobRequest, DebugString) {
       }
       total_bytes_processed: 1234
       num_child_jobs: 1234
-      total_modified_partitions: 1234
       row_level_security_applied: true
       data_masking_applied: true
       completion_ratio: 1234.12
@@ -869,11 +865,6 @@ TEST(InsertJobRequest, DebugString) {
           updated_row_count: 1234
         }
         ddl_target_table {
-          project_id: "2"
-          dataset_id: "1"
-          table_id: "3"
-        }
-        ddl_destination_table {
           project_id: "2"
           dataset_id: "1"
           table_id: "3"

@@ -49,7 +49,7 @@ TEST(DatasetLoggingClientTest, GetDataset) {
           "id": "d-id",
           "self_link": "d-selfLink",
           "friendly_name": "d-friendly-name",
-          "dataset_reference": {"project_id": "p-id", "dataset_id": "d-id"}
+          "dataset_reference": {"projectId": "p-id", "datasetId": "d-id"}
     })";
 
   EXPECT_CALL(*mock_stub, GetDataset)
@@ -102,7 +102,7 @@ TEST(DatasetLoggingClientTest, ListDatasets) {
               {
                 "id": "1",
                 "kind": "kind-1",
-                "dataset_reference": {"project_id": "p123", "dataset_id": "d123"},
+                "dataset_reference": {"projectId": "p123", "datasetId": "d123"},
                 "friendly_name": "friendly-name",
                 "location": "location",
                 "type": "DEFAULT"

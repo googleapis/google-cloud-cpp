@@ -127,28 +127,28 @@ QueryTimelineSample MakeQueryTimeLineSample() {
 RowAccessPolicyReference MakeRowAccessPolicyReference() {
   RowAccessPolicyReference r;
 
-  r.project_id = "1234";
-  r.dataset_id = "1";
-  r.table_id = "2";
-  r.policy_id = "3";
+  r.projectId = "1234";
+  r.datasetId = "1";
+  r.tableId = "2";
+  r.policyId = "3";
 
   return r;
 }
 
 TableReference MakeTableReference() {
   TableReference t;
-  t.dataset_id = "1";
-  t.project_id = "2";
-  t.table_id = "3";
+  t.datasetId = "1";
+  t.projectId = "2";
+  t.tableId = "3";
 
   return t;
 }
 
 RoutineReference MakeRoutineReference() {
   RoutineReference r;
-  r.dataset_id = "1";
-  r.project_id = "2";
-  r.routine_id = "3";
+  r.datasetId = "1";
+  r.projectId = "2";
+  r.routineId = "3";
 
   return r;
 }
@@ -156,12 +156,12 @@ RoutineReference MakeRoutineReference() {
 SearchStatistics MakeSearchStatistics() {
   SearchStatistics s;
 
-  s.index_usage_mode = IndexUsageMode::PartiallyUsed();
+  s.indexUsageMode = IndexUsageMode::PartiallyUsed();
   IndexUnusedReason i;
-  i.base_table = MakeTableReference();
-  i.index_name = "test-index";
+  i.baseTable = MakeTableReference();
+  i.indexName = "test-index";
   i.code = IndexedUnusedReasonCode::BaseTableTooSmall();
-  s.index_unused_reasons.push_back(i);
+  s.indexUnusedReasons.push_back(i);
 
   return s;
 }
@@ -170,12 +170,12 @@ PerformanceInsights MakePerformanceInsights() {
   PerformanceInsights p;
 
   p.avg_previous_execution_time = kDefaultTestTime;
-  p.stage_performance_change_insights.stage_id = kDefaultTestInt;
-  p.stage_performance_change_insights.input_data_change
-      .records_read_diff_percentage = kDefaultTestFloat;
-  p.stage_performance_standalone_insights.insufficient_shuffle_quota = true;
-  p.stage_performance_standalone_insights.slot_contention = true;
-  p.stage_performance_standalone_insights.stage_id = kDefaultTestInt;
+  p.stage_performance_change_insights.stageId = kDefaultTestInt;
+  p.stage_performance_change_insights.inputDataChange
+      .recordsReadDiffPercentage = kDefaultTestFloat;
+  p.stage_performance_standalone_insights.insufficientShuffleQuota = true;
+  p.stage_performance_standalone_insights.slotContention = true;
+  p.stage_performance_standalone_insights.stageId = kDefaultTestInt;
 
   return p;
 }
@@ -185,10 +185,10 @@ MaterializedViewStatistics MakeMaterializedViewStatistics() {
   MaterializedView mv;
 
   mv.chosen = true;
-  mv.estimated_bytes_saved = kDefaultTestInt;
-  mv.rejected_reason = RejectedReason::BaseTableDataChange();
-  mv.table_reference = MakeTableReference();
-  m.materialized_view.push_back(mv);
+  mv.estimatedBytesSaved = kDefaultTestInt;
+  mv.rejectedReason = RejectedReason::BaseTableDataChange();
+  mv.tableReference = MakeTableReference();
+  m.materializedView.push_back(mv);
 
   return m;
 }
@@ -198,20 +198,20 @@ MetadataCacheStatistics MakeMetadataCacheStatistics() {
 
   TableMetadataCacheUsage t;
   t.explanation = "test-table-metadata";
-  t.table_reference = MakeTableReference();
-  t.unused_reason = MetadataCacheUnusedReason::ExceededMaxStaleness();
-  m.table_metadata_cache_usage.push_back(t);
+  t.tableReference = MakeTableReference();
+  t.unusedReason = MetadataCacheUnusedReason::ExceededMaxStaleness();
+  m.tableMetadataCacheUsage.push_back(t);
 
   return m;
 }
 
 ScriptStackFrame MakeScriptStackFrame() {
   ScriptStackFrame sf;
-  sf.end_column = kDefaultTestInt;
-  sf.end_line = kDefaultTestInt;
-  sf.procedure_id = "proc-id";
-  sf.start_column = kDefaultTestInt;
-  sf.start_line = kDefaultTestInt;
+  sf.endColumn = kDefaultTestInt;
+  sf.endLine = kDefaultTestInt;
+  sf.procedureId = "proc-id";
+  sf.startColumn = kDefaultTestInt;
+  sf.startLine = kDefaultTestInt;
   sf.text = "stack-frame-text";
 
   return sf;
@@ -219,24 +219,24 @@ ScriptStackFrame MakeScriptStackFrame() {
 
 ScriptStatistics MakeScriptStatistics() {
   ScriptStatistics s;
-  s.evaluation_kind = EvaluationKind::Statement();
-  s.stack_frames.push_back(MakeScriptStackFrame());
+  s.evaluationKind = EvaluationKind::Statement();
+  s.stackFrames.push_back(MakeScriptStackFrame());
 
   return s;
 }
 
 ScriptOptions MakeScriptOptions() {
   ScriptOptions s;
-  s.statement_byte_budget = 10;
-  s.statement_timeout_ms = 10;
-  s.key_result_statement = KeyResultStatementKind::FirstSelect();
+  s.statementByteBudget = 10;
+  s.statementTimeoutMs = 10;
+  s.keyResultStatement = KeyResultStatementKind::FirstSelect();
 
   return s;
 }
 
 EncryptionConfiguration MakeEncryptionConfiguration() {
   EncryptionConfiguration e;
-  e.kms_key_name = "encryption-key-name";
+  e.kmsKeyName = "encryption-key-name";
 
   return e;
 }
@@ -299,7 +299,6 @@ JobQueryStatistics MakeJobQueryStats() {
   stats.dml_stats = {kDefaultTestInt, kDefaultTestInt, kDefaultTestInt};
 
   stats.ddl_target_table = MakeTableReference();
-  stats.ddl_destination_table = MakeTableReference();
   stats.ddl_target_routine = MakeRoutineReference();
   stats.ddl_target_dataset = MakeDatasetReference();
   stats.dcl_target_table = MakeTableReference();
@@ -325,15 +324,14 @@ JobStatistics MakeJobStats() {
 
   stats.total_bytes_processed = kDefaultTestInt;
   stats.num_child_jobs = kDefaultTestInt;
-  stats.total_modified_partitions = kDefaultTestInt;
 
   stats.parent_job_id = "parent-job-123";
-  stats.session_id = "session-id-123";
-  stats.transaction_id = "transaction-id-123";
+  stats.session_info.sessionId = "session-id-123";
+  stats.transaction_info.transactionId = "transaction-id-123";
   stats.reservation_id = "reservation-id-123";
 
-  stats.row_level_security_applied = true;
-  stats.data_masking_applied = true;
+  stats.row_level_security_statistics.rowLevelSecurityApplied = true;
+  stats.data_masking_statistics.dataMaskingApplied = true;
 
   stats.completion_ratio = kDefaultTestDouble;
   stats.quota_deferments.emplace_back("quota-defer-1");
@@ -348,32 +346,31 @@ JobStatistics MakeJobStats() {
 JobConfigurationQuery MakeJobConfigurationQuery() {
   JobConfigurationQuery config;
   config.query = "select 1;";
-  config.create_disposition = "job-create-disposition";
-  config.write_disposition = "job-write-disposition";
+  config.createDisposition = "job-create-disposition";
+  config.writeDisposition = "job-write-disposition";
   config.priority = "job-priority";
-  config.parameter_mode = "job-param-mode";
-  config.preserve_nulls = true;
-  config.allow_large_results = true;
-  config.use_query_cache = true;
-  config.flatten_results = true;
-  config.use_legacy_sql = true;
-  config.create_session = true;
-  config.continuous = true;
-  config.maximum_bytes_billed = 0;
+  config.parameterMode = "job-param-mode";
+  config.preserveNulls = true;
+  config.allowLargeResults = true;
+  config.useQueryCache = true;
+  config.flattenResults = true;
+  config.useLegacySql = true;
+  config.createSession = true;
+  config.maximumBytesBilled = 0;
 
-  config.query_parameters.push_back(MakeQueryParameter());
-  config.schema_update_options.emplace_back("job-update-options");
-  config.connection_properties.push_back(MakeConnectionProperty());
+  config.queryParameters.push_back(MakeQueryParameter());
+  config.schemaUpdateOptions.emplace_back("job-update-options");
+  config.connectionProperties.push_back(MakeConnectionProperty());
 
-  config.default_dataset = MakeDatasetReference();
-  config.destination_table = MakeTableReference();
-  config.time_partitioning = MakeTimePartitioning();
+  config.defaultDataset = MakeDatasetReference();
+  config.destinationTable = MakeTableReference();
+  config.timePartitioning = MakeTimePartitioning();
 
-  config.range_partitioning = MakeRangePartitioning();
+  config.rangePartitioning = MakeRangePartitioning();
   config.clustering = MakeClustering();
-  config.destination_encryption_configuration = MakeEncryptionConfiguration();
-  config.script_options = MakeScriptOptions();
-  config.system_variables = MakeSystemVariables();
+  config.destinationEncryptionConfiguration = MakeEncryptionConfiguration();
+  config.scriptOptions = MakeScriptOptions();
+  config.systemVariables = MakeSystemVariables();
 
   return config;
 }
@@ -381,11 +378,11 @@ JobConfigurationQuery MakeJobConfigurationQuery() {
 JobConfiguration MakeJobConfiguration() {
   JobConfiguration jc;
 
-  jc.dry_run = true;
-  jc.job_timeout_ms = 10;
-  jc.job_type = "QUERY";
+  jc.dryRun = true;
+  jc.jobTimeoutMs = 10;
+  jc.jobType = "QUERY";
   jc.labels.insert({"label-key1", "label-val1"});
-  jc.query_config = MakeJobConfigurationQuery();
+  jc.query = MakeJobConfigurationQuery();
 
   return jc;
 }
@@ -396,11 +393,11 @@ Job MakeJob() {
   job.etag = "etag";
   job.id = "1";
   job.kind = "Job";
-  job.self_link = "self-link";
+  job.selfLink = "self-link";
   job.user_email = "a@b.com";
-  job.reference.project_id = "1";
-  job.reference.job_id = "2";
-  job.reference.location = "us-east";
+  job.jobReference.projectId = "1";
+  job.jobReference.jobId = "2";
+  job.jobReference.location = "us-east";
   job.status.state = "DONE";
   job.configuration = MakeJobConfiguration();
   job.statistics = MakeJobStats();
@@ -415,9 +412,9 @@ ListFormatJob MakeListFormatJob() {
   job.kind = "Job";
   job.user_email = "a@b.com";
   job.principal_subject = "principal-sub";
-  job.reference.project_id = "1";
-  job.reference.job_id = "2";
-  job.reference.location = "us-east";
+  job.jobReference.projectId = "1";
+  job.jobReference.jobId = "2";
+  job.jobReference.location = "us-east";
   job.state = "DONE";
   job.status.state = "DONE";
   job.configuration = MakeJobConfiguration();
@@ -432,13 +429,13 @@ Job MakePartialJob() {
   job.kind = "jkind";
   job.etag = "jtag";
   job.id = "j123";
-  job.self_link = "jselfLink";
+  job.selfLink = "jselfLink";
   job.user_email = "juserEmail";
   job.status.state = "DONE";
-  job.reference.project_id = "p123";
-  job.reference.job_id = "j123";
-  job.configuration.job_type = "QUERY";
-  job.configuration.query_config.query = "select 1;";
+  job.jobReference.projectId = "p123";
+  job.jobReference.jobId = "j123";
+  job.configuration.jobType = "QUERY";
+  job.configuration.query.query = "select 1;";
 
   return job;
 }
@@ -447,26 +444,26 @@ void AssertEqualsPartial(Job& expected, Job& actual) {
   EXPECT_EQ(expected.kind, actual.kind);
   EXPECT_EQ(expected.etag, actual.etag);
   EXPECT_EQ(expected.id, actual.id);
-  EXPECT_EQ(expected.self_link, actual.self_link);
+  EXPECT_EQ(expected.selfLink, actual.selfLink);
   EXPECT_EQ(expected.user_email, actual.user_email);
   EXPECT_EQ(expected.status.state, actual.status.state);
-  EXPECT_EQ(expected.reference.project_id, actual.reference.project_id);
-  EXPECT_EQ(expected.reference.job_id, actual.reference.job_id);
-  EXPECT_EQ(expected.configuration.job_type, actual.configuration.job_type);
-  EXPECT_EQ(expected.configuration.query_config.query,
-            actual.configuration.query_config.query);
+  EXPECT_EQ(expected.jobReference.projectId, actual.jobReference.projectId);
+  EXPECT_EQ(expected.jobReference.jobId, actual.jobReference.jobId);
+  EXPECT_EQ(expected.configuration.jobType, actual.configuration.jobType);
+  EXPECT_EQ(expected.configuration.query.query,
+            actual.configuration.query.query);
 }
 
 void AssertEquals(Job& expected, Job& actual) {
   EXPECT_EQ(expected.etag, actual.etag);
   EXPECT_EQ(expected.id, actual.id);
   EXPECT_EQ(expected.kind, actual.kind);
-  EXPECT_EQ(expected.reference.project_id, actual.reference.project_id);
-  EXPECT_EQ(expected.reference.job_id, actual.reference.job_id);
+  EXPECT_EQ(expected.jobReference.projectId, actual.jobReference.projectId);
+  EXPECT_EQ(expected.jobReference.jobId, actual.jobReference.jobId);
   EXPECT_EQ(expected.status.state, actual.status.state);
-  EXPECT_EQ(expected.configuration.job_type, actual.configuration.job_type);
-  EXPECT_EQ(expected.configuration.query_config.query,
-            actual.configuration.query_config.query);
+  EXPECT_EQ(expected.configuration.jobType, actual.configuration.jobType);
+  EXPECT_EQ(expected.configuration.query.query,
+            actual.configuration.query.query);
 
   AssertEquals(expected.statistics, actual.statistics);
 }
@@ -474,12 +471,12 @@ void AssertEquals(Job& expected, Job& actual) {
 void AssertEquals(ListFormatJob& expected, ListFormatJob& actual) {
   EXPECT_EQ(expected.id, actual.id);
   EXPECT_EQ(expected.kind, actual.kind);
-  EXPECT_EQ(expected.reference.project_id, actual.reference.project_id);
-  EXPECT_EQ(expected.reference.job_id, actual.reference.job_id);
+  EXPECT_EQ(expected.jobReference.projectId, actual.jobReference.projectId);
+  EXPECT_EQ(expected.jobReference.jobId, actual.jobReference.jobId);
   EXPECT_EQ(expected.status.state, actual.status.state);
-  EXPECT_EQ(expected.configuration.job_type, actual.configuration.job_type);
-  EXPECT_EQ(expected.configuration.query_config.query,
-            actual.configuration.query_config.query);
+  EXPECT_EQ(expected.configuration.jobType, actual.configuration.jobType);
+  EXPECT_EQ(expected.configuration.query.query,
+            actual.configuration.query.query);
 
   AssertEquals(expected.statistics, actual.statistics);
 }
@@ -493,17 +490,16 @@ void AssertEquals(JobStatistics& expected, JobStatistics& actual) {
 
   EXPECT_EQ(expected.total_bytes_processed, actual.total_bytes_processed);
   EXPECT_EQ(expected.num_child_jobs, actual.num_child_jobs);
-  EXPECT_EQ(expected.total_modified_partitions,
-            actual.total_modified_partitions);
-
   EXPECT_EQ(expected.parent_job_id, actual.parent_job_id);
-  EXPECT_EQ(expected.session_id, actual.session_id);
-  EXPECT_EQ(expected.transaction_id, actual.transaction_id);
+  EXPECT_EQ(expected.session_info.sessionId, actual.session_info.sessionId);
+  EXPECT_EQ(expected.transaction_info.transactionId,
+            actual.transaction_info.transactionId);
   EXPECT_EQ(expected.reservation_id, actual.reservation_id);
 
-  EXPECT_EQ(expected.row_level_security_applied,
-            actual.row_level_security_applied);
-  EXPECT_EQ(expected.data_masking_applied, actual.data_masking_applied);
+  EXPECT_EQ(expected.row_level_security_statistics.rowLevelSecurityApplied,
+            actual.row_level_security_statistics.rowLevelSecurityApplied);
+  EXPECT_EQ(expected.data_masking_statistics.dataMaskingApplied,
+            actual.data_masking_statistics.dataMaskingApplied);
 
   EXPECT_EQ(expected.completion_ratio, actual.completion_ratio);
   EXPECT_TRUE(std::equal(expected.quota_deferments.begin(),
@@ -555,7 +551,6 @@ void AssertEquals(bigquery_v2_minimal_internal::JobQueryStatistics& expected,
   EXPECT_EQ(expected.dml_stats, actual.dml_stats);
 
   EXPECT_EQ(expected.ddl_target_table, actual.ddl_target_table);
-  EXPECT_EQ(expected.ddl_destination_table, actual.ddl_destination_table);
   EXPECT_EQ(expected.dcl_target_table, actual.dcl_target_table);
   EXPECT_EQ(expected.dcl_target_view, actual.dcl_target_view);
 
@@ -571,14 +566,14 @@ void AssertEquals(bigquery_v2_minimal_internal::JobQueryStatistics& expected,
 
   EXPECT_EQ(expected.performance_insights, actual.performance_insights);
 
+  EXPECT_TRUE(
+      std::equal(expected.materialized_view_statistics.materializedView.begin(),
+                 expected.materialized_view_statistics.materializedView.end(),
+                 actual.materialized_view_statistics.materializedView.begin()));
   EXPECT_TRUE(std::equal(
-      expected.materialized_view_statistics.materialized_view.begin(),
-      expected.materialized_view_statistics.materialized_view.end(),
-      actual.materialized_view_statistics.materialized_view.begin()));
-  EXPECT_TRUE(std::equal(
-      expected.metadata_cache_statistics.table_metadata_cache_usage.begin(),
-      expected.metadata_cache_statistics.table_metadata_cache_usage.end(),
-      actual.metadata_cache_statistics.table_metadata_cache_usage.begin()));
+      expected.metadata_cache_statistics.tableMetadataCacheUsage.begin(),
+      expected.metadata_cache_statistics.tableMetadataCacheUsage.end(),
+      actual.metadata_cache_statistics.tableMetadataCacheUsage.begin()));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

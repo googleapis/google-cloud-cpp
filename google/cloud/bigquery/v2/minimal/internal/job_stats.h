@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_STATS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_STATS_H
 
+#include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_query_stats.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
@@ -58,20 +59,20 @@ inline bool operator==(EvaluationKind const& lhs, EvaluationKind const& rhs) {
 // For moew details on how frames are evaluated, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#ScriptStackFrame
 struct ScriptStackFrame {
-  std::int32_t start_line;
-  std::int32_t start_column;
-  std::int32_t end_line;
-  std::int32_t end_column;
-  std::string procedure_id;
+  std::int32_t startLine;
+  std::int32_t startColumn;
+  std::int32_t endLine;
+  std::int32_t endColumn;
+  std::string procedureId;
   std::string text;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ScriptStackFrame, start_line,
-                                                start_column, end_line,
-                                                end_column, procedure_id, text);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ScriptStackFrame, startLine,
+                                                startColumn, endLine, endColumn,
+                                                procedureId, text);
 bool operator==(ScriptStackFrame const& lhs, ScriptStackFrame const& rhs);
 
 // For a child job of a Script, describes information about the context
@@ -80,16 +81,33 @@ bool operator==(ScriptStackFrame const& lhs, ScriptStackFrame const& rhs);
 // For more details, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#scriptstatistics
 struct ScriptStatistics {
-  EvaluationKind evaluation_kind;
-  std::vector<ScriptStackFrame> stack_frames;
+  EvaluationKind evaluationKind;
+  std::vector<ScriptStackFrame> stackFrames;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ScriptStatistics,
-                                                evaluation_kind, stack_frames);
+                                                evaluationKind, stackFrames);
 bool operator==(ScriptStatistics const& lhs, ScriptStatistics const& rhs);
+
+struct TransactionInfo {
+  std::string transactionId;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TransactionInfo, transactionId);
+
+struct DataMaskingStatistics {
+  bool dataMaskingApplied = false;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DataMaskingStatistics,
+                                                dataMaskingApplied);
+
+struct RowLevelSecurityStatistics {
+  bool rowLevelSecurityApplied = false;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RowLevelSecurityStatistics,
+                                                rowLevelSecurityApplied);
 
 // Represents the statistics for single job execution.
 // It can be used to get information about the job including
@@ -107,15 +125,14 @@ struct JobStatistics {
 
   std::int64_t total_bytes_processed = 0;
   std::int64_t num_child_jobs = 0;
-  std::int64_t total_modified_partitions = 0;
 
   std::string parent_job_id;
-  std::string session_id;
-  std::string transaction_id;
+  SessionInfo session_info;
+  TransactionInfo transaction_info;
   std::string reservation_id;
 
-  bool row_level_security_applied = false;
-  bool data_masking_applied = false;
+  DataMaskingStatistics data_masking_statistics;
+  RowLevelSecurityStatistics row_level_security_statistics;
 
   double completion_ratio = 0;
   std::vector<std::string> quota_deferments;

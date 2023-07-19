@@ -30,8 +30,8 @@ namespace {
 DatasetReference MakeDatasetReference(std::string project_id,
                                       std::string dataset_id) {
   DatasetReference dataset;
-  dataset.project_id = std::move(project_id);
-  dataset.dataset_id = std::move(dataset_id);
+  dataset.projectId = std::move(project_id);
+  dataset.datasetId = std::move(dataset_id);
   return dataset;
 }
 
@@ -40,12 +40,12 @@ Access MakeAccess(std::string role, std::string project_id,
                   std::string routine_id, TargetType type) {
   Access access;
   access.role = std::move(role);
-  access.view.project_id = project_id;
-  access.view.dataset_id = dataset_id;
-  access.view.table_id = std::move(table_id);
-  access.routine.project_id = project_id;
-  access.routine.dataset_id = dataset_id;
-  access.routine.routine_id = std::move(routine_id);
+  access.view.projectId = project_id;
+  access.view.datasetId = dataset_id;
+  access.view.tableId = std::move(table_id);
+  access.routine.projectId = project_id;
+  access.routine.datasetId = dataset_id;
+  access.routine.routineId = std::move(routine_id);
   access.dataset.dataset =
       MakeDatasetReference(std::move(project_id), std::move(dataset_id));
   access.dataset.target_types.push_back(std::move(type));
@@ -127,13 +127,13 @@ void AssertEquals(Dataset const& lhs, Dataset const& rhs) {
   EXPECT_EQ(lhs.access[0].special_group, rhs.access[0].special_group);
   EXPECT_EQ(lhs.access[0].user_by_email, rhs.access[0].user_by_email);
 
-  EXPECT_EQ(lhs.access[0].view.dataset_id, rhs.access[0].view.dataset_id);
-  EXPECT_EQ(lhs.access[0].view.project_id, rhs.access[0].view.project_id);
-  EXPECT_EQ(lhs.access[0].view.table_id, rhs.access[0].view.table_id);
+  EXPECT_EQ(lhs.access[0].view.datasetId, rhs.access[0].view.datasetId);
+  EXPECT_EQ(lhs.access[0].view.projectId, rhs.access[0].view.projectId);
+  EXPECT_EQ(lhs.access[0].view.tableId, rhs.access[0].view.tableId);
 
-  EXPECT_EQ(lhs.access[0].routine.dataset_id, rhs.access[0].routine.dataset_id);
-  EXPECT_EQ(lhs.access[0].routine.project_id, rhs.access[0].routine.project_id);
-  EXPECT_EQ(lhs.access[0].routine.routine_id, rhs.access[0].routine.routine_id);
+  EXPECT_EQ(lhs.access[0].routine.datasetId, rhs.access[0].routine.datasetId);
+  EXPECT_EQ(lhs.access[0].routine.projectId, rhs.access[0].routine.projectId);
+  EXPECT_EQ(lhs.access[0].routine.routineId, rhs.access[0].routine.routineId);
 
   ASSERT_THAT(lhs.tags, Not(IsEmpty()));
   ASSERT_THAT(rhs.tags, Not(IsEmpty()));
@@ -141,13 +141,13 @@ void AssertEquals(Dataset const& lhs, Dataset const& rhs) {
   EXPECT_EQ(lhs.tags[0].tag_key, rhs.tags[0].tag_key);
   EXPECT_EQ(lhs.tags[0].tag_value, rhs.tags[0].tag_value);
 
-  EXPECT_EQ(lhs.dataset_reference.dataset_id, rhs.dataset_reference.dataset_id);
-  EXPECT_EQ(lhs.dataset_reference.project_id, rhs.dataset_reference.project_id);
+  EXPECT_EQ(lhs.dataset_reference.datasetId, rhs.dataset_reference.datasetId);
+  EXPECT_EQ(lhs.dataset_reference.projectId, rhs.dataset_reference.projectId);
 
-  EXPECT_EQ(lhs.linked_dataset_source.source_dataset.dataset_id,
-            rhs.linked_dataset_source.source_dataset.dataset_id);
-  EXPECT_EQ(lhs.linked_dataset_source.source_dataset.project_id,
-            rhs.linked_dataset_source.source_dataset.project_id);
+  EXPECT_EQ(lhs.linked_dataset_source.source_dataset.datasetId,
+            rhs.linked_dataset_source.source_dataset.datasetId);
+  EXPECT_EQ(lhs.linked_dataset_source.source_dataset.projectId,
+            rhs.linked_dataset_source.source_dataset.projectId);
 
   EXPECT_EQ(lhs.external_dataset_reference.hive_database.catalog_id,
             rhs.external_dataset_reference.hive_database.catalog_id);
@@ -162,18 +162,18 @@ void AssertEquals(Dataset const& lhs, Dataset const& rhs) {
 std::string MakeDatasetJsonText() {
   return R"({"access":[
     {"dataset":{
-         "dataset":{"dataset_id":"d123","project_id":"p123"},
+         "dataset":{"datasetId":"d123","projectId":"p123"},
          "target_types":[{"value":"VIEWS"}]},
          "domain":"","group_by_email":"",
          "iam_member":"",
          "role":"accessrole",
-         "routine":{"dataset_id":"d123","project_id":"p123","routine_id":"r123"},
+         "routine":{"datasetId":"d123","projectId":"p123","routineId":"r123"},
          "special_group":"",
          "user_by_email":"",
-         "view":{"dataset_id":"d123","project_id":"p123","table_id":"t123"}
+         "view":{"datasetId":"d123","projectId":"p123","tableId":"t123"}
     }],
     "creation_time":0,
-    "dataset_reference":{"dataset_id":"d123","project_id":"p123"},
+    "dataset_reference":{"datasetId":"d123","projectId":"p123"},
     "default_collation":"ddefaultcollation",
     "default_partition_expiration":0,
     "default_rounding_mode":{"value":"ROUND_HALF_EVEN"},
@@ -199,8 +199,8 @@ std::string MakeDatasetJsonText() {
     "labels":{"l1":"v1","l2":"v2"},
     "last_modified_time":0,
     "linked_dataset_source":{"source_dataset":{
-        "dataset_id":"d123",
-        "project_id":"p123"
+        "datasetId":"d123",
+        "projectId":"p123"
     }},
     "location":"dlocation",
     "max_time_travel":0,
@@ -224,8 +224,8 @@ void AssertEquals(ListFormatDataset const& lhs, ListFormatDataset const& rhs) {
   EXPECT_EQ(lhs.labels.find("l1")->second, rhs.labels.find("l1")->second);
   EXPECT_EQ(lhs.labels.find("l2")->second, rhs.labels.find("l2")->second);
 
-  EXPECT_EQ(lhs.dataset_reference.dataset_id, rhs.dataset_reference.dataset_id);
-  EXPECT_EQ(lhs.dataset_reference.project_id, rhs.dataset_reference.project_id);
+  EXPECT_EQ(lhs.dataset_reference.datasetId, rhs.dataset_reference.datasetId);
+  EXPECT_EQ(lhs.dataset_reference.projectId, rhs.dataset_reference.projectId);
 }
 
 std::string MakeListFormatDatasetJsonText() {
@@ -235,7 +235,7 @@ std::string MakeListFormatDatasetJsonText() {
     "friendly_name":"dfriendlyname",
     "location":"dlocation",
     "type":"DEFAULT",
-    "dataset_reference": {"project_id":"p123", "dataset_id":"d123"},
+    "dataset_reference": {"projectId":"p123", "datasetId":"d123"},
     "labels":{"l1":"v1","l2":"v2"}
 })";
 }

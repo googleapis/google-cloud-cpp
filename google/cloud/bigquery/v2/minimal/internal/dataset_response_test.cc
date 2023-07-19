@@ -34,7 +34,7 @@ TEST(GetDatasetResponseTest, Success) {
           "id": "d-id",
           "self_link": "d-selfLink",
           "friendly_name": "d-friendly-name",
-          "dataset_reference": {"project_id": "p-id", "dataset_id": "d-id"}
+          "dataset_reference": {"projectId": "p-id", "datasetId": "d-id"}
     })";
   auto const response =
       GetDatasetResponse::BuildFromHttpResponse(http_response);
@@ -45,8 +45,8 @@ TEST(GetDatasetResponseTest, Success) {
   EXPECT_EQ(response->dataset.id, "d-id");
   EXPECT_EQ(response->dataset.self_link, "d-selfLink");
   EXPECT_EQ(response->dataset.friendly_name, "d-friendly-name");
-  EXPECT_EQ(response->dataset.dataset_reference.project_id, "p-id");
-  EXPECT_EQ(response->dataset.dataset_reference.dataset_id, "d-id");
+  EXPECT_EQ(response->dataset.dataset_reference.projectId, "p-id");
+  EXPECT_EQ(response->dataset.dataset_reference.datasetId, "d-id");
 }
 
 TEST(GetDatasetResponseTest, EmptyPayload) {
@@ -91,7 +91,7 @@ TEST(ListDatasetsResponseTest, Success) {
               {
                 "id": "1",
                 "kind": "kind-2",
-                "dataset_reference": {"project_id": "p123", "dataset_id": "d123"},
+                "dataset_reference": {"projectId": "p123", "datasetId": "d123"},
 
                 "friendly_name": "friendly-name",
                 "location": "location",
@@ -111,8 +111,8 @@ TEST(ListDatasetsResponseTest, Success) {
   EXPECT_EQ(datasets[0].id, "1");
   EXPECT_EQ(datasets[0].kind, "kind-2");
   EXPECT_EQ(datasets[0].friendly_name, "friendly-name");
-  EXPECT_EQ(datasets[0].dataset_reference.project_id, "p123");
-  EXPECT_EQ(datasets[0].dataset_reference.dataset_id, "d123");
+  EXPECT_EQ(datasets[0].dataset_reference.projectId, "p123");
+  EXPECT_EQ(datasets[0].dataset_reference.datasetId, "d123");
   EXPECT_EQ(datasets[0].location, "location");
   EXPECT_EQ(datasets[0].type, "DEFAULT");
 }
@@ -177,7 +177,7 @@ TEST(GetDatasetResponseTest, DebugString) {
           "id": "d-id",
           "self_link": "d-selfLink",
           "friendly_name": "d-friendly-name",
-          "dataset_reference": {"project_id": "p-id", "dataset_id": "d-id"}
+          "dataset_reference": {"projectId": "p-id", "datasetId": "d-id"}
     })";
   auto response = GetDatasetResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(response);
@@ -381,7 +381,7 @@ TEST(ListDatasetsResponseTest, DebugString) {
               {
                 "id": "1",
                 "kind": "kind-2",
-                "dataset_reference": {"project_id": "p123", "dataset_id": "d123"},
+                "dataset_reference": {"projectId": "p123", "datasetId": "d123"},
 
                 "friendly_name": "friendly-name",
                 "location": "loc",

@@ -25,11 +25,11 @@ std::string JobConfiguration::DebugString(absl::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("job_type", job_type)
-      .Field("dry_run", dry_run)
-      .Field("job_timeout_ms", job_timeout_ms)
+      .StringField("job_type", jobType)
+      .Field("dry_run", dryRun)
+      .Field("job_timeout_ms", jobTimeoutMs)
       .Field("labels", labels)
-      .SubMessage("query_config", query_config)
+      .SubMessage("query_config", query)
       .Build();
 }
 

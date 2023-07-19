@@ -26,18 +26,18 @@ namespace {
 
 bool valid_job(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("etag") && j.contains("id") &&
-          j.contains("status") && j.contains("reference") &&
+          j.contains("status") && j.contains("jobReference") &&
           j.contains("configuration"));
 }
 
 bool valid_list_format_job(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("state") && j.contains("id") &&
-          j.contains("reference") && j.contains("configuration"));
+          j.contains("jobReference") && j.contains("configuration"));
 }
 
 bool valid_jobs_list(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("etag") &&
-          j.contains("next_page_token") && j.contains("jobs"));
+          j.contains("nextPageToken") && j.contains("jobs"));
 }
 
 StatusOr<nlohmann::json> parse_json(std::string const& payload) {
@@ -98,7 +98,7 @@ StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
 
   result.kind = json->value("kind", "");
   result.etag = json->value("etag", "");
-  result.next_page_token = json->value("next_page_token", "");
+  result.next_page_token = json->value("nextPageToken", "");
 
   for (auto const& kv : json->at("jobs").items()) {
     auto const& json_list_format_job_obj = kv.value();
@@ -185,31 +185,23 @@ std::string CancelJobResponse::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string SessionInfo::DebugString(absl::string_view name,
-                                     TracingOptions const& options,
-                                     int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("session_id", session_id)
-      .Build();
-}
-
 std::string QueryResults::DebugString(absl::string_view name,
                                       TracingOptions const& options,
                                       int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("kind", kind)
-      .StringField("page_token", page_token)
-      .Field("total_rows", total_rows)
-      .Field("total_bytes_processed", total_bytes_processed)
-      .Field("num_dml_affected_rows", num_dml_affected_rows)
-      .Field("job_complete", job_complete)
-      .Field("cache_hit", cache_hit)
+      .StringField("page_token", pageToken)
+      .Field("total_rows", totalRows)
+      .Field("total_bytes_processed", totalBytesProcessed)
+      .Field("num_dml_affected_rows", numDmlAffectedRows)
+      .Field("job_complete", jobComplete)
+      .Field("cache_hit", cacheHit)
       .Field("rows", rows)
       .Field("errors", errors)
       .SubMessage("schema", schema)
-      .SubMessage("job_reference", job_reference)
-      .SubMessage("session_info", session_info)
-      .SubMessage("dml_stats", dml_stats)
+      .SubMessage("job_reference", jobReference)
+      .SubMessage("session_info", sessionInfo)
+      .SubMessage("dml_stats", dmlStats)
       .Build();
 }
 
@@ -229,18 +221,18 @@ StatusOr<QueryResponse> QueryResponse::BuildFromHttpResponse(
 
   QueryResults query_results;
   query_results.kind = json->value("kind", "");
-  query_results.page_token = json->value("page_token", "");
-  query_results.total_rows = json->at("total_rows").get<std::uint64_t>();
-  query_results.total_bytes_processed =
-      json->at("total_bytes_processed").get<std::int64_t>();
-  query_results.num_dml_affected_rows =
-      json->at("num_dml_affected_rows").get<std::int64_t>();
+  query_results.pageToken = json->value("pageToken", "");
+  query_results.totalRows = json->at("totalRows").get<std::uint64_t>();
+  query_results.totalBytesProcessed =
+      json->at("totalBytesProcessed").get<std::int64_t>();
+  query_results.numDmlAffectedRows =
+      json->at("numDmlAffectedRows").get<std::int64_t>();
 
-  query_results.job_complete = json->at("job_complete").get<bool>();
-  query_results.cache_hit = json->at("cache_hit").get<bool>();
+  query_results.jobComplete = json->at("jobComplete").get<bool>();
+  query_results.cacheHit = json->at("cacheHit").get<bool>();
 
   query_results.schema = json->at("schema").get<TableSchema>();
-  query_results.job_reference = json->at("job_reference").get<JobReference>();
+  query_results.jobReference = json->at("jobReference").get<JobReference>();
 
   for (auto const& kv : json->at("rows").items()) {
     auto const& json_struct_obj = kv.value();
@@ -254,8 +246,8 @@ StatusOr<QueryResponse> QueryResponse::BuildFromHttpResponse(
     query_results.errors.push_back(error);
   }
 
-  query_results.session_info = json->at("session_info").get<SessionInfo>();
-  query_results.dml_stats = json->at("dml_stats").get<DmlStats>();
+  query_results.sessionInfo = json->at("sessionInfo").get<SessionInfo>();
+  query_results.dmlStats = json->at("dmlStats").get<DmlStats>();
 
   QueryResponse response;
   response.http_response = http_response;
