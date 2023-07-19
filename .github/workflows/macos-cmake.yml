@@ -7,6 +7,10 @@ on:
         required: true
         description: "The ref we want to compile"
         type: string
+      shards:
+        required: true
+        description: "The shards to compile"
+        type: string
 
 permissions:
   contents: read
@@ -23,76 +27,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ macos-12 ]
-        shard:
-        - Core
-        - Compute
-        - Larger Libraries
-        - Other
-        include:
-        - shard: Core
-          features:
-          # CMake can compile this shard under 20m, so we don't shard the
-          # libraries any more than needed.
-          - bigtable
-          - pubsub
-          - pubsublite
-          - spanner
-          - storage
-        - shard: Compute
-          features:
-          - compute
-        - shard: Larger Libraries
-          features:
-          # See above
-          - servicecontrol
-          - support
-          - video
-          - datacatalog
-          - iam
-          - kms
-          - beyondcorp
-          - contentwarehouse
-          - dataproc
-          - talent
-          - retail
-          - bigquery
-          - appengine
-          - monitoring
-          - sql
-          - dialogflow_cx
-          - aiplatform
-          - dialogflow_es
-        - shard: Other
-          features:
-          - __ga_libraries__
-          - __experimental_libraries__
-          - -bigtable
-          - -pubsub
-          - -pubsublite
-          - -spanner
-          - -storage
-          - -compute
-          - -servicecontrol
-          - -support
-          - -video
-          - -datacatalog
-          - -iam
-          - -kms
-          - -beyondcorp
-          - -contentwarehouse
-          - -dataproc
-          - -talent
-          - -retail
-          - -bigquery
-          - -appengine
-          - -monitoring
-          - -sql
-          - -dialogflow_cx
-          - -aiplatform
-          - -dialogflow_es
-          # Disabled on macOS because GID_MAX is (1) a system macro, (2) not
-          # protected with Protobuf v21
-          - -storagetransfer
+        shard: ${{ fromJSON(inputs.shards) }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -102,11 +37,12 @@ jobs:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
     - uses: google-github-actions/setup-gcloud@v1
-    - name: Get vcpkg version
-      id: vcpkg-version
+    - name: Get External Configuration
+      id: info
       shell: bash
       run: |
-        echo "version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
+        echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
+        echo "features=$(jq -c .${{ matrix.shard }} < .github/workflows/macos-cmake-features.json)" >> "${GITHUB_OUTPUT}"
     - name: Install bash >= 5.x and Ninja
       run: brew install bash ninja
     - name: Download and Install sccache
@@ -120,13 +56,13 @@ jobs:
       working-directory: "${{runner.temp}}"
       run: |
         mkdir -p vcpkg
-        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.vcpkg-version.outputs.version }}.tar.gz" |
+        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.info.outputs.vcpkg-version }}.tar.gz" |
             tar -C vcpkg --strip-components=1 -zxf -
         vcpkg/bootstrap-vcpkg.sh -disableMetrics
     - name: Build google-cloud-cpp
       run: |
         export VCPKG_ROOT="${{ runner.temp }}/vcpkg"
-        /usr/local/bin/bash ci/gha/builds/macos-cmake.sh ${{ join(matrix.features, ',') }}
+        /usr/local/bin/bash ci/gha/builds/macos-cmake.sh ${{ join(fromJSON(steps.info.outputs.features), ',') }}
     env:
       USE_BAZEL_VERSION: 6.2.1
       BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.os }}
