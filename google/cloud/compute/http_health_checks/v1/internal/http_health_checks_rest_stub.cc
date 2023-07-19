@@ -80,7 +80,7 @@ DefaultHttpHealthChecksRestStub::GetHttpHealthChecks(
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/httpHealthChecks/", request.http_health_check(),
                    ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

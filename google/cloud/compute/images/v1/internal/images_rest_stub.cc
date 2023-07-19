@@ -100,7 +100,7 @@ DefaultImagesRestStub::GetImages(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/images/", request.image(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image>
@@ -112,7 +112,7 @@ DefaultImagesRestStub::GetFromFamily(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/images/family/", request.family(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -125,9 +125,8 @@ DefaultImagesRestStub::GetIamPolicy(
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/images/", request.resource(), "/getIamPolicy"),
       {std::make_pair(
-           "options_requested_policy_version",
-           std::to_string(request.options_requested_policy_version())),
-       std::make_pair("project", request.project())});
+          "options_requested_policy_version",
+          std::to_string(request.options_requested_policy_version()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

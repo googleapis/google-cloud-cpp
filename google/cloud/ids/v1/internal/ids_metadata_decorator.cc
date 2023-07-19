@@ -18,6 +18,7 @@
 
 #include "google/cloud/ids/v1/internal/ids_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/ids/v1/ids.grpc.pb.h>
@@ -39,14 +40,14 @@ StatusOr<google::cloud::ids::v1::ListEndpointsResponse>
 IDSMetadata::ListEndpoints(
     grpc::ClientContext& context,
     google::cloud::ids::v1::ListEndpointsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListEndpoints(context, request);
 }
 
 StatusOr<google::cloud::ids::v1::Endpoint> IDSMetadata::GetEndpoint(
     grpc::ClientContext& context,
     google::cloud::ids::v1::GetEndpointRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEndpoint(context, request);
 }
 
@@ -55,7 +56,7 @@ IDSMetadata::AsyncCreateEndpoint(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::ids::v1::CreateEndpointRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateEndpoint(cq, std::move(context), request);
 }
 
@@ -64,7 +65,7 @@ IDSMetadata::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteEndpoint(cq, std::move(context), request);
 }
 

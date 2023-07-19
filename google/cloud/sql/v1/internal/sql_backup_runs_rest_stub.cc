@@ -45,7 +45,8 @@ DefaultSqlBackupRunsServiceRestStub::Delete(
     google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) {
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request,
-      "/v1/projects/{project}/instances/{instance}/backupRuns/{id}");
+      absl::StrCat("/v1/projects/", request.project(), "/instances/",
+                   request.instance(), "/backupRuns/", request.id(), ""));
 }
 
 StatusOr<google::cloud::sql::v1::BackupRun>
@@ -54,10 +55,9 @@ DefaultSqlBackupRunsServiceRestStub::Get(
     google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::BackupRun>(
       *service_, rest_context, request,
-      "/v1/projects/{project}/instances/{instance}/backupRuns/{id}",
-      {std::make_pair("id", std::to_string(request.id())),
-       std::make_pair("instance", request.instance()),
-       std::make_pair("project", request.project())});
+      absl::StrCat("/v1/projects/", request.project(), "/instances/",
+                   request.instance(), "/backupRuns/", request.id(), ""),
+      {});
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -66,7 +66,8 @@ DefaultSqlBackupRunsServiceRestStub::Insert(
     google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) {
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request,
-      "/v1/projects/{project}/instances/{instance}/backupRuns");
+      absl::StrCat("/v1/projects/", request.project(), "/instances/",
+                   request.instance(), "/backupRuns"));
 }
 
 StatusOr<google::cloud::sql::v1::BackupRunsListResponse>
@@ -75,11 +76,10 @@ DefaultSqlBackupRunsServiceRestStub::List(
     google::cloud::sql::v1::SqlBackupRunsListRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::BackupRunsListResponse>(
       *service_, rest_context, request,
-      "/v1/projects/{project}/instances/{instance}/backupRuns",
-      {std::make_pair("instance", request.instance()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("project", request.project())});
+      absl::StrCat("/v1/projects/", request.project(), "/instances/",
+                   request.instance(), "/backupRuns"),
+      {std::make_pair("max_results", std::to_string(request.max_results())),
+       std::make_pair("page_token", request.page_token())});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

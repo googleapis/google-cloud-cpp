@@ -18,6 +18,7 @@
 
 #include "google/cloud/pubsub/internal/subscriber_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
@@ -40,14 +41,14 @@ StatusOr<google::pubsub::v1::Subscription>
 SubscriberMetadata::CreateSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::Subscription const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CreateSubscription(context, request);
 }
 
 StatusOr<google::pubsub::v1::Subscription> SubscriberMetadata::GetSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::GetSubscriptionRequest const& request) {
-  SetMetadata(context, "subscription=" + request.subscription());
+  SetMetadata(context, absl::StrCat("subscription=", request.subscription()));
   return child_->GetSubscription(context, request);
 }
 
@@ -55,7 +56,8 @@ StatusOr<google::pubsub::v1::Subscription>
 SubscriberMetadata::UpdateSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::UpdateSubscriptionRequest const& request) {
-  SetMetadata(context, "subscription.name=" + request.subscription().name());
+  SetMetadata(context, absl::StrCat("subscription.name=",
+                                    request.subscription().name()));
   return child_->UpdateSubscription(context, request);
 }
 
@@ -63,21 +65,21 @@ StatusOr<google::pubsub::v1::ListSubscriptionsResponse>
 SubscriberMetadata::ListSubscriptions(
     grpc::ClientContext& context,
     google::pubsub::v1::ListSubscriptionsRequest const& request) {
-  SetMetadata(context, "project=" + request.project());
+  SetMetadata(context, absl::StrCat("project=", request.project()));
   return child_->ListSubscriptions(context, request);
 }
 
 Status SubscriberMetadata::DeleteSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSubscriptionRequest const& request) {
-  SetMetadata(context, "subscription=" + request.subscription());
+  SetMetadata(context, absl::StrCat("subscription=", request.subscription()));
   return child_->DeleteSubscription(context, request);
 }
 
 StatusOr<google::pubsub::v1::PullResponse> SubscriberMetadata::Pull(
     grpc::ClientContext& context,
     google::pubsub::v1::PullRequest const& request) {
-  SetMetadata(context, "subscription=" + request.subscription());
+  SetMetadata(context, absl::StrCat("subscription=", request.subscription()));
   return child_->Pull(context, request);
 }
 
@@ -94,14 +96,14 @@ SubscriberMetadata::AsyncStreamingPull(
 Status SubscriberMetadata::ModifyPushConfig(
     grpc::ClientContext& context,
     google::pubsub::v1::ModifyPushConfigRequest const& request) {
-  SetMetadata(context, "subscription=" + request.subscription());
+  SetMetadata(context, absl::StrCat("subscription=", request.subscription()));
   return child_->ModifyPushConfig(context, request);
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriberMetadata::GetSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::GetSnapshotRequest const& request) {
-  SetMetadata(context, "snapshot=" + request.snapshot());
+  SetMetadata(context, absl::StrCat("snapshot=", request.snapshot()));
   return child_->GetSnapshot(context, request);
 }
 
@@ -109,35 +111,36 @@ StatusOr<google::pubsub::v1::ListSnapshotsResponse>
 SubscriberMetadata::ListSnapshots(
     grpc::ClientContext& context,
     google::pubsub::v1::ListSnapshotsRequest const& request) {
-  SetMetadata(context, "project=" + request.project());
+  SetMetadata(context, absl::StrCat("project=", request.project()));
   return child_->ListSnapshots(context, request);
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriberMetadata::CreateSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::CreateSnapshotRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CreateSnapshot(context, request);
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriberMetadata::UpdateSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::UpdateSnapshotRequest const& request) {
-  SetMetadata(context, "snapshot.name=" + request.snapshot().name());
+  SetMetadata(context,
+              absl::StrCat("snapshot.name=", request.snapshot().name()));
   return child_->UpdateSnapshot(context, request);
 }
 
 Status SubscriberMetadata::DeleteSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSnapshotRequest const& request) {
-  SetMetadata(context, "snapshot=" + request.snapshot());
+  SetMetadata(context, absl::StrCat("snapshot=", request.snapshot()));
   return child_->DeleteSnapshot(context, request);
 }
 
 StatusOr<google::pubsub::v1::SeekResponse> SubscriberMetadata::Seek(
     grpc::ClientContext& context,
     google::pubsub::v1::SeekRequest const& request) {
-  SetMetadata(context, "subscription=" + request.subscription());
+  SetMetadata(context, absl::StrCat("subscription=", request.subscription()));
   return child_->Seek(context, request);
 }
 
@@ -145,7 +148,7 @@ future<Status> SubscriberMetadata::AsyncModifyAckDeadline(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-  SetMetadata(*context, "subscription=" + request.subscription());
+  SetMetadata(*context, absl::StrCat("subscription=", request.subscription()));
   return child_->AsyncModifyAckDeadline(cq, std::move(context), request);
 }
 
@@ -153,7 +156,7 @@ future<Status> SubscriberMetadata::AsyncAcknowledge(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::pubsub::v1::AcknowledgeRequest const& request) {
-  SetMetadata(*context, "subscription=" + request.subscription());
+  SetMetadata(*context, absl::StrCat("subscription=", request.subscription()));
   return child_->AsyncAcknowledge(cq, std::move(context), request);
 }
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/resourcemanager/v3/internal/organizations_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/resourcemanager/v3/organizations.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::resourcemanager::v3::Organization>
 OrganizationsMetadata::GetOrganization(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetOrganization(context, request);
 }
 
@@ -56,14 +57,14 @@ OrganizationsMetadata::SearchOrganizations(
 StatusOr<google::iam::v1::Policy> OrganizationsMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> OrganizationsMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -71,7 +72,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 OrganizationsMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 

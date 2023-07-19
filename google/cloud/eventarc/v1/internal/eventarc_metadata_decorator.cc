@@ -18,6 +18,7 @@
 
 #include "google/cloud/eventarc/v1/internal/eventarc_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/eventarc/v1/eventarc.grpc.pb.h>
@@ -39,7 +40,7 @@ EventarcMetadata::EventarcMetadata(
 StatusOr<google::cloud::eventarc::v1::Trigger> EventarcMetadata::GetTrigger(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::GetTriggerRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTrigger(context, request);
 }
 
@@ -47,7 +48,7 @@ StatusOr<google::cloud::eventarc::v1::ListTriggersResponse>
 EventarcMetadata::ListTriggers(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::ListTriggersRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTriggers(context, request);
 }
 
@@ -56,7 +57,7 @@ EventarcMetadata::AsyncCreateTrigger(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateTrigger(cq, std::move(context), request);
 }
 
@@ -65,7 +66,8 @@ EventarcMetadata::AsyncUpdateTrigger(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
-  SetMetadata(*context, "trigger.name=" + request.trigger().name());
+  SetMetadata(*context,
+              absl::StrCat("trigger.name=", request.trigger().name()));
   return child_->AsyncUpdateTrigger(cq, std::move(context), request);
 }
 
@@ -74,14 +76,14 @@ EventarcMetadata::AsyncDeleteTrigger(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteTrigger(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::eventarc::v1::Channel> EventarcMetadata::GetChannel(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::GetChannelRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetChannel(context, request);
 }
 
@@ -89,7 +91,7 @@ StatusOr<google::cloud::eventarc::v1::ListChannelsResponse>
 EventarcMetadata::ListChannels(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::ListChannelsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListChannels(context, request);
 }
 
@@ -98,7 +100,7 @@ EventarcMetadata::AsyncCreateChannel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateChannel(cq, std::move(context), request);
 }
 
@@ -107,7 +109,8 @@ EventarcMetadata::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
-  SetMetadata(*context, "channel.name=" + request.channel().name());
+  SetMetadata(*context,
+              absl::StrCat("channel.name=", request.channel().name()));
   return child_->AsyncUpdateChannel(cq, std::move(context), request);
 }
 
@@ -116,14 +119,14 @@ EventarcMetadata::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteChannel(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::eventarc::v1::Provider> EventarcMetadata::GetProvider(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::GetProviderRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetProvider(context, request);
 }
 
@@ -131,7 +134,7 @@ StatusOr<google::cloud::eventarc::v1::ListProvidersResponse>
 EventarcMetadata::ListProviders(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::ListProvidersRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListProviders(context, request);
 }
 
@@ -139,7 +142,7 @@ StatusOr<google::cloud::eventarc::v1::ChannelConnection>
 EventarcMetadata::GetChannelConnection(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::GetChannelConnectionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetChannelConnection(context, request);
 }
 
@@ -147,7 +150,7 @@ StatusOr<google::cloud::eventarc::v1::ListChannelConnectionsResponse>
 EventarcMetadata::ListChannelConnections(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListChannelConnections(context, request);
 }
 
@@ -157,7 +160,7 @@ EventarcMetadata::AsyncCreateChannelConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateChannelConnection(cq, std::move(context), request);
 }
 
@@ -167,7 +170,7 @@ EventarcMetadata::AsyncDeleteChannelConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteChannelConnection(cq, std::move(context), request);
 }
 
@@ -175,7 +178,7 @@ StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
 EventarcMetadata::GetGoogleChannelConfig(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetGoogleChannelConfig(context, request);
 }
 
@@ -184,8 +187,8 @@ EventarcMetadata::UpdateGoogleChannelConfig(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
         request) {
-  SetMetadata(context, "google_channel_config.name=" +
-                           request.google_channel_config().name());
+  SetMetadata(context, absl::StrCat("google_channel_config.name=",
+                                    request.google_channel_config().name()));
   return child_->UpdateGoogleChannelConfig(context, request);
 }
 

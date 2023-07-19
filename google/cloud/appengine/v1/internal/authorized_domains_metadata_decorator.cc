@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/v1/internal/authorized_domains_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
 AuthorizedDomainsMetadata::ListAuthorizedDomains(
     grpc::ClientContext& context,
     google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListAuthorizedDomains(context, request);
 }
 

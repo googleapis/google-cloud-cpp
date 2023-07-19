@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/documents_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/document.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse>
 DocumentsMetadata::ListDocuments(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListDocumentsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDocuments(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::dialogflow::v2::Document>
 DocumentsMetadata::GetDocument(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetDocumentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetDocument(context, request);
 }
 
@@ -57,7 +58,7 @@ DocumentsMetadata::AsyncCreateDocument(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateDocument(cq, std::move(context), request);
 }
 
@@ -66,7 +67,7 @@ DocumentsMetadata::AsyncImportDocuments(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncImportDocuments(cq, std::move(context), request);
 }
 
@@ -75,7 +76,7 @@ DocumentsMetadata::AsyncDeleteDocument(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteDocument(cq, std::move(context), request);
 }
 
@@ -84,7 +85,8 @@ DocumentsMetadata::AsyncUpdateDocument(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
-  SetMetadata(*context, "document.name=" + request.document().name());
+  SetMetadata(*context,
+              absl::StrCat("document.name=", request.document().name()));
   return child_->AsyncUpdateDocument(cq, std::move(context), request);
 }
 
@@ -93,7 +95,7 @@ DocumentsMetadata::AsyncReloadDocument(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncReloadDocument(cq, std::move(context), request);
 }
 
@@ -102,7 +104,7 @@ DocumentsMetadata::AsyncExportDocument(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncExportDocument(cq, std::move(context), request);
 }
 

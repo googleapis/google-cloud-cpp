@@ -18,6 +18,7 @@
 
 #include "google/cloud/automl/v1/internal/prediction_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/automl/v1/prediction_service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::automl::v1::PredictResponse>
 PredictionServiceMetadata::Predict(
     grpc::ClientContext& context,
     google::cloud::automl::v1::PredictRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->Predict(context, request);
 }
 
@@ -49,7 +50,7 @@ PredictionServiceMetadata::AsyncBatchPredict(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::BatchPredictRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncBatchPredict(cq, std::move(context), request);
 }
 

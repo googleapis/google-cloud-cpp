@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/intents_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/intent.grpc.pb.h>
@@ -40,35 +41,35 @@ StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse>
 IntentsMetadata::ListIntents(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListIntentsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListIntents(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Intent> IntentsMetadata::GetIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetIntentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetIntent(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Intent> IntentsMetadata::CreateIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateIntentRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateIntent(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Intent> IntentsMetadata::UpdateIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateIntentRequest const& request) {
-  SetMetadata(context, "intent.name=" + request.intent().name());
+  SetMetadata(context, absl::StrCat("intent.name=", request.intent().name()));
   return child_->UpdateIntent(context, request);
 }
 
 Status IntentsMetadata::DeleteIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteIntentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteIntent(context, request);
 }
 
@@ -77,7 +78,7 @@ IntentsMetadata::AsyncBatchUpdateIntents(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchUpdateIntents(cq, std::move(context), request);
 }
 
@@ -86,7 +87,7 @@ IntentsMetadata::AsyncBatchDeleteIntents(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchDeleteIntents(cq, std::move(context), request);
 }
 

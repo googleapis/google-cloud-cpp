@@ -18,6 +18,7 @@
 
 #include "google/cloud/trace/v1/internal/trace_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/devtools/cloudtrace/v1/trace.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
 TraceServiceMetadata::ListTraces(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, absl::StrCat("project_id=", request.project_id()));
   return child_->ListTraces(context, request);
 }
 
@@ -48,14 +49,15 @@ StatusOr<google::devtools::cloudtrace::v1::Trace>
 TraceServiceMetadata::GetTrace(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, absl::StrCat("project_id=", request.project_id(), "&",
+                                    "trace_id=", request.trace_id()));
   return child_->GetTrace(context, request);
 }
 
 Status TraceServiceMetadata::PatchTraces(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, absl::StrCat("project_id=", request.project_id()));
   return child_->PatchTraces(context, request);
 }
 

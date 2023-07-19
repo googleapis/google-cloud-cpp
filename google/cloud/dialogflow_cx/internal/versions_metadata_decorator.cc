@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/versions_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/version.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListVersionsResponse>
 VersionsMetadata::ListVersions(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListVersionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListVersions(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Version>
 VersionsMetadata::GetVersion(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetVersionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetVersion(context, request);
 }
 
@@ -57,7 +58,7 @@ VersionsMetadata::AsyncCreateVersion(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateVersion(cq, std::move(context), request);
 }
 
@@ -65,14 +66,14 @@ StatusOr<google::cloud::dialogflow::cx::v3::Version>
 VersionsMetadata::UpdateVersion(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request) {
-  SetMetadata(context, "version.name=" + request.version().name());
+  SetMetadata(context, absl::StrCat("version.name=", request.version().name()));
   return child_->UpdateVersion(context, request);
 }
 
 Status VersionsMetadata::DeleteVersion(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteVersion(context, request);
 }
 
@@ -81,7 +82,7 @@ VersionsMetadata::AsyncLoadVersion(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncLoadVersion(cq, std::move(context), request);
 }
 
@@ -89,7 +90,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
 VersionsMetadata::CompareVersions(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request) {
-  SetMetadata(context, "base_version=" + request.base_version());
+  SetMetadata(context, absl::StrCat("base_version=", request.base_version()));
   return child_->CompareVersions(context, request);
 }
 

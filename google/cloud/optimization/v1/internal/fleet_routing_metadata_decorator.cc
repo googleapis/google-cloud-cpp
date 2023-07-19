@@ -18,6 +18,7 @@
 
 #include "google/cloud/optimization/v1/internal/fleet_routing_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/optimization/v1/fleet_routing.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
 FleetRoutingMetadata::OptimizeTours(
     grpc::ClientContext& context,
     google::cloud::optimization::v1::OptimizeToursRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->OptimizeTours(context, request);
 }
 
@@ -49,7 +50,7 @@ FleetRoutingMetadata::AsyncBatchOptimizeTours(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchOptimizeTours(cq, std::move(context), request);
 }
 

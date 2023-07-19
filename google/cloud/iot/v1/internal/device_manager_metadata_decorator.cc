@@ -18,6 +18,7 @@
 
 #include "google/cloud/iot/v1/internal/device_manager_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/iot/v1/device_manager.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerMetadata::CreateDeviceRegistry(
     grpc::ClientContext& context,
     google::cloud::iot::v1::CreateDeviceRegistryRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateDeviceRegistry(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerMetadata::GetDeviceRegistry(
     grpc::ClientContext& context,
     google::cloud::iot::v1::GetDeviceRegistryRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetDeviceRegistry(context, request);
 }
 
@@ -56,15 +57,15 @@ StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerMetadata::UpdateDeviceRegistry(
     grpc::ClientContext& context,
     google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request) {
-  SetMetadata(context,
-              "device_registry.name=" + request.device_registry().name());
+  SetMetadata(context, absl::StrCat("device_registry.name=",
+                                    request.device_registry().name()));
   return child_->UpdateDeviceRegistry(context, request);
 }
 
 Status DeviceManagerMetadata::DeleteDeviceRegistry(
     grpc::ClientContext& context,
     google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteDeviceRegistry(context, request);
 }
 
@@ -72,35 +73,35 @@ StatusOr<google::cloud::iot::v1::ListDeviceRegistriesResponse>
 DeviceManagerMetadata::ListDeviceRegistries(
     grpc::ClientContext& context,
     google::cloud::iot::v1::ListDeviceRegistriesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDeviceRegistries(context, request);
 }
 
 StatusOr<google::cloud::iot::v1::Device> DeviceManagerMetadata::CreateDevice(
     grpc::ClientContext& context,
     google::cloud::iot::v1::CreateDeviceRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateDevice(context, request);
 }
 
 StatusOr<google::cloud::iot::v1::Device> DeviceManagerMetadata::GetDevice(
     grpc::ClientContext& context,
     google::cloud::iot::v1::GetDeviceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetDevice(context, request);
 }
 
 StatusOr<google::cloud::iot::v1::Device> DeviceManagerMetadata::UpdateDevice(
     grpc::ClientContext& context,
     google::cloud::iot::v1::UpdateDeviceRequest const& request) {
-  SetMetadata(context, "device.name=" + request.device().name());
+  SetMetadata(context, absl::StrCat("device.name=", request.device().name()));
   return child_->UpdateDevice(context, request);
 }
 
 Status DeviceManagerMetadata::DeleteDevice(
     grpc::ClientContext& context,
     google::cloud::iot::v1::DeleteDeviceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteDevice(context, request);
 }
 
@@ -108,7 +109,7 @@ StatusOr<google::cloud::iot::v1::ListDevicesResponse>
 DeviceManagerMetadata::ListDevices(
     grpc::ClientContext& context,
     google::cloud::iot::v1::ListDevicesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDevices(context, request);
 }
 
@@ -116,7 +117,7 @@ StatusOr<google::cloud::iot::v1::DeviceConfig>
 DeviceManagerMetadata::ModifyCloudToDeviceConfig(
     grpc::ClientContext& context,
     google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ModifyCloudToDeviceConfig(context, request);
 }
 
@@ -124,7 +125,7 @@ StatusOr<google::cloud::iot::v1::ListDeviceConfigVersionsResponse>
 DeviceManagerMetadata::ListDeviceConfigVersions(
     grpc::ClientContext& context,
     google::cloud::iot::v1::ListDeviceConfigVersionsRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ListDeviceConfigVersions(context, request);
 }
 
@@ -132,21 +133,21 @@ StatusOr<google::cloud::iot::v1::ListDeviceStatesResponse>
 DeviceManagerMetadata::ListDeviceStates(
     grpc::ClientContext& context,
     google::cloud::iot::v1::ListDeviceStatesRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ListDeviceStates(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> DeviceManagerMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> DeviceManagerMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
@@ -154,7 +155,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DeviceManagerMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -162,7 +163,7 @@ StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>
 DeviceManagerMetadata::SendCommandToDevice(
     grpc::ClientContext& context,
     google::cloud::iot::v1::SendCommandToDeviceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->SendCommandToDevice(context, request);
 }
 
@@ -170,7 +171,7 @@ StatusOr<google::cloud::iot::v1::BindDeviceToGatewayResponse>
 DeviceManagerMetadata::BindDeviceToGateway(
     grpc::ClientContext& context,
     google::cloud::iot::v1::BindDeviceToGatewayRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->BindDeviceToGateway(context, request);
 }
 
@@ -178,7 +179,7 @@ StatusOr<google::cloud::iot::v1::UnbindDeviceFromGatewayResponse>
 DeviceManagerMetadata::UnbindDeviceFromGateway(
     grpc::ClientContext& context,
     google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->UnbindDeviceFromGateway(context, request);
 }
 

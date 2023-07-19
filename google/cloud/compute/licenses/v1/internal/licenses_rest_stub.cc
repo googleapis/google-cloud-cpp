@@ -77,7 +77,7 @@ DefaultLicensesRestStub::GetLicenses(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/licenses/", request.license(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -90,9 +90,8 @@ DefaultLicensesRestStub::GetIamPolicy(
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/licenses/", request.resource(), "/getIamPolicy"),
       {std::make_pair(
-           "options_requested_policy_version",
-           std::to_string(request.options_requested_policy_version())),
-       std::make_pair("project", request.project())});
+          "options_requested_policy_version",
+          std::to_string(request.options_requested_policy_version()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/devtools/containeranalysis/v1/containeranalysis.grpc.pb.h>
@@ -39,14 +40,14 @@ ContainerAnalysisMetadata::ContainerAnalysisMetadata(
 StatusOr<google::iam::v1::Policy> ContainerAnalysisMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
@@ -54,7 +55,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ContainerAnalysisMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -64,7 +65,7 @@ ContainerAnalysisMetadata::GetVulnerabilityOccurrencesSummary(
     grpc::ClientContext& context,
     google::devtools::containeranalysis::v1::
         GetVulnerabilityOccurrencesSummaryRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->GetVulnerabilityOccurrencesSummary(context, request);
 }
 

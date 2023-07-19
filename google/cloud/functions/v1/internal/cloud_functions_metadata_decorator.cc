@@ -18,6 +18,7 @@
 
 #include "google/cloud/functions/v1/internal/cloud_functions_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/functions/v1/functions.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::functions::v1::ListFunctionsResponse>
 CloudFunctionsServiceMetadata::ListFunctions(
     grpc::ClientContext& context,
     google::cloud::functions::v1::ListFunctionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListFunctions(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceMetadata::GetFunction(
     grpc::ClientContext& context,
     google::cloud::functions::v1::GetFunctionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetFunction(context, request);
 }
 
@@ -57,7 +58,7 @@ CloudFunctionsServiceMetadata::AsyncCreateFunction(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::functions::v1::CreateFunctionRequest const& request) {
-  SetMetadata(*context, "location=" + request.location());
+  SetMetadata(*context, absl::StrCat("location=", request.location()));
   return child_->AsyncCreateFunction(cq, std::move(context), request);
 }
 
@@ -66,7 +67,8 @@ CloudFunctionsServiceMetadata::AsyncUpdateFunction(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::functions::v1::UpdateFunctionRequest const& request) {
-  SetMetadata(*context, "function.name=" + request.function().name());
+  SetMetadata(*context,
+              absl::StrCat("function.name=", request.function().name()));
   return child_->AsyncUpdateFunction(cq, std::move(context), request);
 }
 
@@ -75,7 +77,7 @@ CloudFunctionsServiceMetadata::AsyncDeleteFunction(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::functions::v1::DeleteFunctionRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteFunction(cq, std::move(context), request);
 }
 
@@ -83,7 +85,7 @@ StatusOr<google::cloud::functions::v1::CallFunctionResponse>
 CloudFunctionsServiceMetadata::CallFunction(
     grpc::ClientContext& context,
     google::cloud::functions::v1::CallFunctionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CallFunction(context, request);
 }
 
@@ -91,7 +93,7 @@ StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
 CloudFunctionsServiceMetadata::GenerateUploadUrl(
     grpc::ClientContext& context,
     google::cloud::functions::v1::GenerateUploadUrlRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->GenerateUploadUrl(context, request);
 }
 
@@ -99,21 +101,21 @@ StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
 CloudFunctionsServiceMetadata::GenerateDownloadUrl(
     grpc::ClientContext& context,
     google::cloud::functions::v1::GenerateDownloadUrlRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GenerateDownloadUrl(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudFunctionsServiceMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudFunctionsServiceMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
@@ -121,7 +123,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudFunctionsServiceMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 

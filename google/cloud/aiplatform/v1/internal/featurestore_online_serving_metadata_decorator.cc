@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/featurestore_online_serving_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/featurestore_online_service.grpc.pb.h>
@@ -41,7 +42,7 @@ StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
 FeaturestoreOnlineServingServiceMetadata::ReadFeatureValues(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
-  SetMetadata(context, "entity_type=" + request.entity_type());
+  SetMetadata(context, absl::StrCat("entity_type=", request.entity_type()));
   return child_->ReadFeatureValues(context, request);
 }
 
@@ -51,7 +52,7 @@ FeaturestoreOnlineServingServiceMetadata::StreamingReadFeatureValues(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
         request) {
-  SetMetadata(*context, "entity_type=" + request.entity_type());
+  SetMetadata(*context, absl::StrCat("entity_type=", request.entity_type()));
   return child_->StreamingReadFeatureValues(std::move(context), request);
 }
 
@@ -59,7 +60,7 @@ StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
 FeaturestoreOnlineServingServiceMetadata::WriteFeatureValues(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
-  SetMetadata(context, "entity_type=" + request.entity_type());
+  SetMetadata(context, absl::StrCat("entity_type=", request.entity_type()));
   return child_->WriteFeatureValues(context, request);
 }
 

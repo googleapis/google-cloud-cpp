@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/tensorboard_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/tensorboard_service.grpc.pb.h>
@@ -41,7 +42,7 @@ TensorboardServiceMetadata::AsyncCreateTensorboard(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateTensorboard(cq, std::move(context), request);
 }
 
@@ -49,7 +50,7 @@ StatusOr<google::cloud::aiplatform::v1::Tensorboard>
 TensorboardServiceMetadata::GetTensorboard(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetTensorboardRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTensorboard(context, request);
 }
 
@@ -58,7 +59,8 @@ TensorboardServiceMetadata::AsyncUpdateTensorboard(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
-  SetMetadata(*context, "tensorboard.name=" + request.tensorboard().name());
+  SetMetadata(*context,
+              absl::StrCat("tensorboard.name=", request.tensorboard().name()));
   return child_->AsyncUpdateTensorboard(cq, std::move(context), request);
 }
 
@@ -66,7 +68,7 @@ StatusOr<google::cloud::aiplatform::v1::ListTensorboardsResponse>
 TensorboardServiceMetadata::ListTensorboards(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListTensorboardsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTensorboards(context, request);
 }
 
@@ -75,7 +77,7 @@ TensorboardServiceMetadata::AsyncDeleteTensorboard(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteTensorboard(cq, std::move(context), request);
 }
 
@@ -83,7 +85,7 @@ StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
 TensorboardServiceMetadata::ReadTensorboardUsage(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
-  SetMetadata(context, "tensorboard=" + request.tensorboard());
+  SetMetadata(context, absl::StrCat("tensorboard=", request.tensorboard()));
   return child_->ReadTensorboardUsage(context, request);
 }
 
@@ -92,7 +94,7 @@ TensorboardServiceMetadata::CreateTensorboardExperiment(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateTensorboardExperiment(context, request);
 }
 
@@ -101,7 +103,7 @@ TensorboardServiceMetadata::GetTensorboardExperiment(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTensorboardExperiment(context, request);
 }
 
@@ -110,8 +112,8 @@ TensorboardServiceMetadata::UpdateTensorboardExperiment(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&
         request) {
-  SetMetadata(context, "tensorboard_experiment.name=" +
-                           request.tensorboard_experiment().name());
+  SetMetadata(context, absl::StrCat("tensorboard_experiment.name=",
+                                    request.tensorboard_experiment().name()));
   return child_->UpdateTensorboardExperiment(context, request);
 }
 
@@ -120,7 +122,7 @@ TensorboardServiceMetadata::ListTensorboardExperiments(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTensorboardExperiments(context, request);
 }
 
@@ -130,7 +132,7 @@ TensorboardServiceMetadata::AsyncDeleteTensorboardExperiment(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteTensorboardExperiment(cq, std::move(context),
                                                   request);
 }
@@ -139,7 +141,7 @@ StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceMetadata::CreateTensorboardRun(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateTensorboardRun(context, request);
 }
 
@@ -148,7 +150,7 @@ TensorboardServiceMetadata::BatchCreateTensorboardRuns(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->BatchCreateTensorboardRuns(context, request);
 }
 
@@ -156,7 +158,7 @@ StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceMetadata::GetTensorboardRun(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTensorboardRun(context, request);
 }
 
@@ -164,8 +166,8 @@ StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceMetadata::UpdateTensorboardRun(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request) {
-  SetMetadata(context,
-              "tensorboard_run.name=" + request.tensorboard_run().name());
+  SetMetadata(context, absl::StrCat("tensorboard_run.name=",
+                                    request.tensorboard_run().name()));
   return child_->UpdateTensorboardRun(context, request);
 }
 
@@ -173,7 +175,7 @@ StatusOr<google::cloud::aiplatform::v1::ListTensorboardRunsResponse>
 TensorboardServiceMetadata::ListTensorboardRuns(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListTensorboardRunsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTensorboardRuns(context, request);
 }
 
@@ -182,7 +184,7 @@ TensorboardServiceMetadata::AsyncDeleteTensorboardRun(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteTensorboardRun(cq, std::move(context), request);
 }
 
@@ -192,7 +194,7 @@ TensorboardServiceMetadata::BatchCreateTensorboardTimeSeries(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::
         BatchCreateTensorboardTimeSeriesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->BatchCreateTensorboardTimeSeries(context, request);
 }
 
@@ -201,7 +203,7 @@ TensorboardServiceMetadata::CreateTensorboardTimeSeries(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateTensorboardTimeSeries(context, request);
 }
 
@@ -210,7 +212,7 @@ TensorboardServiceMetadata::GetTensorboardTimeSeries(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTensorboardTimeSeries(context, request);
 }
 
@@ -219,8 +221,8 @@ TensorboardServiceMetadata::UpdateTensorboardTimeSeries(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&
         request) {
-  SetMetadata(context, "tensorboard_time_series.name=" +
-                           request.tensorboard_time_series().name());
+  SetMetadata(context, absl::StrCat("tensorboard_time_series.name=",
+                                    request.tensorboard_time_series().name()));
   return child_->UpdateTensorboardTimeSeries(context, request);
 }
 
@@ -229,7 +231,7 @@ TensorboardServiceMetadata::ListTensorboardTimeSeries(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTensorboardTimeSeries(context, request);
 }
 
@@ -239,7 +241,7 @@ TensorboardServiceMetadata::AsyncDeleteTensorboardTimeSeries(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteTensorboardTimeSeries(cq, std::move(context),
                                                   request);
 }
@@ -250,7 +252,7 @@ TensorboardServiceMetadata::BatchReadTensorboardTimeSeriesData(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::
         BatchReadTensorboardTimeSeriesDataRequest const& request) {
-  SetMetadata(context, "tensorboard=" + request.tensorboard());
+  SetMetadata(context, absl::StrCat("tensorboard=", request.tensorboard()));
   return child_->BatchReadTensorboardTimeSeriesData(context, request);
 }
 
@@ -259,8 +261,8 @@ TensorboardServiceMetadata::ReadTensorboardTimeSeriesData(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const&
         request) {
-  SetMetadata(context,
-              "tensorboard_time_series=" + request.tensorboard_time_series());
+  SetMetadata(context, absl::StrCat("tensorboard_time_series=",
+                                    request.tensorboard_time_series()));
   return child_->ReadTensorboardTimeSeriesData(context, request);
 }
 
@@ -270,7 +272,7 @@ TensorboardServiceMetadata::ReadTensorboardBlobData(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
         request) {
-  SetMetadata(*context, "time_series=" + request.time_series());
+  SetMetadata(*context, absl::StrCat("time_series=", request.time_series()));
   return child_->ReadTensorboardBlobData(std::move(context), request);
 }
 
@@ -279,8 +281,8 @@ TensorboardServiceMetadata::WriteTensorboardExperimentData(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const&
         request) {
-  SetMetadata(context,
-              "tensorboard_experiment=" + request.tensorboard_experiment());
+  SetMetadata(context, absl::StrCat("tensorboard_experiment=",
+                                    request.tensorboard_experiment()));
   return child_->WriteTensorboardExperimentData(context, request);
 }
 
@@ -289,7 +291,8 @@ TensorboardServiceMetadata::WriteTensorboardRunData(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
         request) {
-  SetMetadata(context, "tensorboard_run=" + request.tensorboard_run());
+  SetMetadata(context,
+              absl::StrCat("tensorboard_run=", request.tensorboard_run()));
   return child_->WriteTensorboardRunData(context, request);
 }
 
@@ -298,8 +301,8 @@ TensorboardServiceMetadata::ExportTensorboardTimeSeriesData(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest const&
         request) {
-  SetMetadata(context,
-              "tensorboard_time_series=" + request.tensorboard_time_series());
+  SetMetadata(context, absl::StrCat("tensorboard_time_series=",
+                                    request.tensorboard_time_series()));
   return child_->ExportTensorboardTimeSeriesData(context, request);
 }
 

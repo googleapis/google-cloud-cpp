@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/v3/internal/query_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/query_service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
 QueryServiceMetadata::QueryTimeSeries(
     grpc::ClientContext& context,
     google::monitoring::v3::QueryTimeSeriesRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->QueryTimeSeries(context, request);
 }
 

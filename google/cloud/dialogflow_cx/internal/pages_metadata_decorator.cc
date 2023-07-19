@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/pages_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/page.grpc.pb.h>
@@ -40,35 +41,35 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse>
 PagesMetadata::ListPages(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListPagesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListPages(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesMetadata::GetPage(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetPageRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetPage(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesMetadata::CreatePage(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreatePage(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesMetadata::UpdatePage(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
-  SetMetadata(context, "page.name=" + request.page().name());
+  SetMetadata(context, absl::StrCat("page.name=", request.page().name()));
   return child_->UpdatePage(context, request);
 }
 
 Status PagesMetadata::DeletePage(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeletePage(context, request);
 }
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/composer/v1/internal/image_versions_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
@@ -42,7 +43,7 @@ ImageVersionsMetadata::ListImageVersions(
     grpc::ClientContext& context,
     google::cloud::orchestration::airflow::service::v1::
         ListImageVersionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListImageVersions(context, request);
 }
 

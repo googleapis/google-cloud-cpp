@@ -77,7 +77,7 @@ DefaultFirewallsRestStub::GetFirewalls(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/firewalls/", request.firewall(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

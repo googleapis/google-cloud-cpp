@@ -18,6 +18,7 @@
 
 #include "google/cloud/assuredworkloads/v1/internal/assured_workloads_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/assuredworkloads/v1/assuredworkloads.grpc.pb.h>
@@ -41,7 +42,7 @@ AssuredWorkloadsServiceMetadata::AsyncCreateWorkload(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateWorkload(cq, std::move(context), request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceMetadata::UpdateWorkload(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
-  SetMetadata(context, "workload.name=" + request.workload().name());
+  SetMetadata(context,
+              absl::StrCat("workload.name=", request.workload().name()));
   return child_->UpdateWorkload(context, request);
 }
 
@@ -58,14 +60,14 @@ AssuredWorkloadsServiceMetadata::RestrictAllowedResources(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->RestrictAllowedResources(context, request);
 }
 
 Status AssuredWorkloadsServiceMetadata::DeleteWorkload(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteWorkload(context, request);
 }
 
@@ -73,7 +75,7 @@ StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceMetadata::GetWorkload(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetWorkload(context, request);
 }
 
@@ -81,7 +83,7 @@ StatusOr<google::cloud::assuredworkloads::v1::ListWorkloadsResponse>
 AssuredWorkloadsServiceMetadata::ListWorkloads(
     grpc::ClientContext& context,
     google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListWorkloads(context, request);
 }
 

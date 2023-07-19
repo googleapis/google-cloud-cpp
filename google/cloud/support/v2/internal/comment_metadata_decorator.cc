@@ -18,6 +18,7 @@
 
 #include "google/cloud/support/v2/internal/comment_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/support/v2/comment_service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::support::v2::ListCommentsResponse>
 CommentServiceMetadata::ListComments(
     grpc::ClientContext& context,
     google::cloud::support::v2::ListCommentsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListComments(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::support::v2::Comment>
 CommentServiceMetadata::CreateComment(
     grpc::ClientContext& context,
     google::cloud::support::v2::CreateCommentRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateComment(context, request);
 }
 

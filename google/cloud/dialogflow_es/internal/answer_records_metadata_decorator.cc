@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/answer_records_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/answer_record.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
 AnswerRecordsMetadata::ListAnswerRecords(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListAnswerRecords(context, request);
 }
 
@@ -48,7 +49,8 @@ StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
 AnswerRecordsMetadata::UpdateAnswerRecord(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
-  SetMetadata(context, "answer_record.name=" + request.answer_record().name());
+  SetMetadata(context, absl::StrCat("answer_record.name=",
+                                    request.answer_record().name()));
   return child_->UpdateAnswerRecord(context, request);
 }
 

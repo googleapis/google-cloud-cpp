@@ -18,6 +18,7 @@
 
 #include "google/cloud/retail/v2/internal/product_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/retail/v2/product_service.grpc.pb.h>
@@ -40,14 +41,14 @@ StatusOr<google::cloud::retail::v2::Product>
 ProductServiceMetadata::CreateProduct(
     grpc::ClientContext& context,
     google::cloud::retail::v2::CreateProductRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateProduct(context, request);
 }
 
 StatusOr<google::cloud::retail::v2::Product> ProductServiceMetadata::GetProduct(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetProductRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetProduct(context, request);
 }
 
@@ -55,7 +56,7 @@ StatusOr<google::cloud::retail::v2::ListProductsResponse>
 ProductServiceMetadata::ListProducts(
     grpc::ClientContext& context,
     google::cloud::retail::v2::ListProductsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListProducts(context, request);
 }
 
@@ -63,14 +64,14 @@ StatusOr<google::cloud::retail::v2::Product>
 ProductServiceMetadata::UpdateProduct(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateProductRequest const& request) {
-  SetMetadata(context, "product.name=" + request.product().name());
+  SetMetadata(context, absl::StrCat("product.name=", request.product().name()));
   return child_->UpdateProduct(context, request);
 }
 
 Status ProductServiceMetadata::DeleteProduct(
     grpc::ClientContext& context,
     google::cloud::retail::v2::DeleteProductRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteProduct(context, request);
 }
 
@@ -79,7 +80,7 @@ ProductServiceMetadata::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::ImportProductsRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncImportProducts(cq, std::move(context), request);
 }
 
@@ -88,7 +89,8 @@ ProductServiceMetadata::AsyncSetInventory(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::SetInventoryRequest const& request) {
-  SetMetadata(*context, "inventory.name=" + request.inventory().name());
+  SetMetadata(*context,
+              absl::StrCat("inventory.name=", request.inventory().name()));
   return child_->AsyncSetInventory(cq, std::move(context), request);
 }
 
@@ -97,7 +99,7 @@ ProductServiceMetadata::AsyncAddFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
-  SetMetadata(*context, "product=" + request.product());
+  SetMetadata(*context, absl::StrCat("product=", request.product()));
   return child_->AsyncAddFulfillmentPlaces(cq, std::move(context), request);
 }
 
@@ -106,7 +108,7 @@ ProductServiceMetadata::AsyncRemoveFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
-  SetMetadata(*context, "product=" + request.product());
+  SetMetadata(*context, absl::StrCat("product=", request.product()));
   return child_->AsyncRemoveFulfillmentPlaces(cq, std::move(context), request);
 }
 
@@ -115,7 +117,7 @@ ProductServiceMetadata::AsyncAddLocalInventories(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
-  SetMetadata(*context, "product=" + request.product());
+  SetMetadata(*context, absl::StrCat("product=", request.product()));
   return child_->AsyncAddLocalInventories(cq, std::move(context), request);
 }
 
@@ -124,7 +126,7 @@ ProductServiceMetadata::AsyncRemoveLocalInventories(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
-  SetMetadata(*context, "product=" + request.product());
+  SetMetadata(*context, absl::StrCat("product=", request.product()));
   return child_->AsyncRemoveLocalInventories(cq, std::move(context), request);
 }
 

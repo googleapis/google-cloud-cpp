@@ -146,8 +146,7 @@ StatusOr<google::cloud::cpp::compute::v1::Disk> DefaultDisksRestStub::GetDisks(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
                    request.zone(), "/disks/", request.disk(), ""),
-      {std::make_pair("project", request.project()),
-       std::make_pair("zone", request.zone())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -161,10 +160,8 @@ DefaultDisksRestStub::GetIamPolicy(
                    request.zone(), "/disks/", request.resource(),
                    "/getIamPolicy"),
       {std::make_pair(
-           "options_requested_policy_version",
-           std::to_string(request.options_requested_policy_version())),
-       std::make_pair("project", request.project()),
-       std::make_pair("zone", request.zone())});
+          "options_requested_policy_version",
+          std::to_string(request.options_requested_policy_version()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -202,7 +199,6 @@ DefaultDisksRestStub::ListDisks(
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("project", request.project()),
        std::make_pair("return_partial_success",
                       request.return_partial_success() ? "1" : "0")});
 }

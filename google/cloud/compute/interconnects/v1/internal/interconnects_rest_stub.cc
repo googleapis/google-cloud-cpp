@@ -78,7 +78,7 @@ DefaultInterconnectsRestStub::GetInterconnects(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/interconnects/", request.interconnect(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
@@ -92,7 +92,7 @@ DefaultInterconnectsRestStub::GetDiagnostics(
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/interconnects/", request.interconnect(),
                    "/getDiagnostics"),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

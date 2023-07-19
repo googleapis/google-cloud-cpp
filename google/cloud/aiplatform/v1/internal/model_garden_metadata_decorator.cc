@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/model_garden_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/model_garden_service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::aiplatform::v1::PublisherModel>
 ModelGardenServiceMetadata::GetPublisherModel(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetPublisherModel(context, request);
 }
 

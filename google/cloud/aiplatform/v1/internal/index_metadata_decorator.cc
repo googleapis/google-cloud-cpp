@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/index_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/index_service.grpc.pb.h>
@@ -41,14 +42,14 @@ IndexServiceMetadata::AsyncCreateIndex(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateIndex(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceMetadata::GetIndex(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetIndexRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetIndex(context, request);
 }
 
@@ -56,7 +57,7 @@ StatusOr<google::cloud::aiplatform::v1::ListIndexesResponse>
 IndexServiceMetadata::ListIndexes(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListIndexesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListIndexes(context, request);
 }
 
@@ -65,7 +66,7 @@ IndexServiceMetadata::AsyncUpdateIndex(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
-  SetMetadata(*context, "index.name=" + request.index().name());
+  SetMetadata(*context, absl::StrCat("index.name=", request.index().name()));
   return child_->AsyncUpdateIndex(cq, std::move(context), request);
 }
 
@@ -74,7 +75,7 @@ IndexServiceMetadata::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteIndex(cq, std::move(context), request);
 }
 
@@ -82,7 +83,7 @@ StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
 IndexServiceMetadata::UpsertDatapoints(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request) {
-  SetMetadata(context, "index=" + request.index());
+  SetMetadata(context, absl::StrCat("index=", request.index()));
   return child_->UpsertDatapoints(context, request);
 }
 
@@ -90,7 +91,7 @@ StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
 IndexServiceMetadata::RemoveDatapoints(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request) {
-  SetMetadata(context, "index=" + request.index());
+  SetMetadata(context, absl::StrCat("index=", request.index()));
   return child_->RemoveDatapoints(context, request);
 }
 

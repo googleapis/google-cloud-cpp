@@ -100,7 +100,7 @@ DefaultInstanceTemplatesRestStub::GetInstanceTemplates(
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/instanceTemplates/", request.instance_template(),
                    ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -114,9 +114,8 @@ DefaultInstanceTemplatesRestStub::GetIamPolicy(
                    "/global/instanceTemplates/", request.resource(),
                    "/getIamPolicy"),
       {std::make_pair(
-           "options_requested_policy_version",
-           std::to_string(request.options_requested_policy_version())),
-       std::make_pair("project", request.project())});
+          "options_requested_policy_version",
+          std::to_string(request.options_requested_policy_version()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

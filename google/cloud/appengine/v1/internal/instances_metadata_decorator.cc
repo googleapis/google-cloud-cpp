@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/v1/internal/instances_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
@@ -40,14 +41,14 @@ StatusOr<google::appengine::v1::ListInstancesResponse>
 InstancesMetadata::ListInstances(
     grpc::ClientContext& context,
     google::appengine::v1::ListInstancesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListInstances(context, request);
 }
 
 StatusOr<google::appengine::v1::Instance> InstancesMetadata::GetInstance(
     grpc::ClientContext& context,
     google::appengine::v1::GetInstanceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetInstance(context, request);
 }
 
@@ -56,7 +57,7 @@ InstancesMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::DeleteInstanceRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
 
@@ -65,7 +66,7 @@ InstancesMetadata::AsyncDebugInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::DebugInstanceRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDebugInstance(cq, std::move(context), request);
 }
 

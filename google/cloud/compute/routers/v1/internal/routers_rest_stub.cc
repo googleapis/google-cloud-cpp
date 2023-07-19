@@ -98,8 +98,7 @@ DefaultRoutersRestStub::GetRouters(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
                    request.region(), "/routers/", request.router(), ""),
-      {std::make_pair("project", request.project()),
-       std::make_pair("region", request.region())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
@@ -117,8 +116,6 @@ DefaultRoutersRestStub::GetNatMappingInfo(
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("project", request.project()),
-       std::make_pair("region", request.region()),
        std::make_pair("return_partial_success",
                       request.return_partial_success() ? "1" : "0")});
 }
@@ -134,8 +131,7 @@ DefaultRoutersRestStub::GetRouterStatus(
       absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
                    request.region(), "/routers/", request.router(),
                    "/getRouterStatus"),
-      {std::make_pair("project", request.project()),
-       std::make_pair("region", request.region())});
+      {});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -175,7 +171,6 @@ DefaultRoutersRestStub::ListRouters(
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("project", request.project()),
        std::make_pair("return_partial_success",
                       request.return_partial_success() ? "1" : "0")});
 }

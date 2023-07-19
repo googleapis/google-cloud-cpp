@@ -250,8 +250,7 @@ DefaultInstancesRestStub::GetInstances(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
                    request.zone(), "/instances/", request.instance(), ""),
-      {std::make_pair("project", request.project()),
-       std::make_pair("zone", request.zone())});
+      {});
 }
 
 StatusOr<
@@ -266,9 +265,7 @@ DefaultInstancesRestStub::GetEffectiveFirewalls(
       absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
                    request.zone(), "/instances/", request.instance(),
                    "/getEffectiveFirewalls"),
-      {std::make_pair("network_interface", request.network_interface()),
-       std::make_pair("project", request.project()),
-       std::make_pair("zone", request.zone())});
+      {std::make_pair("network_interface", request.network_interface())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>
@@ -281,10 +278,8 @@ DefaultInstancesRestStub::GetGuestAttributes(
       absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
                    request.zone(), "/instances/", request.instance(),
                    "/getGuestAttributes"),
-      {std::make_pair("project", request.project()),
-       std::make_pair("query_path", request.query_path()),
-       std::make_pair("variable_key", request.variable_key()),
-       std::make_pair("zone", request.zone())});
+      {std::make_pair("query_path", request.query_path()),
+       std::make_pair("variable_key", request.variable_key())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -298,10 +293,8 @@ DefaultInstancesRestStub::GetIamPolicy(
                    request.zone(), "/instances/", request.resource(),
                    "/getIamPolicy"),
       {std::make_pair(
-           "options_requested_policy_version",
-           std::to_string(request.options_requested_policy_version())),
-       std::make_pair("project", request.project()),
-       std::make_pair("zone", request.zone())});
+          "options_requested_policy_version",
+          std::to_string(request.options_requested_policy_version()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Screenshot>
@@ -314,8 +307,7 @@ DefaultInstancesRestStub::GetScreenshot(
       absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
                    request.zone(), "/instances/", request.instance(),
                    "/screenshot"),
-      {std::make_pair("project", request.project()),
-       std::make_pair("zone", request.zone())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
@@ -329,9 +321,7 @@ DefaultInstancesRestStub::GetSerialPortOutput(
                    request.zone(), "/instances/", request.instance(),
                    "/serialPort"),
       {std::make_pair("port", std::to_string(request.port())),
-       std::make_pair("project", request.project()),
-       std::make_pair("start", request.start()),
-       std::make_pair("zone", request.zone())});
+       std::make_pair("start", request.start())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
@@ -345,8 +335,7 @@ DefaultInstancesRestStub::GetShieldedInstanceIdentity(
       absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
                    request.zone(), "/instances/", request.instance(),
                    "/getShieldedInstanceIdentity"),
-      {std::make_pair("project", request.project()),
-       std::make_pair("zone", request.zone())});
+      {});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -386,7 +375,6 @@ DefaultInstancesRestStub::ListInstances(
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("project", request.project()),
        std::make_pair("return_partial_success",
                       request.return_partial_success() ? "1" : "0")});
 }
@@ -406,10 +394,8 @@ DefaultInstancesRestStub::ListReferrers(
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("project", request.project()),
        std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0"),
-       std::make_pair("zone", request.zone())});
+                      request.return_partial_success() ? "1" : "0")});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

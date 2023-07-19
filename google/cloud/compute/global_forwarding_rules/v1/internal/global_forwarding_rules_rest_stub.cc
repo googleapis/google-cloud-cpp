@@ -80,7 +80,7 @@ DefaultGlobalForwardingRulesRestStub::GetGlobalForwardingRules(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/forwardingRules/", request.forwarding_rule(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

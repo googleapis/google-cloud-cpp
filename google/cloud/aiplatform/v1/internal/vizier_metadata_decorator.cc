@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/vizier_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/vizier_service.grpc.pb.h>
@@ -40,14 +41,14 @@ StatusOr<google::cloud::aiplatform::v1::Study>
 VizierServiceMetadata::CreateStudy(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateStudyRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateStudy(context, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceMetadata::GetStudy(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetStudyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetStudy(context, request);
 }
 
@@ -55,14 +56,14 @@ StatusOr<google::cloud::aiplatform::v1::ListStudiesResponse>
 VizierServiceMetadata::ListStudies(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListStudiesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListStudies(context, request);
 }
 
 Status VizierServiceMetadata::DeleteStudy(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::DeleteStudyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteStudy(context, request);
 }
 
@@ -70,7 +71,7 @@ StatusOr<google::cloud::aiplatform::v1::Study>
 VizierServiceMetadata::LookupStudy(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::LookupStudyRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->LookupStudy(context, request);
 }
 
@@ -79,7 +80,7 @@ VizierServiceMetadata::AsyncSuggestTrials(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncSuggestTrials(cq, std::move(context), request);
 }
 
@@ -87,14 +88,14 @@ StatusOr<google::cloud::aiplatform::v1::Trial>
 VizierServiceMetadata::CreateTrial(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateTrialRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateTrial(context, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceMetadata::GetTrial(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetTrialRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTrial(context, request);
 }
 
@@ -102,7 +103,7 @@ StatusOr<google::cloud::aiplatform::v1::ListTrialsResponse>
 VizierServiceMetadata::ListTrials(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListTrialsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTrials(context, request);
 }
 
@@ -110,7 +111,7 @@ StatusOr<google::cloud::aiplatform::v1::Trial>
 VizierServiceMetadata::AddTrialMeasurement(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request) {
-  SetMetadata(context, "trial_name=" + request.trial_name());
+  SetMetadata(context, absl::StrCat("trial_name=", request.trial_name()));
   return child_->AddTrialMeasurement(context, request);
 }
 
@@ -118,14 +119,14 @@ StatusOr<google::cloud::aiplatform::v1::Trial>
 VizierServiceMetadata::CompleteTrial(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CompleteTrialRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CompleteTrial(context, request);
 }
 
 Status VizierServiceMetadata::DeleteTrial(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::DeleteTrialRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteTrial(context, request);
 }
 
@@ -135,7 +136,7 @@ VizierServiceMetadata::AsyncCheckTrialEarlyStoppingState(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
         request) {
-  SetMetadata(*context, "trial_name=" + request.trial_name());
+  SetMetadata(*context, absl::StrCat("trial_name=", request.trial_name()));
   return child_->AsyncCheckTrialEarlyStoppingState(cq, std::move(context),
                                                    request);
 }
@@ -143,7 +144,7 @@ VizierServiceMetadata::AsyncCheckTrialEarlyStoppingState(
 StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceMetadata::StopTrial(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::StopTrialRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->StopTrial(context, request);
 }
 
@@ -151,7 +152,7 @@ StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
 VizierServiceMetadata::ListOptimalTrials(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListOptimalTrials(context, request);
 }
 

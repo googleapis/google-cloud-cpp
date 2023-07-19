@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/session_entity_types_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/session_entity_type.grpc.pb.h>
@@ -41,7 +42,7 @@ SessionEntityTypesMetadata::ListSessionEntityTypes(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListSessionEntityTypes(context, request);
 }
 
@@ -50,7 +51,7 @@ SessionEntityTypesMetadata::GetSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetSessionEntityType(context, request);
 }
 
@@ -59,7 +60,7 @@ SessionEntityTypesMetadata::CreateSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateSessionEntityType(context, request);
 }
 
@@ -68,8 +69,8 @@ SessionEntityTypesMetadata::UpdateSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
         request) {
-  SetMetadata(context, "session_entity_type.name=" +
-                           request.session_entity_type().name());
+  SetMetadata(context, absl::StrCat("session_entity_type.name=",
+                                    request.session_entity_type().name()));
   return child_->UpdateSessionEntityType(context, request);
 }
 
@@ -77,7 +78,7 @@ Status SessionEntityTypesMetadata::DeleteSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteSessionEntityType(context, request);
 }
 

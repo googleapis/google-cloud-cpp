@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/environments_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/environment.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::dialogflow::v2::ListEnvironmentsResponse>
 EnvironmentsMetadata::ListEnvironments(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListEnvironmentsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListEnvironments(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsMetadata::GetEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEnvironment(context, request);
 }
 
@@ -56,7 +57,7 @@ StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsMetadata::CreateEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateEnvironment(context, request);
 }
 
@@ -64,14 +65,15 @@ StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsMetadata::UpdateEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request) {
-  SetMetadata(context, "environment.name=" + request.environment().name());
+  SetMetadata(context,
+              absl::StrCat("environment.name=", request.environment().name()));
   return child_->UpdateEnvironment(context, request);
 }
 
 Status EnvironmentsMetadata::DeleteEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteEnvironment(context, request);
 }
 
@@ -80,7 +82,7 @@ EnvironmentsMetadata::GetEnvironmentHistory(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->GetEnvironmentHistory(context, request);
 }
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/osconfig/v1/internal/os_config_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/osconfig/v1/osconfig_service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceMetadata::ExecutePatchJob(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::ExecutePatchJobRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ExecutePatchJob(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceMetadata::GetPatchJob(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::GetPatchJobRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetPatchJob(context, request);
 }
 
@@ -56,7 +57,7 @@ StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceMetadata::CancelPatchJob(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::CancelPatchJobRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CancelPatchJob(context, request);
 }
 
@@ -64,7 +65,7 @@ StatusOr<google::cloud::osconfig::v1::ListPatchJobsResponse>
 OsConfigServiceMetadata::ListPatchJobs(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::ListPatchJobsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListPatchJobs(context, request);
 }
 
@@ -73,7 +74,7 @@ OsConfigServiceMetadata::ListPatchJobInstanceDetails(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListPatchJobInstanceDetails(context, request);
 }
 
@@ -81,7 +82,7 @@ StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceMetadata::CreatePatchDeployment(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreatePatchDeployment(context, request);
 }
 
@@ -89,7 +90,7 @@ StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceMetadata::GetPatchDeployment(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetPatchDeployment(context, request);
 }
 
@@ -97,14 +98,14 @@ StatusOr<google::cloud::osconfig::v1::ListPatchDeploymentsResponse>
 OsConfigServiceMetadata::ListPatchDeployments(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::ListPatchDeploymentsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListPatchDeployments(context, request);
 }
 
 Status OsConfigServiceMetadata::DeletePatchDeployment(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeletePatchDeployment(context, request);
 }
 
@@ -112,8 +113,8 @@ StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceMetadata::UpdatePatchDeployment(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
-  SetMetadata(context,
-              "patch_deployment.name=" + request.patch_deployment().name());
+  SetMetadata(context, absl::StrCat("patch_deployment.name=",
+                                    request.patch_deployment().name()));
   return child_->UpdatePatchDeployment(context, request);
 }
 
@@ -121,7 +122,7 @@ StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceMetadata::PausePatchDeployment(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->PausePatchDeployment(context, request);
 }
 
@@ -129,7 +130,7 @@ StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceMetadata::ResumePatchDeployment(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ResumePatchDeployment(context, request);
 }
 

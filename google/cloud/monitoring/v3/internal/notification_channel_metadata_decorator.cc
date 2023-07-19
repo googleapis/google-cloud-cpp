@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/v3/internal/notification_channel_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/notification_service.grpc.pb.h>
@@ -41,7 +42,7 @@ NotificationChannelServiceMetadata::ListNotificationChannelDescriptors(
     grpc::ClientContext& context,
     google::monitoring::v3::ListNotificationChannelDescriptorsRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ListNotificationChannelDescriptors(context, request);
 }
 
@@ -50,7 +51,7 @@ NotificationChannelServiceMetadata::GetNotificationChannelDescriptor(
     grpc::ClientContext& context,
     google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetNotificationChannelDescriptor(context, request);
 }
 
@@ -58,7 +59,7 @@ StatusOr<google::monitoring::v3::ListNotificationChannelsResponse>
 NotificationChannelServiceMetadata::ListNotificationChannels(
     grpc::ClientContext& context,
     google::monitoring::v3::ListNotificationChannelsRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ListNotificationChannels(context, request);
 }
 
@@ -66,7 +67,7 @@ StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceMetadata::GetNotificationChannel(
     grpc::ClientContext& context,
     google::monitoring::v3::GetNotificationChannelRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetNotificationChannel(context, request);
 }
 
@@ -74,7 +75,7 @@ StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceMetadata::CreateNotificationChannel(
     grpc::ClientContext& context,
     google::monitoring::v3::CreateNotificationChannelRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CreateNotificationChannel(context, request);
 }
 
@@ -82,15 +83,15 @@ StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceMetadata::UpdateNotificationChannel(
     grpc::ClientContext& context,
     google::monitoring::v3::UpdateNotificationChannelRequest const& request) {
-  SetMetadata(context, "notification_channel.name=" +
-                           request.notification_channel().name());
+  SetMetadata(context, absl::StrCat("notification_channel.name=",
+                                    request.notification_channel().name()));
   return child_->UpdateNotificationChannel(context, request);
 }
 
 Status NotificationChannelServiceMetadata::DeleteNotificationChannel(
     grpc::ClientContext& context,
     google::monitoring::v3::DeleteNotificationChannelRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteNotificationChannel(context, request);
 }
 
@@ -99,7 +100,7 @@ NotificationChannelServiceMetadata::SendNotificationChannelVerificationCode(
     grpc::ClientContext& context,
     google::monitoring::v3::
         SendNotificationChannelVerificationCodeRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->SendNotificationChannelVerificationCode(context, request);
 }
 
@@ -108,7 +109,7 @@ NotificationChannelServiceMetadata::GetNotificationChannelVerificationCode(
     grpc::ClientContext& context,
     google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetNotificationChannelVerificationCode(context, request);
 }
 
@@ -116,7 +117,7 @@ StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceMetadata::VerifyNotificationChannel(
     grpc::ClientContext& context,
     google::monitoring::v3::VerifyNotificationChannelRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->VerifyNotificationChannel(context, request);
 }
 

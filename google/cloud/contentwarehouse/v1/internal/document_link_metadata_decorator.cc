@@ -18,6 +18,7 @@
 
 #include "google/cloud/contentwarehouse/v1/internal/document_link_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/contentwarehouse/v1/document_link_service.grpc.pb.h>
@@ -41,7 +42,7 @@ DocumentLinkServiceMetadata::ListLinkedTargets(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListLinkedTargets(context, request);
 }
 
@@ -50,7 +51,7 @@ DocumentLinkServiceMetadata::ListLinkedSources(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListLinkedSources(context, request);
 }
 
@@ -59,7 +60,7 @@ DocumentLinkServiceMetadata::CreateDocumentLink(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateDocumentLink(context, request);
 }
 
@@ -67,7 +68,7 @@ Status DocumentLinkServiceMetadata::DeleteDocumentLink(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteDocumentLink(context, request);
 }
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/v1/internal/domain_mappings_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::appengine::v1::ListDomainMappingsResponse>
 DomainMappingsMetadata::ListDomainMappings(
     grpc::ClientContext& context,
     google::appengine::v1::ListDomainMappingsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDomainMappings(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::appengine::v1::DomainMapping>
 DomainMappingsMetadata::GetDomainMapping(
     grpc::ClientContext& context,
     google::appengine::v1::GetDomainMappingRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetDomainMapping(context, request);
 }
 
@@ -57,7 +58,7 @@ DomainMappingsMetadata::AsyncCreateDomainMapping(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::CreateDomainMappingRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateDomainMapping(cq, std::move(context), request);
 }
 
@@ -66,7 +67,7 @@ DomainMappingsMetadata::AsyncUpdateDomainMapping(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateDomainMappingRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUpdateDomainMapping(cq, std::move(context), request);
 }
 
@@ -75,7 +76,7 @@ DomainMappingsMetadata::AsyncDeleteDomainMapping(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::DeleteDomainMappingRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteDomainMapping(cq, std::move(context), request);
 }
 

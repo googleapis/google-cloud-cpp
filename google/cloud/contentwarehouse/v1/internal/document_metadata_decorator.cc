@@ -18,6 +18,7 @@
 
 #include "google/cloud/contentwarehouse/v1/internal/document_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/contentwarehouse/v1/document_service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
 DocumentServiceMetadata::CreateDocument(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateDocument(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::contentwarehouse::v1::Document>
 DocumentServiceMetadata::GetDocument(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetDocument(context, request);
 }
 
@@ -56,14 +57,14 @@ StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
 DocumentServiceMetadata::UpdateDocument(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->UpdateDocument(context, request);
 }
 
 Status DocumentServiceMetadata::DeleteDocument(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteDocument(context, request);
 }
 
@@ -72,7 +73,7 @@ DocumentServiceMetadata::SearchDocuments(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::SearchDocumentsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->SearchDocuments(context, request);
 }
 
@@ -80,7 +81,7 @@ StatusOr<google::cloud::contentwarehouse::v1::Document>
 DocumentServiceMetadata::LockDocument(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->LockDocument(context, request);
 }
 
@@ -88,7 +89,7 @@ StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
 DocumentServiceMetadata::FetchAcl(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->FetchAcl(context, request);
 }
 
@@ -96,7 +97,7 @@ StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
 DocumentServiceMetadata::SetAcl(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetAcl(context, request);
 }
 

@@ -47,7 +47,7 @@ DefaultRegionsRestStub::GetRegions(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
                    request.region(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionList>

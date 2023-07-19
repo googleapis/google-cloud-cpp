@@ -18,6 +18,7 @@
 
 #include "google/cloud/language/v1/internal/language_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/language/v1/language_service.grpc.pb.h>

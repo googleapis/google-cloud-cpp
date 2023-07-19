@@ -18,6 +18,7 @@
 
 #include "google/cloud/servicecontrol/v1/internal/quota_controller_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/api/servicecontrol/v1/quota_controller.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 QuotaControllerMetadata::AllocateQuota(
     grpc::ClientContext& context,
     google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, absl::StrCat("service_name=", request.service_name()));
   return child_->AllocateQuota(context, request);
 }
 

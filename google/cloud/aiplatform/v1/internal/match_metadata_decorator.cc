@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/match_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/match_service.grpc.pb.h>
@@ -40,7 +41,8 @@ StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
 MatchServiceMetadata::FindNeighbors(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
-  SetMetadata(context, "index_endpoint=" + request.index_endpoint());
+  SetMetadata(context,
+              absl::StrCat("index_endpoint=", request.index_endpoint()));
   return child_->FindNeighbors(context, request);
 }
 
@@ -48,7 +50,8 @@ StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
 MatchServiceMetadata::ReadIndexDatapoints(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) {
-  SetMetadata(context, "index_endpoint=" + request.index_endpoint());
+  SetMetadata(context,
+              absl::StrCat("index_endpoint=", request.index_endpoint()));
   return child_->ReadIndexDatapoints(context, request);
 }
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/apikeys/v2/internal/api_keys_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/api/apikeys/v2/apikeys.grpc.pb.h>
@@ -41,21 +42,21 @@ ApiKeysMetadata::AsyncCreateKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::CreateKeyRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateKey(cq, std::move(context), request);
 }
 
 StatusOr<google::api::apikeys::v2::ListKeysResponse> ApiKeysMetadata::ListKeys(
     grpc::ClientContext& context,
     google::api::apikeys::v2::ListKeysRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListKeys(context, request);
 }
 
 StatusOr<google::api::apikeys::v2::Key> ApiKeysMetadata::GetKey(
     grpc::ClientContext& context,
     google::api::apikeys::v2::GetKeyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetKey(context, request);
 }
 
@@ -63,7 +64,7 @@ StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 ApiKeysMetadata::GetKeyString(
     grpc::ClientContext& context,
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetKeyString(context, request);
 }
 
@@ -72,7 +73,7 @@ ApiKeysMetadata::AsyncUpdateKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::UpdateKeyRequest const& request) {
-  SetMetadata(*context, "key.name=" + request.key().name());
+  SetMetadata(*context, absl::StrCat("key.name=", request.key().name()));
   return child_->AsyncUpdateKey(cq, std::move(context), request);
 }
 
@@ -81,7 +82,7 @@ ApiKeysMetadata::AsyncDeleteKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::DeleteKeyRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteKey(cq, std::move(context), request);
 }
 
@@ -90,7 +91,7 @@ ApiKeysMetadata::AsyncUndeleteKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::UndeleteKeyRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUndeleteKey(cq, std::move(context), request);
 }
 

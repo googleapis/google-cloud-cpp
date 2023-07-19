@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
@@ -41,7 +42,7 @@ BigQueryWriteMetadata::CreateWriteStream(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateWriteStream(context, request);
 }
 
@@ -60,7 +61,7 @@ BigQueryWriteMetadata::GetWriteStream(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetWriteStream(context, request);
 }
 
@@ -69,7 +70,7 @@ BigQueryWriteMetadata::FinalizeWriteStream(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->FinalizeWriteStream(context, request);
 }
 
@@ -78,7 +79,7 @@ BigQueryWriteMetadata::BatchCommitWriteStreams(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->BatchCommitWriteStreams(context, request);
 }
 
@@ -86,7 +87,7 @@ StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
 BigQueryWriteMetadata::FlushRows(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::FlushRowsRequest const& request) {
-  SetMetadata(context, "write_stream=" + request.write_stream());
+  SetMetadata(context, absl::StrCat("write_stream=", request.write_stream()));
   return child_->FlushRows(context, request);
 }
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataproc/v1/internal/batch_controller_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dataproc/v1/batches.grpc.pb.h>
@@ -41,14 +42,14 @@ BatchControllerMetadata::AsyncCreateBatch(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::CreateBatchRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateBatch(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Batch> BatchControllerMetadata::GetBatch(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetBatchRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetBatch(context, request);
 }
 
@@ -56,14 +57,14 @@ StatusOr<google::cloud::dataproc::v1::ListBatchesResponse>
 BatchControllerMetadata::ListBatches(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListBatchesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListBatches(context, request);
 }
 
 Status BatchControllerMetadata::DeleteBatch(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::DeleteBatchRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteBatch(context, request);
 }
 

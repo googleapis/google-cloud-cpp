@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/migration_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/migration_service.grpc.pb.h>
@@ -41,7 +42,7 @@ MigrationServiceMetadata::SearchMigratableResources(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->SearchMigratableResources(context, request);
 }
 
@@ -51,7 +52,7 @@ MigrationServiceMetadata::AsyncBatchMigrateResources(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchMigrateResources(cq, std::move(context), request);
 }
 

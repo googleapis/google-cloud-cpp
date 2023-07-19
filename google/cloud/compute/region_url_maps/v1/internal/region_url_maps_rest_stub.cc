@@ -78,8 +78,7 @@ DefaultRegionUrlMapsRestStub::GetRegionUrlMaps(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
                    request.region(), "/urlMaps/", request.url_map(), ""),
-      {std::make_pair("project", request.project()),
-       std::make_pair("region", request.region())});
+      {});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -119,7 +118,6 @@ DefaultRegionUrlMapsRestStub::ListRegionUrlMaps(
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("project", request.project()),
        std::make_pair("return_partial_success",
                       request.return_partial_success() ? "1" : "0")});
 }

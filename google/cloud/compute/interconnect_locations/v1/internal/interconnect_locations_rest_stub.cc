@@ -51,7 +51,7 @@ DefaultInterconnectLocationsRestStub::GetInterconnectLocations(
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/interconnectLocations/",
                    request.interconnect_location(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectLocationList>

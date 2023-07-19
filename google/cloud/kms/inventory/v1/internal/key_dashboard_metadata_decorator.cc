@@ -18,6 +18,7 @@
 
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/kms/inventory/v1/key_dashboard_service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
 KeyDashboardServiceMetadata::ListCryptoKeys(
     grpc::ClientContext& context,
     google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListCryptoKeys(context, request);
 }
 

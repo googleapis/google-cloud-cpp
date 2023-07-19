@@ -18,6 +18,7 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/routing_matcher.h"
@@ -41,7 +42,7 @@ StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkMetadata::GenerateAccessToken(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GenerateAccessToken(context, request);
 }
 
@@ -65,7 +66,7 @@ StatusOr<google::test::admin::database::v1::ListLogsResponse>
 GoldenKitchenSinkMetadata::ListLogs(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListLogsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListLogs(context, request);
 }
 
@@ -73,7 +74,7 @@ StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkMetadata::ListServiceAccountKeys(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ListServiceAccountKeys(context, request);
 }
 

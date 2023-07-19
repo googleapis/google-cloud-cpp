@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/model_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/model_service.grpc.pb.h>
@@ -41,14 +42,14 @@ ModelServiceMetadata::AsyncUploadModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::UploadModelRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncUploadModel(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceMetadata::GetModel(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetModelRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetModel(context, request);
 }
 
@@ -56,7 +57,7 @@ StatusOr<google::cloud::aiplatform::v1::ListModelsResponse>
 ModelServiceMetadata::ListModels(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListModelsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListModels(context, request);
 }
 
@@ -64,7 +65,7 @@ StatusOr<google::cloud::aiplatform::v1::ListModelVersionsResponse>
 ModelServiceMetadata::ListModelVersions(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListModelVersionsRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ListModelVersions(context, request);
 }
 
@@ -72,7 +73,7 @@ StatusOr<google::cloud::aiplatform::v1::Model>
 ModelServiceMetadata::UpdateModel(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpdateModelRequest const& request) {
-  SetMetadata(context, "model.name=" + request.model().name());
+  SetMetadata(context, absl::StrCat("model.name=", request.model().name()));
   return child_->UpdateModel(context, request);
 }
 
@@ -82,7 +83,7 @@ ModelServiceMetadata::AsyncUpdateExplanationDataset(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
         request) {
-  SetMetadata(*context, "model=" + request.model());
+  SetMetadata(*context, absl::StrCat("model=", request.model()));
   return child_->AsyncUpdateExplanationDataset(cq, std::move(context), request);
 }
 
@@ -91,7 +92,7 @@ ModelServiceMetadata::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteModel(cq, std::move(context), request);
 }
 
@@ -100,7 +101,7 @@ ModelServiceMetadata::AsyncDeleteModelVersion(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteModelVersion(cq, std::move(context), request);
 }
 
@@ -108,7 +109,7 @@ StatusOr<google::cloud::aiplatform::v1::Model>
 ModelServiceMetadata::MergeVersionAliases(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->MergeVersionAliases(context, request);
 }
 
@@ -117,7 +118,7 @@ ModelServiceMetadata::AsyncExportModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::ExportModelRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncExportModel(cq, std::move(context), request);
 }
 
@@ -126,7 +127,7 @@ ModelServiceMetadata::AsyncCopyModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::CopyModelRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCopyModel(cq, std::move(context), request);
 }
 
@@ -135,7 +136,7 @@ ModelServiceMetadata::ImportModelEvaluation(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ImportModelEvaluation(context, request);
 }
 
@@ -145,7 +146,7 @@ ModelServiceMetadata::BatchImportModelEvaluationSlices(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::
         BatchImportModelEvaluationSlicesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->BatchImportModelEvaluationSlices(context, request);
 }
 
@@ -154,7 +155,7 @@ ModelServiceMetadata::BatchImportEvaluatedAnnotations(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->BatchImportEvaluatedAnnotations(context, request);
 }
 
@@ -162,7 +163,7 @@ StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
 ModelServiceMetadata::GetModelEvaluation(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetModelEvaluation(context, request);
 }
 
@@ -170,7 +171,7 @@ StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationsResponse>
 ModelServiceMetadata::ListModelEvaluations(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListModelEvaluationsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListModelEvaluations(context, request);
 }
 
@@ -179,7 +180,7 @@ ModelServiceMetadata::GetModelEvaluationSlice(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetModelEvaluationSlice(context, request);
 }
 
@@ -188,7 +189,7 @@ ModelServiceMetadata::ListModelEvaluationSlices(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListModelEvaluationSlices(context, request);
 }
 

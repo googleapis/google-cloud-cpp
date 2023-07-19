@@ -98,7 +98,7 @@ DefaultHealthChecksRestStub::GetHealthChecks(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/healthChecks/", request.health_check(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

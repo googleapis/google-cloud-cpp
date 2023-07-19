@@ -18,6 +18,7 @@
 
 #include "google/cloud/servicecontrol/v2/internal/service_controller_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/api/servicecontrol/v2/service_controller.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::api::servicecontrol::v2::CheckResponse>
 ServiceControllerMetadata::Check(
     grpc::ClientContext& context,
     google::api::servicecontrol::v2::CheckRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, absl::StrCat("service_name=", request.service_name()));
   return child_->Check(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::api::servicecontrol::v2::ReportResponse>
 ServiceControllerMetadata::Report(
     grpc::ClientContext& context,
     google::api::servicecontrol::v2::ReportRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, absl::StrCat("service_name=", request.service_name()));
   return child_->Report(context, request);
 }
 

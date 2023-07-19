@@ -48,8 +48,7 @@ DefaultImageFamilyViewsRestStub::GetImageFamilyViews(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
                    request.zone(), "/imageFamilyViews/", request.family(), ""),
-      {std::make_pair("project", request.project()),
-       std::make_pair("zone", request.zone())});
+      {});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

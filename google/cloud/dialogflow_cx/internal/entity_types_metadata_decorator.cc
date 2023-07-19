@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/entity_types_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/entity_type.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
 EntityTypesMetadata::ListEntityTypes(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListEntityTypes(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesMetadata::GetEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEntityType(context, request);
 }
 
@@ -56,7 +57,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesMetadata::CreateEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateEntityType(context, request);
 }
 
@@ -64,14 +65,15 @@ StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesMetadata::UpdateEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request) {
-  SetMetadata(context, "entity_type.name=" + request.entity_type().name());
+  SetMetadata(context,
+              absl::StrCat("entity_type.name=", request.entity_type().name()));
   return child_->UpdateEntityType(context, request);
 }
 
 Status EntityTypesMetadata::DeleteEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteEntityType(context, request);
 }
 

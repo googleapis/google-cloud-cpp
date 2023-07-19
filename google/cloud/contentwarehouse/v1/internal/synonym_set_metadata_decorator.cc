@@ -18,6 +18,7 @@
 
 #include "google/cloud/contentwarehouse/v1/internal/synonym_set_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/contentwarehouse/v1/synonymset_service.grpc.pb.h>
@@ -41,7 +42,7 @@ SynonymSetServiceMetadata::CreateSynonymSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateSynonymSet(context, request);
 }
 
@@ -49,7 +50,7 @@ StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceMetadata::GetSynonymSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetSynonymSet(context, request);
 }
 
@@ -58,7 +59,7 @@ SynonymSetServiceMetadata::UpdateSynonymSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->UpdateSynonymSet(context, request);
 }
 
@@ -66,7 +67,7 @@ Status SynonymSetServiceMetadata::DeleteSynonymSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteSynonymSet(context, request);
 }
 
@@ -75,7 +76,7 @@ SynonymSetServiceMetadata::ListSynonymSets(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListSynonymSets(context, request);
 }
 

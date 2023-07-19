@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/connection/v1/internal/connection_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/connection/v1/connection.grpc.pb.h>
@@ -41,7 +42,7 @@ ConnectionServiceMetadata::CreateConnection(
     grpc::ClientContext& context,
     google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateConnection(context, request);
 }
 
@@ -50,7 +51,7 @@ ConnectionServiceMetadata::GetConnection(
     grpc::ClientContext& context,
     google::cloud::bigquery::connection::v1::GetConnectionRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetConnection(context, request);
 }
 
@@ -59,7 +60,7 @@ ConnectionServiceMetadata::ListConnections(
     grpc::ClientContext& context,
     google::cloud::bigquery::connection::v1::ListConnectionsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListConnections(context, request);
 }
 
@@ -68,7 +69,7 @@ ConnectionServiceMetadata::UpdateConnection(
     grpc::ClientContext& context,
     google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->UpdateConnection(context, request);
 }
 
@@ -76,21 +77,21 @@ Status ConnectionServiceMetadata::DeleteConnection(
     grpc::ClientContext& context,
     google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteConnection(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> ConnectionServiceMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> ConnectionServiceMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -98,7 +99,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ConnectionServiceMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 

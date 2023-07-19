@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/pipeline_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/pipeline_service.grpc.pb.h>
@@ -41,7 +42,7 @@ PipelineServiceMetadata::CreateTrainingPipeline(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateTrainingPipeline(context, request);
 }
 
@@ -49,7 +50,7 @@ StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 PipelineServiceMetadata::GetTrainingPipeline(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTrainingPipeline(context, request);
 }
 
@@ -58,7 +59,7 @@ PipelineServiceMetadata::ListTrainingPipelines(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListTrainingPipelinesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTrainingPipelines(context, request);
 }
 
@@ -68,7 +69,7 @@ PipelineServiceMetadata::AsyncDeleteTrainingPipeline(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteTrainingPipeline(cq, std::move(context), request);
 }
 
@@ -76,7 +77,7 @@ Status PipelineServiceMetadata::CancelTrainingPipeline(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CancelTrainingPipeline(context, request);
 }
 
@@ -84,7 +85,7 @@ StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 PipelineServiceMetadata::CreatePipelineJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreatePipelineJob(context, request);
 }
 
@@ -92,7 +93,7 @@ StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 PipelineServiceMetadata::GetPipelineJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetPipelineJob(context, request);
 }
 
@@ -100,7 +101,7 @@ StatusOr<google::cloud::aiplatform::v1::ListPipelineJobsResponse>
 PipelineServiceMetadata::ListPipelineJobs(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListPipelineJobsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListPipelineJobs(context, request);
 }
 
@@ -109,14 +110,14 @@ PipelineServiceMetadata::AsyncDeletePipelineJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeletePipelineJob(cq, std::move(context), request);
 }
 
 Status PipelineServiceMetadata::CancelPipelineJob(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CancelPipelineJob(context, request);
 }
 
