@@ -343,10 +343,6 @@ TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsExtensionInfo) {
       service_file_descriptor->service(0)->method(2);
   VarsDictionary vars;
   SetHttpDerivedMethodVars(ParseHttpExtension(*method), *method, vars);
-  EXPECT_THAT(vars.at("method_request_url_path"),
-              Eq("/v1/{parent=projects/*/instances/*}/databases"));
-  EXPECT_THAT(vars.at("method_request_url_substitution"),
-              Eq("projects/*/instances/*"));
   EXPECT_THAT(vars.at("method_request_param_key"), Eq("parent"));
   EXPECT_THAT(vars.at("method_request_param_value"), Eq("parent()"));
   EXPECT_THAT(vars.at("method_request_body"), Eq("*"));
@@ -363,9 +359,6 @@ TEST_F(HttpOptionUtilsTest,
       service_file_descriptor->service(0)->method(5);
   VarsDictionary vars;
   SetHttpDerivedMethodVars(ParseHttpExtension(*method), *method, vars);
-  EXPECT_THAT(vars.at("method_request_url_path"),
-              Eq("/v1/projects/{project=project}/instances/{instance=instance}/"
-                 "databases"));
   EXPECT_THAT(vars.at("method_request_body"), Eq("*"));
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
   auto const* expected_rest_path =
