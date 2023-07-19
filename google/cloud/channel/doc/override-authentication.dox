@@ -11,6 +11,11 @@ The following example shows how to explicitly load a service account key file:
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_channel_client_samples.cc with-service-account
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c channel_v1::CloudChannelServiceClient](@ref channel_v1::CloudChannelServiceClient-service-account-snippet)
+- [\c channel_v1::CloudChannelReportsServiceClient](@ref channel_v1::CloudChannelReportsServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -30,6 +35,12 @@ guide for more details.
 /*! @page channel_v1::CloudChannelServiceClient-service-account-snippet Override channel_v1::CloudChannelServiceClient Authentication Defaults
 
 @snippet google/cloud/channel/v1/samples/cloud_channel_client_samples.cc with-service-account
+
+*/
+
+/*! @page channel_v1::CloudChannelReportsServiceClient-service-account-snippet Override channel_v1::CloudChannelReportsServiceClient Authentication Defaults
+
+@snippet google/cloud/channel/v1/samples/cloud_channel_reports_client_samples.cc with-service-account
 
 */
 // <!-- inject-authentication-pages-end -->
