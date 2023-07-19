@@ -31,6 +31,7 @@ using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::google::protobuf::MethodDescriptor;
 using ::testing::Eq;
+using ::testing::SizeIs;
 
 char const* const kHttpProto =
     "syntax = \"proto3\";\n"
@@ -152,6 +153,12 @@ char const* const kServiceProto =
     "  string project = 1;\n"
     "  string instance = 2;\n"
     "}\n"
+    "// Leading comments about message Implicit.\n"
+    "message Implicit {\n"
+    "  string project = 1;\n"
+    "  string instance = 2;\n"
+    "  string Foo = 3;\n"
+    "}\n"
     "// Leading comments about service Service.\n"
     "service Service {\n"
     "  // Leading comments about rpc Method0$.\n"
@@ -201,6 +208,23 @@ char const* const kServiceProto =
     "       body: \"*\"\n"
     "    };\n"
     "  }\n"
+    "  // Leading comments about rpc Method6.\n"
+    "  rpc Method6(Implicit) returns (Empty) {\n"
+    "    option (google.api.http) = {\n"
+    "       post: "
+    "\"/v1/projects/{project}/databases\"\n"
+    "       body: \"body\"\n"
+    "    };\n"
+    "  }\n"
+    "  // Leading comments about rpc Method7.\n"
+    "  rpc Method7(Implicit) returns (Empty) {\n"
+    "    option (google.api.http) = {\n"
+    "       post: "
+    "\"/v1/projects/{project}/instances/{instance}/databases\"\n"
+    "       body: \"*\"\n"
+    "    };\n"
+    "  }\n"
+
     "}\n";
 
 struct MethodVarsTestValues {
@@ -267,11 +291,54 @@ TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithPrefixAndSuffix) {
   auto extension_info = absl::get<HttpExtensionInfo>(info);
   EXPECT_THAT(extension_info.url_path,
               Eq("/v1/{parent=projects/*/instances/*}/databases"));
-  EXPECT_THAT(extension_info.request_field_name, Eq("parent"));
-  EXPECT_THAT(extension_info.url_substitution, Eq("projects/*/instances/*"));
+  ASSERT_THAT(extension_info.field_substitutions, SizeIs(1));
+  EXPECT_THAT(extension_info.field_substitutions[0].first, Eq("parent"));
+  EXPECT_THAT(extension_info.field_substitutions[0].second,
+              Eq("projects/*/instances/*"));
   EXPECT_THAT(extension_info.body, Eq("*"));
   EXPECT_THAT(extension_info.http_verb, Eq("Post"));
   EXPECT_THAT(extension_info.path_prefix, Eq("/v1/"));
+  EXPECT_THAT(extension_info.path_suffix, Eq("/databases"));
+}
+
+TEST_F(HttpOptionUtilsTest,
+       ParseHttpExtensionImplicitSingleWithPrefixAndSuffix) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(6);
+  auto info = ParseHttpExtension(*method);
+  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
+  auto extension_info = absl::get<HttpExtensionInfo>(info);
+  EXPECT_THAT(extension_info.url_path, Eq("/v1/projects/{project}/databases"));
+  ASSERT_THAT(extension_info.field_substitutions, SizeIs(1));
+  EXPECT_THAT(extension_info.field_substitutions[0].first, Eq("project"));
+  EXPECT_THAT(extension_info.field_substitutions[0].second, Eq("project"));
+  EXPECT_THAT(extension_info.body, Eq("body"));
+  EXPECT_THAT(extension_info.http_verb, Eq("Post"));
+  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/projects/"));
+  EXPECT_THAT(extension_info.path_suffix, Eq("/databases"));
+}
+
+TEST_F(HttpOptionUtilsTest,
+       ParseHttpExtensionImplicitMultipleWithPrefixAndSuffix) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(7);
+  auto info = ParseHttpExtension(*method);
+  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
+  auto extension_info = absl::get<HttpExtensionInfo>(info);
+  EXPECT_THAT(extension_info.url_path,
+              Eq("/v1/projects/{project}/instances/{instance}/databases"));
+  ASSERT_THAT(extension_info.field_substitutions, SizeIs(2));
+  EXPECT_THAT(extension_info.field_substitutions[0].first, Eq("project"));
+  EXPECT_THAT(extension_info.field_substitutions[0].second, Eq("project"));
+  EXPECT_THAT(extension_info.field_substitutions[1].first, Eq("instance"));
+  EXPECT_THAT(extension_info.field_substitutions[1].second, Eq("instance"));
+  EXPECT_THAT(extension_info.body, Eq("*"));
+  EXPECT_THAT(extension_info.http_verb, Eq("Post"));
+  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/projects/"));
   EXPECT_THAT(extension_info.path_suffix, Eq("/databases"));
 }
 
@@ -285,8 +352,9 @@ TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithOnlyPrefix) {
   auto extension_info = absl::get<HttpExtensionInfo>(info);
   EXPECT_THAT(extension_info.url_path,
               Eq("/v1/{name=projects/*/instances/*/backups/*}"));
-  EXPECT_THAT(extension_info.request_field_name, Eq("name"));
-  EXPECT_THAT(extension_info.url_substitution,
+  ASSERT_THAT(extension_info.field_substitutions, SizeIs(1));
+  EXPECT_THAT(extension_info.field_substitutions[0].first, Eq("name"));
+  EXPECT_THAT(extension_info.field_substitutions[0].second,
               Eq("projects/*/instances/*/backups/*"));
   EXPECT_THAT(extension_info.body, Eq(""));
   EXPECT_THAT(extension_info.http_verb, Eq("Delete"));
@@ -330,25 +398,43 @@ TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsSimpleInfo) {
       service_file_descriptor->service(0)->method(0);
   VarsDictionary vars;
   SetHttpDerivedMethodVars(ParseHttpExtension(*method), *method, vars);
-  EXPECT_THAT(vars.at("method_request_param_value"),
+  EXPECT_THAT(vars.at("method_request_params"),
               Eq("google.protobuf.Service.Method0"));
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Delete"));
   EXPECT_THAT(vars.at("method_rest_path"), Eq("\"/v1/simple\""));
 }
 
-TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsExtensionInfo) {
+TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsExtensionInfoSingleParam) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(2);
   VarsDictionary vars;
   SetHttpDerivedMethodVars(ParseHttpExtension(*method), *method, vars);
-  EXPECT_THAT(vars.at("method_request_param_key"), Eq("parent"));
-  EXPECT_THAT(vars.at("method_request_param_value"), Eq("parent()"));
+  EXPECT_THAT(vars.at("method_request_params"),
+              Eq("\"parent=\", request.parent()"));
   EXPECT_THAT(vars.at("method_request_body"), Eq("*"));
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
   EXPECT_THAT(vars.at("method_rest_path"),
               Eq("absl::StrCat(\"/v1/\", request.parent(), \"/databases\")"));
+}
+
+TEST_F(HttpOptionUtilsTest,
+       SetHttpDerivedMethodVarsExtensionInfoMultipleParams) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(7);
+  VarsDictionary vars;
+  SetHttpDerivedMethodVars(ParseHttpExtension(*method), *method, vars);
+  EXPECT_THAT(vars.at("method_request_params"),
+              Eq("\"project=\", request.project(), \"&\",\"instance=\", "
+                 "request.instance()"));
+  EXPECT_THAT(vars.at("method_request_body"), Eq("*"));
+  EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
+  EXPECT_THAT(vars.at("method_rest_path"),
+              Eq("absl::StrCat(\"/v1/projects/\", request.project(), "
+                 "\"/instances/\", request.instance(), \"/databases\")"));
 }
 
 TEST_F(HttpOptionUtilsTest,

@@ -41,8 +41,7 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
   if (info.empty()) {
     if (HasHttpRoutingHeader(method)) {
       return "  SetMetadata(" + context +
-             ", \"$method_request_param_key$=\" + "
-             "request.$method_request_param_value$);";
+             ", absl::StrCat($method_request_params$));";
     }
     // If the method does not have a `google.api.routing` or `google.api.http`
     // annotation, we do not send the "x-goog-request-params" header.
@@ -174,6 +173,7 @@ Status MetadataDecoratorGenerator::GenerateCc() {
   CcPrint("\n");
   CcLocalIncludes(
       {vars("metadata_header_path"),
+       "google/cloud/internal/absl_str_cat_quiet.h",
        HasExplicitRoutingMethod()
            ? "google/cloud/internal/absl_str_join_quiet.h"
            : "",

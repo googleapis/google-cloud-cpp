@@ -35,8 +35,7 @@ struct HttpExtensionInfo {
       std::function<std::string(google::protobuf::MethodDescriptor const&)>;
   std::string http_verb;
   std::string url_path;
-  std::string request_field_name;
-  std::string url_substitution;
+  std::vector<std::pair<std::string, std::string>> field_substitutions;
   std::string body;
   std::string path_prefix;
   std::string path_suffix;
