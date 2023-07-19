@@ -50,35 +50,34 @@ void from_json(nlohmann::json const& j, QueryParameterStructType& q) {
 void to_json(nlohmann::json& j, QueryParameterType const& q) {
   if (q.array_type != nullptr) {
     j = nlohmann::json{{"type", q.type},
-                       {"array_type", *q.array_type},
-                       {"struct_types", q.struct_types}};
+                       {"arrayType", *q.array_type},
+                       {"structTypes", q.struct_types}};
   } else {
-    j = nlohmann::json{{"type", q.type}, {"struct_types", q.struct_types}};
+    j = nlohmann::json{{"type", q.type}, {"structTypes", q.struct_types}};
   }
 }
 
 void from_json(nlohmann::json const& j, QueryParameterType& q) {
   if (j.contains("type")) j.at("type").get_to(q.type);
-  if (j.contains("array_type")) {
+  if (j.contains("arrayType")) {
     if (q.array_type == nullptr) {
       q.array_type = std::make_shared<QueryParameterType>();
     }
-    j.at("array_type").get_to(*q.array_type);
+    j.at("arrayType").get_to(*q.array_type);
   }
-  if (j.contains("struct_types")) j.at("struct_types").get_to(q.struct_types);
+  if (j.contains("structTypes")) j.at("structTypes").get_to(q.struct_types);
 }
 
 void to_json(nlohmann::json& j, QueryParameterValue const& q) {
   j = nlohmann::json{{"value", q.value},
-                     {"array_values", q.array_values},
-                     {"struct_values", q.struct_values}};
+                     {"arrayValues", q.array_values},
+                     {"structValues", q.struct_values}};
 }
 
 void from_json(nlohmann::json const& j, QueryParameterValue& q) {
   if (j.contains("value")) j.at("value").get_to(q.value);
-  if (j.contains("array_values")) j.at("array_values").get_to(q.array_values);
-  if (j.contains("struct_values"))
-    j.at("struct_values").get_to(q.struct_values);
+  if (j.contains("arrayValues")) j.at("arrayValues").get_to(q.array_values);
+  if (j.contains("structValues")) j.at("structValues").get_to(q.struct_values);
 }
 
 void to_json(nlohmann::json& j, StandardSqlField const& f) {
@@ -107,7 +106,7 @@ void from_json(nlohmann::json const& j, StandardSqlStructType& t) {
 
 void to_json(nlohmann::json& j, StandardSqlDataType const& t) {
   if (t.sub_type.valueless_by_exception()) {
-    j = nlohmann::json{{"type_kind", t.type_kind}};
+    j = nlohmann::json{{"typeKind", t.type_kind}};
     return;
   }
 
@@ -116,16 +115,16 @@ void to_json(nlohmann::json& j, StandardSqlDataType const& t) {
     nlohmann::json& j;
 
     void operator()(absl::monostate const&) {
-      j = nlohmann::json{{"type_kind", std::move(type_kind)}};
+      j = nlohmann::json{{"typeKind", std::move(type_kind)}};
     }
     void operator()(std::shared_ptr<StandardSqlDataType> const& type) {
-      j = nlohmann::json{{"type_kind", std::move(type_kind)},
-                         {"sub_type", *type},
+      j = nlohmann::json{{"typeKind", std::move(type_kind)},
+                         {"arrayElementType", *type},
                          {"sub_type_index", 1}};
     }
     void operator()(StandardSqlStructType const& type) {
-      j = nlohmann::json{{"type_kind", std::move(type_kind)},
-                         {"sub_type", type},
+      j = nlohmann::json{{"typeKind", std::move(type_kind)},
+                         {"structType", type},
                          {"sub_type_index", 2}};
     }
   };
@@ -134,16 +133,16 @@ void to_json(nlohmann::json& j, StandardSqlDataType const& t) {
 }
 
 void from_json(nlohmann::json const& j, StandardSqlDataType& t) {
-  if (j.contains("type_kind")) j.at("type_kind").get_to(t.type_kind);
-  if (j.contains("sub_type_index") && j.contains("sub_type")) {
+  if (j.contains("typeKind")) j.at("typeKind").get_to(t.type_kind);
+  if (j.contains("sub_type_index")) {
     auto const index = j.at("sub_type_index").get<int>();
     switch (index) {
       case 1:
         t.sub_type = std::make_shared<StandardSqlDataType>(
-            j.at("sub_type").get<StandardSqlDataType>());
+            j.at("arrayElementType").get<StandardSqlDataType>());
         break;
       case 2:
-        t.sub_type = j.at("sub_type").get<StandardSqlStructType>();
+        t.sub_type = j.at("structType").get<StandardSqlStructType>();
         break;
       default:
         break;
@@ -163,19 +162,19 @@ void to_json(nlohmann::json& j, Value const& v) {
       // Nothing to do.
     }
     void operator()(double const& val) {
-      j = nlohmann::json{{"value_kind", val}, {"kind_index", 1}};
+      j = nlohmann::json{{"valueKind", val}, {"kind_index", 1}};
     }
     void operator()(std::string const& val) {
-      j = nlohmann::json{{"value_kind", val}, {"kind_index", 2}};
+      j = nlohmann::json{{"valueKind", val}, {"kind_index", 2}};
     }
     void operator()(bool const& val) {
-      j = nlohmann::json{{"value_kind", val}, {"kind_index", 3}};
+      j = nlohmann::json{{"valueKind", val}, {"kind_index", 3}};
     }
     void operator()(std::shared_ptr<Struct> const& val) {
-      j = nlohmann::json{{"value_kind", *val}, {"kind_index", 4}};
+      j = nlohmann::json{{"valueKind", *val}, {"kind_index", 4}};
     }
     void operator()(std::vector<Value> const& val) {
-      j = nlohmann::json{{"value_kind", val}, {"kind_index", 5}};
+      j = nlohmann::json{{"valueKind", val}, {"kind_index", 5}};
     }
   };
 
@@ -183,27 +182,27 @@ void to_json(nlohmann::json& j, Value const& v) {
 }
 
 void from_json(nlohmann::json const& j, Value& v) {
-  if (j.contains("kind_index") && j.contains("value_kind")) {
+  if (j.contains("kind_index") && j.contains("valueKind")) {
     auto const index = j.at("kind_index").get<int>();
     switch (index) {
       case 0:
         // Do not set any value
         break;
       case 1:
-        v.value_kind = j.at("value_kind").get<double>();
+        v.value_kind = j.at("valueKind").get<double>();
         break;
       case 2:
-        v.value_kind = j.at("value_kind").get<std::string>();
+        v.value_kind = j.at("valueKind").get<std::string>();
         break;
       case 3:
-        v.value_kind = j.at("value_kind").get<bool>();
+        v.value_kind = j.at("valueKind").get<bool>();
         break;
       case 4:
         v.value_kind =
-            std::make_shared<Struct>(j.at("value_kind").get<Struct>());
+            std::make_shared<Struct>(j.at("valueKind").get<Struct>());
         break;
       case 5:
-        v.value_kind = j.at("value_kind").get<std::vector<Value>>();
+        v.value_kind = j.at("valueKind").get<std::vector<Value>>();
         break;
       default:
         GCP_LOG(FATAL) << "Invalid kind_index for Value: " << index;
@@ -344,8 +343,8 @@ std::string DatasetReference::DebugString(absl::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", project_id)
-      .StringField("dataset_id", dataset_id)
+      .StringField("project_id", projectId)
+      .StringField("dataset_id", datasetId)
       .Build();
 }
 
@@ -353,9 +352,9 @@ std::string TableReference::DebugString(absl::string_view name,
                                         TracingOptions const& options,
                                         int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", project_id)
-      .StringField("dataset_id", dataset_id)
-      .StringField("table_id", table_id)
+      .StringField("project_id", projectId)
+      .StringField("dataset_id", datasetId)
+      .StringField("table_id", tableId)
       .Build();
 }
 
@@ -363,9 +362,9 @@ std::string RoutineReference::DebugString(absl::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", project_id)
-      .StringField("dataset_id", dataset_id)
-      .StringField("routine_id", routine_id)
+      .StringField("project_id", projectId)
+      .StringField("dataset_id", datasetId)
+      .StringField("routine_id", routineId)
       .Build();
 }
 
@@ -382,7 +381,7 @@ std::string EncryptionConfiguration::DebugString(absl::string_view name,
                                                  TracingOptions const& options,
                                                  int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("kms_key_name", kms_key_name)
+      .StringField("kms_key_name", kmsKeyName)
       .Build();
 }
 
@@ -398,9 +397,9 @@ std::string ScriptOptions::DebugString(absl::string_view name,
                                        TracingOptions const& options,
                                        int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .Field("statement_timeout_ms", statement_timeout_ms)
-      .Field("statement_byte_budget", statement_byte_budget)
-      .SubMessage("key_result_statement", key_result_statement)
+      .Field("statement_timeout_ms", statementTimeoutMs)
+      .Field("statement_byte_budget", statementByteBudget)
+      .SubMessage("key_result_statement", keyResultStatement)
       .Build();
 }
 
@@ -512,29 +511,37 @@ std::string QueryParameter::DebugString(absl::string_view qp_name,
                                         int indent) const {
   return internal::DebugFormatter(qp_name, options, indent)
       .StringField("name", name)
-      .SubMessage("parameter_type", parameter_type)
-      .SubMessage("parameter_value", parameter_value)
+      .SubMessage("parameter_type", parameterType)
+      .SubMessage("parameter_value", parameterValue)
       .Build();
 }
 
 bool operator==(TableReference const& lhs, TableReference const& rhs) {
-  return (lhs.dataset_id == rhs.dataset_id &&
-          lhs.project_id == rhs.project_id && lhs.table_id == rhs.table_id);
+  return (lhs.datasetId == rhs.datasetId && lhs.projectId == rhs.projectId &&
+          lhs.tableId == rhs.tableId);
 }
 
 bool operator==(DatasetReference const& lhs, DatasetReference const& rhs) {
-  return (lhs.dataset_id == rhs.dataset_id && lhs.project_id == rhs.project_id);
+  return (lhs.datasetId == rhs.datasetId && lhs.projectId == rhs.projectId);
 }
 
 bool operator==(RoutineReference const& lhs, RoutineReference const& rhs) {
-  return (lhs.dataset_id == rhs.dataset_id &&
-          lhs.project_id == rhs.project_id && lhs.routine_id == rhs.routine_id);
+  return (lhs.datasetId == rhs.datasetId && lhs.projectId == rhs.projectId &&
+          lhs.routineId == rhs.routineId);
 }
 
 bool operator==(QueryParameter const& lhs, QueryParameter const& rhs) {
   return (lhs.name == rhs.name &&
-          lhs.parameter_type.type == rhs.parameter_type.type &&
-          lhs.parameter_value.value == rhs.parameter_value.value);
+          lhs.parameterType.type == rhs.parameterType.type &&
+          lhs.parameterValue.value == rhs.parameterValue.value);
+}
+
+std::string SessionInfo::DebugString(absl::string_view name,
+                                     TracingOptions const& options,
+                                     int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("session_id", sessionId)
+      .Build();
 }
 // NOLINTEND(misc-no-recursion)
 

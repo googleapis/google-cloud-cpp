@@ -36,7 +36,7 @@ TEST(JobConfigurationQueryTest, DebugString) {
       R"( priority: "job-priority" parameter_mode: "job-param-mode")"
       R"( preserve_nulls: true allow_large_results: true)"
       R"( use_query_cache: true flatten_results: true)"
-      R"( use_legacy_sql: true create_session: true continuous: true)"
+      R"( use_legacy_sql: true create_session: true)"
       R"( maximum_bytes_billed: 0 schema_update_options: "job-update-options")"
       R"( connection_properties { key: "conn-prop-key")"
       R"( value: "conn-prop-val" } query_parameters {)"
@@ -78,7 +78,7 @@ TEST(JobConfigurationQueryTest, DebugString) {
       R"( parameter_mode: "job-param-...<truncated>...")"
       R"( preserve_nulls: true allow_large_results: true)"
       R"( use_query_cache: true flatten_results: true use_legacy_sql: true)"
-      R"( create_session: true continuous: true maximum_bytes_billed: 0)"
+      R"( create_session: true maximum_bytes_billed: 0)"
       R"( schema_update_options: "job-update...<truncated>...")"
       R"( connection_properties { key: "conn-prop-...<truncated>...")"
       R"( value: "conn-prop-...<truncated>..." })"
@@ -127,7 +127,6 @@ TEST(JobConfigurationQueryTest, DebugString) {
   flatten_results: true
   use_legacy_sql: true
   create_session: true
-  continuous: true
   maximum_bytes_billed: 0
   schema_update_options: "job-update-options"
   connection_properties {

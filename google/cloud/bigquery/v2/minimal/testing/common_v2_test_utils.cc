@@ -39,8 +39,8 @@ using ::testing::Not;
 
 DatasetReference MakeDatasetReference() {
   DatasetReference d;
-  d.dataset_id = "1";
-  d.project_id = "2";
+  d.datasetId = "1";
+  d.projectId = "2";
 
   return d;
 }
@@ -104,8 +104,8 @@ QueryParameterValue MakeQueryParameterValue() {
 QueryParameter MakeQueryParameter() {
   QueryParameter expected;
   expected.name = "query-parameter-name";
-  expected.parameter_type = MakeQueryParameterType();
-  expected.parameter_value = MakeQueryParameterValue();
+  expected.parameterType = MakeQueryParameterType();
+  expected.parameterValue = MakeQueryParameterValue();
 
   return expected;
 }

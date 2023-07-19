@@ -65,13 +65,13 @@ TEST(JobConnectionTest, GetJobSuccess) {
       R"({"kind": "jkind",
           "etag": "jtag",
           "id": "j123",
-          "self_link": "jselfLink",
+          "selfLink": "jselfLink",
           "user_email": "juserEmail",
           "status": {"state": "DONE"},
-          "reference": {"project_id": "p123", "job_id": "j123"},
+          "jobReference": {"projectId": "p123", "jobId": "j123"},
           "configuration": {
-            "job_type": "QUERY",
-            "query_config": {"query": "select 1;"}
+            "jobType": "QUERY",
+            "query": {"query": "select 1;"}
           }})";
 
   EXPECT_CALL(*mock, GetJob)
@@ -155,13 +155,13 @@ TEST(JobConnectionTest, InsertJobSuccess) {
       R"({"kind": "jkind",
           "etag": "jtag",
           "id": "j123",
-          "self_link": "jselfLink",
+          "selfLink": "jselfLink",
           "user_email": "juserEmail",
           "status": {"state": "DONE"},
-          "reference": {"project_id": "p123", "job_id": "j123"},
+          "jobReference": {"projectId": "p123", "jobId": "j123"},
           "configuration": {
-            "job_type": "QUERY",
-            "query_config": {"query": "select 1;"}
+            "jobType": "QUERY",
+            "query": {"query": "select 1;"}
           }})";
 
   EXPECT_CALL(*mock, InsertJob)
@@ -194,13 +194,13 @@ TEST(JobConnectionTest, CancelJobSuccess) {
           "job":{"kind": "jkind",
           "etag": "jtag",
           "id": "j123",
-          "self_link": "jselfLink",
+          "selfLink": "jselfLink",
           "user_email": "juserEmail",
           "status": {"state": "DONE"},
-          "reference": {"project_id": "p123", "job_id": "j123"},
+          "jobReference": {"projectId": "p123", "jobId": "j123"},
           "configuration": {
-            "job_type": "QUERY",
-            "query_config": {"query": "select 1;"}
+            "jobType": "QUERY",
+            "query": {"query": "select 1;"}
           }}})";
 
   EXPECT_CALL(*mock, CancelJob)

@@ -34,7 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using namespace nlohmann::literals;  // NOLINT
 
 struct JobStatus {
-  ErrorProto error_result;
+  ErrorProto errorResult;
   std::vector<ErrorProto> errors;
   std::string state;
 
@@ -44,8 +44,8 @@ struct JobStatus {
 };
 
 struct JobReference {
-  std::string project_id;
-  std::string job_id;
+  std::string projectId;
+  std::string jobId;
   std::string location;
 
   std::string DebugString(absl::string_view name,
@@ -57,11 +57,11 @@ struct Job {
   std::string kind;
   std::string etag;
   std::string id;
-  std::string self_link;
+  std::string selfLink;
   std::string user_email;
 
   JobStatus status;
-  JobReference reference;
+  JobReference jobReference;
   JobConfiguration configuration;
   JobStatistics statistics;
 
@@ -77,30 +77,31 @@ struct ListFormatJob {
   std::string state;
   std::string principal_subject;
 
-  JobReference reference;
+  JobReference jobReference;
   JobConfiguration configuration;
   JobStatus status;
   JobStatistics statistics;
 
-  ErrorProto error_result;
+  ErrorProto errorResult;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobStatus, error_result, errors,
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobStatus, errorResult, errors,
                                                 state);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobReference, project_id,
-                                                job_id, location);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Job, kind, etag, id, self_link,
-                                                user_email, status, reference,
-                                                configuration, statistics);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobReference, projectId, jobId,
+                                                location);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Job, kind, etag, id, selfLink,
+                                                user_email, status,
+                                                jobReference, configuration,
+                                                statistics);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ListFormatJob, id, kind,
                                                 user_email, state,
-                                                principal_subject, reference,
+                                                principal_subject, jobReference,
                                                 configuration, status,
-                                                statistics, error_result);
+                                                statistics, errorResult);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
