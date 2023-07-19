@@ -70,8 +70,6 @@ void SetHttpDerivedMethodVars(
     // The emitted code needs to access the value via `request.parent()' and
     // 'request.instance().name()`, respectively.
     void operator()(HttpExtensionInfo const& info) {
-      method_vars["method_request_url_path"] = info.url_path;
-      method_vars["method_request_url_substitution"] = info.url_substitution;
       std::string param = info.request_field_name;
       // method_request_param_key and method_request_param_value are only used
       // for gRPC transport.
