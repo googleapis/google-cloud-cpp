@@ -541,6 +541,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/channel/v1/reports_service.proto"
+  additional_proto_files: ["google/cloud/channel/v1/operations.proto"]
+  product_path: "google/cloud/channel/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Composer
 service {
   service_proto_path: "google/cloud/orchestration/airflow/service/v1/environments.proto"
