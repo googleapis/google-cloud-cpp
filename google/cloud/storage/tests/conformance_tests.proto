@@ -79,7 +79,7 @@ message PolicyInput {
 
     Expectations
 
-    E.1: Order them in lexigraphical order so it's the
+    E.1: Order them in lexicographical order so it's
     signature can be verified across different language
     implementations.
 

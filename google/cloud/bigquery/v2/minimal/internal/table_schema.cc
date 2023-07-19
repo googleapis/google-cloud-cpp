@@ -100,8 +100,7 @@ void from_json(nlohmann::json const& j,
     std::vector<TableFieldSchema> fields;
     j.at("fields").get_to(fields);
     for (auto const& f : fields) {
-      auto fpt = std::make_shared<TableFieldSchema>(f);
-      t.push_back(fpt);
+      t.push_back(std::make_shared<TableFieldSchema>(f));
     }
   }
 }

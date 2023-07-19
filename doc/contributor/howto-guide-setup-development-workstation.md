@@ -111,7 +111,7 @@ Install `typos-cli` for spell and typo checking:
 
 ```
 sudo apt install cargo
-cargo install typos-cli --version 1.3.9
+cargo install typos-cli --version 1.16.1
 ```
 
 Install the Python modules used in the integration tests:
