@@ -84,4 +84,4 @@ jobs:
         ci/gha/builds/windows-bazel.sh ${{ matrix.compilation_mode }} ${{ join(matrix.targets, ' ') }}
     env:
       USE_BAZEL_VERSION: 6.2.1
-      BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.msvc }}/${{ matrix.compliation_mode }}
+      BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.msvc }}/${{ matrix.compilation_mode }}
