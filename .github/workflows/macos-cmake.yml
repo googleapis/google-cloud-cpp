@@ -37,12 +37,67 @@ jobs:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
     - uses: google-github-actions/setup-gcloud@v1
-    - name: Get External Configuration
-      id: info
+    - name: Dynamic Configuration
+      id: dynamic
       shell: bash
       run: |
         echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
-        echo "features=$(jq -c .${{ matrix.shard }} < .github/workflows/macos-cmake-features.json)" >> "${GITHUB_OUTPUT}"
+        core_features=(
+          bigtable
+          pubsub
+          pubsublite
+          spanner
+          storage)
+        # These are the libraries with the most "clients". To build the list
+        # run something like this and find the midpoint:
+        #
+        # git grep -l 'class.*Client' 'google/cloud/**_client.h' |
+        #    egrep -v "(bigtable/|internal/|pubsub/|spanner/|storage/)" |
+        #    cut -f -3 -d/| sort | uniq -c | sort -n |
+        #    awk '{ s += $1; print s, $0}'
+        #
+        shard1_features=(
+          servicecontrol
+          support
+          video
+          datacatalog
+          iam
+          kms
+          beyondcorp
+          contentwarehouse
+          dataproc
+          talent
+          retail
+          bigquery
+          appengine
+          monitoring
+          sql
+          dialogflow_cx
+          aiplatform
+          dialogflow_es
+        )
+        if [[ "${{ matrix.shard }}" == "Core" ]]; then
+          features="$(printf ",%s" "${core_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{matrix.shard}}" == "Compute" ]]; then
+          echo "features=compute" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Shard1" ]]; then
+          features="$(printf ",%s" "${shard1_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        else
+          skipped_features=("${core_features[@]}")
+          skipped_features+=(compute)
+          skipped_features+=("${shard1_features[@]}")
+          # Disable `storagetranster` on macOS+CMake because:
+          # - we use vcpkg in this build
+          # - vcpkg ships with Protobuf v21
+          # - GID_MAX is generated in the *.pb.h file
+          # - GID_MAX is a system macro on macOS
+          # - Protobuf v21 does not protect against this macro
+          skipped_features+=(storagetransfer)
+          skipped="$(printf ",-%s" "${skipped_features[@]}")"
+          echo "features=__ga_libraries__,__experimental_libraries__,${skipped:2}" >> "${GITHUB_OUTPUT}"
+        fi
     - name: Install bash >= 5.x and Ninja
       run: brew install bash ninja
     - name: Download and Install sccache
@@ -56,13 +111,13 @@ jobs:
       working-directory: "${{runner.temp}}"
       run: |
         mkdir -p vcpkg
-        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.info.outputs.vcpkg-version }}.tar.gz" |
+        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.dynamic.outputs.vcpkg-version }}.tar.gz" |
             tar -C vcpkg --strip-components=1 -zxf -
         vcpkg/bootstrap-vcpkg.sh -disableMetrics
     - name: Build google-cloud-cpp
       run: |
         export VCPKG_ROOT="${{ runner.temp }}/vcpkg"
-        /usr/local/bin/bash ci/gha/builds/macos-cmake.sh ${{ join(fromJSON(steps.info.outputs.features), ',') }}
+        /usr/local/bin/bash ci/gha/builds/macos-cmake.sh ${{ steps.dynamic.outputs.features }}
     env:
       USE_BAZEL_VERSION: 6.2.1
       BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.os }}
