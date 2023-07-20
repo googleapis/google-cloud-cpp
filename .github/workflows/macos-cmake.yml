@@ -26,8 +26,17 @@ jobs:
       # Continue other builds even if one fails
       fail-fast: false
       matrix:
+        exclude-from-full-trick: [ true ]
         os: [ macos-12 ]
-        shard: ${{ fromJSON(inputs.shards) }}
+        shard: [ Core, Compute, Shard1, Other ]
+        exclude:
+        # Only full builds include shards with generated code.
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Compute
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard1
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Other
     steps:
     - uses: actions/checkout@v3
       with:
