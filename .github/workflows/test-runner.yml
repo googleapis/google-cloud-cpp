@@ -38,13 +38,13 @@ jobs:
         id: save-pull-request
         run: >
           echo "sha=${{ github.event.pull_request.head.sha || github.ref }}" >> $GITHUB_OUTPUT
-      - name: Get github.event Object
+      - name: Get github.event Object DEBUG DEBUG
         run: |
           echo ========== 'github'
           cat >/dev/null <<'_EOF_'
           ${{ toJSON(github.event) }}
           _EOF_
-      - name: Get github Object
+      - name: Get github Object DEBUG DEBUG
         run: |
           echo ========== 'github'
           cat >/dev/null <<'_EOF_'
@@ -64,18 +64,28 @@ jobs:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
   macos-bazel:
-    # We only run the Bazel tests post-merge. macOS builds are expensive, and
-    # the Bazel tests are unlikely to fail given that (1) we have macOS+CMake
-    # builds below, and (2) we have Linux+Bazel tests elsewhere.
-    if: false # DEBUG DEBUG ${{ github.event_name == 'push' }}
+    # We only run the Bazel tests post-merge. GHA builds are expensive, and
+    # the Bazel tests are unlikely to fail given that (1) we have CMake builds
+    # below, and (2) we have Linux+Bazel tests elsewhere.
+    if: ${{ false && github.event.label.name == 'gha:full-build' }} # DEBUG DEBUG ${{ github.event_name == 'push' }}
     name: macOS-Bazel
     needs: [pre-flight]
     uses: ./.github/workflows/macos-bazel.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
+  windows-bazel:
+    if: ${{ github.event.label.name == 'gha:full-build' || github.event_name == 'push' }}
+    name: Windows-Bazel
+    needs: [pre-flight]
+    uses: ./.github/workflows/windows-bazel.yml
+    with:
+      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      # Build the full matrix only on push events to the default branch.
+      full-matrix: ${{ github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+    secrets: inherit
   macos-cmake:
-    if: ${{ false }}
+    if: false # TODO DEBUG DEBUG
     name: macOS-CMake
     needs: [pre-flight]
     uses: ./.github/workflows/macos-cmake.yml
@@ -87,12 +97,12 @@ jobs:
       # this code on Linux and Windows.
       shards: ${{ (github.event_name == 'push' && '["Core","Compute","Shard1","Other"]') || '["Core"]' }}
     secrets: inherit
-  windows:
-    name: Windows
+  windows-cmake:
+    name: Windows-CMake
     needs: [pre-flight]
-    uses: ./.github/workflows/windows.yml
+    uses: ./.github/workflows/windows-bazel.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
       # Build the full matrix only on push events to the default branch.
-      full-matrix: ${{ github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+      full-matrix: ${{ github.event.label.name == 'gha:full-build' || (github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch)) }}
     secrets: inherit
