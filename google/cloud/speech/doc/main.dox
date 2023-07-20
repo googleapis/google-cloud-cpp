@@ -30,6 +30,7 @@ The library also has other classes that provide helpers, configuration
 parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
 
+- [\c speech_v1::AdaptationClient](@ref google::cloud::speech_v1::AdaptationClient)
 - [\c speech_v1::SpeechClient](@ref google::cloud::speech_v1::SpeechClient)
 - [\c speech_v2::SpeechClient](@ref google::cloud::speech_v2::SpeechClient)
 <!-- inject-client-list-end -->
