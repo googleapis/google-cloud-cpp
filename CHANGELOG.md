@@ -114,6 +114,10 @@ info, see [#7463] and [#5976].
 
 The library has been expanded to include the Reporting API.
 
+### [Cloud Monitoring](/google/cloud/monitoring/README.md)
+
+The library has been expanded to include the [Snooze][monitoring-snooze] API.
+
 ### [Compute Engine OS Config](/google/cloud/osconfig/README.md)
 
 The library has been expanded to include the Zonal OS Config API.
@@ -3667,6 +3671,7 @@ releases.  The relevant notes are:
 [iam-policy-link]: https://cloud.google.com/iam/docs/manage-access-other-resources
 [issue-2567]: https://github.com/googleapis/google-cloud-cpp/issues/2567
 [modern-table-ctor]: https://github.com/googleapis/google-cloud-cpp/blob/62740c8e9180056db77d4dd3e80a6fa7ae71295a/google/cloud/bigtable/table.h#L182-L214
+[monitoring-snooze]: https://cloud.google.com/monitoring/alerts/snooze
 [nlohmann-json-gh]: https://github.com/nlohmann/json.git
 [oss-cxx-support]: https://opensource.google/documentation/policies/cplusplus-support
 [product-launch-stages]: https://cloud.google.com/products/#product-launch-stages
