@@ -69,6 +69,11 @@ jobs:
     uses: ./.github/workflows/macos-cmake.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      # On pull requests only build the `Core` shard. This contains all the
+      # hand-crafted code. The other shards are unlikely to catch problems, as
+      # (1) this is largely generated code, (2) we have other builds that test
+      # this code on Linux and Windows.
+      shards: ${{ (github.event_name == 'push' && '["Core","Compute","Shard1","Other"]') || '["Core"]' }}
     secrets: inherit
   windows:
     name: Windows
