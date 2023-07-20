@@ -58,7 +58,6 @@ jobs:
   # the additional jobs inherit any secrets needed to use the remote caches and
   # receive what version to checkout as an input.
   external-account-integration:
-    if: ${{ false }}  # DEBUG DEBUG
     name: External Account Integration
     needs: [pre-flight]
     uses: ./.github/workflows/external-account-integration.yml
