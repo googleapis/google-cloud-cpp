@@ -54,25 +54,33 @@ void to_json(nlohmann::json& j, JobStatistics const& s) {
 }
 
 void from_json(nlohmann::json const& j, JobStatistics& s) {
-  if (j.contains("totalBytesProcessed"))
+  if (j.contains("totalBytesProcessed")) {
     j.at("totalBytesProcessed").get_to(s.total_bytes_processed);
+  }
   if (j.contains("numChildJobs")) j.at("numChildJobs").get_to(s.num_child_jobs);
   if (j.contains("parentJobId")) j.at("parentJobId").get_to(s.parent_job_id);
   if (j.contains("sessionInfo")) j.at("sessionInfo").get_to(s.session_info);
-  if (j.contains("transactionInfo"))
+  if (j.contains("transactionInfo")) {
     j.at("transactionInfo").get_to(s.transaction_info);
-  if (j.contains("reservation_id"))
+  }
+  if (j.contains("reservation_id")) {
     j.at("reservation_id").get_to(s.reservation_id);
-  if (j.contains("rowLevelSecurityStatistics"))
+  }
+  if (j.contains("rowLevelSecurityStatistics")) {
     j.at("rowLevelSecurityStatistics").get_to(s.row_level_security_statistics);
-  if (j.contains("dataMaskingStatistics"))
+  }
+  if (j.contains("dataMaskingStatistics")) {
     j.at("dataMaskingStatistics").get_to(s.data_masking_statistics);
-  if (j.contains("completionRatio"))
+  }
+  if (j.contains("completionRatio")) {
     j.at("completionRatio").get_to(s.completion_ratio);
-  if (j.contains("quotaDeferments"))
+  }
+  if (j.contains("quotaDeferments")) {
     j.at("quotaDeferments").get_to(s.quota_deferments);
-  if (j.contains("scriptStatistics"))
+  }
+  if (j.contains("scriptStatistics")) {
     j.at("scriptStatistics").get_to(s.script_statistics);
+  }
   if (j.contains("query")) j.at("query").get_to(s.job_query_stats);
 
   FromJson(s.start_time, j, "startTime");
@@ -188,8 +196,9 @@ void to_json(nlohmann::json& j, TransactionInfo const& t) {
   j = nlohmann::json{{"transactionId", t.transaction_id}};
 }
 void from_json(nlohmann::json const& j, TransactionInfo& t) {
-  if (j.contains("transactionId"))
+  if (j.contains("transactionId")) {
     j.at("transactionId").get_to(t.transaction_id);
+  }
 }
 
 void to_json(nlohmann::json& j, ScriptStatistics const& s) {
@@ -197,8 +206,9 @@ void to_json(nlohmann::json& j, ScriptStatistics const& s) {
                      {"stackFrames", s.stack_frames}};
 }
 void from_json(nlohmann::json const& j, ScriptStatistics& s) {
-  if (j.contains("evaluationKind"))
+  if (j.contains("evaluationKind")) {
     j.at("evaluationKind").get_to(s.evaluation_kind);
+  }
   if (j.contains("stackFrames")) j.at("stackFrames").get_to(s.stack_frames);
 }
 

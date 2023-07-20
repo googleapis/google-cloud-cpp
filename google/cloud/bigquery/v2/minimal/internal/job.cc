@@ -111,8 +111,9 @@ void from_json(nlohmann::json const& j, Job& jb) {
   if (j.contains("user_email")) j.at("user_email").get_to(jb.user_email);
   if (j.contains("status")) j.at("status").get_to(jb.status);
   if (j.contains("jobReference")) j.at("jobReference").get_to(jb.job_reference);
-  if (j.contains("configuration"))
+  if (j.contains("configuration")) {
     j.at("configuration").get_to(jb.configuration);
+  }
   if (j.contains("statistics")) j.at("statistics").get_to(jb.statistics);
 }
 
@@ -133,11 +134,13 @@ void from_json(nlohmann::json const& j, ListFormatJob& l) {
   if (j.contains("kind")) j.at("kind").get_to(l.kind);
   if (j.contains("user_email")) j.at("user_email").get_to(l.user_email);
   if (j.contains("state")) j.at("state").get_to(l.state);
-  if (j.contains("principal_subject"))
+  if (j.contains("principal_subject")) {
     j.at("principal_subject").get_to(l.principal_subject);
+  }
   if (j.contains("jobReference")) j.at("jobReference").get_to(l.job_reference);
-  if (j.contains("configuration"))
+  if (j.contains("configuration")) {
     j.at("configuration").get_to(l.configuration);
+  }
   if (j.contains("status")) j.at("status").get_to(l.status);
   if (j.contains("statistics")) j.at("statistics").get_to(l.statistics);
   if (j.contains("errorResult")) j.at("errorResult").get_to(l.error_result);

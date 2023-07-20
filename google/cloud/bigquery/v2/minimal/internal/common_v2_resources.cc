@@ -548,6 +548,7 @@ void to_json(nlohmann::json& j, TableReference const& t) {
                      {"tableId", t.table_id}};
 }
 void from_json(nlohmann::json const& j, TableReference& t) {
+  // TODO(#12188): Implement SafeGetTo(...)
   if (j.contains("projectId")) j.at("projectId").get_to(t.project_id);
   if (j.contains("datasetId")) j.at("datasetId").get_to(t.dataset_id);
   if (j.contains("tableId")) j.at("tableId").get_to(t.table_id);
