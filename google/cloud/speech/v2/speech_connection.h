@@ -22,7 +22,6 @@
 #include "google/cloud/speech/v2/internal/speech_retry_traits.h"
 #include "google/cloud/speech/v2/speech_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -289,8 +288,7 @@ class SpeechConnection {
  * @param options (optional) Configure the `SpeechConnection` created by
  * this function.
  */
-std::shared_ptr<SpeechConnection> MakeSpeechConnection(ExperimentalTag,
-                                                       Options options = {});
+std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v2
