@@ -103,40 +103,48 @@ export LANG=C.UTF-8
 
 # Stage documentation in DocFX format for processing. go/cloud-rad for details.
 function stage_docfx() {
-  local package="$1"
-  local docfx_dir="$2"
+  local feature="$1"
+  local binary_dir="$2"
+  local log="${3}"
+  local package="google-cloud-${feature}"
+  local path="${binary_dir}/google/cloud/${feature}/docfx"
+  if [[ "${feature}" == "common" ]]; then
+    path="${binary_dir}/google/cloud/docfx"
+  fi
 
-  if [[ ! -d "${docfx_dir}" ]]; then
-    io::log_red "Directory not found: ${docfx_dir}, skipping"
+  echo "path=${path}" >"${log}"
+  if [[ ! -d "${path}" ]]; then
+    echo "Directory not found: ${path}, skipping" >>"${log}"
+    echo "SUCCESS" >>"${log}"
     return 0
   fi
 
-  io::log "docfx_dir=${docfx_dir}"
-
-  env -C "${docfx_dir}" "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
-    python3 -m docuploader upload \
+  if ci/retry-command.sh 3 120 env -C "${path}" python3 -m docuploader upload \
     --staging-bucket "${docfx_bucket}" \
-    --destination-prefix docfx .
+    --destination-prefix docfx . >>"${log}" 2>&1 </dev/null; then
+    echo "SUCCESS" >>"${log}"
+  fi
 }
-
-exit_status=0
+export -f stage_docfx # enables this function to be called from a subshell
 
 io::log_h2 "Publishing DocFX"
 io::log "branch:  ${BRANCH_NAME}"
 io::log "bucket:  gs://${docfx_bucket}"
 
+echo common "${FEATURE_LIST[@]}" | xargs -P "$(nproc)" -n 1 \
+  bash -c "TIMEFORMAT=\"\${0} completed in %0lR\";
+           time stage_docfx \"\${0}\" cmake-out \"cmake-out/\${0}.docfx.log\""
+
+errors=0
 for feature in common "${FEATURE_LIST[@]}"; do
-  if [[ "${feature}" == "experimental-storage-grpc" ]]; then continue; fi
-  if [[ "${feature}" == "grafeas" ]]; then continue; fi
-  if [[ "${feature}" == "experimental-opentelemetry" ]]; then feature="opentelemetry"; fi
-  path="cmake-out/google/cloud/${feature}/docfx"
-  if [[ "${feature}" == "common" ]]; then path="cmake-out/google/cloud/docfx"; fi
-  io::log_h2 "Uploading docfx docs: ${feature}"
-  # These uploads are extremely noisy. Just print their output on error.
-  if ! mapfile -t LOG < <(stage_docfx "google-cloud-${feature}" "${path}" 2>&1); then
-    for line in "${LOG[@]}"; do echo "${line}"; done
-    exit_status=1
+  log="cmake-out/${feature}.docfx.log"
+  if [[ "$(tail -1 "${log}")" == "SUCCESS" ]]; then
+    continue
   fi
+  ((++errors))
+  io::log_red "Error uploading documentation for ${feature}"
+  cat "${log}"
 done
 
-exit ${exit_status}
+echo
+exit "${errors}"
