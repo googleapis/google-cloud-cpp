@@ -10,7 +10,7 @@ on:
       full-matrix:
         required: true
         description: "Run the full matrix"
-        type: bool
+        type: boolean
 
 permissions:
   contents: read
