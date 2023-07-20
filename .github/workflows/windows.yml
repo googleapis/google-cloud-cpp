@@ -108,7 +108,7 @@ jobs:
       # Continue other builds even if one fails
       fail-fast: false
       matrix:
-        full-build: [ true ]
+        exclude-from-full-trick: [ true ]
         msvc: [ msvc-2022, msvc-2019 ]
         build_type: [ Debug, Release ]
         vcpkg_triplet: [ x64-windows ]
@@ -123,9 +123,9 @@ jobs:
         # this code on Linux.
         # Do not run MSVC 2019 builds with pull requests. Running builds is
         # expensive, and these rarely catch any problems.
-        - full-build: ${{ ! inputs.full-matrix }}
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           msvc: ${{ 'windows-2019' }}
-        - full-build: ${{ ! inputs.full-matrix }}
+        - exclude-from-full-tri: ${{ ! inputs.full-matrix }}
           msvc: msvc-2019
         # Compute is (currently) a single `.lib` file. This file is too large in
         # Debug mode. MSVC uses COFF:

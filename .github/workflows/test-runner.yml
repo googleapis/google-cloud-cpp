@@ -77,11 +77,19 @@ jobs:
     secrets: inherit
   debug:
     name: DEBUG DEBUG DEBUG
-    run: |
-      echo ========== 'github'
-      cat >/dev/null <'_EOF_'
-      ${{ toJSON(github) }}
-      _EOF_
+    steps:
+      name: Get GitHub Object
+      run: |
+        echo ========== 'github'
+        cat >/dev/null <'_EOF_'
+        ${{ toJSON(github) }}
+        _EOF_
+      name: Get github.event Object
+      run: |
+        echo ========== 'github'
+        cat >/dev/null <'_EOF_'
+        ${{ toJSON(github.event) }}
+        _EOF_
   windows:
     name: Windows
     needs: [pre-flight]
