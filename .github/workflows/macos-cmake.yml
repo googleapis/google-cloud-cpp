@@ -56,7 +56,8 @@ jobs:
           pubsub
           pubsublite
           spanner
-          storage)
+          storage
+        )
         # These are the libraries with the most "clients". To build the list
         # run something like this and find the midpoint:
         #
