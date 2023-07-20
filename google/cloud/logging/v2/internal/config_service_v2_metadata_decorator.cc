@@ -33,7 +33,8 @@ ConfigServiceV2Metadata::ConfigServiceV2Metadata(
     std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::logging::v2::ListBucketsResponse>
 ConfigServiceV2Metadata::ListBuckets(
@@ -43,8 +44,7 @@ ConfigServiceV2Metadata::ListBuckets(
   return child_->ListBuckets(context, request);
 }
 
-StatusOr<google::logging::v2::LogBucket>
-ConfigServiceV2Metadata::GetBucket(
+StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Metadata::GetBucket(
     grpc::ClientContext& context,
     google::logging::v2::GetBucketRequest const& request) {
   SetMetadata(context, "name=" + request.name());
@@ -69,32 +69,28 @@ ConfigServiceV2Metadata::AsyncUpdateBucketAsync(
   return child_->AsyncUpdateBucketAsync(cq, std::move(context), request);
 }
 
-StatusOr<google::logging::v2::LogBucket>
-ConfigServiceV2Metadata::CreateBucket(
+StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Metadata::CreateBucket(
     grpc::ClientContext& context,
     google::logging::v2::CreateBucketRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->CreateBucket(context, request);
 }
 
-StatusOr<google::logging::v2::LogBucket>
-ConfigServiceV2Metadata::UpdateBucket(
+StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Metadata::UpdateBucket(
     grpc::ClientContext& context,
     google::logging::v2::UpdateBucketRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->UpdateBucket(context, request);
 }
 
-Status
-ConfigServiceV2Metadata::DeleteBucket(
+Status ConfigServiceV2Metadata::DeleteBucket(
     grpc::ClientContext& context,
     google::logging::v2::DeleteBucketRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->DeleteBucket(context, request);
 }
 
-Status
-ConfigServiceV2Metadata::UndeleteBucket(
+Status ConfigServiceV2Metadata::UndeleteBucket(
     grpc::ClientContext& context,
     google::logging::v2::UndeleteBucketRequest const& request) {
   SetMetadata(context, "name=" + request.name());
@@ -109,32 +105,28 @@ ConfigServiceV2Metadata::ListViews(
   return child_->ListViews(context, request);
 }
 
-StatusOr<google::logging::v2::LogView>
-ConfigServiceV2Metadata::GetView(
+StatusOr<google::logging::v2::LogView> ConfigServiceV2Metadata::GetView(
     grpc::ClientContext& context,
     google::logging::v2::GetViewRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetView(context, request);
 }
 
-StatusOr<google::logging::v2::LogView>
-ConfigServiceV2Metadata::CreateView(
+StatusOr<google::logging::v2::LogView> ConfigServiceV2Metadata::CreateView(
     grpc::ClientContext& context,
     google::logging::v2::CreateViewRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->CreateView(context, request);
 }
 
-StatusOr<google::logging::v2::LogView>
-ConfigServiceV2Metadata::UpdateView(
+StatusOr<google::logging::v2::LogView> ConfigServiceV2Metadata::UpdateView(
     grpc::ClientContext& context,
     google::logging::v2::UpdateViewRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->UpdateView(context, request);
 }
 
-Status
-ConfigServiceV2Metadata::DeleteView(
+Status ConfigServiceV2Metadata::DeleteView(
     grpc::ClientContext& context,
     google::logging::v2::DeleteViewRequest const& request) {
   SetMetadata(context, "name=" + request.name());
@@ -149,32 +141,28 @@ ConfigServiceV2Metadata::ListSinks(
   return child_->ListSinks(context, request);
 }
 
-StatusOr<google::logging::v2::LogSink>
-ConfigServiceV2Metadata::GetSink(
+StatusOr<google::logging::v2::LogSink> ConfigServiceV2Metadata::GetSink(
     grpc::ClientContext& context,
     google::logging::v2::GetSinkRequest const& request) {
   SetMetadata(context, "sink_name=" + request.sink_name());
   return child_->GetSink(context, request);
 }
 
-StatusOr<google::logging::v2::LogSink>
-ConfigServiceV2Metadata::CreateSink(
+StatusOr<google::logging::v2::LogSink> ConfigServiceV2Metadata::CreateSink(
     grpc::ClientContext& context,
     google::logging::v2::CreateSinkRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->CreateSink(context, request);
 }
 
-StatusOr<google::logging::v2::LogSink>
-ConfigServiceV2Metadata::UpdateSink(
+StatusOr<google::logging::v2::LogSink> ConfigServiceV2Metadata::UpdateSink(
     grpc::ClientContext& context,
     google::logging::v2::UpdateSinkRequest const& request) {
   SetMetadata(context, "sink_name=" + request.sink_name());
   return child_->UpdateSink(context, request);
 }
 
-Status
-ConfigServiceV2Metadata::DeleteSink(
+Status ConfigServiceV2Metadata::DeleteSink(
     grpc::ClientContext& context,
     google::logging::v2::DeleteSinkRequest const& request) {
   SetMetadata(context, "sink_name=" + request.sink_name());
@@ -207,8 +195,7 @@ ConfigServiceV2Metadata::ListLinks(
   return child_->ListLinks(context, request);
 }
 
-StatusOr<google::logging::v2::Link>
-ConfigServiceV2Metadata::GetLink(
+StatusOr<google::logging::v2::Link> ConfigServiceV2Metadata::GetLink(
     grpc::ClientContext& context,
     google::logging::v2::GetLinkRequest const& request) {
   SetMetadata(context, "name=" + request.name());
@@ -247,8 +234,7 @@ ConfigServiceV2Metadata::UpdateExclusion(
   return child_->UpdateExclusion(context, request);
 }
 
-Status
-ConfigServiceV2Metadata::DeleteExclusion(
+Status ConfigServiceV2Metadata::DeleteExclusion(
     grpc::ClientContext& context,
     google::logging::v2::DeleteExclusionRequest const& request) {
   SetMetadata(context, "name=" + request.name());
@@ -271,16 +257,14 @@ ConfigServiceV2Metadata::UpdateCmekSettings(
   return child_->UpdateCmekSettings(context, request);
 }
 
-StatusOr<google::logging::v2::Settings>
-ConfigServiceV2Metadata::GetSettings(
+StatusOr<google::logging::v2::Settings> ConfigServiceV2Metadata::GetSettings(
     grpc::ClientContext& context,
     google::logging::v2::GetSettingsRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetSettings(context, request);
 }
 
-StatusOr<google::logging::v2::Settings>
-ConfigServiceV2Metadata::UpdateSettings(
+StatusOr<google::logging::v2::Settings> ConfigServiceV2Metadata::UpdateSettings(
     grpc::ClientContext& context,
     google::logging::v2::UpdateSettingsRequest const& request) {
   SetMetadata(context, "name=" + request.name());
@@ -314,7 +298,7 @@ future<Status> ConfigServiceV2Metadata::AsyncCancelOperation(
 }
 
 void ConfigServiceV2Metadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context);
 }
@@ -326,8 +310,8 @@ void ConfigServiceV2Metadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    context.AddMetadata(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
   }
   auto const& authority = options.get<AuthorityOption>();
   if (!authority.empty()) context.set_authority(authority);

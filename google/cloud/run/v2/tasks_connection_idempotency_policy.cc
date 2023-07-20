@@ -33,16 +33,18 @@ TasksConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TasksConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TasksConnectionIdempotencyPolicy::GetTask(google::cloud::run::v2::GetTaskRequest const&) {
+Idempotency TasksConnectionIdempotencyPolicy::GetTask(
+    google::cloud::run::v2::GetTaskRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TasksConnectionIdempotencyPolicy::ListTasks(google::cloud::run::v2::ListTasksRequest) {  // NOLINT
+Idempotency TasksConnectionIdempotencyPolicy::ListTasks(
+    google::cloud::run::v2::ListTasksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<TasksConnectionIdempotencyPolicy>
-    MakeDefaultTasksConnectionIdempotencyPolicy() {
+MakeDefaultTasksConnectionIdempotencyPolicy() {
   return std::make_unique<TasksConnectionIdempotencyPolicy>();
 }
 

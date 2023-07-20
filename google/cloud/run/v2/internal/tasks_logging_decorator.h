@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TasksLogging : public TasksStub {
  public:
   ~TasksLogging() override = default;
-  TasksLogging(std::shared_ptr<TasksStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+  TasksLogging(std::shared_ptr<TasksStub> child, TracingOptions tracing_options,
+               std::set<std::string> const& components);
 
   StatusOr<google::cloud::run::v2::Task> GetTask(
       grpc::ClientContext& context,

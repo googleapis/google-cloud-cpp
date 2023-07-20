@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_NODE_GROUP_CONTROLLER_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_NODE_GROUP_CONTROLLER_STUB_FACTORY_H
 
+#include "google/cloud/dataproc/v1/internal/node_group_controller_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/dataproc/v1/internal/node_group_controller_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>

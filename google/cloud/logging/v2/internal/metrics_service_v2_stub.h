@@ -34,59 +34,56 @@ class MetricsServiceV2Stub {
   virtual ~MetricsServiceV2Stub() = 0;
 
   virtual StatusOr<google::logging::v2::ListLogMetricsResponse> ListLogMetrics(
-    grpc::ClientContext& context,
-    google::logging::v2::ListLogMetricsRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::logging::v2::ListLogMetricsRequest const& request) = 0;
 
   virtual StatusOr<google::logging::v2::LogMetric> GetLogMetric(
-    grpc::ClientContext& context,
-    google::logging::v2::GetLogMetricRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::logging::v2::GetLogMetricRequest const& request) = 0;
 
   virtual StatusOr<google::logging::v2::LogMetric> CreateLogMetric(
-    grpc::ClientContext& context,
-    google::logging::v2::CreateLogMetricRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::logging::v2::CreateLogMetricRequest const& request) = 0;
 
   virtual StatusOr<google::logging::v2::LogMetric> UpdateLogMetric(
-    grpc::ClientContext& context,
-    google::logging::v2::UpdateLogMetricRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::logging::v2::UpdateLogMetricRequest const& request) = 0;
 
   virtual Status DeleteLogMetric(
-    grpc::ClientContext& context,
-    google::logging::v2::DeleteLogMetricRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::logging::v2::DeleteLogMetricRequest const& request) = 0;
 };
 
 class DefaultMetricsServiceV2Stub : public MetricsServiceV2Stub {
  public:
   explicit DefaultMetricsServiceV2Stub(
-      std::unique_ptr<google::logging::v2::MetricsServiceV2::StubInterface> grpc_stub)
+      std::unique_ptr<google::logging::v2::MetricsServiceV2::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::logging::v2::ListLogMetricsResponse>
-  ListLogMetrics(
-    grpc::ClientContext& client_context,
-    google::logging::v2::ListLogMetricsRequest const& request) override;
+  StatusOr<google::logging::v2::ListLogMetricsResponse> ListLogMetrics(
+      grpc::ClientContext& client_context,
+      google::logging::v2::ListLogMetricsRequest const& request) override;
 
-  StatusOr<google::logging::v2::LogMetric>
-  GetLogMetric(
-    grpc::ClientContext& client_context,
-    google::logging::v2::GetLogMetricRequest const& request) override;
+  StatusOr<google::logging::v2::LogMetric> GetLogMetric(
+      grpc::ClientContext& client_context,
+      google::logging::v2::GetLogMetricRequest const& request) override;
 
-  StatusOr<google::logging::v2::LogMetric>
-  CreateLogMetric(
-    grpc::ClientContext& client_context,
-    google::logging::v2::CreateLogMetricRequest const& request) override;
+  StatusOr<google::logging::v2::LogMetric> CreateLogMetric(
+      grpc::ClientContext& client_context,
+      google::logging::v2::CreateLogMetricRequest const& request) override;
 
-  StatusOr<google::logging::v2::LogMetric>
-  UpdateLogMetric(
-    grpc::ClientContext& client_context,
-    google::logging::v2::UpdateLogMetricRequest const& request) override;
+  StatusOr<google::logging::v2::LogMetric> UpdateLogMetric(
+      grpc::ClientContext& client_context,
+      google::logging::v2::UpdateLogMetricRequest const& request) override;
 
-  Status
-  DeleteLogMetric(
-    grpc::ClientContext& client_context,
-    google::logging::v2::DeleteLogMetricRequest const& request) override;
+  Status DeleteLogMetric(
+      grpc::ClientContext& client_context,
+      google::logging::v2::DeleteLogMetricRequest const& request) override;
 
  private:
-  std::unique_ptr<google::logging::v2::MetricsServiceV2::StubInterface> grpc_stub_;
+  std::unique_ptr<google::logging::v2::MetricsServiceV2::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

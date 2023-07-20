@@ -36,18 +36,18 @@ class ExecutionsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<ExecutionsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  GetExecution(google::cloud::run::v2::GetExecutionRequest const& request);
+  virtual google::cloud::Idempotency GetExecution(
+      google::cloud::run::v2::GetExecutionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListExecutions(google::cloud::run::v2::ListExecutionsRequest request);
+  virtual google::cloud::Idempotency ListExecutions(
+      google::cloud::run::v2::ListExecutionsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteExecution(google::cloud::run::v2::DeleteExecutionRequest const& request);
+  virtual google::cloud::Idempotency DeleteExecution(
+      google::cloud::run::v2::DeleteExecutionRequest const& request);
 };
 
 std::unique_ptr<ExecutionsConnectionIdempotencyPolicy>
-    MakeDefaultExecutionsConnectionIdempotencyPolicy();
+MakeDefaultExecutionsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2

@@ -32,10 +32,11 @@ NodeGroupControllerTracingStub::NodeGroupControllerTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerTracingStub::AsyncCreateNodeGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "CreateNodeGroup");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.NodeGroupController", "CreateNodeGroup");
   {
     auto scope = opentelemetry::trace::Scope(span);
     internal::InjectTraceContext(*context, internal::CurrentOptions());
@@ -46,10 +47,11 @@ NodeGroupControllerTracingStub::AsyncCreateNodeGroup(
 
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerTracingStub::AsyncResizeNodeGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "ResizeNodeGroup");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.NodeGroupController", "ResizeNodeGroup");
   {
     auto scope = opentelemetry::trace::Scope(span);
     internal::InjectTraceContext(*context, internal::CurrentOptions());
@@ -58,10 +60,12 @@ NodeGroupControllerTracingStub::AsyncResizeNodeGroup(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::cloud::dataproc::v1::NodeGroup> NodeGroupControllerTracingStub::GetNodeGroup(
+StatusOr<google::cloud::dataproc::v1::NodeGroup>
+NodeGroupControllerTracingStub::GetNodeGroup(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.NodeGroupController", "GetNodeGroup");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.NodeGroupController", "GetNodeGroup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,

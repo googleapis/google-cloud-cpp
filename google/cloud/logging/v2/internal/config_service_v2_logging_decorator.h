@@ -36,8 +36,8 @@ class ConfigServiceV2Logging : public ConfigServiceV2Stub {
  public:
   ~ConfigServiceV2Logging() override = default;
   ConfigServiceV2Logging(std::shared_ptr<ConfigServiceV2Stub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                         TracingOptions tracing_options,
+                         std::set<std::string> const& components);
 
   StatusOr<google::logging::v2::ListBucketsResponse> ListBuckets(
       grpc::ClientContext& context,

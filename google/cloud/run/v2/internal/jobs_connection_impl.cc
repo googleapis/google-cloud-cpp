@@ -17,13 +17,13 @@
 // source: google/cloud/run/v2/job.proto
 
 #include "google/cloud/run/v2/internal/jobs_connection_impl.h"
+#include "google/cloud/run/v2/internal/jobs_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/run/v2/internal/jobs_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -33,67 +33,67 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 JobsConnectionImpl::JobsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<run_v2_internal::JobsStub> stub,
-    Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        JobsConnection::options())) {}
+    std::shared_ptr<run_v2_internal::JobsStub> stub, Options options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      JobsConnection::options())) {}
 
-future<StatusOr<google::cloud::run::v2::Job>>
-JobsConnectionImpl::CreateJob(google::cloud::run::v2::CreateJobRequest const& request) {
+future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::CreateJob(
+    google::cloud::run::v2::CreateJobRequest const& request) {
   auto& stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::run::v2::Job>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::run::v2::CreateJobRequest const& request) {
-     return stub->AsyncCreateJob(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::run::v2::Job>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->CreateJob(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::run::v2::Job>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::run::v2::CreateJobRequest const& request) {
+        return stub->AsyncCreateJob(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::run::v2::Job>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateJob(request), polling_policy(), __func__);
 }
 
-StatusOr<google::cloud::run::v2::Job>
-JobsConnectionImpl::GetJob(google::cloud::run::v2::GetJobRequest const& request) {
+StatusOr<google::cloud::run::v2::Job> JobsConnectionImpl::GetJob(
+    google::cloud::run::v2::GetJobRequest const& request) {
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetJob(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->GetJob(request),
       [this](grpc::ClientContext& context,
-          google::cloud::run::v2::GetJobRequest const& request) {
+             google::cloud::run::v2::GetJobRequest const& request) {
         return stub_->GetJob(context, request);
       },
       request, __func__);
 }
 
-StreamRange<google::cloud::run::v2::Job>
-JobsConnectionImpl::ListJobs(google::cloud::run::v2::ListJobsRequest request) {
+StreamRange<google::cloud::run::v2::Job> JobsConnectionImpl::ListJobs(
+    google::cloud::run::v2::ListJobsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<run_v2::JobsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::run::v2::Job>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::run::v2::Job>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::run::v2::ListJobsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::run::v2::ListJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::cloud::run::v2::ListJobsRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::cloud::run::v2::ListJobsRequest const& request) {
               return stub->ListJobs(context, request);
             },
             r, function_name);
@@ -106,118 +106,119 @@ JobsConnectionImpl::ListJobs(google::cloud::run::v2::ListJobsRequest request) {
       });
 }
 
-future<StatusOr<google::cloud::run::v2::Job>>
-JobsConnectionImpl::UpdateJob(google::cloud::run::v2::UpdateJobRequest const& request) {
+future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::UpdateJob(
+    google::cloud::run::v2::UpdateJobRequest const& request) {
   auto& stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::run::v2::Job>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::run::v2::UpdateJobRequest const& request) {
-     return stub->AsyncUpdateJob(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::run::v2::Job>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->UpdateJob(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::run::v2::Job>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::run::v2::UpdateJobRequest const& request) {
+        return stub->AsyncUpdateJob(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::run::v2::Job>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateJob(request), polling_policy(), __func__);
 }
 
-future<StatusOr<google::cloud::run::v2::Job>>
-JobsConnectionImpl::DeleteJob(google::cloud::run::v2::DeleteJobRequest const& request) {
+future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::DeleteJob(
+    google::cloud::run::v2::DeleteJobRequest const& request) {
   auto& stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::run::v2::Job>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::run::v2::DeleteJobRequest const& request) {
-     return stub->AsyncDeleteJob(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::run::v2::Job>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->DeleteJob(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::run::v2::Job>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::run::v2::DeleteJobRequest const& request) {
+        return stub->AsyncDeleteJob(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::run::v2::Job>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteJob(request), polling_policy(), __func__);
 }
 
-future<StatusOr<google::cloud::run::v2::Execution>>
-JobsConnectionImpl::RunJob(google::cloud::run::v2::RunJobRequest const& request) {
+future<StatusOr<google::cloud::run::v2::Execution>> JobsConnectionImpl::RunJob(
+    google::cloud::run::v2::RunJobRequest const& request) {
   auto& stub = stub_;
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::run::v2::Execution>(
-    background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::run::v2::RunJobRequest const& request) {
-     return stub->AsyncRunJob(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), request);
-    },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::run::v2::Execution>,
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->RunJob(request),
-    polling_policy(), __func__);
-
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::run::v2::Execution>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::run::v2::RunJobRequest const& request) {
+        return stub->AsyncRunJob(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::run::v2::Execution>,
+      retry_policy(), backoff_policy(), idempotency_policy()->RunJob(request),
+      polling_policy(), __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-JobsConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> JobsConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
       [this](grpc::ClientContext& context,
-          google::iam::v1::GetIamPolicyRequest const& request) {
+             google::iam::v1::GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(context, request);
       },
       request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-JobsConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> JobsConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
       [this](grpc::ClientContext& context,
-          google::iam::v1::SetIamPolicyRequest const& request) {
+             google::iam::v1::SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-JobsConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+JobsConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](grpc::ClientContext& context,
-          google::iam::v1::TestIamPermissionsRequest const& request) {
+             google::iam::v1::TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(context, request);
       },
       request, __func__);

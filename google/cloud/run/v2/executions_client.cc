@@ -27,34 +27,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ExecutionsClient::ExecutionsClient(
     std::shared_ptr<ExecutionsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ExecutionsClient::~ExecutionsClient() = default;
 
-StatusOr<google::cloud::run::v2::Execution>
-ExecutionsClient::GetExecution(std::string const& name, Options opts) {
+StatusOr<google::cloud::run::v2::Execution> ExecutionsClient::GetExecution(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::GetExecutionRequest request;
   request.set_name(name);
   return connection_->GetExecution(request);
 }
 
-StatusOr<google::cloud::run::v2::Execution>
-ExecutionsClient::GetExecution(google::cloud::run::v2::GetExecutionRequest const& request, Options opts) {
+StatusOr<google::cloud::run::v2::Execution> ExecutionsClient::GetExecution(
+    google::cloud::run::v2::GetExecutionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetExecution(request);
 }
 
-StreamRange<google::cloud::run::v2::Execution>
-ExecutionsClient::ListExecutions(std::string const& parent, Options opts) {
+StreamRange<google::cloud::run::v2::Execution> ExecutionsClient::ListExecutions(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::ListExecutionsRequest request;
   request.set_parent(parent);
   return connection_->ListExecutions(request);
 }
 
-StreamRange<google::cloud::run::v2::Execution>
-ExecutionsClient::ListExecutions(google::cloud::run::v2::ListExecutionsRequest request, Options opts) {
+StreamRange<google::cloud::run::v2::Execution> ExecutionsClient::ListExecutions(
+    google::cloud::run::v2::ListExecutionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListExecutions(std::move(request));
 }
@@ -68,7 +68,9 @@ ExecutionsClient::DeleteExecution(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>>
-ExecutionsClient::DeleteExecution(google::cloud::run::v2::DeleteExecutionRequest const& request, Options opts) {
+ExecutionsClient::DeleteExecution(
+    google::cloud::run::v2::DeleteExecutionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExecution(request);
 }

@@ -32,14 +32,15 @@ NodeGroupControllerAuth::NodeGroupControllerAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerAuth::AsyncCreateNodeGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -50,14 +51,15 @@ NodeGroupControllerAuth::AsyncCreateNodeGroup(
 
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerAuth::AsyncResizeNodeGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -66,7 +68,8 @@ NodeGroupControllerAuth::AsyncResizeNodeGroup(
       });
 }
 
-StatusOr<google::cloud::dataproc::v1::NodeGroup> NodeGroupControllerAuth::GetNodeGroup(
+StatusOr<google::cloud::dataproc::v1::NodeGroup>
+NodeGroupControllerAuth::GetNodeGroup(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -81,9 +84,10 @@ NodeGroupControllerAuth::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -97,9 +101,10 @@ future<Status> NodeGroupControllerAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
         return child->AsyncCancelOperation(cq, *std::move(context), request);

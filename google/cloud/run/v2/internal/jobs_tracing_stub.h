@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_JOBS_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_JOBS_TRACING_STUB_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/run/v2/internal/jobs_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -98,8 +98,7 @@ class JobsTracingStub : public JobsStub {
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<JobsStub> MakeJobsTracingStub(
-    std::shared_ptr<JobsStub> stub);
+std::shared_ptr<JobsStub> MakeJobsTracingStub(std::shared_ptr<JobsStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2_internal

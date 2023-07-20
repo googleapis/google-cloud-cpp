@@ -28,10 +28,10 @@ namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MetricsServiceV2Logging::MetricsServiceV2Logging(
-    std::shared_ptr<MetricsServiceV2Stub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<MetricsServiceV2Stub> child, TracingOptions tracing_options,
     std::set<std::string> const& components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::logging::v2::ListLogMetricsResponse>
@@ -46,8 +46,7 @@ MetricsServiceV2Logging::ListLogMetrics(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2Logging::GetLogMetric(
+StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Logging::GetLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::GetLogMetricRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -82,8 +81,7 @@ MetricsServiceV2Logging::UpdateLogMetric(
       context, request, __func__, tracing_options_);
 }
 
-Status
-MetricsServiceV2Logging::DeleteLogMetric(
+Status MetricsServiceV2Logging::DeleteLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::DeleteLogMetricRequest const& request) {
   return google::cloud::internal::LogWrapper(

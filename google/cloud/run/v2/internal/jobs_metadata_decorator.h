@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class JobsMetadata : public JobsStub {
  public:
   ~JobsMetadata() override = default;
-  JobsMetadata(
-      std::shared_ptr<JobsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+  JobsMetadata(std::shared_ptr<JobsStub> child,
+               std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateJob(
       google::cloud::CompletionQueue& cq,

@@ -46,41 +46,41 @@ class MockJobsConnection : public run_v2::JobsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>,
-  CreateJob,
-  (google::cloud::run::v2::CreateJobRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, CreateJob,
+              (google::cloud::run::v2::CreateJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::run::v2::Job>,
-  GetJob,
-  (google::cloud::run::v2::GetJobRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::run::v2::Job>, GetJob,
+              (google::cloud::run::v2::GetJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::run::v2::Job>,
-  ListJobs,
-  (google::cloud::run::v2::ListJobsRequest request), (override));
+  MOCK_METHOD(StreamRange<google::cloud::run::v2::Job>, ListJobs,
+              (google::cloud::run::v2::ListJobsRequest request), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>,
-  UpdateJob,
-  (google::cloud::run::v2::UpdateJobRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, UpdateJob,
+              (google::cloud::run::v2::UpdateJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>,
-  DeleteJob,
-  (google::cloud::run::v2::DeleteJobRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, DeleteJob,
+              (google::cloud::run::v2::DeleteJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>,
-  RunJob,
-  (google::cloud::run::v2::RunJobRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>, RunJob,
+              (google::cloud::run::v2::RunJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

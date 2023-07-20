@@ -33,7 +33,8 @@ MetricsServiceV2Metadata::MetricsServiceV2Metadata(
     std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::logging::v2::ListLogMetricsResponse>
 MetricsServiceV2Metadata::ListLogMetrics(
@@ -43,8 +44,7 @@ MetricsServiceV2Metadata::ListLogMetrics(
   return child_->ListLogMetrics(context, request);
 }
 
-StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2Metadata::GetLogMetric(
+StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Metadata::GetLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::GetLogMetricRequest const& request) {
   SetMetadata(context, "metric_name=" + request.metric_name());
@@ -67,8 +67,7 @@ MetricsServiceV2Metadata::UpdateLogMetric(
   return child_->UpdateLogMetric(context, request);
 }
 
-Status
-MetricsServiceV2Metadata::DeleteLogMetric(
+Status MetricsServiceV2Metadata::DeleteLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::DeleteLogMetricRequest const& request) {
   SetMetadata(context, "metric_name=" + request.metric_name());
@@ -76,7 +75,7 @@ MetricsServiceV2Metadata::DeleteLogMetric(
 }
 
 void MetricsServiceV2Metadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+                                           std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context);
 }
@@ -88,8 +87,8 @@ void MetricsServiceV2Metadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    context.AddMetadata(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
   }
   auto const& authority = options.get<AuthorityOption>();
   if (!authority.empty()) context.set_authority(authority);

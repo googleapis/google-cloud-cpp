@@ -17,12 +17,12 @@
 // source: google/logging/v2/logging_metrics.proto
 
 #include "google/cloud/logging/v2/internal/metrics_service_v2_connection_impl.h"
+#include "google/cloud/logging/v2/internal/metrics_service_v2_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/logging/v2/internal/metrics_service_v2_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -34,26 +34,30 @@ MetricsServiceV2ConnectionImpl::MetricsServiceV2ConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<logging_v2_internal::MetricsServiceV2Stub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        MetricsServiceV2Connection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      MetricsServiceV2Connection::options())) {}
 
 StreamRange<google::logging::v2::LogMetric>
-MetricsServiceV2ConnectionImpl::ListLogMetrics(google::logging::v2::ListLogMetricsRequest request) {
+MetricsServiceV2ConnectionImpl::ListLogMetrics(
+    google::logging::v2::ListLogMetricsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<logging_v2::MetricsServiceV2RetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<logging_v2::MetricsServiceV2RetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListLogMetrics(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::logging::v2::LogMetric>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::logging::v2::LogMetric>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::logging::v2::ListLogMetricsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::logging::v2::ListLogMetricsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::logging::v2::ListLogMetricsRequest const& request) {
+            [stub](grpc::ClientContext& context,
+                   google::logging::v2::ListLogMetricsRequest const& request) {
               return stub->ListLogMetrics(context, request);
             },
             r, function_name);
@@ -67,48 +71,51 @@ MetricsServiceV2ConnectionImpl::ListLogMetrics(google::logging::v2::ListLogMetri
 }
 
 StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2ConnectionImpl::GetLogMetric(google::logging::v2::GetLogMetricRequest const& request) {
+MetricsServiceV2ConnectionImpl::GetLogMetric(
+    google::logging::v2::GetLogMetricRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetLogMetric(request),
       [this](grpc::ClientContext& context,
-          google::logging::v2::GetLogMetricRequest const& request) {
+             google::logging::v2::GetLogMetricRequest const& request) {
         return stub_->GetLogMetric(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2ConnectionImpl::CreateLogMetric(google::logging::v2::CreateLogMetricRequest const& request) {
+MetricsServiceV2ConnectionImpl::CreateLogMetric(
+    google::logging::v2::CreateLogMetricRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateLogMetric(request),
       [this](grpc::ClientContext& context,
-          google::logging::v2::CreateLogMetricRequest const& request) {
+             google::logging::v2::CreateLogMetricRequest const& request) {
         return stub_->CreateLogMetric(context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2ConnectionImpl::UpdateLogMetric(google::logging::v2::UpdateLogMetricRequest const& request) {
+MetricsServiceV2ConnectionImpl::UpdateLogMetric(
+    google::logging::v2::UpdateLogMetricRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateLogMetric(request),
       [this](grpc::ClientContext& context,
-          google::logging::v2::UpdateLogMetricRequest const& request) {
+             google::logging::v2::UpdateLogMetricRequest const& request) {
         return stub_->UpdateLogMetric(context, request);
       },
       request, __func__);
 }
 
-Status
-MetricsServiceV2ConnectionImpl::DeleteLogMetric(google::logging::v2::DeleteLogMetricRequest const& request) {
+Status MetricsServiceV2ConnectionImpl::DeleteLogMetric(
+    google::logging::v2::DeleteLogMetricRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteLogMetric(request),
       [this](grpc::ClientContext& context,
-          google::logging::v2::DeleteLogMetricRequest const& request) {
+             google::logging::v2::DeleteLogMetricRequest const& request) {
         return stub_->DeleteLogMetric(context, request);
       },
       request, __func__);

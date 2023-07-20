@@ -17,16 +17,16 @@
 // source: google/cloud/run/v2/task.proto
 
 #include "google/cloud/run/v2/tasks_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/run/v2/internal/tasks_connection_impl.h"
 #include "google/cloud/run/v2/internal/tasks_option_defaults.h"
 #include "google/cloud/run/v2/internal/tasks_stub_factory.h"
 #include "google/cloud/run/v2/internal/tasks_tracing_connection.h"
 #include "google/cloud/run/v2/tasks_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include <memory>
 
 namespace google {
@@ -36,31 +36,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TasksConnection::~TasksConnection() = default;
 
-StatusOr<google::cloud::run::v2::Task>
-TasksConnection::GetTask(
+StatusOr<google::cloud::run::v2::Task> TasksConnection::GetTask(
     google::cloud::run::v2::GetTaskRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::cloud::run::v2::Task> TasksConnection::ListTasks(
-    google::cloud::run::v2::ListTasksRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::run::v2::
+        ListTasksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::run::v2::Task>>();
 }
 
-std::shared_ptr<TasksConnection> MakeTasksConnection(
-    Options options) {
+std::shared_ptr<TasksConnection> MakeTasksConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      TasksPolicyOptionList>(options, __func__);
-  options = run_v2_internal::TasksDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 TasksPolicyOptionList>(options, __func__);
+  options = run_v2_internal::TasksDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = run_v2_internal::CreateDefaultTasksStub(
-    background->cq(), options);
+  auto stub =
+      run_v2_internal::CreateDefaultTasksStub(background->cq(), options);
   return run_v2_internal::MakeTasksTracingConnection(
       std::make_shared<run_v2_internal::TasksConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

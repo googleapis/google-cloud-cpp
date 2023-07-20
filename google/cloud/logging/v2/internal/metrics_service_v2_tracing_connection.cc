@@ -33,38 +33,47 @@ MetricsServiceV2TracingConnection::MetricsServiceV2TracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::logging::v2::LogMetric>
-MetricsServiceV2TracingConnection::ListLogMetrics(google::logging::v2::ListLogMetricsRequest request) {
-  auto span = internal::MakeSpan("logging_v2::MetricsServiceV2Connection::ListLogMetrics");
+MetricsServiceV2TracingConnection::ListLogMetrics(
+    google::logging::v2::ListLogMetricsRequest request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::MetricsServiceV2Connection::ListLogMetrics");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListLogMetrics(std::move(request));
   return internal::MakeTracedStreamRange<google::logging::v2::LogMetric>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2TracingConnection::GetLogMetric(google::logging::v2::GetLogMetricRequest const& request) {
-  auto span = internal::MakeSpan("logging_v2::MetricsServiceV2Connection::GetLogMetric");
+MetricsServiceV2TracingConnection::GetLogMetric(
+    google::logging::v2::GetLogMetricRequest const& request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::MetricsServiceV2Connection::GetLogMetric");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLogMetric(request));
 }
 
 StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2TracingConnection::CreateLogMetric(google::logging::v2::CreateLogMetricRequest const& request) {
-  auto span = internal::MakeSpan("logging_v2::MetricsServiceV2Connection::CreateLogMetric");
+MetricsServiceV2TracingConnection::CreateLogMetric(
+    google::logging::v2::CreateLogMetricRequest const& request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::MetricsServiceV2Connection::CreateLogMetric");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateLogMetric(request));
 }
 
 StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2TracingConnection::UpdateLogMetric(google::logging::v2::UpdateLogMetricRequest const& request) {
-  auto span = internal::MakeSpan("logging_v2::MetricsServiceV2Connection::UpdateLogMetric");
+MetricsServiceV2TracingConnection::UpdateLogMetric(
+    google::logging::v2::UpdateLogMetricRequest const& request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::MetricsServiceV2Connection::UpdateLogMetric");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateLogMetric(request));
 }
 
-Status
-MetricsServiceV2TracingConnection::DeleteLogMetric(google::logging::v2::DeleteLogMetricRequest const& request) {
-  auto span = internal::MakeSpan("logging_v2::MetricsServiceV2Connection::DeleteLogMetric");
+Status MetricsServiceV2TracingConnection::DeleteLogMetric(
+    google::logging::v2::DeleteLogMetricRequest const& request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::MetricsServiceV2Connection::DeleteLogMetric");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteLogMetric(request));
 }

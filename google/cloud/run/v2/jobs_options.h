@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_JOBS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_JOBS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/run/v2/jobs_connection.h"
 #include "google/cloud/run/v2/jobs_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -74,10 +74,8 @@ struct JobsPollingPolicyOption {
  * @ingroup google-cloud-run-options
  */
 using JobsPolicyOptionList =
-    OptionList<JobsRetryPolicyOption,
-               JobsBackoffPolicyOption,
-               JobsPollingPolicyOption,
-               JobsConnectionIdempotencyPolicyOption>;
+    OptionList<JobsRetryPolicyOption, JobsBackoffPolicyOption,
+               JobsPollingPolicyOption, JobsConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2

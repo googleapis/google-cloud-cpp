@@ -27,12 +27,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 NodeGroupControllerClient::NodeGroupControllerClient(
     std::shared_ptr<NodeGroupControllerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 NodeGroupControllerClient::~NodeGroupControllerClient() = default;
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerClient::CreateNodeGroup(std::string const& parent, google::cloud::dataproc::v1::NodeGroup const& node_group, std::string const& node_group_id, Options opts) {
+NodeGroupControllerClient::CreateNodeGroup(
+    std::string const& parent,
+    google::cloud::dataproc::v1::NodeGroup const& node_group,
+    std::string const& node_group_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::CreateNodeGroupRequest request;
   request.set_parent(parent);
@@ -42,13 +45,16 @@ NodeGroupControllerClient::CreateNodeGroup(std::string const& parent, google::cl
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerClient::CreateNodeGroup(google::cloud::dataproc::v1::CreateNodeGroupRequest const& request, Options opts) {
+NodeGroupControllerClient::CreateNodeGroup(
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNodeGroup(request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerClient::ResizeNodeGroup(std::string const& name, std::int32_t size, Options opts) {
+NodeGroupControllerClient::ResizeNodeGroup(std::string const& name,
+                                           std::int32_t size, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::ResizeNodeGroupRequest request;
   request.set_name(name);
@@ -57,7 +63,9 @@ NodeGroupControllerClient::ResizeNodeGroup(std::string const& name, std::int32_t
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerClient::ResizeNodeGroup(google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request, Options opts) {
+NodeGroupControllerClient::ResizeNodeGroup(
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResizeNodeGroup(request);
 }
@@ -71,7 +79,9 @@ NodeGroupControllerClient::GetNodeGroup(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>
-NodeGroupControllerClient::GetNodeGroup(google::cloud::dataproc::v1::GetNodeGroupRequest const& request, Options opts) {
+NodeGroupControllerClient::GetNodeGroup(
+    google::cloud::dataproc::v1::GetNodeGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNodeGroup(request);
 }

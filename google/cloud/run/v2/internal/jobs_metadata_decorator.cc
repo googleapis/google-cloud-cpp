@@ -33,10 +33,10 @@ JobsMetadata::JobsMetadata(
     std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
-future<StatusOr<google::longrunning::Operation>>
-JobsMetadata::AsyncCreateJob(
+future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncCreateJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::CreateJobRequest const& request) {
@@ -44,24 +44,21 @@ JobsMetadata::AsyncCreateJob(
   return child_->AsyncCreateJob(cq, std::move(context), request);
 }
 
-StatusOr<google::cloud::run::v2::Job>
-JobsMetadata::GetJob(
+StatusOr<google::cloud::run::v2::Job> JobsMetadata::GetJob(
     grpc::ClientContext& context,
     google::cloud::run::v2::GetJobRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetJob(context, request);
 }
 
-StatusOr<google::cloud::run::v2::ListJobsResponse>
-JobsMetadata::ListJobs(
+StatusOr<google::cloud::run::v2::ListJobsResponse> JobsMetadata::ListJobs(
     grpc::ClientContext& context,
     google::cloud::run::v2::ListJobsRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListJobs(context, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-JobsMetadata::AsyncUpdateJob(
+future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncUpdateJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::UpdateJobRequest const& request) {
@@ -69,8 +66,7 @@ JobsMetadata::AsyncUpdateJob(
   return child_->AsyncUpdateJob(cq, std::move(context), request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-JobsMetadata::AsyncDeleteJob(
+future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncDeleteJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::DeleteJobRequest const& request) {
@@ -78,8 +74,7 @@ JobsMetadata::AsyncDeleteJob(
   return child_->AsyncDeleteJob(cq, std::move(context), request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-JobsMetadata::AsyncRunJob(
+future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncRunJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::RunJobRequest const& request) {
@@ -87,16 +82,14 @@ JobsMetadata::AsyncRunJob(
   return child_->AsyncRunJob(cq, std::move(context), request);
 }
 
-StatusOr<google::iam::v1::Policy>
-JobsMetadata::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> JobsMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
   return child_->GetIamPolicy(context, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-JobsMetadata::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> JobsMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
@@ -129,7 +122,7 @@ future<Status> JobsMetadata::AsyncCancelOperation(
 }
 
 void JobsMetadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+                               std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context);
 }
@@ -141,8 +134,8 @@ void JobsMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    context.AddMetadata(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
   }
   auto const& authority = options.get<AuthorityOption>();
   if (!authority.empty()) context.set_authority(authority);

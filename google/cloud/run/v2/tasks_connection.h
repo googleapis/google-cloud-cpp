@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_TASKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_TASKS_CONNECTION_H
 
+#include "google/cloud/run/v2/internal/tasks_retry_traits.h"
+#include "google/cloud/run/v2/tasks_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/run/v2/internal/tasks_retry_traits.h"
-#include "google/cloud/run/v2/tasks_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -34,7 +34,6 @@ namespace google {
 namespace cloud {
 namespace run_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
 
 /// The retry policy for `TasksConnection`.
 class TasksRetryPolicy : public ::google::cloud::RetryPolicy {
@@ -63,14 +62,14 @@ class TasksLimitedErrorCountRetryPolicy : public TasksRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit TasksLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   TasksLimitedErrorCountRetryPolicy(
       TasksLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TasksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TasksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TasksLimitedErrorCountRetryPolicy(
       TasksLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TasksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TasksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +89,9 @@ class TasksLimitedErrorCountRetryPolicy : public TasksRetryPolicy {
   using BaseType = TasksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<run_v2_internal::TasksRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      run_v2_internal::TasksRetryTraits>
+      impl_;
 };
 
 /**
@@ -128,12 +129,12 @@ class TasksLimitedTimeRetryPolicy : public TasksRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit TasksLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   TasksLimitedTimeRetryPolicy(TasksLimitedTimeRetryPolicy&& rhs) noexcept
-    : TasksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : TasksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   TasksLimitedTimeRetryPolicy(TasksLimitedTimeRetryPolicy const& rhs) noexcept
-    : TasksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : TasksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -147,15 +148,16 @@ class TasksLimitedTimeRetryPolicy : public TasksRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<TasksRetryPolicy> clone() const override {
-    return std::make_unique<TasksLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<TasksLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = TasksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<run_v2_internal::TasksRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      run_v2_internal::TasksRetryTraits>
+      impl_;
 };
 
 /**
@@ -176,11 +178,11 @@ class TasksConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::run::v2::Task>
-  GetTask(google::cloud::run::v2::GetTaskRequest const& request);
+  virtual StatusOr<google::cloud::run::v2::Task> GetTask(
+      google::cloud::run::v2::GetTaskRequest const& request);
 
-  virtual StreamRange<google::cloud::run::v2::Task>
-  ListTasks(google::cloud::run::v2::ListTasksRequest request);
+  virtual StreamRange<google::cloud::run::v2::Task> ListTasks(
+      google::cloud::run::v2::ListTasksRequest request);
 };
 
 /**
@@ -204,8 +206,7 @@ class TasksConnection {
  * @param options (optional) Configure the `TasksConnection` created by
  * this function.
  */
-std::shared_ptr<TasksConnection> MakeTasksConnection(
-    Options options = {});
+std::shared_ptr<TasksConnection> MakeTasksConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2

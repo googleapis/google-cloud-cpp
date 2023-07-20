@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `NodeGroupControllerConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `NodeGroupControllerClient`. To do so,
- * construct an object of type `NodeGroupControllerClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `NodeGroupControllerClient`. To do
+ * so, construct an object of type `NodeGroupControllerClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,21 +42,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockNodeGroupControllerConnection : public dataproc_v1::NodeGroupControllerConnection {
+class MockNodeGroupControllerConnection
+    : public dataproc_v1::NodeGroupControllerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>,
-  CreateNodeGroup,
-  (google::cloud::dataproc::v1::CreateNodeGroupRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>, CreateNodeGroup,
+      (google::cloud::dataproc::v1::CreateNodeGroupRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>,
-  ResizeNodeGroup,
-  (google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>, ResizeNodeGroup,
+      (google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::NodeGroup>,
-  GetNodeGroup,
-  (google::cloud::dataproc::v1::GetNodeGroupRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::NodeGroup>, GetNodeGroup,
+              (google::cloud::dataproc::v1::GetNodeGroupRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

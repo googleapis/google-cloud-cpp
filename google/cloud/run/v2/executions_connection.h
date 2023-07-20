@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_EXECUTIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_EXECUTIONS_CONNECTION_H
 
+#include "google/cloud/run/v2/executions_connection_idempotency_policy.h"
+#include "google/cloud/run/v2/internal/executions_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/run/v2/executions_connection_idempotency_policy.h"
-#include "google/cloud/run/v2/internal/executions_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -37,7 +37,6 @@ namespace google {
 namespace cloud {
 namespace run_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
 
 /// The retry policy for `ExecutionsConnection`.
 class ExecutionsRetryPolicy : public ::google::cloud::RetryPolicy {
@@ -66,14 +65,14 @@ class ExecutionsLimitedErrorCountRetryPolicy : public ExecutionsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ExecutionsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ExecutionsLimitedErrorCountRetryPolicy(
       ExecutionsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ExecutionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ExecutionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ExecutionsLimitedErrorCountRetryPolicy(
       ExecutionsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ExecutionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ExecutionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +92,9 @@ class ExecutionsLimitedErrorCountRetryPolicy : public ExecutionsRetryPolicy {
   using BaseType = ExecutionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<run_v2_internal::ExecutionsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      run_v2_internal::ExecutionsRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +132,14 @@ class ExecutionsLimitedTimeRetryPolicy : public ExecutionsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ExecutionsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ExecutionsLimitedTimeRetryPolicy(ExecutionsLimitedTimeRetryPolicy&& rhs) noexcept
-    : ExecutionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ExecutionsLimitedTimeRetryPolicy(ExecutionsLimitedTimeRetryPolicy const& rhs) noexcept
-    : ExecutionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ExecutionsLimitedTimeRetryPolicy(
+      ExecutionsLimitedTimeRetryPolicy&& rhs) noexcept
+      : ExecutionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ExecutionsLimitedTimeRetryPolicy(
+      ExecutionsLimitedTimeRetryPolicy const& rhs) noexcept
+      : ExecutionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +161,9 @@ class ExecutionsLimitedTimeRetryPolicy : public ExecutionsRetryPolicy {
   using BaseType = ExecutionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<run_v2_internal::ExecutionsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      run_v2_internal::ExecutionsRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,14 +184,14 @@ class ExecutionsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::run::v2::Execution>
-  GetExecution(google::cloud::run::v2::GetExecutionRequest const& request);
+  virtual StatusOr<google::cloud::run::v2::Execution> GetExecution(
+      google::cloud::run::v2::GetExecutionRequest const& request);
 
-  virtual StreamRange<google::cloud::run::v2::Execution>
-  ListExecutions(google::cloud::run::v2::ListExecutionsRequest request);
+  virtual StreamRange<google::cloud::run::v2::Execution> ListExecutions(
+      google::cloud::run::v2::ListExecutionsRequest request);
 
-  virtual future<StatusOr<google::cloud::run::v2::Execution>>
-  DeleteExecution(google::cloud::run::v2::DeleteExecutionRequest const& request);
+  virtual future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
+      google::cloud::run::v2::DeleteExecutionRequest const& request);
 };
 
 /**

@@ -29,30 +29,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TasksStub::~TasksStub() = default;
 
-StatusOr<google::cloud::run::v2::Task>
-DefaultTasksStub::GetTask(
-  grpc::ClientContext& client_context,
-  google::cloud::run::v2::GetTaskRequest const& request) {
-    google::cloud::run::v2::Task response;
-    auto status =
-        grpc_stub_->GetTask(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::run::v2::Task> DefaultTasksStub::GetTask(
+    grpc::ClientContext& client_context,
+    google::cloud::run::v2::GetTaskRequest const& request) {
+  google::cloud::run::v2::Task response;
+  auto status = grpc_stub_->GetTask(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::run::v2::ListTasksResponse>
-DefaultTasksStub::ListTasks(
-  grpc::ClientContext& client_context,
-  google::cloud::run::v2::ListTasksRequest const& request) {
-    google::cloud::run::v2::ListTasksResponse response;
-    auto status =
-        grpc_stub_->ListTasks(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::run::v2::ListTasksResponse> DefaultTasksStub::ListTasks(
+    grpc::ClientContext& client_context,
+    google::cloud::run::v2::ListTasksRequest const& request) {
+  google::cloud::run::v2::ListTasksResponse response;
+  auto status = grpc_stub_->ListTasks(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,70 +32,68 @@ JobsTracingConnection::JobsTracingConnection(
     std::shared_ptr<run_v2::JobsConnection> child)
     : child_(std::move(child)) {}
 
-future<StatusOr<google::cloud::run::v2::Job>>
-JobsTracingConnection::CreateJob(google::cloud::run::v2::CreateJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "run_v2::JobsConnection::CreateJob");
+future<StatusOr<google::cloud::run::v2::Job>> JobsTracingConnection::CreateJob(
+    google::cloud::run::v2::CreateJobRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::JobsConnection::CreateJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->CreateJob(request));
 }
 
-StatusOr<google::cloud::run::v2::Job>
-JobsTracingConnection::GetJob(google::cloud::run::v2::GetJobRequest const& request) {
+StatusOr<google::cloud::run::v2::Job> JobsTracingConnection::GetJob(
+    google::cloud::run::v2::GetJobRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::GetJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetJob(request));
 }
 
-StreamRange<google::cloud::run::v2::Job>
-JobsTracingConnection::ListJobs(google::cloud::run::v2::ListJobsRequest request) {
+StreamRange<google::cloud::run::v2::Job> JobsTracingConnection::ListJobs(
+    google::cloud::run::v2::ListJobsRequest request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::ListJobs");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::run::v2::Job>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
-future<StatusOr<google::cloud::run::v2::Job>>
-JobsTracingConnection::UpdateJob(google::cloud::run::v2::UpdateJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "run_v2::JobsConnection::UpdateJob");
+future<StatusOr<google::cloud::run::v2::Job>> JobsTracingConnection::UpdateJob(
+    google::cloud::run::v2::UpdateJobRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::JobsConnection::UpdateJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateJob(request));
 }
 
-future<StatusOr<google::cloud::run::v2::Job>>
-JobsTracingConnection::DeleteJob(google::cloud::run::v2::DeleteJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "run_v2::JobsConnection::DeleteJob");
+future<StatusOr<google::cloud::run::v2::Job>> JobsTracingConnection::DeleteJob(
+    google::cloud::run::v2::DeleteJobRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::JobsConnection::DeleteJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteJob(request));
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>>
-JobsTracingConnection::RunJob(google::cloud::run::v2::RunJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "run_v2::JobsConnection::RunJob");
+JobsTracingConnection::RunJob(
+    google::cloud::run::v2::RunJobRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::JobsConnection::RunJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->RunJob(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-JobsTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> JobsTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-JobsTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> JobsTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-JobsTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+JobsTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
@@ -103,8 +101,7 @@ JobsTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsReq
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<run_v2::JobsConnection>
-MakeJobsTracingConnection(
+std::shared_ptr<run_v2::JobsConnection> MakeJobsTracingConnection(
     std::shared_ptr<run_v2::JobsConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

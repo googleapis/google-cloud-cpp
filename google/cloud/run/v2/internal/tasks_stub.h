@@ -34,12 +34,12 @@ class TasksStub {
   virtual ~TasksStub() = 0;
 
   virtual StatusOr<google::cloud::run::v2::Task> GetTask(
-    grpc::ClientContext& context,
-    google::cloud::run::v2::GetTaskRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::run::v2::GetTaskRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::run::v2::ListTasksResponse> ListTasks(
-    grpc::ClientContext& context,
-    google::cloud::run::v2::ListTasksRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::run::v2::ListTasksRequest const& request) = 0;
 };
 
 class DefaultTasksStub : public TasksStub {
@@ -48,15 +48,13 @@ class DefaultTasksStub : public TasksStub {
       std::unique_ptr<google::cloud::run::v2::Tasks::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::run::v2::Task>
-  GetTask(
-    grpc::ClientContext& client_context,
-    google::cloud::run::v2::GetTaskRequest const& request) override;
+  StatusOr<google::cloud::run::v2::Task> GetTask(
+      grpc::ClientContext& client_context,
+      google::cloud::run::v2::GetTaskRequest const& request) override;
 
-  StatusOr<google::cloud::run::v2::ListTasksResponse>
-  ListTasks(
-    grpc::ClientContext& client_context,
-    google::cloud::run::v2::ListTasksRequest const& request) override;
+  StatusOr<google::cloud::run::v2::ListTasksResponse> ListTasks(
+      grpc::ClientContext& client_context,
+      google::cloud::run::v2::ListTasksRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::run::v2::Tasks::StubInterface> grpc_stub_;

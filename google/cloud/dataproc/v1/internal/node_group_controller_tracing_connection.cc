@@ -32,7 +32,8 @@ NodeGroupControllerTracingConnection::NodeGroupControllerTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerTracingConnection::CreateNodeGroup(google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+NodeGroupControllerTracingConnection::CreateNodeGroup(
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::CreateNodeGroup");
   auto scope = opentelemetry::trace::Scope(span);
@@ -40,7 +41,8 @@ NodeGroupControllerTracingConnection::CreateNodeGroup(google::cloud::dataproc::v
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerTracingConnection::ResizeNodeGroup(google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+NodeGroupControllerTracingConnection::ResizeNodeGroup(
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::ResizeNodeGroup");
   auto scope = opentelemetry::trace::Scope(span);
@@ -48,8 +50,10 @@ NodeGroupControllerTracingConnection::ResizeNodeGroup(google::cloud::dataproc::v
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>
-NodeGroupControllerTracingConnection::GetNodeGroup(google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::NodeGroupControllerConnection::GetNodeGroup");
+NodeGroupControllerTracingConnection::GetNodeGroup(
+    google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::NodeGroupControllerConnection::GetNodeGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNodeGroup(request));
 }
@@ -61,7 +65,8 @@ MakeNodeGroupControllerTracingConnection(
     std::shared_ptr<dataproc_v1::NodeGroupControllerConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<NodeGroupControllerTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<NodeGroupControllerTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

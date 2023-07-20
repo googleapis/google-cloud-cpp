@@ -17,16 +17,16 @@
 // source: google/cloud/run/v2/execution.proto
 
 #include "google/cloud/run/v2/executions_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/run/v2/executions_options.h"
 #include "google/cloud/run/v2/internal/executions_connection_impl.h"
 #include "google/cloud/run/v2/internal/executions_option_defaults.h"
 #include "google/cloud/run/v2/internal/executions_stub_factory.h"
 #include "google/cloud/run/v2/internal/executions_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include <memory>
 
 namespace google {
@@ -36,14 +36,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ExecutionsConnection::~ExecutionsConnection() = default;
 
-StatusOr<google::cloud::run::v2::Execution>
-ExecutionsConnection::GetExecution(
+StatusOr<google::cloud::run::v2::Execution> ExecutionsConnection::GetExecution(
     google::cloud::run::v2::GetExecutionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::run::v2::Execution> ExecutionsConnection::ListExecutions(
-    google::cloud::run::v2::ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::run::v2::Execution>
+ExecutionsConnection::ListExecutions(
+    google::cloud::run::v2::
+        ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::run::v2::Execution>>();
 }
@@ -52,23 +53,22 @@ future<StatusOr<google::cloud::run::v2::Execution>>
 ExecutionsConnection::DeleteExecution(
     google::cloud::run::v2::DeleteExecutionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Execution>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Execution>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<ExecutionsConnection> MakeExecutionsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ExecutionsPolicyOptionList>(options, __func__);
-  options = run_v2_internal::ExecutionsDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 ExecutionsPolicyOptionList>(options, __func__);
+  options = run_v2_internal::ExecutionsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = run_v2_internal::CreateDefaultExecutionsStub(
-    background->cq(), options);
+  auto stub =
+      run_v2_internal::CreateDefaultExecutionsStub(background->cq(), options);
   return run_v2_internal::MakeExecutionsTracingConnection(
       std::make_shared<run_v2_internal::ExecutionsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -63,23 +63,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NodeGroupControllerClient {
  public:
-  explicit NodeGroupControllerClient(std::shared_ptr<NodeGroupControllerConnection> connection, Options opts = {});
+  explicit NodeGroupControllerClient(
+      std::shared_ptr<NodeGroupControllerConnection> connection,
+      Options opts = {});
   ~NodeGroupControllerClient();
 
   ///@{
   /// @name Copy and move support
   NodeGroupControllerClient(NodeGroupControllerClient const&) = default;
-  NodeGroupControllerClient& operator=(NodeGroupControllerClient const&) = default;
+  NodeGroupControllerClient& operator=(NodeGroupControllerClient const&) =
+      default;
   NodeGroupControllerClient(NodeGroupControllerClient&&) = default;
   NodeGroupControllerClient& operator=(NodeGroupControllerClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(NodeGroupControllerClient const& a, NodeGroupControllerClient const& b) {
+  friend bool operator==(NodeGroupControllerClient const& a,
+                         NodeGroupControllerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(NodeGroupControllerClient const& a, NodeGroupControllerClient const& b) {
+  friend bool operator!=(NodeGroupControllerClient const& a,
+                         NodeGroupControllerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,8 +128,10 @@ class NodeGroupControllerClient {
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-  CreateNodeGroup(std::string const& parent, google::cloud::dataproc::v1::NodeGroup const& node_group, std::string const& node_group_id, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> CreateNodeGroup(
+      std::string const& parent,
+      google::cloud::dataproc::v1::NodeGroup const& node_group,
+      std::string const& node_group_id, Options opts = {});
 
   // clang-format off
   ///
@@ -163,8 +170,9 @@ class NodeGroupControllerClient {
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-  CreateNodeGroup(google::cloud::dataproc::v1::CreateNodeGroupRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> CreateNodeGroup(
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -203,8 +211,8 @@ class NodeGroupControllerClient {
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-  ResizeNodeGroup(std::string const& name, std::int32_t size, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
+      std::string const& name, std::int32_t size, Options opts = {});
 
   // clang-format off
   ///
@@ -243,8 +251,9 @@ class NodeGroupControllerClient {
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-  ResizeNodeGroup(google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -272,8 +281,8 @@ class NodeGroupControllerClient {
   /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L756}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::NodeGroup>
-  GetNodeGroup(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -304,8 +313,9 @@ class NodeGroupControllerClient {
   /// [google.cloud.dataproc.v1.NodeGroup]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L756}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::NodeGroup>
-  GetNodeGroup(google::cloud::dataproc::v1::GetNodeGroupRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
+      google::cloud::dataproc::v1::GetNodeGroupRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<NodeGroupControllerConnection> connection_;

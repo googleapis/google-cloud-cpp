@@ -47,8 +47,8 @@ class NodeGroupControllerStub {
       google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
-    grpc::ClientContext& context,
-    google::cloud::dataproc::v1::GetNodeGroupRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::dataproc::v1::GetNodeGroupRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -64,25 +64,28 @@ class NodeGroupControllerStub {
 class DefaultNodeGroupControllerStub : public NodeGroupControllerStub {
  public:
   DefaultNodeGroupControllerStub(
-      std::unique_ptr<google::cloud::dataproc::v1::NodeGroupController::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
-      : grpc_stub_(std::move(grpc_stub)),
-        operations_(std::move(operations)) {}
+      std::unique_ptr<
+          google::cloud::dataproc::v1::NodeGroupController::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) override;
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResizeNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) override;
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dataproc::v1::NodeGroup>
-  GetNodeGroup(
-    grpc::ClientContext& client_context,
-    google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
+  StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
+      grpc::ClientContext& client_context,
+      google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -95,7 +98,9 @@ class DefaultNodeGroupControllerStub : public NodeGroupControllerStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::dataproc::v1::NodeGroupController::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::dataproc::v1::NodeGroupController::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_CONFIG_SERVICE_V2_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_CONFIG_SERVICE_V2_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/logging/v2/config_service_v2_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -61,7 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ConfigServiceV2Client {
  public:
-  explicit ConfigServiceV2Client(std::shared_ptr<ConfigServiceV2Connection> connection, Options opts = {});
+  explicit ConfigServiceV2Client(
+      std::shared_ptr<ConfigServiceV2Connection> connection, Options opts = {});
   ~ConfigServiceV2Client();
 
   ///@{
@@ -74,10 +75,12 @@ class ConfigServiceV2Client {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ConfigServiceV2Client const& a, ConfigServiceV2Client const& b) {
+  friend bool operator==(ConfigServiceV2Client const& a,
+                         ConfigServiceV2Client const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ConfigServiceV2Client const& a, ConfigServiceV2Client const& b) {
+  friend bool operator!=(ConfigServiceV2Client const& a,
+                         ConfigServiceV2Client const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,8 +126,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogBucket]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L801}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogBucket>
-  ListBuckets(std::string const& parent, Options opts = {});
+  StreamRange<google::logging::v2::LogBucket> ListBuckets(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -163,8 +166,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogBucket]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L801}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogBucket>
-  ListBuckets(google::logging::v2::ListBucketsRequest request, Options opts = {});
+  StreamRange<google::logging::v2::LogBucket> ListBuckets(
+      google::logging::v2::ListBucketsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -194,8 +197,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogBucket]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L801}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogBucket>
-  GetBucket(google::logging::v2::GetBucketRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogBucket> GetBucket(
+      google::logging::v2::GetBucketRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -233,8 +236,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogBucket]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L801}
   ///
   // clang-format on
-  future<StatusOr<google::logging::v2::LogBucket>>
-  CreateBucketAsync(google::logging::v2::CreateBucketRequest const& request, Options opts = {});
+  future<StatusOr<google::logging::v2::LogBucket>> CreateBucketAsync(
+      google::logging::v2::CreateBucketRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -275,8 +279,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.UpdateBucketRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1211}
   ///
   // clang-format on
-  future<StatusOr<google::logging::v2::LogBucket>>
-  UpdateBucketAsync(google::logging::v2::UpdateBucketRequest const& request, Options opts = {});
+  future<StatusOr<google::logging::v2::LogBucket>> UpdateBucketAsync(
+      google::logging::v2::UpdateBucketRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -307,8 +312,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogBucket]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L801}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogBucket>
-  CreateBucket(google::logging::v2::CreateBucketRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogBucket> CreateBucket(
+      google::logging::v2::CreateBucketRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -343,8 +349,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.UpdateBucketRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1211}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogBucket>
-  UpdateBucket(google::logging::v2::UpdateBucketRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogBucket> UpdateBucket(
+      google::logging::v2::UpdateBucketRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -375,8 +382,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.DeleteBucketRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1265}
   ///
   // clang-format on
-  Status
-  DeleteBucket(google::logging::v2::DeleteBucketRequest const& request, Options opts = {});
+  Status DeleteBucket(google::logging::v2::DeleteBucketRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -404,8 +411,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.UndeleteBucketRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1285}
   ///
   // clang-format on
-  Status
-  UndeleteBucket(google::logging::v2::UndeleteBucketRequest const& request, Options opts = {});
+  Status UndeleteBucket(
+      google::logging::v2::UndeleteBucketRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -441,8 +449,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogView]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L879}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogView>
-  ListViews(std::string const& parent, Options opts = {});
+  StreamRange<google::logging::v2::LogView> ListViews(std::string const& parent,
+                                                      Options opts = {});
 
   // clang-format off
   ///
@@ -481,8 +489,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogView]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L879}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogView>
-  ListViews(google::logging::v2::ListViewsRequest request, Options opts = {});
+  StreamRange<google::logging::v2::LogView> ListViews(
+      google::logging::v2::ListViewsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -512,8 +520,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogView]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L879}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogView>
-  GetView(google::logging::v2::GetViewRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogView> GetView(
+      google::logging::v2::GetViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -544,8 +552,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogView]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L879}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogView>
-  CreateView(google::logging::v2::CreateViewRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogView> CreateView(
+      google::logging::v2::CreateViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -579,8 +587,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.UpdateViewRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1356}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogView>
-  UpdateView(google::logging::v2::UpdateViewRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogView> UpdateView(
+      google::logging::v2::UpdateViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -610,8 +618,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.DeleteViewRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1397}
   ///
   // clang-format on
-  Status
-  DeleteView(google::logging::v2::DeleteViewRequest const& request, Options opts = {});
+  Status DeleteView(google::logging::v2::DeleteViewRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -650,8 +658,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogSink]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L928}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogSink>
-  ListSinks(std::string const& parent, Options opts = {});
+  StreamRange<google::logging::v2::LogSink> ListSinks(std::string const& parent,
+                                                      Options opts = {});
 
   // clang-format off
   ///
@@ -690,8 +698,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogSink]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L928}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogSink>
-  ListSinks(google::logging::v2::ListSinksRequest request, Options opts = {});
+  StreamRange<google::logging::v2::LogSink> ListSinks(
+      google::logging::v2::ListSinksRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -725,8 +733,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogSink]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L928}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogSink>
-  GetSink(std::string const& sink_name, Options opts = {});
+  StatusOr<google::logging::v2::LogSink> GetSink(std::string const& sink_name,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -756,8 +764,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogSink]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L928}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogSink>
-  GetSink(google::logging::v2::GetSinkRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogSink> GetSink(
+      google::logging::v2::GetSinkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -797,8 +805,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogSink]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L928}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogSink>
-  CreateSink(std::string const& parent, google::logging::v2::LogSink const& sink, Options opts = {});
+  StatusOr<google::logging::v2::LogSink> CreateSink(
+      std::string const& parent, google::logging::v2::LogSink const& sink,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -831,8 +840,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogSink]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L928}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogSink>
-  CreateSink(google::logging::v2::CreateSinkRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogSink> CreateSink(
+      google::logging::v2::CreateSinkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -889,8 +898,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.UpdateSinkRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1507}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogSink>
-  UpdateSink(std::string const& sink_name, google::logging::v2::LogSink const& sink, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::logging::v2::LogSink> UpdateSink(
+      std::string const& sink_name, google::logging::v2::LogSink const& sink,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -931,8 +941,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.UpdateSinkRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1507}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogSink>
-  UpdateSink(std::string const& sink_name, google::logging::v2::LogSink const& sink, Options opts = {});
+  StatusOr<google::logging::v2::LogSink> UpdateSink(
+      std::string const& sink_name, google::logging::v2::LogSink const& sink,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -966,8 +977,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.UpdateSinkRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1507}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogSink>
-  UpdateSink(google::logging::v2::UpdateSinkRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogSink> UpdateSink(
+      google::logging::v2::UpdateSinkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1000,8 +1011,7 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.DeleteSinkRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1562}
   ///
   // clang-format on
-  Status
-  DeleteSink(std::string const& sink_name, Options opts = {});
+  Status DeleteSink(std::string const& sink_name, Options opts = {});
 
   // clang-format off
   ///
@@ -1029,8 +1039,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.DeleteSinkRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1562}
   ///
   // clang-format on
-  Status
-  DeleteSink(google::logging::v2::DeleteSinkRequest const& request, Options opts = {});
+  Status DeleteSink(google::logging::v2::DeleteSinkRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -1072,8 +1082,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.Link]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1075}
   ///
   // clang-format on
-  future<StatusOr<google::logging::v2::Link>>
-  CreateLink(std::string const& parent, google::logging::v2::Link const& link, std::string const& link_id, Options opts = {});
+  future<StatusOr<google::logging::v2::Link>> CreateLink(
+      std::string const& parent, google::logging::v2::Link const& link,
+      std::string const& link_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1111,8 +1122,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.Link]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1075}
   ///
   // clang-format on
-  future<StatusOr<google::logging::v2::Link>>
-  CreateLink(google::logging::v2::CreateLinkRequest const& request, Options opts = {});
+  future<StatusOr<google::logging::v2::Link>> CreateLink(
+      google::logging::v2::CreateLinkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1149,8 +1160,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LinkMetadata]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L2227}
   ///
   // clang-format on
-  future<StatusOr<google::logging::v2::LinkMetadata>>
-  DeleteLink(std::string const& name, Options opts = {});
+  future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1187,8 +1198,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LinkMetadata]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L2227}
   ///
   // clang-format on
-  future<StatusOr<google::logging::v2::LinkMetadata>>
-  DeleteLink(google::logging::v2::DeleteLinkRequest const& request, Options opts = {});
+  future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
+      google::logging::v2::DeleteLinkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1227,8 +1238,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.ListLinksRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1619}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::Link>
-  ListLinks(std::string const& parent, Options opts = {});
+  StreamRange<google::logging::v2::Link> ListLinks(std::string const& parent,
+                                                   Options opts = {});
 
   // clang-format off
   ///
@@ -1267,8 +1278,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.ListLinksRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1619}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::Link>
-  ListLinks(google::logging::v2::ListLinksRequest request, Options opts = {});
+  StreamRange<google::logging::v2::Link> ListLinks(
+      google::logging::v2::ListLinksRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1298,8 +1309,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.Link]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1075}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::Link>
-  GetLink(std::string const& name, Options opts = {});
+  StatusOr<google::logging::v2::Link> GetLink(std::string const& name,
+                                              Options opts = {});
 
   // clang-format off
   ///
@@ -1329,8 +1340,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.Link]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1075}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::Link>
-  GetLink(google::logging::v2::GetLinkRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::Link> GetLink(
+      google::logging::v2::GetLinkRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1369,8 +1380,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogExclusion]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1672}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogExclusion>
-  ListExclusions(std::string const& parent, Options opts = {});
+  StreamRange<google::logging::v2::LogExclusion> ListExclusions(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1409,8 +1420,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogExclusion]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1672}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogExclusion>
-  ListExclusions(google::logging::v2::ListExclusionsRequest request, Options opts = {});
+  StreamRange<google::logging::v2::LogExclusion> ListExclusions(
+      google::logging::v2::ListExclusionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1444,8 +1455,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogExclusion]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1672}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogExclusion>
-  GetExclusion(std::string const& name, Options opts = {});
+  StatusOr<google::logging::v2::LogExclusion> GetExclusion(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1475,8 +1486,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogExclusion]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1672}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogExclusion>
-  GetExclusion(google::logging::v2::GetExclusionRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogExclusion> GetExclusion(
+      google::logging::v2::GetExclusionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1515,8 +1527,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogExclusion]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1672}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogExclusion>
-  CreateExclusion(std::string const& parent, google::logging::v2::LogExclusion const& exclusion, Options opts = {});
+  StatusOr<google::logging::v2::LogExclusion> CreateExclusion(
+      std::string const& parent,
+      google::logging::v2::LogExclusion const& exclusion, Options opts = {});
 
   // clang-format off
   ///
@@ -1548,8 +1561,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.LogExclusion]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1672}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogExclusion>
-  CreateExclusion(google::logging::v2::CreateExclusionRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogExclusion> CreateExclusion(
+      google::logging::v2::CreateExclusionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1594,8 +1608,10 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.UpdateExclusionRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1805}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogExclusion>
-  UpdateExclusion(std::string const& name, google::logging::v2::LogExclusion const& exclusion, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::logging::v2::LogExclusion> UpdateExclusion(
+      std::string const& name,
+      google::logging::v2::LogExclusion const& exclusion,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1626,8 +1642,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.UpdateExclusionRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1805}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogExclusion>
-  UpdateExclusion(google::logging::v2::UpdateExclusionRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogExclusion> UpdateExclusion(
+      google::logging::v2::UpdateExclusionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1658,8 +1675,7 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.DeleteExclusionRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1840}
   ///
   // clang-format on
-  Status
-  DeleteExclusion(std::string const& name, Options opts = {});
+  Status DeleteExclusion(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1686,8 +1702,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.DeleteExclusionRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1840}
   ///
   // clang-format on
-  Status
-  DeleteExclusion(google::logging::v2::DeleteExclusionRequest const& request, Options opts = {});
+  Status DeleteExclusion(
+      google::logging::v2::DeleteExclusionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1726,8 +1743,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.GetCmekSettingsRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1865}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::CmekSettings>
-  GetCmekSettings(google::logging::v2::GetCmekSettingsRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::CmekSettings> GetCmekSettings(
+      google::logging::v2::GetCmekSettingsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1772,8 +1790,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.UpdateCmekSettingsRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L1895}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::CmekSettings>
-  UpdateCmekSettings(google::logging::v2::UpdateCmekSettingsRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::CmekSettings> UpdateCmekSettings(
+      google::logging::v2::UpdateCmekSettingsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1821,8 +1840,8 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.Settings]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L2086}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::Settings>
-  GetSettings(std::string const& name, Options opts = {});
+  StatusOr<google::logging::v2::Settings> GetSettings(std::string const& name,
+                                                      Options opts = {});
 
   // clang-format off
   ///
@@ -1861,8 +1880,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.Settings]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L2086}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::Settings>
-  GetSettings(google::logging::v2::GetSettingsRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::Settings> GetSettings(
+      google::logging::v2::GetSettingsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1914,8 +1934,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.UpdateSettingsRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L2052}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::Settings>
-  UpdateSettings(google::logging::v2::Settings const& settings, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::logging::v2::Settings> UpdateSettings(
+      google::logging::v2::Settings const& settings,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1961,8 +1982,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.UpdateSettingsRequest]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L2052}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::Settings>
-  UpdateSettings(google::logging::v2::UpdateSettingsRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::Settings> UpdateSettings(
+      google::logging::v2::UpdateSettingsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1998,8 +2020,9 @@ class ConfigServiceV2Client {
   /// [google.logging.v2.CopyLogEntriesResponse]: @googleapis_reference_link{google/logging/v2/logging_config.proto#L2201}
   ///
   // clang-format on
-  future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
-  CopyLogEntries(google::logging::v2::CopyLogEntriesRequest const& request, Options opts = {});
+  future<StatusOr<google::logging::v2::CopyLogEntriesResponse>> CopyLogEntries(
+      google::logging::v2::CopyLogEntriesRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ConfigServiceV2Connection> connection_;

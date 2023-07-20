@@ -27,12 +27,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MetricsServiceV2Client::MetricsServiceV2Client(
     std::shared_ptr<MetricsServiceV2Connection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 MetricsServiceV2Client::~MetricsServiceV2Client() = default;
 
 StreamRange<google::logging::v2::LogMetric>
-MetricsServiceV2Client::ListLogMetrics(std::string const& parent, Options opts) {
+MetricsServiceV2Client::ListLogMetrics(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::logging::v2::ListLogMetricsRequest request;
   request.set_parent(parent);
@@ -40,27 +41,30 @@ MetricsServiceV2Client::ListLogMetrics(std::string const& parent, Options opts) 
 }
 
 StreamRange<google::logging::v2::LogMetric>
-MetricsServiceV2Client::ListLogMetrics(google::logging::v2::ListLogMetricsRequest request, Options opts) {
+MetricsServiceV2Client::ListLogMetrics(
+    google::logging::v2::ListLogMetricsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLogMetrics(std::move(request));
 }
 
-StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2Client::GetLogMetric(std::string const& metric_name, Options opts) {
+StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Client::GetLogMetric(
+    std::string const& metric_name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::logging::v2::GetLogMetricRequest request;
   request.set_metric_name(metric_name);
   return connection_->GetLogMetric(request);
 }
 
-StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2Client::GetLogMetric(google::logging::v2::GetLogMetricRequest const& request, Options opts) {
+StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Client::GetLogMetric(
+    google::logging::v2::GetLogMetricRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLogMetric(request);
 }
 
 StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2Client::CreateLogMetric(std::string const& parent, google::logging::v2::LogMetric const& metric, Options opts) {
+MetricsServiceV2Client::CreateLogMetric(
+    std::string const& parent, google::logging::v2::LogMetric const& metric,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::logging::v2::CreateLogMetricRequest request;
   request.set_parent(parent);
@@ -69,13 +73,16 @@ MetricsServiceV2Client::CreateLogMetric(std::string const& parent, google::loggi
 }
 
 StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2Client::CreateLogMetric(google::logging::v2::CreateLogMetricRequest const& request, Options opts) {
+MetricsServiceV2Client::CreateLogMetric(
+    google::logging::v2::CreateLogMetricRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLogMetric(request);
 }
 
 StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2Client::UpdateLogMetric(std::string const& metric_name, google::logging::v2::LogMetric const& metric, Options opts) {
+MetricsServiceV2Client::UpdateLogMetric(
+    std::string const& metric_name,
+    google::logging::v2::LogMetric const& metric, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::logging::v2::UpdateLogMetricRequest request;
   request.set_metric_name(metric_name);
@@ -84,21 +91,22 @@ MetricsServiceV2Client::UpdateLogMetric(std::string const& metric_name, google::
 }
 
 StatusOr<google::logging::v2::LogMetric>
-MetricsServiceV2Client::UpdateLogMetric(google::logging::v2::UpdateLogMetricRequest const& request, Options opts) {
+MetricsServiceV2Client::UpdateLogMetric(
+    google::logging::v2::UpdateLogMetricRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateLogMetric(request);
 }
 
-Status
-MetricsServiceV2Client::DeleteLogMetric(std::string const& metric_name, Options opts) {
+Status MetricsServiceV2Client::DeleteLogMetric(std::string const& metric_name,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::logging::v2::DeleteLogMetricRequest request;
   request.set_metric_name(metric_name);
   return connection_->DeleteLogMetric(request);
 }
 
-Status
-MetricsServiceV2Client::DeleteLogMetric(google::logging::v2::DeleteLogMetricRequest const& request, Options opts) {
+Status MetricsServiceV2Client::DeleteLogMetric(
+    google::logging::v2::DeleteLogMetricRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLogMetric(request);
 }

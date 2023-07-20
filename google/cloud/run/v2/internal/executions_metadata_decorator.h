@@ -34,9 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ExecutionsMetadata : public ExecutionsStub {
  public:
   ~ExecutionsMetadata() override = default;
-  ExecutionsMetadata(
-      std::shared_ptr<ExecutionsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+  ExecutionsMetadata(std::shared_ptr<ExecutionsStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::run::v2::Execution> GetExecution(
       grpc::ClientContext& context,

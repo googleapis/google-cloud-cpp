@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_JOBS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_JOBS_CONNECTION_H
 
+#include "google/cloud/run/v2/internal/jobs_retry_traits.h"
+#include "google/cloud/run/v2/jobs_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/run/v2/internal/jobs_retry_traits.h"
-#include "google/cloud/run/v2/jobs_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -37,7 +37,6 @@ namespace google {
 namespace cloud {
 namespace run_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
 
 /// The retry policy for `JobsConnection`.
 class JobsRetryPolicy : public ::google::cloud::RetryPolicy {
@@ -66,14 +65,14 @@ class JobsLimitedErrorCountRetryPolicy : public JobsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit JobsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   JobsLimitedErrorCountRetryPolicy(
       JobsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : JobsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : JobsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   JobsLimitedErrorCountRetryPolicy(
       JobsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : JobsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : JobsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +92,9 @@ class JobsLimitedErrorCountRetryPolicy : public JobsRetryPolicy {
   using BaseType = JobsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<run_v2_internal::JobsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      run_v2_internal::JobsRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +132,12 @@ class JobsLimitedTimeRetryPolicy : public JobsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit JobsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   JobsLimitedTimeRetryPolicy(JobsLimitedTimeRetryPolicy&& rhs) noexcept
-    : JobsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : JobsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   JobsLimitedTimeRetryPolicy(JobsLimitedTimeRetryPolicy const& rhs) noexcept
-    : JobsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : JobsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -150,15 +151,16 @@ class JobsLimitedTimeRetryPolicy : public JobsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<JobsRetryPolicy> clone() const override {
-    return std::make_unique<JobsLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<JobsLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = JobsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<run_v2_internal::JobsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      run_v2_internal::JobsRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,29 +181,29 @@ class JobsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::cloud::run::v2::Job>>
-  CreateJob(google::cloud::run::v2::CreateJobRequest const& request);
+  virtual future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
+      google::cloud::run::v2::CreateJobRequest const& request);
 
-  virtual StatusOr<google::cloud::run::v2::Job>
-  GetJob(google::cloud::run::v2::GetJobRequest const& request);
+  virtual StatusOr<google::cloud::run::v2::Job> GetJob(
+      google::cloud::run::v2::GetJobRequest const& request);
 
-  virtual StreamRange<google::cloud::run::v2::Job>
-  ListJobs(google::cloud::run::v2::ListJobsRequest request);
+  virtual StreamRange<google::cloud::run::v2::Job> ListJobs(
+      google::cloud::run::v2::ListJobsRequest request);
 
-  virtual future<StatusOr<google::cloud::run::v2::Job>>
-  UpdateJob(google::cloud::run::v2::UpdateJobRequest const& request);
+  virtual future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
+      google::cloud::run::v2::UpdateJobRequest const& request);
 
-  virtual future<StatusOr<google::cloud::run::v2::Job>>
-  DeleteJob(google::cloud::run::v2::DeleteJobRequest const& request);
+  virtual future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
+      google::cloud::run::v2::DeleteJobRequest const& request);
 
-  virtual future<StatusOr<google::cloud::run::v2::Execution>>
-  RunJob(google::cloud::run::v2::RunJobRequest const& request);
+  virtual future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
+      google::cloud::run::v2::RunJobRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
@@ -228,8 +230,7 @@ class JobsConnection {
  * @param options (optional) Configure the `JobsConnection` created by
  * this function.
  */
-std::shared_ptr<JobsConnection> MakeJobsConnection(
-    Options options = {});
+std::shared_ptr<JobsConnection> MakeJobsConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2

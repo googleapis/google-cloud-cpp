@@ -17,14 +17,14 @@
 // source: google/cloud/dataproc/v1/node_groups.proto
 
 #include "google/cloud/dataproc/v1/node_group_controller_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dataproc/v1/internal/node_group_controller_connection_impl.h"
 #include "google/cloud/dataproc/v1/internal/node_group_controller_option_defaults.h"
 #include "google/cloud/dataproc/v1/internal/node_group_controller_stub_factory.h"
 #include "google/cloud/dataproc/v1/internal/node_group_controller_tracing_connection.h"
 #include "google/cloud/dataproc/v1/node_group_controller_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -39,16 +39,16 @@ future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerConnection::CreateNodeGroup(
     google::cloud::dataproc::v1::CreateNodeGroupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerConnection::ResizeNodeGroup(
     google::cloud::dataproc::v1::ResizeNodeGroupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>
@@ -57,19 +57,21 @@ NodeGroupControllerConnection::GetNodeGroup(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<NodeGroupControllerConnection> MakeNodeGroupControllerConnection(
-    std::string const& location, Options options) {
+std::shared_ptr<NodeGroupControllerConnection>
+MakeNodeGroupControllerConnection(std::string const& location,
+                                  Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      NodeGroupControllerPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 NodeGroupControllerPolicyOptionList>(options,
+                                                                      __func__);
   options = dataproc_v1_internal::NodeGroupControllerDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_v1_internal::CreateDefaultNodeGroupControllerStub(
-    background->cq(), options);
+      background->cq(), options);
   return dataproc_v1_internal::MakeNodeGroupControllerTracingConnection(
       std::make_shared<dataproc_v1_internal::NodeGroupControllerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -42,12 +42,12 @@ class JobsStub {
       google::cloud::run::v2::CreateJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::run::v2::Job> GetJob(
-    grpc::ClientContext& context,
-    google::cloud::run::v2::GetJobRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::run::v2::GetJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::run::v2::ListJobsResponse> ListJobs(
-    grpc::ClientContext& context,
-    google::cloud::run::v2::ListJobsRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::run::v2::ListJobsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateJob(
       google::cloud::CompletionQueue& cq,
@@ -65,16 +65,17 @@ class JobsStub {
       google::cloud::run::v2::RunJobRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-    grpc::ClientContext& context,
-    google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context,
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -91,24 +92,22 @@ class DefaultJobsStub : public JobsStub {
  public:
   DefaultJobsStub(
       std::unique_ptr<google::cloud::run::v2::Jobs::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
-      : grpc_stub_(std::move(grpc_stub)),
-        operations_(std::move(operations)) {}
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::run::v2::CreateJobRequest const& request) override;
 
-  StatusOr<google::cloud::run::v2::Job>
-  GetJob(
-    grpc::ClientContext& client_context,
-    google::cloud::run::v2::GetJobRequest const& request) override;
+  StatusOr<google::cloud::run::v2::Job> GetJob(
+      grpc::ClientContext& client_context,
+      google::cloud::run::v2::GetJobRequest const& request) override;
 
-  StatusOr<google::cloud::run::v2::ListJobsResponse>
-  ListJobs(
-    grpc::ClientContext& client_context,
-    google::cloud::run::v2::ListJobsRequest const& request) override;
+  StatusOr<google::cloud::run::v2::ListJobsResponse> ListJobs(
+      grpc::ClientContext& client_context,
+      google::cloud::run::v2::ListJobsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateJob(
       google::cloud::CompletionQueue& cq,
@@ -125,20 +124,17 @@ class DefaultJobsStub : public JobsStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::run::v2::RunJobRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(
-    grpc::ClientContext& client_context,
-    google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& client_context,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(
-    grpc::ClientContext& client_context,
-    google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& client_context,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-    grpc::ClientContext& client_context,
-    google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& client_context,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

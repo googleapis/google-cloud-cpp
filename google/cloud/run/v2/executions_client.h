@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_EXECUTIONS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_EXECUTIONS_CLIENT_H
 
+#include "google/cloud/run/v2/executions_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/run/v2/executions_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ExecutionsClient {
  public:
-  explicit ExecutionsClient(std::shared_ptr<ExecutionsConnection> connection, Options opts = {});
+  explicit ExecutionsClient(std::shared_ptr<ExecutionsConnection> connection,
+                            Options opts = {});
   ~ExecutionsClient();
 
   ///@{
@@ -109,8 +110,8 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.GetExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L71}
   ///
   // clang-format on
-  StatusOr<google::cloud::run::v2::Execution>
-  GetExecution(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::run::v2::Execution> GetExecution(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -140,8 +141,9 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.GetExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L71}
   ///
   // clang-format on
-  StatusOr<google::cloud::run::v2::Execution>
-  GetExecution(google::cloud::run::v2::GetExecutionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::run::v2::Execution> GetExecution(
+      google::cloud::run::v2::GetExecutionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -178,8 +180,8 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L83}
   ///
   // clang-format on
-  StreamRange<google::cloud::run::v2::Execution>
-  ListExecutions(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::run::v2::Execution> ListExecutions(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -218,8 +220,8 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L83}
   ///
   // clang-format on
-  StreamRange<google::cloud::run::v2::Execution>
-  ListExecutions(google::cloud::run::v2::ListExecutionsRequest request, Options opts = {});
+  StreamRange<google::cloud::run::v2::Execution> ListExecutions(
+      google::cloud::run::v2::ListExecutionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -253,8 +255,8 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L139}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Execution>>
-  DeleteExecution(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -290,8 +292,9 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L139}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Execution>>
-  DeleteExecution(google::cloud::run::v2::DeleteExecutionRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
+      google::cloud::run::v2::DeleteExecutionRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ExecutionsConnection> connection_;

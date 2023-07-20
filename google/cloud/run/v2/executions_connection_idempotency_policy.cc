@@ -26,27 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ExecutionsConnectionIdempotencyPolicy::~ExecutionsConnectionIdempotencyPolicy() = default;
+ExecutionsConnectionIdempotencyPolicy::
+    ~ExecutionsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ExecutionsConnectionIdempotencyPolicy>
 ExecutionsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ExecutionsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ExecutionsConnectionIdempotencyPolicy::GetExecution(google::cloud::run::v2::GetExecutionRequest const&) {
+Idempotency ExecutionsConnectionIdempotencyPolicy::GetExecution(
+    google::cloud::run::v2::GetExecutionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ExecutionsConnectionIdempotencyPolicy::ListExecutions(google::cloud::run::v2::ListExecutionsRequest) {  // NOLINT
+Idempotency ExecutionsConnectionIdempotencyPolicy::ListExecutions(
+    google::cloud::run::v2::ListExecutionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ExecutionsConnectionIdempotencyPolicy::DeleteExecution(google::cloud::run::v2::DeleteExecutionRequest const&) {
+Idempotency ExecutionsConnectionIdempotencyPolicy::DeleteExecution(
+    google::cloud::run::v2::DeleteExecutionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ExecutionsConnectionIdempotencyPolicy>
-    MakeDefaultExecutionsConnectionIdempotencyPolicy() {
+MakeDefaultExecutionsConnectionIdempotencyPolicy() {
   return std::make_unique<ExecutionsConnectionIdempotencyPolicy>();
 }
 

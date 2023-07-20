@@ -30,16 +30,16 @@ JobsAuth::JobsAuth(
     std::shared_ptr<JobsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-future<StatusOr<google::longrunning::Operation>>
-JobsAuth::AsyncCreateJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::run::v2::CreateJobRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncCreateJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::CreateJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -64,16 +64,16 @@ StatusOr<google::cloud::run::v2::ListJobsResponse> JobsAuth::ListJobs(
   return child_->ListJobs(context, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-JobsAuth::AsyncUpdateJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::run::v2::UpdateJobRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncUpdateJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::UpdateJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -82,16 +82,16 @@ JobsAuth::AsyncUpdateJob(
       });
 }
 
-future<StatusOr<google::longrunning::Operation>>
-JobsAuth::AsyncDeleteJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::run::v2::DeleteJobRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncDeleteJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::DeleteJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -100,16 +100,16 @@ JobsAuth::AsyncDeleteJob(
       });
 }
 
-future<StatusOr<google::longrunning::Operation>>
-JobsAuth::AsyncRunJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::run::v2::RunJobRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncRunJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::RunJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -134,7 +134,8 @@ StatusOr<google::iam::v1::Policy> JobsAuth::SetIamPolicy(
   return child_->SetIamPolicy(context, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> JobsAuth::TestIamPermissions(
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+JobsAuth::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -142,16 +143,16 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse> JobsAuth::TestIamPermissio
   return child_->TestIamPermissions(context, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-JobsAuth::AsyncGetOperation(
+future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -165,9 +166,10 @@ future<Status> JobsAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
         return child->AsyncCancelOperation(cq, *std::move(context), request);

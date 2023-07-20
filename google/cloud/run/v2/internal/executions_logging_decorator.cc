@@ -27,15 +27,14 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ExecutionsLogging::ExecutionsLogging(
-    std::shared_ptr<ExecutionsStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const& components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+ExecutionsLogging::ExecutionsLogging(std::shared_ptr<ExecutionsStub> child,
+                                     TracingOptions tracing_options,
+                                     std::set<std::string> const& components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
-StatusOr<google::cloud::run::v2::Execution>
-ExecutionsLogging::GetExecution(
+StatusOr<google::cloud::run::v2::Execution> ExecutionsLogging::GetExecution(
     grpc::ClientContext& context,
     google::cloud::run::v2::GetExecutionRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -60,9 +59,9 @@ ExecutionsLogging::ListExecutions(
 
 future<StatusOr<google::longrunning::Operation>>
 ExecutionsLogging::AsyncDeleteExecution(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::run::v2::DeleteExecutionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::DeleteExecutionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,

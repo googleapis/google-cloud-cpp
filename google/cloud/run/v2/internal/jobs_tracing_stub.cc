@@ -26,15 +26,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-JobsTracingStub::JobsTracingStub(
-    std::shared_ptr<JobsStub> child)
+JobsTracingStub::JobsTracingStub(std::shared_ptr<JobsStub> child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 JobsTracingStub::AsyncCreateJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::run::v2::CreateJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::CreateJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "CreateJob");
   {
     auto scope = opentelemetry::trace::Scope(span);
@@ -50,8 +49,7 @@ StatusOr<google::cloud::run::v2::Job> JobsTracingStub::GetJob(
   auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "GetJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
-  return internal::EndSpan(context, *span,
-                           child_->GetJob(context, request));
+  return internal::EndSpan(context, *span, child_->GetJob(context, request));
 }
 
 StatusOr<google::cloud::run::v2::ListJobsResponse> JobsTracingStub::ListJobs(
@@ -60,15 +58,14 @@ StatusOr<google::cloud::run::v2::ListJobsResponse> JobsTracingStub::ListJobs(
   auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "ListJobs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
-  return internal::EndSpan(context, *span,
-                           child_->ListJobs(context, request));
+  return internal::EndSpan(context, *span, child_->ListJobs(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 JobsTracingStub::AsyncUpdateJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::run::v2::UpdateJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::UpdateJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "UpdateJob");
   {
     auto scope = opentelemetry::trace::Scope(span);
@@ -80,9 +77,9 @@ JobsTracingStub::AsyncUpdateJob(
 
 future<StatusOr<google::longrunning::Operation>>
 JobsTracingStub::AsyncDeleteJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::run::v2::DeleteJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::DeleteJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "DeleteJob");
   {
     auto scope = opentelemetry::trace::Scope(span);
@@ -92,11 +89,10 @@ JobsTracingStub::AsyncDeleteJob(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-future<StatusOr<google::longrunning::Operation>>
-JobsTracingStub::AsyncRunJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::run::v2::RunJobRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> JobsTracingStub::AsyncRunJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::RunJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "RunJob");
   {
     auto scope = opentelemetry::trace::Scope(span);
@@ -109,7 +105,8 @@ JobsTracingStub::AsyncRunJob(
 StatusOr<google::iam::v1::Policy> JobsTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "GetIamPolicy");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
@@ -119,17 +116,20 @@ StatusOr<google::iam::v1::Policy> JobsTracingStub::GetIamPolicy(
 StatusOr<google::iam::v1::Policy> JobsTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "SetIamPolicy");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> JobsTracingStub::TestIamPermissions(
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+JobsTracingStub::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "TestIamPermissions");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
@@ -167,8 +167,7 @@ future<Status> JobsTracingStub::AsyncCancelOperation(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<JobsStub> MakeJobsTracingStub(
-    std::shared_ptr<JobsStub> stub) {
+std::shared_ptr<JobsStub> MakeJobsTracingStub(std::shared_ptr<JobsStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<JobsTracingStub>(std::move(stub));
 #else

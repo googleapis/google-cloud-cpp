@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_NODE_GROUP_CONTROLLER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_NODE_GROUP_CONTROLLER_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/internal/node_group_controller_retry_traits.h"
 #include "google/cloud/dataproc/v1/internal/node_group_controller_stub.h"
 #include "google/cloud/dataproc/v1/node_group_controller_connection.h"
 #include "google/cloud/dataproc/v1/node_group_controller_connection_idempotency_policy.h"
 #include "google/cloud/dataproc/v1/node_group_controller_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -45,53 +45,69 @@ class NodeGroupControllerConnectionImpl
   ~NodeGroupControllerConnectionImpl() override = default;
 
   NodeGroupControllerConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dataproc_v1_internal::NodeGroupControllerStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<dataproc_v1_internal::NodeGroupControllerStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-  CreateNodeGroup(google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) override;
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> CreateNodeGroup(
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-  ResizeNodeGroup(google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) override;
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dataproc::v1::NodeGroup>
-  GetNodeGroup(google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
+  StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
+      google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
 
  private:
   std::unique_ptr<dataproc_v1::NodeGroupControllerRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<dataproc_v1::NodeGroupControllerRetryPolicyOption>()) {
-      return options.get<dataproc_v1::NodeGroupControllerRetryPolicyOption>()->clone();
+      return options.get<dataproc_v1::NodeGroupControllerRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<dataproc_v1::NodeGroupControllerRetryPolicyOption>()->clone();
+    return options_.get<dataproc_v1::NodeGroupControllerRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<dataproc_v1::NodeGroupControllerBackoffPolicyOption>()) {
-      return options.get<dataproc_v1::NodeGroupControllerBackoffPolicyOption>()->clone();
+      return options.get<dataproc_v1::NodeGroupControllerBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<dataproc_v1::NodeGroupControllerBackoffPolicyOption>()->clone();
+    return options_.get<dataproc_v1::NodeGroupControllerBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<dataproc_v1::NodeGroupControllerConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<dataproc_v1::NodeGroupControllerConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc_v1::NodeGroupControllerConnectionIdempotencyPolicyOption>()) {
-      return options.get<dataproc_v1::NodeGroupControllerConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<dataproc_v1::
+                     NodeGroupControllerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<dataproc_v1::
+                   NodeGroupControllerConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<dataproc_v1::NodeGroupControllerConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<
+            dataproc_v1::NodeGroupControllerConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<dataproc_v1::NodeGroupControllerPollingPolicyOption>()) {
-      return options.get<dataproc_v1::NodeGroupControllerPollingPolicyOption>()->clone();
+      return options.get<dataproc_v1::NodeGroupControllerPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<dataproc_v1::NodeGroupControllerPollingPolicyOption>()->clone();
+    return options_.get<dataproc_v1::NodeGroupControllerPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

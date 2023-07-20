@@ -33,7 +33,8 @@ NodeGroupControllerMetadata::NodeGroupControllerMetadata(
     std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerMetadata::AsyncCreateNodeGroup(
@@ -78,8 +79,8 @@ future<Status> NodeGroupControllerMetadata::AsyncCancelOperation(
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
-void NodeGroupControllerMetadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
+void NodeGroupControllerMetadata::SetMetadata(
+    grpc::ClientContext& context, std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context);
 }
@@ -91,8 +92,8 @@ void NodeGroupControllerMetadata::SetMetadata(grpc::ClientContext& context) {
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    context.AddMetadata(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
   }
   auto const& authority = options.get<AuthorityOption>();
   if (!authority.empty()) context.set_authority(authority);

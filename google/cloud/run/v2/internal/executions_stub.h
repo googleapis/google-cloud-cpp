@@ -37,12 +37,13 @@ class ExecutionsStub {
   virtual ~ExecutionsStub() = 0;
 
   virtual StatusOr<google::cloud::run::v2::Execution> GetExecution(
-    grpc::ClientContext& context,
-    google::cloud::run::v2::GetExecutionRequest const& request) = 0;
+      grpc::ClientContext& context,
+      google::cloud::run::v2::GetExecutionRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::run::v2::ListExecutionsResponse> ListExecutions(
-    grpc::ClientContext& context,
-    google::cloud::run::v2::ListExecutionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::run::v2::ListExecutionsResponse>
+  ListExecutions(
+      grpc::ClientContext& context,
+      google::cloud::run::v2::ListExecutionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteExecution(
       google::cloud::CompletionQueue& cq,
@@ -63,20 +64,19 @@ class ExecutionsStub {
 class DefaultExecutionsStub : public ExecutionsStub {
  public:
   DefaultExecutionsStub(
-      std::unique_ptr<google::cloud::run::v2::Executions::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
-      : grpc_stub_(std::move(grpc_stub)),
-        operations_(std::move(operations)) {}
+      std::unique_ptr<google::cloud::run::v2::Executions::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
-  StatusOr<google::cloud::run::v2::Execution>
-  GetExecution(
-    grpc::ClientContext& client_context,
-    google::cloud::run::v2::GetExecutionRequest const& request) override;
+  StatusOr<google::cloud::run::v2::Execution> GetExecution(
+      grpc::ClientContext& client_context,
+      google::cloud::run::v2::GetExecutionRequest const& request) override;
 
-  StatusOr<google::cloud::run::v2::ListExecutionsResponse>
-  ListExecutions(
-    grpc::ClientContext& client_context,
-    google::cloud::run::v2::ListExecutionsRequest const& request) override;
+  StatusOr<google::cloud::run::v2::ListExecutionsResponse> ListExecutions(
+      grpc::ClientContext& client_context,
+      google::cloud::run::v2::ListExecutionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteExecution(
       google::cloud::CompletionQueue& cq,

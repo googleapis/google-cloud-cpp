@@ -36,8 +36,8 @@ class ExecutionsLogging : public ExecutionsStub {
  public:
   ~ExecutionsLogging() override = default;
   ExecutionsLogging(std::shared_ptr<ExecutionsStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                    TracingOptions tracing_options,
+                    std::set<std::string> const& components);
 
   StatusOr<google::cloud::run::v2::Execution> GetExecution(
       grpc::ClientContext& context,

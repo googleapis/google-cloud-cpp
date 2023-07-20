@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_TASKS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_TASKS_CLIENT_H
 
+#include "google/cloud/run/v2/tasks_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/run/v2/tasks_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
@@ -61,7 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TasksClient {
  public:
-  explicit TasksClient(std::shared_ptr<TasksConnection> connection, Options opts = {});
+  explicit TasksClient(std::shared_ptr<TasksConnection> connection,
+                       Options opts = {});
   ~TasksClient();
 
   ///@{
@@ -107,8 +108,8 @@ class TasksClient {
   /// [google.cloud.run.v2.Task]: @googleapis_reference_link{google/cloud/run/v2/task.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::cloud::run::v2::Task>
-  GetTask(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::run::v2::Task> GetTask(std::string const& name,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -138,8 +139,8 @@ class TasksClient {
   /// [google.cloud.run.v2.Task]: @googleapis_reference_link{google/cloud/run/v2/task.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::cloud::run::v2::Task>
-  GetTask(google::cloud::run::v2::GetTaskRequest const& request, Options opts = {});
+  StatusOr<google::cloud::run::v2::Task> GetTask(
+      google::cloud::run::v2::GetTaskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -176,8 +177,8 @@ class TasksClient {
   /// [google.cloud.run.v2.Task]: @googleapis_reference_link{google/cloud/run/v2/task.proto#L102}
   ///
   // clang-format on
-  StreamRange<google::cloud::run::v2::Task>
-  ListTasks(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::run::v2::Task> ListTasks(std::string const& parent,
+                                                      Options opts = {});
 
   // clang-format off
   ///
@@ -216,8 +217,8 @@ class TasksClient {
   /// [google.cloud.run.v2.Task]: @googleapis_reference_link{google/cloud/run/v2/task.proto#L102}
   ///
   // clang-format on
-  StreamRange<google::cloud::run::v2::Task>
-  ListTasks(google::cloud::run::v2::ListTasksRequest request, Options opts = {});
+  StreamRange<google::cloud::run::v2::Task> ListTasks(
+      google::cloud::run::v2::ListTasksRequest request, Options opts = {});
 
  private:
   std::shared_ptr<TasksConnection> connection_;

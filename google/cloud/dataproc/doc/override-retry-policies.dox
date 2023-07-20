@@ -83,6 +83,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c dataproc_v1::BatchControllerClient](@ref dataproc_v1::BatchControllerClient-retry-snippet)
 - [\c dataproc_v1::ClusterControllerClient](@ref dataproc_v1::ClusterControllerClient-retry-snippet)
 - [\c dataproc_v1::JobControllerClient](@ref dataproc_v1::JobControllerClient-retry-snippet)
+- [\c dataproc_v1::NodeGroupControllerClient](@ref dataproc_v1::NodeGroupControllerClient-retry-snippet)
 - [\c dataproc_v1::WorkflowTemplateServiceClient](@ref dataproc_v1::WorkflowTemplateServiceClient-retry-snippet)
 
 <!-- inject-retry-snippet-end -->
@@ -144,6 +145,18 @@ This shows how to override the retry policies for dataproc_v1::JobControllerClie
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/dataproc/v1/samples/job_controller_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dataproc_v1::NodeGroupControllerClient-retry-snippet Override dataproc_v1::NodeGroupControllerClient Retry Policies
+
+This shows how to override the retry policies for dataproc_v1::NodeGroupControllerClient:
+
+@snippet google/cloud/dataproc/v1/samples/node_group_controller_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dataproc/v1/samples/node_group_controller_client_samples.cc custom-idempotency-policy
 
 */
 

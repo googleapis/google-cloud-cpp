@@ -30,7 +30,8 @@ ConfigServiceV2Auth::ConfigServiceV2Auth(
     std::shared_ptr<ConfigServiceV2Stub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::logging::v2::ListBucketsResponse> ConfigServiceV2Auth::ListBuckets(
+StatusOr<google::logging::v2::ListBucketsResponse>
+ConfigServiceV2Auth::ListBuckets(
     grpc::ClientContext& context,
     google::logging::v2::ListBucketsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -48,14 +49,15 @@ StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Auth::GetBucket(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Auth::AsyncCreateBucketAsync(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::logging::v2::CreateBucketRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::logging::v2::CreateBucketRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -66,14 +68,15 @@ ConfigServiceV2Auth::AsyncCreateBucketAsync(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Auth::AsyncUpdateBucketAsync(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::logging::v2::UpdateBucketRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::logging::v2::UpdateBucketRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -196,14 +199,15 @@ Status ConfigServiceV2Auth::DeleteSink(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Auth::AsyncCreateLink(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::logging::v2::CreateLinkRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::logging::v2::CreateLinkRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -214,14 +218,15 @@ ConfigServiceV2Auth::AsyncCreateLink(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Auth::AsyncDeleteLink(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::logging::v2::DeleteLinkRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::logging::v2::DeleteLinkRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -246,7 +251,8 @@ StatusOr<google::logging::v2::Link> ConfigServiceV2Auth::GetLink(
   return child_->GetLink(context, request);
 }
 
-StatusOr<google::logging::v2::ListExclusionsResponse> ConfigServiceV2Auth::ListExclusions(
+StatusOr<google::logging::v2::ListExclusionsResponse>
+ConfigServiceV2Auth::ListExclusions(
     grpc::ClientContext& context,
     google::logging::v2::ListExclusionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -262,7 +268,8 @@ StatusOr<google::logging::v2::LogExclusion> ConfigServiceV2Auth::GetExclusion(
   return child_->GetExclusion(context, request);
 }
 
-StatusOr<google::logging::v2::LogExclusion> ConfigServiceV2Auth::CreateExclusion(
+StatusOr<google::logging::v2::LogExclusion>
+ConfigServiceV2Auth::CreateExclusion(
     grpc::ClientContext& context,
     google::logging::v2::CreateExclusionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -270,7 +277,8 @@ StatusOr<google::logging::v2::LogExclusion> ConfigServiceV2Auth::CreateExclusion
   return child_->CreateExclusion(context, request);
 }
 
-StatusOr<google::logging::v2::LogExclusion> ConfigServiceV2Auth::UpdateExclusion(
+StatusOr<google::logging::v2::LogExclusion>
+ConfigServiceV2Auth::UpdateExclusion(
     grpc::ClientContext& context,
     google::logging::v2::UpdateExclusionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -286,7 +294,8 @@ Status ConfigServiceV2Auth::DeleteExclusion(
   return child_->DeleteExclusion(context, request);
 }
 
-StatusOr<google::logging::v2::CmekSettings> ConfigServiceV2Auth::GetCmekSettings(
+StatusOr<google::logging::v2::CmekSettings>
+ConfigServiceV2Auth::GetCmekSettings(
     grpc::ClientContext& context,
     google::logging::v2::GetCmekSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -294,7 +303,8 @@ StatusOr<google::logging::v2::CmekSettings> ConfigServiceV2Auth::GetCmekSettings
   return child_->GetCmekSettings(context, request);
 }
 
-StatusOr<google::logging::v2::CmekSettings> ConfigServiceV2Auth::UpdateCmekSettings(
+StatusOr<google::logging::v2::CmekSettings>
+ConfigServiceV2Auth::UpdateCmekSettings(
     grpc::ClientContext& context,
     google::logging::v2::UpdateCmekSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -320,14 +330,15 @@ StatusOr<google::logging::v2::Settings> ConfigServiceV2Auth::UpdateSettings(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Auth::AsyncCopyLogEntries(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::logging::v2::CopyLogEntriesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::logging::v2::CopyLogEntriesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -343,9 +354,10 @@ ConfigServiceV2Auth::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -359,9 +371,10 @@ future<Status> ConfigServiceV2Auth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
         return child->AsyncCancelOperation(cq, *std::move(context), request);

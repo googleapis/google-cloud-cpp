@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_TASKS_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_TASKS_TRACING_STUB_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/run/v2/internal/tasks_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {

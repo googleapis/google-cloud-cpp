@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_CONFIG_SERVICE_V2_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_CONFIG_SERVICE_V2_STUB_FACTORY_H
 
+#include "google/cloud/logging/v2/internal/config_service_v2_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/logging/v2/internal/config_service_v2_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 

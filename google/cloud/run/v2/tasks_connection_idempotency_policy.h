@@ -36,15 +36,15 @@ class TasksConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<TasksConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  GetTask(google::cloud::run::v2::GetTaskRequest const& request);
+  virtual google::cloud::Idempotency GetTask(
+      google::cloud::run::v2::GetTaskRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTasks(google::cloud::run::v2::ListTasksRequest request);
+  virtual google::cloud::Idempotency ListTasks(
+      google::cloud::run::v2::ListTasksRequest request);
 };
 
 std::unique_ptr<TasksConnectionIdempotencyPolicy>
-    MakeDefaultTasksConnectionIdempotencyPolicy();
+MakeDefaultTasksConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2

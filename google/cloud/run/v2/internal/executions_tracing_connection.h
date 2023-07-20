@@ -30,24 +30,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class ExecutionsTracingConnection
-    : public run_v2::ExecutionsConnection {
+class ExecutionsTracingConnection : public run_v2::ExecutionsConnection {
  public:
   ~ExecutionsTracingConnection() override = default;
 
   explicit ExecutionsTracingConnection(
-    std::shared_ptr<run_v2::ExecutionsConnection> child);
+      std::shared_ptr<run_v2::ExecutionsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::run::v2::Execution>
-  GetExecution(google::cloud::run::v2::GetExecutionRequest const& request) override;
+  StatusOr<google::cloud::run::v2::Execution> GetExecution(
+      google::cloud::run::v2::GetExecutionRequest const& request) override;
 
-  StreamRange<google::cloud::run::v2::Execution>
-  ListExecutions(google::cloud::run::v2::ListExecutionsRequest request) override;
+  StreamRange<google::cloud::run::v2::Execution> ListExecutions(
+      google::cloud::run::v2::ListExecutionsRequest request) override;
 
-  future<StatusOr<google::cloud::run::v2::Execution>>
-  DeleteExecution(google::cloud::run::v2::DeleteExecutionRequest const& request) override;
+  future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
+      google::cloud::run::v2::DeleteExecutionRequest const& request) override;
 
  private:
   std::shared_ptr<run_v2::ExecutionsConnection> child_;
@@ -61,8 +60,7 @@ class ExecutionsTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<run_v2::ExecutionsConnection>
-MakeExecutionsTracingConnection(
+std::shared_ptr<run_v2::ExecutionsConnection> MakeExecutionsTracingConnection(
     std::shared_ptr<run_v2::ExecutionsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

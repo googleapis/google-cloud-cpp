@@ -32,11 +32,12 @@ NodeGroupControllerStub::~NodeGroupControllerStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNodeGroupControllerStub::AsyncCreateNodeGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataproc::v1::CreateNodeGroupRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataproc::v1::CreateNodeGroupRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataproc::v1::CreateNodeGroupRequest const& request,
@@ -48,11 +49,12 @@ DefaultNodeGroupControllerStub::AsyncCreateNodeGroup(
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNodeGroupControllerStub::AsyncResizeNodeGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataproc::v1::ResizeNodeGroupRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request,
@@ -64,15 +66,14 @@ DefaultNodeGroupControllerStub::AsyncResizeNodeGroup(
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>
 DefaultNodeGroupControllerStub::GetNodeGroup(
-  grpc::ClientContext& client_context,
-  google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
-    google::cloud::dataproc::v1::NodeGroup response;
-    auto status =
-        grpc_stub_->GetNodeGroup(&client_context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& client_context,
+    google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
+  google::cloud::dataproc::v1::NodeGroup response;
+  auto status = grpc_stub_->GetNodeGroup(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -97,13 +98,13 @@ future<Status> DefaultNodeGroupControllerStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

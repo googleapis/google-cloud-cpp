@@ -29,20 +29,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NodeGroupControllerLogging::NodeGroupControllerLogging(
     std::shared_ptr<NodeGroupControllerStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const& components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> const& components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerLogging::AsyncCreateNodeGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
         return child_->AsyncCreateNodeGroup(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
@@ -50,13 +51,14 @@ NodeGroupControllerLogging::AsyncCreateNodeGroup(
 
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerLogging::AsyncResizeNodeGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
         return child_->AsyncResizeNodeGroup(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);

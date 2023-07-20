@@ -30,21 +30,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class TasksTracingConnection
-    : public run_v2::TasksConnection {
+class TasksTracingConnection : public run_v2::TasksConnection {
  public:
   ~TasksTracingConnection() override = default;
 
   explicit TasksTracingConnection(
-    std::shared_ptr<run_v2::TasksConnection> child);
+      std::shared_ptr<run_v2::TasksConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::run::v2::Task>
-  GetTask(google::cloud::run::v2::GetTaskRequest const& request) override;
+  StatusOr<google::cloud::run::v2::Task> GetTask(
+      google::cloud::run::v2::GetTaskRequest const& request) override;
 
-  StreamRange<google::cloud::run::v2::Task>
-  ListTasks(google::cloud::run::v2::ListTasksRequest request) override;
+  StreamRange<google::cloud::run::v2::Task> ListTasks(
+      google::cloud::run::v2::ListTasksRequest request) override;
 
  private:
   std::shared_ptr<run_v2::TasksConnection> child_;
@@ -58,8 +57,7 @@ class TasksTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<run_v2::TasksConnection>
-MakeTasksTracingConnection(
+std::shared_ptr<run_v2::TasksConnection> MakeTasksTracingConnection(
     std::shared_ptr<run_v2::TasksConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

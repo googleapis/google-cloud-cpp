@@ -32,26 +32,25 @@ TasksTracingConnection::TasksTracingConnection(
     std::shared_ptr<run_v2::TasksConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::run::v2::Task>
-TasksTracingConnection::GetTask(google::cloud::run::v2::GetTaskRequest const& request) {
+StatusOr<google::cloud::run::v2::Task> TasksTracingConnection::GetTask(
+    google::cloud::run::v2::GetTaskRequest const& request) {
   auto span = internal::MakeSpan("run_v2::TasksConnection::GetTask");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTask(request));
 }
 
-StreamRange<google::cloud::run::v2::Task>
-TasksTracingConnection::ListTasks(google::cloud::run::v2::ListTasksRequest request) {
+StreamRange<google::cloud::run::v2::Task> TasksTracingConnection::ListTasks(
+    google::cloud::run::v2::ListTasksRequest request) {
   auto span = internal::MakeSpan("run_v2::TasksConnection::ListTasks");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListTasks(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::run::v2::Task>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<run_v2::TasksConnection>
-MakeTasksTracingConnection(
+std::shared_ptr<run_v2::TasksConnection> MakeTasksTracingConnection(
     std::shared_ptr<run_v2::TasksConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

@@ -68,14 +68,20 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section logging-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
-For example, this will override the retry policies for `logging_v2::LoggingServiceV2Client`:
+For example, this will override the retry policies for `logging_v2::ConfigServiceV2Client`:
 
-@snippet logging_service_v2_client_samples.cc set-retry-policy
+@snippet config_service_v2_client_samples.cc set-retry-policy
 
 This assumes you have created a custom idempotency policy. Such as:
 
-@snippet logging_service_v2_client_samples.cc custom-idempotency-policy
+@snippet config_service_v2_client_samples.cc custom-idempotency-policy
 
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c logging_v2::ConfigServiceV2Client](@ref logging_v2::ConfigServiceV2Client-retry-snippet)
+- [\c logging_v2::LoggingServiceV2Client](@ref logging_v2::LoggingServiceV2Client-retry-snippet)
+- [\c logging_v2::MetricsServiceV2Client](@ref logging_v2::MetricsServiceV2Client-retry-snippet)
 
 <!-- inject-retry-snippet-end -->
 
@@ -91,6 +97,18 @@ This assumes you have created a custom idempotency policy. Such as:
 
 // <!-- inject-retry-pages-start -->
 
+/*! @page logging_v2::ConfigServiceV2Client-retry-snippet Override logging_v2::ConfigServiceV2Client Retry Policies
+
+This shows how to override the retry policies for logging_v2::ConfigServiceV2Client:
+
+@snippet google/cloud/logging/v2/samples/config_service_v2_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/logging/v2/samples/config_service_v2_client_samples.cc custom-idempotency-policy
+
+*/
+
 /*! @page logging_v2::LoggingServiceV2Client-retry-snippet Override logging_v2::LoggingServiceV2Client Retry Policies
 
 This shows how to override the retry policies for logging_v2::LoggingServiceV2Client:
@@ -100,6 +118,18 @@ This shows how to override the retry policies for logging_v2::LoggingServiceV2Cl
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/logging/v2/samples/logging_service_v2_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page logging_v2::MetricsServiceV2Client-retry-snippet Override logging_v2::MetricsServiceV2Client Retry Policies
+
+This shows how to override the retry policies for logging_v2::MetricsServiceV2Client:
+
+@snippet google/cloud/logging/v2/samples/metrics_service_v2_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/logging/v2/samples/metrics_service_v2_client_samples.cc custom-idempotency-policy
 
 */
 // <!-- inject-retry-pages-end -->

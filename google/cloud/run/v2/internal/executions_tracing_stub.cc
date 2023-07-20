@@ -33,17 +33,20 @@ ExecutionsTracingStub::ExecutionsTracingStub(
 StatusOr<google::cloud::run::v2::Execution> ExecutionsTracingStub::GetExecution(
     grpc::ClientContext& context,
     google::cloud::run::v2::GetExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "GetExecution");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "GetExecution");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
                            child_->GetExecution(context, request));
 }
 
-StatusOr<google::cloud::run::v2::ListExecutionsResponse> ExecutionsTracingStub::ListExecutions(
+StatusOr<google::cloud::run::v2::ListExecutionsResponse>
+ExecutionsTracingStub::ListExecutions(
     grpc::ClientContext& context,
     google::cloud::run::v2::ListExecutionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "ListExecutions");
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions",
+                                     "ListExecutions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
@@ -52,10 +55,11 @@ StatusOr<google::cloud::run::v2::ListExecutionsResponse> ExecutionsTracingStub::
 
 future<StatusOr<google::longrunning::Operation>>
 ExecutionsTracingStub::AsyncDeleteExecution(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::run::v2::DeleteExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "DeleteExecution");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::DeleteExecutionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions",
+                                     "DeleteExecution");
   {
     auto scope = opentelemetry::trace::Scope(span);
     internal::InjectTraceContext(*context, internal::CurrentOptions());

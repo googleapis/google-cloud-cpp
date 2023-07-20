@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_TASKS_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_TASKS_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/run/v2/internal/tasks_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>

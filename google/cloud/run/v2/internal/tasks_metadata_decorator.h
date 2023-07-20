@@ -33,9 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TasksMetadata : public TasksStub {
  public:
   ~TasksMetadata() override = default;
-  TasksMetadata(
-      std::shared_ptr<TasksStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+  TasksMetadata(std::shared_ptr<TasksStub> child,
+                std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::run::v2::Task> GetTask(
       grpc::ClientContext& context,

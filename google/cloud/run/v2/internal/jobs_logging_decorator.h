@@ -35,9 +35,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class JobsLogging : public JobsStub {
  public:
   ~JobsLogging() override = default;
-  JobsLogging(std::shared_ptr<JobsStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+  JobsLogging(std::shared_ptr<JobsStub> child, TracingOptions tracing_options,
+              std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateJob(
       google::cloud::CompletionQueue& cq,

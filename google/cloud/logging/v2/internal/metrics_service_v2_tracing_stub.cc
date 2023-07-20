@@ -30,40 +30,48 @@ MetricsServiceV2TracingStub::MetricsServiceV2TracingStub(
     std::shared_ptr<MetricsServiceV2Stub> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::logging::v2::ListLogMetricsResponse> MetricsServiceV2TracingStub::ListLogMetrics(
+StatusOr<google::logging::v2::ListLogMetricsResponse>
+MetricsServiceV2TracingStub::ListLogMetrics(
     grpc::ClientContext& context,
     google::logging::v2::ListLogMetricsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.logging.v2.MetricsServiceV2", "ListLogMetrics");
+  auto span = internal::MakeSpanGrpc("google.logging.v2.MetricsServiceV2",
+                                     "ListLogMetrics");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
                            child_->ListLogMetrics(context, request));
 }
 
-StatusOr<google::logging::v2::LogMetric> MetricsServiceV2TracingStub::GetLogMetric(
+StatusOr<google::logging::v2::LogMetric>
+MetricsServiceV2TracingStub::GetLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::GetLogMetricRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.logging.v2.MetricsServiceV2", "GetLogMetric");
+  auto span = internal::MakeSpanGrpc("google.logging.v2.MetricsServiceV2",
+                                     "GetLogMetric");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
                            child_->GetLogMetric(context, request));
 }
 
-StatusOr<google::logging::v2::LogMetric> MetricsServiceV2TracingStub::CreateLogMetric(
+StatusOr<google::logging::v2::LogMetric>
+MetricsServiceV2TracingStub::CreateLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::CreateLogMetricRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.logging.v2.MetricsServiceV2", "CreateLogMetric");
+  auto span = internal::MakeSpanGrpc("google.logging.v2.MetricsServiceV2",
+                                     "CreateLogMetric");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
                            child_->CreateLogMetric(context, request));
 }
 
-StatusOr<google::logging::v2::LogMetric> MetricsServiceV2TracingStub::UpdateLogMetric(
+StatusOr<google::logging::v2::LogMetric>
+MetricsServiceV2TracingStub::UpdateLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::UpdateLogMetricRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.logging.v2.MetricsServiceV2", "UpdateLogMetric");
+  auto span = internal::MakeSpanGrpc("google.logging.v2.MetricsServiceV2",
+                                     "UpdateLogMetric");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
@@ -73,7 +81,8 @@ StatusOr<google::logging::v2::LogMetric> MetricsServiceV2TracingStub::UpdateLogM
 Status MetricsServiceV2TracingStub::DeleteLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::DeleteLogMetricRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.logging.v2.MetricsServiceV2", "DeleteLogMetric");
+  auto span = internal::MakeSpanGrpc("google.logging.v2.MetricsServiceV2",
+                                     "DeleteLogMetric");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,

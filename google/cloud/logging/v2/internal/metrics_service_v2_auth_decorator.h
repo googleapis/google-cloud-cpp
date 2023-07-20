@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_METRICS_SERVICE_V2_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_METRICS_SERVICE_V2_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/logging/v2/internal/metrics_service_v2_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>

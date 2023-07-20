@@ -36,18 +36,20 @@ class NodeGroupControllerTracingConnection
   ~NodeGroupControllerTracingConnection() override = default;
 
   explicit NodeGroupControllerTracingConnection(
-    std::shared_ptr<dataproc_v1::NodeGroupControllerConnection> child);
+      std::shared_ptr<dataproc_v1::NodeGroupControllerConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-  CreateNodeGroup(google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) override;
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> CreateNodeGroup(
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-  ResizeNodeGroup(google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) override;
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dataproc::v1::NodeGroup>
-  GetNodeGroup(google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
+  StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
+      google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
 
  private:
   std::shared_ptr<dataproc_v1::NodeGroupControllerConnection> child_;

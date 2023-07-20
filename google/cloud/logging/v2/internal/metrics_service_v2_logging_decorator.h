@@ -35,8 +35,8 @@ class MetricsServiceV2Logging : public MetricsServiceV2Stub {
  public:
   ~MetricsServiceV2Logging() override = default;
   MetricsServiceV2Logging(std::shared_ptr<MetricsServiceV2Stub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                          TracingOptions tracing_options,
+                          std::set<std::string> const& components);
 
   StatusOr<google::logging::v2::ListLogMetricsResponse> ListLogMetrics(
       grpc::ClientContext& context,

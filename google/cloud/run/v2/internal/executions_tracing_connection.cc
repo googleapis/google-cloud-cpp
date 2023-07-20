@@ -33,33 +33,36 @@ ExecutionsTracingConnection::ExecutionsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::run::v2::Execution>
-ExecutionsTracingConnection::GetExecution(google::cloud::run::v2::GetExecutionRequest const& request) {
+ExecutionsTracingConnection::GetExecution(
+    google::cloud::run::v2::GetExecutionRequest const& request) {
   auto span = internal::MakeSpan("run_v2::ExecutionsConnection::GetExecution");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetExecution(request));
 }
 
 StreamRange<google::cloud::run::v2::Execution>
-ExecutionsTracingConnection::ListExecutions(google::cloud::run::v2::ListExecutionsRequest request) {
-  auto span = internal::MakeSpan("run_v2::ExecutionsConnection::ListExecutions");
+ExecutionsTracingConnection::ListExecutions(
+    google::cloud::run::v2::ListExecutionsRequest request) {
+  auto span =
+      internal::MakeSpan("run_v2::ExecutionsConnection::ListExecutions");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListExecutions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::run::v2::Execution>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>>
-ExecutionsTracingConnection::DeleteExecution(google::cloud::run::v2::DeleteExecutionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "run_v2::ExecutionsConnection::DeleteExecution");
+ExecutionsTracingConnection::DeleteExecution(
+    google::cloud::run::v2::DeleteExecutionRequest const& request) {
+  auto span =
+      internal::MakeSpan("run_v2::ExecutionsConnection::DeleteExecution");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteExecution(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<run_v2::ExecutionsConnection>
-MakeExecutionsTracingConnection(
+std::shared_ptr<run_v2::ExecutionsConnection> MakeExecutionsTracingConnection(
     std::shared_ptr<run_v2::ExecutionsConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

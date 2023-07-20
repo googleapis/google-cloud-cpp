@@ -26,27 +26,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-NodeGroupControllerConnectionIdempotencyPolicy::~NodeGroupControllerConnectionIdempotencyPolicy() = default;
+NodeGroupControllerConnectionIdempotencyPolicy::
+    ~NodeGroupControllerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<NodeGroupControllerConnectionIdempotencyPolicy>
 NodeGroupControllerConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<NodeGroupControllerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<NodeGroupControllerConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency NodeGroupControllerConnectionIdempotencyPolicy::CreateNodeGroup(google::cloud::dataproc::v1::CreateNodeGroupRequest const&) {
+Idempotency NodeGroupControllerConnectionIdempotencyPolicy::CreateNodeGroup(
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeGroupControllerConnectionIdempotencyPolicy::ResizeNodeGroup(google::cloud::dataproc::v1::ResizeNodeGroupRequest const&) {
+Idempotency NodeGroupControllerConnectionIdempotencyPolicy::ResizeNodeGroup(
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeGroupControllerConnectionIdempotencyPolicy::GetNodeGroup(google::cloud::dataproc::v1::GetNodeGroupRequest const&) {
+Idempotency NodeGroupControllerConnectionIdempotencyPolicy::GetNodeGroup(
+    google::cloud::dataproc::v1::GetNodeGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<NodeGroupControllerConnectionIdempotencyPolicy>
-    MakeDefaultNodeGroupControllerConnectionIdempotencyPolicy() {
+MakeDefaultNodeGroupControllerConnectionIdempotencyPolicy() {
   return std::make_unique<NodeGroupControllerConnectionIdempotencyPolicy>();
 }
 

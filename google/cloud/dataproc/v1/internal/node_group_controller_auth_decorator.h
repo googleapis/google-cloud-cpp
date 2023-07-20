@@ -42,12 +42,14 @@ class NodeGroupControllerAuth : public NodeGroupControllerStub {
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) override;
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResizeNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) override;
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
+      override;
 
   StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
       grpc::ClientContext& context,

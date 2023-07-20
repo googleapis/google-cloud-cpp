@@ -27,15 +27,14 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TasksLogging::TasksLogging(
-    std::shared_ptr<TasksStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const& components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+TasksLogging::TasksLogging(std::shared_ptr<TasksStub> child,
+                           TracingOptions tracing_options,
+                           std::set<std::string> const& components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
-StatusOr<google::cloud::run::v2::Task>
-TasksLogging::GetTask(
+StatusOr<google::cloud::run::v2::Task> TasksLogging::GetTask(
     grpc::ClientContext& context,
     google::cloud::run::v2::GetTaskRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -46,8 +45,7 @@ TasksLogging::GetTask(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::run::v2::ListTasksResponse>
-TasksLogging::ListTasks(
+StatusOr<google::cloud::run::v2::ListTasksResponse> TasksLogging::ListTasks(
     grpc::ClientContext& context,
     google::cloud::run::v2::ListTasksRequest const& request) {
   return google::cloud::internal::LogWrapper(

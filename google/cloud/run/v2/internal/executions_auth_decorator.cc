@@ -38,7 +38,8 @@ StatusOr<google::cloud::run::v2::Execution> ExecutionsAuth::GetExecution(
   return child_->GetExecution(context, request);
 }
 
-StatusOr<google::cloud::run::v2::ListExecutionsResponse> ExecutionsAuth::ListExecutions(
+StatusOr<google::cloud::run::v2::ListExecutionsResponse>
+ExecutionsAuth::ListExecutions(
     grpc::ClientContext& context,
     google::cloud::run::v2::ListExecutionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
@@ -48,14 +49,15 @@ StatusOr<google::cloud::run::v2::ListExecutionsResponse> ExecutionsAuth::ListExe
 
 future<StatusOr<google::longrunning::Operation>>
 ExecutionsAuth::AsyncDeleteExecution(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::run::v2::DeleteExecutionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::DeleteExecutionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -71,9 +73,10 @@ ExecutionsAuth::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -87,9 +90,10 @@ future<Status> ExecutionsAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
         return child->AsyncCancelOperation(cq, *std::move(context), request);

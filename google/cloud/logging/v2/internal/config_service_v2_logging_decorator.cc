@@ -28,10 +28,10 @@ namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConfigServiceV2Logging::ConfigServiceV2Logging(
-    std::shared_ptr<ConfigServiceV2Stub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<ConfigServiceV2Stub> child, TracingOptions tracing_options,
     std::set<std::string> const& components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::logging::v2::ListBucketsResponse>
@@ -46,8 +46,7 @@ ConfigServiceV2Logging::ListBuckets(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::LogBucket>
-ConfigServiceV2Logging::GetBucket(
+StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Logging::GetBucket(
     grpc::ClientContext& context,
     google::logging::v2::GetBucketRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -60,9 +59,9 @@ ConfigServiceV2Logging::GetBucket(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Logging::AsyncCreateBucketAsync(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::logging::v2::CreateBucketRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::logging::v2::CreateBucketRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
@@ -74,9 +73,9 @@ ConfigServiceV2Logging::AsyncCreateBucketAsync(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Logging::AsyncUpdateBucketAsync(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::logging::v2::UpdateBucketRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::logging::v2::UpdateBucketRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
@@ -86,8 +85,7 @@ ConfigServiceV2Logging::AsyncUpdateBucketAsync(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::LogBucket>
-ConfigServiceV2Logging::CreateBucket(
+StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Logging::CreateBucket(
     grpc::ClientContext& context,
     google::logging::v2::CreateBucketRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -98,8 +96,7 @@ ConfigServiceV2Logging::CreateBucket(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::LogBucket>
-ConfigServiceV2Logging::UpdateBucket(
+StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Logging::UpdateBucket(
     grpc::ClientContext& context,
     google::logging::v2::UpdateBucketRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -110,8 +107,7 @@ ConfigServiceV2Logging::UpdateBucket(
       context, request, __func__, tracing_options_);
 }
 
-Status
-ConfigServiceV2Logging::DeleteBucket(
+Status ConfigServiceV2Logging::DeleteBucket(
     grpc::ClientContext& context,
     google::logging::v2::DeleteBucketRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -122,8 +118,7 @@ ConfigServiceV2Logging::DeleteBucket(
       context, request, __func__, tracing_options_);
 }
 
-Status
-ConfigServiceV2Logging::UndeleteBucket(
+Status ConfigServiceV2Logging::UndeleteBucket(
     grpc::ClientContext& context,
     google::logging::v2::UndeleteBucketRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -146,8 +141,7 @@ ConfigServiceV2Logging::ListViews(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::LogView>
-ConfigServiceV2Logging::GetView(
+StatusOr<google::logging::v2::LogView> ConfigServiceV2Logging::GetView(
     grpc::ClientContext& context,
     google::logging::v2::GetViewRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -158,8 +152,7 @@ ConfigServiceV2Logging::GetView(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::LogView>
-ConfigServiceV2Logging::CreateView(
+StatusOr<google::logging::v2::LogView> ConfigServiceV2Logging::CreateView(
     grpc::ClientContext& context,
     google::logging::v2::CreateViewRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -170,8 +163,7 @@ ConfigServiceV2Logging::CreateView(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::LogView>
-ConfigServiceV2Logging::UpdateView(
+StatusOr<google::logging::v2::LogView> ConfigServiceV2Logging::UpdateView(
     grpc::ClientContext& context,
     google::logging::v2::UpdateViewRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -182,8 +174,7 @@ ConfigServiceV2Logging::UpdateView(
       context, request, __func__, tracing_options_);
 }
 
-Status
-ConfigServiceV2Logging::DeleteView(
+Status ConfigServiceV2Logging::DeleteView(
     grpc::ClientContext& context,
     google::logging::v2::DeleteViewRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -206,8 +197,7 @@ ConfigServiceV2Logging::ListSinks(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::LogSink>
-ConfigServiceV2Logging::GetSink(
+StatusOr<google::logging::v2::LogSink> ConfigServiceV2Logging::GetSink(
     grpc::ClientContext& context,
     google::logging::v2::GetSinkRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -218,8 +208,7 @@ ConfigServiceV2Logging::GetSink(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::LogSink>
-ConfigServiceV2Logging::CreateSink(
+StatusOr<google::logging::v2::LogSink> ConfigServiceV2Logging::CreateSink(
     grpc::ClientContext& context,
     google::logging::v2::CreateSinkRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -230,8 +219,7 @@ ConfigServiceV2Logging::CreateSink(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::LogSink>
-ConfigServiceV2Logging::UpdateSink(
+StatusOr<google::logging::v2::LogSink> ConfigServiceV2Logging::UpdateSink(
     grpc::ClientContext& context,
     google::logging::v2::UpdateSinkRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -242,8 +230,7 @@ ConfigServiceV2Logging::UpdateSink(
       context, request, __func__, tracing_options_);
 }
 
-Status
-ConfigServiceV2Logging::DeleteSink(
+Status ConfigServiceV2Logging::DeleteSink(
     grpc::ClientContext& context,
     google::logging::v2::DeleteSinkRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -256,9 +243,9 @@ ConfigServiceV2Logging::DeleteSink(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Logging::AsyncCreateLink(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::logging::v2::CreateLinkRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::logging::v2::CreateLinkRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
@@ -270,9 +257,9 @@ ConfigServiceV2Logging::AsyncCreateLink(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Logging::AsyncDeleteLink(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::logging::v2::DeleteLinkRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::logging::v2::DeleteLinkRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
@@ -294,8 +281,7 @@ ConfigServiceV2Logging::ListLinks(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::Link>
-ConfigServiceV2Logging::GetLink(
+StatusOr<google::logging::v2::Link> ConfigServiceV2Logging::GetLink(
     grpc::ClientContext& context,
     google::logging::v2::GetLinkRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -354,8 +340,7 @@ ConfigServiceV2Logging::UpdateExclusion(
       context, request, __func__, tracing_options_);
 }
 
-Status
-ConfigServiceV2Logging::DeleteExclusion(
+Status ConfigServiceV2Logging::DeleteExclusion(
     grpc::ClientContext& context,
     google::logging::v2::DeleteExclusionRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -390,8 +375,7 @@ ConfigServiceV2Logging::UpdateCmekSettings(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::Settings>
-ConfigServiceV2Logging::GetSettings(
+StatusOr<google::logging::v2::Settings> ConfigServiceV2Logging::GetSettings(
     grpc::ClientContext& context,
     google::logging::v2::GetSettingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -402,8 +386,7 @@ ConfigServiceV2Logging::GetSettings(
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::logging::v2::Settings>
-ConfigServiceV2Logging::UpdateSettings(
+StatusOr<google::logging::v2::Settings> ConfigServiceV2Logging::UpdateSettings(
     grpc::ClientContext& context,
     google::logging::v2::UpdateSettingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
@@ -416,9 +399,9 @@ ConfigServiceV2Logging::UpdateSettings(
 
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Logging::AsyncCopyLogEntries(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::logging::v2::CopyLogEntriesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::logging::v2::CopyLogEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,

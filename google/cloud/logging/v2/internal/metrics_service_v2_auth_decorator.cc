@@ -30,7 +30,8 @@ MetricsServiceV2Auth::MetricsServiceV2Auth(
     std::shared_ptr<MetricsServiceV2Stub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::logging::v2::ListLogMetricsResponse> MetricsServiceV2Auth::ListLogMetrics(
+StatusOr<google::logging::v2::ListLogMetricsResponse>
+MetricsServiceV2Auth::ListLogMetrics(
     grpc::ClientContext& context,
     google::logging::v2::ListLogMetricsRequest const& request) {
   auto status = auth_->ConfigureContext(context);

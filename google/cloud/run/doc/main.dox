@@ -39,8 +39,11 @@ The library also has other classes that provide helpers, configuration
 parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
 
+- [\c run_v2::ExecutionsClient](@ref google::cloud::run_v2::ExecutionsClient)
+- [\c run_v2::JobsClient](@ref google::cloud::run_v2::JobsClient)
 - [\c run_v2::RevisionsClient](@ref google::cloud::run_v2::RevisionsClient)
 - [\c run_v2::ServicesClient](@ref google::cloud::run_v2::ServicesClient)
+- [\c run_v2::TasksClient](@ref google::cloud::run_v2::TasksClient)
 <!-- inject-client-list-end -->
 
 ## More Information
