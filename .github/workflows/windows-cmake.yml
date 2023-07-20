@@ -9,7 +9,7 @@ on:
         type: string
       full-matrix:
         required: true
-        description: "Run the full matrix"
+        description: "Build the full matrix"
         type: boolean
 
 permissions:

@@ -7,10 +7,10 @@ on:
         required: true
         description: "The ref we want to compile"
         type: string
-      shards:
+      full-matrix:
         required: true
-        description: "The shards to compile"
-        type: string
+        description: "Build the full matrix"
+        type: boolean
 
 permissions:
   contents: read
