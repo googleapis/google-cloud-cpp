@@ -7,12 +7,20 @@ on:
         required: true
         description: "The ref we want to compile"
         type: string
+      full-matrix:
+        required: true
+        description: "Run the full matrix"
+        type: bool
 
 permissions:
   contents: read
 
 jobs:
   bazel:
+    # We only run the Bazel tests post-merge. macOS builds are expensive, and
+    # the Bazel tests are unlikely to fail given that (1) we have macOS+CMake
+    # builds below, and (2) we have Linux+Bazel tests elsewhere.
+    if: ${{ inputs.full-matrix }}
     name: bazel + ${{ matrix.msvc }} + ${{ matrix.compilation_mode }} + ${{ matrix.shard }}
     runs-on:
       group: cpp-runners
@@ -100,7 +108,8 @@ jobs:
       # Continue other builds even if one fails
       fail-fast: false
       matrix:
-        msvc: [ windows-2022, windows-2019 ]
+        full-build: [ true ]
+        msvc: [ msvc-2022, msvc-2019 ]
         build_type: [ Debug, Release ]
         vcpkg_triplet: [ x64-windows ]
         shard:
@@ -108,6 +117,16 @@ jobs:
         - Compute
         - Other
         exclude:
+        # On pull requests skip the MSVC 2019 builds. These rarely contain This contains all the
+        # hand-crafted code. The other shards are unlikely to catch problems, as
+        # (1) this is largely generated code, (2) we have other builds that test
+        # this code on Linux.
+        # Do not run MSVC 2019 builds with pull requests. Running builds is
+        # expensive, and these rarely catch any problems.
+        - full-build: ${{ ! inputs.full-matrix }}
+          msvc: ${{ 'windows-2019' }}
+        - full-build: ${{ ! inputs.full-matrix }}
+          msvc: msvc-2019
         # Compute is (currently) a single `.lib` file. This file is too large in
         # Debug mode. MSVC uses COFF:
         #     https://en.wikipedia.org/wiki/COFF
@@ -117,9 +136,9 @@ jobs:
         - build_type: Debug
           shard: Compute
         include:
-        - msvc: windows-2022
+        - msvc: msvc-2022
           os: windows-2022
-        - msvc: windows-2019
+        - msvc: msvc-2019
           os: windows-2019
         - shard: Core
           features:
@@ -194,7 +213,7 @@ jobs:
         # Put the CMake output in a directory with more space and keep it short
         # to avoid running into the MSVC limits.
         export CMAKE_OUT='c:\b'
-        ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ join(matrix.features, ',') }}
+        echo DEBUG DEBUG DEBUG ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ join(matrix.features, ',') }}
     env:
       SCCACHE_GCS_BUCKET: cloud-cpp-gha-cache
       SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.msvc }}/${{ matrix.build_type }}

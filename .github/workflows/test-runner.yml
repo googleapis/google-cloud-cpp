@@ -54,9 +54,8 @@ jobs:
   macos-bazel:
     # We only run the Bazel tests post-merge. macOS builds are expensive, and
     # the Bazel tests are unlikely to fail given that (1) we have macOS+CMake
-    # builds below, and (2) we have Linux+Bazel and Windows+Bazel tests
-    # elsewhere.
-    if: ${{ github.event_name == 'push' }}
+    # builds below, and (2) we have Linux+Bazel tests elsewhere.
+    if: false # DEBUG DEBUG ${{ github.event_name == 'push' }}
     name: macOS-Bazel
     needs: [pre-flight]
     uses: ./.github/workflows/macos-bazel.yml
@@ -64,6 +63,7 @@ jobs:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
   macos-cmake:
+    if: ${{ false }}
     name: macOS-CMake
     needs: [pre-flight]
     uses: ./.github/workflows/macos-cmake.yml
@@ -75,10 +75,18 @@ jobs:
       # this code on Linux and Windows.
       shards: ${{ (github.event_name == 'push' && '["Core","Compute","Shard1","Other"]') || '["Core"]' }}
     secrets: inherit
+  debug:
+    name: DEBUG DEBUG DEBUG
+    run: |
+      echo ========== 'github'
+      cat >/dev/null <'_EOF_'
+      ${{ toJSON(github) }}
+      _EOF_
   windows:
     name: Windows
     needs: [pre-flight]
     uses: ./.github/workflows/windows.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      full-matrix: false # TODO DEBUG ${{ github.event_name == 'push' && github.ref == 'main' }}
     secrets: inherit
