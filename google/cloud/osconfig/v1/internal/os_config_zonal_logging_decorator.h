@@ -37,7 +37,7 @@ class OsConfigZonalServiceLogging : public OsConfigZonalServiceStub {
   ~OsConfigZonalServiceLogging() override = default;
   OsConfigZonalServiceLogging(std::shared_ptr<OsConfigZonalServiceStub> child,
                               TracingOptions tracing_options,
-                              std::set<std::string> components);
+                              std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncCreateOSPolicyAssignment(
@@ -124,7 +124,7 @@ class OsConfigZonalServiceLogging : public OsConfigZonalServiceStub {
  private:
   std::shared_ptr<OsConfigZonalServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // OsConfigZonalServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
