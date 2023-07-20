@@ -15,9 +15,12 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c retail_v2::CatalogServiceClient](@ref retail_v2::CatalogServiceClient-endpoint-snippet)
 - [\c retail_v2::CompletionServiceClient](@ref retail_v2::CompletionServiceClient-endpoint-snippet)
+- [\c retail_v2::ControlServiceClient](@ref retail_v2::ControlServiceClient-endpoint-snippet)
+- [\c retail_v2::ModelServiceClient](@ref retail_v2::ModelServiceClient-endpoint-snippet)
 - [\c retail_v2::PredictionServiceClient](@ref retail_v2::PredictionServiceClient-endpoint-snippet)
 - [\c retail_v2::ProductServiceClient](@ref retail_v2::ProductServiceClient-endpoint-snippet)
 - [\c retail_v2::SearchServiceClient](@ref retail_v2::SearchServiceClient-endpoint-snippet)
+- [\c retail_v2::ServingConfigServiceClient](@ref retail_v2::ServingConfigServiceClient-endpoint-snippet)
 - [\c retail_v2::UserEventServiceClient](@ref retail_v2::UserEventServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
@@ -38,6 +41,18 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page retail_v2::ControlServiceClient-endpoint-snippet Override retail_v2::ControlServiceClient Endpoint Configuration
+
+@snippet google/cloud/retail/v2/samples/control_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page retail_v2::ModelServiceClient-endpoint-snippet Override retail_v2::ModelServiceClient Endpoint Configuration
+
+@snippet google/cloud/retail/v2/samples/model_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page retail_v2::PredictionServiceClient-endpoint-snippet Override retail_v2::PredictionServiceClient Endpoint Configuration
 
 @snippet google/cloud/retail/v2/samples/prediction_client_samples.cc set-client-endpoint
@@ -53,6 +68,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page retail_v2::SearchServiceClient-endpoint-snippet Override retail_v2::SearchServiceClient Endpoint Configuration
 
 @snippet google/cloud/retail/v2/samples/search_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page retail_v2::ServingConfigServiceClient-endpoint-snippet Override retail_v2::ServingConfigServiceClient Endpoint Configuration
+
+@snippet google/cloud/retail/v2/samples/serving_config_client_samples.cc set-client-endpoint
 
 */
 

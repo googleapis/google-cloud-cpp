@@ -118,6 +118,10 @@ The library has been expanded to include the Reporting API.
 
 The library has been expanded to include the Zonal OS Config API.
 
+### [Retail](/google/cloud/retail/README.md)
+
+The library has been expanded to include new services.
+
 ## v2.13.0 - 2023-07
 
 ### New Libraries
