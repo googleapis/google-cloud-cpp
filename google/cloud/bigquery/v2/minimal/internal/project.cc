@@ -41,6 +41,30 @@ std::string Project::DebugString(absl::string_view name,
       .Build();
 }
 
+void to_json(nlohmann::json& j, ProjectReference const& p) {
+  j = nlohmann::json{{"projectId", p.project_id}};
+}
+void from_json(nlohmann::json const& j, ProjectReference& p) {
+  // TODO(#12188): Implement SafeGetTo(...)
+  if (j.contains("projectId")) j.at("projectId").get_to(p.project_id);
+}
+
+void to_json(nlohmann::json& j, Project const& p) {
+  j = nlohmann::json{{"kind", p.kind},
+                     {"id", p.id},
+                     {"friendlyName", p.friendly_name},
+                     {"numericId", p.numeric_id},
+                     {"projectReference", p.project_reference}};
+}
+void from_json(nlohmann::json const& j, Project& p) {
+  if (j.contains("kind")) j.at("kind").get_to(p.kind);
+  if (j.contains("id")) j.at("id").get_to(p.id);
+  if (j.contains("friendlyName")) j.at("friendlyName").get_to(p.friendly_name);
+  if (j.contains("numericId")) j.at("numericId").get_to(p.numeric_id);
+  if (j.contains("projectReference"))
+    j.at("projectReference").get_to(p.project_reference);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

@@ -27,10 +27,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Disabling clang-tidy here as the namespace is needed for using the
-// NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT.
-using namespace nlohmann::literals;  // NOLINT
-
 struct ProjectReference {
   std::string project_id;
 
@@ -38,7 +34,8 @@ struct ProjectReference {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ProjectReference, project_id);
+void to_json(nlohmann::json& j, ProjectReference const& p);
+void from_json(nlohmann::json const& j, ProjectReference& p);
 
 struct Project {
   std::string kind;
@@ -53,9 +50,8 @@ struct Project {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Project, kind, id,
-                                                friendly_name, numeric_id,
-                                                project_reference);
+void to_json(nlohmann::json& j, Project const& p);
+void from_json(nlohmann::json const& j, Project& p);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

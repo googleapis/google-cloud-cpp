@@ -44,10 +44,10 @@ void AssertEquals(bigquery_v2_minimal_internal::Project const& lhs,
 std::string MakeProjectJsonText() {
   return R"({"kind":"p-kind")"
          R"(,"id":"p-id")"
-         R"(,"friendly_name":"p-friendly-name")"
-         R"(,"numeric_id":123)"
-         R"(,"project_reference":{)"
-         R"("project_id":"p-project-id")"
+         R"(,"friendlyName":"p-friendly-name")"
+         R"(,"numericId":123)"
+         R"(,"projectReference":{)"
+         R"("projectId":"p-project-id")"
          R"(})"
          R"(})";
 }
@@ -56,8 +56,8 @@ std::string MakeListProjectsResponseJsonText() {
   auto projects_json_txt = MakeProjectJsonText();
   return R"({"etag": "tag-1",
           "kind": "kind-1",
-          "next_page_token": "npt-123",
-          "total_items": "1",
+          "nextPageToken": "npt-123",
+          "totalItems": "1",
           "projects": [)" +
          projects_json_txt + R"(]})";
 }
