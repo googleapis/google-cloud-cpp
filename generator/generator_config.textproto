@@ -2657,6 +2657,20 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/retail/v2/control_service.proto"
+  product_path: "google/cloud/retail/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/retail/v2/model_service.proto"
+  product_path: "google/cloud/retail/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/retail/v2/prediction_service.proto"
   product_path: "google/cloud/retail/v2"
   forwarding_product_path: "google/cloud/retail"
@@ -2678,6 +2692,13 @@ service {
   product_path: "google/cloud/retail/v2"
   forwarding_product_path: "google/cloud/retail"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/retail/v2/serving_config_service.proto"
+  product_path: "google/cloud/retail/v2"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 
