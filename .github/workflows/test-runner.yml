@@ -15,6 +15,13 @@ on:
   # have access to the secrets in the build, which we need to use the remote
   # caches (Bazel and sccache).
   pull_request_target:
+    types:
+    - opened
+    - synchronize
+    - reopened
+    # We also need to restart the builds when a label is assigned. This can
+    # be used to trigger a full build.
+    - labeled
 
 # Cancel in-progress runs of the workflow if somebody adds a new commit to the
 # PR or branch. That reduces billing, but it creates more noise about cancelled
@@ -38,18 +45,6 @@ jobs:
         id: save-pull-request
         run: >
           echo "sha=${{ github.event.pull_request.head.sha || github.ref }}" >> $GITHUB_OUTPUT
-      - name: Get github.event Object DEBUG DEBUG
-        run: |
-          echo ========== 'github'
-          cat >/dev/null <<'_EOF_'
-          ${{ toJSON(github.event) }}
-          _EOF_
-      - name: Get github Object DEBUG DEBUG
-        run: |
-          echo ========== 'github'
-          cat >/dev/null <<'_EOF_'
-          ${{ toJSON(github) }}
-          _EOF_
 
   # Run other jobs once the `pre-flight` job passes. When the `pre-flight`
   # job requires approval, these blocks all the other jobs. The jobs are defined
