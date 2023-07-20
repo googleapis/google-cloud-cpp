@@ -93,5 +93,6 @@ jobs:
     uses: ./.github/workflows/windows.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-      full-matrix: false # TODO DEBUG ${{ github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+      # Build the full matrix only on push events to the default branch.
+      full-matrix: ${{ github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
     secrets: inherit

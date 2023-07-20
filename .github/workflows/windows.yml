@@ -125,7 +125,7 @@ jobs:
         # expensive, and these rarely catch any problems.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           msvc: ${{ 'windows-2019' }}
-        - exclude-from-full-tri: ${{ ! inputs.full-matrix }}
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           msvc: msvc-2019
         # Compute is (currently) a single `.lib` file. This file is too large in
         # Debug mode. MSVC uses COFF:
