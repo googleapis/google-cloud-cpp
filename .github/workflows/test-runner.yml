@@ -67,7 +67,7 @@ jobs:
     # We only run the Bazel tests post-merge. GHA builds are expensive, and
     # the Bazel tests are unlikely to fail given that (1) we have CMake builds
     # below, and (2) we have Linux+Bazel tests elsewhere.
-    if: ${{ github.event.label.name == 'gha:full-build' || github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch)) }}
+    if: ${{ github.event.label.name == 'gha:full-build' || github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
     name: macOS-Bazel
     needs: [pre-flight]
     uses: ./.github/workflows/macos-bazel.yml
@@ -75,7 +75,7 @@ jobs:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
   windows-bazel:
-    if: ${{ github.event.label.name == 'gha:full-build' || github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch)) }}
+    if: ${{ github.event.label.name == 'gha:full-build' || github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
     name: Windows-Bazel
     needs: [pre-flight]
     uses: ./.github/workflows/windows-bazel.yml
@@ -85,19 +85,14 @@ jobs:
       full-matrix: ${{ github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
     secrets: inherit
   macos-cmake:
-    if: ${{ github.event.label.name == 'gha:full-build' || github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch)) }}
+    if: ${{ github.event.label.name == 'gha:full-build' || github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
     name: macOS-CMake
     needs: [pre-flight]
     uses: ./.github/workflows/macos-cmake.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-      # On pull requests only build the `Core` shard. This contains all the
-      # hand-crafted code. The other shards are unlikely to catch problems, as
-      # (1) this is largely generated code, (2) we have other builds that test
-      # this code on Linux and Windows.
-      shards: ${{ (github.event_name == 'push' && '["Core","Compute","Shard1","Other"]') || '["Core"]' }}
       # Build the full matrix only on push events to the default branch.
-      full-matrix: ${{ github.event.label.name == 'gha:full-build' || (github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch)) }}
+      full-matrix: ${{ github.event.label.name == 'gha:full-build' || (github.event_name == 'push' && github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
     secrets: inherit
   windows-cmake:
     name: Windows-CMake
