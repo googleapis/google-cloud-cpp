@@ -21,6 +21,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c monitoring_v3::NotificationChannelServiceClient](@ref monitoring_v3::NotificationChannelServiceClient-endpoint-snippet)
 - [\c monitoring_v3::QueryServiceClient](@ref monitoring_v3::QueryServiceClient-endpoint-snippet)
 - [\c monitoring_v3::ServiceMonitoringServiceClient](@ref monitoring_v3::ServiceMonitoringServiceClient-endpoint-snippet)
+- [\c monitoring_v3::SnoozeServiceClient](@ref monitoring_v3::SnoozeServiceClient-endpoint-snippet)
 - [\c monitoring_v3::UptimeCheckServiceClient](@ref monitoring_v3::UptimeCheckServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
@@ -74,6 +75,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page monitoring_v3::ServiceMonitoringServiceClient-endpoint-snippet Override monitoring_v3::ServiceMonitoringServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/v3/samples/service_monitoring_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page monitoring_v3::SnoozeServiceClient-endpoint-snippet Override monitoring_v3::SnoozeServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/v3/samples/snooze_client_samples.cc set-client-endpoint
 
 */
 
