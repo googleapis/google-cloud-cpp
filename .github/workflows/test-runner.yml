@@ -96,7 +96,7 @@ jobs:
   windows-cmake:
     name: Windows-CMake
     needs: [pre-flight]
-    uses: ./.github/workflows/windows-bazel.yml
+    uses: ./.github/workflows/windows-cmake.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
       # Build the full matrix only on push events to the default branch.
