@@ -45,6 +45,7 @@ void to_json(nlohmann::json& j, ProjectReference const& p) {
   j = nlohmann::json{{"projectId", p.project_id}};
 }
 void from_json(nlohmann::json const& j, ProjectReference& p) {
+  // TODO(#12188): Implement SafeGetTo(...)
   if (j.contains("projectId")) j.at("projectId").get_to(p.project_id);
 }
 
