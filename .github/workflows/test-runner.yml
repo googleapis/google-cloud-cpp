@@ -38,6 +38,18 @@ jobs:
         id: save-pull-request
         run: >
           echo "sha=${{ github.event.pull_request.head.sha || github.ref }}" >> $GITHUB_OUTPUT
+      - name: Get github.event Object
+        run: |
+          echo ========== 'github'
+          cat >/dev/null <'_EOF_'
+          ${{ toJSON(github.event) }}
+          _EOF_
+      - name: Get github Object
+        run: |
+          echo ========== 'github'
+          cat >/dev/null <'_EOF_'
+          ${{ toJSON(github) }}
+          _EOF_
 
   # Run other jobs once the `pre-flight` job passes. When the `pre-flight`
   # job requires approval, these blocks all the other jobs. The jobs are defined
@@ -75,21 +87,6 @@ jobs:
       # this code on Linux and Windows.
       shards: ${{ (github.event_name == 'push' && '["Core","Compute","Shard1","Other"]') || '["Core"]' }}
     secrets: inherit
-  debug:
-    name: DEBUG DEBUG DEBUG
-    steps:
-      name: Get GitHub Object
-      run: |
-        echo ========== 'github'
-        cat >/dev/null <'_EOF_'
-        ${{ toJSON(github) }}
-        _EOF_
-      name: Get github.event Object
-      run: |
-        echo ========== 'github'
-        cat >/dev/null <'_EOF_'
-        ${{ toJSON(github.event) }}
-        _EOF_
   windows:
     name: Windows
     needs: [pre-flight]
