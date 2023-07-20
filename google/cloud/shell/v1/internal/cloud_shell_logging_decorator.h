@@ -37,7 +37,7 @@ class CloudShellServiceLogging : public CloudShellServiceStub {
   ~CloudShellServiceLogging() override = default;
   CloudShellServiceLogging(std::shared_ptr<CloudShellServiceStub> child,
                            TracingOptions tracing_options,
-                           std::set<std::string> components);
+                           std::set<std::string> const& components);
 
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       grpc::ClientContext& context,
@@ -78,7 +78,7 @@ class CloudShellServiceLogging : public CloudShellServiceStub {
  private:
   std::shared_ptr<CloudShellServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // CloudShellServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

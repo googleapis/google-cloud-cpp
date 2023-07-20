@@ -36,7 +36,7 @@ class AlertPolicyServiceLogging : public AlertPolicyServiceStub {
   ~AlertPolicyServiceLogging() override = default;
   AlertPolicyServiceLogging(std::shared_ptr<AlertPolicyServiceStub> child,
                             TracingOptions tracing_options,
-                            std::set<std::string> components);
+                            std::set<std::string> const& components);
 
   StatusOr<google::monitoring::v3::ListAlertPoliciesResponse> ListAlertPolicies(
       grpc::ClientContext& context,
@@ -61,7 +61,7 @@ class AlertPolicyServiceLogging : public AlertPolicyServiceStub {
  private:
   std::shared_ptr<AlertPolicyServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AlertPolicyServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

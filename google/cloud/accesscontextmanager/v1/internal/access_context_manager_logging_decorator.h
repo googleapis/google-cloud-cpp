@@ -37,7 +37,7 @@ class AccessContextManagerLogging : public AccessContextManagerStub {
   ~AccessContextManagerLogging() override = default;
   AccessContextManagerLogging(std::shared_ptr<AccessContextManagerStub> child,
                               TracingOptions tracing_options,
-                              std::set<std::string> components);
+                              std::set<std::string> const& components);
 
   StatusOr<
       google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse>
@@ -207,7 +207,7 @@ class AccessContextManagerLogging : public AccessContextManagerStub {
  private:
   std::shared_ptr<AccessContextManagerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AccessContextManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

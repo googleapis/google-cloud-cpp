@@ -37,7 +37,7 @@ class JobServiceLogging : public JobServiceStub {
   ~JobServiceLogging() override = default;
   JobServiceLogging(std::shared_ptr<JobServiceStub> child,
                     TracingOptions tracing_options,
-                    std::set<std::string> components);
+                    std::set<std::string> const& components);
 
   StatusOr<google::cloud::aiplatform::v1::CustomJob> CreateCustomJob(
       grpc::ClientContext& context,
@@ -252,7 +252,7 @@ class JobServiceLogging : public JobServiceStub {
  private:
   std::shared_ptr<JobServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // JobServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

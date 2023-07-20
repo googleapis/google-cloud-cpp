@@ -30,10 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TensorboardServiceLogging::TensorboardServiceLogging(
     std::shared_ptr<TensorboardServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
+    TracingOptions tracing_options, std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceLogging::AsyncCreateTensorboard(
@@ -409,7 +409,7 @@ TensorboardServiceLogging::ReadTensorboardBlobData(
               google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>> {
         auto stream =
             child_->ReadTensorboardBlobData(std::move(context), request);
-        if (components_.count("rpc-streams") > 0) {
+        if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
                   google::cloud::aiplatform::v1::

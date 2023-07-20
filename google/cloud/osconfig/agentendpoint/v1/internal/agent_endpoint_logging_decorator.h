@@ -36,7 +36,7 @@ class AgentEndpointServiceLogging : public AgentEndpointServiceStub {
   ~AgentEndpointServiceLogging() override = default;
   AgentEndpointServiceLogging(std::shared_ptr<AgentEndpointServiceStub> child,
                               TracingOptions tracing_options,
-                              std::set<std::string> components);
+                              std::set<std::string> const& components);
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::osconfig::agentendpoint::v1::
@@ -79,7 +79,7 @@ class AgentEndpointServiceLogging : public AgentEndpointServiceStub {
  private:
   std::shared_ptr<AgentEndpointServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AgentEndpointServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

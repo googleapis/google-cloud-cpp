@@ -37,7 +37,7 @@ class DomainsLogging : public DomainsStub {
   ~DomainsLogging() override = default;
   DomainsLogging(std::shared_ptr<DomainsStub> child,
                  TracingOptions tracing_options,
-                 std::set<std::string> components);
+                 std::set<std::string> const& components);
 
   StatusOr<google::cloud::domains::v1::SearchDomainsResponse> SearchDomains(
       grpc::ClientContext& context,
@@ -140,7 +140,7 @@ class DomainsLogging : public DomainsStub {
  private:
   std::shared_ptr<DomainsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DomainsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

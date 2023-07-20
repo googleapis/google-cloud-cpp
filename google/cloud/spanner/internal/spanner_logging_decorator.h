@@ -36,7 +36,7 @@ class SpannerLogging : public SpannerStub {
   ~SpannerLogging() override = default;
   SpannerLogging(std::shared_ptr<SpannerStub> child,
                  TracingOptions tracing_options,
-                 std::set<std::string> components);
+                 std::set<std::string> const& components);
 
   StatusOr<google::spanner::v1::Session> CreateSession(
       grpc::ClientContext& context,
@@ -108,7 +108,7 @@ class SpannerLogging : public SpannerStub {
  private:
   std::shared_ptr<SpannerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // SpannerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

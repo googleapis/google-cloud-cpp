@@ -36,7 +36,7 @@ class DocumentServiceLogging : public DocumentServiceStub {
   ~DocumentServiceLogging() override = default;
   DocumentServiceLogging(std::shared_ptr<DocumentServiceStub> child,
                          TracingOptions tracing_options,
-                         std::set<std::string> components);
+                         std::set<std::string> const& components);
 
   StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
   CreateDocument(
@@ -84,7 +84,7 @@ class DocumentServiceLogging : public DocumentServiceStub {
  private:
   std::shared_ptr<DocumentServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DocumentServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

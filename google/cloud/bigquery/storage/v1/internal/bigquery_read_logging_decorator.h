@@ -36,7 +36,7 @@ class BigQueryReadLogging : public BigQueryReadStub {
   ~BigQueryReadLogging() override = default;
   BigQueryReadLogging(std::shared_ptr<BigQueryReadStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       grpc::ClientContext& context,
@@ -58,7 +58,7 @@ class BigQueryReadLogging : public BigQueryReadStub {
  private:
   std::shared_ptr<BigQueryReadStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // BigQueryReadLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

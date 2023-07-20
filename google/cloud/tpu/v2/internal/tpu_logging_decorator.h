@@ -36,7 +36,7 @@ class TpuLogging : public TpuStub {
  public:
   ~TpuLogging() override = default;
   TpuLogging(std::shared_ptr<TpuStub> child, TracingOptions tracing_options,
-             std::set<std::string> components);
+             std::set<std::string> const& components);
 
   StatusOr<google::cloud::tpu::v2::ListNodesResponse> ListNodes(
       grpc::ClientContext& context,
@@ -115,7 +115,7 @@ class TpuLogging : public TpuStub {
  private:
   std::shared_ptr<TpuStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // TpuLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

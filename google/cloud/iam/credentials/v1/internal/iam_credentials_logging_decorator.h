@@ -36,7 +36,7 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
   ~IAMCredentialsLogging() override = default;
   IAMCredentialsLogging(std::shared_ptr<IAMCredentialsStub> child,
                         TracingOptions tracing_options,
-                        std::set<std::string> components);
+                        std::set<std::string> const& components);
 
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
@@ -60,7 +60,7 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
  private:
   std::shared_ptr<IAMCredentialsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // IAMCredentialsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

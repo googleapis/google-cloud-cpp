@@ -36,7 +36,7 @@ class ConfidentialComputingLogging : public ConfidentialComputingStub {
   ~ConfidentialComputingLogging() override = default;
   ConfidentialComputingLogging(std::shared_ptr<ConfidentialComputingStub> child,
                                TracingOptions tracing_options,
-                               std::set<std::string> components);
+                               std::set<std::string> const& components);
 
   StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
       grpc::ClientContext& context,
@@ -52,7 +52,7 @@ class ConfidentialComputingLogging : public ConfidentialComputingStub {
  private:
   std::shared_ptr<ConfidentialComputingStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ConfidentialComputingLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

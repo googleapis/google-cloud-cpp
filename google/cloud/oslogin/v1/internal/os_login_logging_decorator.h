@@ -36,7 +36,7 @@ class OsLoginServiceLogging : public OsLoginServiceStub {
   ~OsLoginServiceLogging() override = default;
   OsLoginServiceLogging(std::shared_ptr<OsLoginServiceStub> child,
                         TracingOptions tracing_options,
-                        std::set<std::string> components);
+                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
       grpc::ClientContext& context,
@@ -77,7 +77,7 @@ class OsLoginServiceLogging : public OsLoginServiceStub {
  private:
   std::shared_ptr<OsLoginServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // OsLoginServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

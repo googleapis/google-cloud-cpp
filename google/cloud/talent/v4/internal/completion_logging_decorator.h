@@ -36,7 +36,7 @@ class CompletionLogging : public CompletionStub {
   ~CompletionLogging() override = default;
   CompletionLogging(std::shared_ptr<CompletionStub> child,
                     TracingOptions tracing_options,
-                    std::set<std::string> components);
+                    std::set<std::string> const& components);
 
   StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
       grpc::ClientContext& context,
@@ -45,7 +45,7 @@ class CompletionLogging : public CompletionStub {
  private:
   std::shared_ptr<CompletionStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // CompletionLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

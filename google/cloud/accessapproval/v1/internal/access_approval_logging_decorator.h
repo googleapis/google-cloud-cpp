@@ -36,7 +36,7 @@ class AccessApprovalLogging : public AccessApprovalStub {
   ~AccessApprovalLogging() override = default;
   AccessApprovalLogging(std::shared_ptr<AccessApprovalStub> child,
                         TracingOptions tracing_options,
-                        std::set<std::string> components);
+                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::accessapproval::v1::ListApprovalRequestsResponse>
   ListApprovalRequests(
@@ -94,7 +94,7 @@ class AccessApprovalLogging : public AccessApprovalStub {
  private:
   std::shared_ptr<AccessApprovalStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AccessApprovalLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

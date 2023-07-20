@@ -38,7 +38,7 @@ class CloudChannelReportsServiceLogging
   ~CloudChannelReportsServiceLogging() override = default;
   CloudChannelReportsServiceLogging(
       std::shared_ptr<CloudChannelReportsServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunReportJob(
       google::cloud::CompletionQueue& cq,
@@ -68,7 +68,7 @@ class CloudChannelReportsServiceLogging
  private:
   std::shared_ptr<CloudChannelReportsServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // CloudChannelReportsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

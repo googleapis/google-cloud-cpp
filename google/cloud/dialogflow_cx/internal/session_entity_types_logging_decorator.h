@@ -36,7 +36,7 @@ class SessionEntityTypesLogging : public SessionEntityTypesStub {
   ~SessionEntityTypesLogging() override = default;
   SessionEntityTypesLogging(std::shared_ptr<SessionEntityTypesStub> child,
                             TracingOptions tracing_options,
-                            std::set<std::string> components);
+                            std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse>
   ListSessionEntityTypes(
@@ -70,7 +70,7 @@ class SessionEntityTypesLogging : public SessionEntityTypesStub {
  private:
   std::shared_ptr<SessionEntityTypesStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // SessionEntityTypesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,7 +36,7 @@ class ValidationHelperV1Logging : public ValidationHelperV1Stub {
   ~ValidationHelperV1Logging() override = default;
   ValidationHelperV1Logging(std::shared_ptr<ValidationHelperV1Stub> child,
                             TracingOptions tracing_options,
-                            std::set<std::string> components);
+                            std::set<std::string> const& components);
 
   StatusOr<google::cloud::binaryauthorization::v1::
                ValidateAttestationOccurrenceResponse>
@@ -48,7 +48,7 @@ class ValidationHelperV1Logging : public ValidationHelperV1Stub {
  private:
   std::shared_ptr<ValidationHelperV1Stub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ValidationHelperV1Logging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

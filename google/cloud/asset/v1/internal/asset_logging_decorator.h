@@ -37,7 +37,7 @@ class AssetServiceLogging : public AssetServiceStub {
   ~AssetServiceLogging() override = default;
   AssetServiceLogging(std::shared_ptr<AssetServiceStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportAssets(
       google::cloud::CompletionQueue& cq,
@@ -165,7 +165,7 @@ class AssetServiceLogging : public AssetServiceStub {
  private:
   std::shared_ptr<AssetServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AssetServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

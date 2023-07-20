@@ -37,7 +37,7 @@ class ModelServiceLogging : public ModelServiceStub {
   ~ModelServiceLogging() override = default;
   ModelServiceLogging(std::shared_ptr<ModelServiceStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncUploadModel(
       google::cloud::CompletionQueue& cq,
@@ -155,7 +155,7 @@ class ModelServiceLogging : public ModelServiceStub {
  private:
   std::shared_ptr<ModelServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ModelServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

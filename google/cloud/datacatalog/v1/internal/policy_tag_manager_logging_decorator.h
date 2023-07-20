@@ -36,7 +36,7 @@ class PolicyTagManagerLogging : public PolicyTagManagerStub {
   ~PolicyTagManagerLogging() override = default;
   PolicyTagManagerLogging(std::shared_ptr<PolicyTagManagerStub> child,
                           TracingOptions tracing_options,
-                          std::set<std::string> components);
+                          std::set<std::string> const& components);
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> CreateTaxonomy(
       grpc::ClientContext& context,
@@ -103,7 +103,7 @@ class PolicyTagManagerLogging : public PolicyTagManagerStub {
  private:
   std::shared_ptr<PolicyTagManagerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // PolicyTagManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

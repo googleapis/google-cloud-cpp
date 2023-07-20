@@ -36,7 +36,7 @@ class RuleSetServiceLogging : public RuleSetServiceStub {
   ~RuleSetServiceLogging() override = default;
   RuleSetServiceLogging(std::shared_ptr<RuleSetServiceStub> child,
                         TracingOptions tracing_options,
-                        std::set<std::string> components);
+                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
       grpc::ClientContext& context,
@@ -66,7 +66,7 @@ class RuleSetServiceLogging : public RuleSetServiceStub {
  private:
   std::shared_ptr<RuleSetServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // RuleSetServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

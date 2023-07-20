@@ -36,7 +36,7 @@ class CursorServiceLogging : public CursorServiceStub {
   ~CursorServiceLogging() override = default;
   CursorServiceLogging(std::shared_ptr<CursorServiceStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
@@ -59,7 +59,7 @@ class CursorServiceLogging : public CursorServiceStub {
  private:
   std::shared_ptr<CursorServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // CursorServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

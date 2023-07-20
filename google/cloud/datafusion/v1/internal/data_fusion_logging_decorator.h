@@ -37,7 +37,7 @@ class DataFusionLogging : public DataFusionStub {
   ~DataFusionLogging() override = default;
   DataFusionLogging(std::shared_ptr<DataFusionStub> child,
                     TracingOptions tracing_options,
-                    std::set<std::string> components);
+                    std::set<std::string> const& components);
 
   StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse>
   ListAvailableVersions(
@@ -92,7 +92,7 @@ class DataFusionLogging : public DataFusionStub {
  private:
   std::shared_ptr<DataFusionStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DataFusionLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,7 +36,7 @@ class ProfilerServiceLogging : public ProfilerServiceStub {
   ~ProfilerServiceLogging() override = default;
   ProfilerServiceLogging(std::shared_ptr<ProfilerServiceStub> child,
                          TracingOptions tracing_options,
-                         std::set<std::string> components);
+                         std::set<std::string> const& components);
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
       grpc::ClientContext& context,
@@ -56,7 +56,7 @@ class ProfilerServiceLogging : public ProfilerServiceStub {
  private:
   std::shared_ptr<ProfilerServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ProfilerServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

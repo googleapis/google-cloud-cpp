@@ -36,7 +36,7 @@ class OrgPolicyLogging : public OrgPolicyStub {
   ~OrgPolicyLogging() override = default;
   OrgPolicyLogging(std::shared_ptr<OrgPolicyStub> child,
                    TracingOptions tracing_options,
-                   std::set<std::string> components);
+                   std::set<std::string> const& components);
 
   StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
   ListConstraints(grpc::ClientContext& context,
@@ -74,7 +74,7 @@ class OrgPolicyLogging : public OrgPolicyStub {
  private:
   std::shared_ptr<OrgPolicyStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // OrgPolicyLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

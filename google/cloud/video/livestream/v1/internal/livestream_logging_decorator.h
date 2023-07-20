@@ -37,7 +37,7 @@ class LivestreamServiceLogging : public LivestreamServiceStub {
   ~LivestreamServiceLogging() override = default;
   LivestreamServiceLogging(std::shared_ptr<LivestreamServiceStub> child,
                            TracingOptions tracing_options,
-                           std::set<std::string> components);
+                           std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateChannel(
       google::cloud::CompletionQueue& cq,
@@ -140,7 +140,7 @@ class LivestreamServiceLogging : public LivestreamServiceStub {
  private:
   std::shared_ptr<LivestreamServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // LivestreamServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

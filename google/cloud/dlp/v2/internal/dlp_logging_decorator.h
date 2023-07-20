@@ -36,7 +36,7 @@ class DlpServiceLogging : public DlpServiceStub {
   ~DlpServiceLogging() override = default;
   DlpServiceLogging(std::shared_ptr<DlpServiceStub> child,
                     TracingOptions tracing_options,
-                    std::set<std::string> components);
+                    std::set<std::string> const& components);
 
   StatusOr<google::privacy::dlp::v2::InspectContentResponse> InspectContent(
       grpc::ClientContext& context,
@@ -206,7 +206,7 @@ class DlpServiceLogging : public DlpServiceStub {
  private:
   std::shared_ptr<DlpServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DlpServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

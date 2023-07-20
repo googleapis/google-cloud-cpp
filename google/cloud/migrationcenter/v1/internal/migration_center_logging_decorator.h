@@ -37,7 +37,7 @@ class MigrationCenterLogging : public MigrationCenterStub {
   ~MigrationCenterLogging() override = default;
   MigrationCenterLogging(std::shared_ptr<MigrationCenterStub> child,
                          TracingOptions tracing_options,
-                         std::set<std::string> components);
+                         std::set<std::string> const& components);
 
   StatusOr<google::cloud::migrationcenter::v1::ListAssetsResponse> ListAssets(
       grpc::ClientContext& context,
@@ -324,7 +324,7 @@ class MigrationCenterLogging : public MigrationCenterStub {
  private:
   std::shared_ptr<MigrationCenterStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // MigrationCenterLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -37,7 +37,7 @@ class EnvironmentsLogging : public EnvironmentsStub {
   ~EnvironmentsLogging() override = default;
   EnvironmentsLogging(std::shared_ptr<EnvironmentsStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEnvironment(
       google::cloud::CompletionQueue& cq,
@@ -125,7 +125,7 @@ class EnvironmentsLogging : public EnvironmentsStub {
  private:
   std::shared_ptr<EnvironmentsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // EnvironmentsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

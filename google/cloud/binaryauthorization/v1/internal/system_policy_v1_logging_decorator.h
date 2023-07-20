@@ -36,7 +36,7 @@ class SystemPolicyV1Logging : public SystemPolicyV1Stub {
   ~SystemPolicyV1Logging() override = default;
   SystemPolicyV1Logging(std::shared_ptr<SystemPolicyV1Stub> child,
                         TracingOptions tracing_options,
-                        std::set<std::string> components);
+                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
       grpc::ClientContext& context,
@@ -46,7 +46,7 @@ class SystemPolicyV1Logging : public SystemPolicyV1Stub {
  private:
   std::shared_ptr<SystemPolicyV1Stub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // SystemPolicyV1Logging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

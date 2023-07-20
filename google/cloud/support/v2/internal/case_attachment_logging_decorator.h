@@ -36,7 +36,7 @@ class CaseAttachmentServiceLogging : public CaseAttachmentServiceStub {
   ~CaseAttachmentServiceLogging() override = default;
   CaseAttachmentServiceLogging(std::shared_ptr<CaseAttachmentServiceStub> child,
                                TracingOptions tracing_options,
-                               std::set<std::string> components);
+                               std::set<std::string> const& components);
 
   StatusOr<google::cloud::support::v2::ListAttachmentsResponse> ListAttachments(
       grpc::ClientContext& context,
@@ -46,7 +46,7 @@ class CaseAttachmentServiceLogging : public CaseAttachmentServiceStub {
  private:
   std::shared_ptr<CaseAttachmentServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // CaseAttachmentServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

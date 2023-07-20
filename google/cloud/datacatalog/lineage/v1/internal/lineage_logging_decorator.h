@@ -37,7 +37,7 @@ class LineageLogging : public LineageStub {
   ~LineageLogging() override = default;
   LineageLogging(std::shared_ptr<LineageStub> child,
                  TracingOptions tracing_options,
-                 std::set<std::string> components);
+                 std::set<std::string> const& components);
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
       grpc::ClientContext& context,
@@ -140,7 +140,7 @@ class LineageLogging : public LineageStub {
  private:
   std::shared_ptr<LineageStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // LineageLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

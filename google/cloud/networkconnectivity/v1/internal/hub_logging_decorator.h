@@ -37,7 +37,7 @@ class HubServiceLogging : public HubServiceStub {
   ~HubServiceLogging() override = default;
   HubServiceLogging(std::shared_ptr<HubServiceStub> child,
                     TracingOptions tracing_options,
-                    std::set<std::string> components);
+                    std::set<std::string> const& components);
 
   StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse> ListHubs(
       grpc::ClientContext& context,
@@ -108,7 +108,7 @@ class HubServiceLogging : public HubServiceStub {
  private:
   std::shared_ptr<HubServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // HubServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

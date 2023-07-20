@@ -30,10 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SpannerLogging::SpannerLogging(std::shared_ptr<SpannerStub> child,
                                TracingOptions tracing_options,
-                               std::set<std::string> components)
+                               std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::spanner::v1::Session> SpannerLogging::CreateSession(
     grpc::ClientContext& context,
@@ -91,7 +91,7 @@ SpannerLogging::ExecuteStreamingSql(
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::spanner::v1::PartialResultSet>> {
         auto stream = child_->ExecuteStreamingSql(std::move(context), request);
-        if (components_.count("rpc-streams") > 0) {
+        if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
                   google::spanner::v1::PartialResultSet>>(
@@ -125,7 +125,7 @@ SpannerLogging::StreamingRead(std::shared_ptr<grpc::ClientContext> context,
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::spanner::v1::PartialResultSet>> {
         auto stream = child_->StreamingRead(std::move(context), request);
-        if (components_.count("rpc-streams") > 0) {
+        if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
                   google::spanner::v1::PartialResultSet>>(

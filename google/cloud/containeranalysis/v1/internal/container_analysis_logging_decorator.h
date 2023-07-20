@@ -36,7 +36,7 @@ class ContainerAnalysisLogging : public ContainerAnalysisStub {
   ~ContainerAnalysisLogging() override = default;
   ContainerAnalysisLogging(std::shared_ptr<ContainerAnalysisStub> child,
                            TracingOptions tracing_options,
-                           std::set<std::string> components);
+                           std::set<std::string> const& components);
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext& context,
@@ -60,7 +60,7 @@ class ContainerAnalysisLogging : public ContainerAnalysisStub {
  private:
   std::shared_ptr<ContainerAnalysisStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ContainerAnalysisLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

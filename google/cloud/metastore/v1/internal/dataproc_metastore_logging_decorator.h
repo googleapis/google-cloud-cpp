@@ -37,7 +37,7 @@ class DataprocMetastoreLogging : public DataprocMetastoreStub {
   ~DataprocMetastoreLogging() override = default;
   DataprocMetastoreLogging(std::shared_ptr<DataprocMetastoreStub> child,
                            TracingOptions tracing_options,
-                           std::set<std::string> components);
+                           std::set<std::string> const& components);
 
   StatusOr<google::cloud::metastore::v1::ListServicesResponse> ListServices(
       grpc::ClientContext& context,
@@ -153,7 +153,7 @@ class DataprocMetastoreLogging : public DataprocMetastoreStub {
  private:
   std::shared_ptr<DataprocMetastoreStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DataprocMetastoreLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

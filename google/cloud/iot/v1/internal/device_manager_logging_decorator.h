@@ -36,7 +36,7 @@ class DeviceManagerLogging : public DeviceManagerStub {
   ~DeviceManagerLogging() override = default;
   DeviceManagerLogging(std::shared_ptr<DeviceManagerStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::iot::v1::DeviceRegistry> CreateDeviceRegistry(
       grpc::ClientContext& context,
@@ -129,7 +129,7 @@ class DeviceManagerLogging : public DeviceManagerStub {
  private:
   std::shared_ptr<DeviceManagerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DeviceManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

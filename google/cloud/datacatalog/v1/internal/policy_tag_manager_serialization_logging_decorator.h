@@ -37,7 +37,7 @@ class PolicyTagManagerSerializationLogging
   ~PolicyTagManagerSerializationLogging() override = default;
   PolicyTagManagerSerializationLogging(
       std::shared_ptr<PolicyTagManagerSerializationStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
       grpc::ClientContext& context,
@@ -59,7 +59,7 @@ class PolicyTagManagerSerializationLogging
  private:
   std::shared_ptr<PolicyTagManagerSerializationStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // PolicyTagManagerSerializationLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,7 +36,7 @@ class EntityTypesLogging : public EntityTypesStub {
   ~EntityTypesLogging() override = default;
   EntityTypesLogging(std::shared_ptr<EntityTypesStub> child,
                      TracingOptions tracing_options,
-                     std::set<std::string> components);
+                     std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
   ListEntityTypes(
@@ -67,7 +67,7 @@ class EntityTypesLogging : public EntityTypesStub {
  private:
   std::shared_ptr<EntityTypesStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // EntityTypesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

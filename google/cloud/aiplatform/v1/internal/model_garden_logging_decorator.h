@@ -36,7 +36,7 @@ class ModelGardenServiceLogging : public ModelGardenServiceStub {
   ~ModelGardenServiceLogging() override = default;
   ModelGardenServiceLogging(std::shared_ptr<ModelGardenServiceStub> child,
                             TracingOptions tracing_options,
-                            std::set<std::string> components);
+                            std::set<std::string> const& components);
 
   StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
       grpc::ClientContext& context,
@@ -46,7 +46,7 @@ class ModelGardenServiceLogging : public ModelGardenServiceStub {
  private:
   std::shared_ptr<ModelGardenServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ModelGardenServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -37,7 +37,7 @@ class AgentsLogging : public AgentsStub {
   ~AgentsLogging() override = default;
   AgentsLogging(std::shared_ptr<AgentsStub> child,
                 TracingOptions tracing_options,
-                std::set<std::string> components);
+                std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
       grpc::ClientContext& context,
@@ -97,7 +97,7 @@ class AgentsLogging : public AgentsStub {
  private:
   std::shared_ptr<AgentsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AgentsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
