@@ -429,6 +429,34 @@ void CreateBigQuerySubscription(
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
+void CreateCloudStorageSubscription(
+    google::cloud::pubsub::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [START pubsub_create_cloud_storage_subscription]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& topic_id, std::string const& subscription_id,
+     std::string const& bucket) {
+    auto sub = client.CreateSubscription(
+        pubsub::Topic(project_id, std::move(topic_id)),
+        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::SubscriptionBuilder{}.set_cloud_storage_config(
+            pubsub::CloudStorageConfigBuilder{}.set_bucket(bucket)));
+    if (!sub) {
+      if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+        std::cout << "The subscription already exists\n";
+        return;
+      }
+      throw std::move(sub).status();
+    }
+
+    std::cout << "The subscription was successfully created: "
+              << sub->DebugString() << "\n";
+  }
+  //! [END pubsub_create_cloud_storage_subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
 void CreateOrderingSubscription(
     google::cloud::pubsub::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
@@ -2356,6 +2384,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const filtered_subscription_id = RandomSubscriptionId(generator);
   auto const push_subscription_id = RandomSubscriptionId(generator);
   auto const unwrapped_push_subscription_id = RandomSubscriptionId(generator);
+  auto const cloud_storage_subscription_id = RandomSubscriptionId(generator);
   auto const bigquery_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_topic_id = "ordering-" + RandomTopicId(generator);
@@ -2414,6 +2443,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateSubscription() sample [2]" << std::endl;
   CreateSubscription(subscription_admin_client,
                      {project_id, topic_id, subscription_id});
+
+  auto const bucket_id = project_id + "-pubsub-bucket";
+  std::cout << "\nRunning CreateCloudStorageSubscription() sample" << std::endl;
+  CreateCloudStorageSubscription(
+      subscription_admin_client,
+      {project_id, topic_id, cloud_storage_subscription_id, bucket_id});
 
   std::cout << "\nRunning CreateFilteredSubscription() sample [1]" << std::endl;
   CreateFilteredSubscription(subscription_admin_client,
@@ -2694,6 +2729,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   DeleteSubscription(subscription_admin_client,
                      {project_id, bigquery_subscription_id});
 
+  std::cout << "\nRunning DeleteSubscription() for sample [7] " << std::endl;
+  DeleteSubscription(subscription_admin_client,
+                     {project_id, cloud_storage_subscription_id});
+
   std::cout << "\nRunning DeleteSubscription() sample [8] " << std::endl;
   DeleteSubscription(subscription_admin_client,
                      {project_id, unwrapped_push_subscription_id});
@@ -2764,6 +2803,10 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           "create-bigquery-subscription",
           {"project-id", "topic-id", "subscription-id", "table-id"},
           CreateBigQuerySubscription),
+      CreateSubscriptionAdminCommand(
+          "create-cloud-storage-subscription",
+          {"project-id", "topic-id", "subscription-id", "bucket"},
+          CreateCloudStorageSubscription),
       CreateSubscriptionAdminCommand(
           "create-ordering-subscription",
           {"project-id", "topic-id", "subscription-id"},
