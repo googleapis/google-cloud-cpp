@@ -15,6 +15,13 @@ on:
   # have access to the secrets in the build, which we need to use the remote
   # caches (Bazel and sccache).
   pull_request_target:
+    types:
+    - opened
+    - synchronize
+    - reopened
+    # We also need to restart the builds when a label is assigned. This can
+    # be used to trigger a full build.
+    - labeled
 
 # Cancel in-progress runs of the workflow if somebody adds a new commit to the
 # PR or branch. That reduces billing, but it creates more noise about cancelled
@@ -28,7 +35,13 @@ jobs:
     # For external contributors, run the build in the `external` environment.
     # This requires manual approval from a contributor. It also saves the
     # `ref` of the pull request, so downstream jobs know what to checkout.
-    environment: ${{ (github.event_name != 'pull_request_target' && 'internal') || (github.event.pull_request.head.repo.full_name == github.repository && 'internal') || (contains(fromJSON(vars.TRUSTED_FORKS), github.actor) && 'internal') || 'external' }}
+    environment: >-
+      ${{
+          (github.event_name != 'pull_request_target' && 'internal') ||
+          (github.event.pull_request.head.repo.full_name == github.repository && 'internal') ||
+          (contains(fromJSON(vars.TRUSTED_FORKS), github.actor) && 'internal') ||
+          'external'
+      }}
     name: Require Approval for External PRs
     runs-on: ubuntu-latest
     outputs:
@@ -52,14 +65,40 @@ jobs:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
   macos-bazel:
-    # We only run the Bazel tests post-merge. macOS builds are expensive, and
-    # the Bazel tests are unlikely to fail given that (1) we have macOS+CMake
-    # builds below, and (2) we have Linux+Bazel and Windows+Bazel tests
-    # elsewhere.
-    if: ${{ github.event_name == 'push' }}
+    # Build the full matrix only on push events to the default branch, or
+    # when PR gets the has a `gha:full-build` label, or when it had the
+    # label already and it gets a new commit.
+    if: |-
+      ${{
+        (
+          github.event_name == 'push' &&
+          github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        ) ||
+        github.event.label.name == 'gha:full-build' ||
+        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+      }}
     name: macOS-Bazel
     needs: [pre-flight]
     uses: ./.github/workflows/macos-bazel.yml
+    with:
+      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+    secrets: inherit
+  windows-bazel:
+    # Build the full matrix only on push events to the default branch, or
+    # when PR gets the has a `gha:full-build` label, or when it had the
+    # label already and it gets a new commit.
+    if: |-
+      ${{
+        (
+          github.event_name == 'push' &&
+          github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        ) ||
+        github.event.label.name == 'gha:full-build' ||
+        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+      }}
+    name: Windows-Bazel
+    needs: [pre-flight]
+    uses: ./.github/workflows/windows-bazel.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
@@ -69,16 +108,35 @@ jobs:
     uses: ./.github/workflows/macos-cmake.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-      # On pull requests only build the `Core` shard. This contains all the
-      # hand-crafted code. The other shards are unlikely to catch problems, as
-      # (1) this is largely generated code, (2) we have other builds that test
-      # this code on Linux and Windows.
-      shards: ${{ (github.event_name == 'push' && '["Core","Compute","Shard1","Other"]') || '["Core"]' }}
+      # Build the full matrix only on push events to the default branch, or
+      # when PR gets the has a `gha:full-build` label, or when it had the
+      # label already and it gets a new commit.
+      full-matrix: |-
+        ${{
+          (
+            github.event_name == 'push' &&
+            github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+          ) ||
+          github.event.label.name == 'gha:full-build' ||
+          contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+        }}
     secrets: inherit
-  windows:
-    name: Windows
+  windows-cmake:
+    name: Windows-CMake
     needs: [pre-flight]
-    uses: ./.github/workflows/windows.yml
+    uses: ./.github/workflows/windows-cmake.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      # Build the full matrix only on push events to the default branch, or
+      # when PR gets the has a `gha:full-build` label, or when it had the
+      # label already and it gets a new commit.
+      full-matrix: |-
+        ${{
+          (
+            github.event_name == 'push' &&
+            github.event.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+          ) ||
+          github.event.label.name == 'gha:full-build' ||
+          contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+        }}
     secrets: inherit
