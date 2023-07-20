@@ -7,20 +7,12 @@ on:
         required: true
         description: "The ref we want to compile"
         type: string
-      full-matrix:
-        required: true
-        description: "Run the full matrix"
-        type: boolean
 
 permissions:
   contents: read
 
 jobs:
   bazel:
-    # We only run the Bazel tests post-merge. macOS builds are expensive, and
-    # the Bazel tests are unlikely to fail given that (1) we have macOS+CMake
-    # builds below, and (2) we have Linux+Bazel tests elsewhere.
-    if: ${{ inputs.full-matrix }}
     name: bazel + ${{ matrix.msvc }} + ${{ matrix.compilation_mode }} + ${{ matrix.shard }}
     runs-on:
       group: cpp-runners
