@@ -18,6 +18,14 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "retail.googleapis.com")
   used by `MakeCompletionServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_CONTROL_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "retail.googleapis.com")
+  used by `MakeControlServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_MODEL_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "retail.googleapis.com")
+  used by `MakeModelServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_PRODUCT_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "retail.googleapis.com")
   used by `MakeProductServiceConnection()`.
@@ -29,6 +37,10 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_SEARCH_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "retail.googleapis.com")
   used by `MakeSearchServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SERVING_CONFIG_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "retail.googleapis.com")
+  used by `MakeServingConfigServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_USER_EVENT_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "retail.googleapis.com")
