@@ -36,7 +36,7 @@ class RegistrationServiceLogging : public RegistrationServiceStub {
   ~RegistrationServiceLogging() override = default;
   RegistrationServiceLogging(std::shared_ptr<RegistrationServiceStub> child,
                              TracingOptions tracing_options,
-                             std::set<std::string> components);
+                             std::set<std::string> const& components);
 
   StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
       grpc::ClientContext& context,
@@ -129,7 +129,7 @@ class RegistrationServiceLogging : public RegistrationServiceStub {
  private:
   std::shared_ptr<RegistrationServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // RegistrationServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

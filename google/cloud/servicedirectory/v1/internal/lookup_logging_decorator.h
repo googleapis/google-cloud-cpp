@@ -36,7 +36,7 @@ class LookupServiceLogging : public LookupServiceStub {
   ~LookupServiceLogging() override = default;
   LookupServiceLogging(std::shared_ptr<LookupServiceStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(
@@ -47,7 +47,7 @@ class LookupServiceLogging : public LookupServiceStub {
  private:
   std::shared_ptr<LookupServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // LookupServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -38,7 +38,7 @@ class AppConnectionsServiceLogging : public AppConnectionsServiceStub {
   ~AppConnectionsServiceLogging() override = default;
   AppConnectionsServiceLogging(std::shared_ptr<AppConnectionsServiceStub> child,
                                TracingOptions tracing_options,
-                               std::set<std::string> components);
+                               std::set<std::string> const& components);
 
   StatusOr<
       google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse>
@@ -89,7 +89,7 @@ class AppConnectionsServiceLogging : public AppConnectionsServiceStub {
  private:
   std::shared_ptr<AppConnectionsServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AppConnectionsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -37,7 +37,7 @@ class SpecialistPoolServiceLogging : public SpecialistPoolServiceStub {
   ~SpecialistPoolServiceLogging() override = default;
   SpecialistPoolServiceLogging(std::shared_ptr<SpecialistPoolServiceStub> child,
                                TracingOptions tracing_options,
-                               std::set<std::string> components);
+                               std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSpecialistPool(
       google::cloud::CompletionQueue& cq,
@@ -81,7 +81,7 @@ class SpecialistPoolServiceLogging : public SpecialistPoolServiceStub {
  private:
   std::shared_ptr<SpecialistPoolServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // SpecialistPoolServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

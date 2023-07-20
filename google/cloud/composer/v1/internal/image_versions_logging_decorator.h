@@ -36,7 +36,7 @@ class ImageVersionsLogging : public ImageVersionsStub {
   ~ImageVersionsLogging() override = default;
   ImageVersionsLogging(std::shared_ptr<ImageVersionsStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ListImageVersionsResponse>
@@ -47,7 +47,7 @@ class ImageVersionsLogging : public ImageVersionsStub {
  private:
   std::shared_ptr<ImageVersionsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ImageVersionsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

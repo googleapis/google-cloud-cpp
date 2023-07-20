@@ -37,7 +37,7 @@ class WorkstationsLogging : public WorkstationsStub {
   ~WorkstationsLogging() override = default;
   WorkstationsLogging(std::shared_ptr<WorkstationsStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   StatusOr<google::cloud::workstations::v1::WorkstationCluster>
   GetWorkstationCluster(
@@ -175,7 +175,7 @@ class WorkstationsLogging : public WorkstationsStub {
  private:
   std::shared_ptr<WorkstationsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // WorkstationsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

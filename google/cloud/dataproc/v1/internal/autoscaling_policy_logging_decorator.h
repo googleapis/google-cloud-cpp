@@ -36,7 +36,7 @@ class AutoscalingPolicyServiceLogging : public AutoscalingPolicyServiceStub {
   ~AutoscalingPolicyServiceLogging() override = default;
   AutoscalingPolicyServiceLogging(
       std::shared_ptr<AutoscalingPolicyServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   CreateAutoscalingPolicy(
@@ -69,7 +69,7 @@ class AutoscalingPolicyServiceLogging : public AutoscalingPolicyServiceStub {
  private:
   std::shared_ptr<AutoscalingPolicyServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AutoscalingPolicyServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

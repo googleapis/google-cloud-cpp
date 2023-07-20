@@ -37,7 +37,7 @@ class ContactCenterInsightsLogging : public ContactCenterInsightsStub {
   ~ContactCenterInsightsLogging() override = default;
   ContactCenterInsightsLogging(std::shared_ptr<ContactCenterInsightsStub> child,
                                TracingOptions tracing_options,
-                               std::set<std::string> components);
+                               std::set<std::string> const& components);
 
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   CreateConversation(
@@ -264,7 +264,7 @@ class ContactCenterInsightsLogging : public ContactCenterInsightsStub {
  private:
   std::shared_ptr<ContactCenterInsightsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ContactCenterInsightsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

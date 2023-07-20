@@ -37,7 +37,7 @@ class EdgeContainerLogging : public EdgeContainerStub {
   ~EdgeContainerLogging() override = default;
   EdgeContainerLogging(std::shared_ptr<EdgeContainerStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::edgecontainer::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,
@@ -147,7 +147,7 @@ class EdgeContainerLogging : public EdgeContainerStub {
  private:
   std::shared_ptr<EdgeContainerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // EdgeContainerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

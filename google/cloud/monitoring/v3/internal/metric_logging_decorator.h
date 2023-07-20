@@ -36,7 +36,7 @@ class MetricServiceLogging : public MetricServiceStub {
   ~MetricServiceLogging() override = default;
   MetricServiceLogging(std::shared_ptr<MetricServiceStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
   ListMonitoredResourceDescriptors(
@@ -91,7 +91,7 @@ class MetricServiceLogging : public MetricServiceStub {
  private:
   std::shared_ptr<MetricServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // MetricServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

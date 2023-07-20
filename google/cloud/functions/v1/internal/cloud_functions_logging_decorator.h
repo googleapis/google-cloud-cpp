@@ -37,7 +37,7 @@ class CloudFunctionsServiceLogging : public CloudFunctionsServiceStub {
   ~CloudFunctionsServiceLogging() override = default;
   CloudFunctionsServiceLogging(std::shared_ptr<CloudFunctionsServiceStub> child,
                                TracingOptions tracing_options,
-                               std::set<std::string> components);
+                               std::set<std::string> const& components);
 
   StatusOr<google::cloud::functions::v1::ListFunctionsResponse> ListFunctions(
       grpc::ClientContext& context,
@@ -108,7 +108,7 @@ class CloudFunctionsServiceLogging : public CloudFunctionsServiceStub {
  private:
   std::shared_ptr<CloudFunctionsServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // CloudFunctionsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

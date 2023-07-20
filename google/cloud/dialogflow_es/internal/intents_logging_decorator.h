@@ -37,7 +37,7 @@ class IntentsLogging : public IntentsStub {
   ~IntentsLogging() override = default;
   IntentsLogging(std::shared_ptr<IntentsStub> child,
                  TracingOptions tracing_options,
-                 std::set<std::string> components);
+                 std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse> ListIntents(
       grpc::ClientContext& context,
@@ -87,7 +87,7 @@ class IntentsLogging : public IntentsStub {
  private:
   std::shared_ptr<IntentsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // IntentsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

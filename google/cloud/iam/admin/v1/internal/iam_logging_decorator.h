@@ -35,7 +35,7 @@ class IAMLogging : public IAMStub {
  public:
   ~IAMLogging() override = default;
   IAMLogging(std::shared_ptr<IAMStub> child, TracingOptions tracing_options,
-             std::set<std::string> components);
+             std::set<std::string> const& components);
 
   StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
   ListServiceAccounts(grpc::ClientContext& context,
@@ -173,7 +173,7 @@ class IAMLogging : public IAMStub {
  private:
   std::shared_ptr<IAMStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // IAMLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

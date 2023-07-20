@@ -36,7 +36,7 @@ class SessionsLogging : public SessionsStub {
   ~SessionsLogging() override = default;
   SessionsLogging(std::shared_ptr<SessionsStub> child,
                   TracingOptions tracing_options,
-                  std::set<std::string> components);
+                  std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
       grpc::ClientContext& context,
@@ -53,7 +53,7 @@ class SessionsLogging : public SessionsStub {
  private:
   std::shared_ptr<SessionsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // SessionsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

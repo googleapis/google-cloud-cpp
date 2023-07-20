@@ -37,7 +37,7 @@ class VmMigrationLogging : public VmMigrationStub {
   ~VmMigrationLogging() override = default;
   VmMigrationLogging(std::shared_ptr<VmMigrationStub> child,
                      TracingOptions tracing_options,
-                     std::set<std::string> components);
+                     std::set<std::string> const& components);
 
   StatusOr<google::cloud::vmmigration::v1::ListSourcesResponse> ListSources(
       grpc::ClientContext& context,
@@ -317,7 +317,7 @@ class VmMigrationLogging : public VmMigrationStub {
  private:
   std::shared_ptr<VmMigrationStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // VmMigrationLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

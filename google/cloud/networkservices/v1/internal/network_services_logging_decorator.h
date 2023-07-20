@@ -37,7 +37,7 @@ class NetworkServicesLogging : public NetworkServicesStub {
   ~NetworkServicesLogging() override = default;
   NetworkServicesLogging(std::shared_ptr<NetworkServicesStub> child,
                          TracingOptions tracing_options,
-                         std::set<std::string> components);
+                         std::set<std::string> const& components);
 
   StatusOr<google::cloud::networkservices::v1::ListEndpointPoliciesResponse>
   ListEndpointPolicies(
@@ -276,7 +276,7 @@ class NetworkServicesLogging : public NetworkServicesStub {
  private:
   std::shared_ptr<NetworkServicesStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // NetworkServicesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

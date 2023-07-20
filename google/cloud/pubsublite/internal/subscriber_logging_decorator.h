@@ -36,7 +36,7 @@ class SubscriberServiceLogging : public SubscriberServiceStub {
   ~SubscriberServiceLogging() override = default;
   SubscriberServiceLogging(std::shared_ptr<SubscriberServiceStub> child,
                            TracingOptions tracing_options,
-                           std::set<std::string> components);
+                           std::set<std::string> const& components);
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::SubscribeRequest,
@@ -47,7 +47,7 @@ class SubscriberServiceLogging : public SubscriberServiceStub {
  private:
   std::shared_ptr<SubscriberServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // SubscriberServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

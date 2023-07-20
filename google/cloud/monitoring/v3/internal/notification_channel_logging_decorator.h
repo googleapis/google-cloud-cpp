@@ -37,7 +37,7 @@ class NotificationChannelServiceLogging
   ~NotificationChannelServiceLogging() override = default;
   NotificationChannelServiceLogging(
       std::shared_ptr<NotificationChannelServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::monitoring::v3::ListNotificationChannelDescriptorsResponse>
   ListNotificationChannelDescriptors(
@@ -102,7 +102,7 @@ class NotificationChannelServiceLogging
  private:
   std::shared_ptr<NotificationChannelServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // NotificationChannelServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

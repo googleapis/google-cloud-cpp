@@ -36,7 +36,7 @@ class PublisherServiceLogging : public PublisherServiceStub {
   ~PublisherServiceLogging() override = default;
   PublisherServiceLogging(std::shared_ptr<PublisherServiceStub> child,
                           TracingOptions tracing_options,
-                          std::set<std::string> components);
+                          std::set<std::string> const& components);
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PublishRequest,
@@ -47,7 +47,7 @@ class PublisherServiceLogging : public PublisherServiceStub {
  private:
   std::shared_ptr<PublisherServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // PublisherServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -37,7 +37,7 @@ class DataCatalogLogging : public DataCatalogStub {
   ~DataCatalogLogging() override = default;
   DataCatalogLogging(std::shared_ptr<DataCatalogStub> child,
                      TracingOptions tracing_options,
-                     std::set<std::string> components);
+                     std::set<std::string> const& components);
 
   StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse> SearchCatalog(
       grpc::ClientContext& context,
@@ -218,7 +218,7 @@ class DataCatalogLogging : public DataCatalogStub {
  private:
   std::shared_ptr<DataCatalogStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DataCatalogLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

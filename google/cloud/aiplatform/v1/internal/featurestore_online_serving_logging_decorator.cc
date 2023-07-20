@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FeaturestoreOnlineServingServiceLogging::
     FeaturestoreOnlineServingServiceLogging(
         std::shared_ptr<FeaturestoreOnlineServingServiceStub> child,
-        TracingOptions tracing_options, std::set<std::string> components)
+        TracingOptions tracing_options, std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
 FeaturestoreOnlineServingServiceLogging::ReadFeatureValues(
@@ -63,7 +63,7 @@ FeaturestoreOnlineServingServiceLogging::StreamingReadFeatureValues(
               google::cloud::aiplatform::v1::ReadFeatureValuesResponse>> {
         auto stream =
             child_->StreamingReadFeatureValues(std::move(context), request);
-        if (components_.count("rpc-streams") > 0) {
+        if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
                   google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>(

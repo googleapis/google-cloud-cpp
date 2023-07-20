@@ -36,7 +36,7 @@ class TransitionRouteGroupsLogging : public TransitionRouteGroupsStub {
   ~TransitionRouteGroupsLogging() override = default;
   TransitionRouteGroupsLogging(std::shared_ptr<TransitionRouteGroupsStub> child,
                                TracingOptions tracing_options,
-                               std::set<std::string> components);
+                               std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse>
   ListTransitionRouteGroups(
@@ -70,7 +70,7 @@ class TransitionRouteGroupsLogging : public TransitionRouteGroupsStub {
  private:
   std::shared_ptr<TransitionRouteGroupsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // TransitionRouteGroupsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

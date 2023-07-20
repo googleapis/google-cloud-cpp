@@ -36,7 +36,7 @@ class BigtableLogging : public BigtableStub {
   ~BigtableLogging() override = default;
   BigtableLogging(std::shared_ptr<BigtableStub> child,
                   TracingOptions tracing_options,
-                  std::set<std::string> components);
+                  std::set<std::string> const& components);
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::ReadRowsResponse>>
@@ -110,7 +110,7 @@ class BigtableLogging : public BigtableStub {
  private:
   std::shared_ptr<BigtableStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // BigtableLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

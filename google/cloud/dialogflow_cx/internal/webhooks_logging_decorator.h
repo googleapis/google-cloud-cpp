@@ -36,7 +36,7 @@ class WebhooksLogging : public WebhooksStub {
   ~WebhooksLogging() override = default;
   WebhooksLogging(std::shared_ptr<WebhooksStub> child,
                   TracingOptions tracing_options,
-                  std::set<std::string> components);
+                  std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
   ListWebhooks(grpc::ClientContext& context,
@@ -66,7 +66,7 @@ class WebhooksLogging : public WebhooksStub {
  private:
   std::shared_ptr<WebhooksStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // WebhooksLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

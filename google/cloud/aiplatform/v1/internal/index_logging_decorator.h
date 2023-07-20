@@ -37,7 +37,7 @@ class IndexServiceLogging : public IndexServiceStub {
   ~IndexServiceLogging() override = default;
   IndexServiceLogging(std::shared_ptr<IndexServiceStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateIndex(
       google::cloud::CompletionQueue& cq,
@@ -89,7 +89,7 @@ class IndexServiceLogging : public IndexServiceStub {
  private:
   std::shared_ptr<IndexServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // IndexServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

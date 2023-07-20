@@ -37,7 +37,7 @@ class VizierServiceLogging : public VizierServiceStub {
   ~VizierServiceLogging() override = default;
   VizierServiceLogging(std::shared_ptr<VizierServiceStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::aiplatform::v1::Study> CreateStudy(
       grpc::ClientContext& context,
@@ -125,7 +125,7 @@ class VizierServiceLogging : public VizierServiceStub {
  private:
   std::shared_ptr<VizierServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // VizierServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

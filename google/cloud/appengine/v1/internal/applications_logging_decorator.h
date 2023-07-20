@@ -37,7 +37,7 @@ class ApplicationsLogging : public ApplicationsStub {
   ~ApplicationsLogging() override = default;
   ApplicationsLogging(std::shared_ptr<ApplicationsStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   StatusOr<google::appengine::v1::Application> GetApplication(
       grpc::ClientContext& context,
@@ -71,7 +71,7 @@ class ApplicationsLogging : public ApplicationsStub {
  private:
   std::shared_ptr<ApplicationsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ApplicationsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

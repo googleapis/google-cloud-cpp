@@ -37,7 +37,7 @@ class FeaturestoreOnlineServingServiceLogging
   ~FeaturestoreOnlineServingServiceLogging() override = default;
   FeaturestoreOnlineServingServiceLogging(
       std::shared_ptr<FeaturestoreOnlineServingServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
   ReadFeatureValues(
@@ -61,7 +61,7 @@ class FeaturestoreOnlineServingServiceLogging
  private:
   std::shared_ptr<FeaturestoreOnlineServingServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // FeaturestoreOnlineServingServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

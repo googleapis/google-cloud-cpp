@@ -37,7 +37,7 @@ class PartitionAssignmentServiceLogging
   ~PartitionAssignmentServiceLogging() override = default;
   PartitionAssignmentServiceLogging(
       std::shared_ptr<PartitionAssignmentServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,
@@ -48,7 +48,7 @@ class PartitionAssignmentServiceLogging
  private:
   std::shared_ptr<PartitionAssignmentServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // PartitionAssignmentServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

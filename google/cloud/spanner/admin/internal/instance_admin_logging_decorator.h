@@ -37,7 +37,7 @@ class InstanceAdminLogging : public InstanceAdminStub {
   ~InstanceAdminLogging() override = default;
   InstanceAdminLogging(std::shared_ptr<InstanceAdminStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
   ListInstanceConfigs(
@@ -128,7 +128,7 @@ class InstanceAdminLogging : public InstanceAdminStub {
  private:
   std::shared_ptr<InstanceAdminStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // InstanceAdminLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -37,7 +37,7 @@ class ConversationModelsLogging : public ConversationModelsStub {
   ~ConversationModelsLogging() override = default;
   ConversationModelsLogging(std::shared_ptr<ConversationModelsStub> child,
                             TracingOptions tracing_options,
-                            std::set<std::string> components);
+                            std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConversationModel(
       google::cloud::CompletionQueue& cq,
@@ -109,7 +109,7 @@ class ConversationModelsLogging : public ConversationModelsStub {
  private:
   std::shared_ptr<ConversationModelsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ConversationModelsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EkmServiceLogging::EkmServiceLogging(std::shared_ptr<EkmServiceStub> child,
                                      TracingOptions tracing_options,
-                                     std::set<std::string> components)
+                                     std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
 EkmServiceLogging::ListEkmConnections(

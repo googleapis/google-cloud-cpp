@@ -36,7 +36,7 @@ class AnswerRecordsLogging : public AnswerRecordsStub {
   ~AnswerRecordsLogging() override = default;
   AnswerRecordsLogging(std::shared_ptr<AnswerRecordsStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
   ListAnswerRecords(
@@ -52,7 +52,7 @@ class AnswerRecordsLogging : public AnswerRecordsStub {
  private:
   std::shared_ptr<AnswerRecordsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AnswerRecordsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

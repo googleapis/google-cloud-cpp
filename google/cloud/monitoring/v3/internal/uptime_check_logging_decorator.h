@@ -36,7 +36,7 @@ class UptimeCheckServiceLogging : public UptimeCheckServiceStub {
   ~UptimeCheckServiceLogging() override = default;
   UptimeCheckServiceLogging(std::shared_ptr<UptimeCheckServiceStub> child,
                             TracingOptions tracing_options,
-                            std::set<std::string> components);
+                            std::set<std::string> const& components);
 
   StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
   ListUptimeCheckConfigs(
@@ -72,7 +72,7 @@ class UptimeCheckServiceLogging : public UptimeCheckServiceStub {
  private:
   std::shared_ptr<UptimeCheckServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // UptimeCheckServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

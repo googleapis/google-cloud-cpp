@@ -36,7 +36,7 @@ class DocumentLinkServiceLogging : public DocumentLinkServiceStub {
   ~DocumentLinkServiceLogging() override = default;
   DocumentLinkServiceLogging(std::shared_ptr<DocumentLinkServiceStub> child,
                              TracingOptions tracing_options,
-                             std::set<std::string> components);
+                             std::set<std::string> const& components);
 
   StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
   ListLinkedTargets(
@@ -64,7 +64,7 @@ class DocumentLinkServiceLogging : public DocumentLinkServiceStub {
  private:
   std::shared_ptr<DocumentLinkServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DocumentLinkServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

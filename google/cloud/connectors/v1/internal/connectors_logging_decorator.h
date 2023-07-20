@@ -37,7 +37,7 @@ class ConnectorsLogging : public ConnectorsStub {
   ~ConnectorsLogging() override = default;
   ConnectorsLogging(std::shared_ptr<ConnectorsStub> child,
                     TracingOptions tracing_options,
-                    std::set<std::string> components);
+                    std::set<std::string> const& components);
 
   StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
   ListConnections(grpc::ClientContext& context,
@@ -146,7 +146,7 @@ class ConnectorsLogging : public ConnectorsStub {
  private:
   std::shared_ptr<ConnectorsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ConnectorsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

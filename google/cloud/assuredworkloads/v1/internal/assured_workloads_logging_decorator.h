@@ -37,7 +37,7 @@ class AssuredWorkloadsServiceLogging : public AssuredWorkloadsServiceStub {
   ~AssuredWorkloadsServiceLogging() override = default;
   AssuredWorkloadsServiceLogging(
       std::shared_ptr<AssuredWorkloadsServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkload(
       google::cloud::CompletionQueue& cq,
@@ -102,7 +102,7 @@ class AssuredWorkloadsServiceLogging : public AssuredWorkloadsServiceStub {
  private:
   std::shared_ptr<AssuredWorkloadsServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AssuredWorkloadsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

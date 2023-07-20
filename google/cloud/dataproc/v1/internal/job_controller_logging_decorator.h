@@ -37,7 +37,7 @@ class JobControllerLogging : public JobControllerStub {
   ~JobControllerLogging() override = default;
   JobControllerLogging(std::shared_ptr<JobControllerStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
       grpc::ClientContext& context,
@@ -81,7 +81,7 @@ class JobControllerLogging : public JobControllerStub {
  private:
   std::shared_ptr<JobControllerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // JobControllerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,7 +36,7 @@ class CloudCatalogLogging : public CloudCatalogStub {
   ~CloudCatalogLogging() override = default;
   CloudCatalogLogging(std::shared_ptr<CloudCatalogStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   StatusOr<google::cloud::billing::v1::ListServicesResponse> ListServices(
       grpc::ClientContext& context,
@@ -49,7 +49,7 @@ class CloudCatalogLogging : public CloudCatalogStub {
  private:
   std::shared_ptr<CloudCatalogStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // CloudCatalogLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

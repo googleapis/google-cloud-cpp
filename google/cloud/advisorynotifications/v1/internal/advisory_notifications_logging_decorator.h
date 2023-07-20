@@ -37,7 +37,7 @@ class AdvisoryNotificationsServiceLogging
   ~AdvisoryNotificationsServiceLogging() override = default;
   AdvisoryNotificationsServiceLogging(
       std::shared_ptr<AdvisoryNotificationsServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
   ListNotifications(
@@ -54,7 +54,7 @@ class AdvisoryNotificationsServiceLogging
  private:
   std::shared_ptr<AdvisoryNotificationsServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AdvisoryNotificationsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

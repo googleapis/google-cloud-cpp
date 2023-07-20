@@ -36,7 +36,7 @@ class KeyDashboardServiceLogging : public KeyDashboardServiceStub {
   ~KeyDashboardServiceLogging() override = default;
   KeyDashboardServiceLogging(std::shared_ptr<KeyDashboardServiceStub> child,
                              TracingOptions tracing_options,
-                             std::set<std::string> components);
+                             std::set<std::string> const& components);
 
   StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
   ListCryptoKeys(grpc::ClientContext& context,
@@ -46,7 +46,7 @@ class KeyDashboardServiceLogging : public KeyDashboardServiceStub {
  private:
   std::shared_ptr<KeyDashboardServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // KeyDashboardServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

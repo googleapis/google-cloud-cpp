@@ -37,7 +37,7 @@ class BigtableTableAdminLogging : public BigtableTableAdminStub {
   ~BigtableTableAdminLogging() override = default;
   BigtableTableAdminLogging(std::shared_ptr<BigtableTableAdminStub> child,
                             TracingOptions tracing_options,
-                            std::set<std::string> components);
+                            std::set<std::string> const& components);
 
   StatusOr<google::bigtable::admin::v2::Table> CreateTable(
       grpc::ClientContext& context,
@@ -144,7 +144,7 @@ class BigtableTableAdminLogging : public BigtableTableAdminStub {
  private:
   std::shared_ptr<BigtableTableAdminStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // BigtableTableAdminLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

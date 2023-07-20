@@ -37,7 +37,7 @@ class InstancesLogging : public InstancesStub {
   ~InstancesLogging() override = default;
   InstancesLogging(std::shared_ptr<InstancesStub> child,
                    TracingOptions tracing_options,
-                   std::set<std::string> components);
+                   std::set<std::string> const& components);
 
   StatusOr<google::appengine::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,
@@ -70,7 +70,7 @@ class InstancesLogging : public InstancesStub {
  private:
   std::shared_ptr<InstancesStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // InstancesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

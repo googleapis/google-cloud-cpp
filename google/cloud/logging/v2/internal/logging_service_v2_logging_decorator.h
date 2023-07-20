@@ -36,7 +36,7 @@ class LoggingServiceV2Logging : public LoggingServiceV2Stub {
   ~LoggingServiceV2Logging() override = default;
   LoggingServiceV2Logging(std::shared_ptr<LoggingServiceV2Stub> child,
                           TracingOptions tracing_options,
-                          std::set<std::string> components);
+                          std::set<std::string> const& components);
 
   Status DeleteLog(
       grpc::ClientContext& context,
@@ -75,7 +75,7 @@ class LoggingServiceV2Logging : public LoggingServiceV2Stub {
  private:
   std::shared_ptr<LoggingServiceV2Stub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // LoggingServiceV2Logging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

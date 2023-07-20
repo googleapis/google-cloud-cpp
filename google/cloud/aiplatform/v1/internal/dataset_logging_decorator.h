@@ -37,7 +37,7 @@ class DatasetServiceLogging : public DatasetServiceStub {
   ~DatasetServiceLogging() override = default;
   DatasetServiceLogging(std::shared_ptr<DatasetServiceStub> child,
                         TracingOptions tracing_options,
-                        std::set<std::string> components);
+                        std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDataset(
       google::cloud::CompletionQueue& cq,
@@ -119,7 +119,7 @@ class DatasetServiceLogging : public DatasetServiceStub {
  private:
   std::shared_ptr<DatasetServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DatasetServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

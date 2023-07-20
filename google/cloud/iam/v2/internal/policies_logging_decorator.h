@@ -37,7 +37,7 @@ class PoliciesLogging : public PoliciesStub {
   ~PoliciesLogging() override = default;
   PoliciesLogging(std::shared_ptr<PoliciesStub> child,
                   TracingOptions tracing_options,
-                  std::set<std::string> components);
+                  std::set<std::string> const& components);
 
   StatusOr<google::iam::v2::ListPoliciesResponse> ListPolicies(
       grpc::ClientContext& context,
@@ -75,7 +75,7 @@ class PoliciesLogging : public PoliciesStub {
  private:
   std::shared_ptr<PoliciesStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // PoliciesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

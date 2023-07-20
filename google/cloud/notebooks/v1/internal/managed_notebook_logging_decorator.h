@@ -37,7 +37,7 @@ class ManagedNotebookServiceLogging : public ManagedNotebookServiceStub {
   ~ManagedNotebookServiceLogging() override = default;
   ManagedNotebookServiceLogging(
       std::shared_ptr<ManagedNotebookServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse> ListRuntimes(
       grpc::ClientContext& context,
@@ -126,7 +126,7 @@ class ManagedNotebookServiceLogging : public ManagedNotebookServiceStub {
  private:
   std::shared_ptr<ManagedNotebookServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ManagedNotebookServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

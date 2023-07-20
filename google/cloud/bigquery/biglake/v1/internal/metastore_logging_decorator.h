@@ -36,7 +36,7 @@ class MetastoreServiceLogging : public MetastoreServiceStub {
   ~MetastoreServiceLogging() override = default;
   MetastoreServiceLogging(std::shared_ptr<MetastoreServiceStub> child,
                           TracingOptions tracing_options,
-                          std::set<std::string> components);
+                          std::set<std::string> const& components);
 
   StatusOr<google::cloud::bigquery::biglake::v1::Catalog> CreateCatalog(
       grpc::ClientContext& context,
@@ -117,7 +117,7 @@ class MetastoreServiceLogging : public MetastoreServiceStub {
  private:
   std::shared_ptr<MetastoreServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // MetastoreServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

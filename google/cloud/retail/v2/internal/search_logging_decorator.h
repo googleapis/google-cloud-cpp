@@ -36,7 +36,7 @@ class SearchServiceLogging : public SearchServiceStub {
   ~SearchServiceLogging() override = default;
   SearchServiceLogging(std::shared_ptr<SearchServiceStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::retail::v2::SearchResponse> Search(
       grpc::ClientContext& context,
@@ -45,7 +45,7 @@ class SearchServiceLogging : public SearchServiceStub {
  private:
   std::shared_ptr<SearchServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // SearchServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

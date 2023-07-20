@@ -37,7 +37,7 @@ class ServiceManagerLogging : public ServiceManagerStub {
   ~ServiceManagerLogging() override = default;
   ServiceManagerLogging(std::shared_ptr<ServiceManagerStub> child,
                         TracingOptions tracing_options,
-                        std::set<std::string> components);
+                        std::set<std::string> const& components);
 
   StatusOr<google::api::servicemanagement::v1::ListServicesResponse>
   ListServices(grpc::ClientContext& context,
@@ -125,7 +125,7 @@ class ServiceManagerLogging : public ServiceManagerStub {
  private:
   std::shared_ptr<ServiceManagerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ServiceManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

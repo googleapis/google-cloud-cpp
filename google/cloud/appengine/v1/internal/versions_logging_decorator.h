@@ -37,7 +37,7 @@ class VersionsLogging : public VersionsStub {
   ~VersionsLogging() override = default;
   VersionsLogging(std::shared_ptr<VersionsStub> child,
                   TracingOptions tracing_options,
-                  std::set<std::string> components);
+                  std::set<std::string> const& components);
 
   StatusOr<google::appengine::v1::ListVersionsResponse> ListVersions(
       grpc::ClientContext& context,
@@ -75,7 +75,7 @@ class VersionsLogging : public VersionsStub {
  private:
   std::shared_ptr<VersionsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // VersionsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
