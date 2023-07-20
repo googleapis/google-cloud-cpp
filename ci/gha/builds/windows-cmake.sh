@@ -59,6 +59,11 @@ time {
   io::run cmake "${args[@]}" "${vcpkg_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE="$*"
 }
 
+if command -v sccache >/dev/null 2>&1; then
+  io::log "Current sccache stats"
+  sccache --show-stats
+fi
+
 TIMEFORMAT="==> 🕑 CMake build done in %R seconds"
 time {
   # Always run //google/cloud:status_test in case the list of targets has
