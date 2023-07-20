@@ -219,7 +219,8 @@ running while you work on tweaks to the quickstart and documentation.
 
 ```shell
 env GOOGLE_CLOUD_CPP_CHECK_API=${library} ci/cloudbuild/build.sh -t check-api-pr
-git commit -m"Add API baseline" ci/abi-dumps/
+git add ci/abi-dumps
+git commit -m"Add API baseline"
 ```
 
 ### Update the README files
@@ -306,6 +307,8 @@ library=...  # e.g. bigquery
 api_name=... # e.g. BigLake API
 ```
 
+- Check out a new branch
+  - `git checkout -b feat-expand-${library}`
 - Update `generator_config.textproto`
 - Update and run `external/googleapis/update_libraries.sh ${library}`
 - Add the new directory to `service_dirs` in:
