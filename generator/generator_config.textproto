@@ -2459,6 +2459,13 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/osconfig/v1/osconfig_zonal_service.proto"
+  product_path: "google/cloud/osconfig/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto"
   product_path: "google/cloud/osconfig/agentendpoint/v1"
   forwarding_product_path: "google/cloud/osconfig"

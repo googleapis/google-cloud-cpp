@@ -18,6 +18,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "osconfig.googleapis.com")
   used by `MakeOsConfigServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_OS_CONFIG_ZONAL_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "osconfig.googleapis.com")
+  used by `MakeOsConfigZonalServiceConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption
