@@ -129,8 +129,8 @@ void AssertEquals(QueryRequest const& lhs, QueryRequest const& rhs) {
   EXPECT_TRUE(std::equal(lhs.labels().begin(), lhs.labels().end(),
                          rhs.labels().begin()));
 
-  EXPECT_EQ(lhs.default_dataset().datasetId, rhs.default_dataset().datasetId);
-  EXPECT_EQ(lhs.default_dataset().projectId, rhs.default_dataset().projectId);
+  EXPECT_EQ(lhs.default_dataset().dataset_id, rhs.default_dataset().dataset_id);
+  EXPECT_EQ(lhs.default_dataset().project_id, rhs.default_dataset().project_id);
   EXPECT_EQ(lhs.format_options().use_int64_timestamp,
             rhs.format_options().use_int64_timestamp);
 }
@@ -144,25 +144,25 @@ void AssertEquals(bigquery_v2_minimal_internal::PostQueryRequest const& lhs,
 QueryResults MakeQueryResults() {
   QueryResults expected;
 
-  expected.cacheHit = true;
-  expected.dmlStats.deletedRowCount = 10;
-  expected.dmlStats.insertedRowCount = 10;
-  expected.dmlStats.updatedRowCount = 10;
-  expected.sessionInfo.sessionId = "123";
-  expected.jobComplete = true;
+  expected.cache_hit = true;
+  expected.dml_stats.deleted_row_count = 10;
+  expected.dml_stats.inserted_row_count = 10;
+  expected.dml_stats.updated_row_count = 10;
+  expected.session_info.session_id = "123";
+  expected.job_complete = true;
 
-  expected.jobReference.projectId = "p123";
-  expected.jobReference.location = "useast";
-  expected.jobReference.jobId = "j123";
+  expected.job_reference.project_id = "p123";
+  expected.job_reference.location = "useast";
+  expected.job_reference.job_id = "j123";
 
   expected.kind = "query-kind";
-  expected.numDmlAffectedRows = 5;
-  expected.pageToken = "np123";
+  expected.num_dml_affected_rows = 5;
+  expected.page_token = "np123";
   expected.rows.push_back(MakeSystemVariables().values);
 
   expected.schema = MakeTable().schema;
-  expected.totalBytesProcessed = 1000;
-  expected.totalRows = 1000;
+  expected.total_bytes_processed = 1000;
+  expected.total_rows = 1000;
 
   return expected;
 }
@@ -176,23 +176,23 @@ std::string MakeQueryResponsePayload() {
 
 void AssertEquals(bigquery_v2_minimal_internal::QueryResults const& lhs,
                   bigquery_v2_minimal_internal::QueryResults const& rhs) {
-  EXPECT_EQ(lhs.cacheHit, rhs.cacheHit);
-  EXPECT_EQ(lhs.dmlStats, rhs.dmlStats);
-  EXPECT_EQ(lhs.jobComplete, rhs.jobComplete);
-  EXPECT_EQ(lhs.jobReference.jobId, rhs.jobReference.jobId);
-  EXPECT_EQ(lhs.jobReference.projectId, rhs.jobReference.projectId);
-  EXPECT_EQ(lhs.jobReference.location, rhs.jobReference.location);
+  EXPECT_EQ(lhs.cache_hit, rhs.cache_hit);
+  EXPECT_EQ(lhs.dml_stats, rhs.dml_stats);
+  EXPECT_EQ(lhs.job_complete, rhs.job_complete);
+  EXPECT_EQ(lhs.job_reference.job_id, rhs.job_reference.job_id);
+  EXPECT_EQ(lhs.job_reference.project_id, rhs.job_reference.project_id);
+  EXPECT_EQ(lhs.job_reference.location, rhs.job_reference.location);
   EXPECT_EQ(lhs.kind, rhs.kind);
-  EXPECT_EQ(lhs.numDmlAffectedRows, rhs.numDmlAffectedRows);
-  EXPECT_EQ(lhs.pageToken, rhs.pageToken);
+  EXPECT_EQ(lhs.num_dml_affected_rows, rhs.num_dml_affected_rows);
+  EXPECT_EQ(lhs.page_token, rhs.page_token);
 
   ASSERT_THAT(lhs.schema.fields, Not(IsEmpty()));
   ASSERT_THAT(rhs.schema.fields, Not(IsEmpty()));
   EXPECT_EQ(lhs.schema.fields.size(), rhs.schema.fields.size());
 
-  EXPECT_EQ(lhs.sessionInfo.sessionId, rhs.sessionInfo.sessionId);
-  EXPECT_EQ(lhs.totalBytesProcessed, rhs.totalBytesProcessed);
-  EXPECT_EQ(lhs.totalRows, rhs.totalRows);
+  EXPECT_EQ(lhs.session_info.session_id, rhs.session_info.session_id);
+  EXPECT_EQ(lhs.total_bytes_processed, rhs.total_bytes_processed);
+  EXPECT_EQ(lhs.total_rows, rhs.total_rows);
 
   EXPECT_TRUE(
       std::equal(lhs.errors.begin(), lhs.errors.end(), rhs.errors.begin()));

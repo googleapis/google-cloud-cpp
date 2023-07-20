@@ -28,48 +28,39 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Disabling clang-tidy here as the namespace is needed for using the
-// NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT.
-using namespace nlohmann::literals;  // NOLINT
-
 struct JobConfigurationQuery {
   std::string query;
-  std::string createDisposition;
-  std::string writeDisposition;
+  std::string create_disposition;
+  std::string write_disposition;
   std::string priority;
-  std::string parameterMode;
-  bool preserveNulls = false;
-  bool allowLargeResults = false;
-  bool useQueryCache = false;
-  bool flattenResults = false;
-  bool useLegacySql = false;
-  bool createSession = false;
-  std::int64_t maximumBytesBilled = 0;
+  std::string parameter_mode;
+  bool preserve_nulls = false;
+  bool allow_large_results = false;
+  bool use_query_cache = false;
+  bool flatten_results = false;
+  bool use_legacy_sql = false;
+  bool create_session = false;
+  std::int64_t maximum_bytes_billed = 0;
 
-  std::vector<QueryParameter> queryParameters;
-  std::vector<std::string> schemaUpdateOptions;
-  std::vector<ConnectionProperty> connectionProperties;
+  std::vector<QueryParameter> query_parameters;
+  std::vector<std::string> schema_update_options;
+  std::vector<ConnectionProperty> connection_properties;
 
-  DatasetReference defaultDataset;
-  TableReference destinationTable;
-  TimePartitioning timePartitioning;
-  RangePartitioning rangePartitioning;
+  DatasetReference default_dataset;
+  TableReference destination_table;
+  TimePartitioning time_partitioning;
+  RangePartitioning range_partitioning;
   Clustering clustering;
-  EncryptionConfiguration destinationEncryptionConfiguration;
-  ScriptOptions scriptOptions;
-  SystemVariables systemVariables;
+  EncryptionConfiguration destination_encryption_configuration;
+  ScriptOptions script_options;
+  SystemVariables system_variables;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
-    JobConfigurationQuery, query, createDisposition, writeDisposition, priority,
-    parameterMode, preserveNulls, allowLargeResults, useQueryCache,
-    flattenResults, useLegacySql, createSession, maximumBytesBilled,
-    queryParameters, schemaUpdateOptions, connectionProperties, defaultDataset,
-    destinationTable, timePartitioning, rangePartitioning, clustering,
-    destinationEncryptionConfiguration, scriptOptions, systemVariables);
+void to_json(nlohmann::json& j, JobConfigurationQuery const& c);
+void from_json(nlohmann::json const& j, JobConfigurationQuery& c);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 

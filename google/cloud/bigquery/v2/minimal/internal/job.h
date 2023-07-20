@@ -29,12 +29,8 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Disabling clang-tidy here as the namespace is needed for using the
-// NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT.
-using namespace nlohmann::literals;  // NOLINT
-
 struct JobStatus {
-  ErrorProto errorResult;
+  ErrorProto error_result;
   std::vector<ErrorProto> errors;
   std::string state;
 
@@ -42,26 +38,30 @@ struct JobStatus {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
+void to_json(nlohmann::json& j, JobStatus const& jb);
+void from_json(nlohmann::json const& j, JobStatus& jb);
 
 struct JobReference {
-  std::string projectId;
-  std::string jobId;
+  std::string project_id;
+  std::string job_id;
   std::string location;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
+void to_json(nlohmann::json& j, JobReference const& jb);
+void from_json(nlohmann::json const& j, JobReference& jb);
 
 struct Job {
   std::string kind;
   std::string etag;
   std::string id;
-  std::string selfLink;
+  std::string self_link;
   std::string user_email;
 
   JobStatus status;
-  JobReference jobReference;
+  JobReference job_reference;
   JobConfiguration configuration;
   JobStatistics statistics;
 
@@ -69,6 +69,8 @@ struct Job {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
+void to_json(nlohmann::json& j, Job const& jb);
+void from_json(nlohmann::json const& j, Job& jb);
 
 struct ListFormatJob {
   std::string id;
@@ -77,31 +79,19 @@ struct ListFormatJob {
   std::string state;
   std::string principal_subject;
 
-  JobReference jobReference;
+  JobReference job_reference;
   JobConfiguration configuration;
   JobStatus status;
   JobStatistics statistics;
 
-  ErrorProto errorResult;
+  ErrorProto error_result;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobStatus, errorResult, errors,
-                                                state);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobReference, projectId, jobId,
-                                                location);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Job, kind, etag, id, selfLink,
-                                                user_email, status,
-                                                jobReference, configuration,
-                                                statistics);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ListFormatJob, id, kind,
-                                                user_email, state,
-                                                principal_subject, jobReference,
-                                                configuration, status,
-                                                statistics, errorResult);
+void to_json(nlohmann::json& j, ListFormatJob const& l);
+void from_json(nlohmann::json const& j, ListFormatJob& l);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

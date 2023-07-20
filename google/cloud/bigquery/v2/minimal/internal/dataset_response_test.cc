@@ -45,8 +45,8 @@ TEST(GetDatasetResponseTest, Success) {
   EXPECT_EQ(response->dataset.id, "d-id");
   EXPECT_EQ(response->dataset.self_link, "d-selfLink");
   EXPECT_EQ(response->dataset.friendly_name, "d-friendly-name");
-  EXPECT_EQ(response->dataset.dataset_reference.projectId, "p-id");
-  EXPECT_EQ(response->dataset.dataset_reference.datasetId, "d-id");
+  EXPECT_EQ(response->dataset.dataset_reference.project_id, "p-id");
+  EXPECT_EQ(response->dataset.dataset_reference.dataset_id, "d-id");
 }
 
 TEST(GetDatasetResponseTest, EmptyPayload) {
@@ -111,8 +111,8 @@ TEST(ListDatasetsResponseTest, Success) {
   EXPECT_EQ(datasets[0].id, "1");
   EXPECT_EQ(datasets[0].kind, "kind-2");
   EXPECT_EQ(datasets[0].friendly_name, "friendly-name");
-  EXPECT_EQ(datasets[0].dataset_reference.projectId, "p123");
-  EXPECT_EQ(datasets[0].dataset_reference.datasetId, "d123");
+  EXPECT_EQ(datasets[0].dataset_reference.project_id, "p123");
+  EXPECT_EQ(datasets[0].dataset_reference.dataset_id, "d123");
   EXPECT_EQ(datasets[0].location, "location");
   EXPECT_EQ(datasets[0].type, "DEFAULT");
 }

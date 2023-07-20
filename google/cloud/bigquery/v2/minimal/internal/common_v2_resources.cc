@@ -137,13 +137,19 @@ void from_json(nlohmann::json const& j, StandardSqlDataType& t) {
   if (j.contains("sub_type_index")) {
     auto const index = j.at("sub_type_index").get<int>();
     switch (index) {
-      case 1:
-        t.sub_type = std::make_shared<StandardSqlDataType>(
-            j.at("arrayElementType").get<StandardSqlDataType>());
+      case 1: {
+        if (j.contains("arrayElementType")) {
+          t.sub_type = std::make_shared<StandardSqlDataType>(
+              j.at("arrayElementType").get<StandardSqlDataType>());
+        }
         break;
-      case 2:
-        t.sub_type = j.at("structType").get<StandardSqlStructType>();
+      }
+      case 2: {
+        if (j.contains("structType")) {
+          t.sub_type = j.at("structType").get<StandardSqlStructType>();
+        }
         break;
+      }
       default:
         break;
     }
@@ -343,8 +349,8 @@ std::string DatasetReference::DebugString(absl::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", projectId)
-      .StringField("dataset_id", datasetId)
+      .StringField("project_id", project_id)
+      .StringField("dataset_id", dataset_id)
       .Build();
 }
 
@@ -352,9 +358,9 @@ std::string TableReference::DebugString(absl::string_view name,
                                         TracingOptions const& options,
                                         int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", projectId)
-      .StringField("dataset_id", datasetId)
-      .StringField("table_id", tableId)
+      .StringField("project_id", project_id)
+      .StringField("dataset_id", dataset_id)
+      .StringField("table_id", table_id)
       .Build();
 }
 
@@ -362,9 +368,9 @@ std::string RoutineReference::DebugString(absl::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", projectId)
-      .StringField("dataset_id", datasetId)
-      .StringField("routine_id", routineId)
+      .StringField("project_id", project_id)
+      .StringField("dataset_id", dataset_id)
+      .StringField("routine_id", routine_id)
       .Build();
 }
 
@@ -381,7 +387,7 @@ std::string EncryptionConfiguration::DebugString(absl::string_view name,
                                                  TracingOptions const& options,
                                                  int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("kms_key_name", kmsKeyName)
+      .StringField("kms_key_name", kms_key_name)
       .Build();
 }
 
@@ -397,9 +403,9 @@ std::string ScriptOptions::DebugString(absl::string_view name,
                                        TracingOptions const& options,
                                        int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .Field("statement_timeout_ms", statementTimeoutMs)
-      .Field("statement_byte_budget", statementByteBudget)
-      .SubMessage("key_result_statement", keyResultStatement)
+      .Field("statement_timeout_ms", statement_timeout_ms)
+      .Field("statement_byte_budget", statement_byte_budget)
+      .SubMessage("key_result_statement", key_result_statement)
       .Build();
 }
 
@@ -511,37 +517,98 @@ std::string QueryParameter::DebugString(absl::string_view qp_name,
                                         int indent) const {
   return internal::DebugFormatter(qp_name, options, indent)
       .StringField("name", name)
-      .SubMessage("parameter_type", parameterType)
-      .SubMessage("parameter_value", parameterValue)
+      .SubMessage("parameter_type", parameter_type)
+      .SubMessage("parameter_value", parameter_value)
       .Build();
 }
 
 bool operator==(TableReference const& lhs, TableReference const& rhs) {
-  return (lhs.datasetId == rhs.datasetId && lhs.projectId == rhs.projectId &&
-          lhs.tableId == rhs.tableId);
+  return (lhs.dataset_id == rhs.dataset_id &&
+          lhs.project_id == rhs.project_id && lhs.table_id == rhs.table_id);
 }
 
 bool operator==(DatasetReference const& lhs, DatasetReference const& rhs) {
-  return (lhs.datasetId == rhs.datasetId && lhs.projectId == rhs.projectId);
+  return (lhs.dataset_id == rhs.dataset_id && lhs.project_id == rhs.project_id);
 }
 
 bool operator==(RoutineReference const& lhs, RoutineReference const& rhs) {
-  return (lhs.datasetId == rhs.datasetId && lhs.projectId == rhs.projectId &&
-          lhs.routineId == rhs.routineId);
+  return (lhs.dataset_id == rhs.dataset_id &&
+          lhs.project_id == rhs.project_id && lhs.routine_id == rhs.routine_id);
 }
 
 bool operator==(QueryParameter const& lhs, QueryParameter const& rhs) {
   return (lhs.name == rhs.name &&
-          lhs.parameterType.type == rhs.parameterType.type &&
-          lhs.parameterValue.value == rhs.parameterValue.value);
+          lhs.parameter_type.type == rhs.parameter_type.type &&
+          lhs.parameter_value.value == rhs.parameter_value.value);
 }
 
-std::string SessionInfo::DebugString(absl::string_view name,
-                                     TracingOptions const& options,
-                                     int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("session_id", sessionId)
-      .Build();
+void to_json(nlohmann::json& j, TableReference const& t) {
+  j = nlohmann::json{{"projectId", t.project_id},
+                     {"datasetId", t.dataset_id},
+                     {"tableId", t.table_id}};
+}
+void from_json(nlohmann::json const& j, TableReference& t) {
+  if (j.contains("projectId")) j.at("projectId").get_to(t.project_id);
+  if (j.contains("datasetId")) j.at("datasetId").get_to(t.dataset_id);
+  if (j.contains("tableId")) j.at("tableId").get_to(t.table_id);
+}
+
+void to_json(nlohmann::json& j, DatasetReference const& d) {
+  j = nlohmann::json{{"projectId", d.project_id}, {"datasetId", d.dataset_id}};
+}
+void from_json(nlohmann::json const& j, DatasetReference& d) {
+  if (j.contains("projectId")) j.at("projectId").get_to(d.project_id);
+  if (j.contains("datasetId")) j.at("datasetId").get_to(d.dataset_id);
+}
+
+void to_json(nlohmann::json& j, RoutineReference const& r) {
+  j = nlohmann::json{{"projectId", r.project_id},
+                     {"datasetId", r.dataset_id},
+                     {"routineId", r.routine_id}};
+}
+void from_json(nlohmann::json const& j, RoutineReference& r) {
+  if (j.contains("projectId")) j.at("projectId").get_to(r.project_id);
+  if (j.contains("datasetId")) j.at("datasetId").get_to(r.dataset_id);
+  if (j.contains("routineId")) j.at("routineId").get_to(r.routine_id);
+}
+
+void to_json(nlohmann::json& j, EncryptionConfiguration const& ec) {
+  j = nlohmann::json{{"kmsKeyName", ec.kms_key_name}};
+}
+void from_json(nlohmann::json const& j, EncryptionConfiguration& ec) {
+  if (j.contains("kmsKeyName")) j.at("kmsKeyName").get_to(ec.kms_key_name);
+}
+
+void to_json(nlohmann::json& j, ScriptOptions const& s) {
+  j = nlohmann::json{{"statementTimeoutMs", s.statement_timeout_ms},
+                     {"statementByteBudget", s.statement_byte_budget},
+                     {"keyResultStatement", s.key_result_statement}};
+}
+void from_json(nlohmann::json const& j, ScriptOptions& s) {
+  if (j.contains("statementTimeoutMs")) {
+    j.at("statementTimeoutMs").get_to(s.statement_timeout_ms);
+  }
+  if (j.contains("statementByteBudget")) {
+    j.at("statementByteBudget").get_to(s.statement_byte_budget);
+  }
+  if (j.contains("keyResultStatement")) {
+    j.at("keyResultStatement").get_to(s.key_result_statement);
+  }
+}
+
+void to_json(nlohmann::json& j, QueryParameter const& q) {
+  j = nlohmann::json{{"name", q.name},
+                     {"parameterType", q.parameter_type},
+                     {"parameterValue", q.parameter_value}};
+}
+void from_json(nlohmann::json const& j, QueryParameter& q) {
+  if (j.contains("name")) j.at("name").get_to(q.name);
+  if (j.contains("parameterType")) {
+    j.at("parameterType").get_to(q.parameter_type);
+  }
+  if (j.contains("parameterValue")) {
+    j.at("parameterValue").get_to(q.parameter_value);
+  }
 }
 // NOLINTEND(misc-no-recursion)
 

@@ -52,12 +52,12 @@ TEST(GetJobResponseTest, SuccessTopLevelFields) {
   EXPECT_THAT(job_response->job.kind, Eq("jkind"));
   EXPECT_THAT(job_response->job.etag, Eq("jtag"));
   EXPECT_THAT(job_response->job.id, Eq("j123"));
-  EXPECT_THAT(job_response->job.selfLink, Eq("jselfLink"));
+  EXPECT_THAT(job_response->job.self_link, Eq("jselfLink"));
   EXPECT_THAT(job_response->job.user_email, Eq("juserEmail"));
   EXPECT_THAT(job_response->job.status.state, IsEmpty());
-  EXPECT_THAT(job_response->job.jobReference.projectId, IsEmpty());
-  EXPECT_THAT(job_response->job.jobReference.jobId, IsEmpty());
-  EXPECT_THAT(job_response->job.configuration.jobType, IsEmpty());
+  EXPECT_THAT(job_response->job.job_reference.project_id, IsEmpty());
+  EXPECT_THAT(job_response->job.job_reference.job_id, IsEmpty());
+  EXPECT_THAT(job_response->job.configuration.job_type, IsEmpty());
 }
 
 TEST(GetJobResponseTest, SuccessNestedFields) {
@@ -81,12 +81,12 @@ TEST(GetJobResponseTest, SuccessNestedFields) {
   EXPECT_THAT(job_response->job.kind, Eq("jkind"));
   EXPECT_THAT(job_response->job.etag, Eq("jtag"));
   EXPECT_THAT(job_response->job.id, Eq("j123"));
-  EXPECT_THAT(job_response->job.selfLink, Eq("jselfLink"));
+  EXPECT_THAT(job_response->job.self_link, Eq("jselfLink"));
   EXPECT_THAT(job_response->job.user_email, Eq("juserEmail"));
   EXPECT_THAT(job_response->job.status.state, Eq("DONE"));
-  EXPECT_THAT(job_response->job.jobReference.projectId, Eq("p123"));
-  EXPECT_THAT(job_response->job.jobReference.jobId, Eq("j123"));
-  EXPECT_THAT(job_response->job.configuration.jobType, Eq("QUERY"));
+  EXPECT_THAT(job_response->job.job_reference.project_id, Eq("p123"));
+  EXPECT_THAT(job_response->job.job_reference.job_id, Eq("j123"));
+  EXPECT_THAT(job_response->job.configuration.job_type, Eq("QUERY"));
   EXPECT_THAT(job_response->job.configuration.query.query, Eq("select 1;"));
 }
 
@@ -159,9 +159,9 @@ TEST(ListJobsResponseTest, Success) {
   EXPECT_EQ(jobs[0].status.state, "DONE");
   EXPECT_EQ(jobs[0].state, "DONE");
   EXPECT_EQ(jobs[0].user_email, "user-email");
-  EXPECT_EQ(jobs[0].jobReference.projectId, "p123");
-  EXPECT_EQ(jobs[0].jobReference.jobId, "j123");
-  EXPECT_EQ(jobs[0].configuration.jobType, "QUERY");
+  EXPECT_EQ(jobs[0].job_reference.project_id, "p123");
+  EXPECT_EQ(jobs[0].job_reference.job_id, "j123");
+  EXPECT_EQ(jobs[0].configuration.job_type, "QUERY");
   EXPECT_EQ(jobs[0].configuration.query.query, "select 1;");
 }
 

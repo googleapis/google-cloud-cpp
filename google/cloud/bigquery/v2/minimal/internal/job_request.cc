@@ -227,7 +227,7 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
 
   auto const& job = json_payload.get<Job>();
 
-  if (job.configuration.jobType.empty() || job.id != r.job().id) {
+  if (job.configuration.job_type.empty() || job.id != r.job().id) {
     return internal::InvalidArgumentError(
         "Invalid InsertJobRequest: Invalid Job object", GCP_ERROR_INFO());
   }

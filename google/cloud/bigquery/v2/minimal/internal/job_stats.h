@@ -59,20 +59,19 @@ inline bool operator==(EvaluationKind const& lhs, EvaluationKind const& rhs) {
 // For more details on how frames are evaluated, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#ScriptStackFrame
 struct ScriptStackFrame {
-  std::int32_t startLine;
-  std::int32_t startColumn;
-  std::int32_t endLine;
-  std::int32_t endColumn;
-  std::string procedureId;
+  std::int32_t start_line;
+  std::int32_t start_column;
+  std::int32_t end_line;
+  std::int32_t end_column;
+  std::string procedure_id;
   std::string text;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ScriptStackFrame, startLine,
-                                                startColumn, endLine, endColumn,
-                                                procedureId, text);
+void to_json(nlohmann::json& j, ScriptStackFrame const& s);
+void from_json(nlohmann::json const& j, ScriptStackFrame& s);
 bool operator==(ScriptStackFrame const& lhs, ScriptStackFrame const& rhs);
 
 // For a child job of a Script, describes information about the context
@@ -81,33 +80,44 @@ bool operator==(ScriptStackFrame const& lhs, ScriptStackFrame const& rhs);
 // For more details, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#scriptstatistics
 struct ScriptStatistics {
-  EvaluationKind evaluationKind;
-  std::vector<ScriptStackFrame> stackFrames;
+  EvaluationKind evaluation_kind;
+  std::vector<ScriptStackFrame> stack_frames;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ScriptStatistics,
-                                                evaluationKind, stackFrames);
+void to_json(nlohmann::json& j, ScriptStatistics const& s);
+void from_json(nlohmann::json const& j, ScriptStatistics& s);
 bool operator==(ScriptStatistics const& lhs, ScriptStatistics const& rhs);
 
 struct TransactionInfo {
-  std::string transactionId;
+  std::string transaction_id;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TransactionInfo, transactionId);
+void to_json(nlohmann::json& j, TransactionInfo const& t);
+void from_json(nlohmann::json const& j, TransactionInfo& t);
 
 struct DataMaskingStatistics {
-  bool dataMaskingApplied = false;
+  bool data_masking_applied = false;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DataMaskingStatistics,
-                                                dataMaskingApplied);
+void to_json(nlohmann::json& j, DataMaskingStatistics const& d);
+void from_json(nlohmann::json const& j, DataMaskingStatistics& d);
 
 struct RowLevelSecurityStatistics {
-  bool rowLevelSecurityApplied = false;
+  bool row_level_security_applied = false;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RowLevelSecurityStatistics,
-                                                rowLevelSecurityApplied);
+void to_json(nlohmann::json& j, RowLevelSecurityStatistics const& r);
+void from_json(nlohmann::json const& j, RowLevelSecurityStatistics& r);
+
+struct SessionInfo {
+  std::string session_id;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+};
+void to_json(nlohmann::json& j, SessionInfo const& s);
+void from_json(nlohmann::json const& j, SessionInfo& s);
 
 // Represents the statistics for single job execution.
 // It can be used to get information about the job including

@@ -83,16 +83,16 @@ void from_json(nlohmann::json const& j, JobStatistics& s) {
 }
 
 bool operator==(ScriptStackFrame const& lhs, ScriptStackFrame const& rhs) {
-  return lhs.endColumn == rhs.endColumn && lhs.endLine == rhs.endLine &&
-         lhs.procedureId == rhs.procedureId &&
-         lhs.startColumn == rhs.startColumn && lhs.startLine == rhs.startLine &&
-         lhs.text == rhs.text;
+  return lhs.end_column == rhs.end_column && lhs.end_line == rhs.end_line &&
+         lhs.procedure_id == rhs.procedure_id &&
+         lhs.start_column == rhs.start_column &&
+         lhs.start_line == rhs.start_line && lhs.text == rhs.text;
 }
 
 bool operator==(ScriptStatistics const& lhs, ScriptStatistics const& rhs) {
-  auto const eq = lhs.evaluationKind == rhs.evaluationKind;
-  return eq && (std::equal(lhs.stackFrames.begin(), lhs.stackFrames.end(),
-                           rhs.stackFrames.begin()));
+  auto const eq = lhs.evaluation_kind == rhs.evaluation_kind;
+  return eq && (std::equal(lhs.stack_frames.begin(), lhs.stack_frames.end(),
+                           rhs.stack_frames.begin()));
 }
 
 std::string EvaluationKind::DebugString(absl::string_view name,
@@ -107,11 +107,11 @@ std::string ScriptStackFrame::DebugString(absl::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .Field("start_line", startLine)
-      .Field("start_column", startColumn)
-      .Field("end_line", endLine)
-      .Field("end_column", endColumn)
-      .StringField("procedure_id", procedureId)
+      .Field("start_line", start_line)
+      .Field("start_column", start_column)
+      .Field("end_line", end_line)
+      .Field("end_column", end_column)
+      .StringField("procedure_id", procedure_id)
       .StringField("text", text)
       .Build();
 }
@@ -120,8 +120,8 @@ std::string ScriptStatistics::DebugString(absl::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .Field("stack_frames", stackFrames)
-      .SubMessage("evaluation_kind", evaluationKind)
+      .Field("stack_frames", stack_frames)
+      .SubMessage("evaluation_kind", evaluation_kind)
       .Build();
 }
 
@@ -137,17 +137,69 @@ std::string JobStatistics::DebugString(absl::string_view name,
       .Field("total_bytes_processed", total_bytes_processed)
       .Field("num_child_jobs", num_child_jobs)
       .Field("row_level_security_applied",
-             row_level_security_statistics.rowLevelSecurityApplied)
-      .Field("data_masking_applied", data_masking_statistics.dataMaskingApplied)
+             row_level_security_statistics.row_level_security_applied)
+      .Field("data_masking_applied",
+             data_masking_statistics.data_masking_applied)
       .Field("completion_ratio", completion_ratio)
       .Field("quota_deferments", quota_deferments)
       .StringField("parent_job_id", parent_job_id)
-      .StringField("session_id", session_info.sessionId)
-      .StringField("transaction_id", transaction_info.transactionId)
+      .StringField("session_id", session_info.session_id)
+      .StringField("transaction_id", transaction_info.transaction_id)
       .StringField("reservation_id", reservation_id)
       .SubMessage("script_statistics", script_statistics)
       .SubMessage("job_query_stats", job_query_stats)
       .Build();
+}
+
+void to_json(nlohmann::json& j, ScriptStackFrame const& s) {
+  j = nlohmann::json{
+      {"startLine", s.start_line},     {"startColumn", s.start_column},
+      {"endLine", s.end_line},         {"endColumn", s.end_column},
+      {"procedureId", s.procedure_id}, {"text", s.text}};
+}
+void from_json(nlohmann::json const& j, ScriptStackFrame& s) {
+  if (j.contains("startLine")) j.at("startLine").get_to(s.start_line);
+  if (j.contains("startColumn")) j.at("startColumn").get_to(s.start_column);
+  if (j.contains("endLine")) j.at("endLine").get_to(s.end_line);
+  if (j.contains("endColumn")) j.at("endColumn").get_to(s.end_column);
+  if (j.contains("procedureId")) j.at("procedureId").get_to(s.procedure_id);
+  if (j.contains("text")) j.at("text").get_to(s.text);
+}
+
+void to_json(nlohmann::json& j, RowLevelSecurityStatistics const& r) {
+  j = nlohmann::json{{"rowLevelSecurityApplied", r.row_level_security_applied}};
+}
+void from_json(nlohmann::json const& j, RowLevelSecurityStatistics& r) {
+  if (j.contains("rowLevelSecurityApplied")) {
+    j.at("rowLevelSecurityApplied").get_to(r.row_level_security_applied);
+  }
+}
+
+void to_json(nlohmann::json& j, DataMaskingStatistics const& d) {
+  j = nlohmann::json{{"dataMaskingApplied", d.data_masking_applied}};
+}
+void from_json(nlohmann::json const& j, DataMaskingStatistics& d) {
+  if (j.contains("dataMaskingApplied")) {
+    j.at("dataMaskingApplied").get_to(d.data_masking_applied);
+  }
+}
+
+void to_json(nlohmann::json& j, TransactionInfo const& t) {
+  j = nlohmann::json{{"transactionId", t.transaction_id}};
+}
+void from_json(nlohmann::json const& j, TransactionInfo& t) {
+  if (j.contains("transactionId"))
+    j.at("transactionId").get_to(t.transaction_id);
+}
+
+void to_json(nlohmann::json& j, ScriptStatistics const& s) {
+  j = nlohmann::json{{"evaluationKind", s.evaluation_kind},
+                     {"stackFrames", s.stack_frames}};
+}
+void from_json(nlohmann::json const& j, ScriptStatistics& s) {
+  if (j.contains("evaluationKind"))
+    j.at("evaluationKind").get_to(s.evaluation_kind);
+  if (j.contains("stackFrames")) j.at("stackFrames").get_to(s.stack_frames);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

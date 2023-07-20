@@ -46,41 +46,41 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ErrorProto, reason, location,
 bool operator==(ErrorProto const& lhs, ErrorProto const& rhs);
 
 struct TableReference {
-  std::string projectId;
-  std::string datasetId;
-  std::string tableId;
+  std::string project_id;
+  std::string dataset_id;
+  std::string table_id;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableReference, projectId,
-                                                datasetId, tableId);
+void to_json(nlohmann::json& j, TableReference const& t);
+void from_json(nlohmann::json const& j, TableReference& t);
 bool operator==(TableReference const& lhs, TableReference const& rhs);
 
 struct DatasetReference {
-  std::string datasetId;
-  std::string projectId;
+  std::string dataset_id;
+  std::string project_id;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DatasetReference, projectId,
-                                                datasetId);
+void to_json(nlohmann::json& j, DatasetReference const& d);
+void from_json(nlohmann::json const& j, DatasetReference& d);
 bool operator==(DatasetReference const& lhs, DatasetReference const& rhs);
 
 struct RoutineReference {
-  std::string projectId;
-  std::string datasetId;
-  std::string routineId;
+  std::string project_id;
+  std::string dataset_id;
+  std::string routine_id;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RoutineReference, datasetId,
-                                                projectId, routineId);
+void to_json(nlohmann::json& j, RoutineReference const& r);
+void from_json(nlohmann::json const& j, RoutineReference& r);
 bool operator==(RoutineReference const& lhs, RoutineReference const& rhs);
 
 struct RoundingMode {
@@ -117,14 +117,14 @@ bool operator==(ConnectionProperty const& lhs, ConnectionProperty const& rhs);
 // For more details, see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/EncryptionConfiguration
 struct EncryptionConfiguration {
-  std::string kmsKeyName;
+  std::string kms_key_name;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(EncryptionConfiguration,
-                                                kmsKeyName);
+void to_json(nlohmann::json& j, EncryptionConfiguration const& ec);
+void from_json(nlohmann::json const& j, EncryptionConfiguration& ec);
 
 // Used in ScriptOptions to control the execution of script.
 // Determines which statement in the script represents the "key result",
@@ -151,19 +151,17 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(KeyResultStatementKind, value);
 // For more details, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#ScriptOptions
 struct ScriptOptions {
-  std::int64_t statementTimeoutMs = 0;
-  std::int64_t statementByteBudget = 0;
+  std::int64_t statement_timeout_ms = 0;
+  std::int64_t statement_byte_budget = 0;
 
-  KeyResultStatementKind keyResultStatement;
+  KeyResultStatementKind key_result_statement;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ScriptOptions,
-                                                statementTimeoutMs,
-                                                statementByteBudget,
-                                                keyResultStatement);
+void to_json(nlohmann::json& j, ScriptOptions const& s);
+void from_json(nlohmann::json const& j, ScriptOptions& s);
 
 // Represents a GoogleSQL Data Type.
 //
@@ -358,7 +356,6 @@ struct QueryParameterType {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-
 void to_json(nlohmann::json& j, QueryParameterType const& q);
 void from_json(nlohmann::json const& j, QueryParameterType& q);
 
@@ -371,31 +368,21 @@ struct QueryParameterValue {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-
 void to_json(nlohmann::json& j, QueryParameterValue const& q);
 void from_json(nlohmann::json const& j, QueryParameterValue& q);
 
 struct QueryParameter {
   std::string name;
-  QueryParameterType parameterType;
-  QueryParameterValue parameterValue;
+  QueryParameterType parameter_type;
+  QueryParameterValue parameter_value;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(QueryParameter, name,
-                                                parameterType, parameterValue);
+void to_json(nlohmann::json& j, QueryParameter const& q);
+void from_json(nlohmann::json const& j, QueryParameter& q);
 bool operator==(QueryParameter const& lhs, QueryParameter const& rhs);
-
-struct SessionInfo {
-  std::string sessionId;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(SessionInfo, sessionId);
 // NOLINTEND(misc-no-recursion)
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

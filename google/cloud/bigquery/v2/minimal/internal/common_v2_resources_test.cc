@@ -166,8 +166,8 @@ TEST(CommonV2ResourcesTest, QueryParameterFromJson) {
   from_json(json, actual);
 
   EXPECT_EQ(expected.name, actual.name);
-  AssertParamTypeEquals(expected.parameterType, actual.parameterType);
-  AssertParamValueEquals(expected.parameterValue, actual.parameterValue);
+  AssertParamTypeEquals(expected.parameter_type, actual.parameter_type);
+  AssertParamValueEquals(expected.parameter_value, actual.parameter_value);
 }
 
 TEST(CommonV2ResourcesTest, QueryParameterToJson) {
@@ -223,11 +223,11 @@ TEST(CommonV2ResourcesTest, DatasetReferenceFromJson) {
   from_json(json, actual);
 
   DatasetReference expected;
-  expected.datasetId = "d123";
-  expected.projectId = "p123";
+  expected.dataset_id = "d123";
+  expected.project_id = "p123";
 
-  EXPECT_EQ(expected.datasetId, actual.datasetId);
-  EXPECT_EQ(expected.projectId, actual.projectId);
+  EXPECT_EQ(expected.dataset_id, actual.dataset_id);
+  EXPECT_EQ(expected.project_id, actual.project_id);
 }
 
 TEST(CommonV2ResourcesTest, DatasetReferenceToJson) {
@@ -238,8 +238,8 @@ TEST(CommonV2ResourcesTest, DatasetReferenceToJson) {
       })"_json;
 
   DatasetReference expected;
-  expected.datasetId = "d123";
-  expected.projectId = "p123";
+  expected.dataset_id = "d123";
+  expected.project_id = "p123";
 
   nlohmann::json actual_json;
   to_json(actual_json, expected);
@@ -261,13 +261,13 @@ TEST(CommonV2ResourcesTest, TableReferenceFromJson) {
   from_json(json, actual);
 
   TableReference expected;
-  expected.datasetId = "d123";
-  expected.projectId = "p123";
-  expected.tableId = "t123";
+  expected.dataset_id = "d123";
+  expected.project_id = "p123";
+  expected.table_id = "t123";
 
-  EXPECT_EQ(expected.datasetId, actual.datasetId);
-  EXPECT_EQ(expected.projectId, actual.projectId);
-  EXPECT_EQ(expected.tableId, actual.tableId);
+  EXPECT_EQ(expected.dataset_id, actual.dataset_id);
+  EXPECT_EQ(expected.project_id, actual.project_id);
+  EXPECT_EQ(expected.table_id, actual.table_id);
 }
 
 TEST(CommonV2ResourcesTest, TableReferenceToJson) {
@@ -279,9 +279,9 @@ TEST(CommonV2ResourcesTest, TableReferenceToJson) {
       })"_json;
 
   TableReference expected;
-  expected.datasetId = "d123";
-  expected.projectId = "p123";
-  expected.tableId = "t123";
+  expected.dataset_id = "d123";
+  expected.project_id = "p123";
+  expected.table_id = "t123";
 
   nlohmann::json actual_json;
   to_json(actual_json, expected);
@@ -291,8 +291,8 @@ TEST(CommonV2ResourcesTest, TableReferenceToJson) {
 
 TEST(CommonV2ResourcesTest, DatasetReferenceDebugString) {
   DatasetReference dataset;
-  dataset.datasetId = "d123";
-  dataset.projectId = "p123";
+  dataset.dataset_id = "d123";
+  dataset.project_id = "p123";
 
   EXPECT_EQ(dataset.DebugString("DatasetReference", TracingOptions{}),
             R"(DatasetReference {)"
@@ -318,9 +318,9 @@ TEST(CommonV2ResourcesTest, DatasetReferenceDebugString) {
 
 TEST(CommonV2ResourcesTest, TableReferenceDebugString) {
   TableReference table;
-  table.datasetId = "d123";
-  table.projectId = "p123";
-  table.tableId = "t123";
+  table.dataset_id = "d123";
+  table.project_id = "p123";
+  table.table_id = "t123";
 
   EXPECT_EQ(table.DebugString("TableReference", TracingOptions{}),
             R"(TableReference {)"

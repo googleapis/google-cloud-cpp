@@ -40,14 +40,14 @@ using namespace nlohmann::literals;  // NOLINT
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#explainquerystep
 struct ExplainQueryStep {
   std::string kind;
-  std::vector<std::string> substeps;
+  std::vector<std::string> sub_steps;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ExplainQueryStep, kind,
-                                                substeps);
+void to_json(nlohmann::json& j, ExplainQueryStep const& q);
+void from_json(nlohmann::json const& j, ExplainQueryStep& q);
 bool operator==(ExplainQueryStep const& lhs, ExplainQueryStep const& rhs);
 
 // Indicates the type of compute mode for the query stage.
@@ -150,17 +150,16 @@ bool operator==(QueryTimelineSample const& lhs, QueryTimelineSample const& rhs);
 // For more details on field members, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/DmlStats.
 struct DmlStats {
-  std::int64_t insertedRowCount = 0;
-  std::int64_t deletedRowCount = 0;
-  std::int64_t updatedRowCount = 0;
+  std::int64_t inserted_row_count = 0;
+  std::int64_t deleted_row_count = 0;
+  std::int64_t updated_row_count = 0;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DmlStats, insertedRowCount,
-                                                deletedRowCount,
-                                                updatedRowCount);
+void to_json(nlohmann::json& j, DmlStats const& d);
+void from_json(nlohmann::json const& j, DmlStats& d);
 bool operator==(DmlStats const& lhs, DmlStats const& rhs);
 
 // Represents the Id path of a row access policy. It is
@@ -169,18 +168,17 @@ bool operator==(DmlStats const& lhs, DmlStats const& rhs);
 // For more details on field members, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/RowAccessPolicyReference.
 struct RowAccessPolicyReference {
-  std::string projectId;
-  std::string datasetId;
-  std::string tableId;
-  std::string policyId;
+  std::string project_id;
+  std::string dataset_id;
+  std::string table_id;
+  std::string policy_id;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RowAccessPolicyReference,
-                                                projectId, datasetId, tableId,
-                                                policyId);
+void to_json(nlohmann::json& j, RowAccessPolicyReference const& r);
+void from_json(nlohmann::json const& j, RowAccessPolicyReference& r);
 bool operator==(RowAccessPolicyReference const& lhs,
                 RowAccessPolicyReference const& rhs);
 
@@ -249,17 +247,17 @@ inline bool operator==(IndexedUnusedReasonCode const& lhs,
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#indexunusedreason.
 struct IndexUnusedReason {
   std::string message;
-  std::string indexName;
+  std::string index_name;
 
-  TableReference baseTable;
+  TableReference base_table;
   IndexedUnusedReasonCode code;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(IndexUnusedReason, message,
-                                                indexName, baseTable, code);
+void to_json(nlohmann::json& j, IndexUnusedReason const& i);
+void from_json(nlohmann::json const& j, IndexUnusedReason& i);
 bool operator==(IndexUnusedReason const& lhs, IndexUnusedReason const& rhs);
 
 // Describes search query specific statistics and is
@@ -268,16 +266,15 @@ bool operator==(IndexUnusedReason const& lhs, IndexUnusedReason const& rhs);
 // For more details on field members, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#searchstatistics.
 struct SearchStatistics {
-  IndexUsageMode indexUsageMode;
-  std::vector<IndexUnusedReason> indexUnusedReasons;
+  IndexUsageMode index_usage_mode;
+  std::vector<IndexUnusedReason> index_unused_reasons;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(SearchStatistics,
-                                                indexUsageMode,
-                                                indexUnusedReasons);
+void to_json(nlohmann::json& j, SearchStatistics const& s);
+void from_json(nlohmann::json const& j, SearchStatistics& s);
 bool operator==(SearchStatistics const& lhs, SearchStatistics const& rhs);
 
 // Details about the input data change insight.
@@ -285,14 +282,14 @@ bool operator==(SearchStatistics const& lhs, SearchStatistics const& rhs);
 // For more details on fields, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#inputdatachange
 struct InputDataChange {
-  std::float_t recordsReadDiffPercentage = 0;
+  std::float_t records_read_diff_percentage = 0;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(InputDataChange,
-                                                recordsReadDiffPercentage);
+void to_json(nlohmann::json& j, InputDataChange const& i);
+void from_json(nlohmann::json const& j, InputDataChange& i);
 
 // Performance insights compared to the previous executions for a specific
 // stage.
@@ -300,32 +297,31 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(InputDataChange,
 // For more details on fields, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#stageperformancechangeinsight
 struct StagePerformanceChangeInsight {
-  std::int64_t stageId = 0;
-  InputDataChange inputDataChange;
+  std::int64_t stage_id = 0;
+  InputDataChange input_data_change;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(StagePerformanceChangeInsight,
-                                                stageId, inputDataChange);
+void to_json(nlohmann::json& j, StagePerformanceChangeInsight const& s);
+void from_json(nlohmann::json const& j, StagePerformanceChangeInsight& s);
 
 // Standalone performance insights for a specific stage.
 //
 // For more details on fields, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#stageperformancestandaloneinsight
 struct StagePerformanceStandaloneInsight {
-  std::int64_t stageId = 0;
-  bool slotContention = false;
-  bool insufficientShuffleQuota = false;
+  std::int64_t stage_id = 0;
+  bool slot_contention = false;
+  bool insufficient_shuffle_quota = false;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
-    StagePerformanceStandaloneInsight, stageId, slotContention,
-    insufficientShuffleQuota);
+void to_json(nlohmann::json& j, StagePerformanceStandaloneInsight const& s);
+void from_json(nlohmann::json const& j, StagePerformanceStandaloneInsight& s);
 
 // Performance insights for the job.
 //
@@ -376,18 +372,17 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RejectedReason, value);
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#materializedview
 struct MaterializedView {
   bool chosen = false;
-  std::int64_t estimatedBytesSaved = 0;
+  std::int64_t estimated_bytes_saved = 0;
 
-  RejectedReason rejectedReason;
-  TableReference tableReference;
+  RejectedReason rejected_reason;
+  TableReference table_reference;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(MaterializedView, chosen,
-                                                estimatedBytesSaved,
-                                                rejectedReason, tableReference);
+void to_json(nlohmann::json& j, MaterializedView const& m);
+void from_json(nlohmann::json const& j, MaterializedView& m);
 bool operator==(MaterializedView const& lhs, MaterializedView const& rhs);
 
 // Statistics of materialized views of a query job.
@@ -395,14 +390,14 @@ bool operator==(MaterializedView const& lhs, MaterializedView const& rhs);
 // For more details on field members, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#materializedviewstatistics
 struct MaterializedViewStatistics {
-  std::vector<MaterializedView> materializedView;
+  std::vector<MaterializedView> materialized_view;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(MaterializedViewStatistics,
-                                                materializedView);
+void to_json(nlohmann::json& j, MaterializedViewStatistics const& m);
+void from_json(nlohmann::json const& j, MaterializedViewStatistics& m);
 
 // Reasons for not using metadata caching.
 //
@@ -430,16 +425,15 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(MetadataCacheUnusedReason,
 struct TableMetadataCacheUsage {
   std::string explanation;
 
-  TableReference tableReference;
-  MetadataCacheUnusedReason unusedReason;
+  TableReference table_reference;
+  MetadataCacheUnusedReason unused_reason;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableMetadataCacheUsage,
-                                                explanation, tableReference,
-                                                unusedReason);
+void to_json(nlohmann::json& j, TableMetadataCacheUsage const& t);
+void from_json(nlohmann::json const& j, TableMetadataCacheUsage& t);
 bool operator==(TableMetadataCacheUsage const& lhs,
                 TableMetadataCacheUsage const& rhs);
 
@@ -448,14 +442,14 @@ bool operator==(TableMetadataCacheUsage const& lhs,
 // For more details on field members, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#metadatacachestatistics.
 struct MetadataCacheStatistics {
-  std::vector<TableMetadataCacheUsage> tableMetadataCacheUsage;
+  std::vector<TableMetadataCacheUsage> table_metadata_cache_usage;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(MetadataCacheStatistics,
-                                                tableMetadataCacheUsage);
+void to_json(nlohmann::json& j, MetadataCacheStatistics const& m);
+void from_json(nlohmann::json const& j, MetadataCacheStatistics& m);
 
 // Statistics for a query job.
 //

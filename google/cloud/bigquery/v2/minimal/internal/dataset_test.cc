@@ -30,8 +30,8 @@ namespace {
 DatasetReference MakeDatasetReference(std::string project_id,
                                       std::string dataset_id) {
   DatasetReference dataset;
-  dataset.projectId = std::move(project_id);
-  dataset.datasetId = std::move(dataset_id);
+  dataset.project_id = std::move(project_id);
+  dataset.dataset_id = std::move(dataset_id);
   return dataset;
 }
 
@@ -40,12 +40,12 @@ Access MakeAccess(std::string role, std::string project_id,
                   std::string routine_id, TargetType type) {
   Access access;
   access.role = std::move(role);
-  access.view.projectId = project_id;
-  access.view.datasetId = dataset_id;
-  access.view.tableId = std::move(table_id);
-  access.routine.projectId = project_id;
-  access.routine.datasetId = dataset_id;
-  access.routine.routineId = std::move(routine_id);
+  access.view.project_id = project_id;
+  access.view.dataset_id = dataset_id;
+  access.view.table_id = std::move(table_id);
+  access.routine.project_id = project_id;
+  access.routine.dataset_id = dataset_id;
+  access.routine.routine_id = std::move(routine_id);
   access.dataset.dataset =
       MakeDatasetReference(std::move(project_id), std::move(dataset_id));
   access.dataset.target_types.push_back(std::move(type));
@@ -127,13 +127,13 @@ void AssertEquals(Dataset const& lhs, Dataset const& rhs) {
   EXPECT_EQ(lhs.access[0].special_group, rhs.access[0].special_group);
   EXPECT_EQ(lhs.access[0].user_by_email, rhs.access[0].user_by_email);
 
-  EXPECT_EQ(lhs.access[0].view.datasetId, rhs.access[0].view.datasetId);
-  EXPECT_EQ(lhs.access[0].view.projectId, rhs.access[0].view.projectId);
-  EXPECT_EQ(lhs.access[0].view.tableId, rhs.access[0].view.tableId);
+  EXPECT_EQ(lhs.access[0].view.dataset_id, rhs.access[0].view.dataset_id);
+  EXPECT_EQ(lhs.access[0].view.project_id, rhs.access[0].view.project_id);
+  EXPECT_EQ(lhs.access[0].view.table_id, rhs.access[0].view.table_id);
 
-  EXPECT_EQ(lhs.access[0].routine.datasetId, rhs.access[0].routine.datasetId);
-  EXPECT_EQ(lhs.access[0].routine.projectId, rhs.access[0].routine.projectId);
-  EXPECT_EQ(lhs.access[0].routine.routineId, rhs.access[0].routine.routineId);
+  EXPECT_EQ(lhs.access[0].routine.dataset_id, rhs.access[0].routine.dataset_id);
+  EXPECT_EQ(lhs.access[0].routine.project_id, rhs.access[0].routine.project_id);
+  EXPECT_EQ(lhs.access[0].routine.routine_id, rhs.access[0].routine.routine_id);
 
   ASSERT_THAT(lhs.tags, Not(IsEmpty()));
   ASSERT_THAT(rhs.tags, Not(IsEmpty()));
@@ -141,13 +141,13 @@ void AssertEquals(Dataset const& lhs, Dataset const& rhs) {
   EXPECT_EQ(lhs.tags[0].tag_key, rhs.tags[0].tag_key);
   EXPECT_EQ(lhs.tags[0].tag_value, rhs.tags[0].tag_value);
 
-  EXPECT_EQ(lhs.dataset_reference.datasetId, rhs.dataset_reference.datasetId);
-  EXPECT_EQ(lhs.dataset_reference.projectId, rhs.dataset_reference.projectId);
+  EXPECT_EQ(lhs.dataset_reference.dataset_id, rhs.dataset_reference.dataset_id);
+  EXPECT_EQ(lhs.dataset_reference.project_id, rhs.dataset_reference.project_id);
 
-  EXPECT_EQ(lhs.linked_dataset_source.source_dataset.datasetId,
-            rhs.linked_dataset_source.source_dataset.datasetId);
-  EXPECT_EQ(lhs.linked_dataset_source.source_dataset.projectId,
-            rhs.linked_dataset_source.source_dataset.projectId);
+  EXPECT_EQ(lhs.linked_dataset_source.source_dataset.dataset_id,
+            rhs.linked_dataset_source.source_dataset.dataset_id);
+  EXPECT_EQ(lhs.linked_dataset_source.source_dataset.project_id,
+            rhs.linked_dataset_source.source_dataset.project_id);
 
   EXPECT_EQ(lhs.external_dataset_reference.hive_database.catalog_id,
             rhs.external_dataset_reference.hive_database.catalog_id);
@@ -224,8 +224,8 @@ void AssertEquals(ListFormatDataset const& lhs, ListFormatDataset const& rhs) {
   EXPECT_EQ(lhs.labels.find("l1")->second, rhs.labels.find("l1")->second);
   EXPECT_EQ(lhs.labels.find("l2")->second, rhs.labels.find("l2")->second);
 
-  EXPECT_EQ(lhs.dataset_reference.datasetId, rhs.dataset_reference.datasetId);
-  EXPECT_EQ(lhs.dataset_reference.projectId, rhs.dataset_reference.projectId);
+  EXPECT_EQ(lhs.dataset_reference.dataset_id, rhs.dataset_reference.dataset_id);
+  EXPECT_EQ(lhs.dataset_reference.project_id, rhs.dataset_reference.project_id);
 }
 
 std::string MakeListFormatDatasetJsonText() {

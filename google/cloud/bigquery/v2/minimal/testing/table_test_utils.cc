@@ -40,9 +40,9 @@ bigquery_v2_minimal_internal::ListFormatTable MakeListFormatTable() {
   expected.creation_time = std::chrono::milliseconds(1);
   expected.expiration_time = std::chrono::milliseconds(1);
 
-  expected.table_reference.datasetId = "t-123";
-  expected.table_reference.projectId = "t-123";
-  expected.table_reference.tableId = "t-123";
+  expected.table_reference.dataset_id = "t-123";
+  expected.table_reference.project_id = "t-123";
+  expected.table_reference.table_id = "t-123";
 
   expected.time_partitioning.field = "time-partition-field";
   expected.time_partitioning.expiration_time = std::chrono::milliseconds(123);
@@ -103,9 +103,9 @@ bigquery_v2_minimal_internal::Table MakeTable() {
   expected.last_modified_time =
       std::chrono::system_clock::time_point(std::chrono::milliseconds(1));
 
-  expected.table_reference.datasetId = "t-123";
-  expected.table_reference.projectId = "t-123";
-  expected.table_reference.tableId = "t-123";
+  expected.table_reference.dataset_id = "t-123";
+  expected.table_reference.project_id = "t-123";
+  expected.table_reference.table_id = "t-123";
 
   bigquery_v2_minimal_internal::TableFieldSchema f;
   f.name = "fname-1";
@@ -124,9 +124,9 @@ bigquery_v2_minimal_internal::Table MakeTable() {
   cfields.emplace_back("c-field-1");
   expected.clustering.fields = cfields;
 
-  expected.clone_definition.base_table_reference.datasetId = "t-123";
-  expected.clone_definition.base_table_reference.projectId = "t-123";
-  expected.clone_definition.base_table_reference.tableId = "t-123";
+  expected.clone_definition.base_table_reference.dataset_id = "t-123";
+  expected.clone_definition.base_table_reference.project_id = "t-123";
+  expected.clone_definition.base_table_reference.table_id = "t-123";
 
   expected.table_constraints.primary_key.columns.emplace_back("pcol-1");
   bigquery_v2_minimal_internal::ForeignKey fk;
@@ -192,9 +192,9 @@ void AssertEquals(bigquery_v2_minimal_internal::Table const& lhs,
   EXPECT_EQ(lhs.labels.find("l1")->second, rhs.labels.find("l1")->second);
   EXPECT_EQ(lhs.labels.find("l2")->second, rhs.labels.find("l2")->second);
 
-  EXPECT_EQ(lhs.table_reference.datasetId, rhs.table_reference.datasetId);
-  EXPECT_EQ(lhs.table_reference.projectId, rhs.table_reference.projectId);
-  EXPECT_EQ(lhs.table_reference.tableId, rhs.table_reference.tableId);
+  EXPECT_EQ(lhs.table_reference.dataset_id, rhs.table_reference.dataset_id);
+  EXPECT_EQ(lhs.table_reference.project_id, rhs.table_reference.project_id);
+  EXPECT_EQ(lhs.table_reference.table_id, rhs.table_reference.table_id);
 
   EXPECT_EQ(lhs.time_partitioning.field, rhs.time_partitioning.field);
   EXPECT_EQ(lhs.range_partitioning.field, rhs.range_partitioning.field);
@@ -207,12 +207,12 @@ void AssertEquals(bigquery_v2_minimal_internal::Table const& lhs,
   EXPECT_EQ(lhs.clustering.fields.size(), rhs.clustering.fields.size());
 
   EXPECT_EQ(lhs.clone_definition.clone_time, rhs.clone_definition.clone_time);
-  EXPECT_EQ(lhs.clone_definition.base_table_reference.datasetId,
-            rhs.clone_definition.base_table_reference.datasetId);
-  EXPECT_EQ(lhs.clone_definition.base_table_reference.projectId,
-            rhs.clone_definition.base_table_reference.projectId);
-  EXPECT_EQ(lhs.clone_definition.base_table_reference.tableId,
-            rhs.clone_definition.base_table_reference.tableId);
+  EXPECT_EQ(lhs.clone_definition.base_table_reference.dataset_id,
+            rhs.clone_definition.base_table_reference.dataset_id);
+  EXPECT_EQ(lhs.clone_definition.base_table_reference.project_id,
+            rhs.clone_definition.base_table_reference.project_id);
+  EXPECT_EQ(lhs.clone_definition.base_table_reference.table_id,
+            rhs.clone_definition.base_table_reference.table_id);
 
   ASSERT_THAT(lhs.table_constraints.primary_key.columns, Not(IsEmpty()));
   ASSERT_THAT(rhs.table_constraints.primary_key.columns, Not(IsEmpty()));
@@ -251,9 +251,9 @@ void AssertEquals(bigquery_v2_minimal_internal::ListFormatTable const& lhs,
   EXPECT_EQ(lhs.labels.find("l1")->second, rhs.labels.find("l1")->second);
   EXPECT_EQ(lhs.labels.find("l2")->second, rhs.labels.find("l2")->second);
 
-  EXPECT_EQ(lhs.table_reference.datasetId, rhs.table_reference.datasetId);
-  EXPECT_EQ(lhs.table_reference.projectId, rhs.table_reference.projectId);
-  EXPECT_EQ(lhs.table_reference.tableId, rhs.table_reference.tableId);
+  EXPECT_EQ(lhs.table_reference.dataset_id, rhs.table_reference.dataset_id);
+  EXPECT_EQ(lhs.table_reference.project_id, rhs.table_reference.project_id);
+  EXPECT_EQ(lhs.table_reference.table_id, rhs.table_reference.table_id);
 
   EXPECT_EQ(lhs.time_partitioning.field, rhs.time_partitioning.field);
   EXPECT_EQ(lhs.range_partitioning.field, rhs.range_partitioning.field);

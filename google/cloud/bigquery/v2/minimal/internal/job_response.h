@@ -30,8 +30,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using namespace nlohmann::literals;  // NOLINT
-
 // Parses the BigQueryHttpResponse and builds a GetJobResponse.
 class GetJobResponse {
  public:
@@ -104,28 +102,24 @@ struct QueryResults {
                           int indent = 0) const;
 
   std::string kind;
-  std::string pageToken;
+  std::string page_token;
 
-  std::uint64_t totalRows = 0;
-  std::int64_t totalBytesProcessed = 0;
-  std::int64_t numDmlAffectedRows = 0;
+  std::uint64_t total_rows = 0;
+  std::int64_t total_bytes_processed = 0;
+  std::int64_t num_dml_affected_rows = 0;
 
-  bool jobComplete = false;
-  bool cacheHit = false;
+  bool job_complete = false;
+  bool cache_hit = false;
 
   TableSchema schema;
-  JobReference jobReference;
+  JobReference job_reference;
   std::vector<Struct> rows;
   std::vector<ErrorProto> errors;
-  SessionInfo sessionInfo;
-  DmlStats dmlStats;
+  SessionInfo session_info;
+  DmlStats dml_stats;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(QueryResults, kind, pageToken,
-                                                totalRows, totalBytesProcessed,
-                                                numDmlAffectedRows, jobComplete,
-                                                cacheHit, schema, jobReference,
-                                                rows, errors, sessionInfo,
-                                                dmlStats)
+void to_json(nlohmann::json& j, QueryResults const& q);
+void from_json(nlohmann::json const& j, QueryResults& q);
 
 class QueryResponse {
  public:

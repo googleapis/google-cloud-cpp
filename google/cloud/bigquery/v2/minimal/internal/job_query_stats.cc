@@ -362,20 +362,20 @@ void from_json(nlohmann::json const& j, JobQueryStatistics& q) {
 
 bool operator==(MaterializedView const& lhs, MaterializedView const& rhs) {
   return (lhs.chosen == rhs.chosen &&
-          lhs.estimatedBytesSaved == rhs.estimatedBytesSaved &&
-          lhs.rejectedReason.value == rhs.rejectedReason.value &&
-          lhs.tableReference.datasetId == rhs.tableReference.datasetId &&
-          lhs.tableReference.projectId == rhs.tableReference.projectId &&
-          lhs.tableReference.tableId == rhs.tableReference.tableId);
+          lhs.estimated_bytes_saved == rhs.estimated_bytes_saved &&
+          lhs.rejected_reason.value == rhs.rejected_reason.value &&
+          lhs.table_reference.dataset_id == rhs.table_reference.dataset_id &&
+          lhs.table_reference.project_id == rhs.table_reference.project_id &&
+          lhs.table_reference.table_id == rhs.table_reference.table_id);
 }
 
 bool operator==(TableMetadataCacheUsage const& lhs,
                 TableMetadataCacheUsage const& rhs) {
   return (lhs.explanation == rhs.explanation &&
-          lhs.unusedReason.value == rhs.unusedReason.value &&
-          lhs.tableReference.datasetId == rhs.tableReference.datasetId &&
-          lhs.tableReference.projectId == rhs.tableReference.projectId &&
-          lhs.tableReference.tableId == rhs.tableReference.tableId);
+          lhs.unused_reason.value == rhs.unused_reason.value &&
+          lhs.table_reference.dataset_id == rhs.table_reference.dataset_id &&
+          lhs.table_reference.project_id == rhs.table_reference.project_id &&
+          lhs.table_reference.table_id == rhs.table_reference.table_id);
 }
 
 bool operator==(QueryTimelineSample const& lhs,
@@ -390,8 +390,8 @@ bool operator==(QueryTimelineSample const& lhs,
 
 bool operator==(ExplainQueryStep const& lhs, ExplainQueryStep const& rhs) {
   auto eq = (lhs.kind == rhs.kind);
-  return eq && std::equal(lhs.substeps.begin(), lhs.substeps.end(),
-                          rhs.substeps.begin());
+  return eq && std::equal(lhs.sub_steps.begin(), lhs.sub_steps.end(),
+                          rhs.sub_steps.begin());
 }
 
 bool operator==(ExplainQueryStage const& lhs, ExplainQueryStage const& rhs) {
@@ -434,42 +434,43 @@ bool operator==(PerformanceInsights const& lhs,
                 PerformanceInsights const& rhs) {
   return (
       lhs.avg_previous_execution_time == rhs.avg_previous_execution_time &&
-      lhs.stage_performance_standalone_insights.insufficientShuffleQuota ==
-          rhs.stage_performance_standalone_insights.insufficientShuffleQuota &&
-      lhs.stage_performance_standalone_insights.slotContention ==
-          rhs.stage_performance_standalone_insights.slotContention &&
-      lhs.stage_performance_standalone_insights.stageId ==
-          rhs.stage_performance_standalone_insights.stageId &&
-      lhs.stage_performance_change_insights.stageId ==
-          rhs.stage_performance_change_insights.stageId &&
-      lhs.stage_performance_change_insights.inputDataChange
-              .recordsReadDiffPercentage ==
-          rhs.stage_performance_change_insights.inputDataChange
-              .recordsReadDiffPercentage);
+      lhs.stage_performance_standalone_insights.insufficient_shuffle_quota ==
+          rhs.stage_performance_standalone_insights
+              .insufficient_shuffle_quota &&
+      lhs.stage_performance_standalone_insights.slot_contention ==
+          rhs.stage_performance_standalone_insights.slot_contention &&
+      lhs.stage_performance_standalone_insights.stage_id ==
+          rhs.stage_performance_standalone_insights.stage_id &&
+      lhs.stage_performance_change_insights.stage_id ==
+          rhs.stage_performance_change_insights.stage_id &&
+      lhs.stage_performance_change_insights.input_data_change
+              .records_read_diff_percentage ==
+          rhs.stage_performance_change_insights.input_data_change
+              .records_read_diff_percentage);
 }
 
 bool operator==(IndexUnusedReason const& lhs, IndexUnusedReason const& rhs) {
-  return lhs.baseTable == rhs.baseTable && lhs.code == rhs.code &&
-         lhs.indexName == rhs.indexName && lhs.message == rhs.message;
+  return lhs.base_table == rhs.base_table && lhs.code == rhs.code &&
+         lhs.index_name == rhs.index_name && lhs.message == rhs.message;
 }
 
 bool operator==(SearchStatistics const& lhs, SearchStatistics const& rhs) {
-  bool eq = lhs.indexUsageMode == rhs.indexUsageMode;
-  return eq && std::equal(lhs.indexUnusedReasons.begin(),
-                          lhs.indexUnusedReasons.end(),
-                          rhs.indexUnusedReasons.begin());
+  bool eq = lhs.index_usage_mode == rhs.index_usage_mode;
+  return eq && std::equal(lhs.index_unused_reasons.begin(),
+                          lhs.index_unused_reasons.end(),
+                          rhs.index_unused_reasons.begin());
 }
 
 bool operator==(DmlStats const& lhs, DmlStats const& rhs) {
-  return lhs.deletedRowCount == rhs.deletedRowCount &&
-         lhs.insertedRowCount == rhs.insertedRowCount &&
-         lhs.updatedRowCount == rhs.updatedRowCount;
+  return lhs.deleted_row_count == rhs.deleted_row_count &&
+         lhs.inserted_row_count == rhs.inserted_row_count &&
+         lhs.updated_row_count == rhs.updated_row_count;
 }
 
 bool operator==(RowAccessPolicyReference const& lhs,
                 RowAccessPolicyReference const& rhs) {
-  return lhs.datasetId == rhs.datasetId && lhs.projectId == rhs.projectId &&
-         lhs.tableId == rhs.tableId && lhs.policyId == rhs.policyId;
+  return lhs.dataset_id == rhs.dataset_id && lhs.project_id == rhs.project_id &&
+         lhs.table_id == rhs.table_id && lhs.policy_id == rhs.policy_id;
 }
 
 std::string ExplainQueryStep::DebugString(absl::string_view name,
@@ -477,7 +478,7 @@ std::string ExplainQueryStep::DebugString(absl::string_view name,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("kind", kind)
-      .Field("substeps", substeps)
+      .Field("substeps", sub_steps)
       .Build();
 }
 
@@ -543,9 +544,9 @@ std::string DmlStats::DebugString(absl::string_view name,
                                   TracingOptions const& options,
                                   int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .Field("inserted_row_count", insertedRowCount)
-      .Field("deleted_row_count", deletedRowCount)
-      .Field("updated_row_count", updatedRowCount)
+      .Field("inserted_row_count", inserted_row_count)
+      .Field("deleted_row_count", deleted_row_count)
+      .Field("updated_row_count", updated_row_count)
       .Build();
 }
 
@@ -553,10 +554,10 @@ std::string RowAccessPolicyReference::DebugString(absl::string_view name,
                                                   TracingOptions const& options,
                                                   int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", projectId)
-      .StringField("dataset_id", datasetId)
-      .StringField("table_id", tableId)
-      .StringField("policy_id", policyId)
+      .StringField("project_id", project_id)
+      .StringField("dataset_id", dataset_id)
+      .StringField("table_id", table_id)
+      .StringField("policy_id", policy_id)
       .Build();
 }
 
@@ -581,8 +582,8 @@ std::string IndexUnusedReason::DebugString(absl::string_view name,
                                            int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("message", message)
-      .StringField("index_name", indexName)
-      .SubMessage("base_table", baseTable)
+      .StringField("index_name", index_name)
+      .SubMessage("base_table", base_table)
       .SubMessage("code", code)
       .Build();
 }
@@ -591,8 +592,8 @@ std::string SearchStatistics::DebugString(absl::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .Field("index_unused_reasons", indexUnusedReasons)
-      .SubMessage("index_usage_mode", indexUsageMode)
+      .Field("index_unused_reasons", index_unused_reasons)
+      .SubMessage("index_usage_mode", index_usage_mode)
       .Build();
 }
 
@@ -601,24 +602,24 @@ std::string InputDataChange::DebugString(absl::string_view name,
                                          int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .Field("records_read_diff_percentage",
-             static_cast<double>(recordsReadDiffPercentage))
+             static_cast<double>(records_read_diff_percentage))
       .Build();
 }
 
 std::string StagePerformanceChangeInsight::DebugString(
     absl::string_view name, TracingOptions const& options, int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .Field("stage_id", stageId)
-      .SubMessage("input_data_change", inputDataChange)
+      .Field("stage_id", stage_id)
+      .SubMessage("input_data_change", input_data_change)
       .Build();
 }
 
 std::string StagePerformanceStandaloneInsight::DebugString(
     absl::string_view name, TracingOptions const& options, int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .Field("stage_id", stageId)
-      .Field("slot_contention", slotContention)
-      .Field("insufficient_shuffle_quota", insufficientShuffleQuota)
+      .Field("stage_id", stage_id)
+      .Field("slot_contention", slot_contention)
+      .Field("insufficient_shuffle_quota", insufficient_shuffle_quota)
       .Build();
 }
 
@@ -647,16 +648,16 @@ std::string MaterializedView::DebugString(absl::string_view name,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .Field("chosen", chosen)
-      .Field("estimated_bytes_saved", estimatedBytesSaved)
-      .SubMessage("rejected_reason", rejectedReason)
-      .SubMessage("table_reference", tableReference)
+      .Field("estimated_bytes_saved", estimated_bytes_saved)
+      .SubMessage("rejected_reason", rejected_reason)
+      .SubMessage("table_reference", table_reference)
       .Build();
 }
 
 std::string MaterializedViewStatistics::DebugString(
     absl::string_view name, TracingOptions const& options, int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .Field("materialized_view", materializedView)
+      .Field("materialized_view", materialized_view)
       .Build();
 }
 
@@ -672,8 +673,8 @@ std::string TableMetadataCacheUsage::DebugString(absl::string_view name,
                                                  int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("explanation", explanation)
-      .SubMessage("unused_reason", unusedReason)
-      .SubMessage("table_reference", tableReference)
+      .SubMessage("unused_reason", unused_reason)
+      .SubMessage("table_reference", table_reference)
       .Build();
 }
 
@@ -681,7 +682,7 @@ std::string MetadataCacheStatistics::DebugString(absl::string_view name,
                                                  TracingOptions const& options,
                                                  int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .Field("table_metadata_cache_usage", tableMetadataCacheUsage)
+      .Field("table_metadata_cache_usage", table_metadata_cache_usage)
       .Build();
 }
 
@@ -721,6 +722,183 @@ std::string JobQueryStatistics::DebugString(absl::string_view name,
       .SubMessage("materialized_view_statistics", materialized_view_statistics)
       .SubMessage("metadata_cache_statistics", metadata_cache_statistics)
       .Build();
+}
+
+void to_json(nlohmann::json& j, MetadataCacheStatistics const& m) {
+  j = nlohmann::json{{"tableMetadataCacheUsage", m.table_metadata_cache_usage}};
+}
+void from_json(nlohmann::json const& j, MetadataCacheStatistics& m) {
+  if (j.contains("tableMetadataCacheUsage")) {
+    j.at("tableMetadataCacheUsage").get_to(m.table_metadata_cache_usage);
+  }
+}
+
+void to_json(nlohmann::json& j, TableMetadataCacheUsage const& t) {
+  j = nlohmann::json{{"explanation", t.explanation},
+                     {"tableReference", t.table_reference},
+                     {"unusedReason", t.unused_reason}};
+}
+void from_json(nlohmann::json const& j, TableMetadataCacheUsage& t) {
+  if (j.contains("explanation")) {
+    j.at("explanation").get_to(t.explanation);
+  }
+  if (j.contains("tableReference")) {
+    j.at("tableReference").get_to(t.table_reference);
+  }
+  if (j.contains("unusedReason")) {
+    j.at("unusedReason").get_to(t.unused_reason);
+  }
+}
+
+void to_json(nlohmann::json& j, MaterializedViewStatistics const& m) {
+  j = nlohmann::json{{"materializedView", m.materialized_view}};
+}
+void from_json(nlohmann::json const& j, MaterializedViewStatistics& m) {
+  if (j.contains("materializedView")) {
+    j.at("materializedView").get_to(m.materialized_view);
+  }
+}
+
+void to_json(nlohmann::json& j, MaterializedView const& m) {
+  j = nlohmann::json{{"chosen", m.chosen},
+                     {"estimatedBytesSaved", m.estimated_bytes_saved},
+                     {"rejectedReason", m.rejected_reason},
+                     {"tableReference", m.table_reference}};
+}
+void from_json(nlohmann::json const& j, MaterializedView& m) {
+  if (j.contains("chosen")) {
+    j.at("chosen").get_to(m.chosen);
+  }
+  if (j.contains("estimatedBytesSaved")) {
+    j.at("estimatedBytesSaved").get_to(m.estimated_bytes_saved);
+  }
+  if (j.contains("rejectedReason")) {
+    j.at("rejectedReason").get_to(m.rejected_reason);
+  }
+  if (j.contains("tableReference")) {
+    j.at("tableReference").get_to(m.table_reference);
+  }
+}
+
+void to_json(nlohmann::json& j, StagePerformanceStandaloneInsight const& s) {
+  j = nlohmann::json{
+      {"stageId", s.stage_id},
+      {"slotContention", s.slot_contention},
+      {"insufficientShuffleQuota", s.insufficient_shuffle_quota}};
+}
+void from_json(nlohmann::json const& j, StagePerformanceStandaloneInsight& s) {
+  if (j.contains("stageId")) {
+    j.at("stageId").get_to(s.stage_id);
+  }
+  if (j.contains("slotContention")) {
+    j.at("slotContention").get_to(s.slot_contention);
+  }
+  if (j.contains("insufficientShuffleQuota")) {
+    j.at("insufficientShuffleQuota").get_to(s.insufficient_shuffle_quota);
+  }
+}
+
+void to_json(nlohmann::json& j, StagePerformanceChangeInsight const& s) {
+  j = nlohmann::json{{"stageId", s.stage_id},
+                     {"inputDataChange", s.input_data_change}};
+}
+void from_json(nlohmann::json const& j, StagePerformanceChangeInsight& s) {
+  if (j.contains("stageId")) {
+    j.at("stageId").get_to(s.stage_id);
+  }
+  if (j.contains("inputDataChange")) {
+    j.at("inputDataChange").get_to(s.input_data_change);
+  }
+}
+
+void to_json(nlohmann::json& j, InputDataChange const& i) {
+  j = nlohmann::json{
+      {"recordsReadDiffPercentage", i.records_read_diff_percentage}};
+}
+void from_json(nlohmann::json const& j, InputDataChange& i) {
+  if (j.contains("recordsReadDiffPercentage")) {
+    j.at("recordsReadDiffPercentage").get_to(i.records_read_diff_percentage);
+  }
+}
+
+void to_json(nlohmann::json& j, SearchStatistics const& s) {
+  j = nlohmann::json{{"indexUsageMode", s.index_usage_mode},
+                     {"indexUnusedReasons", s.index_unused_reasons}};
+}
+void from_json(nlohmann::json const& j, SearchStatistics& s) {
+  if (j.contains("indexUsageMode")) {
+    j.at("indexUsageMode").get_to(s.index_usage_mode);
+  }
+  if (j.contains("indexUnusedReasons")) {
+    j.at("indexUnusedReasons").get_to(s.index_unused_reasons);
+  }
+}
+
+void to_json(nlohmann::json& j, IndexUnusedReason const& i) {
+  j = nlohmann::json{{"message", i.message},
+                     {"indexName", i.index_name},
+                     {"baseTable", i.base_table},
+                     {"code", i.code}};
+}
+void from_json(nlohmann::json const& j, IndexUnusedReason& i) {
+  if (j.contains("message")) {
+    j.at("message").get_to(i.message);
+  }
+  if (j.contains("indexName")) {
+    j.at("indexName").get_to(i.index_name);
+  }
+  if (j.contains("baseTable")) {
+    j.at("baseTable").get_to(i.base_table);
+  }
+  if (j.contains("code")) {
+    j.at("code").get_to(i.code);
+  }
+}
+
+void to_json(nlohmann::json& j, RowAccessPolicyReference const& r) {
+  j = nlohmann::json{{"projectId", r.project_id},
+                     {"datasetId", r.dataset_id},
+                     {"tableId", r.table_id},
+                     {"policyId", r.policy_id}};
+}
+void from_json(nlohmann::json const& j, RowAccessPolicyReference& r) {
+  if (j.contains("projectId")) {
+    j.at("projectId").get_to(r.project_id);
+  }
+  if (j.contains("datasetId")) {
+    j.at("datasetId").get_to(r.dataset_id);
+  }
+  if (j.contains("tableId")) {
+    j.at("tableId").get_to(r.table_id);
+  }
+  if (j.contains("policyId")) {
+    j.at("policyId").get_to(r.policy_id);
+  }
+}
+
+void to_json(nlohmann::json& j, DmlStats const& d) {
+  j = nlohmann::json{{"insertedRowCount", d.inserted_row_count},
+                     {"deletedRowCount", d.deleted_row_count},
+                     {"updatedRowCount", d.updated_row_count}};
+}
+void from_json(nlohmann::json const& j, DmlStats& d) {
+  if (j.contains("insertedRowCount")) {
+    j.at("insertedRowCount").get_to(d.inserted_row_count);
+  }
+  if (j.contains("deletedRowCount")) {
+    j.at("deletedRowCount").get_to(d.deleted_row_count);
+  }
+  if (j.contains("updatedRowCount")) {
+    j.at("updatedRowCount").get_to(d.updated_row_count);
+  }
+}
+
+void to_json(nlohmann::json& j, ExplainQueryStep const& q) {
+  j = nlohmann::json{{"kind", q.kind}, {"substeps", q.sub_steps}};
+}
+void from_json(nlohmann::json const& j, ExplainQueryStep& q) {
+  if (j.contains("kind")) j.at("kind").get_to(q.kind);
+  if (j.contains("substeps")) j.at("substeps").get_to(q.sub_steps);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
