@@ -7,12 +7,13 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `speech_v1::SpeechClient`:
+For example, this will override the default endpoint for `speech_v1::AdaptationClient`:
 
-@snippet speech_client_samples.cc set-client-endpoint
+@snippet adaptation_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c speech_v1::AdaptationClient](@ref speech_v1::AdaptationClient-endpoint-snippet)
 - [\c speech_v1::SpeechClient](@ref speech_v1::SpeechClient-endpoint-snippet)
 - [\c speech_v2::SpeechClient](@ref speech_v2::SpeechClient-endpoint-snippet)
 
@@ -21,6 +22,12 @@ Follow these links to find examples for other \c *Client classes:
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page speech_v1::AdaptationClient-endpoint-snippet Override speech_v1::AdaptationClient Endpoint Configuration
+
+@snippet google/cloud/speech/v1/samples/adaptation_client_samples.cc set-client-endpoint
+
+*/
 
 /*! @page speech_v1::SpeechClient-endpoint-snippet Override speech_v1::SpeechClient Endpoint Configuration
 

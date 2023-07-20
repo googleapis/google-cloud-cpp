@@ -122,6 +122,11 @@ The library has been expanded to include the Zonal OS Config API.
 
 The library has been expanded to include new services.
 
+### [Speech](/google/cloud/speech/README.md)
+
+The library has been expanded to include the
+[Model Adaptation][speech-model-adaptation] API.
+
 ## v2.13.0 - 2023-07
 
 ### New Libraries
@@ -3673,6 +3678,7 @@ releases.  The relevant notes are:
 [pub/sub lite]: /google/cloud/pubsublite/README.md
 [resource-types-with-policies]: https://cloud.google.com/iam/docs/resource-types-with-policies
 [secret manager]: /google/cloud/secretmanager/README.md
+[speech-model-adaptation]: https://cloud.google.com/speech-to-text/docs/adaptation-model
 [storage-dox-link]: https://cloud.google.com/cpp/docs/reference/storage/latest/
 [storage-mocking-link]: https://cloud.google.com/cpp/docs/reference/storage/latest/storage-mocking
 [vcpkg-github]: https://github.com/microsoft/vcpkg
