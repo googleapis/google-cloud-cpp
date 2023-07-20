@@ -27,7 +27,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::EventNamed;
-using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanNamed;
@@ -102,7 +102,7 @@ TEST(AsyncStreamingReadWriteRpcTracing, Start) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, ElementsAre(AllOf(SpanNamed("span"),
-                                       SpanHasAttributes(SpanAttribute<bool>(
+                                       SpanHasAttributes(OTelAttribute<bool>(
                                            "gcloud.stream_started", true)))));
 }
 
@@ -136,16 +136,16 @@ TEST(AsyncStreamingReadWriteRpcTracing, Read) {
           SpanEventsAre(
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "RECEIVED"),
-                        SpanAttribute<int>("message.id", 1))),
+                        OTelAttribute<std::string>("message.type", "RECEIVED"),
+                        OTelAttribute<int>("message.id", 1))),
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "RECEIVED"),
-                        SpanAttribute<int>("message.id", 2))),
+                        OTelAttribute<std::string>("message.type", "RECEIVED"),
+                        OTelAttribute<int>("message.id", 2))),
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "RECEIVED"),
-                        SpanAttribute<int>("message.id", 3)))))));
+                        OTelAttribute<std::string>("message.type", "RECEIVED"),
+                        OTelAttribute<int>("message.id", 3)))))));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, Write) {
@@ -175,22 +175,22 @@ TEST(AsyncStreamingReadWriteRpcTracing, Write) {
           SpanEventsAre(
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "SENT"),
-                        SpanAttribute<int>("message.id", 1),
-                        SpanAttribute<bool>("message.is_last", false),
-                        SpanAttribute<bool>("message.success", true))),
+                        OTelAttribute<std::string>("message.type", "SENT"),
+                        OTelAttribute<int>("message.id", 1),
+                        OTelAttribute<bool>("message.is_last", false),
+                        OTelAttribute<bool>("message.success", true))),
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "SENT"),
-                        SpanAttribute<int>("message.id", 2),
-                        SpanAttribute<bool>("message.is_last", false),
-                        SpanAttribute<bool>("message.success", false))),
+                        OTelAttribute<std::string>("message.type", "SENT"),
+                        OTelAttribute<int>("message.id", 2),
+                        OTelAttribute<bool>("message.is_last", false),
+                        OTelAttribute<bool>("message.success", false))),
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "SENT"),
-                        SpanAttribute<int>("message.id", 3),
-                        SpanAttribute<bool>("message.is_last", true),
-                        SpanAttribute<bool>("message.success", true)))))));
+                        OTelAttribute<std::string>("message.type", "SENT"),
+                        OTelAttribute<int>("message.id", 3),
+                        OTelAttribute<bool>("message.is_last", true),
+                        OTelAttribute<bool>("message.success", true)))))));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, SeparateCountersForReadAndWrite) {
@@ -219,14 +219,14 @@ TEST(AsyncStreamingReadWriteRpcTracing, SeparateCountersForReadAndWrite) {
           SpanEventsAre(
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "SENT"),
-                        SpanAttribute<int>("message.id", 1),
-                        SpanAttribute<bool>("message.is_last", false),
-                        SpanAttribute<bool>("message.success", true))),
+                        OTelAttribute<std::string>("message.type", "SENT"),
+                        OTelAttribute<int>("message.id", 1),
+                        OTelAttribute<bool>("message.is_last", false),
+                        OTelAttribute<bool>("message.success", true))),
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "RECEIVED"),
-                        SpanAttribute<int>("message.id", 1)))))));
+                        OTelAttribute<std::string>("message.type", "RECEIVED"),
+                        OTelAttribute<int>("message.id", 1)))))));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, WritesDone) {
@@ -266,7 +266,7 @@ TEST(AsyncStreamingReadWriteRpcTracing, Finish) {
       spans,
       ElementsAre(AllOf(
           SpanNamed("span"),
-          SpanHasAttributes(SpanAttribute<std::string>("grpc.peer", _)),
+          SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"))));
 }
 

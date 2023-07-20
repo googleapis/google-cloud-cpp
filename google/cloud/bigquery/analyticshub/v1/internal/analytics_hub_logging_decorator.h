@@ -36,7 +36,7 @@ class AnalyticsHubServiceLogging : public AnalyticsHubServiceStub {
   ~AnalyticsHubServiceLogging() override = default;
   AnalyticsHubServiceLogging(std::shared_ptr<AnalyticsHubServiceStub> child,
                              TracingOptions tracing_options,
-                             std::set<std::string> components);
+                             std::set<std::string> const& components);
 
   StatusOr<google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse>
   ListDataExchanges(
@@ -118,7 +118,7 @@ class AnalyticsHubServiceLogging : public AnalyticsHubServiceStub {
  private:
   std::shared_ptr<AnalyticsHubServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AnalyticsHubServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

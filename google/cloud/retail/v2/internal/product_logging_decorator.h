@@ -37,7 +37,7 @@ class ProductServiceLogging : public ProductServiceStub {
   ~ProductServiceLogging() override = default;
   ProductServiceLogging(std::shared_ptr<ProductServiceStub> child,
                         TracingOptions tracing_options,
-                        std::set<std::string> components);
+                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::retail::v2::Product> CreateProduct(
       grpc::ClientContext& context,
@@ -106,7 +106,7 @@ class ProductServiceLogging : public ProductServiceStub {
  private:
   std::shared_ptr<ProductServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ProductServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

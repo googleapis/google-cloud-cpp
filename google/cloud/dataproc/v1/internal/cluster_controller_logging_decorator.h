@@ -37,7 +37,7 @@ class ClusterControllerLogging : public ClusterControllerStub {
   ~ClusterControllerLogging() override = default;
   ClusterControllerLogging(std::shared_ptr<ClusterControllerStub> child,
                            TracingOptions tracing_options,
-                           std::set<std::string> components);
+                           std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCluster(
       google::cloud::CompletionQueue& cq,
@@ -94,7 +94,7 @@ class ClusterControllerLogging : public ClusterControllerStub {
  private:
   std::shared_ptr<ClusterControllerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ClusterControllerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

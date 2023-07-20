@@ -30,10 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ParticipantsLogging::ParticipantsLogging(
     std::shared_ptr<ParticipantsStub> child, TracingOptions tracing_options,
-    std::set<std::string> components)
+    std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsLogging::CreateParticipant(
@@ -114,7 +114,7 @@ ParticipantsLogging::AsyncStreamingAnalyzeContent(
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncStreamingAnalyzeContent(cq, std::move(context));
-  if (components_.count("rpc-streams") > 0) {
+  if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }

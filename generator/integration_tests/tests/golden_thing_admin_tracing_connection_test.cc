@@ -36,7 +36,7 @@ using ::testing::Return;
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
-using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -89,7 +89,7 @@ TEST(GoldenThingAdminTracingConnectionTest, ListDatabases) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::ListDatabases"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, CreateDatabase) {
@@ -115,7 +115,7 @@ TEST(GoldenThingAdminTracingConnectionTest, CreateDatabase) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::CreateDatabase"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, GetDatabase) {
@@ -140,7 +140,7 @@ TEST(GoldenThingAdminTracingConnectionTest, GetDatabase) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::GetDatabase"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, UpdateDatabaseDdl) {
@@ -167,7 +167,7 @@ TEST(GoldenThingAdminTracingConnectionTest, UpdateDatabaseDdl) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::UpdateDatabaseDdl"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, DropDatabase) {
@@ -192,7 +192,7 @@ TEST(GoldenThingAdminTracingConnectionTest, DropDatabase) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::DropDatabase"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, GetDatabaseDdl) {
@@ -217,7 +217,7 @@ TEST(GoldenThingAdminTracingConnectionTest, GetDatabaseDdl) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::GetDatabaseDdl"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, SetIamPolicy) {
@@ -242,7 +242,7 @@ TEST(GoldenThingAdminTracingConnectionTest, SetIamPolicy) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::SetIamPolicy"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, GetIamPolicy) {
@@ -267,7 +267,7 @@ TEST(GoldenThingAdminTracingConnectionTest, GetIamPolicy) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::GetIamPolicy"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, TestIamPermissions) {
@@ -293,7 +293,7 @@ TEST(GoldenThingAdminTracingConnectionTest, TestIamPermissions) {
               "golden_v1::GoldenThingAdminConnection::TestIamPermissions"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, CreateBackup) {
@@ -318,7 +318,7 @@ TEST(GoldenThingAdminTracingConnectionTest, CreateBackup) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::CreateBackup"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, GetBackup) {
@@ -343,7 +343,7 @@ TEST(GoldenThingAdminTracingConnectionTest, GetBackup) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::GetBackup"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, UpdateBackup) {
@@ -368,7 +368,7 @@ TEST(GoldenThingAdminTracingConnectionTest, UpdateBackup) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::UpdateBackup"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, DeleteBackup) {
@@ -393,7 +393,7 @@ TEST(GoldenThingAdminTracingConnectionTest, DeleteBackup) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::DeleteBackup"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, ListBackups) {
@@ -420,7 +420,7 @@ TEST(GoldenThingAdminTracingConnectionTest, ListBackups) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::ListBackups"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, RestoreDatabase) {
@@ -446,7 +446,7 @@ TEST(GoldenThingAdminTracingConnectionTest, RestoreDatabase) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::RestoreDatabase"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, ListDatabaseOperations) {
@@ -475,7 +475,7 @@ TEST(GoldenThingAdminTracingConnectionTest, ListDatabaseOperations) {
               "golden_v1::GoldenThingAdminConnection::ListDatabaseOperations"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, ListBackupOperations) {
@@ -504,7 +504,7 @@ TEST(GoldenThingAdminTracingConnectionTest, ListBackupOperations) {
               "golden_v1::GoldenThingAdminConnection::ListBackupOperations"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, LongRunningWithoutRouting) {
@@ -531,7 +531,7 @@ TEST(GoldenThingAdminTracingConnectionTest, LongRunningWithoutRouting) {
                     "LongRunningWithoutRouting"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, AsyncGetDatabase) {
@@ -557,7 +557,7 @@ TEST(GoldenThingAdminTracingConnectionTest, AsyncGetDatabase) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::AsyncGetDatabase"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, AsyncDropDatabase) {
@@ -582,7 +582,7 @@ TEST(GoldenThingAdminTracingConnectionTest, AsyncDropDatabase) {
           SpanNamed("golden_v1::GoldenThingAdminConnection::AsyncDropDatabase"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(MakeGoldenThingAdminTracingConnection, TracingEnabled) {

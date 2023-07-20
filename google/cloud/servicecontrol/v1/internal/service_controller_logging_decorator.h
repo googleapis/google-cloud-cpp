@@ -36,7 +36,7 @@ class ServiceControllerLogging : public ServiceControllerStub {
   ~ServiceControllerLogging() override = default;
   ServiceControllerLogging(std::shared_ptr<ServiceControllerStub> child,
                            TracingOptions tracing_options,
-                           std::set<std::string> components);
+                           std::set<std::string> const& components);
 
   StatusOr<google::api::servicecontrol::v1::CheckResponse> Check(
       grpc::ClientContext& context,
@@ -49,7 +49,7 @@ class ServiceControllerLogging : public ServiceControllerStub {
  private:
   std::shared_ptr<ServiceControllerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ServiceControllerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

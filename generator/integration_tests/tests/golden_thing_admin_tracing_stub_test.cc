@@ -32,7 +32,7 @@ using ::testing::Return;
 
 using ::google::cloud::testing_util::InstallMockPropagator;
 using ::google::cloud::testing_util::InstallSpanCatcher;
-using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -80,8 +80,8 @@ TEST(GoldenThingAdminTracingStubTest, ListDatabases) {
               "google.test.admin.database.v1.GoldenThingAdmin/ListDatabases"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, AsyncCreateDatabase) {
@@ -108,8 +108,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCreateDatabase) {
               "google.test.admin.database.v1.GoldenThingAdmin/CreateDatabase"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, GetDatabase) {
@@ -138,8 +138,8 @@ TEST(GoldenThingAdminTracingStubTest, GetDatabase) {
               "google.test.admin.database.v1.GoldenThingAdmin/GetDatabase"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, AsyncUpdateDatabaseDdl) {
@@ -166,8 +166,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncUpdateDatabaseDdl) {
                     "UpdateDatabaseDdl"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, DropDatabase) {
@@ -196,8 +196,8 @@ TEST(GoldenThingAdminTracingStubTest, DropDatabase) {
               "google.test.admin.database.v1.GoldenThingAdmin/DropDatabase"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, GetDatabaseDdl) {
@@ -226,8 +226,8 @@ TEST(GoldenThingAdminTracingStubTest, GetDatabaseDdl) {
               "google.test.admin.database.v1.GoldenThingAdmin/GetDatabaseDdl"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, SetIamPolicy) {
@@ -256,8 +256,8 @@ TEST(GoldenThingAdminTracingStubTest, SetIamPolicy) {
               "google.test.admin.database.v1.GoldenThingAdmin/SetIamPolicy"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, GetIamPolicy) {
@@ -286,8 +286,8 @@ TEST(GoldenThingAdminTracingStubTest, GetIamPolicy) {
               "google.test.admin.database.v1.GoldenThingAdmin/GetIamPolicy"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, TestIamPermissions) {
@@ -316,8 +316,8 @@ TEST(GoldenThingAdminTracingStubTest, TestIamPermissions) {
                     "TestIamPermissions"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, AsyncCreateBackup) {
@@ -344,8 +344,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCreateBackup) {
               "google.test.admin.database.v1.GoldenThingAdmin/CreateBackup"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, GetBackup) {
@@ -373,8 +373,8 @@ TEST(GoldenThingAdminTracingStubTest, GetBackup) {
           SpanNamed("google.test.admin.database.v1.GoldenThingAdmin/GetBackup"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, UpdateBackup) {
@@ -403,8 +403,8 @@ TEST(GoldenThingAdminTracingStubTest, UpdateBackup) {
               "google.test.admin.database.v1.GoldenThingAdmin/UpdateBackup"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, DeleteBackup) {
@@ -433,8 +433,8 @@ TEST(GoldenThingAdminTracingStubTest, DeleteBackup) {
               "google.test.admin.database.v1.GoldenThingAdmin/DeleteBackup"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, ListBackups) {
@@ -463,8 +463,8 @@ TEST(GoldenThingAdminTracingStubTest, ListBackups) {
               "google.test.admin.database.v1.GoldenThingAdmin/ListBackups"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, AsyncRestoreDatabase) {
@@ -491,8 +491,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncRestoreDatabase) {
               "google.test.admin.database.v1.GoldenThingAdmin/RestoreDatabase"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, ListDatabaseOperations) {
@@ -521,8 +521,8 @@ TEST(GoldenThingAdminTracingStubTest, ListDatabaseOperations) {
                     "ListDatabaseOperations"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, ListBackupOperations) {
@@ -551,8 +551,8 @@ TEST(GoldenThingAdminTracingStubTest, ListBackupOperations) {
                     "ListBackupOperations"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, AsyncGetDatabase) {
@@ -582,8 +582,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncGetDatabase) {
               "google.test.admin.database.v1.GoldenThingAdmin/GetDatabase"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, AsyncDropDatabase) {
@@ -612,8 +612,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncDropDatabase) {
               "google.test.admin.database.v1.GoldenThingAdmin/DropDatabase"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, AsyncGetOperation) {
@@ -639,8 +639,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncGetOperation) {
           SpanNamed("google.longrunning.Operations/GetOperation"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, AsyncCancelOperation) {
@@ -668,8 +668,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCancelOperation) {
           SpanNamed("google.longrunning.Operations/CancelOperation"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(MakeGoldenThingAdminTracingStub, OpenTelemetry) {

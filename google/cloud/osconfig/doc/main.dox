@@ -33,6 +33,7 @@ application.
 
 - [\c osconfig_agentendpoint_v1::AgentEndpointServiceClient](@ref google::cloud::osconfig_agentendpoint_v1::AgentEndpointServiceClient)
 - [\c osconfig_v1::OsConfigServiceClient](@ref google::cloud::osconfig_v1::OsConfigServiceClient)
+- [\c osconfig_v1::OsConfigZonalServiceClient](@ref google::cloud::osconfig_v1::OsConfigZonalServiceClient)
 <!-- inject-client-list-end -->
 
 ## More Information

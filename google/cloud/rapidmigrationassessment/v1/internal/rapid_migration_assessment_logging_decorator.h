@@ -38,7 +38,7 @@ class RapidMigrationAssessmentLogging : public RapidMigrationAssessmentStub {
   ~RapidMigrationAssessmentLogging() override = default;
   RapidMigrationAssessmentLogging(
       std::shared_ptr<RapidMigrationAssessmentStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCollector(
       google::cloud::CompletionQueue& cq,
@@ -112,7 +112,7 @@ class RapidMigrationAssessmentLogging : public RapidMigrationAssessmentStub {
  private:
   std::shared_ptr<RapidMigrationAssessmentStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // RapidMigrationAssessmentLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

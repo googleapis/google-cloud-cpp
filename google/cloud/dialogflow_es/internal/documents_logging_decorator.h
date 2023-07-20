@@ -37,7 +37,7 @@ class DocumentsLogging : public DocumentsStub {
   ~DocumentsLogging() override = default;
   DocumentsLogging(std::shared_ptr<DocumentsStub> child,
                    TracingOptions tracing_options,
-                   std::set<std::string> components);
+                   std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse> ListDocuments(
       grpc::ClientContext& context,
@@ -98,7 +98,7 @@ class DocumentsLogging : public DocumentsStub {
  private:
   std::shared_ptr<DocumentsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DocumentsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

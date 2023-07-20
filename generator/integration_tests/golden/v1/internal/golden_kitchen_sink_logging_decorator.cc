@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GoldenKitchenSinkLogging::GoldenKitchenSinkLogging(
     std::shared_ptr<GoldenKitchenSinkStub> child,
     TracingOptions tracing_options,
-    std::set<std::string> components)
+    std::set<std::string> const& components)
     : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkLogging::GenerateAccessToken(
@@ -133,7 +133,7 @@ GoldenKitchenSinkLogging::StreamingRead(
       std::unique_ptr<google::cloud::internal::StreamingReadRpc<
           google::test::admin::database::v1::Response>> {
         auto stream = child_->StreamingRead(std::move(context), request);
-        if (components_.count("rpc-streams") > 0) {
+        if (stream_logging_) {
           stream = std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
              google::test::admin::database::v1::Response>>(
                std::move(stream), tracing_options_,
@@ -155,7 +155,7 @@ GoldenKitchenSinkLogging::StreamingWrite(
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->StreamingWrite(std::move(context));
-  if (components_.count("rpc-streams") > 0) {
+  if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
@@ -174,7 +174,7 @@ GoldenKitchenSinkLogging::AsyncStreamingReadWrite(
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncStreamingReadWrite(cq, std::move(context));
-  if (components_.count("rpc-streams") > 0) {
+  if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
@@ -217,7 +217,7 @@ GoldenKitchenSinkLogging::AsyncStreamingRead(
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncStreamingRead(cq, std::move(context), request);
-  if (components_.count("rpc-streams") > 0) {
+  if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
@@ -235,7 +235,7 @@ GoldenKitchenSinkLogging::AsyncStreamingWrite(
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncStreamingWrite(cq, std::move(context));
-  if (components_.count("rpc-streams") > 0) {
+  if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }

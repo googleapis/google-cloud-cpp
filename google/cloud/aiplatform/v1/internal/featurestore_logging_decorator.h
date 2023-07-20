@@ -37,7 +37,7 @@ class FeaturestoreServiceLogging : public FeaturestoreServiceStub {
   ~FeaturestoreServiceLogging() override = default;
   FeaturestoreServiceLogging(std::shared_ptr<FeaturestoreServiceStub> child,
                              TracingOptions tracing_options,
-                             std::set<std::string> components);
+                             std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFeaturestore(
       google::cloud::CompletionQueue& cq,
@@ -169,7 +169,7 @@ class FeaturestoreServiceLogging : public FeaturestoreServiceStub {
  private:
   std::shared_ptr<FeaturestoreServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // FeaturestoreServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

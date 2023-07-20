@@ -37,7 +37,7 @@ class ServicesLogging : public ServicesStub {
   ~ServicesLogging() override = default;
   ServicesLogging(std::shared_ptr<ServicesStub> child,
                   TracingOptions tracing_options,
-                  std::set<std::string> components);
+                  std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateService(
       google::cloud::CompletionQueue& cq,
@@ -87,7 +87,7 @@ class ServicesLogging : public ServicesStub {
  private:
   std::shared_ptr<ServicesStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ServicesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

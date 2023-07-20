@@ -36,7 +36,7 @@ class EssentialContactsServiceLogging : public EssentialContactsServiceStub {
   ~EssentialContactsServiceLogging() override = default;
   EssentialContactsServiceLogging(
       std::shared_ptr<EssentialContactsServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
       grpc::ClientContext& context,
@@ -77,7 +77,7 @@ class EssentialContactsServiceLogging : public EssentialContactsServiceStub {
  private:
   std::shared_ptr<EssentialContactsServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // EssentialContactsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

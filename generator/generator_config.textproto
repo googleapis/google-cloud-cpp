@@ -541,6 +541,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/channel/v1/reports_service.proto"
+  additional_proto_files: ["google/cloud/channel/v1/operations.proto"]
+  product_path: "google/cloud/channel/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Composer
 service {
   service_proto_path: "google/cloud/orchestration/airflow/service/v1/environments.proto"
@@ -2354,6 +2362,13 @@ service {
 }
 
 service {
+  service_proto_path: "google/monitoring/v3/snooze_service.proto"
+  product_path: "google/cloud/monitoring/v3"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/monitoring/v3/uptime_service.proto"
   product_path: "google/cloud/monitoring/v3"
   forwarding_product_path: "google/cloud/monitoring"
@@ -2447,6 +2462,13 @@ service {
   product_path: "google/cloud/osconfig/v1"
   forwarding_product_path: "google/cloud/osconfig"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/osconfig/v1/osconfig_zonal_service.proto"
+  product_path: "google/cloud/osconfig/v1"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -2642,6 +2664,20 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/retail/v2/control_service.proto"
+  product_path: "google/cloud/retail/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/retail/v2/model_service.proto"
+  product_path: "google/cloud/retail/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/retail/v2/prediction_service.proto"
   product_path: "google/cloud/retail/v2"
   forwarding_product_path: "google/cloud/retail"
@@ -2663,6 +2699,13 @@ service {
   product_path: "google/cloud/retail/v2"
   forwarding_product_path: "google/cloud/retail"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/retail/v2/serving_config_service.proto"
+  product_path: "google/cloud/retail/v2"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -2846,12 +2889,17 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/speech/v1/cloud_speech_adaptation.proto"
+  product_path: "google/cloud/speech/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/speech/v2/cloud_speech.proto"
   product_path: "google/cloud/speech/v2"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
-  # TODO(#10264): Remove experimental when service goes GA.
-  experimental: true
 }
 
 # Sql

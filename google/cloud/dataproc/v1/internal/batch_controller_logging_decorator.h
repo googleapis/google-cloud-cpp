@@ -37,7 +37,7 @@ class BatchControllerLogging : public BatchControllerStub {
   ~BatchControllerLogging() override = default;
   BatchControllerLogging(std::shared_ptr<BatchControllerStub> child,
                          TracingOptions tracing_options,
-                         std::set<std::string> components);
+                         std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBatch(
       google::cloud::CompletionQueue& cq,
@@ -69,7 +69,7 @@ class BatchControllerLogging : public BatchControllerStub {
  private:
   std::shared_ptr<BatchControllerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // BatchControllerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

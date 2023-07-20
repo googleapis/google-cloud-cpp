@@ -1,0 +1,73 @@
+name: macOS-CMake-Builds
+
+on:
+  workflow_call:
+    inputs:
+      checkout-ref:
+        required: true
+        description: "The ref we want to compile"
+        type: string
+      shards:
+        required: true
+        description: "The shards to compile"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  cmake:
+    name: cmake + ${{ matrix.os }} + ${{ matrix.shard }}
+    runs-on: ${{ matrix.os }}-xl
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    strategy:
+      # Continue other builds even if one fails
+      fail-fast: false
+      matrix:
+        os: [ macos-12 ]
+        shard: ${{ fromJSON(inputs.shards) }}
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.checkout-ref }}
+    - uses: google-github-actions/auth@v1
+      with:
+        create_credentials_file: true
+        credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    - uses: google-github-actions/setup-gcloud@v1
+    - name: Get External Configuration
+      id: info
+      shell: bash
+      run: |
+        echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
+        echo "features=$(jq -c .${{ matrix.shard }} < .github/workflows/macos-cmake-features.json)" >> "${GITHUB_OUTPUT}"
+    - name: Install bash >= 5.x and Ninja
+      run: brew install bash ninja
+    - name: Download and Install sccache
+      working-directory: "${{runner.temp}}"
+      run: |
+        curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-apple-darwin.tar.gz | \
+          tar -zxf - --strip-components=1 && \
+        chmod +x sccache && \
+        mv sccache /Users/runner/.cargo/bin/sccache
+    - name: Download and Install vcpkg
+      working-directory: "${{runner.temp}}"
+      run: |
+        mkdir -p vcpkg
+        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.info.outputs.vcpkg-version }}.tar.gz" |
+            tar -C vcpkg --strip-components=1 -zxf -
+        vcpkg/bootstrap-vcpkg.sh -disableMetrics
+    - name: Build google-cloud-cpp
+      run: |
+        export VCPKG_ROOT="${{ runner.temp }}/vcpkg"
+        /usr/local/bin/bash ci/gha/builds/macos-cmake.sh ${{ join(fromJSON(steps.info.outputs.features), ',') }}
+    env:
+      USE_BAZEL_VERSION: 6.2.1
+      BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.os }}
+      SCCACHE_GCS_BUCKET: cloud-cpp-gha-cache
+      SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.os }}
+      SCCACHE_GCS_RW_MODE: READ_WRITE
+      SCCACHE_IGNORE_SERVER_IO_ERROR: 1
+      VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-gha-cache/vcpkg-cache/${{ matrix.os }},readwrite

@@ -36,7 +36,7 @@ class SynonymSetServiceLogging : public SynonymSetServiceStub {
   ~SynonymSetServiceLogging() override = default;
   SynonymSetServiceLogging(std::shared_ptr<SynonymSetServiceStub> child,
                            TracingOptions tracing_options,
-                           std::set<std::string> components);
+                           std::set<std::string> const& components);
 
   StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> CreateSynonymSet(
       grpc::ClientContext& context,
@@ -67,7 +67,7 @@ class SynonymSetServiceLogging : public SynonymSetServiceStub {
  private:
   std::shared_ptr<SynonymSetServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // SynonymSetServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

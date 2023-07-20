@@ -36,7 +36,7 @@ class FirewallLogging : public FirewallStub {
   ~FirewallLogging() override = default;
   FirewallLogging(std::shared_ptr<FirewallStub> child,
                   TracingOptions tracing_options,
-                  std::set<std::string> components);
+                  std::set<std::string> const& components);
 
   StatusOr<google::appengine::v1::ListIngressRulesResponse> ListIngressRules(
       grpc::ClientContext& context,
@@ -67,7 +67,7 @@ class FirewallLogging : public FirewallStub {
  private:
   std::shared_ptr<FirewallStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // FirewallLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

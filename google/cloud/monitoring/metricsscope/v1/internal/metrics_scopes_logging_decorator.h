@@ -37,7 +37,7 @@ class MetricsScopesLogging : public MetricsScopesStub {
   ~MetricsScopesLogging() override = default;
   MetricsScopesLogging(std::shared_ptr<MetricsScopesStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
       grpc::ClientContext& context,
@@ -76,7 +76,7 @@ class MetricsScopesLogging : public MetricsScopesStub {
  private:
   std::shared_ptr<MetricsScopesStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // MetricsScopesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

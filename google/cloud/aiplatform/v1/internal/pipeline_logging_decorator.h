@@ -37,7 +37,7 @@ class PipelineServiceLogging : public PipelineServiceStub {
   ~PipelineServiceLogging() override = default;
   PipelineServiceLogging(std::shared_ptr<PipelineServiceStub> child,
                          TracingOptions tracing_options,
-                         std::set<std::string> components);
+                         std::set<std::string> const& components);
 
   StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
   CreateTrainingPipeline(
@@ -106,7 +106,7 @@ class PipelineServiceLogging : public PipelineServiceStub {
  private:
   std::shared_ptr<PipelineServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // PipelineServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,7 +36,7 @@ class GroupServiceLogging : public GroupServiceStub {
   ~GroupServiceLogging() override = default;
   GroupServiceLogging(std::shared_ptr<GroupServiceStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   StatusOr<google::monitoring::v3::ListGroupsResponse> ListGroups(
       grpc::ClientContext& context,
@@ -65,7 +65,7 @@ class GroupServiceLogging : public GroupServiceStub {
  private:
   std::shared_ptr<GroupServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // GroupServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

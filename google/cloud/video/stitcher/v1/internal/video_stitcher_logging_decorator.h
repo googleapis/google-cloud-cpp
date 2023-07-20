@@ -37,7 +37,7 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
   ~VideoStitcherServiceLogging() override = default;
   VideoStitcherServiceLogging(std::shared_ptr<VideoStitcherServiceStub> child,
                               TracingOptions tracing_options,
-                              std::set<std::string> components);
+                              std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCdnKey(
       google::cloud::CompletionQueue& cq,
@@ -187,7 +187,7 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
  private:
   std::shared_ptr<VideoStitcherServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // VideoStitcherServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

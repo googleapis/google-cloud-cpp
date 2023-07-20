@@ -53,17 +53,18 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util_internal {
 
-using SpanAttributeMap =
+using OTelAttributeMap =
     std::unordered_map<std::string,
                        opentelemetry::sdk::common::OwnedAttributeValue>;
+
 MATCHER_P(SpanAttributesImpl, matcher,
-          ::testing::DescribeMatcher<SpanAttributeMap>(matcher)) {
+          ::testing::DescribeMatcher<OTelAttributeMap>(matcher)) {
   return ::testing::ExplainMatchResult(matcher, arg->GetAttributes(),
                                        result_listener);
 }
 
 MATCHER_P(EventAttributesImpl, matcher,
-          ::testing::DescribeMatcher<SpanAttributeMap>(matcher)) {
+          ::testing::DescribeMatcher<OTelAttributeMap>(matcher)) {
   return ::testing::ExplainMatchResult(matcher, arg.GetAttributes(),
                                        result_listener);
 }
@@ -151,7 +152,7 @@ template <typename... Args>
 template <typename T>
 ::testing::Matcher<
     std::pair<std::string, opentelemetry::sdk::common::OwnedAttributeValue>>
-SpanAttribute(std::string const& key, ::testing::Matcher<T const&> matcher) {
+OTelAttribute(std::string const& key, ::testing::Matcher<T const&> matcher) {
   return ::testing::Pair(key, ::testing::VariantWith<T>(matcher));
 }
 

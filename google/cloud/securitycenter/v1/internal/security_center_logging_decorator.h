@@ -37,7 +37,7 @@ class SecurityCenterLogging : public SecurityCenterStub {
   ~SecurityCenterLogging() override = default;
   SecurityCenterLogging(std::shared_ptr<SecurityCenterStub> child,
                         TracingOptions tracing_options,
-                        std::set<std::string> components);
+                        std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncBulkMuteFindings(
       google::cloud::CompletionQueue& cq,
@@ -305,7 +305,7 @@ class SecurityCenterLogging : public SecurityCenterStub {
  private:
   std::shared_ptr<SecurityCenterStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // SecurityCenterLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

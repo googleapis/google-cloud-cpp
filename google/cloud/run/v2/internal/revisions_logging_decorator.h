@@ -37,7 +37,7 @@ class RevisionsLogging : public RevisionsStub {
   ~RevisionsLogging() override = default;
   RevisionsLogging(std::shared_ptr<RevisionsStub> child,
                    TracingOptions tracing_options,
-                   std::set<std::string> components);
+                   std::set<std::string> const& components);
 
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
       grpc::ClientContext& context,
@@ -65,7 +65,7 @@ class RevisionsLogging : public RevisionsStub {
  private:
   std::shared_ptr<RevisionsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // RevisionsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

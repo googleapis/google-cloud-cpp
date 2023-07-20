@@ -36,7 +36,7 @@ class ServiceMonitoringServiceLogging : public ServiceMonitoringServiceStub {
   ~ServiceMonitoringServiceLogging() override = default;
   ServiceMonitoringServiceLogging(
       std::shared_ptr<ServiceMonitoringServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::monitoring::v3::Service> CreateService(
       grpc::ClientContext& context,
@@ -90,7 +90,7 @@ class ServiceMonitoringServiceLogging : public ServiceMonitoringServiceStub {
  private:
   std::shared_ptr<ServiceMonitoringServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ServiceMonitoringServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,7 +36,7 @@ class MetadataServiceLogging : public MetadataServiceStub {
   ~MetadataServiceLogging() override = default;
   MetadataServiceLogging(std::shared_ptr<MetadataServiceStub> child,
                          TracingOptions tracing_options,
-                         std::set<std::string> components);
+                         std::set<std::string> const& components);
 
   StatusOr<google::cloud::dataplex::v1::Entity> CreateEntity(
       grpc::ClientContext& context,
@@ -80,7 +80,7 @@ class MetadataServiceLogging : public MetadataServiceStub {
  private:
   std::shared_ptr<MetadataServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // MetadataServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

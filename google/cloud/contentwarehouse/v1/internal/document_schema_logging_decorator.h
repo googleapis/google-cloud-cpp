@@ -36,7 +36,7 @@ class DocumentSchemaServiceLogging : public DocumentSchemaServiceStub {
   ~DocumentSchemaServiceLogging() override = default;
   DocumentSchemaServiceLogging(std::shared_ptr<DocumentSchemaServiceStub> child,
                                TracingOptions tracing_options,
-                               std::set<std::string> components);
+                               std::set<std::string> const& components);
 
   StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
   CreateDocumentSchema(
@@ -70,7 +70,7 @@ class DocumentSchemaServiceLogging : public DocumentSchemaServiceStub {
  private:
   std::shared_ptr<DocumentSchemaServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DocumentSchemaServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

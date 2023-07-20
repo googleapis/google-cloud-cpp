@@ -36,7 +36,7 @@ class FlowsLogging : public FlowsStub {
  public:
   ~FlowsLogging() override = default;
   FlowsLogging(std::shared_ptr<FlowsStub> child, TracingOptions tracing_options,
-               std::set<std::string> components);
+               std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> CreateFlow(
       grpc::ClientContext& context,
@@ -104,7 +104,7 @@ class FlowsLogging : public FlowsStub {
  private:
   std::shared_ptr<FlowsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // FlowsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -38,7 +38,7 @@ using ::testing::Return;
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
-using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -65,14 +65,14 @@ TEST(OpenTelemetry, MakeSpanGrpc) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("google.cloud.foo.v1.Foo/GetBar"),
           SpanHasAttributes(
-              SpanAttribute<std::string>(sc::kRpcSystem,
+              OTelAttribute<std::string>(sc::kRpcSystem,
                                          sc::RpcSystemValues::kGrpc),
-              SpanAttribute<std::string>(sc::kRpcService,
+              OTelAttribute<std::string>(sc::kRpcService,
                                          "google.cloud.foo.v1.Foo"),
-              SpanAttribute<std::string>(sc::kRpcMethod, "GetBar"),
-              SpanAttribute<std::string>(sc::kNetTransport,
+              OTelAttribute<std::string>(sc::kRpcMethod, "GetBar"),
+              OTelAttribute<std::string>(sc::kNetTransport,
                                          sc::NetTransportValues::kIpTcp),
-              SpanAttribute<std::string>("grpc.version", grpc::Version())))));
+              OTelAttribute<std::string>("grpc.version", grpc::Version())))));
 }
 
 TEST(OpenTelemetry, MakeSpanGrpcHandlesNonNullTerminatedStringView) {
@@ -118,7 +118,7 @@ TEST(OpenTelemetry, EndSpan) {
       spans,
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(SpanAttribute<std::string>("grpc.peer", _)))));
+          SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)))));
 }
 
 TEST(OpenTelemetry, EndSpanFuture) {
@@ -140,7 +140,7 @@ TEST(OpenTelemetry, EndSpanFuture) {
       spans,
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(SpanAttribute<std::string>("grpc.peer", _)))));
+          SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)))));
 }
 
 TEST(OpenTelemetry, TracedAsyncBackoffEnabled) {

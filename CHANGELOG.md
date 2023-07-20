@@ -110,6 +110,27 @@ info, see [#7463] and [#5976].
 
 ## v2.14.0 - TBD
 
+### [Channel Services](/google/cloud/channel/README.md)
+
+The library has been expanded to include the Reporting API.
+
+### [Cloud Monitoring](/google/cloud/monitoring/README.md)
+
+The library has been expanded to include the [Snooze][monitoring-snooze] API.
+
+### [Compute Engine OS Config](/google/cloud/osconfig/README.md)
+
+The library has been expanded to include the Zonal OS Config API.
+
+### [Retail](/google/cloud/retail/README.md)
+
+The library has been expanded to include new services.
+
+### [Speech](/google/cloud/speech/README.md)
+
+The library has been expanded to include the
+[Model Adaptation][speech-model-adaptation] API.
+
 ## v2.13.0 - 2023-07
 
 ### New Libraries
@@ -3655,12 +3676,14 @@ releases.  The relevant notes are:
 [iam-policy-link]: https://cloud.google.com/iam/docs/manage-access-other-resources
 [issue-2567]: https://github.com/googleapis/google-cloud-cpp/issues/2567
 [modern-table-ctor]: https://github.com/googleapis/google-cloud-cpp/blob/62740c8e9180056db77d4dd3e80a6fa7ae71295a/google/cloud/bigtable/table.h#L182-L214
+[monitoring-snooze]: https://cloud.google.com/monitoring/alerts/snooze
 [nlohmann-json-gh]: https://github.com/nlohmann/json.git
 [oss-cxx-support]: https://opensource.google/documentation/policies/cplusplus-support
 [product-launch-stages]: https://cloud.google.com/products/#product-launch-stages
 [pub/sub lite]: /google/cloud/pubsublite/README.md
 [resource-types-with-policies]: https://cloud.google.com/iam/docs/resource-types-with-policies
 [secret manager]: /google/cloud/secretmanager/README.md
+[speech-model-adaptation]: https://cloud.google.com/speech-to-text/docs/adaptation-model
 [storage-dox-link]: https://cloud.google.com/cpp/docs/reference/storage/latest/
 [storage-mocking-link]: https://cloud.google.com/cpp/docs/reference/storage/latest/storage-mocking
 [vcpkg-github]: https://github.com/microsoft/vcpkg

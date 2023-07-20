@@ -37,7 +37,7 @@ class BinauthzManagementServiceV1Logging
   ~BinauthzManagementServiceV1Logging() override = default;
   BinauthzManagementServiceV1Logging(
       std::shared_ptr<BinauthzManagementServiceV1Stub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
       grpc::ClientContext& context,
@@ -78,7 +78,7 @@ class BinauthzManagementServiceV1Logging
  private:
   std::shared_ptr<BinauthzManagementServiceV1Stub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // BinauthzManagementServiceV1Logging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,7 +36,7 @@ class QuotaControllerLogging : public QuotaControllerStub {
   ~QuotaControllerLogging() override = default;
   QuotaControllerLogging(std::shared_ptr<QuotaControllerStub> child,
                          TracingOptions tracing_options,
-                         std::set<std::string> components);
+                         std::set<std::string> const& components);
 
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
   AllocateQuota(grpc::ClientContext& context,
@@ -46,7 +46,7 @@ class QuotaControllerLogging : public QuotaControllerStub {
  private:
   std::shared_ptr<QuotaControllerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // QuotaControllerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

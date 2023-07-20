@@ -34,9 +34,12 @@ application.
 
 - [\c retail_v2::CatalogServiceClient](@ref google::cloud::retail_v2::CatalogServiceClient)
 - [\c retail_v2::CompletionServiceClient](@ref google::cloud::retail_v2::CompletionServiceClient)
+- [\c retail_v2::ControlServiceClient](@ref google::cloud::retail_v2::ControlServiceClient)
+- [\c retail_v2::ModelServiceClient](@ref google::cloud::retail_v2::ModelServiceClient)
 - [\c retail_v2::PredictionServiceClient](@ref google::cloud::retail_v2::PredictionServiceClient)
 - [\c retail_v2::ProductServiceClient](@ref google::cloud::retail_v2::ProductServiceClient)
 - [\c retail_v2::SearchServiceClient](@ref google::cloud::retail_v2::SearchServiceClient)
+- [\c retail_v2::ServingConfigServiceClient](@ref google::cloud::retail_v2::ServingConfigServiceClient)
 - [\c retail_v2::UserEventServiceClient](@ref google::cloud::retail_v2::UserEventServiceClient)
 <!-- inject-client-list-end -->
 

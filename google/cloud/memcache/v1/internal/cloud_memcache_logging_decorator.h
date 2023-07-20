@@ -37,7 +37,7 @@ class CloudMemcacheLogging : public CloudMemcacheStub {
   ~CloudMemcacheLogging() override = default;
   CloudMemcacheLogging(std::shared_ptr<CloudMemcacheStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::memcache::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,
@@ -97,7 +97,7 @@ class CloudMemcacheLogging : public CloudMemcacheStub {
  private:
   std::shared_ptr<CloudMemcacheStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // CloudMemcacheLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

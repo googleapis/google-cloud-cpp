@@ -36,7 +36,7 @@ class ClusterManagerLogging : public ClusterManagerStub {
   ~ClusterManagerLogging() override = default;
   ClusterManagerLogging(std::shared_ptr<ClusterManagerStub> child,
                         TracingOptions tracing_options,
-                        std::set<std::string> components);
+                        std::set<std::string> const& components);
 
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,
@@ -187,7 +187,7 @@ class ClusterManagerLogging : public ClusterManagerStub {
  private:
   std::shared_ptr<ClusterManagerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ClusterManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

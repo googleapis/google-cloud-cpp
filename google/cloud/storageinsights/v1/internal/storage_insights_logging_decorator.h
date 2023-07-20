@@ -36,7 +36,7 @@ class StorageInsightsLogging : public StorageInsightsStub {
   ~StorageInsightsLogging() override = default;
   StorageInsightsLogging(std::shared_ptr<StorageInsightsStub> child,
                          TracingOptions tracing_options,
-                         std::set<std::string> components);
+                         std::set<std::string> const& components);
 
   StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
   ListReportConfigs(
@@ -78,7 +78,7 @@ class StorageInsightsLogging : public StorageInsightsStub {
  private:
   std::shared_ptr<StorageInsightsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // StorageInsightsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

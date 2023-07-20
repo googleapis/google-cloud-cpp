@@ -36,7 +36,7 @@ class AuthorizedCertificatesLogging : public AuthorizedCertificatesStub {
   ~AuthorizedCertificatesLogging() override = default;
   AuthorizedCertificatesLogging(
       std::shared_ptr<AuthorizedCertificatesStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
   ListAuthorizedCertificates(
@@ -70,7 +70,7 @@ class AuthorizedCertificatesLogging : public AuthorizedCertificatesStub {
  private:
   std::shared_ptr<AuthorizedCertificatesStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AuthorizedCertificatesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

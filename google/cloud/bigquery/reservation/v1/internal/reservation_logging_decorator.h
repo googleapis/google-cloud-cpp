@@ -36,7 +36,7 @@ class ReservationServiceLogging : public ReservationServiceStub {
   ~ReservationServiceLogging() override = default;
   ReservationServiceLogging(std::shared_ptr<ReservationServiceStub> child,
                             TracingOptions tracing_options,
-                            std::set<std::string> components);
+                            std::set<std::string> const& components);
 
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   CreateReservation(
@@ -164,7 +164,7 @@ class ReservationServiceLogging : public ReservationServiceStub {
  private:
   std::shared_ptr<ReservationServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ReservationServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

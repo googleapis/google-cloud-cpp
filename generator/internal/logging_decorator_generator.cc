@@ -67,7 +67,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
     "  ~$logging_class_name$() override = default;\n"
     "  $logging_class_name$(std::shared_ptr<$stub_class_name$> child,\n"
     "                       TracingOptions tracing_options,\n"
-    "                       std::set<std::string> components);\n");
+    "                       std::set<std::string> const& components);\n");
   // clang-format on
 
   HeaderPrintPublicMethods();
@@ -77,7 +77,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
     " private:\n"
     "  std::shared_ptr<$stub_class_name$> child_;\n"
     "  TracingOptions tracing_options_;\n"
-    "  std::set<std::string> components_;\n"
+    "  bool stream_logging_;\n"
     "};  // $logging_class_name$\n");
   // clang-format on
 
@@ -126,9 +126,9 @@ Status LoggingDecoratorGenerator::GenerateCc() {
     "$logging_class_name$::$logging_class_name$(\n"
     "    std::shared_ptr<$stub_class_name$> child,\n"
     "    TracingOptions tracing_options,\n"
-    "    std::set<std::string> components)\n"
+    "    std::set<std::string> const& components)\n"
     "    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),\n"
-    "      components_(std::move(components)) {}\n");
+    "      stream_logging_(components.find(\"rpc-streams\") != components.end()) {}\n");
   // clang-format on
 
   // logging decorator class member methods
@@ -147,7 +147,7 @@ $logging_class_name$::$method_name$(
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->$method_name$(std::move(context));
-  if (components_.count("rpc-streams") > 0) {
+  if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
@@ -171,7 +171,7 @@ $logging_class_name$::Async$method_name$(
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->Async$method_name$(cq, std::move(context));
-  if (components_.count("rpc-streams") > 0) {
+  if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
@@ -232,7 +232,7 @@ $logging_class_name$::Async$method_name$(
                "          $response_type$>> {\n"
                "        auto stream = "
                "child_->$method_name$(std::move(context), request);\n"
-               "        if (components_.count(\"rpc-streams\") > 0) {\n"
+               "        if (stream_logging_) {\n"
                "          stream = "
                "std::make_unique<google::cloud::internal::"
                "StreamingReadRpcLogging<\n"
@@ -266,7 +266,7 @@ $logging_class_name$::Async$method_name$(
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->Async$method_name$(cq, std::move(context), request);
-  if (components_.count("rpc-streams") > 0) {
+  if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
@@ -289,7 +289,7 @@ $logging_class_name$::Async$method_name$(
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->Async$method_name$(cq, std::move(context));
-  if (components_.count("rpc-streams") > 0) {
+  if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }

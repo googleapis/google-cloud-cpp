@@ -55,7 +55,7 @@ inline bool operator==(EvaluationKind const& lhs, EvaluationKind const& rhs) {
 
 // Represents the location of the statement/expression being evaluated.
 //
-// For moew details on how frames are evaluated, please see:
+// For more details on how frames are evaluated, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#ScriptStackFrame
 struct ScriptStackFrame {
   std::int32_t start_line;

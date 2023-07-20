@@ -36,7 +36,7 @@ class RecommenderLogging : public RecommenderStub {
   ~RecommenderLogging() override = default;
   RecommenderLogging(std::shared_ptr<RecommenderStub> child,
                      TracingOptions tracing_options,
-                     std::set<std::string> components);
+                     std::set<std::string> const& components);
 
   StatusOr<google::cloud::recommender::v1::ListInsightsResponse> ListInsights(
       grpc::ClientContext& context,
@@ -109,7 +109,7 @@ class RecommenderLogging : public RecommenderStub {
  private:
   std::shared_ptr<RecommenderStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // RecommenderLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -37,7 +37,7 @@ class DatastreamLogging : public DatastreamStub {
   ~DatastreamLogging() override = default;
   DatastreamLogging(std::shared_ptr<DatastreamStub> child,
                     TracingOptions tracing_options,
-                    std::set<std::string> components);
+                    std::set<std::string> const& components);
 
   StatusOr<google::cloud::datastream::v1::ListConnectionProfilesResponse>
   ListConnectionProfiles(
@@ -190,7 +190,7 @@ class DatastreamLogging : public DatastreamStub {
  private:
   std::shared_ptr<DatastreamStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DatastreamLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

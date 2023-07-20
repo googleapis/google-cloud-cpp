@@ -118,6 +118,27 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_policytroubleshooter_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
+include(CTest)
+if (BUILD_TESTING)
+    add_executable(policytroubleshooter_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(policytroubleshooter_quickstart
+                          PRIVATE google-cloud-cpp::policytroubleshooter)
+    google_cloud_cpp_add_common_options(policytroubleshooter_quickstart)
+    add_test(
+        NAME policytroubleshooter_quickstart
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:policytroubleshooter_quickstart>
+            GOOGLE_CLOUD_CPP_POLICYTROUBLESHOOTER_PRINCIPAL
+            GOOGLE_CLOUD_CPP_POLICYTROUBLESHOOTER_RESOURCE
+            GOOGLE_CLOUD_CPP_POLICYTROUBLESHOOTER_PERMISSION)
+    set_tests_properties(
+        policytroubleshooter_quickstart
+        PROPERTIES
+            LABELS "integration-test;quickstart" ENVIRONMENT
+            GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT})
+endif ()
+
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 

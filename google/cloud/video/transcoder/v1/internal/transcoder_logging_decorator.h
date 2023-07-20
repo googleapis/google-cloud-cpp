@@ -36,7 +36,7 @@ class TranscoderServiceLogging : public TranscoderServiceStub {
   ~TranscoderServiceLogging() override = default;
   TranscoderServiceLogging(std::shared_ptr<TranscoderServiceStub> child,
                            TracingOptions tracing_options,
-                           std::set<std::string> components);
+                           std::set<std::string> const& components);
 
   StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
       grpc::ClientContext& context,
@@ -81,7 +81,7 @@ class TranscoderServiceLogging : public TranscoderServiceStub {
  private:
   std::shared_ptr<TranscoderServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // TranscoderServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

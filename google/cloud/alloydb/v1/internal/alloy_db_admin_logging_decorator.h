@@ -37,7 +37,7 @@ class AlloyDBAdminLogging : public AlloyDBAdminStub {
   ~AlloyDBAdminLogging() override = default;
   AlloyDBAdminLogging(std::shared_ptr<AlloyDBAdminStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   StatusOr<google::cloud::alloydb::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,
@@ -197,7 +197,7 @@ class AlloyDBAdminLogging : public AlloyDBAdminStub {
  private:
   std::shared_ptr<AlloyDBAdminStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AlloyDBAdminLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

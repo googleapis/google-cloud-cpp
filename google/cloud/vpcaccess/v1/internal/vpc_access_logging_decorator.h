@@ -37,7 +37,7 @@ class VpcAccessServiceLogging : public VpcAccessServiceStub {
   ~VpcAccessServiceLogging() override = default;
   VpcAccessServiceLogging(std::shared_ptr<VpcAccessServiceStub> child,
                           TracingOptions tracing_options,
-                          std::set<std::string> components);
+                          std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnector(
       google::cloud::CompletionQueue& cq,
@@ -74,7 +74,7 @@ class VpcAccessServiceLogging : public VpcAccessServiceStub {
  private:
   std::shared_ptr<VpcAccessServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // VpcAccessServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -42,6 +42,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "monitoring.googleapis.com")
   used by `MakeServiceMonitoringServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_SNOOZE_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "monitoring.googleapis.com")
+  used by `MakeSnoozeServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_UPTIME_CHECK_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "monitoring.googleapis.com")
   used by `MakeUptimeCheckServiceConnection()`.

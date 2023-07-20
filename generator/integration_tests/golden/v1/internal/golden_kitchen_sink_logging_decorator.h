@@ -36,7 +36,7 @@ class GoldenKitchenSinkLogging : public GoldenKitchenSinkStub {
   ~GoldenKitchenSinkLogging() override = default;
   GoldenKitchenSinkLogging(std::shared_ptr<GoldenKitchenSinkStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
       grpc::ClientContext& context,
@@ -107,7 +107,7 @@ class GoldenKitchenSinkLogging : public GoldenKitchenSinkStub {
  private:
   std::shared_ptr<GoldenKitchenSinkStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // GoldenKitchenSinkLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

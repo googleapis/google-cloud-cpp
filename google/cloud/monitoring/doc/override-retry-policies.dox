@@ -87,6 +87,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c monitoring_v3::NotificationChannelServiceClient](@ref monitoring_v3::NotificationChannelServiceClient-retry-snippet)
 - [\c monitoring_v3::QueryServiceClient](@ref monitoring_v3::QueryServiceClient-retry-snippet)
 - [\c monitoring_v3::ServiceMonitoringServiceClient](@ref monitoring_v3::ServiceMonitoringServiceClient-retry-snippet)
+- [\c monitoring_v3::SnoozeServiceClient](@ref monitoring_v3::SnoozeServiceClient-retry-snippet)
 - [\c monitoring_v3::UptimeCheckServiceClient](@ref monitoring_v3::UptimeCheckServiceClient-retry-snippet)
 
 <!-- inject-retry-snippet-end -->
@@ -196,6 +197,18 @@ This shows how to override the retry policies for monitoring_v3::ServiceMonitori
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/monitoring/v3/samples/service_monitoring_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page monitoring_v3::SnoozeServiceClient-retry-snippet Override monitoring_v3::SnoozeServiceClient Retry Policies
+
+This shows how to override the retry policies for monitoring_v3::SnoozeServiceClient:
+
+@snippet google/cloud/monitoring/v3/samples/snooze_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/monitoring/v3/samples/snooze_client_samples.cc custom-idempotency-policy
 
 */
 

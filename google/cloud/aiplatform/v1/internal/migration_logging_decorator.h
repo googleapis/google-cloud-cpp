@@ -37,7 +37,7 @@ class MigrationServiceLogging : public MigrationServiceStub {
   ~MigrationServiceLogging() override = default;
   MigrationServiceLogging(std::shared_ptr<MigrationServiceStub> child,
                           TracingOptions tracing_options,
-                          std::set<std::string> components);
+                          std::set<std::string> const& components);
 
   StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
   SearchMigratableResources(
@@ -64,7 +64,7 @@ class MigrationServiceLogging : public MigrationServiceStub {
  private:
   std::shared_ptr<MigrationServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // MigrationServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

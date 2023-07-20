@@ -37,7 +37,7 @@ class IdentityAwareProxyAdminServiceLogging
   ~IdentityAwareProxyAdminServiceLogging() override = default;
   IdentityAwareProxyAdminServiceLogging(
       std::shared_ptr<IdentityAwareProxyAdminServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext& context,
@@ -88,7 +88,7 @@ class IdentityAwareProxyAdminServiceLogging
  private:
   std::shared_ptr<IdentityAwareProxyAdminServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // IdentityAwareProxyAdminServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

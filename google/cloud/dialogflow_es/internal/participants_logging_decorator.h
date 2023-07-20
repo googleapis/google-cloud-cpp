@@ -36,7 +36,7 @@ class ParticipantsLogging : public ParticipantsStub {
   ~ParticipantsLogging() override = default;
   ParticipantsLogging(std::shared_ptr<ParticipantsStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
       grpc::ClientContext& context,
@@ -90,7 +90,7 @@ class ParticipantsLogging : public ParticipantsStub {
  private:
   std::shared_ptr<ParticipantsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ParticipantsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

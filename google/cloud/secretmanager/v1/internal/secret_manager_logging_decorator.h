@@ -36,7 +36,7 @@ class SecretManagerServiceLogging : public SecretManagerServiceStub {
   ~SecretManagerServiceLogging() override = default;
   SecretManagerServiceLogging(std::shared_ptr<SecretManagerServiceStub> child,
                               TracingOptions tracing_options,
-                              std::set<std::string> components);
+                              std::set<std::string> const& components);
 
   StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse> ListSecrets(
       grpc::ClientContext& context,
@@ -117,7 +117,7 @@ class SecretManagerServiceLogging : public SecretManagerServiceStub {
  private:
   std::shared_ptr<SecretManagerServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // SecretManagerServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

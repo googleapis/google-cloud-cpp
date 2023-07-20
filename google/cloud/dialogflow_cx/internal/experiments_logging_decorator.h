@@ -36,7 +36,7 @@ class ExperimentsLogging : public ExperimentsStub {
   ~ExperimentsLogging() override = default;
   ExperimentsLogging(std::shared_ptr<ExperimentsStub> child,
                      TracingOptions tracing_options,
-                     std::set<std::string> components);
+                     std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse>
   ListExperiments(
@@ -77,7 +77,7 @@ class ExperimentsLogging : public ExperimentsStub {
  private:
   std::shared_ptr<ExperimentsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ExperimentsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

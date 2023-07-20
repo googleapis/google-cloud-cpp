@@ -37,7 +37,7 @@ class DataMigrationServiceLogging : public DataMigrationServiceStub {
   ~DataMigrationServiceLogging() override = default;
   DataMigrationServiceLogging(std::shared_ptr<DataMigrationServiceStub> child,
                               TracingOptions tracing_options,
-                              std::set<std::string> components);
+                              std::set<std::string> const& components);
 
   StatusOr<google::cloud::clouddms::v1::ListMigrationJobsResponse>
   ListMigrationJobs(grpc::ClientContext& context,
@@ -270,7 +270,7 @@ class DataMigrationServiceLogging : public DataMigrationServiceStub {
  private:
   std::shared_ptr<DataMigrationServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DataMigrationServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
