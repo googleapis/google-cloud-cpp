@@ -61,7 +61,7 @@ TEST(DatasetConnectionTest, GetDatasetSuccess) {
           "id": "d-id",
           "self_link": "d-selfLink",
           "friendly_name": "d-friendly-name",
-          "dataset_reference": {"project_id": "p-id", "dataset_id": "d-id"}
+          "dataset_reference": {"projectId": "p-id", "datasetId": "d-id"}
     })";
 
   EXPECT_CALL(*mock, GetDataset)

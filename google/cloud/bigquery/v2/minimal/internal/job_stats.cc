@@ -33,59 +33,61 @@ EvaluationKind EvaluationKind::Expression() {
 
 void to_json(nlohmann::json& j, JobStatistics const& s) {
   j = nlohmann::json{
-      {"total_bytes_processed", s.total_bytes_processed},
-      {"num_child_jobs", s.num_child_jobs},
-      {"total_modified_partitions", s.total_modified_partitions},
-      {"parent_job_id", s.parent_job_id},
-      {"session_id", s.session_id},
-      {"transaction_id", s.transaction_id},
+      {"totalBytesProcessed", s.total_bytes_processed},
+      {"numChildJobs", s.num_child_jobs},
+      {"parentJobId", s.parent_job_id},
+      {"sessionInfo", s.session_info},
+      {"transactionInfo", s.transaction_info},
       {"reservation_id", s.reservation_id},
-      {"row_level_security_applied", s.row_level_security_applied},
-      {"data_masking_applied", s.data_masking_applied},
-      {"completion_ratio", s.completion_ratio},
-      {"quota_deferments", s.quota_deferments},
-      {"script_statistics", s.script_statistics},
-      {"job_query_stats", s.job_query_stats}};
+      {"rowLevelSecurityStatistics", s.row_level_security_statistics},
+      {"dataMaskingStatistics", s.data_masking_statistics},
+      {"completionRatio", s.completion_ratio},
+      {"quotaDeferments", s.quota_deferments},
+      {"scriptStatistics", s.script_statistics},
+      {"query", s.job_query_stats}};
 
-  ToJson(s.start_time, j, "start_time");
-  ToJson(s.end_time, j, "end_time");
-  ToJson(s.creation_time, j, "creation_time");
-  ToJson(s.total_slot_time, j, "total_slot_time");
-  ToJson(s.final_execution_duration, j, "final_execution_duration");
+  ToJson(s.start_time, j, "startTime");
+  ToJson(s.end_time, j, "endTime");
+  ToJson(s.creation_time, j, "creationTime");
+  ToJson(s.total_slot_time, j, "totalSlotMs");
+  ToJson(s.final_execution_duration, j, "finalExecutionDurationMs");
 }
 
 void from_json(nlohmann::json const& j, JobStatistics& s) {
-  if (j.contains("total_bytes_processed"))
-    j.at("total_bytes_processed").get_to(s.total_bytes_processed);
-  if (j.contains("num_child_jobs"))
-    j.at("num_child_jobs").get_to(s.num_child_jobs);
-  if (j.contains("total_modified_partitions"))
-    j.at("total_modified_partitions").get_to(s.total_modified_partitions);
-  if (j.contains("parent_job_id"))
-    j.at("parent_job_id").get_to(s.parent_job_id);
-  if (j.contains("session_id")) j.at("session_id").get_to(s.session_id);
-  if (j.contains("transaction_id"))
-    j.at("transaction_id").get_to(s.transaction_id);
-  if (j.contains("reservation_id"))
+  if (j.contains("totalBytesProcessed")) {
+    j.at("totalBytesProcessed").get_to(s.total_bytes_processed);
+  }
+  if (j.contains("numChildJobs")) j.at("numChildJobs").get_to(s.num_child_jobs);
+  if (j.contains("parentJobId")) j.at("parentJobId").get_to(s.parent_job_id);
+  if (j.contains("sessionInfo")) j.at("sessionInfo").get_to(s.session_info);
+  if (j.contains("transactionInfo")) {
+    j.at("transactionInfo").get_to(s.transaction_info);
+  }
+  if (j.contains("reservation_id")) {
     j.at("reservation_id").get_to(s.reservation_id);
-  if (j.contains("row_level_security_applied"))
-    j.at("row_level_security_applied").get_to(s.row_level_security_applied);
-  if (j.contains("data_masking_applied"))
-    j.at("data_masking_applied").get_to(s.data_masking_applied);
-  if (j.contains("completion_ratio"))
-    j.at("completion_ratio").get_to(s.completion_ratio);
-  if (j.contains("quota_deferments"))
-    j.at("quota_deferments").get_to(s.quota_deferments);
-  if (j.contains("script_statistics"))
-    j.at("script_statistics").get_to(s.script_statistics);
-  if (j.contains("job_query_stats"))
-    j.at("job_query_stats").get_to(s.job_query_stats);
+  }
+  if (j.contains("rowLevelSecurityStatistics")) {
+    j.at("rowLevelSecurityStatistics").get_to(s.row_level_security_statistics);
+  }
+  if (j.contains("dataMaskingStatistics")) {
+    j.at("dataMaskingStatistics").get_to(s.data_masking_statistics);
+  }
+  if (j.contains("completionRatio")) {
+    j.at("completionRatio").get_to(s.completion_ratio);
+  }
+  if (j.contains("quotaDeferments")) {
+    j.at("quotaDeferments").get_to(s.quota_deferments);
+  }
+  if (j.contains("scriptStatistics")) {
+    j.at("scriptStatistics").get_to(s.script_statistics);
+  }
+  if (j.contains("query")) j.at("query").get_to(s.job_query_stats);
 
-  FromJson(s.start_time, j, "start_time");
-  FromJson(s.end_time, j, "end_time");
-  FromJson(s.creation_time, j, "creation_time");
-  FromJson(s.total_slot_time, j, "total_slot_time");
-  FromJson(s.final_execution_duration, j, "final_execution_duration");
+  FromJson(s.start_time, j, "startTime");
+  FromJson(s.end_time, j, "endTime");
+  FromJson(s.creation_time, j, "creationTime");
+  FromJson(s.total_slot_time, j, "totalSlotMs");
+  FromJson(s.final_execution_duration, j, "finalExecutionDurationMs");
 }
 
 bool operator==(ScriptStackFrame const& lhs, ScriptStackFrame const& rhs) {
@@ -142,18 +144,72 @@ std::string JobStatistics::DebugString(absl::string_view name,
       .Field("final_execution_duration", final_execution_duration)
       .Field("total_bytes_processed", total_bytes_processed)
       .Field("num_child_jobs", num_child_jobs)
-      .Field("total_modified_partitions", total_modified_partitions)
-      .Field("row_level_security_applied", row_level_security_applied)
-      .Field("data_masking_applied", data_masking_applied)
+      .Field("row_level_security_applied",
+             row_level_security_statistics.row_level_security_applied)
+      .Field("data_masking_applied",
+             data_masking_statistics.data_masking_applied)
       .Field("completion_ratio", completion_ratio)
       .Field("quota_deferments", quota_deferments)
       .StringField("parent_job_id", parent_job_id)
-      .StringField("session_id", session_id)
-      .StringField("transaction_id", transaction_id)
+      .StringField("session_id", session_info.session_id)
+      .StringField("transaction_id", transaction_info.transaction_id)
       .StringField("reservation_id", reservation_id)
       .SubMessage("script_statistics", script_statistics)
       .SubMessage("job_query_stats", job_query_stats)
       .Build();
+}
+
+void to_json(nlohmann::json& j, ScriptStackFrame const& s) {
+  j = nlohmann::json{
+      {"startLine", s.start_line},     {"startColumn", s.start_column},
+      {"endLine", s.end_line},         {"endColumn", s.end_column},
+      {"procedureId", s.procedure_id}, {"text", s.text}};
+}
+void from_json(nlohmann::json const& j, ScriptStackFrame& s) {
+  if (j.contains("startLine")) j.at("startLine").get_to(s.start_line);
+  if (j.contains("startColumn")) j.at("startColumn").get_to(s.start_column);
+  if (j.contains("endLine")) j.at("endLine").get_to(s.end_line);
+  if (j.contains("endColumn")) j.at("endColumn").get_to(s.end_column);
+  if (j.contains("procedureId")) j.at("procedureId").get_to(s.procedure_id);
+  if (j.contains("text")) j.at("text").get_to(s.text);
+}
+
+void to_json(nlohmann::json& j, RowLevelSecurityStatistics const& r) {
+  j = nlohmann::json{{"rowLevelSecurityApplied", r.row_level_security_applied}};
+}
+void from_json(nlohmann::json const& j, RowLevelSecurityStatistics& r) {
+  if (j.contains("rowLevelSecurityApplied")) {
+    j.at("rowLevelSecurityApplied").get_to(r.row_level_security_applied);
+  }
+}
+
+void to_json(nlohmann::json& j, DataMaskingStatistics const& d) {
+  j = nlohmann::json{{"dataMaskingApplied", d.data_masking_applied}};
+}
+void from_json(nlohmann::json const& j, DataMaskingStatistics& d) {
+  if (j.contains("dataMaskingApplied")) {
+    j.at("dataMaskingApplied").get_to(d.data_masking_applied);
+  }
+}
+
+void to_json(nlohmann::json& j, TransactionInfo const& t) {
+  j = nlohmann::json{{"transactionId", t.transaction_id}};
+}
+void from_json(nlohmann::json const& j, TransactionInfo& t) {
+  if (j.contains("transactionId")) {
+    j.at("transactionId").get_to(t.transaction_id);
+  }
+}
+
+void to_json(nlohmann::json& j, ScriptStatistics const& s) {
+  j = nlohmann::json{{"evaluationKind", s.evaluation_kind},
+                     {"stackFrames", s.stack_frames}};
+}
+void from_json(nlohmann::json const& j, ScriptStatistics& s) {
+  if (j.contains("evaluationKind")) {
+    j.at("evaluationKind").get_to(s.evaluation_kind);
+  }
+  if (j.contains("stackFrames")) j.at("stackFrames").get_to(s.stack_frames);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

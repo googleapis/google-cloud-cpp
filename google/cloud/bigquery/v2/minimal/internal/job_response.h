@@ -30,8 +30,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using namespace nlohmann::literals;  // NOLINT
-
 // Parses the BigQueryHttpResponse and builds a GetJobResponse.
 class GetJobResponse {
  public:
@@ -98,15 +96,6 @@ class CancelJobResponse {
   BigQueryHttpResponse http_response;
 };
 
-struct SessionInfo {
-  std::string session_id;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(SessionInfo, session_id);
-
 struct QueryResults {
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
@@ -129,10 +118,8 @@ struct QueryResults {
   SessionInfo session_info;
   DmlStats dml_stats;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
-    QueryResults, kind, page_token, total_rows, total_bytes_processed,
-    num_dml_affected_rows, job_complete, cache_hit, schema, job_reference, rows,
-    errors, session_info, dml_stats);
+void to_json(nlohmann::json& j, QueryResults const& q);
+void from_json(nlohmann::json const& j, QueryResults& q);
 
 class QueryResponse {
  public:

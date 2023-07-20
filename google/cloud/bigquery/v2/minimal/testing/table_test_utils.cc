@@ -284,8 +284,8 @@ void AssertEquals(bigquery_v2_minimal_internal::ListFormatTable const& lhs,
 
 std::string MakeTableJsonText() {
   return R"({"case_insensitive":true,"clone_definition":{)"
-         R"("base_table_reference":{"dataset_id":"t-123","project_id":"t-123")"
-         R"(,"table_id":"t-123"})"
+         R"("base_table_reference":{"datasetId":"t-123","projectId":"t-123")"
+         R"(,"tableId":"t-123"})"
          R"(,"clone_time":0},"clustering":{"fields":["c-field-1"]})"
          R"(,"creation_time":1,"default_collation":"t-defaultcollation")"
          R"(,"default_rounding_mode":{"value":"ROUND_HALF_EVEN"})"
@@ -316,11 +316,11 @@ std::string MakeTableJsonText() {
          R"("type":""},"rounding_mode":{"value":""})"
          R"(,"scale":0,"type":""}]},"self_link":"t-selflink")"
          R"(,"table_constraints":{"foreign_keys":[{"column_references":[])"
-         R"(,"key_name":"fkey-1","referenced_table":{"dataset_id":"")"
-         R"(,"project_id":"","table_id":""}}])"
+         R"(,"key_name":"fkey-1","referenced_table":{"datasetId":"")"
+         R"(,"projectId":"","tableId":""}}])"
          R"(,"primary_key":{"columns":["pcol-1"]}},"table_reference":{)"
-         R"("dataset_id":"t-123","project_id":"t-123")"
-         R"(,"table_id":"t-123"},"time_partitioning":{)"
+         R"("datasetId":"t-123","projectId":"t-123")"
+         R"(,"tableId":"t-123"},"time_partitioning":{)"
          R"("expiration_time":123,"field":"time-partition-field","type":""})"
          R"(,"type":"t-type","view":{"query":"select 1;")"
          R"(,"use_explicit_column_names":true)"
@@ -335,7 +335,7 @@ std::string MakeListFormatTableJsonText() {
          R"(,"id":"t-id","kind":"t-kind","labels":{"l1":"v1","l2":"v2"})"
          R"(,"range_partitioning":{"field":"range-partition-field")"
          R"(,"range":{"end":"","interval":"","start":""}},"table_reference":{)"
-         R"("dataset_id":"t-123","project_id":"t-123","table_id":"t-123"})"
+         R"("datasetId":"t-123","projectId":"t-123","tableId":"t-123"})"
          R"(,"time_partitioning":{"expiration_time":123,"field":"time-partition-field")"
          R"(,"type":""},"type":"t-type","view":{"use_legacy_sql":true}})";
 }

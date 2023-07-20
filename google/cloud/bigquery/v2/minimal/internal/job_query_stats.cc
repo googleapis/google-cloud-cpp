@@ -144,228 +144,220 @@ void to_json(nlohmann::json& j, ExplainQueryStage const& q) {
       {"name", q.name},
       {"status", q.status},
       {"id", q.id},
-      {"shuffle_output_bytes", q.shuffle_output_bytes},
-      {"shuffle_output_bytes_spilled", q.shuffle_output_bytes_spilled},
-      {"records_read", q.records_read},
-      {"records_written", q.records_written},
-      {"parallel_inputs", q.parallel_inputs},
-      {"completed_parallel_inputs", q.completed_parallel_inputs},
-      {"input_stages", q.input_stages},
-      {"wait_ratio_avg", q.wait_ratio_avg},
-      {"wait_ratio_max", q.wait_ratio_max},
-      {"read_ratio_avg", q.read_ratio_avg},
-      {"read_ratio_max", q.read_ratio_max},
-      {"compute_ratio_avg", q.compute_ratio_avg},
-      {"compute_ratio_max", q.compute_ratio_max},
-      {"write_ratio_avg", q.write_ratio_avg},
-      {"write_ratio_max", q.write_ratio_max},
+      {"shuffleOutputBytes", q.shuffle_output_bytes},
+      {"shuffleOutputBytesSpilled", q.shuffle_output_bytes_spilled},
+      {"recordsRead", q.records_read},
+      {"recordsWritten", q.records_written},
+      {"parallelInputs", q.parallel_inputs},
+      {"completedParallelInputs", q.completed_parallel_inputs},
+      {"inputStages", q.input_stages},
+      {"waitRatioAvg", q.wait_ratio_avg},
+      {"waitRatioMax", q.wait_ratio_max},
+      {"readRatioAvg", q.read_ratio_avg},
+      {"readRatioMax", q.read_ratio_max},
+      {"computeRatioAvg", q.compute_ratio_avg},
+      {"computeRatioMax", q.compute_ratio_max},
+      {"writeRatioAvg", q.write_ratio_avg},
+      {"writeRatioMax", q.write_ratio_max},
 
       {"steps", q.steps},
-      {"compute_mode", q.compute_mode}};
+      {"computeMode", q.compute_mode}};
 
-  ToJson(q.start_time, j, "start_time");
-  ToJson(q.end_time, j, "end_time");
-  ToJson(q.slot_time, j, "slot_time");
-  ToJson(q.wait_avg_time_spent, j, "wait_avg_time_spent");
-  ToJson(q.wait_max_time_spent, j, "wait_max_time_spent");
-  ToJson(q.read_avg_time_spent, j, "read_avg_time_spent");
-  ToJson(q.read_max_time_spent, j, "read_max_time_spent");
-  ToJson(q.write_avg_time_spent, j, "write_avg_time_spent");
-  ToJson(q.write_max_time_spent, j, "write_max_time_spent");
-  ToJson(q.compute_avg_time_spent, j, "compute_avg_time_spent");
-  ToJson(q.compute_max_time_spent, j, "compute_max_time_spent");
+  ToJson(q.start_time, j, "startMs");
+  ToJson(q.end_time, j, "endMs");
+  ToJson(q.slot_time, j, "slotMs");
+  ToJson(q.wait_avg_time_spent, j, "waitMsAvg");
+  ToJson(q.wait_max_time_spent, j, "waitMsMax");
+  ToJson(q.read_avg_time_spent, j, "readMsAvg");
+  ToJson(q.read_max_time_spent, j, "readMsMax");
+  ToJson(q.write_avg_time_spent, j, "writeMsAvg");
+  ToJson(q.write_max_time_spent, j, "writeMsMax");
+  ToJson(q.compute_avg_time_spent, j, "computeMsAvg");
+  ToJson(q.compute_max_time_spent, j, "computeMsMax");
 }
 
 void from_json(nlohmann::json const& j, ExplainQueryStage& q) {
   if (j.contains("name")) j.at("name").get_to(q.name);
   if (j.contains("status")) j.at("status").get_to(q.status);
   if (j.contains("id")) j.at("id").get_to(q.id);
-  if (j.contains("shuffle_output_bytes"))
-    j.at("shuffle_output_bytes").get_to(q.shuffle_output_bytes);
-  if (j.contains("shuffle_output_bytes_spilled"))
-    j.at("shuffle_output_bytes_spilled").get_to(q.shuffle_output_bytes_spilled);
-  if (j.contains("records_read")) j.at("records_read").get_to(q.records_read);
-  if (j.contains("records_written"))
-    j.at("records_written").get_to(q.records_written);
-  if (j.contains("parallel_inputs"))
-    j.at("parallel_inputs").get_to(q.parallel_inputs);
-  if (j.contains("completed_parallel_inputs"))
-    j.at("completed_parallel_inputs").get_to(q.completed_parallel_inputs);
-  if (j.contains("input_stages")) j.at("input_stages").get_to(q.input_stages);
-  if (j.contains("wait_ratio_avg"))
-    j.at("wait_ratio_avg").get_to(q.wait_ratio_avg);
-  if (j.contains("wait_ratio_max"))
-    j.at("wait_ratio_max").get_to(q.wait_ratio_max);
-  if (j.contains("read_ratio_avg"))
-    j.at("read_ratio_avg").get_to(q.read_ratio_avg);
-  if (j.contains("read_ratio_max"))
-    j.at("read_ratio_max").get_to(q.read_ratio_max);
-  if (j.contains("compute_ratio_avg"))
-    j.at("compute_ratio_avg").get_to(q.compute_ratio_avg);
-  if (j.contains("compute_ratio_max"))
-    j.at("compute_ratio_max").get_to(q.compute_ratio_max);
-  if (j.contains("write_ratio_avg"))
-    j.at("write_ratio_avg").get_to(q.write_ratio_avg);
-  if (j.contains("write_ratio_max"))
-    j.at("write_ratio_max").get_to(q.write_ratio_max);
+  if (j.contains("shuffleOutputBytes"))
+    j.at("shuffleOutputBytes").get_to(q.shuffle_output_bytes);
+  if (j.contains("shuffleOutputBytesSpilled"))
+    j.at("shuffleOutputBytesSpilled").get_to(q.shuffle_output_bytes_spilled);
+  if (j.contains("recordsRead")) j.at("recordsRead").get_to(q.records_read);
+  if (j.contains("recordsWritten"))
+    j.at("recordsWritten").get_to(q.records_written);
+  if (j.contains("parallelInputs"))
+    j.at("parallelInputs").get_to(q.parallel_inputs);
+  if (j.contains("completedParallelInputs"))
+    j.at("completedParallelInputs").get_to(q.completed_parallel_inputs);
+  if (j.contains("inputStages")) j.at("inputStages").get_to(q.input_stages);
+  if (j.contains("waitRatioAvg")) j.at("waitRatioAvg").get_to(q.wait_ratio_avg);
+  if (j.contains("waitRatioMax")) j.at("waitRatioMax").get_to(q.wait_ratio_max);
+  if (j.contains("readRatioAvg")) j.at("readRatioAvg").get_to(q.read_ratio_avg);
+  if (j.contains("readRatioMax")) j.at("readRatioMax").get_to(q.read_ratio_max);
+  if (j.contains("computeRatioAvg"))
+    j.at("computeRatioAvg").get_to(q.compute_ratio_avg);
+  if (j.contains("computeRatioMax"))
+    j.at("computeRatioMax").get_to(q.compute_ratio_max);
+  if (j.contains("writeRatioAvg"))
+    j.at("writeRatioAvg").get_to(q.write_ratio_avg);
+  if (j.contains("writeRatioMax"))
+    j.at("writeRatioMax").get_to(q.write_ratio_max);
   if (j.contains("steps")) j.at("steps").get_to(q.steps);
-  if (j.contains("compute_mode")) j.at("compute_mode").get_to(q.compute_mode);
+  if (j.contains("computeMode")) j.at("computeMode").get_to(q.compute_mode);
 
-  FromJson(q.start_time, j, "start_time");
-  FromJson(q.end_time, j, "end_time");
-  FromJson(q.slot_time, j, "slot_time");
-  FromJson(q.wait_avg_time_spent, j, "wait_avg_time_spent");
-  FromJson(q.wait_max_time_spent, j, "wait_max_time_spent");
-  FromJson(q.read_avg_time_spent, j, "read_avg_time_spent");
-  FromJson(q.read_max_time_spent, j, "read_max_time_spent");
-  FromJson(q.write_avg_time_spent, j, "write_avg_time_spent");
-  FromJson(q.write_max_time_spent, j, "write_max_time_spent");
-  FromJson(q.compute_avg_time_spent, j, "compute_avg_time_spent");
-  FromJson(q.compute_max_time_spent, j, "compute_max_time_spent");
+  FromJson(q.start_time, j, "startMs");
+  FromJson(q.end_time, j, "endMs");
+  FromJson(q.slot_time, j, "slotMs");
+  FromJson(q.wait_avg_time_spent, j, "waitMsAvg");
+  FromJson(q.wait_max_time_spent, j, "waitMsMax");
+  FromJson(q.read_avg_time_spent, j, "readMsAvg");
+  FromJson(q.read_max_time_spent, j, "readMsMax");
+  FromJson(q.write_avg_time_spent, j, "writeMsAvg");
+  FromJson(q.write_max_time_spent, j, "writeMsMax");
+  FromJson(q.compute_avg_time_spent, j, "computeMsAvg");
+  FromJson(q.compute_max_time_spent, j, "computeMsMax");
 }
 
 void to_json(nlohmann::json& j, QueryTimelineSample const& q) {
-  j = nlohmann::json{{"pending_units", q.pending_units},
-                     {"completed_units", q.completed_units},
-                     {"active_units", q.active_units},
-                     {"estimated_runnable_units", q.estimated_runnable_units}};
+  j = nlohmann::json{{"pendingUnits", q.pending_units},
+                     {"completedUnits", q.completed_units},
+                     {"activeUnits", q.active_units},
+                     {"estimatedRunnableUnits", q.estimated_runnable_units}};
 
-  ToJson(q.elapsed_time, j, "elapsed_time");
-  ToJson(q.total_slot_time, j, "total_slot_time");
+  ToJson(q.elapsed_time, j, "elapsedMs");
+  ToJson(q.total_slot_time, j, "totalSlotMs");
 }
 
 void from_json(nlohmann::json const& j, QueryTimelineSample& q) {
-  if (j.contains("pending_units"))
-    j.at("pending_units").get_to(q.pending_units);
-  if (j.contains("completed_units"))
-    j.at("completed_units").get_to(q.completed_units);
-  if (j.contains("active_units")) j.at("active_units").get_to(q.active_units);
-  if (j.contains("estimated_runnable_units"))
-    j.at("estimated_runnable_units").get_to(q.estimated_runnable_units);
+  if (j.contains("pendingUnits")) j.at("pendingUnits").get_to(q.pending_units);
+  if (j.contains("completedUnits"))
+    j.at("completedUnits").get_to(q.completed_units);
+  if (j.contains("activeUnits")) j.at("activeUnits").get_to(q.active_units);
+  if (j.contains("estimatedRunnableUnits"))
+    j.at("estimatedRunnableUnits").get_to(q.estimated_runnable_units);
 
-  FromJson(q.elapsed_time, j, "elapsed_time");
-  FromJson(q.total_slot_time, j, "total_slot_time");
+  FromJson(q.elapsed_time, j, "elapsedMs");
+  FromJson(q.total_slot_time, j, "totalSlotMs");
 }
 
 void to_json(nlohmann::json& j, PerformanceInsights const& p) {
-  j = nlohmann::json{{"stage_performance_standalone_insights",
-                      p.stage_performance_standalone_insights},
-                     {"stage_performance_change_insights",
-                      p.stage_performance_change_insights}};
+  j = nlohmann::json{
+      {"stagePerformanceStandaloneInsights",
+       p.stage_performance_standalone_insights},
+      {"stagePerformanceChangeInsights", p.stage_performance_change_insights}};
 
-  ToJson(p.avg_previous_execution_time, j, "avg_previous_execution_time");
+  ToJson(p.avg_previous_execution_time, j, "avgPreviousExecutionMs");
 }
 
 void from_json(nlohmann::json const& j, PerformanceInsights& p) {
-  if (j.contains("stage_performance_standalone_insights"))
-    j.at("stage_performance_standalone_insights")
+  if (j.contains("stagePerformanceStandaloneInsights"))
+    j.at("stagePerformanceStandaloneInsights")
         .get_to(p.stage_performance_standalone_insights);
-  if (j.contains("stage_performance_change_insights"))
-    j.at("stage_performance_change_insights")
+  if (j.contains("stagePerformanceChangeInsights"))
+    j.at("stagePerformanceChangeInsights")
         .get_to(p.stage_performance_change_insights);
 
-  FromJson(p.avg_previous_execution_time, j, "avg_previous_execution_time");
+  FromJson(p.avg_previous_execution_time, j, "avgPreviousExecutionMs");
 }
 
 void to_json(nlohmann::json& j, JobQueryStatistics const& q) {
   j = nlohmann::json{
-      {"estimated_bytes_processed", q.estimated_bytes_processed},
-      {"total_partitions_processed", q.total_partitions_processed},
-      {"total_bytes_processed", q.total_bytes_processed},
-      {"total_bytes_billed", q.total_bytes_billed},
-      {"billing_tier", q.billing_tier},
-      {"num_dml_affected_rows", q.num_dml_affected_rows},
-      {"ddl_affected_row_access_policy_count",
+      {"estimatedBytesProcessed", q.estimated_bytes_processed},
+      {"totalPartitionsProcessed", q.total_partitions_processed},
+      {"totalBytesProcessed", q.total_bytes_processed},
+      {"totalBytesBilled", q.total_bytes_billed},
+      {"billingTier", q.billing_tier},
+      {"numDmlAffectedRows", q.num_dml_affected_rows},
+      {"ddlAffectedRowAccessPolicyCount",
        q.ddl_affected_row_access_policy_count},
-      {"transferred_bytes", q.transferred_bytes},
-      {"total_bytes_processed_accuracy", q.total_bytes_processed_accuracy},
-      {"statement_type", q.statement_type},
-      {"ddl_operation_performed", q.ddl_operation_performed},
-      {"cache_hit", q.cache_hit},
-      {"query_plan", q.query_plan},
+      {"transferredBytes", q.transferred_bytes},
+      {"totalBytesProcessedAccuracy", q.total_bytes_processed_accuracy},
+      {"statementType", q.statement_type},
+      {"ddlOperationPerformed", q.ddl_operation_performed},
+      {"cacheHit", q.cache_hit},
+      {"queryPlan", q.query_plan},
       {"timeline", q.timeline},
-      {"referenced_tables", q.referenced_tables},
-      {"referenced_routines", q.referenced_routines},
-      {"undeclared_query_parameters", q.undeclared_query_parameters},
+      {"referencedTables", q.referenced_tables},
+      {"referencedRoutines", q.referenced_routines},
+      {"undeclaredQueryParameters", q.undeclared_query_parameters},
       {"schema", q.schema},
-      {"dml_stats", q.dml_stats},
-      {"ddl_target_table", q.ddl_target_table},
-      {"ddl_destination_table", q.ddl_destination_table},
-      {"ddl_target_row_access_policy", q.ddl_target_row_access_policy},
-      {"ddl_target_routine", q.ddl_target_routine},
-      {"ddl_target_dataset", q.ddl_target_dataset},
-      {"dcl_target_table", q.dcl_target_table},
-      {"dcl_target_view", q.dcl_target_view},
-      {"dcl_target_dataset", q.dcl_target_dataset},
-      {"search_statistics", q.search_statistics},
-      {"performance_insights", q.performance_insights},
-      {"materialized_view_statistics", q.materialized_view_statistics},
-      {"metadata_cache_statistics", q.metadata_cache_statistics}};
+      {"dmlStats", q.dml_stats},
+      {"ddlTargetTable", q.ddl_target_table},
+      {"ddlTargetRowAccessPolicy", q.ddl_target_row_access_policy},
+      {"ddlTargetRoutine", q.ddl_target_routine},
+      {"ddlTargetDataset", q.ddl_target_dataset},
+      {"dclTargetTable", q.dcl_target_table},
+      {"dclTargetView", q.dcl_target_view},
+      {"dclTargetDataset", q.dcl_target_dataset},
+      {"searchStatistics", q.search_statistics},
+      {"performanceInsights", q.performance_insights},
+      {"materializedViewStatistics", q.materialized_view_statistics},
+      {"metadataCacheStatistics", q.metadata_cache_statistics}};
 
-  ToJson(q.total_slot_time, j, "total_slot_time");
+  ToJson(q.total_slot_time, j, "totalSlotMs");
 }
 
 void from_json(nlohmann::json const& j, JobQueryStatistics& q) {
-  if (j.contains("estimated_bytes_processed"))
-    j.at("estimated_bytes_processed").get_to(q.estimated_bytes_processed);
-  if (j.contains("total_partitions_processed"))
-    j.at("total_partitions_processed").get_to(q.total_partitions_processed);
-  if (j.contains("total_bytes_processed"))
-    j.at("total_bytes_processed").get_to(q.total_bytes_processed);
-  if (j.contains("total_bytes_billed"))
-    j.at("total_bytes_billed").get_to(q.total_bytes_billed);
-  if (j.contains("billing_tier")) j.at("billing_tier").get_to(q.billing_tier);
-  if (j.contains("num_dml_affected_rows"))
-    j.at("num_dml_affected_rows").get_to(q.num_dml_affected_rows);
-  if (j.contains("ddl_affected_row_access_policy_count"))
-    j.at("ddl_affected_row_access_policy_count")
+  if (j.contains("estimatedBytesProcessed"))
+    j.at("estimatedBytesProcessed").get_to(q.estimated_bytes_processed);
+  if (j.contains("totalPartitionsProcessed"))
+    j.at("totalPartitionsProcessed").get_to(q.total_partitions_processed);
+  if (j.contains("totalBytesProcessed"))
+    j.at("totalBytesProcessed").get_to(q.total_bytes_processed);
+  if (j.contains("totalBytesBilled"))
+    j.at("totalBytesBilled").get_to(q.total_bytes_billed);
+  if (j.contains("billingTier")) j.at("billingTier").get_to(q.billing_tier);
+  if (j.contains("numDmlAffectedRows"))
+    j.at("numDmlAffectedRows").get_to(q.num_dml_affected_rows);
+  if (j.contains("ddlAffectedRowAccessPolicyCount"))
+    j.at("ddlAffectedRowAccessPolicyCount")
         .get_to(q.ddl_affected_row_access_policy_count);
-  if (j.contains("transferred_bytes"))
-    j.at("transferred_bytes").get_to(q.transferred_bytes);
-  if (j.contains("total_bytes_processed_accuracy"))
-    j.at("total_bytes_processed_accuracy")
+  if (j.contains("transferredBytes"))
+    j.at("transferredBytes").get_to(q.transferred_bytes);
+  if (j.contains("totalBytesProcessedAccuracy"))
+    j.at("totalBytesProcessedAccuracy")
         .get_to(q.total_bytes_processed_accuracy);
-  if (j.contains("statement_type"))
-    j.at("statement_type").get_to(q.statement_type);
-  if (j.contains("ddl_operation_performed"))
-    j.at("ddl_operation_performed").get_to(q.ddl_operation_performed);
-  if (j.contains("cache_hit")) j.at("cache_hit").get_to(q.cache_hit);
-  if (j.contains("query_plan")) j.at("query_plan").get_to(q.query_plan);
+  if (j.contains("statementType"))
+    j.at("statementType").get_to(q.statement_type);
+  if (j.contains("ddlOperationPerformed"))
+    j.at("ddlOperationPerformed").get_to(q.ddl_operation_performed);
+  if (j.contains("cacheHit")) j.at("cacheHit").get_to(q.cache_hit);
+  if (j.contains("queryPlan")) j.at("queryPlan").get_to(q.query_plan);
   if (j.contains("timeline")) j.at("timeline").get_to(q.timeline);
-  if (j.contains("referenced_tables"))
-    j.at("referenced_tables").get_to(q.referenced_tables);
-  if (j.contains("referenced_routines"))
-    j.at("referenced_routines").get_to(q.referenced_routines);
-  if (j.contains("undeclared_query_parameters"))
-    j.at("undeclared_query_parameters").get_to(q.undeclared_query_parameters);
+  if (j.contains("referencedTables"))
+    j.at("referencedTables").get_to(q.referenced_tables);
+  if (j.contains("referencedRoutines"))
+    j.at("referencedRoutines").get_to(q.referenced_routines);
+  if (j.contains("undeclaredQueryParameters"))
+    j.at("undeclaredQueryParameters").get_to(q.undeclared_query_parameters);
   if (j.contains("schema")) j.at("schema").get_to(q.schema);
-  if (j.contains("dml_stats")) j.at("dml_stats").get_to(q.dml_stats);
-  if (j.contains("ddl_target_table"))
-    j.at("ddl_target_table").get_to(q.ddl_target_table);
-  if (j.contains("ddl_destination_table"))
-    j.at("ddl_destination_table").get_to(q.ddl_destination_table);
-  if (j.contains("ddl_target_row_access_policy"))
-    j.at("ddl_target_row_access_policy").get_to(q.ddl_target_row_access_policy);
-  if (j.contains("ddl_target_routine"))
-    j.at("ddl_target_routine").get_to(q.ddl_target_routine);
-  if (j.contains("ddl_target_dataset"))
-    j.at("ddl_target_dataset").get_to(q.ddl_target_dataset);
-  if (j.contains("dcl_target_table"))
-    j.at("dcl_target_table").get_to(q.dcl_target_table);
-  if (j.contains("dcl_target_view"))
-    j.at("dcl_target_view").get_to(q.dcl_target_view);
-  if (j.contains("dcl_target_dataset"))
-    j.at("dcl_target_dataset").get_to(q.dcl_target_dataset);
-  if (j.contains("search_statistics"))
-    j.at("search_statistics").get_to(q.search_statistics);
-  if (j.contains("performance_insights"))
-    j.at("performance_insights").get_to(q.performance_insights);
-  if (j.contains("materialized_view_statistics"))
-    j.at("materialized_view_statistics").get_to(q.materialized_view_statistics);
-  if (j.contains("metadata_cache_statistics"))
-    j.at("metadata_cache_statistics").get_to(q.metadata_cache_statistics);
+  if (j.contains("dmlStats")) j.at("dmlStats").get_to(q.dml_stats);
+  if (j.contains("ddlTargetTable"))
+    j.at("ddlTargetTable").get_to(q.ddl_target_table);
+  if (j.contains("ddlTargetRowAccessPolicy"))
+    j.at("ddlTargetRowAccessPolicy").get_to(q.ddl_target_row_access_policy);
+  if (j.contains("ddlTargetRoutine"))
+    j.at("ddlTargetRoutine").get_to(q.ddl_target_routine);
+  if (j.contains("ddlTargetDataset"))
+    j.at("ddlTargetDataset").get_to(q.ddl_target_dataset);
+  if (j.contains("dclTargetTable"))
+    j.at("dclTargetTable").get_to(q.dcl_target_table);
+  if (j.contains("dclTargetView"))
+    j.at("dclTargetView").get_to(q.dcl_target_view);
+  if (j.contains("dclTargetDataset"))
+    j.at("dclTargetDataset").get_to(q.dcl_target_dataset);
+  if (j.contains("searchStatistics"))
+    j.at("searchStatistics").get_to(q.search_statistics);
+  if (j.contains("performanceInsights"))
+    j.at("performanceInsights").get_to(q.performance_insights);
+  if (j.contains("materializedViewStatistics"))
+    j.at("materializedViewStatistics").get_to(q.materialized_view_statistics);
+  if (j.contains("metadataCacheStatistics"))
+    j.at("metadataCacheStatistics").get_to(q.metadata_cache_statistics);
 
-  FromJson(q.total_slot_time, j, "total_slot_time");
+  FromJson(q.total_slot_time, j, "totalSlotMs");
 }
 
 bool operator==(MaterializedView const& lhs, MaterializedView const& rhs) {
@@ -398,8 +390,8 @@ bool operator==(QueryTimelineSample const& lhs,
 
 bool operator==(ExplainQueryStep const& lhs, ExplainQueryStep const& rhs) {
   auto eq = (lhs.kind == rhs.kind);
-  return eq && std::equal(lhs.substeps.begin(), lhs.substeps.end(),
-                          rhs.substeps.begin());
+  return eq && std::equal(lhs.sub_steps.begin(), lhs.sub_steps.end(),
+                          rhs.sub_steps.begin());
 }
 
 bool operator==(ExplainQueryStage const& lhs, ExplainQueryStage const& rhs) {
@@ -486,7 +478,7 @@ std::string ExplainQueryStep::DebugString(absl::string_view name,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("kind", kind)
-      .Field("substeps", substeps)
+      .Field("substeps", sub_steps)
       .Build();
 }
 
@@ -719,7 +711,6 @@ std::string JobQueryStatistics::DebugString(absl::string_view name,
       .SubMessage("schema", schema)
       .SubMessage("dml_stats", dml_stats)
       .SubMessage("ddl_target_table", ddl_target_table)
-      .SubMessage("ddl_destination_table", ddl_destination_table)
       .SubMessage("ddl_target_row_access_policy", ddl_target_row_access_policy)
       .SubMessage("ddl_target_routine", ddl_target_routine)
       .SubMessage("ddl_target_dataset", ddl_target_dataset)
@@ -731,6 +722,183 @@ std::string JobQueryStatistics::DebugString(absl::string_view name,
       .SubMessage("materialized_view_statistics", materialized_view_statistics)
       .SubMessage("metadata_cache_statistics", metadata_cache_statistics)
       .Build();
+}
+
+void to_json(nlohmann::json& j, MetadataCacheStatistics const& m) {
+  j = nlohmann::json{{"tableMetadataCacheUsage", m.table_metadata_cache_usage}};
+}
+void from_json(nlohmann::json const& j, MetadataCacheStatistics& m) {
+  if (j.contains("tableMetadataCacheUsage")) {
+    j.at("tableMetadataCacheUsage").get_to(m.table_metadata_cache_usage);
+  }
+}
+
+void to_json(nlohmann::json& j, TableMetadataCacheUsage const& t) {
+  j = nlohmann::json{{"explanation", t.explanation},
+                     {"tableReference", t.table_reference},
+                     {"unusedReason", t.unused_reason}};
+}
+void from_json(nlohmann::json const& j, TableMetadataCacheUsage& t) {
+  if (j.contains("explanation")) {
+    j.at("explanation").get_to(t.explanation);
+  }
+  if (j.contains("tableReference")) {
+    j.at("tableReference").get_to(t.table_reference);
+  }
+  if (j.contains("unusedReason")) {
+    j.at("unusedReason").get_to(t.unused_reason);
+  }
+}
+
+void to_json(nlohmann::json& j, MaterializedViewStatistics const& m) {
+  j = nlohmann::json{{"materializedView", m.materialized_view}};
+}
+void from_json(nlohmann::json const& j, MaterializedViewStatistics& m) {
+  if (j.contains("materializedView")) {
+    j.at("materializedView").get_to(m.materialized_view);
+  }
+}
+
+void to_json(nlohmann::json& j, MaterializedView const& m) {
+  j = nlohmann::json{{"chosen", m.chosen},
+                     {"estimatedBytesSaved", m.estimated_bytes_saved},
+                     {"rejectedReason", m.rejected_reason},
+                     {"tableReference", m.table_reference}};
+}
+void from_json(nlohmann::json const& j, MaterializedView& m) {
+  if (j.contains("chosen")) {
+    j.at("chosen").get_to(m.chosen);
+  }
+  if (j.contains("estimatedBytesSaved")) {
+    j.at("estimatedBytesSaved").get_to(m.estimated_bytes_saved);
+  }
+  if (j.contains("rejectedReason")) {
+    j.at("rejectedReason").get_to(m.rejected_reason);
+  }
+  if (j.contains("tableReference")) {
+    j.at("tableReference").get_to(m.table_reference);
+  }
+}
+
+void to_json(nlohmann::json& j, StagePerformanceStandaloneInsight const& s) {
+  j = nlohmann::json{
+      {"stageId", s.stage_id},
+      {"slotContention", s.slot_contention},
+      {"insufficientShuffleQuota", s.insufficient_shuffle_quota}};
+}
+void from_json(nlohmann::json const& j, StagePerformanceStandaloneInsight& s) {
+  if (j.contains("stageId")) {
+    j.at("stageId").get_to(s.stage_id);
+  }
+  if (j.contains("slotContention")) {
+    j.at("slotContention").get_to(s.slot_contention);
+  }
+  if (j.contains("insufficientShuffleQuota")) {
+    j.at("insufficientShuffleQuota").get_to(s.insufficient_shuffle_quota);
+  }
+}
+
+void to_json(nlohmann::json& j, StagePerformanceChangeInsight const& s) {
+  j = nlohmann::json{{"stageId", s.stage_id},
+                     {"inputDataChange", s.input_data_change}};
+}
+void from_json(nlohmann::json const& j, StagePerformanceChangeInsight& s) {
+  if (j.contains("stageId")) {
+    j.at("stageId").get_to(s.stage_id);
+  }
+  if (j.contains("inputDataChange")) {
+    j.at("inputDataChange").get_to(s.input_data_change);
+  }
+}
+
+void to_json(nlohmann::json& j, InputDataChange const& i) {
+  j = nlohmann::json{
+      {"recordsReadDiffPercentage", i.records_read_diff_percentage}};
+}
+void from_json(nlohmann::json const& j, InputDataChange& i) {
+  if (j.contains("recordsReadDiffPercentage")) {
+    j.at("recordsReadDiffPercentage").get_to(i.records_read_diff_percentage);
+  }
+}
+
+void to_json(nlohmann::json& j, SearchStatistics const& s) {
+  j = nlohmann::json{{"indexUsageMode", s.index_usage_mode},
+                     {"indexUnusedReasons", s.index_unused_reasons}};
+}
+void from_json(nlohmann::json const& j, SearchStatistics& s) {
+  if (j.contains("indexUsageMode")) {
+    j.at("indexUsageMode").get_to(s.index_usage_mode);
+  }
+  if (j.contains("indexUnusedReasons")) {
+    j.at("indexUnusedReasons").get_to(s.index_unused_reasons);
+  }
+}
+
+void to_json(nlohmann::json& j, IndexUnusedReason const& i) {
+  j = nlohmann::json{{"message", i.message},
+                     {"indexName", i.index_name},
+                     {"baseTable", i.base_table},
+                     {"code", i.code}};
+}
+void from_json(nlohmann::json const& j, IndexUnusedReason& i) {
+  if (j.contains("message")) {
+    j.at("message").get_to(i.message);
+  }
+  if (j.contains("indexName")) {
+    j.at("indexName").get_to(i.index_name);
+  }
+  if (j.contains("baseTable")) {
+    j.at("baseTable").get_to(i.base_table);
+  }
+  if (j.contains("code")) {
+    j.at("code").get_to(i.code);
+  }
+}
+
+void to_json(nlohmann::json& j, RowAccessPolicyReference const& r) {
+  j = nlohmann::json{{"projectId", r.project_id},
+                     {"datasetId", r.dataset_id},
+                     {"tableId", r.table_id},
+                     {"policyId", r.policy_id}};
+}
+void from_json(nlohmann::json const& j, RowAccessPolicyReference& r) {
+  if (j.contains("projectId")) {
+    j.at("projectId").get_to(r.project_id);
+  }
+  if (j.contains("datasetId")) {
+    j.at("datasetId").get_to(r.dataset_id);
+  }
+  if (j.contains("tableId")) {
+    j.at("tableId").get_to(r.table_id);
+  }
+  if (j.contains("policyId")) {
+    j.at("policyId").get_to(r.policy_id);
+  }
+}
+
+void to_json(nlohmann::json& j, DmlStats const& d) {
+  j = nlohmann::json{{"insertedRowCount", d.inserted_row_count},
+                     {"deletedRowCount", d.deleted_row_count},
+                     {"updatedRowCount", d.updated_row_count}};
+}
+void from_json(nlohmann::json const& j, DmlStats& d) {
+  if (j.contains("insertedRowCount")) {
+    j.at("insertedRowCount").get_to(d.inserted_row_count);
+  }
+  if (j.contains("deletedRowCount")) {
+    j.at("deletedRowCount").get_to(d.deleted_row_count);
+  }
+  if (j.contains("updatedRowCount")) {
+    j.at("updatedRowCount").get_to(d.updated_row_count);
+  }
+}
+
+void to_json(nlohmann::json& j, ExplainQueryStep const& q) {
+  j = nlohmann::json{{"kind", q.kind}, {"substeps", q.sub_steps}};
+}
+void from_json(nlohmann::json const& j, ExplainQueryStep& q) {
+  if (j.contains("kind")) j.at("kind").get_to(q.kind);
+  if (j.contains("substeps")) j.at("substeps").get_to(q.sub_steps);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,7 +34,7 @@ TEST(GetDatasetResponseTest, Success) {
           "id": "d-id",
           "self_link": "d-selfLink",
           "friendly_name": "d-friendly-name",
-          "dataset_reference": {"project_id": "p-id", "dataset_id": "d-id"}
+          "dataset_reference": {"projectId": "p-id", "datasetId": "d-id"}
     })";
   auto const response =
       GetDatasetResponse::BuildFromHttpResponse(http_response);
@@ -91,7 +91,7 @@ TEST(ListDatasetsResponseTest, Success) {
               {
                 "id": "1",
                 "kind": "kind-2",
-                "dataset_reference": {"project_id": "p123", "dataset_id": "d123"},
+                "dataset_reference": {"projectId": "p123", "datasetId": "d123"},
 
                 "friendly_name": "friendly-name",
                 "location": "location",
@@ -177,7 +177,7 @@ TEST(GetDatasetResponseTest, DebugString) {
           "id": "d-id",
           "self_link": "d-selfLink",
           "friendly_name": "d-friendly-name",
-          "dataset_reference": {"project_id": "p-id", "dataset_id": "d-id"}
+          "dataset_reference": {"projectId": "p-id", "datasetId": "d-id"}
     })";
   auto response = GetDatasetResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(response);
@@ -381,7 +381,7 @@ TEST(ListDatasetsResponseTest, DebugString) {
               {
                 "id": "1",
                 "kind": "kind-2",
-                "dataset_reference": {"project_id": "p123", "dataset_id": "d123"},
+                "dataset_reference": {"projectId": "p123", "datasetId": "d123"},
 
                 "friendly_name": "friendly-name",
                 "location": "loc",

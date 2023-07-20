@@ -39,12 +39,12 @@ TEST(CommonV2ResourcesTest, QueryParameterTypeFromJson) {
   std::string text =
       R"({
           "type": "query-parameter-type",
-          "array_type": {"type": "array-type", "struct_types": [{
+          "arrayType": {"type": "array-type", "structTypes": [{
                             "name": "array-struct-name",
                             "type": {"type": "array-struct-type"},
                             "description": "array-struct-description"
                           }]},
-          "struct_types": [{
+          "structTypes": [{
               "name": "qp-struct-name",
               "type": {"type": "qp-struct-type"},
               "description": "qp-struct-description"
@@ -65,20 +65,20 @@ TEST(CommonV2ResourcesTest, QueryParameterTypeFromJson) {
 TEST(CommonV2ResourcesTest, QueryParameterTypeToJson) {
   auto const expected_text =
       R"({
-        "array_type":{
-            "struct_types":[{
+        "arrayType":{
+            "structTypes":[{
                 "description":"array-struct-description",
                 "name":"array-struct-name",
                 "type":{
-                    "struct_types":[],
+                    "structTypes":[],
                     "type":"array-struct-type"
                 }
             }],
         "type":"array-type"},
-        "struct_types":[{
+        "structTypes":[{
             "description":"qp-struct-description",
             "name":"qp-struct-name",
-            "type":{"struct_types":[],"type":"qp-struct-type"}
+            "type":{"structTypes":[],"type":"qp-struct-type"}
         }],
         "type":"query-parameter-type"})"_json;
 
@@ -94,11 +94,11 @@ TEST(CommonV2ResourcesTest, QueryParameterValueFromJson) {
   std::string text =
       R"({
           "value": "query-parameter-value",
-          "array_values": [{"value": "array-val-1", "array_values": [{
+          "arrayValues": [{"value": "array-val-1", "arrayValues": [{
                             "value": "array-val-2",
-                            "struct_values": {"array-map-key": {"value":"array-map-value"}}
+                            "structValues": {"array-map-key": {"value":"array-map-value"}}
                           }]}],
-          "struct_values": {"qp-map-key": {"value": "qp-map-value"}}
+          "structValues": {"qp-map-key": {"value": "qp-map-value"}}
       })";
   auto json = nlohmann::json::parse(text, nullptr, false);
   EXPECT_TRUE(json.is_object());
@@ -114,16 +114,16 @@ TEST(CommonV2ResourcesTest, QueryParameterValueFromJson) {
 TEST(CommonV2ResourcesTest, QueryParameterValueToJson) {
   auto const expected_text =
       R"({
-        "array_values":[{
-            "array_values":[{
-                "array_values":[],
-                "struct_values":{"array-map-key":{"array_values":[],"struct_values":{},"value":"array-map-value"}},
+        "arrayValues":[{
+            "arrayValues":[{
+                "arrayValues":[],
+                "structValues":{"array-map-key":{"arrayValues":[],"structValues":{},"value":"array-map-value"}},
                 "value":"array-val-2"
             }],
-            "struct_values":{},
+            "structValues":{},
             "value":"array-val-1"
         }],
-        "struct_values":{"qp-map-key":{"array_values":[],"struct_values":{},"value":"qp-map-value"}},
+        "structValues":{"qp-map-key":{"arrayValues":[],"structValues":{},"value":"qp-map-value"}},
         "value":"query-parameter-value"})"_json;
   auto expected = MakeQueryParameterValue();
   nlohmann::json j;
@@ -136,26 +136,26 @@ TEST(CommonV2ResourcesTest, QueryParameterFromJson) {
   std::string text =
       R"({
         "name": "query-parameter-name",
-        "parameter_type": {
+        "parameterType": {
           "type": "query-parameter-type",
-          "array_type": {"type": "array-type", "struct_types": [{
+          "arrayType": {"type": "array-type", "structTypes": [{
                             "name": "array-struct-name",
                             "type": {"type": "array-struct-type"},
                             "description": "array-struct-description"
                           }]},
-          "struct_types": [{
+          "structTypes": [{
               "name": "qp-struct-name",
               "type": {"type": "qp-struct-type"},
               "description": "qp-struct-description"
               }]
        },
-        "parameter_value": {
+        "parameterValue": {
           "value": "query-parameter-value",
-          "array_values": [{"value": "array-val-1", "array_values": [{
+          "arrayValues": [{"value": "array-val-1", "arrayValues": [{
                             "value": "array-val-2",
-                            "struct_values": {"array-map-key": {"value":"array-map-value"}}
+                            "structValues": {"array-map-key": {"value":"array-map-value"}}
                           }]}],
-          "struct_values": {"qp-map-key": {"value": "qp-map-value"}}
+          "structValues": {"qp-map-key": {"value": "qp-map-value"}}
       }})";
   auto json = nlohmann::json::parse(text, nullptr, false);
   EXPECT_TRUE(json.is_object());
@@ -174,33 +174,33 @@ TEST(CommonV2ResourcesTest, QueryParameterToJson) {
   auto const expected_text =
       R"({
         "name":"query-parameter-name",
-        "parameter_type":{
-            "array_type":{
-                "struct_types":[{
+        "parameterType":{
+            "arrayType":{
+                "structTypes":[{
                     "description":"array-struct-description",
                     "name":"array-struct-name",
-                    "type":{"struct_types":[],"type":"array-struct-type"}
+                    "type":{"structTypes":[],"type":"array-struct-type"}
                 }],
                 "type":"array-type"
             },
-            "struct_types":[{
+            "structTypes":[{
                 "description":"qp-struct-description",
                 "name":"qp-struct-name",
-                "type":{"struct_types":[],"type":"qp-struct-type"}
+                "type":{"structTypes":[],"type":"qp-struct-type"}
             }],
             "type":"query-parameter-type"
         },
-        "parameter_value":{
-            "array_values":[{
-                "array_values":[{
-                    "array_values":[],
-                    "struct_values":{"array-map-key":{"array_values":[],"struct_values":{},"value":"array-map-value"}},
+        "parameterValue":{
+            "arrayValues":[{
+                "arrayValues":[{
+                    "arrayValues":[],
+                    "structValues":{"array-map-key":{"arrayValues":[],"structValues":{},"value":"array-map-value"}},
                     "value":"array-val-2"
                 }],
-                "struct_values":{},
+                "structValues":{},
                 "value":"array-val-1"
             }],
-            "struct_values":{"qp-map-key":{"array_values":[],"struct_values":{},"value":"qp-map-value"}},
+            "structValues":{"qp-map-key":{"arrayValues":[],"structValues":{},"value":"qp-map-value"}},
             "value":"query-parameter-value"
         }})"_json;
   auto expected = MakeQueryParameter();
@@ -213,8 +213,8 @@ TEST(CommonV2ResourcesTest, QueryParameterToJson) {
 TEST(CommonV2ResourcesTest, DatasetReferenceFromJson) {
   std::string text =
       R"({
-          "dataset_id":"d123",
-          "project_id":"p123"
+          "datasetId":"d123",
+          "projectId":"p123"
       })";
   auto json = nlohmann::json::parse(text, nullptr, false);
   EXPECT_TRUE(json.is_object());
@@ -233,8 +233,8 @@ TEST(CommonV2ResourcesTest, DatasetReferenceFromJson) {
 TEST(CommonV2ResourcesTest, DatasetReferenceToJson) {
   auto const expected_json =
       R"({
-          "dataset_id":"d123",
-          "project_id":"p123"
+          "datasetId":"d123",
+          "projectId":"p123"
       })"_json;
 
   DatasetReference expected;
@@ -250,9 +250,9 @@ TEST(CommonV2ResourcesTest, DatasetReferenceToJson) {
 TEST(CommonV2ResourcesTest, TableReferenceFromJson) {
   std::string text =
       R"({
-          "dataset_id":"d123",
-          "project_id":"p123",
-          "table_id":"t123"
+          "datasetId":"d123",
+          "projectId":"p123",
+          "tableId":"t123"
       })";
   auto json = nlohmann::json::parse(text, nullptr, false);
   EXPECT_TRUE(json.is_object());
@@ -273,9 +273,9 @@ TEST(CommonV2ResourcesTest, TableReferenceFromJson) {
 TEST(CommonV2ResourcesTest, TableReferenceToJson) {
   auto const expected_json =
       R"({
-          "dataset_id":"d123",
-          "project_id":"p123",
-          "table_id":"t123"
+          "datasetId":"d123",
+          "projectId":"p123",
+          "tableId":"t123"
       })"_json;
 
   TableReference expected;
@@ -381,39 +381,39 @@ TEST(CommonV2ResourcesTest, ErrorProtoDebugString) {
 TEST(CommonV2ResourcesTest, SystemVariablesToFromJson) {
   auto const* const expected_text =
       R"({"types":{"sql-struct-type-key-1":{)"
-      R"("sub_type":{)"
+      R"("structType":{)"
       R"("fields":[{)"
       R"("name":"f1-sql-struct-type-int64")"
       R"(}]})"
       R"(,"sub_type_index":2)"
-      R"(,"type_kind":{)"
+      R"(,"typeKind":{)"
       R"("value":"INT64")"
       R"(}})"
       R"(,"sql-struct-type-key-2":{)"
-      R"("sub_type":{)"
+      R"("structType":{)"
       R"("fields":[{)"
       R"("name":"f2-sql-struct-type-string")"
       R"(}]})"
       R"(,"sub_type_index":2)"
-      R"(,"type_kind":{)"
+      R"(,"typeKind":{)"
       R"("value":"STRING"}})"
       R"(,"sql-struct-type-key-3":{)"
-      R"("sub_type":{)"
-      R"("sub_type":{)"
+      R"("arrayElementType":{)"
+      R"("structType":{)"
       R"("fields":[{)"
       R"("name":"f2-sql-struct-type-string")"
       R"(}]})"
       R"(,"sub_type_index":2)"
-      R"(,"type_kind":{)"
+      R"(,"typeKind":{)"
       R"("value":"STRING"}})"
       R"(,"sub_type_index":1)"
-      R"(,"type_kind":{"value":"STRING")"
+      R"(,"typeKind":{"value":"STRING")"
       R"(}}})"
       R"(,"values":{)"
       R"("fields":{)"
-      R"("bool-key":{"value_kind":true,"kind_index":3})"
-      R"(,"double-key":{"value_kind":3.4,"kind_index":1})"
-      R"(,"string-key":{"value_kind":"val3","kind_index":2})"
+      R"("bool-key":{"valueKind":true,"kind_index":3})"
+      R"(,"double-key":{"valueKind":3.4,"kind_index":1})"
+      R"(,"string-key":{"valueKind":"val3","kind_index":2})"
       R"(}}})";
   auto expected_json = nlohmann::json::parse(expected_text, nullptr, false);
   EXPECT_TRUE(expected_json.is_object());

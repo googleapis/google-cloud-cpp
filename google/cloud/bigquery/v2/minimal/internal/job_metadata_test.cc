@@ -48,13 +48,13 @@ TEST(JobMetadataTest, GetJob) {
       R"({"kind": "jkind",
           "etag": "jtag",
           "id": "j123",
-          "self_link": "jselfLink",
+          "selfLink": "jselfLink",
           "user_email": "juserEmail",
           "status": {"state": "DONE"},
-          "reference": {"project_id": "p123", "job_id": "j123"},
+          "jobReference": {"projectId": "p123", "jobId": "j123"},
           "configuration": {
-            "job_type": "QUERY",
-            "query_config": {"query": "select 1;"}
+            "jobType": "QUERY",
+            "query": {"query": "select 1;"}
           }})";
 
   EXPECT_CALL(*mock_stub, GetJob)
@@ -85,16 +85,16 @@ TEST(JobMetadataTest, ListJobs) {
   auto constexpr kExpectedPayload =
       R"({"etag": "tag-1",
           "kind": "kind-1",
-          "next_page_token": "npt-123",
+          "nextPageToken": "npt-123",
           "jobs": [
               {
                 "id": "1",
                 "kind": "kind-2",
-                "reference": {"project_id": "p123", "job_id": "j123"},
+                "jobReference": {"projectId": "p123", "jobId": "j123"},
                 "state": "DONE",
                 "configuration": {
-                   "job_type": "QUERY",
-                   "query_config": {"query": "select 1;"}
+                   "jobType": "QUERY",
+                   "query": {"query": "select 1;"}
                 },
                 "status": {"state": "DONE"},
                 "user_email": "user-email",
@@ -131,13 +131,13 @@ TEST(JobMetadataTest, InsertJob) {
       R"({"kind": "jkind",
           "etag": "jtag",
           "id": "j123",
-          "self_link": "jselfLink",
+          "selfLink": "jselfLink",
           "user_email": "juserEmail",
           "status": {"state": "DONE"},
-          "reference": {"project_id": "p123", "job_id": "j123"},
+          "jobReference": {"projectId": "p123", "jobId": "j123"},
           "configuration": {
-            "job_type": "QUERY",
-            "query_config": {"query": "select 1;"}
+            "jobType": "QUERY",
+            "query": {"query": "select 1;"}
           }})";
 
   EXPECT_CALL(*mock_stub, InsertJob)
@@ -170,13 +170,13 @@ TEST(JobMetadataTest, CancelJob) {
           "job":{"kind": "jkind",
           "etag": "jtag",
           "id": "j123",
-          "self_link": "jselfLink",
+          "selfLink": "jselfLink",
           "user_email": "juserEmail",
           "status": {"state": "DONE"},
-          "reference": {"project_id": "p123", "job_id": "j123"},
+          "jobReference": {"projectId": "p123", "jobId": "j123"},
           "configuration": {
-            "job_type": "QUERY",
-            "query_config": {"query": "select 1;"}
+            "jobType": "QUERY",
+            "query": {"query": "select 1;"}
           }}})";
 
   EXPECT_CALL(*mock_stub, CancelJob)

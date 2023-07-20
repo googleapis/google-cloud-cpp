@@ -299,7 +299,6 @@ JobQueryStatistics MakeJobQueryStats() {
   stats.dml_stats = {kDefaultTestInt, kDefaultTestInt, kDefaultTestInt};
 
   stats.ddl_target_table = MakeTableReference();
-  stats.ddl_destination_table = MakeTableReference();
   stats.ddl_target_routine = MakeRoutineReference();
   stats.ddl_target_dataset = MakeDatasetReference();
   stats.dcl_target_table = MakeTableReference();
@@ -325,15 +324,14 @@ JobStatistics MakeJobStats() {
 
   stats.total_bytes_processed = kDefaultTestInt;
   stats.num_child_jobs = kDefaultTestInt;
-  stats.total_modified_partitions = kDefaultTestInt;
 
   stats.parent_job_id = "parent-job-123";
-  stats.session_id = "session-id-123";
-  stats.transaction_id = "transaction-id-123";
+  stats.session_info.session_id = "session-id-123";
+  stats.transaction_info.transaction_id = "transaction-id-123";
   stats.reservation_id = "reservation-id-123";
 
-  stats.row_level_security_applied = true;
-  stats.data_masking_applied = true;
+  stats.row_level_security_statistics.row_level_security_applied = true;
+  stats.data_masking_statistics.data_masking_applied = true;
 
   stats.completion_ratio = kDefaultTestDouble;
   stats.quota_deferments.emplace_back("quota-defer-1");
@@ -358,7 +356,6 @@ JobConfigurationQuery MakeJobConfigurationQuery() {
   config.flatten_results = true;
   config.use_legacy_sql = true;
   config.create_session = true;
-  config.continuous = true;
   config.maximum_bytes_billed = 0;
 
   config.query_parameters.push_back(MakeQueryParameter());
@@ -385,7 +382,7 @@ JobConfiguration MakeJobConfiguration() {
   jc.job_timeout_ms = 10;
   jc.job_type = "QUERY";
   jc.labels.insert({"label-key1", "label-val1"});
-  jc.query_config = MakeJobConfigurationQuery();
+  jc.query = MakeJobConfigurationQuery();
 
   return jc;
 }
@@ -398,9 +395,9 @@ Job MakeJob() {
   job.kind = "Job";
   job.self_link = "self-link";
   job.user_email = "a@b.com";
-  job.reference.project_id = "1";
-  job.reference.job_id = "2";
-  job.reference.location = "us-east";
+  job.job_reference.project_id = "1";
+  job.job_reference.job_id = "2";
+  job.job_reference.location = "us-east";
   job.status.state = "DONE";
   job.configuration = MakeJobConfiguration();
   job.statistics = MakeJobStats();
@@ -415,9 +412,9 @@ ListFormatJob MakeListFormatJob() {
   job.kind = "Job";
   job.user_email = "a@b.com";
   job.principal_subject = "principal-sub";
-  job.reference.project_id = "1";
-  job.reference.job_id = "2";
-  job.reference.location = "us-east";
+  job.job_reference.project_id = "1";
+  job.job_reference.job_id = "2";
+  job.job_reference.location = "us-east";
   job.state = "DONE";
   job.status.state = "DONE";
   job.configuration = MakeJobConfiguration();
@@ -435,10 +432,10 @@ Job MakePartialJob() {
   job.self_link = "jselfLink";
   job.user_email = "juserEmail";
   job.status.state = "DONE";
-  job.reference.project_id = "p123";
-  job.reference.job_id = "j123";
+  job.job_reference.project_id = "p123";
+  job.job_reference.job_id = "j123";
   job.configuration.job_type = "QUERY";
-  job.configuration.query_config.query = "select 1;";
+  job.configuration.query.query = "select 1;";
 
   return job;
 }
@@ -450,23 +447,23 @@ void AssertEqualsPartial(Job& expected, Job& actual) {
   EXPECT_EQ(expected.self_link, actual.self_link);
   EXPECT_EQ(expected.user_email, actual.user_email);
   EXPECT_EQ(expected.status.state, actual.status.state);
-  EXPECT_EQ(expected.reference.project_id, actual.reference.project_id);
-  EXPECT_EQ(expected.reference.job_id, actual.reference.job_id);
+  EXPECT_EQ(expected.job_reference.project_id, actual.job_reference.project_id);
+  EXPECT_EQ(expected.job_reference.job_id, actual.job_reference.job_id);
   EXPECT_EQ(expected.configuration.job_type, actual.configuration.job_type);
-  EXPECT_EQ(expected.configuration.query_config.query,
-            actual.configuration.query_config.query);
+  EXPECT_EQ(expected.configuration.query.query,
+            actual.configuration.query.query);
 }
 
 void AssertEquals(Job& expected, Job& actual) {
   EXPECT_EQ(expected.etag, actual.etag);
   EXPECT_EQ(expected.id, actual.id);
   EXPECT_EQ(expected.kind, actual.kind);
-  EXPECT_EQ(expected.reference.project_id, actual.reference.project_id);
-  EXPECT_EQ(expected.reference.job_id, actual.reference.job_id);
+  EXPECT_EQ(expected.job_reference.project_id, actual.job_reference.project_id);
+  EXPECT_EQ(expected.job_reference.job_id, actual.job_reference.job_id);
   EXPECT_EQ(expected.status.state, actual.status.state);
   EXPECT_EQ(expected.configuration.job_type, actual.configuration.job_type);
-  EXPECT_EQ(expected.configuration.query_config.query,
-            actual.configuration.query_config.query);
+  EXPECT_EQ(expected.configuration.query.query,
+            actual.configuration.query.query);
 
   AssertEquals(expected.statistics, actual.statistics);
 }
@@ -474,12 +471,12 @@ void AssertEquals(Job& expected, Job& actual) {
 void AssertEquals(ListFormatJob& expected, ListFormatJob& actual) {
   EXPECT_EQ(expected.id, actual.id);
   EXPECT_EQ(expected.kind, actual.kind);
-  EXPECT_EQ(expected.reference.project_id, actual.reference.project_id);
-  EXPECT_EQ(expected.reference.job_id, actual.reference.job_id);
+  EXPECT_EQ(expected.job_reference.project_id, actual.job_reference.project_id);
+  EXPECT_EQ(expected.job_reference.job_id, actual.job_reference.job_id);
   EXPECT_EQ(expected.status.state, actual.status.state);
   EXPECT_EQ(expected.configuration.job_type, actual.configuration.job_type);
-  EXPECT_EQ(expected.configuration.query_config.query,
-            actual.configuration.query_config.query);
+  EXPECT_EQ(expected.configuration.query.query,
+            actual.configuration.query.query);
 
   AssertEquals(expected.statistics, actual.statistics);
 }
@@ -493,17 +490,16 @@ void AssertEquals(JobStatistics& expected, JobStatistics& actual) {
 
   EXPECT_EQ(expected.total_bytes_processed, actual.total_bytes_processed);
   EXPECT_EQ(expected.num_child_jobs, actual.num_child_jobs);
-  EXPECT_EQ(expected.total_modified_partitions,
-            actual.total_modified_partitions);
-
   EXPECT_EQ(expected.parent_job_id, actual.parent_job_id);
-  EXPECT_EQ(expected.session_id, actual.session_id);
-  EXPECT_EQ(expected.transaction_id, actual.transaction_id);
+  EXPECT_EQ(expected.session_info.session_id, actual.session_info.session_id);
+  EXPECT_EQ(expected.transaction_info.transaction_id,
+            actual.transaction_info.transaction_id);
   EXPECT_EQ(expected.reservation_id, actual.reservation_id);
 
-  EXPECT_EQ(expected.row_level_security_applied,
-            actual.row_level_security_applied);
-  EXPECT_EQ(expected.data_masking_applied, actual.data_masking_applied);
+  EXPECT_EQ(expected.row_level_security_statistics.row_level_security_applied,
+            actual.row_level_security_statistics.row_level_security_applied);
+  EXPECT_EQ(expected.data_masking_statistics.data_masking_applied,
+            actual.data_masking_statistics.data_masking_applied);
 
   EXPECT_EQ(expected.completion_ratio, actual.completion_ratio);
   EXPECT_TRUE(std::equal(expected.quota_deferments.begin(),
@@ -555,7 +551,6 @@ void AssertEquals(bigquery_v2_minimal_internal::JobQueryStatistics& expected,
   EXPECT_EQ(expected.dml_stats, actual.dml_stats);
 
   EXPECT_EQ(expected.ddl_target_table, actual.ddl_target_table);
-  EXPECT_EQ(expected.ddl_destination_table, actual.ddl_destination_table);
   EXPECT_EQ(expected.dcl_target_table, actual.dcl_target_table);
   EXPECT_EQ(expected.dcl_target_view, actual.dcl_target_view);
 

@@ -162,18 +162,18 @@ void AssertEquals(Dataset const& lhs, Dataset const& rhs) {
 std::string MakeDatasetJsonText() {
   return R"({"access":[
     {"dataset":{
-         "dataset":{"dataset_id":"d123","project_id":"p123"},
+         "dataset":{"datasetId":"d123","projectId":"p123"},
          "target_types":[{"value":"VIEWS"}]},
          "domain":"","group_by_email":"",
          "iam_member":"",
          "role":"accessrole",
-         "routine":{"dataset_id":"d123","project_id":"p123","routine_id":"r123"},
+         "routine":{"datasetId":"d123","projectId":"p123","routineId":"r123"},
          "special_group":"",
          "user_by_email":"",
-         "view":{"dataset_id":"d123","project_id":"p123","table_id":"t123"}
+         "view":{"datasetId":"d123","projectId":"p123","tableId":"t123"}
     }],
     "creation_time":0,
-    "dataset_reference":{"dataset_id":"d123","project_id":"p123"},
+    "dataset_reference":{"datasetId":"d123","projectId":"p123"},
     "default_collation":"ddefaultcollation",
     "default_partition_expiration":0,
     "default_rounding_mode":{"value":"ROUND_HALF_EVEN"},
@@ -199,8 +199,8 @@ std::string MakeDatasetJsonText() {
     "labels":{"l1":"v1","l2":"v2"},
     "last_modified_time":0,
     "linked_dataset_source":{"source_dataset":{
-        "dataset_id":"d123",
-        "project_id":"p123"
+        "datasetId":"d123",
+        "projectId":"p123"
     }},
     "location":"dlocation",
     "max_time_travel":0,
@@ -235,7 +235,7 @@ std::string MakeListFormatDatasetJsonText() {
     "friendly_name":"dfriendlyname",
     "location":"dlocation",
     "type":"DEFAULT",
-    "dataset_reference": {"project_id":"p123", "dataset_id":"d123"},
+    "dataset_reference": {"projectId":"p123", "datasetId":"d123"},
     "labels":{"l1":"v1","l2":"v2"}
 })";
 }

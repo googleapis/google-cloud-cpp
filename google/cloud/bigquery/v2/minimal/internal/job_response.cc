@@ -26,18 +26,18 @@ namespace {
 
 bool valid_job(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("etag") && j.contains("id") &&
-          j.contains("status") && j.contains("reference") &&
+          j.contains("status") && j.contains("jobReference") &&
           j.contains("configuration"));
 }
 
 bool valid_list_format_job(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("state") && j.contains("id") &&
-          j.contains("reference") && j.contains("configuration"));
+          j.contains("jobReference") && j.contains("configuration"));
 }
 
 bool valid_jobs_list(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("etag") &&
-          j.contains("next_page_token") && j.contains("jobs"));
+          j.contains("nextPageToken") && j.contains("jobs"));
 }
 
 StatusOr<nlohmann::json> parse_json(std::string const& payload) {
@@ -98,7 +98,7 @@ StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
 
   result.kind = json->value("kind", "");
   result.etag = json->value("etag", "");
-  result.next_page_token = json->value("next_page_token", "");
+  result.next_page_token = json->value("nextPageToken", "");
 
   for (auto const& kv : json->at("jobs").items()) {
     auto const& json_list_format_job_obj = kv.value();
@@ -185,14 +185,6 @@ std::string CancelJobResponse::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string SessionInfo::DebugString(absl::string_view name,
-                                     TracingOptions const& options,
-                                     int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("session_id", session_id)
-      .Build();
-}
-
 std::string QueryResults::DebugString(absl::string_view name,
                                       TracingOptions const& options,
                                       int indent) const {
@@ -229,18 +221,18 @@ StatusOr<QueryResponse> QueryResponse::BuildFromHttpResponse(
 
   QueryResults query_results;
   query_results.kind = json->value("kind", "");
-  query_results.page_token = json->value("page_token", "");
-  query_results.total_rows = json->at("total_rows").get<std::uint64_t>();
+  query_results.page_token = json->value("pageToken", "");
+  query_results.total_rows = json->at("totalRows").get<std::uint64_t>();
   query_results.total_bytes_processed =
-      json->at("total_bytes_processed").get<std::int64_t>();
+      json->at("totalBytesProcessed").get<std::int64_t>();
   query_results.num_dml_affected_rows =
-      json->at("num_dml_affected_rows").get<std::int64_t>();
+      json->at("numDmlAffectedRows").get<std::int64_t>();
 
-  query_results.job_complete = json->at("job_complete").get<bool>();
-  query_results.cache_hit = json->at("cache_hit").get<bool>();
+  query_results.job_complete = json->at("jobComplete").get<bool>();
+  query_results.cache_hit = json->at("cacheHit").get<bool>();
 
   query_results.schema = json->at("schema").get<TableSchema>();
-  query_results.job_reference = json->at("job_reference").get<JobReference>();
+  query_results.job_reference = json->at("jobReference").get<JobReference>();
 
   for (auto const& kv : json->at("rows").items()) {
     auto const& json_struct_obj = kv.value();
@@ -254,14 +246,65 @@ StatusOr<QueryResponse> QueryResponse::BuildFromHttpResponse(
     query_results.errors.push_back(error);
   }
 
-  query_results.session_info = json->at("session_info").get<SessionInfo>();
-  query_results.dml_stats = json->at("dml_stats").get<DmlStats>();
+  query_results.session_info = json->at("sessionInfo").get<SessionInfo>();
+  query_results.dml_stats = json->at("dmlStats").get<DmlStats>();
 
   QueryResponse response;
   response.http_response = http_response;
   response.query_results = query_results;
 
   return response;
+}
+
+std::string SessionInfo::DebugString(absl::string_view name,
+                                     TracingOptions const& options,
+                                     int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("session_id", session_id)
+      .Build();
+}
+
+void to_json(nlohmann::json& j, SessionInfo const& s) {
+  j = nlohmann::json{{"sessionId", s.session_id}};
+}
+void from_json(nlohmann::json const& j, SessionInfo& s) {
+  if (j.contains("sessionId")) j.at("sessionId").get_to(s.session_id);
+}
+
+void to_json(nlohmann::json& j, QueryResults const& q) {
+  j = nlohmann::json{{"kind", q.kind},
+                     {"pageToken", q.page_token},
+                     {"totalRows", q.total_rows},
+                     {"totalBytesProcessed", q.total_bytes_processed},
+                     {"numDmlAffectedRows", q.num_dml_affected_rows},
+                     {"jobComplete", q.job_complete},
+                     {"cacheHit", q.cache_hit},
+                     {"schema", q.schema},
+                     {"jobReference", q.job_reference},
+                     {"rows", q.rows},
+                     {"errors", q.errors},
+                     {"sessionInfo", q.session_info},
+                     {"dmlStats", q.dml_stats}};
+}
+
+void from_json(nlohmann::json const& j, QueryResults& q) {
+  if (j.contains("kind")) j.at("kind").get_to(q.kind);
+  if (j.contains("pageToken")) j.at("pageToken").get_to(q.page_token);
+  if (j.contains("totalRows")) j.at("totalRows").get_to(q.total_rows);
+  if (j.contains("totalBytesProcessed")) {
+    j.at("totalBytesProcessed").get_to(q.total_bytes_processed);
+  }
+  if (j.contains("numDmlAffectedRows")) {
+    j.at("numDmlAffectedRows").get_to(q.num_dml_affected_rows);
+  }
+  if (j.contains("jobComplete")) j.at("jobComplete").get_to(q.job_complete);
+  if (j.contains("cacheHit")) j.at("cacheHit").get_to(q.cache_hit);
+  if (j.contains("schema")) j.at("schema").get_to(q.schema);
+  if (j.contains("jobReference")) j.at("jobReference").get_to(q.job_reference);
+  if (j.contains("rows")) j.at("rows").get_to(q.rows);
+  if (j.contains("errors")) j.at("errors").get_to(q.errors);
+  if (j.contains("sessionInfo")) j.at("sessionInfo").get_to(q.session_info);
+  if (j.contains("dmlStats")) j.at("dmlStats").get_to(q.dml_stats);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

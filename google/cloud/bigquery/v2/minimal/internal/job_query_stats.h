@@ -40,14 +40,14 @@ using namespace nlohmann::literals;  // NOLINT
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#explainquerystep
 struct ExplainQueryStep {
   std::string kind;
-  std::vector<std::string> substeps;
+  std::vector<std::string> sub_steps;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ExplainQueryStep, kind,
-                                                substeps);
+void to_json(nlohmann::json& j, ExplainQueryStep const& q);
+void from_json(nlohmann::json const& j, ExplainQueryStep& q);
 bool operator==(ExplainQueryStep const& lhs, ExplainQueryStep const& rhs);
 
 // Indicates the type of compute mode for the query stage.
@@ -158,9 +158,8 @@ struct DmlStats {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DmlStats, inserted_row_count,
-                                                deleted_row_count,
-                                                updated_row_count);
+void to_json(nlohmann::json& j, DmlStats const& d);
+void from_json(nlohmann::json const& j, DmlStats& d);
 bool operator==(DmlStats const& lhs, DmlStats const& rhs);
 
 // Represents the Id path of a row access policy. It is
@@ -178,9 +177,8 @@ struct RowAccessPolicyReference {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RowAccessPolicyReference,
-                                                project_id, dataset_id,
-                                                table_id, policy_id);
+void to_json(nlohmann::json& j, RowAccessPolicyReference const& r);
+void from_json(nlohmann::json const& j, RowAccessPolicyReference& r);
 bool operator==(RowAccessPolicyReference const& lhs,
                 RowAccessPolicyReference const& rhs);
 
@@ -258,8 +256,8 @@ struct IndexUnusedReason {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(IndexUnusedReason, message,
-                                                index_name, base_table, code);
+void to_json(nlohmann::json& j, IndexUnusedReason const& i);
+void from_json(nlohmann::json const& j, IndexUnusedReason& i);
 bool operator==(IndexUnusedReason const& lhs, IndexUnusedReason const& rhs);
 
 // Describes search query specific statistics and is
@@ -275,9 +273,8 @@ struct SearchStatistics {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(SearchStatistics,
-                                                index_usage_mode,
-                                                index_unused_reasons);
+void to_json(nlohmann::json& j, SearchStatistics const& s);
+void from_json(nlohmann::json const& j, SearchStatistics& s);
 bool operator==(SearchStatistics const& lhs, SearchStatistics const& rhs);
 
 // Details about the input data change insight.
@@ -291,8 +288,8 @@ struct InputDataChange {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(InputDataChange,
-                                                records_read_diff_percentage);
+void to_json(nlohmann::json& j, InputDataChange const& i);
+void from_json(nlohmann::json const& j, InputDataChange& i);
 
 // Performance insights compared to the previous executions for a specific
 // stage.
@@ -307,8 +304,8 @@ struct StagePerformanceChangeInsight {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(StagePerformanceChangeInsight,
-                                                stage_id, input_data_change);
+void to_json(nlohmann::json& j, StagePerformanceChangeInsight const& s);
+void from_json(nlohmann::json const& j, StagePerformanceChangeInsight& s);
 
 // Standalone performance insights for a specific stage.
 //
@@ -323,9 +320,8 @@ struct StagePerformanceStandaloneInsight {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
-    StagePerformanceStandaloneInsight, stage_id, slot_contention,
-    insufficient_shuffle_quota);
+void to_json(nlohmann::json& j, StagePerformanceStandaloneInsight const& s);
+void from_json(nlohmann::json const& j, StagePerformanceStandaloneInsight& s);
 
 // Performance insights for the job.
 //
@@ -385,10 +381,8 @@ struct MaterializedView {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(MaterializedView, chosen,
-                                                estimated_bytes_saved,
-                                                rejected_reason,
-                                                table_reference);
+void to_json(nlohmann::json& j, MaterializedView const& m);
+void from_json(nlohmann::json const& j, MaterializedView& m);
 bool operator==(MaterializedView const& lhs, MaterializedView const& rhs);
 
 // Statistics of materialized views of a query job.
@@ -402,8 +396,8 @@ struct MaterializedViewStatistics {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(MaterializedViewStatistics,
-                                                materialized_view);
+void to_json(nlohmann::json& j, MaterializedViewStatistics const& m);
+void from_json(nlohmann::json const& j, MaterializedViewStatistics& m);
 
 // Reasons for not using metadata caching.
 //
@@ -438,9 +432,8 @@ struct TableMetadataCacheUsage {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableMetadataCacheUsage,
-                                                explanation, table_reference,
-                                                unused_reason);
+void to_json(nlohmann::json& j, TableMetadataCacheUsage const& t);
+void from_json(nlohmann::json const& j, TableMetadataCacheUsage& t);
 bool operator==(TableMetadataCacheUsage const& lhs,
                 TableMetadataCacheUsage const& rhs);
 
@@ -455,8 +448,8 @@ struct MetadataCacheStatistics {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(MetadataCacheStatistics,
-                                                table_metadata_cache_usage);
+void to_json(nlohmann::json& j, MetadataCacheStatistics const& m);
+void from_json(nlohmann::json const& j, MetadataCacheStatistics& m);
 
 // Statistics for a query job.
 //
@@ -489,7 +482,6 @@ struct JobQueryStatistics {
   DmlStats dml_stats;
 
   TableReference ddl_target_table;
-  TableReference ddl_destination_table;
   RowAccessPolicyReference ddl_target_row_access_policy;
   RoutineReference ddl_target_routine;
   DatasetReference ddl_target_dataset;
