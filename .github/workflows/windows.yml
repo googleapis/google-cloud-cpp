@@ -156,7 +156,7 @@ jobs:
         if [[ "${{ matrix.shard }}" == "Core" ]]; then
           features="$(printf ",%s" "${core_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
-        elsif [[ "${{matrix.shard}}" == "Compute" ]]; then
+        elif [[ "${{matrix.shard}}" == "Compute" ]]; then
           echo "features=compute" >> "${GITHUB_OUTPUT}"
         else
           skipped_features=("${core_features[@]}")
