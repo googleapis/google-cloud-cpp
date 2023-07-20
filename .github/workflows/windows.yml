@@ -24,7 +24,7 @@ jobs:
     name: bazel + ${{ matrix.msvc }} + ${{ matrix.compilation_mode }} + ${{ matrix.shard }}
     runs-on:
       group: cpp-runners
-      labels:  ${{ matrix.os }}
+      labels: ${{ endsWith(matrix.msvc, '-2019') && 'windows-2019' || 'windows-2022' }}
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -38,8 +38,6 @@ jobs:
         compilation_mode: [ opt ]
         shard: [ Core, Compute, Other ]
         include:
-        - msvc: msvc-2019
-          os: windows-2019
         - shard: Core
           targets:
           - //google/cloud:all
@@ -100,7 +98,7 @@ jobs:
     name: cmake + ${{ matrix.msvc }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
     runs-on:
       group: cpp-runners
-      labels: ${{ matrix.os }}
+      labels: ${{ endsWith(matrix.msvc, '-2019') && 'windows-2019' || 'windows-2022' }}
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -112,10 +110,7 @@ jobs:
         msvc: [ msvc-2022, msvc-2019 ]
         build_type: [ Debug, Release ]
         vcpkg_triplet: [ x64-windows ]
-        shard:
-        - Core
-        - Compute
-        - Other
+        shard: [Core, Compute, Other]
         exclude:
         # On pull requests skip the MSVC 2019 builds. These rarely contain This contains all the
         # hand-crafted code. The other shards are unlikely to catch problems, as
@@ -127,6 +122,10 @@ jobs:
           msvc: ${{ 'windows-2019' }}
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           msvc: msvc-2019
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Compute
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Other
         # Compute is (currently) a single `.lib` file. This file is too large in
         # Debug mode. MSVC uses COFF:
         #     https://en.wikipedia.org/wiki/COFF
@@ -135,35 +134,6 @@ jobs:
         #     https://learn.microsoft.com/en-us/cpp/error-messages/tool-errors/linker-tools-error-lnk1248
         - build_type: Debug
           shard: Compute
-        include:
-        - msvc: msvc-2022
-          os: windows-2022
-        - msvc: msvc-2019
-          os: windows-2019
-        - shard: Core
-          features:
-          - bigtable
-          - pubsub
-          - pubsublite
-          - spanner
-          - storage
-        - shard: Compute
-          features:
-          - compute
-        - shard: Other
-          features:
-          - __ga_libraries__
-          - __experimental_libraries__
-          - -bigtable
-          - -pubsub
-          - -pubsublite
-          - -spanner
-          - -storage
-          - -compute
-          # We use vcpkg in this build, which ships with Protobuf v21.x.
-          # These require Protobuf >= 23.x to compile on Windows.
-          - -asset
-          - -channel
     steps:
     - uses: actions/checkout@v3
       with:
@@ -177,11 +147,27 @@ jobs:
       with:
         python-version: '3.11'
     - uses: google-github-actions/setup-gcloud@v1
-    - name: Get vcpkg Version
-      id: vcpkg-version
+    - name: Dynamic Configuration
+      id: dynamic
       shell: bash
       run: |
-        echo "version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
+        echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
+        core_features=(bigtable pubsub pubsublite spanner storage)
+        if [[ "${{ matrix.shard }}" == "Core" ]]; then
+          features="$(printf ",%s" "${core_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elsif [[ "${{matrix.shard}}" == "Compute" ]]; then
+          echo "features=compute" >> "${GITHUB_OUTPUT}"
+        else
+          skipped_features=("${core_features[@]}")
+          skipped_features+=(compute)
+          # We use vcpkg in this build, which ships with Protobuf v21.x.
+          # Both `asset` and `channel` require Protobuf >= 23.x to compile on
+          # Windows.
+          skipped_features+=(asset channel)
+          skipped="$(printf ",-%s" "${skipped_features[@]}")"
+          echo "features=__ga_libraries__,__experimental_libraries__,${skipped:2}" >> "${GITHUB_OUTPUT}"
+        fi
     - name: Download and Install sccache
       working-directory: "${{runner.temp}}"
       shell: bash
@@ -195,7 +181,7 @@ jobs:
       run: |
         cd "${TEMP}"
         mkdir -p .build/vcpkg
-        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.vcpkg-version.outputs.version }}.tar.gz" |
+        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.dynamic.outputs.vcpkg-version }}.tar.gz" |
             tar -C .build/vcpkg --strip-components=1 -zxf -
         .build/vcpkg/bootstrap-vcpkg.sh -disableMetrics
     # go/github-actions#gha-bestpractices explains why we use a SHA instead of
@@ -213,7 +199,7 @@ jobs:
         # Put the CMake output in a directory with more space and keep it short
         # to avoid running into the MSVC limits.
         export CMAKE_OUT='c:\b'
-        echo DEBUG DEBUG DEBUG ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ join(matrix.features, ',') }}
+        echo DEBUG DEBUG DEBUG ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ steps.dynamic.outputs.features }}
     env:
       SCCACHE_GCS_BUCKET: cloud-cpp-gha-cache
       SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.msvc }}/${{ matrix.build_type }}
