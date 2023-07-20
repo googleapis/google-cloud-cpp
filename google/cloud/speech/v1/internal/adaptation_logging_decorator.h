@@ -36,7 +36,7 @@ class AdaptationLogging : public AdaptationStub {
   ~AdaptationLogging() override = default;
   AdaptationLogging(std::shared_ptr<AdaptationStub> child,
                     TracingOptions tracing_options,
-                    std::set<std::string> components);
+                    std::set<std::string> const& components);
 
   StatusOr<google::cloud::speech::v1::PhraseSet> CreatePhraseSet(
       grpc::ClientContext& context,
@@ -88,7 +88,7 @@ class AdaptationLogging : public AdaptationStub {
  private:
   std::shared_ptr<AdaptationStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AdaptationLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
