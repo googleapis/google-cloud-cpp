@@ -35,7 +35,7 @@ jobs:
     # For external contributors, run the build in the `external` environment.
     # This requires manual approval from a contributor. It also saves the
     # `ref` of the pull request, so downstream jobs know what to checkout.
-    environment: |-
+    environment: >-
       ${{
         (github.event_name != 'pull_request_target' && 'internal') ||
         (github.event.pull_request.head.repo.full_name == github.repository && 'internal') ||
@@ -68,7 +68,7 @@ jobs:
       # Build the full matrix only on push events to the default branch, or
       # when PR gets the has a `gha:full-build` label, or when it had the
       # label already and it gets a new commit.
-      if: |-
+      if: >-
         ${{
           (
             github.event_name == 'push' &&
@@ -87,7 +87,7 @@ jobs:
       # Build the full matrix only on push events to the default branch, or
       # when PR gets the has a `gha:full-build` label, or when it had the
       # label already and it gets a new commit.
-      if: |-
+      if: >-
         ${{
           (
             github.event_name == 'push' &&
@@ -111,7 +111,7 @@ jobs:
       # Build the full matrix only on push events to the default branch, or
       # when PR gets the has a `gha:full-build` label, or when it had the
       # label already and it gets a new commit.
-      full-matrix: |-
+      full-matrix: >-
         ${{
           (
             github.event_name == 'push' &&
@@ -130,7 +130,7 @@ jobs:
       # Build the full matrix only on push events to the default branch, or
       # when PR gets the has a `gha:full-build` label, or when it had the
       # label already and it gets a new commit.
-      full-matrix: |-
+      full-matrix: >-
         ${{
           (
             github.event_name == 'push' &&
