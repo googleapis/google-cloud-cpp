@@ -82,6 +82,10 @@ Follow these links to find examples for other \c *Client classes:
 - [\c resourcemanager_v3::FoldersClient](@ref resourcemanager_v3::FoldersClient-retry-snippet)
 - [\c resourcemanager_v3::OrganizationsClient](@ref resourcemanager_v3::OrganizationsClient-retry-snippet)
 - [\c resourcemanager_v3::ProjectsClient](@ref resourcemanager_v3::ProjectsClient-retry-snippet)
+- [\c resourcemanager_v3::TagBindingsClient](@ref resourcemanager_v3::TagBindingsClient-retry-snippet)
+- [\c resourcemanager_v3::TagHoldsClient](@ref resourcemanager_v3::TagHoldsClient-retry-snippet)
+- [\c resourcemanager_v3::TagKeysClient](@ref resourcemanager_v3::TagKeysClient-retry-snippet)
+- [\c resourcemanager_v3::TagValuesClient](@ref resourcemanager_v3::TagValuesClient-retry-snippet)
 
 <!-- inject-retry-snippet-end -->
 
@@ -130,6 +134,54 @@ This shows how to override the retry policies for resourcemanager_v3::ProjectsCl
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/resourcemanager/v3/samples/projects_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page resourcemanager_v3::TagBindingsClient-retry-snippet Override resourcemanager_v3::TagBindingsClient Retry Policies
+
+This shows how to override the retry policies for resourcemanager_v3::TagBindingsClient:
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_bindings_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_bindings_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page resourcemanager_v3::TagHoldsClient-retry-snippet Override resourcemanager_v3::TagHoldsClient Retry Policies
+
+This shows how to override the retry policies for resourcemanager_v3::TagHoldsClient:
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_holds_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_holds_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page resourcemanager_v3::TagKeysClient-retry-snippet Override resourcemanager_v3::TagKeysClient Retry Policies
+
+This shows how to override the retry policies for resourcemanager_v3::TagKeysClient:
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_keys_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_keys_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page resourcemanager_v3::TagValuesClient-retry-snippet Override resourcemanager_v3::TagValuesClient Retry Policies
+
+This shows how to override the retry policies for resourcemanager_v3::TagValuesClient:
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_values_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_values_client_samples.cc custom-idempotency-policy
 
 */
 // <!-- inject-retry-pages-end -->

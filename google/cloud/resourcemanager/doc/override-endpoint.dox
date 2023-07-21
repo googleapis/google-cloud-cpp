@@ -16,6 +16,10 @@ Follow these links to find examples for other \c *Client classes:
 - [\c resourcemanager_v3::FoldersClient](@ref resourcemanager_v3::FoldersClient-endpoint-snippet)
 - [\c resourcemanager_v3::OrganizationsClient](@ref resourcemanager_v3::OrganizationsClient-endpoint-snippet)
 - [\c resourcemanager_v3::ProjectsClient](@ref resourcemanager_v3::ProjectsClient-endpoint-snippet)
+- [\c resourcemanager_v3::TagBindingsClient](@ref resourcemanager_v3::TagBindingsClient-endpoint-snippet)
+- [\c resourcemanager_v3::TagHoldsClient](@ref resourcemanager_v3::TagHoldsClient-endpoint-snippet)
+- [\c resourcemanager_v3::TagKeysClient](@ref resourcemanager_v3::TagKeysClient-endpoint-snippet)
+- [\c resourcemanager_v3::TagValuesClient](@ref resourcemanager_v3::TagValuesClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -38,6 +42,30 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page resourcemanager_v3::ProjectsClient-endpoint-snippet Override resourcemanager_v3::ProjectsClient Endpoint Configuration
 
 @snippet google/cloud/resourcemanager/v3/samples/projects_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page resourcemanager_v3::TagBindingsClient-endpoint-snippet Override resourcemanager_v3::TagBindingsClient Endpoint Configuration
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_bindings_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page resourcemanager_v3::TagHoldsClient-endpoint-snippet Override resourcemanager_v3::TagHoldsClient Endpoint Configuration
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_holds_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page resourcemanager_v3::TagKeysClient-endpoint-snippet Override resourcemanager_v3::TagKeysClient Endpoint Configuration
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_keys_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page resourcemanager_v3::TagValuesClient-endpoint-snippet Override resourcemanager_v3::TagValuesClient Endpoint Configuration
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_values_client_samples.cc set-client-endpoint
 
 */
 // <!-- inject-endpoint-pages-end -->

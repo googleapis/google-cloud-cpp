@@ -34,6 +34,10 @@ application.
 - [\c resourcemanager_v3::FoldersClient](@ref google::cloud::resourcemanager_v3::FoldersClient)
 - [\c resourcemanager_v3::OrganizationsClient](@ref google::cloud::resourcemanager_v3::OrganizationsClient)
 - [\c resourcemanager_v3::ProjectsClient](@ref google::cloud::resourcemanager_v3::ProjectsClient)
+- [\c resourcemanager_v3::TagBindingsClient](@ref google::cloud::resourcemanager_v3::TagBindingsClient)
+- [\c resourcemanager_v3::TagHoldsClient](@ref google::cloud::resourcemanager_v3::TagHoldsClient)
+- [\c resourcemanager_v3::TagKeysClient](@ref google::cloud::resourcemanager_v3::TagKeysClient)
+- [\c resourcemanager_v3::TagValuesClient](@ref google::cloud::resourcemanager_v3::TagValuesClient)
 <!-- inject-client-list-end -->
 
 ## More Information
