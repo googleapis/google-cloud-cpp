@@ -142,6 +142,10 @@ API.
 
 The library has been expanded to include new services.
 
+### [Resource Manager](/google/cloud/resourcemanager/README.md)
+
+The library has been expanded to include the [Tags][resource-manager-tags] API.
+
 ### [Speech](/google/cloud/speech/README.md)
 
 The library has been expanded to include the
@@ -3701,6 +3705,7 @@ releases.  The relevant notes are:
 [oss-cxx-support]: https://opensource.google/documentation/policies/cplusplus-support
 [product-launch-stages]: https://cloud.google.com/products/#product-launch-stages
 [pub/sub lite]: /google/cloud/pubsublite/README.md
+[resource-manager-tags]: https://cloud.google.com/resource-manager/docs/tags/tags-overview
 [resource-types-with-policies]: https://cloud.google.com/iam/docs/resource-types-with-policies
 [secret manager]: /google/cloud/secretmanager/README.md
 [speech-model-adaptation]: https://cloud.google.com/speech-to-text/docs/adaptation-model

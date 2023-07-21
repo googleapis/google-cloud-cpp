@@ -2659,6 +2659,34 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/resourcemanager/v3/tag_bindings.proto"
+  product_path: "google/cloud/resourcemanager/v3"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/resourcemanager/v3/tag_holds.proto"
+  product_path: "google/cloud/resourcemanager/v3"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/resourcemanager/v3/tag_keys.proto"
+  product_path: "google/cloud/resourcemanager/v3"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/resourcemanager/v3/tag_values.proto"
+  product_path: "google/cloud/resourcemanager/v3"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Resource Settings
 service {
   service_proto_path: "google/cloud/resourcesettings/v1/resource_settings.proto"
