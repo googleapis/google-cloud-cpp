@@ -118,6 +118,10 @@ The library has been expanded to include the Reporting API.
 
 The library has been expanded to include the [Snooze][monitoring-snooze] API.
 
+### [Cloud Functions](/google/cloud/functions/README.md)
+
+The library has been expanded to include the [2nd gen][functions-v2] API.
+
 ### [Cloud Run](/google/cloud/run/README.md)
 
 The library has been expanded to include the
@@ -3686,6 +3690,7 @@ releases.  The relevant notes are:
 [cloud-debugger-deprecated]: https://cloud.google.com/debugger/docs/deprecations
 [cloud-run-jobs]: https://cloud.google.com/run/docs/managing/job-executions
 [dataproc-node-groups]: https://cloud.google.com/dataproc/docs/guides/node-groups/dataproc-driver-node-groups
+[functions-v2]: https://cloud.google.com/functions/docs/concepts/version-comparison
 [github-cpp-common]: https://github.com/googleapis/google-cloud-cpp-common
 [google.pubsub.v1.schemaserviceclient]: https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#google.pubsub.v1.SchemaService
 [guac-dox]: https://cloud.google.com/cpp/docs/reference/common/latest/group__guac
