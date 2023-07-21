@@ -398,14 +398,14 @@ ParameterCommentSubstitution substitutions[] = {
     {kDialogflowESSessionEntityTypeDisplayNameProto,
      kDialogflowESSessionEntityTypeDisplayNameCpp},
 
+    // From logging/v2.
+    {kLoggingConfigClientProto1, kLoggingConfigClientCpp1},
+    {kLoggingConfigClientProto2, kLoggingConfigClientCpp2},
+
     // From artifactregistry/v1, where a missing closing quote confuses
     // the Doxygen parser.
     {R"""("projects/p1/locations/us-central1/repositories/repo1)""",
      R"""("projects/p1/locations/us-central1/repositories/repo1")"""},
-
-    // From logging/v2/config_logging_client.h
-    {kLoggingConfigClientProto1, kLoggingConfigClientCpp1},
-    {kLoggingConfigClientProto2, kLoggingConfigClientCpp2},
 
     // Unescaped elements in spanner/admin/instance/v1.
     {" <parent>/instanceConfigs/us-east1,",

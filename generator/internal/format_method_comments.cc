@@ -128,8 +128,8 @@ std::string FormatMethodComments(
       {
           {"\n", "\n  ///"},
           {"$", "$$"},
-          // TODO(#12190) - track whether this substitution is used.
-          // From logging/v2/config_logging_client.h
+          // TODO(#12190) - track whether this substitution is used.           \
+          // From logging/v2
           {R"""(Gets a view on a log bucket..)""",
            R"""(Gets a view on a log bucket.)"""},
       });
