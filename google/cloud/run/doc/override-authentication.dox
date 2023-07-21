@@ -9,12 +9,15 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
-@snippet revisions_client_samples.cc with-service-account
+@snippet executions_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c run_v2::ExecutionsClient](@ref run_v2::ExecutionsClient-service-account-snippet)
+- [\c run_v2::JobsClient](@ref run_v2::JobsClient-service-account-snippet)
 - [\c run_v2::RevisionsClient](@ref run_v2::RevisionsClient-service-account-snippet)
 - [\c run_v2::ServicesClient](@ref run_v2::ServicesClient-service-account-snippet)
+- [\c run_v2::TasksClient](@ref run_v2::TasksClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -32,6 +35,18 @@ guide for more details.
 
 // <!-- inject-authentication-pages-start -->
 
+/*! @page run_v2::ExecutionsClient-service-account-snippet Override run_v2::ExecutionsClient Authentication Defaults
+
+@snippet google/cloud/run/v2/samples/executions_client_samples.cc with-service-account
+
+*/
+
+/*! @page run_v2::JobsClient-service-account-snippet Override run_v2::JobsClient Authentication Defaults
+
+@snippet google/cloud/run/v2/samples/jobs_client_samples.cc with-service-account
+
+*/
+
 /*! @page run_v2::RevisionsClient-service-account-snippet Override run_v2::RevisionsClient Authentication Defaults
 
 @snippet google/cloud/run/v2/samples/revisions_client_samples.cc with-service-account
@@ -41,6 +56,12 @@ guide for more details.
 /*! @page run_v2::ServicesClient-service-account-snippet Override run_v2::ServicesClient Authentication Defaults
 
 @snippet google/cloud/run/v2/samples/services_client_samples.cc with-service-account
+
+*/
+
+/*! @page run_v2::TasksClient-service-account-snippet Override run_v2::TasksClient Authentication Defaults
+
+@snippet google/cloud/run/v2/samples/tasks_client_samples.cc with-service-account
 
 */
 // <!-- inject-authentication-pages-end -->

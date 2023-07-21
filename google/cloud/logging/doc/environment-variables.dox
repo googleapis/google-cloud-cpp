@@ -10,9 +10,17 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-start -->
 
+- `GOOGLE_CLOUD_CPP_CONFIG_SERVICE_V2_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "logging.googleapis.com")
+  used by `MakeConfigServiceV2Connection()`.
+
 - `GOOGLE_CLOUD_CPP_LOGGING_SERVICE_V2_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "logging.googleapis.com")
   used by `MakeLoggingServiceV2Connection()`.
+
+- `GOOGLE_CLOUD_CPP_METRICS_SERVICE_V2_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "logging.googleapis.com")
+  used by `MakeMetricsServiceV2Connection()`.
 
 <!-- inject-endpoint-env-vars-end -->
 
