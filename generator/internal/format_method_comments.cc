@@ -123,9 +123,16 @@ std::string FormatMethodComments(
     GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
                    << " no leading_comments to format";
   }
-  std::string doxygen_formatted_function_comments =
-      absl::StrReplaceAll(method_source_location.leading_comments,
-                          {{"\n", "\n  ///"}, {"$", "$$"}});
+  std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
+      method_source_location.leading_comments,
+      {
+          {"\n", "\n  ///"},
+          {"$", "$$"},
+          // TODO(#12190) - track whether this substitution is used.
+          // From logging/v2/config_logging_client.h
+          {R"""(Gets a view on a log bucket..)""",
+           R"""(Gets a view on a log bucket.)"""},
+      });
 
   auto const options_comment = std::string{
       R"""(  /// @param opts Optional. Override the class-level options, such as retry and

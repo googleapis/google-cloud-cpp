@@ -351,6 +351,38 @@ auto constexpr kDialogflowESSessionEntityTypeDisplayNameCpp = R"""(
  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
  @endcode)""";
 
+auto constexpr kLoggingConfigClientProto1 =
+    R"""( The resource name of the link:
+
+   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]"
+   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]"
+   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]"
+   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID])""";
+
+auto constexpr kLoggingConfigClientCpp1 =
+    R"""( The resource name of the link:
+
+   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]"
+   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]"
+   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]"
+   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]")""";
+
+auto constexpr kLoggingConfigClientProto2 =
+    R"""( The parent resource whose links are to be listed:
+
+   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/"
+   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/"
+   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/"
+   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/)""";
+
+auto constexpr kLoggingConfigClientCpp2 =
+    R"""( The parent resource whose links are to be listed:
+
+   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]")""";
+
 ParameterCommentSubstitution substitutions[] = {
     // From dialogflow/cx/v3.
     {kDialogflowCXEnvironmentIdProto1, kDialogflowCXEnvironmentIdCpp1},
@@ -370,6 +402,10 @@ ParameterCommentSubstitution substitutions[] = {
     // the Doxygen parser.
     {R"""("projects/p1/locations/us-central1/repositories/repo1)""",
      R"""("projects/p1/locations/us-central1/repositories/repo1")"""},
+
+    // From logging/v2/config_logging_client.h
+    {kLoggingConfigClientProto1, kLoggingConfigClientCpp1},
+    {kLoggingConfigClientProto2, kLoggingConfigClientCpp2},
 
     // Unescaped elements in spanner/admin/instance/v1.
     {" <parent>/instanceConfigs/us-east1,",
