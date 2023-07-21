@@ -19,9 +19,6 @@ on:
     - opened
     - synchronize
     - reopened
-    # We also need to restart the builds when a label is assigned. This can
-    # be used to trigger a full build.
-    - labeled
 
 # Cancel in-progress runs of the workflow if somebody adds a new commit to the
 # PR or branch. That reduces billing, but it creates more noise about cancelled
