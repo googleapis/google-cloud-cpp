@@ -61,33 +61,33 @@ struct TargetType {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TargetType, value);
 
 struct LinkedDatasetSource {
-  DatasetReference sourceDataset;
+  DatasetReference source_dataset;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(LinkedDatasetSource,
-                                                sourceDataset);
+void to_json(nlohmann::json& j, LinkedDatasetSource const& d);
+void from_json(nlohmann::json const& j, LinkedDatasetSource& d);
 
 struct DatasetAccessEntry {
   DatasetReference dataset;
-  std::vector<TargetType> targetTypes;
+  std::vector<TargetType> target_types;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DatasetAccessEntry, dataset,
-                                                targetTypes);
+void to_json(nlohmann::json& j, DatasetAccessEntry const& d);
+void from_json(nlohmann::json const& j, DatasetAccessEntry& d);
 
 struct Access {
   std::string role;
-  std::string userByEmail;
-  std::string groupByEmail;
+  std::string user_by_email;
+  std::string group_by_email;
   std::string domain;
-  std::string specialGroup;
-  std::string iamMember;
+  std::string special_group;
+  std::string iam_member;
 
   TableReference view;
   RoutineReference routine;
@@ -97,20 +97,19 @@ struct Access {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Access, role, userByEmail,
-                                                groupByEmail, domain,
-                                                specialGroup, iamMember, view,
-                                                routine, dataset);
+void to_json(nlohmann::json& j, Access const& a);
+void from_json(nlohmann::json const& j, Access& a);
 
 struct GcpTag {
-  std::string tagKey;
-  std::string tagValue;
+  std::string tag_key;
+  std::string tag_value;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(GcpTag, tagKey, tagValue);
+void to_json(nlohmann::json& j, GcpTag const& t);
+void from_json(nlohmann::json const& j, GcpTag& t);
 
 struct Dataset {
   std::string kind;
@@ -148,27 +147,25 @@ struct Dataset {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
+void to_json(nlohmann::json& j, Dataset const& d);
+void from_json(nlohmann::json const& j, Dataset& d);
 
 struct ListFormatDataset {
   std::string kind;
   std::string id;
-  std::string friendlyName;
+  std::string friendly_name;
   std::string location;
   std::string type;
 
-  DatasetReference datasetReference;
+  DatasetReference dataset_reference;
   std::map<std::string, std::string> labels;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ListFormatDataset, kind, id,
-                                                friendlyName, location, type,
-                                                datasetReference, labels);
-
-void to_json(nlohmann::json& j, Dataset const& d);
-void from_json(nlohmann::json const& j, Dataset& d);
+void to_json(nlohmann::json& j, ListFormatDataset const& d);
+void from_json(nlohmann::json const& j, ListFormatDataset& d);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

@@ -106,7 +106,7 @@ std::string LinkedDatasetSource::DebugString(absl::string_view name,
                                              TracingOptions const& options,
                                              int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .SubMessage("source_dataset", sourceDataset)
+      .SubMessage("source_dataset", source_dataset)
       .Build();
 }
 
@@ -131,7 +131,7 @@ std::string DatasetAccessEntry::DebugString(absl::string_view name,
                                             int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .SubMessage("dataset", dataset)
-      .Field("target_types", targetTypes)
+      .Field("target_types", target_types)
       .Build();
 }
 
@@ -140,11 +140,11 @@ std::string Access::DebugString(absl::string_view name,
                                 int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("role", role)
-      .StringField("user_by_email", userByEmail)
-      .StringField("group_by_email", groupByEmail)
+      .StringField("user_by_email", user_by_email)
+      .StringField("group_by_email", group_by_email)
       .StringField("domain", domain)
-      .StringField("special_group", specialGroup)
-      .StringField("iam_member", iamMember)
+      .StringField("special_group", special_group)
+      .StringField("iam_member", iam_member)
       .SubMessage("view", view)
       .SubMessage("routine", routine)
       .SubMessage("dataset", dataset)
@@ -155,8 +155,8 @@ std::string GcpTag::DebugString(absl::string_view name,
                                 TracingOptions const& options,
                                 int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("tag_key", tagKey)
-      .StringField("tag_value", tagValue)
+      .StringField("tag_key", tag_key)
+      .StringField("tag_value", tag_value)
       .Build();
 }
 
@@ -196,12 +196,86 @@ std::string ListFormatDataset::DebugString(absl::string_view name,
   return internal::DebugFormatter(name, options, indent)
       .StringField("kind", kind)
       .StringField("id", id)
-      .StringField("friendly_name", friendlyName)
+      .StringField("friendly_name", friendly_name)
       .StringField("location", location)
       .StringField("type", type)
-      .SubMessage("dataset_reference", datasetReference)
+      .SubMessage("dataset_reference", dataset_reference)
       .Field("labels", labels)
       .Build();
+}
+
+void to_json(nlohmann::json& j, ListFormatDataset const& d) {
+  j = nlohmann::json{{"kind", d.kind},
+                     {"id", d.id},
+                     {"friendlyName", d.friendly_name},
+                     {"location", d.location},
+                     {"type", d.type},
+                     {"datasetReference", d.dataset_reference},
+                     {"labels", d.labels}};
+}
+void from_json(nlohmann::json const& j, ListFormatDataset& d) {
+  // TODO(#12188): Implement SafeGetTo(...) for potentially better performance.
+  if (j.contains("kind")) j.at("kind").get_to(d.kind);
+  if (j.contains("id")) j.at("id").get_to(d.id);
+  if (j.contains("friendlyName")) j.at("friendlyName").get_to(d.friendly_name);
+  if (j.contains("location")) j.at("location").get_to(d.location);
+  if (j.contains("type")) j.at("type").get_to(d.type);
+  if (j.contains("datasetReference")) {
+    j.at("datasetReference").get_to(d.dataset_reference);
+  }
+  if (j.contains("labels")) j.at("labels").get_to(d.labels);
+}
+
+void to_json(nlohmann::json& j, GcpTag const& t) {
+  j = nlohmann::json{{"tagKey", t.tag_key}, {"tagValue", t.tag_value}};
+}
+void from_json(nlohmann::json const& j, GcpTag& t) {
+  // TODO(#12188): Implement SafeGetTo(...) for potentially better performance.
+  if (j.contains("tagKey")) j.at("tagKey").get_to(t.tag_key);
+  if (j.contains("tagValue")) j.at("tagValue").get_to(t.tag_value);
+}
+
+void to_json(nlohmann::json& j, Access const& a) {
+  j = nlohmann::json{{"role", a.role},
+                     {"userByEmail", a.user_by_email},
+                     {"groupByEmail", a.group_by_email},
+                     {"domain", a.domain},
+                     {"specialGroup", a.special_group},
+                     {"iamMember", a.iam_member},
+                     {"view", a.view},
+                     {"routine", a.routine},
+                     {"dataset", a.dataset}};
+}
+void from_json(nlohmann::json const& j, Access& a) {
+  // TODO(#12188): Implement SafeGetTo(...) for potentially better performance.
+  if (j.contains("role")) j.at("role").get_to(a.role);
+  if (j.contains("userByEmail")) j.at("userByEmail").get_to(a.user_by_email);
+  if (j.contains("groupByEmail")) j.at("groupByEmail").get_to(a.group_by_email);
+  if (j.contains("domain")) j.at("domain").get_to(a.domain);
+  if (j.contains("specialGroup")) j.at("specialGroup").get_to(a.special_group);
+  if (j.contains("iamMember")) j.at("iamMember").get_to(a.iam_member);
+  if (j.contains("view")) j.at("view").get_to(a.view);
+  if (j.contains("routine")) j.at("routine").get_to(a.routine);
+  if (j.contains("dataset")) j.at("dataset").get_to(a.dataset);
+}
+
+void to_json(nlohmann::json& j, DatasetAccessEntry const& d) {
+  j = nlohmann::json{{"dataset", d.dataset}, {"targetTypes", d.target_types}};
+}
+void from_json(nlohmann::json const& j, DatasetAccessEntry& d) {
+  // TODO(#12188): Implement SafeGetTo(...) for potentially better performance.
+  if (j.contains("dataset")) j.at("dataset").get_to(d.dataset);
+  if (j.contains("targetTypes")) j.at("targetTypes").get_to(d.target_types);
+}
+
+void to_json(nlohmann::json& j, LinkedDatasetSource const& d) {
+  j = nlohmann::json{{"sourceDataset", d.source_dataset}};
+}
+void from_json(nlohmann::json const& j, LinkedDatasetSource& d) {
+  // TODO(#12188): Implement SafeGetTo(...) for potentially better performance.
+  if (j.contains("sourceDataset")) {
+    j.at("sourceDataset").get_to(d.source_dataset);
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

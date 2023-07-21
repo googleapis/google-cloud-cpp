@@ -44,7 +44,7 @@ TEST(DatasetMetadataTest, GetDataset) {
           "id": "d-id",
           "selfLink": "d-selfLink",
           "friendlyName": "d-friendly-name",
-          "datasetReference": {"project_id": "p-id", "dataset_id": "d-id"}
+          "datasetReference": {"projectId": "p-id", "datasetId": "d-id"}
     })";
 
   EXPECT_CALL(*mock_stub, GetDataset)
@@ -82,7 +82,7 @@ TEST(DatasetMetadataTest, ListDatasets) {
               {
                 "id": "1",
                 "kind": "kind-2",
-                "datasetReference": {"project_id": "p123", "dataset_id": "d123"},
+                "datasetReference": {"projectId": "p123", "datasetId": "d123"},
 
                 "friendlyName": "friendly-name",
                 "location": "location",

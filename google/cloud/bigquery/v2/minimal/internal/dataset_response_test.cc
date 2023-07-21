@@ -34,7 +34,7 @@ TEST(GetDatasetResponseTest, Success) {
           "id": "d-id",
           "selfLink": "d-selfLink",
           "friendlyName": "d-friendly-name",
-          "datasetReference": {"project_id": "p-id", "dataset_id": "d-id"}
+          "datasetReference": {"projectId": "p-id", "datasetId": "d-id"}
     })";
   auto const response =
       GetDatasetResponse::BuildFromHttpResponse(http_response);
@@ -91,7 +91,7 @@ TEST(ListDatasetsResponseTest, Success) {
               {
                 "id": "1",
                 "kind": "kind-2",
-                "datasetReference": {"project_id": "p123", "dataset_id": "d123"},
+                "datasetReference": {"projectId": "p123", "datasetId": "d123"},
                 "friendlyName": "friendly-name",
                 "location": "location",
                 "type": "DEFAULT"
@@ -109,9 +109,9 @@ TEST(ListDatasetsResponseTest, Success) {
   ASSERT_EQ(datasets.size(), 1);
   EXPECT_EQ(datasets[0].id, "1");
   EXPECT_EQ(datasets[0].kind, "kind-2");
-  EXPECT_EQ(datasets[0].friendlyName, "friendly-name");
-  EXPECT_EQ(datasets[0].datasetReference.project_id, "p123");
-  EXPECT_EQ(datasets[0].datasetReference.dataset_id, "d123");
+  EXPECT_EQ(datasets[0].friendly_name, "friendly-name");
+  EXPECT_EQ(datasets[0].dataset_reference.project_id, "p123");
+  EXPECT_EQ(datasets[0].dataset_reference.dataset_id, "d123");
   EXPECT_EQ(datasets[0].location, "location");
   EXPECT_EQ(datasets[0].type, "DEFAULT");
 }
@@ -176,7 +176,7 @@ TEST(GetDatasetResponseTest, DebugString) {
           "id": "d-id",
           "selfLink": "d-selfLink",
           "friendlyName": "d-friendly-name",
-          "datasetReference": {"project_id": "p-id", "dataset_id": "d-id"}
+          "datasetReference": {"projectId": "p-id", "datasetId": "d-id"}
     })";
   auto response = GetDatasetResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(response);
@@ -344,7 +344,7 @@ TEST(ListDatasetsResponseTest, DebugString) {
               {
                 "id": "1",
                 "kind": "kind-2",
-                "datasetReference": {"project_id": "p123", "dataset_id": "d123"},
+                "datasetReference": {"projectId": "p123", "datasetId": "d123"},
 
                 "friendlyName": "friendly-name",
                 "location": "loc",
