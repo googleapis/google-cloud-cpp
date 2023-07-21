@@ -32,9 +32,9 @@ TEST(GetDatasetResponseTest, Success) {
       R"({"kind": "d-kind",
           "etag": "d-tag",
           "id": "d-id",
-          "self_link": "d-selfLink",
-          "friendly_name": "d-friendly-name",
-          "dataset_reference": {"projectId": "p-id", "datasetId": "d-id"}
+          "selfLink": "d-selfLink",
+          "friendlyName": "d-friendly-name",
+          "datasetReference": {"projectId": "p-id", "datasetId": "d-id"}
     })";
   auto const response =
       GetDatasetResponse::BuildFromHttpResponse(http_response);
@@ -74,7 +74,7 @@ TEST(GetDatasetResponseTest, InvalidDataset) {
       R"({"kind": "dkind",
           "etag": "dtag",
           "id": "jd123",
-          "self_link": "dselfLink"})";
+          "selfLink": "dselfLink"})";
   auto const response =
       GetDatasetResponse::BuildFromHttpResponse(http_response);
   EXPECT_THAT(response, StatusIs(StatusCode::kInternal,
@@ -86,14 +86,13 @@ TEST(ListDatasetsResponseTest, Success) {
   http_response.payload =
       R"({"etag": "tag-1",
           "kind": "kind-1",
-          "next_page_token": "npt-123",
+          "nextPageToken": "npt-123",
           "datasets": [
               {
                 "id": "1",
                 "kind": "kind-2",
-                "dataset_reference": {"projectId": "p123", "datasetId": "d123"},
-
-                "friendly_name": "friendly-name",
+                "datasetReference": {"projectId": "p123", "datasetId": "d123"},
+                "friendlyName": "friendly-name",
                 "location": "location",
                 "type": "DEFAULT"
               }
@@ -153,7 +152,7 @@ TEST(ListDatasetsResponseTest, InvalidListFormatDataset) {
   http_response.payload =
       R"({"etag": "tag-1",
           "kind": "kind-1",
-          "next_page_token": "npt-123",
+          "nextPageToken": "npt-123",
           "datasets": [
               {
                 "id": "1",
@@ -175,9 +174,9 @@ TEST(GetDatasetResponseTest, DebugString) {
       R"({"kind": "d-kind",
           "etag": "d-tag",
           "id": "d-id",
-          "self_link": "d-selfLink",
-          "friendly_name": "d-friendly-name",
-          "dataset_reference": {"projectId": "p-id", "datasetId": "d-id"}
+          "selfLink": "d-selfLink",
+          "friendlyName": "d-friendly-name",
+          "datasetReference": {"projectId": "p-id", "datasetId": "d-id"}
     })";
   auto response = GetDatasetResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(response);
@@ -209,18 +208,6 @@ TEST(GetDatasetResponseTest, DebugString) {
             R"( source_dataset {)"
             R"( project_id: "")"
             R"( dataset_id: "")"
-            R"( })"
-            R"( })"
-            R"( external_dataset_reference {)"
-            R"( hive_database {)"
-            R"( catalog_id: "")"
-            R"( database: "")"
-            R"( metadata_connectivity {)"
-            R"( access_uri_type: "")"
-            R"( access_uri: "")"
-            R"( metadata_connection: "")"
-            R"( storage_connection: "")"
-            R"( })"
             R"( })"
             R"( })"
             R"( default_rounding_mode {)"
@@ -268,18 +255,6 @@ TEST(GetDatasetResponseTest, DebugString) {
             R"( source_dataset {)"
             R"( project_id: "")"
             R"( dataset_id: "")"
-            R"( })"
-            R"( })"
-            R"( external_dataset_reference {)"
-            R"( hive_database {)"
-            R"( catalog_id: "")"
-            R"( database: "")"
-            R"( metadata_connectivity {)"
-            R"( access_uri_type: "")"
-            R"( access_uri: "")"
-            R"( metadata_connection: "")"
-            R"( storage_connection: "")"
-            R"( })"
             R"( })"
             R"( })"
             R"( default_rounding_mode {)"
@@ -339,18 +314,6 @@ TEST(GetDatasetResponseTest, DebugString) {
         dataset_id: ""
       }
     }
-    external_dataset_reference {
-      hive_database {
-        catalog_id: ""
-        database: ""
-        metadata_connectivity {
-          access_uri_type: ""
-          access_uri: ""
-          metadata_connection: ""
-          storage_connection: ""
-        }
-      }
-    }
     default_rounding_mode {
       value: ""
     }
@@ -376,14 +339,14 @@ TEST(ListDatasetsResponseTest, DebugString) {
   http_response.payload =
       R"({"etag": "tag-1",
           "kind": "kind-1",
-          "next_page_token": "npt-123",
+          "nextPageToken": "npt-123",
           "datasets": [
               {
                 "id": "1",
                 "kind": "kind-2",
-                "dataset_reference": {"projectId": "p123", "datasetId": "d123"},
+                "datasetReference": {"projectId": "p123", "datasetId": "d123"},
 
-                "friendly_name": "friendly-name",
+                "friendlyName": "friendly-name",
                 "location": "loc",
                 "type": "DEFAULT"
               }

@@ -26,17 +26,17 @@ namespace {
 
 bool valid_dataset(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("etag") && j.contains("id") &&
-          j.contains("dataset_reference"));
+          j.contains("datasetReference"));
 }
 
 bool valid_list_format_dataset(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("id") &&
-          j.contains("dataset_reference"));
+          j.contains("datasetReference"));
 }
 
 bool valid_datasets_list(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("etag") &&
-          j.contains("next_page_token") && j.contains("datasets"));
+          j.contains("nextPageToken") && j.contains("datasets"));
 }
 
 StatusOr<nlohmann::json> parse_json(std::string const& payload) {
@@ -84,7 +84,7 @@ StatusOr<ListDatasetsResponse> ListDatasetsResponse::BuildFromHttpResponse(
 
   result.kind = json->value("kind", "");
   result.etag = json->value("etag", "");
-  result.next_page_token = json->value("next_page_token", "");
+  result.next_page_token = json->value("nextPageToken", "");
 
   for (auto const& kv : json->at("datasets").items()) {
     auto const& json_list_format_dataset_obj = kv.value();

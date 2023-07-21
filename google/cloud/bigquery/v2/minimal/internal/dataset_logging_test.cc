@@ -47,9 +47,9 @@ TEST(DatasetLoggingClientTest, GetDataset) {
       R"({"kind": "d-kind",
           "etag": "d-tag",
           "id": "d-id",
-          "self_link": "d-selfLink",
-          "friendly_name": "d-friendly-name",
-          "dataset_reference": {"projectId": "p-id", "datasetId": "d-id"}
+          "selfLink": "d-selfLink",
+          "friendlyName": "d-friendly-name",
+          "datasetReference": {"projectId": "p-id", "datasetId": "d-id"}
     })";
 
   EXPECT_CALL(*mock_stub, GetDataset)
@@ -97,13 +97,13 @@ TEST(DatasetLoggingClientTest, ListDatasets) {
   auto constexpr kExpectedPayload =
       R"({"etag": "tag-1",
           "kind": "kind-1",
-          "next_page_token": "npt-123",
+          "nextPageToken": "npt-123",
           "datasets": [
               {
                 "id": "1",
                 "kind": "kind-1",
-                "dataset_reference": {"projectId": "p123", "datasetId": "d123"},
-                "friendly_name": "friendly-name",
+                "datasetReference": {"projectId": "p123", "datasetId": "d123"},
+                "friendlyName": "friendly-name",
                 "location": "location",
                 "type": "DEFAULT"
               }

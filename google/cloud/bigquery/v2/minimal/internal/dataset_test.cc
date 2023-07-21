@@ -90,8 +90,6 @@ Dataset MakeDataset() {
   expected.tags = tags;
   expected.dataset_reference = dataset_ref;
   expected.linked_dataset_source.source_dataset = dataset_ref;
-  expected.external_dataset_reference.hive_database.catalog_id = "c1";
-  expected.external_dataset_reference.hive_database.database = "d1";
   expected.default_rounding_mode = RoundingMode::RoundHalfEven();
   expected.storage_billing_model = StorageBillingModel::Logical();
 
@@ -149,12 +147,6 @@ void AssertEquals(Dataset const& lhs, Dataset const& rhs) {
   EXPECT_EQ(lhs.linked_dataset_source.source_dataset.project_id,
             rhs.linked_dataset_source.source_dataset.project_id);
 
-  EXPECT_EQ(lhs.external_dataset_reference.hive_database.catalog_id,
-            rhs.external_dataset_reference.hive_database.catalog_id);
-
-  EXPECT_EQ(lhs.external_dataset_reference.hive_database.database,
-            rhs.external_dataset_reference.hive_database.database);
-
   EXPECT_EQ(lhs.default_rounding_mode.value, rhs.default_rounding_mode.value);
   EXPECT_EQ(lhs.storage_billing_model.value, rhs.storage_billing_model.value);
 }
@@ -163,51 +155,40 @@ std::string MakeDatasetJsonText() {
   return R"({"access":[
     {"dataset":{
          "dataset":{"datasetId":"d123","projectId":"p123"},
-         "target_types":[{"value":"VIEWS"}]},
-         "domain":"","group_by_email":"",
-         "iam_member":"",
+         "targetTypes":[{"value":"VIEWS"}]},
+         "domain":"",
+         "groupByEmail":"",
+         "iamMember":"",
          "role":"accessrole",
          "routine":{"datasetId":"d123","projectId":"p123","routineId":"r123"},
-         "special_group":"",
-         "user_by_email":"",
+         "specialGroup":"",
+         "userByEmail":"",
          "view":{"datasetId":"d123","projectId":"p123","tableId":"t123"}
     }],
-    "creation_time":0,
-    "dataset_reference":{"datasetId":"d123","projectId":"p123"},
-    "default_collation":"ddefaultcollation",
-    "default_partition_expiration":0,
-    "default_rounding_mode":{"value":"ROUND_HALF_EVEN"},
-    "default_table_expiration":0,
+    "creationTime":0,
+    "datasetReference":{"datasetId":"d123","projectId":"p123"},
+    "defaultCollation":"ddefaultcollation",
+    "defaultPartitionExpirationMs":0,
+    "defaultRoundingMode":{"value":"ROUND_HALF_EVEN"},
+    "defaultTableExpirationMs":0,
     "description":"ddescription",
     "etag":"detag",
-    "external_dataset_reference":{
-        "hive_database":{
-            "catalog_id":"c1",
-            "database":"d1",
-            "metadata_connectivity":{
-                "access_uri":"",
-                "access_uri_type":"",
-                "metadata_connection":"",
-                "storage_connection":""
-            }
-       }
-    },
-    "friendly_name":"dfriendlyname",
+    "friendlyName":"dfriendlyname",
     "id":"did",
-    "is_case_insensitive":true,
+    "isCaseInsensitive":true,
     "kind":"dkind",
     "labels":{"l1":"v1","l2":"v2"},
-    "last_modified_time":0,
-    "linked_dataset_source":{"source_dataset":{
+    "lastModifiedTime":0,
+    "linkedDatasetSource":{"sourceDataset":{
         "datasetId":"d123",
         "projectId":"p123"
     }},
     "location":"dlocation",
-    "max_time_travel":0,
+    "maxTimeTravelHours":0,
     "published":false,
-    "self_link":"dselflink",
-    "storage_billing_model":{"value":"LOGICAL"},
-    "tags":[{"tag_key":"t1","tag_value":"t2"}],
+    "selfLink":"dselflink",
+    "storageBillingModel":{"value":"LOGICAL"},
+    "tags":[{"tagKey":"t1","tagValue":"t2"}],
     "type":"dtype"})";
 }
 
@@ -232,10 +213,10 @@ std::string MakeListFormatDatasetJsonText() {
   return R"({
     "kind":"dkind",
     "id":"did",
-    "friendly_name":"dfriendlyname",
+    "friendlyName":"dfriendlyname",
     "location":"dlocation",
     "type":"DEFAULT",
-    "dataset_reference": {"projectId":"p123", "datasetId":"d123"},
+    "datasetReference": {"projectId":"p123", "datasetId":"d123"},
     "labels":{"l1":"v1","l2":"v2"}
 })";
 }
@@ -356,18 +337,6 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( linked_dataset_source {)"
       R"( source_dataset { project_id: "p123" dataset_id: "d123" })"
       R"( })"
-      R"( external_dataset_reference {)"
-      R"( hive_database {)"
-      R"( catalog_id: "c1")"
-      R"( database: "d1")"
-      R"( metadata_connectivity {)"
-      R"( access_uri_type: "")"
-      R"( access_uri: "")"
-      R"( metadata_connection: "")"
-      R"( storage_connection: "")"
-      R"( })"
-      R"( })"
-      R"( })"
       R"( default_rounding_mode {)"
       R"( value: "ROUND_HALF_EVEN")"
       R"( })"
@@ -414,18 +383,6 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( dataset_reference { project_id: "p123" dataset_id: "d123" })"
       R"( linked_dataset_source {)"
       R"( source_dataset { project_id: "p123" dataset_id: "d123" })"
-      R"( })"
-      R"( external_dataset_reference {)"
-      R"( hive_database {)"
-      R"( catalog_id: "c1")"
-      R"( database: "d1")"
-      R"( metadata_connectivity {)"
-      R"( access_uri_type: "")"
-      R"( access_uri: "")"
-      R"( metadata_connection: "")"
-      R"( storage_connection: "")"
-      R"( })"
-      R"( })"
       R"( })"
       R"( default_rounding_mode {)"
       R"( value: "ROUND_H...<truncated>...")"
@@ -509,18 +466,6 @@ TEST(DatasetTest, DatasetDebugString) {
     source_dataset {
       project_id: "p123"
       dataset_id: "d123"
-    }
-  }
-  external_dataset_reference {
-    hive_database {
-      catalog_id: "c1"
-      database: "d1"
-      metadata_connectivity {
-        access_uri_type: ""
-        access_uri: ""
-        metadata_connection: ""
-        storage_connection: ""
-      }
     }
   }
   default_rounding_mode {
