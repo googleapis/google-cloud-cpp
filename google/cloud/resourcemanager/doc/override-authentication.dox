@@ -16,6 +16,10 @@ Follow these links to find examples for other \c *Client classes:
 - [\c resourcemanager_v3::FoldersClient](@ref resourcemanager_v3::FoldersClient-service-account-snippet)
 - [\c resourcemanager_v3::OrganizationsClient](@ref resourcemanager_v3::OrganizationsClient-service-account-snippet)
 - [\c resourcemanager_v3::ProjectsClient](@ref resourcemanager_v3::ProjectsClient-service-account-snippet)
+- [\c resourcemanager_v3::TagBindingsClient](@ref resourcemanager_v3::TagBindingsClient-service-account-snippet)
+- [\c resourcemanager_v3::TagHoldsClient](@ref resourcemanager_v3::TagHoldsClient-service-account-snippet)
+- [\c resourcemanager_v3::TagKeysClient](@ref resourcemanager_v3::TagKeysClient-service-account-snippet)
+- [\c resourcemanager_v3::TagValuesClient](@ref resourcemanager_v3::TagValuesClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -48,6 +52,30 @@ guide for more details.
 /*! @page resourcemanager_v3::ProjectsClient-service-account-snippet Override resourcemanager_v3::ProjectsClient Authentication Defaults
 
 @snippet google/cloud/resourcemanager/v3/samples/projects_client_samples.cc with-service-account
+
+*/
+
+/*! @page resourcemanager_v3::TagBindingsClient-service-account-snippet Override resourcemanager_v3::TagBindingsClient Authentication Defaults
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_bindings_client_samples.cc with-service-account
+
+*/
+
+/*! @page resourcemanager_v3::TagHoldsClient-service-account-snippet Override resourcemanager_v3::TagHoldsClient Authentication Defaults
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_holds_client_samples.cc with-service-account
+
+*/
+
+/*! @page resourcemanager_v3::TagKeysClient-service-account-snippet Override resourcemanager_v3::TagKeysClient Authentication Defaults
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_keys_client_samples.cc with-service-account
+
+*/
+
+/*! @page resourcemanager_v3::TagValuesClient-service-account-snippet Override resourcemanager_v3::TagValuesClient Authentication Defaults
+
+@snippet google/cloud/resourcemanager/v3/samples/tag_values_client_samples.cc with-service-account
 
 */
 // <!-- inject-authentication-pages-end -->
