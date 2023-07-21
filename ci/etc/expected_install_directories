@@ -673,6 +673,9 @@
 ./include/google/cloud/functions/v1
 ./include/google/cloud/functions/v1/internal
 ./include/google/cloud/functions/v1/mocks
+./include/google/cloud/functions/v2
+./include/google/cloud/functions/v2/internal
+./include/google/cloud/functions/v2/mocks
 ./include/google/cloud/gkebackup
 ./include/google/cloud/gkebackup/v1
 ./include/google/cloud/gkebackup/v1/internal

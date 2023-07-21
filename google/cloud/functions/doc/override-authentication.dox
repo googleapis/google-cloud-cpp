@@ -11,6 +11,11 @@ The following example shows how to explicitly load a service account key file:
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_functions_client_samples.cc with-service-account
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c functions_v1::CloudFunctionsServiceClient](@ref functions_v1::CloudFunctionsServiceClient-service-account-snippet)
+- [\c functions_v2::FunctionServiceClient](@ref functions_v2::FunctionServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -30,6 +35,12 @@ guide for more details.
 /*! @page functions_v1::CloudFunctionsServiceClient-service-account-snippet Override functions_v1::CloudFunctionsServiceClient Authentication Defaults
 
 @snippet google/cloud/functions/v1/samples/cloud_functions_client_samples.cc with-service-account
+
+*/
+
+/*! @page functions_v2::FunctionServiceClient-service-account-snippet Override functions_v2::FunctionServiceClient Authentication Defaults
+
+@snippet google/cloud/functions/v2/samples/function_client_samples.cc with-service-account
 
 */
 // <!-- inject-authentication-pages-end -->

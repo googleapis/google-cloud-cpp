@@ -14,6 +14,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "cloudfunctions.googleapis.com")
   used by `MakeCloudFunctionsServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_FUNCTION_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudfunctions.googleapis.com")
+  used by `MakeFunctionServiceConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption

@@ -77,6 +77,11 @@ This assumes you have created a custom idempotency policy. Such as:
 @snippet cloud_functions_client_samples.cc custom-idempotency-policy
 
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c functions_v1::CloudFunctionsServiceClient](@ref functions_v1::CloudFunctionsServiceClient-retry-snippet)
+- [\c functions_v2::FunctionServiceClient](@ref functions_v2::FunctionServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section functions-override-retry-more-information More Information
@@ -100,6 +105,18 @@ This shows how to override the retry policies for functions_v1::CloudFunctionsSe
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/functions/v1/samples/cloud_functions_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page functions_v2::FunctionServiceClient-retry-snippet Override functions_v2::FunctionServiceClient Retry Policies
+
+This shows how to override the retry policies for functions_v2::FunctionServiceClient:
+
+@snippet google/cloud/functions/v2/samples/function_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/functions/v2/samples/function_client_samples.cc custom-idempotency-policy
 
 */
 // <!-- inject-retry-pages-end -->
