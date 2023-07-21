@@ -80,7 +80,6 @@ bigquery_v2_minimal_internal::Table MakeTable() {
   expected.location = "t-location";
   expected.default_collation = "t-defaultcollation";
   expected.max_staleness = "stale";
-  expected.case_insensitive = true;
   expected.require_partition_filter = true;
   expected.labels = labels;
   expected.num_time_travel_physical_bytes = 1;
@@ -110,7 +109,6 @@ bigquery_v2_minimal_internal::Table MakeTable() {
   bigquery_v2_minimal_internal::TableFieldSchema f;
   f.name = "fname-1";
   f.mode = "fmode";
-  f.is_measure = true;
 
   expected.schema.fields.emplace_back(f);
 
@@ -134,7 +132,6 @@ bigquery_v2_minimal_internal::Table MakeTable() {
   expected.table_constraints.foreign_keys.emplace_back(fk);
 
   expected.view.query = "select 1;";
-  expected.view.use_explicit_column_names = true;
 
   expected.materialized_view.query = "select 1;";
   expected.materialized_view.enable_refresh = true;
@@ -225,9 +222,6 @@ void AssertEquals(bigquery_v2_minimal_internal::Table const& lhs,
             rhs.table_constraints.foreign_keys[0].key_name);
 
   EXPECT_EQ(lhs.view.query, rhs.view.query);
-  EXPECT_EQ(lhs.view.use_explicit_column_names,
-            rhs.view.use_explicit_column_names);
-
   EXPECT_EQ(lhs.materialized_view.query, rhs.materialized_view.query);
   EXPECT_EQ(lhs.materialized_view.enable_refresh,
             rhs.materialized_view.enable_refresh);
@@ -283,61 +277,42 @@ void AssertEquals(bigquery_v2_minimal_internal::ListFormatTable const& lhs,
 }
 
 std::string MakeTableJsonText() {
-  return R"({"case_insensitive":true,"clone_definition":{)"
-         R"("base_table_reference":{"datasetId":"t-123","projectId":"t-123")"
-         R"(,"tableId":"t-123"})"
-         R"(,"clone_time":0},"clustering":{"fields":["c-field-1"]})"
-         R"(,"creation_time":1,"default_collation":"t-defaultcollation")"
-         R"(,"default_rounding_mode":{"value":"ROUND_HALF_EVEN"})"
-         R"(,"description":"t-description","etag":"t-etag")"
-         R"(,"expiration_time":1,"friendly_name":"t-friendlyname")"
-         R"(,"id":"t-id","kind":"t-kind","labels":{"l1":"v1","l2":"v2"})"
-         R"(,"last_modified_time":1,"location":"t-location","materialized_view":{)"
-         R"("allow_non_incremental_definition":false)"
-         R"(,"enable_refresh":true,"last_refresh_time":0,"max_staleness":"")"
-         R"(,"query":"select 1;","refresh_interval":0})"
-         R"(,"materialized_view_status":{"last_refresh_status":{)"
-         R"("location":"","message":"","reason":""},"refresh_watermark":123})"
-         R"(,"max_staleness":"stale","num_active_logical_bytes":1)"
-         R"(,"num_active_physical_bytes":1,"num_bytes":1)"
-         R"(,"num_long_term_bytes":1,"num_long_term_logical_bytes":1)"
-         R"(,"num_long_term_physical_bytes":1,"num_partitions":1)"
-         R"(,"num_physical_bytes":1,"num_rows":1)"
-         R"(,"num_time_travel_physical_bytes":1,"num_total_logical_bytes":1)"
-         R"(,"num_total_physical_bytes":1,"range_partitioning":{)"
-         R"("field":"range-partition-field","range":{"end":"")"
-         R"(,"interval":"","start":""}},"require_partition_filter":true)"
-         R"(,"schema":{"fields":[{"categories":{"names":[]})"
-         R"(,"collation":"","data_classification_tags":{"names":[]})"
-         R"(,"default_value_expression":"","description":"")"
-         R"(,"fields":{"fields":[]},"is_measure":true,"max_length":0)"
-         R"(,"mode":"fmode","name":"fname-1")"
-         R"(,"policy_tags":{"names":[]},"precision":0,"range_element_type":{)"
-         R"("type":""},"rounding_mode":{"value":""})"
-         R"(,"scale":0,"type":""}]},"self_link":"t-selflink")"
-         R"(,"table_constraints":{"foreign_keys":[{"column_references":[])"
-         R"(,"key_name":"fkey-1","referenced_table":{"datasetId":"")"
-         R"(,"projectId":"","tableId":""}}])"
-         R"(,"primary_key":{"columns":["pcol-1"]}},"table_reference":{)"
-         R"("datasetId":"t-123","projectId":"t-123")"
-         R"(,"tableId":"t-123"},"time_partitioning":{)"
-         R"("expiration_time":123,"field":"time-partition-field","type":""})"
-         R"(,"type":"t-type","view":{"query":"select 1;")"
-         R"(,"use_explicit_column_names":true)"
-         R"(,"use_legacy_sql":false,"user_defined_function_resources":[]}})";
+  return R"({"cloneDefinition":{"baseTableReference":{"datasetId":"t-123","projectId":"t-123")"
+         R"(,"tableId":"t-123"},"cloneTime":0},"clustering":{"fields":["c-field-1"]})"
+         R"(,"creationTime":1,"defaultCollation":"t-defaultcollation")"
+         R"(,"defaultRoundingMode":{"value":"ROUND_HALF_EVEN"},"description":"t-description","etag":"t-etag")"
+         R"(,"expirationTime":1,"friendlyName":"t-friendlyname","id":"t-id","kind":"t-kind")"
+         R"(,"labels":{"l1":"v1","l2":"v2"},"lastModifiedTime":1,"location":"t-location")"
+         R"(,"materializedView":{"enableRefresh":true,"lastRefreshTime":0,"query":"select 1;")"
+         R"(,"refreshIntervalMs":0},"materializedViewStatus":{"lastRefreshStatus":{"location":"","message":"")"
+         R"(,"reason":""},"refreshWatermark":123},"maxStaleness":"stale","numActiveLogicalBytes":1)"
+         R"(,"numActivePhysicalBytes":1,"numBytes":1,"numLongTermBytes":1,"numLongTermLogicalBytes":1)"
+         R"(,"numLongTermPhysicalBytes":1,"numPartitions":1,"numPhysicalBytes":1,"numRows":1)"
+         R"(,"numTimeTravelPhysicalBytes":1,"numTotalLogicalBytes":1,"numTotalPhysicalBytes":1)"
+         R"(,"rangePartitioning":{"field":"range-partition-field","range":{"end":"","interval":"","start":""}})"
+         R"(,"requirePartitionFilter":true,"schema":{"fields":[{"categories":{"names":[]})"
+         R"(,"collation":"","defaultValueExpression":"","description":"","fields":{"fields":[]})"
+         R"(,"maxLength":0,"mode":"fmode","name":"fname-1","policyTags":{"names":[]},"precision":0)"
+         R"(,"rangeElementType":{"type":""},"roundingMode":{"value":""},"scale":0,"type":""}]})"
+         R"(,"selfLink":"t-selflink","tableConstraints":{"foreignKeys":[{"columnReferences":[])"
+         R"(,"keyName":"fkey-1","referencedTable":{"datasetId":"","projectId":"","tableId":""}}])"
+         R"(,"primaryKey":{"columns":["pcol-1"]}},"tableReference":{"datasetId":"t-123")"
+         R"(,"projectId":"t-123","tableId":"t-123"},"timePartitioning":{"expirationTime":123)"
+         R"(,"field":"time-partition-field","type":""},"type":"t-type","view":{"query":"select 1;")"
+         R"(,"useLegacySql":false,"userDefinedFunctionResources":[]}})";
 }
 
 std::string MakeListFormatTableJsonText() {
-  return R"({"clustering":{"fields":["c-field-1"]},"creation_time":1)"
-         R"(,"expiration_time":1,"friendly_name":"t-friendlyname")"
-         R"(,"hive_partitioning_options":{"fields":["h-field-1"],"mode":"h-mode")"
-         R"(,"require_partition_filter":true,"source_uri_prefix":""})"
+  return R"({"clustering":{"fields":["c-field-1"]},"creationTime":1)"
+         R"(,"expirationTime":1,"friendlyName":"t-friendlyname")"
+         R"(,"hivePartitioningOptions":{"fields":["h-field-1"],"mode":"h-mode")"
+         R"(,"requirePartitionFilter":true,"sourceUriPrefix":""})"
          R"(,"id":"t-id","kind":"t-kind","labels":{"l1":"v1","l2":"v2"})"
-         R"(,"range_partitioning":{"field":"range-partition-field")"
-         R"(,"range":{"end":"","interval":"","start":""}},"table_reference":{)"
+         R"(,"rangePartitioning":{"field":"range-partition-field")"
+         R"(,"range":{"end":"","interval":"","start":""}},"tableReference":{)"
          R"("datasetId":"t-123","projectId":"t-123","tableId":"t-123"})"
-         R"(,"time_partitioning":{"expiration_time":123,"field":"time-partition-field")"
-         R"(,"type":""},"type":"t-type","view":{"use_legacy_sql":true}})";
+         R"(,"timePartitioning":{"expirationTime":123,"field":"time-partition-field")"
+         R"(,"type":""},"type":"t-type","view":{"useLegacySql":true}})";
 }
 
 std::string MakeListTablesResponseJsonText() {
@@ -345,8 +320,8 @@ std::string MakeListTablesResponseJsonText() {
       bigquery_v2_minimal_testing::MakeListFormatTableJsonText();
   return R"({"etag": "tag-1",
           "kind": "kind-1",
-          "next_page_token": "npt-123",
-          "total_items": "1",
+          "nextPageToken": "npt-123",
+          "totalItems": "1",
           "tables": [)" +
          tables_json_txt + R"(]})";
 }

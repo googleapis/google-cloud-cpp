@@ -33,10 +33,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Disabling clang-tidy here as the namespace is needed for using the
-// NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT.
-using namespace nlohmann::literals;  // NOLINT
-
 struct CloneDefinition {
   TableReference base_table_reference;
   std::chrono::system_clock::time_point clone_time;
@@ -45,6 +41,8 @@ struct CloneDefinition {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
+void to_json(nlohmann::json& j, CloneDefinition const& c);
+void from_json(nlohmann::json const& j, CloneDefinition& c);
 
 struct Table {
   std::string kind;
@@ -59,7 +57,6 @@ struct Table {
   std::string max_staleness;
 
   bool require_partition_filter = false;
-  bool case_insensitive = false;
 
   std::chrono::system_clock::time_point creation_time;
   std::chrono::system_clock::time_point expiration_time;
@@ -98,6 +95,8 @@ struct Table {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
+void to_json(nlohmann::json& j, Table const& t);
+void from_json(nlohmann::json const& j, Table& t);
 
 struct ListFormatView {
   bool use_legacy_sql = false;
@@ -106,7 +105,8 @@ struct ListFormatView {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ListFormatView, use_legacy_sql);
+void to_json(nlohmann::json& j, ListFormatView const& v);
+void from_json(nlohmann::json const& j, ListFormatView& v);
 
 struct HivePartitioningOptions {
   std::string mode;
@@ -120,10 +120,8 @@ struct HivePartitioningOptions {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(HivePartitioningOptions, mode,
-                                                source_uri_prefix,
-                                                require_partition_filter,
-                                                fields);
+void to_json(nlohmann::json& j, HivePartitioningOptions const& h);
+void from_json(nlohmann::json const& j, HivePartitioningOptions& h);
 
 struct ListFormatTable {
   std::string kind;
@@ -146,13 +144,6 @@ struct ListFormatTable {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-
-void to_json(nlohmann::json& j, CloneDefinition const& c);
-void from_json(nlohmann::json const& j, CloneDefinition& c);
-
-void to_json(nlohmann::json& j, Table const& t);
-void from_json(nlohmann::json const& j, Table& t);
-
 void to_json(nlohmann::json& j, ListFormatTable const& t);
 void from_json(nlohmann::json const& j, ListFormatTable& t);
 

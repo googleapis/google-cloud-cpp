@@ -55,10 +55,10 @@ TEST(JobStatsTest, JobStatsToFromJson) {
       R"(,"waitRatioMax":1234.1234,"writeMsAvg":10,"writeMsMax":10,"writeRatioAvg":1234.1234)"
       R"(,"writeRatioMax":1234.1234}],"referencedRoutines":[{"datasetId":"1","projectId":"2","routineId":"3"}])"
       R"(,"referencedTables":[{"datasetId":"1","projectId":"2","tableId":"3"}],"schema":{"fields":[{)"
-      R"("categories":{"names":[]},"collation":"","data_classification_tags":{"names":[]})"
-      R"(,"default_value_expression":"","description":"","fields":{"fields":[]},"is_measure":true)"
-      R"(,"max_length":0,"mode":"fmode","name":"fname-1","policy_tags":{"names":[]},"precision":0)"
-      R"(,"range_element_type":{"type":""},"rounding_mode":{"value":""},"scale":0,"type":""}]})"
+      R"("categories":{"names":[]},"collation":"")"
+      R"(,"defaultValueExpression":"","description":"","fields":{"fields":[]})"
+      R"(,"maxLength":0,"mode":"fmode","name":"fname-1","policyTags":{"names":[]},"precision":0)"
+      R"(,"rangeElementType":{"type":""},"roundingMode":{"value":""},"scale":0,"type":""}]})"
       R"(,"searchStatistics":{"indexUnusedReasons":[{"baseTable":{"datasetId":"1","projectId":"2")"
       R"(,"tableId":"3"},"code":{"value":"BASE_TABLE_TOO_SMALL"},"indexName":"test-index","message":""}])"
       R"(,"indexUsageMode":{"value":"PARTIALLY_USED"}},"statementType":"statement_type")"
@@ -143,8 +143,8 @@ TEST(JobStatsTest, DebugString) {
       R"( project_id: "2" dataset_id: "1" routine_id: "3" } schema { fields {)"
       R"( name: "fname-1" type: "" mode: "fmode" description: "" collation: "")"
       R"( default_value_expression: "" max_length: 0 precision: 0 scale: 0)"
-      R"( is_measure: true categories { } policy_tags { })"
-      R"( data_classification_tags { } rounding_mode { value: "" })"
+      R"( categories { } policy_tags { })"
+      R"( rounding_mode { value: "" })"
       R"( range_element_type { type: "" } } } dml_stats { inserted_row_count: 1234)"
       R"( deleted_row_count: 1234 updated_row_count: 1234 } ddl_target_table {)"
       R"( project_id: "2" dataset_id: "1" table_id: "3" })"
@@ -226,8 +226,8 @@ TEST(JobStatsTest, DebugString) {
       R"( routine_id: "3" } schema { fields { name: "fname-1" type: "")"
       R"( mode: "fmode" description: "" collation: "")"
       R"( default_value_expression: "" max_length: 0 precision: 0 scale: 0)"
-      R"( is_measure: true categories { } policy_tags { })"
-      R"( data_classification_tags { } rounding_mode { value: "" })"
+      R"( categories { } policy_tags { })"
+      R"( rounding_mode { value: "" })"
       R"( range_element_type { type: "" } } })"
       R"( dml_stats { inserted_row_count: 1234 deleted_row_count: 1234)"
       R"( updated_row_count: 1234 })"
@@ -406,12 +406,9 @@ TEST(JobStatsTest, DebugString) {
         max_length: 0
         precision: 0
         scale: 0
-        is_measure: true
         categories {
         }
         policy_tags {
-        }
-        data_classification_tags {
         }
         rounding_mode {
           value: ""

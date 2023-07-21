@@ -82,12 +82,12 @@ TEST(JobQueryStatsTest, JobQueryStatsToFromJson) {
       R"(,"routineId":"3"}],"referencedTables":[{)"
       R"("datasetId":"1","projectId":"2","tableId":"3"}])"
       R"(,"schema":{"fields":[{"categories":{"names":[]})"
-      R"(,"collation":"","data_classification_tags":{"names":[]})"
-      R"(,"default_value_expression":"","description":"","fields":{)"
-      R"("fields":[]},"is_measure":true,"max_length":0)"
-      R"(,"mode":"fmode","name":"fname-1","policy_tags":{)"
-      R"("names":[]},"precision":0,"range_element_type":{"type":""})"
-      R"(,"rounding_mode":{"value":""},"scale":0,"type":""}]})"
+      R"(,"collation":"")"
+      R"(,"defaultValueExpression":"","description":"","fields":{)"
+      R"("fields":[]},"maxLength":0)"
+      R"(,"mode":"fmode","name":"fname-1","policyTags":{)"
+      R"("names":[]},"precision":0,"rangeElementType":{"type":""})"
+      R"(,"roundingMode":{"value":""},"scale":0,"type":""}]})"
       R"(,"searchStatistics":{"indexUnusedReasons":[{"baseTable":{)"
       R"("datasetId":"1","projectId":"2","tableId":"3"},"code":{)"
       R"("value":"BASE_TABLE_TOO_SMALL"},"indexName":"test-index")"
@@ -164,8 +164,8 @@ TEST(JobQueryStatsTest, DebugString) {
       R"( referenced_routines { project_id: "2" dataset_id: "1" routine_id: "3" })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode" description: "")"
       R"( collation: "" default_value_expression: "" max_length: 0 precision: 0)"
-      R"( scale: 0 is_measure: true categories { } policy_tags { })"
-      R"( data_classification_tags { } rounding_mode { value: "" })"
+      R"( scale: 0 categories { } policy_tags { })"
+      R"( rounding_mode { value: "" })"
       R"( range_element_type { type: "" } } })"
       R"( dml_stats {)"
       R"( inserted_row_count: 1234 deleted_row_count: 1234 updated_row_count: 1234 })"
@@ -231,8 +231,8 @@ TEST(JobQueryStatsTest, DebugString) {
       R"( referenced_routines { project_id: "2" dataset_id: "1" routine_id: "3" })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode" description: "")"
       R"( collation: "" default_value_expression: "" max_length: 0 precision: 0)"
-      R"( scale: 0 is_measure: true categories { } policy_tags { })"
-      R"( data_classification_tags { } rounding_mode { value: "" })"
+      R"( scale: 0 categories { } policy_tags { })"
+      R"( rounding_mode { value: "" })"
       R"( range_element_type { type: "" } } })"
       R"( dml_stats {)"
       R"( inserted_row_count: 1234 deleted_row_count: 1234 updated_row_count: 1234 })"
@@ -370,12 +370,9 @@ TEST(JobQueryStatsTest, DebugString) {
       max_length: 0
       precision: 0
       scale: 0
-      is_measure: true
       categories {
       }
       policy_tags {
-      }
-      data_classification_tags {
       }
       rounding_mode {
         value: ""

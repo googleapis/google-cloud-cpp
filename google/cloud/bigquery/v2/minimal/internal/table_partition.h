@@ -41,6 +41,8 @@ struct TimePartitioning {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
+void to_json(nlohmann::json& j, TimePartitioning const& t);
+void from_json(nlohmann::json const& j, TimePartitioning& t);
 
 struct Range {
   std::string start;
@@ -72,19 +74,6 @@ struct Clustering {
                           int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Clustering, fields);
-
-inline void to_json(nlohmann::json& j, TimePartitioning const& t) {
-  j = nlohmann::json{{"type", t.type}, {"field", t.field}};
-
-  ToJson(t.expiration_time, j, "expiration_time");
-}
-
-inline void from_json(nlohmann::json const& j, TimePartitioning& t) {
-  if (j.contains("type")) j.at("type").get_to(t.type);
-  if (j.contains("field")) j.at("field").get_to(t.field);
-
-  FromJson(t.expiration_time, j, "expiration_time");
-}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

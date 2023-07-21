@@ -41,14 +41,13 @@ struct UserDefinedFunctionResource {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(UserDefinedFunctionResource,
-                                                resource_uri, inline_code);
+void to_json(nlohmann::json& j, UserDefinedFunctionResource const& u);
+void from_json(nlohmann::json const& j, UserDefinedFunctionResource& u);
 
 struct ViewDefinition {
   std::string query;
 
   bool use_legacy_sql = false;
-  bool use_explicit_column_names = false;
 
   std::vector<UserDefinedFunctionResource> user_defined_function_resources;
 
@@ -56,15 +55,11 @@ struct ViewDefinition {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
-    ViewDefinition, query, use_legacy_sql, use_explicit_column_names,
-    user_defined_function_resources);
+void to_json(nlohmann::json& j, ViewDefinition const& v);
+void from_json(nlohmann::json const& j, ViewDefinition& v);
 
 struct MaterializedViewDefinition {
   std::string query;
-  std::string max_staleness;
-
-  bool allow_non_incremental_definition = false;
   bool enable_refresh = false;
 
   std::chrono::milliseconds refresh_interval_time =
@@ -75,6 +70,8 @@ struct MaterializedViewDefinition {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
+void to_json(nlohmann::json& j, MaterializedViewDefinition const& m);
+void from_json(nlohmann::json const& j, MaterializedViewDefinition& m);
 
 struct MaterializedViewStatus {
   std::chrono::system_clock::time_point refresh_watermark;
@@ -84,6 +81,8 @@ struct MaterializedViewStatus {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
+void to_json(nlohmann::json& j, MaterializedViewStatus const& m);
+void from_json(nlohmann::json const& j, MaterializedViewStatus& m);
 
 struct TableMetadataView {
   static TableMetadataView UnSpecified();
@@ -98,12 +97,6 @@ struct TableMetadataView {
                           int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableMetadataView, value);
-
-void to_json(nlohmann::json& j, MaterializedViewDefinition const& m);
-void from_json(nlohmann::json const& j, MaterializedViewDefinition& m);
-
-void to_json(nlohmann::json& j, MaterializedViewStatus const& m);
-void from_json(nlohmann::json const& j, MaterializedViewStatus& m);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

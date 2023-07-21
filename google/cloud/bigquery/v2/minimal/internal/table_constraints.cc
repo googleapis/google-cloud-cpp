@@ -57,6 +57,49 @@ std::string TableConstraints::DebugString(absl::string_view name,
       .Build();
 }
 
+void to_json(nlohmann::json& j, TableConstraints const& t) {
+  j = nlohmann::json{{"primaryKey", t.primary_key},
+                     {"foreignKeys", t.foreign_keys}};
+}
+void from_json(nlohmann::json const& j, TableConstraints& t) {
+  // TODO(#12188): Implement SafeGetTo(...) for potential performance
+  // improvement.
+  if (j.contains("primaryKey")) j.at("primaryKey").get_to(t.primary_key);
+  if (j.contains("foreignKeys")) j.at("foreignKeys").get_to(t.foreign_keys);
+}
+
+void to_json(nlohmann::json& j, ForeignKey const& f) {
+  j = nlohmann::json{{"keyName", f.key_name},
+                     {"referencedTable", f.referenced_table},
+                     {"columnReferences", f.column_references}};
+}
+void from_json(nlohmann::json const& j, ForeignKey& f) {
+  // TODO(#12188): Implement SafeGetTo(...) for potential performance
+  // improvement.
+  if (j.contains("keyName")) j.at("keyName").get_to(f.key_name);
+  if (j.contains("referencedTable")) {
+    j.at("referencedTable").get_to(f.referenced_table);
+  }
+  if (j.contains("columnReferences")) {
+    j.at("columnReferences").get_to(f.column_references);
+  }
+}
+
+void to_json(nlohmann::json& j, ColumnReference const& c) {
+  j = nlohmann::json{{"referencingColumn", c.referencing_column},
+                     {"referencedColumn", c.referenced_column}};
+}
+void from_json(nlohmann::json const& j, ColumnReference& c) {
+  // TODO(#12188): Implement SafeGetTo(...) for potential performance
+  // improvement.
+  if (j.contains("referencingColumn")) {
+    j.at("referencingColumn").get_to(c.referencing_column);
+  }
+  if (j.contains("referencedColumn")) {
+    j.at("referencedColumn").get_to(c.referenced_column);
+  }
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

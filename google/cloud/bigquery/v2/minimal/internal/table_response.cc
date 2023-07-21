@@ -27,17 +27,17 @@ namespace {
 
 bool valid_table(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("etag") && j.contains("id") &&
-          j.contains("table_reference"));
+          j.contains("tableReference"));
 }
 
 bool valid_list_format_table(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("id") &&
-          j.contains("table_reference"));
+          j.contains("tableReference"));
 }
 
 bool valid_tables_list(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("etag") &&
-          j.contains("next_page_token") && j.contains("tables"));
+          j.contains("nextPageToken") && j.contains("tables"));
 }
 
 StatusOr<nlohmann::json> parse_json(std::string const& payload) {
@@ -85,9 +85,9 @@ StatusOr<ListTablesResponse> ListTablesResponse::BuildFromHttpResponse(
 
   result.kind = json->value("kind", "");
   result.etag = json->value("etag", "");
-  result.next_page_token = json->value("next_page_token", "");
-  if (!absl::SimpleAtoi(json->value("total_items", "0"), &result.total_items)) {
-    return internal::InternalError("Invalid value for total_items",
+  result.next_page_token = json->value("nextPageToken", "");
+  if (!absl::SimpleAtoi(json->value("totalItems", "0"), &result.total_items)) {
+    return internal::InternalError("Invalid value for totalItems",
                                    GCP_ERROR_INFO());
   }
 
