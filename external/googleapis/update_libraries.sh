@@ -128,7 +128,11 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/eventarc/publishing/v1:publishing_cc_grpc"
   )"
   ["filestore"]="@com_google_googleapis//google/cloud/filestore/v1:filestore_cc_grpc"
-  ["functions"]="@com_google_googleapis//google/cloud/functions/v1:functions_cc_grpc"
+  ["functions"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/functions/v1:functions_cc_grpc" \
+      "@com_google_googleapis//google/cloud/functions/v2:functions_cc_grpc"
+  )"
   ["gkebackup"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/gkebackup/logging/v1:logging_cc_grpc" \
