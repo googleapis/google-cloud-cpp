@@ -134,6 +134,23 @@ TEST(ParseHttpTemplate, TwoVariableExplicit) {
       << ", expected=" << expected << ", parsed=" << *parsed;
 }
 
+TEST(ParseHttpTemplate, MatcherOutsideVariable) {
+  // This is allowed by the grammar, and used in
+  // cloud/gkeconnect/v1beta1/gateway.proto
+  auto parsed = ParsePathTemplate("/v1/a/*/b/**");
+  ASSERT_STATUS_OK(parsed);
+  auto const expected = PathTemplate{/*segments=*/{
+                                         MakeSegment("v1"),
+                                         MakeSegment("a"),
+                                         MakeMatchSegment(),
+                                         MakeSegment("b"),
+                                         MakeMatchRecursiveSegment(),
+                                     },
+                                     /*verb=*/{}};
+  EXPECT_TRUE(SameValues(expected, *parsed))
+      << ", expected=" << expected << ", parsed=" << *parsed;
+}
+
 TEST(ParseHttpTemplate, Complex) {
   auto parsed = ParsePathTemplate(
       "/v1/{parent=projects/*/databases/*/documents/*/**}/{collection_id}");
@@ -182,15 +199,18 @@ TEST(ParseHttpTemplate, Errors) {
       {"v1/projects/{project}", " offset 0\n"},
       {"/", " offset 1\n"},
       {"/:put", " offset 1\n"},
-      {"/v1:bad-verb", " offset 4\n"},
+      {"/v1:bad|verb", " offset 7\n"},
+      {"/v1:put ", " offset 7\n"},
       {"/v1//", " offset 4\n"},
       {"/v1/|**/", " offset 4\n"},
+      {"/v1/a/{p|}", " offset 8\n"},
       {"/v1/a/{p=}", " offset 9\n"},
       {"/v1/a/{=abc}", " offset 7\n"},
       {"/v1/a/{p=**|}", " offset 11\n"},
       {"/v1/a/{p", " offset 8\n"},
       {"/v1/a/{p} ", " offset 9\n"},
       {"/v1/a/{p=b/{c}}", " offset 11\n"},
+      {"/v1/a/{", " offset 7\n"},
   };
   for (auto const& test : cases) {
     SCOPED_TRACE("Testing with input=" + test.input);
@@ -198,6 +218,16 @@ TEST(ParseHttpTemplate, Errors) {
     EXPECT_THAT(parsed, StatusIs(StatusCode::kInvalidArgument,
                                  HasSubstr(test.expected)));
   }
+}
+
+TEST(ParsetHttpTemplate, OStream) {
+  auto parsed = ParsePathTemplate("/v1/a/{b=c}/d/{e=f/**/*}:put");
+  ASSERT_STATUS_OK(parsed);
+  std::ostringstream os;
+  os << *parsed;
+  EXPECT_EQ(os.str(),
+            "{segments=[ {v1} / {a} / {field_path=b, segments=[ {c} ]} / {d} /"
+            " {field_path=e, segments=[ {f} / {**} / {*} ]} ], verb=put}");
 }
 
 }  // namespace

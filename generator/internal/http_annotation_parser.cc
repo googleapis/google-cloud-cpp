@@ -15,6 +15,7 @@
 #include "generator/internal/http_annotation_parser.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/log.h"
 #include "absl/strings/match.h"
 
 namespace google {
@@ -186,10 +187,7 @@ ParseResult<std::string> ParseFieldPath(absl::string_view input,
 
 ParseResult<PathTemplate::Segment> ParseVariable(absl::string_view input,
                                                  std::size_t offset) {
-  auto candidate = input.substr(offset);
-  if (candidate.empty() || candidate[0] != '{') {
-    return ParseError(input, offset, " opening brace", GCP_ERROR_INFO());
-  }
+  // assert(input.size() != offset && input[offset] == '{');
   auto fp = ParseFieldPath(input, offset + 1);
   if (!fp) return std::move(fp).status();
   auto result = PathTemplate::Variable{std::move(fp->value), {}};
@@ -212,16 +210,6 @@ ParseResult<PathTemplate::Segment> ParseVariable(absl::string_view input,
   }
   result.segments = std::move(ps->value);
   return MakeParseSuccess(PathTemplate::Segment{std::move(result)}, offset + 1);
-}
-
-ParseResult<std::string> ParseVerb(absl::string_view input,
-                                   std::size_t offset) {
-  auto verb = input.substr(offset);
-  if (verb == "post" || verb == "get" || verb == "patch" || verb == "delete" ||
-      verb == "put") {
-    return MakeParseSuccess(std::string(verb), input.size());
-  }
-  return ParseError(input, offset, " http verb", GCP_ERROR_INFO());
 }
 
 void StreamSegments(std::ostream& os, PathTemplate::Segments const& segments) {
@@ -248,13 +236,14 @@ StatusOr<PathTemplate> ParsePathTemplate(absl::string_view input) {
     return ParseError(input, offset, " ':'", GCP_ERROR_INFO());
   }
   ++offset;
-  auto v = ParseVerb(input, offset);
+  auto v = ParseLiteral(input, offset);
   if (!v) return std::move(v).status();
   offset = v->end;
   if (input.size() != offset) {
     return ParseError(input, v->end, " end of input", GCP_ERROR_INFO());
   }
-  return PathTemplate{std::move(s->value), v->value};
+  return PathTemplate{std::move(s->value),
+                      absl::get<std::string>(v->value.value)};
 }
 
 std::ostream& operator<<(std::ostream& os, PathTemplate::Segment const& rhs) {
@@ -262,10 +251,11 @@ std::ostream& operator<<(std::ostream& os, PathTemplate::Segment const& rhs) {
     std::ostream& os;
     void operator()(PathTemplate::Match const&) { os << "*"; }
     void operator()(PathTemplate::MatchRecursive const&) { os << "**"; }
-    void operator()(std::string const& s) { os << "segment=" << s; }
+    void operator()(std::string const& s) { os << s; }
     void operator()(PathTemplate::Variable const& v) {
-      os << v.field_path;
+      os << "field_path=" << v.field_path;
       if (v.field_path.empty()) return;
+      os << ", segments=";
       StreamSegments(os, v.segments);
     }
   };
