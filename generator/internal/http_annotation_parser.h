@@ -41,9 +41,8 @@ namespace generator_internal {
  *     FieldPath = IDENT { "." IDENT } ;
  *     Verb     = ":" LITERAL ;
  *
- * The specific notation is not defined, but this seems to be inspired by
- * [Backus-Naur Form].  In this notation, `{ ... }` seems to allow for
- * repetition.
+ * The specific notation is not defined, but it seems inspired by
+ * [Backus-Naur Form].  In this notation, `{ ... }` allows repetition.
  *
  * The documentation goes on to say:
  *     A variable template must not contain other variables.
