@@ -175,7 +175,7 @@ ParseResult<std::string> ParseFieldPath(absl::string_view input,
     if (!s) return std::move(s).status();
     field_path.append(s->value);
     offset = s->end;
-    if (input[s->end] != '.') break;
+    if (input.size() == offset || input[offset] != '.') break;
     ++offset;
   }
   if (field_path.empty()) {
@@ -219,7 +219,7 @@ ParseResult<std::string> ParseVerb(absl::string_view input,
   auto verb = input.substr(offset);
   if (verb == "post" || verb == "get" || verb == "patch" || verb == "delete" ||
       verb == "put") {
-    return MakeParseSuccess(std::string(input.substr(offset)), input.size());
+    return MakeParseSuccess(std::string(verb), input.size());
   }
   return ParseError(input, offset, " http verb", GCP_ERROR_INFO());
 }
@@ -242,13 +242,16 @@ StatusOr<PathTemplate> ParsePathTemplate(absl::string_view input) {
   }
   auto s = ParseSegments(input, 1);
   if (!s) return std::move(s).status();
-  if (input.size() == s->end) return PathTemplate{std::move(s->value), {}};
-  if (input[s->end] != ':') {
-    return ParseError(input, s->end, " ':'", GCP_ERROR_INFO());
+  auto offset = s->end;
+  if (input.size() == offset) return PathTemplate{std::move(s->value), {}};
+  if (input[offset] != ':') {
+    return ParseError(input, offset, " ':'", GCP_ERROR_INFO());
   }
-  auto v = ParseVerb(input, s->end + 1);
+  ++offset;
+  auto v = ParseVerb(input, offset);
   if (!v) return std::move(v).status();
-  if (v->end != input.size()) {
+  offset = v->end;
+  if (input.size() != offset) {
     return ParseError(input, v->end, " end of input", GCP_ERROR_INFO());
   }
   return PathTemplate{std::move(s->value), v->value};
