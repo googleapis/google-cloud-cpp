@@ -171,13 +171,16 @@ ParseResult<std::string> ParseIdent(absl::string_view input,
 ParseResult<std::string> ParseFieldPath(absl::string_view input,
                                         std::size_t offset) {
   std::string field_path;
+  char const* sep = "";
   while (input.size() != offset) {
     auto s = ParseIdent(input, offset);
     if (!s) return std::move(s).status();
+    field_path.append(sep);
     field_path.append(s->value);
     offset = s->end;
     if (input.size() == offset || input[offset] != '.') break;
     ++offset;
+    sep = ".";
   }
   if (field_path.empty()) {
     return ParseError(input, offset, " identifier", GCP_ERROR_INFO());

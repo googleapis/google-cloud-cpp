@@ -109,6 +109,26 @@ TEST(ParseHttpTemplate, SingleVariableExplicit) {
       << ", expected=" << expected << ", parsed=" << *parsed;
 }
 
+TEST(ParseHttpTemplate, NestedFieldPath) {
+  auto parsed = ParsePathTemplate("/v1/{instance.name=projects/*/instances/*}");
+  ASSERT_STATUS_OK(parsed);
+  auto const expected = PathTemplate{
+      /*segments=*/{
+          MakeSegment("v1"),
+          MakeSegment(PathTemplate::Variable{/*field_path=*/"instance.name",
+                                             /*segments=*/
+                                             {
+                                                 MakeSegment("projects"),
+                                                 MakeMatchSegment(),
+                                                 MakeSegment("instances"),
+                                                 MakeMatchSegment(),
+                                             }}),
+      },
+      /*verb=*/{}};
+  EXPECT_TRUE(SameValues(expected, *parsed))
+      << ", expected=" << expected << ", parsed=" << *parsed;
+}
+
 TEST(ParseHttpTemplate, TwoVariableExplicit) {
   auto parsed = ParsePathTemplate(
       "/v1/projects/{project=project}/instances/{instance=instance}");
