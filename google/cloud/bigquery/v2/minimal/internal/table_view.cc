@@ -60,7 +60,6 @@ std::string ViewDefinition::DebugString(absl::string_view name,
   return internal::DebugFormatter(name, options, indent)
       .StringField("query", query)
       .Field("use_legacy_sql", use_legacy_sql)
-      .Field("use_explicit_column_names", use_explicit_column_names)
       .Field("user_defined_function_resources", user_defined_function_resources)
       .Build();
 }
@@ -69,9 +68,6 @@ std::string MaterializedViewDefinition::DebugString(
     absl::string_view name, TracingOptions const& options, int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("query", query)
-      .StringField("max_staleness", max_staleness)
-      .Field("allow_non_incremental_definition",
-             allow_non_incremental_definition)
       .Field("enable_refresh", enable_refresh)
       .Field("refresh_interval_time", refresh_interval_time)
       .Field("last_refresh_time", last_refresh_time)
@@ -88,37 +84,56 @@ std::string MaterializedViewStatus::DebugString(absl::string_view name,
 }
 
 void to_json(nlohmann::json& j, MaterializedViewDefinition const& m) {
-  j = nlohmann::json{
-      {"query", m.query},
-      {"max_staleness", m.max_staleness},
-      {"allow_non_incremental_definition", m.allow_non_incremental_definition},
-      {"enable_refresh", m.enable_refresh}};
+  j = nlohmann::json{{"query", m.query}, {"enableRefresh", m.enable_refresh}};
 
-  ToJson(m.refresh_interval_time, j, "refresh_interval");
-  ToJson(m.last_refresh_time, j, "last_refresh_time");
+  ToJson(m.refresh_interval_time, j, "refreshIntervalMs");
+  ToJson(m.last_refresh_time, j, "lastRefreshTime");
 }
 void from_json(nlohmann::json const& j, MaterializedViewDefinition& m) {
   if (j.contains("query")) j.at("query").get_to(m.query);
-  if (j.contains("max_staleness"))
-    j.at("max_staleness").get_to(m.max_staleness);
-  if (j.contains("allow_non_incremental_definition"))
-    j.at("allow_non_incremental_definition")
-        .get_to(m.allow_non_incremental_definition);
-  if (j.contains("enable_refresh"))
-    j.at("enable_refresh").get_to(m.enable_refresh);
+  if (j.contains("enableRefresh"))
+    j.at("enableRefresh").get_to(m.enable_refresh);
 
-  FromJson(m.refresh_interval_time, j, "refresh_interval");
-  FromJson(m.last_refresh_time, j, "last_refresh_time");
+  FromJson(m.refresh_interval_time, j, "refreshIntervalMs");
+  FromJson(m.last_refresh_time, j, "lastRefreshTime");
 }
 
 void to_json(nlohmann::json& j, MaterializedViewStatus const& m) {
-  j = nlohmann::json{{"last_refresh_status", m.last_refresh_status}};
-  ToJson(m.refresh_watermark, j, "refresh_watermark");
+  j = nlohmann::json{{"lastRefreshStatus", m.last_refresh_status}};
+  ToJson(m.refresh_watermark, j, "refreshWatermark");
 }
 void from_json(nlohmann::json const& j, MaterializedViewStatus& m) {
-  if (j.contains("last_refresh_status"))
-    j.at("last_refresh_status").get_to(m.last_refresh_status);
-  FromJson(m.refresh_watermark, j, "refresh_watermark");
+  if (j.contains("lastRefreshStatus"))
+    j.at("lastRefreshStatus").get_to(m.last_refresh_status);
+  FromJson(m.refresh_watermark, j, "refreshWatermark");
+}
+
+void to_json(nlohmann::json& j, ViewDefinition const& v) {
+  j = nlohmann::json{
+      {"query", v.query},
+      {"useLegacySql", v.use_legacy_sql},
+      {"userDefinedFunctionResources", v.user_defined_function_resources}};
+}
+void from_json(nlohmann::json const& j, ViewDefinition& v) {
+  // TODO(#12188): Implement SafeGetTo(...) for potential performance
+  // improvement.
+  if (j.contains("query")) j.at("query").get_to(v.query);
+  if (j.contains("useLegacySql")) j.at("useLegacySql").get_to(v.use_legacy_sql);
+  if (j.contains("userDefinedFunctionResources")) {
+    j.at("userDefinedFunctionResources")
+        .get_to(v.user_defined_function_resources);
+  }
+}
+
+void to_json(nlohmann::json& j, UserDefinedFunctionResource const& u) {
+  j = nlohmann::json{{"resourceUri", u.resource_uri},
+                     {"inlineCode", u.inline_code}};
+}
+void from_json(nlohmann::json const& j, UserDefinedFunctionResource& u) {
+  // TODO(#12188): Implement SafeGetTo(...) for potential performance
+  // improvement.
+  if (j.contains("resourceUri")) j.at("resourceUri").get_to(u.resource_uri);
+  if (j.contains("inlineCode")) j.at("inlineCode").get_to(u.inline_code);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

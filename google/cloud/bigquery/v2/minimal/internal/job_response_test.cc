@@ -957,10 +957,10 @@ TEST(InsertJobResponseTest, Success) {
       R"(,"writeRatioMax":1234.1234}],"referencedRoutines":[{"datasetId":"1","projectId":"2")"
       R"(,"routineId":"3"}],"referencedTables":[{"datasetId":"1","projectId":"2","tableId":"3"}])"
       R"(,"schema":{"fields":[{"categories":{"names":[]},"collation":"")"
-      R"(,"data_classification_tags":{"names":[]},"default_value_expression":"")"
-      R"(,"description":"","fields":{"fields":[]},"is_measure":true,"max_length":0)"
-      R"(,"mode":"fmode","name":"fname-1","policy_tags":{"names":[]},"precision":0)"
-      R"(,"range_element_type":{"type":""},"rounding_mode":{"value":""},"scale":0,"type":""}]})"
+      R"(,"defaultValueExpression":"")"
+      R"(,"description":"","fields":{"fields":[]},"maxLength":0)"
+      R"(,"mode":"fmode","name":"fname-1","policyTags":{"names":[]},"precision":0)"
+      R"(,"rangeElementType":{"type":""},"roundingMode":{"value":""},"scale":0,"type":""}]})"
       R"(,"searchStatistics":{"indexUnusedReasons":[{"baseTable":{"datasetId":"1")"
       R"(,"projectId":"2","tableId":"3"},"code":{"value":"BASE_TABLE_TOO_SMALL"})"
       R"(,"indexName":"test-index","message":""}],"indexUsageMode":{"value":"PARTIALLY_USED"}})"
@@ -1435,10 +1435,10 @@ TEST(CancelJobResponseTest, Success) {
       R"(,"writeRatioMax":1234.1234}],"referencedRoutines":[{"datasetId":"1","projectId":"2")"
       R"(,"routineId":"3"}],"referencedTables":[{"datasetId":"1","projectId":"2","tableId":"3"}])"
       R"(,"schema":{"fields":[{"categories":{"names":[]},"collation":"")"
-      R"(,"data_classification_tags":{"names":[]},"default_value_expression":"")"
-      R"(,"description":"","fields":{"fields":[]},"is_measure":true,"max_length":0)"
-      R"(,"mode":"fmode","name":"fname-1","policy_tags":{"names":[]},"precision":0)"
-      R"(,"range_element_type":{"type":""},"rounding_mode":{"value":""},"scale":0,"type":""}]})"
+      R"(,"defaultValueExpression":"")"
+      R"(,"description":"","fields":{"fields":[]},"maxLength":0)"
+      R"(,"mode":"fmode","name":"fname-1","policyTags":{"names":[]},"precision":0)"
+      R"(,"rangeElementType":{"type":""},"roundingMode":{"value":""},"scale":0,"type":""}]})"
       R"(,"searchStatistics":{"indexUnusedReasons":[{"baseTable":{"datasetId":"1")"
       R"(,"projectId":"2","tableId":"3"},"code":{"value":"BASE_TABLE_TOO_SMALL"})"
       R"(,"indexName":"test-index","message":""}],"indexUsageMode":{"value":"PARTIALLY_USED"}})"
@@ -1916,8 +1916,8 @@ TEST(QueryResponseTest, DebugString) {
       R"( schema { fields {)"
       R"( name: "fname-1" type: "" mode: "fmode" description: "")"
       R"( collation: "" default_value_expression: "" max_length: 0)"
-      R"( precision: 0 scale: 0 is_measure: true)"
-      R"( categories { } policy_tags { } data_classification_tags { })"
+      R"( precision: 0 scale: 0)"
+      R"( categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
       R"( session_info { session_id: "123" })"
@@ -1938,8 +1938,8 @@ TEST(QueryResponseTest, DebugString) {
       R"( fields { key: "string-key" value { value_kind: "val3" } } })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
       R"( description: "" collation: "" default_value_expression: "")"
-      R"( max_length: 0 precision: 0 scale: 0 is_measure: true categories { })"
-      R"( policy_tags { } data_classification_tags { })"
+      R"( max_length: 0 precision: 0 scale: 0 categories { })"
+      R"( policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
       R"( session_info { session_id: "123" } dml_stats { inserted_row_count: 10)"
@@ -1991,12 +1991,9 @@ TEST(QueryResponseTest, DebugString) {
         max_length: 0
         precision: 0
         scale: 0
-        is_measure: true
         categories {
         }
         policy_tags {
-        }
-        data_classification_tags {
         }
         rounding_mode {
           value: ""

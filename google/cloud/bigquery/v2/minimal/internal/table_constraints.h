@@ -29,10 +29,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Disabling clang-tidy here as the namespace is needed for using the
-// NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT.
-using namespace nlohmann::literals;  // NOLINT
-
 struct PrimaryKey {
   std::vector<std::string> columns;
 
@@ -50,9 +46,8 @@ struct ColumnReference {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ColumnReference,
-                                                referencing_column,
-                                                referenced_column);
+void to_json(nlohmann::json& j, ColumnReference const& c);
+void from_json(nlohmann::json const& j, ColumnReference& c);
 
 struct ForeignKey {
   std::string key_name;
@@ -63,9 +58,8 @@ struct ForeignKey {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ForeignKey, key_name,
-                                                referenced_table,
-                                                column_references);
+void to_json(nlohmann::json& j, ForeignKey const& f);
+void from_json(nlohmann::json const& j, ForeignKey& f);
 
 struct TableConstraints {
   PrimaryKey primary_key;
@@ -75,8 +69,8 @@ struct TableConstraints {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableConstraints, primary_key,
-                                                foreign_keys);
+void to_json(nlohmann::json& j, TableConstraints const& t);
+void from_json(nlohmann::json const& j, TableConstraints& t);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

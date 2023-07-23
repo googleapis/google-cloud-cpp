@@ -50,16 +50,6 @@ struct PolicyTagList {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(PolicyTagList, names);
 
-struct DataClassificationTagList {
-  std::vector<std::string> names;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DataClassificationTagList,
-                                                names);
-
 struct FieldElementType {
   std::string type;
 
@@ -82,13 +72,10 @@ struct TableFieldSchema {
   std::int64_t precision = 0;
   std::int64_t scale = 0;
 
-  bool is_measure = false;
-
   std::vector<std::shared_ptr<TableFieldSchema>> fields;
 
   CategoryList categories;
   PolicyTagList policy_tags;
-  DataClassificationTagList data_classification_tags;
   RoundingMode rounding_mode;
   FieldElementType range_element_type;
 
@@ -96,15 +83,6 @@ struct TableFieldSchema {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-
-struct TableSchema {
-  std::vector<TableFieldSchema> fields;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-
 void to_json(nlohmann::json& j, TableFieldSchema const& t);
 void from_json(nlohmann::json const& j, TableFieldSchema& t);
 
@@ -113,6 +91,13 @@ void to_json(nlohmann::json& j,
 void from_json(nlohmann::json const& j,
                std::vector<std::shared_ptr<TableFieldSchema>>& t);
 
+struct TableSchema {
+  std::vector<TableFieldSchema> fields;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+};
 void to_json(nlohmann::json& j, TableSchema const& t);
 void from_json(nlohmann::json const& j, TableSchema& t);
 // NOLINTEND

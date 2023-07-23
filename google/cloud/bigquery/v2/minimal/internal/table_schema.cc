@@ -45,13 +45,6 @@ std::string FieldElementType::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string DataClassificationTagList::DebugString(
-    absl::string_view name, TracingOptions const& options, int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .Field("names", names)
-      .Build();
-}
-
 std::string TableFieldSchema::DebugString(absl::string_view fname,
                                           TracingOptions const& options,
                                           int indent) const {
@@ -65,10 +58,8 @@ std::string TableFieldSchema::DebugString(absl::string_view fname,
       .Field("max_length", max_length)
       .Field("precision", precision)
       .Field("scale", scale)
-      .Field("is_measure", is_measure)
       .SubMessage("categories", categories)
       .SubMessage("policy_tags", policy_tags)
-      .SubMessage("data_classification_tags", data_classification_tags)
       .SubMessage("rounding_mode", rounding_mode)
       .SubMessage("range_element_type", range_element_type)
       .Build();
@@ -111,17 +102,15 @@ void to_json(nlohmann::json& j, TableFieldSchema const& t) {
                      {"mode", t.mode},
                      {"description", t.description},
                      {"collation", t.collation},
-                     {"default_value_expression", t.default_value_expression},
-                     {"max_length", t.max_length},
+                     {"defaultValueExpression", t.default_value_expression},
+                     {"maxLength", t.max_length},
                      {"precision", t.precision},
                      {"scale", t.scale},
-                     {"is_measure", t.is_measure},
                      {"fields", t.fields},
                      {"categories", t.categories},
-                     {"policy_tags", t.policy_tags},
-                     {"data_classification_tags", t.data_classification_tags},
-                     {"rounding_mode", t.rounding_mode},
-                     {"range_element_type", t.range_element_type}};
+                     {"policyTags", t.policy_tags},
+                     {"roundingMode", t.rounding_mode},
+                     {"rangeElementType", t.range_element_type}};
 }
 
 void from_json(nlohmann::json const& j, TableFieldSchema& t) {
@@ -130,21 +119,17 @@ void from_json(nlohmann::json const& j, TableFieldSchema& t) {
   if (j.contains("mode")) j.at("mode").get_to(t.mode);
   if (j.contains("description")) j.at("description").get_to(t.description);
   if (j.contains("collation")) j.at("collation").get_to(t.collation);
-  if (j.contains("default_value_expression"))
-    j.at("default_value_expression").get_to(t.default_value_expression);
-  if (j.contains("max_length")) j.at("max_length").get_to(t.max_length);
+  if (j.contains("defaultValueExpression"))
+    j.at("defaultValueExpression").get_to(t.default_value_expression);
+  if (j.contains("maxLength")) j.at("maxLength").get_to(t.max_length);
   if (j.contains("precision")) j.at("precision").get_to(t.precision);
   if (j.contains("scale")) j.at("scale").get_to(t.scale);
-  if (j.contains("is_measure")) j.at("is_measure").get_to(t.is_measure);
   if (j.contains("fields")) j.at("fields").get_to(t.fields);
   if (j.contains("categories")) j.at("categories").get_to(t.categories);
-  if (j.contains("policy_tags")) j.at("policy_tags").get_to(t.policy_tags);
-  if (j.contains("data_classification_tags"))
-    j.at("data_classification_tags").get_to(t.data_classification_tags);
-  if (j.contains("rounding_mode"))
-    j.at("rounding_mode").get_to(t.rounding_mode);
-  if (j.contains("range_element_type"))
-    j.at("range_element_type").get_to(t.range_element_type);
+  if (j.contains("policyTags")) j.at("policyTags").get_to(t.policy_tags);
+  if (j.contains("roundingMode")) j.at("roundingMode").get_to(t.rounding_mode);
+  if (j.contains("rangeElementType"))
+    j.at("rangeElementType").get_to(t.range_element_type);
 }
 
 void to_json(nlohmann::json& j, TableSchema const& t) {

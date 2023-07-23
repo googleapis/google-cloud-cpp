@@ -406,8 +406,8 @@ TEST(InsertJobRequest, DebugString) {
       R"( project_id: "2" dataset_id: "1" routine_id: "3" } schema { fields {)"
       R"( name: "fname-1" type: "" mode: "fmode" description: "" collation: "")"
       R"( default_value_expression: "" max_length: 0 precision: 0 scale: 0)"
-      R"( is_measure: true categories { } policy_tags { })"
-      R"( data_classification_tags { } rounding_mode { value: "" })"
+      R"( categories { } policy_tags { })"
+      R"( rounding_mode { value: "" })"
       R"( range_element_type { type: "" } } } dml_stats { inserted_row_count: 1234)"
       R"( deleted_row_count: 1234 updated_row_count: 1234 } ddl_target_table {)"
       R"( project_id: "2" dataset_id: "1" table_id: "3" })"
@@ -522,7 +522,7 @@ TEST(InsertJobRequest, DebugString) {
       R"( dataset_id: "1" routine_id: "3" } schema { fields { name: "fname-1")"
       R"( type: "" mode: "fmode" description: "" collation: "")"
       R"( default_value_expression: "" max_length: 0 precision: 0 scale: 0)"
-      R"( is_measure: true categories { } policy_tags { } data_classification_tags { })"
+      R"( categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( dml_stats { inserted_row_count: 1234 deleted_row_count: 1234)"
       R"( updated_row_count: 1234 } ddl_target_table { project_id: "2")"
@@ -844,12 +844,9 @@ TEST(InsertJobRequest, DebugString) {
             max_length: 0
             precision: 0
             scale: 0
-            is_measure: true
             categories {
             }
             policy_tags {
-            }
-            data_classification_tags {
             }
             rounding_mode {
               value: ""

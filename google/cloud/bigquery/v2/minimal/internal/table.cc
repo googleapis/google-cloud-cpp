@@ -46,7 +46,6 @@ std::string Table::DebugString(absl::string_view name,
       .StringField("default_collation", default_collation)
       .StringField("max_staleness", max_staleness)
       .Field("require_partition_filter", require_partition_filter)
-      .Field("case_insensitive", case_insensitive)
       .Field("creation_time", creation_time)
       .Field("expiration_time", expiration_time)
       .Field("last_modified_time", last_modified_time)
@@ -116,54 +115,56 @@ std::string ListFormatTable::DebugString(absl::string_view name,
 }
 
 void to_json(nlohmann::json& j, CloneDefinition const& c) {
-  j = nlohmann::json{{"base_table_reference", c.base_table_reference}};
-  ToJson(c.clone_time, j, "clone_time");
+  j = nlohmann::json{{"baseTableReference", c.base_table_reference}};
+  ToJson(c.clone_time, j, "cloneTime");
 }
 
 void from_json(nlohmann::json const& j, CloneDefinition& c) {
-  if (j.contains("base_table_reference"))
-    j.at("base_table_reference").get_to(c.base_table_reference);
-  FromJson(c.clone_time, j, "clone_time");
+  if (j.contains("baseTableReference")) {
+    j.at("baseTableReference").get_to(c.base_table_reference);
+  }
+  FromJson(c.clone_time, j, "cloneTime");
 }
 
 void to_json(nlohmann::json& j, ListFormatTable const& t) {
   j = nlohmann::json{{"kind", t.kind},
                      {"id", t.id},
-                     {"friendly_name", t.friendly_name},
+                     {"friendlyName", t.friendly_name},
                      {"type", t.type},
-                     {"table_reference", t.table_reference},
-                     {"time_partitioning", t.time_partitioning},
-                     {"range_partitioning", t.range_partitioning},
+                     {"tableReference", t.table_reference},
+                     {"timePartitioning", t.time_partitioning},
+                     {"rangePartitioning", t.range_partitioning},
                      {"clustering", t.clustering},
-                     {"hive_partitioning_options", t.hive_partitioning_options},
+                     {"hivePartitioningOptions", t.hive_partitioning_options},
                      {"view", t.view},
                      {"labels", t.labels}};
-  ToJson(t.creation_time, j, "creation_time");
-  ToJson(t.expiration_time, j, "expiration_time");
+  ToJson(t.creation_time, j, "creationTime");
+  ToJson(t.expiration_time, j, "expirationTime");
 }
 
 void from_json(nlohmann::json const& j, ListFormatTable& t) {
   if (j.contains("kind")) j.at("kind").get_to(t.kind);
   if (j.contains("id")) j.at("id").get_to(t.id);
   if (j.contains("type")) j.at("type").get_to(t.type);
-  if (j.contains("friendly_name"))
-    j.at("friendly_name").get_to(t.friendly_name);
-  if (j.contains("table_reference"))
-    j.at("table_reference").get_to(t.table_reference);
-  if (j.contains("time_partitioning"))
-    j.at("time_partitioning").get_to(t.time_partitioning);
-  if (j.contains("range_partitioning"))
-    j.at("range_partitioning").get_to(t.range_partitioning);
+  if (j.contains("friendlyName")) j.at("friendlyName").get_to(t.friendly_name);
+  if (j.contains("tableReference")) {
+    j.at("tableReference").get_to(t.table_reference);
+  }
+  if (j.contains("timePartitioning")) {
+    j.at("timePartitioning").get_to(t.time_partitioning);
+  }
+  if (j.contains("rangePartitioning")) {
+    j.at("rangePartitioning").get_to(t.range_partitioning);
+  }
   if (j.contains("clustering")) j.at("clustering").get_to(t.clustering);
-  if (j.contains("hive_partitioning_options"))
-    j.at("hive_partitioning_options").get_to(t.hive_partitioning_options);
+  if (j.contains("hivePartitioningOptions")) {
+    j.at("hivePartitioningOptions").get_to(t.hive_partitioning_options);
+  }
   if (j.contains("view")) j.at("view").get_to(t.view);
   if (j.contains("labels")) j.at("labels").get_to(t.labels);
-  if (j.contains("friendly_name"))
-    j.at("friendly_name").get_to(t.friendly_name);
 
-  FromJson(t.creation_time, j, "creation_time");
-  FromJson(t.expiration_time, j, "expiration_time");
+  FromJson(t.creation_time, j, "creationTime");
+  FromJson(t.expiration_time, j, "expirationTime");
 }
 
 void to_json(nlohmann::json& j, Table const& t) {
@@ -171,43 +172,42 @@ void to_json(nlohmann::json& j, Table const& t) {
       {"kind", t.kind},
       {"etag", t.etag},
       {"id", t.id},
-      {"self_link", t.self_link},
-      {"friendly_name", t.friendly_name},
+      {"selfLink", t.self_link},
+      {"friendlyName", t.friendly_name},
       {"description", t.description},
       {"type", t.type},
       {"location", t.location},
-      {"default_collation", t.default_collation},
-      {"max_staleness", t.max_staleness},
-      {"require_partition_filter", t.require_partition_filter},
-      {"case_insensitive", t.case_insensitive},
-      {"num_time_travel_physical_bytes", t.num_time_travel_physical_bytes},
-      {"num_total_logical_bytes", t.num_total_logical_bytes},
-      {"num_active_logical_bytes", t.num_active_logical_bytes},
-      {"num_long_term_logical_bytes", t.num_long_term_logical_bytes},
-      {"num_total_physical_bytes", t.num_total_physical_bytes},
-      {"num_active_physical_bytes", t.num_active_physical_bytes},
-      {"num_long_term_physical_bytes", t.num_long_term_physical_bytes},
-      {"num_partitions", t.num_partitions},
-      {"num_bytes", t.num_bytes},
-      {"num_physical_bytes", t.num_physical_bytes},
-      {"num_long_term_bytes", t.num_long_term_bytes},
-      {"num_rows", t.num_rows},
+      {"defaultCollation", t.default_collation},
+      {"maxStaleness", t.max_staleness},
+      {"requirePartitionFilter", t.require_partition_filter},
+      {"numTimeTravelPhysicalBytes", t.num_time_travel_physical_bytes},
+      {"numTotalLogicalBytes", t.num_total_logical_bytes},
+      {"numActiveLogicalBytes", t.num_active_logical_bytes},
+      {"numLongTermLogicalBytes", t.num_long_term_logical_bytes},
+      {"numTotalPhysicalBytes", t.num_total_physical_bytes},
+      {"numActivePhysicalBytes", t.num_active_physical_bytes},
+      {"numLongTermPhysicalBytes", t.num_long_term_physical_bytes},
+      {"numPartitions", t.num_partitions},
+      {"numBytes", t.num_bytes},
+      {"numPhysicalBytes", t.num_physical_bytes},
+      {"numLongTermBytes", t.num_long_term_bytes},
+      {"numRows", t.num_rows},
       {"labels", t.labels},
-      {"table_reference", t.table_reference},
+      {"tableReference", t.table_reference},
       {"schema", t.schema},
-      {"default_rounding_mode", t.default_rounding_mode},
-      {"time_partitioning", t.time_partitioning},
-      {"range_partitioning", t.range_partitioning},
+      {"defaultRoundingMode", t.default_rounding_mode},
+      {"timePartitioning", t.time_partitioning},
+      {"rangePartitioning", t.range_partitioning},
       {"clustering", t.clustering},
-      {"clone_definition", t.clone_definition},
-      {"table_constraints", t.table_constraints},
+      {"cloneDefinition", t.clone_definition},
+      {"tableConstraints", t.table_constraints},
       {"view", t.view},
-      {"materialized_view", t.materialized_view},
-      {"materialized_view_status", t.materialized_view_status}};
+      {"materializedView", t.materialized_view},
+      {"materializedViewStatus", t.materialized_view_status}};
 
-  ToJson(t.last_modified_time, j, "last_modified_time");
-  ToJson(t.expiration_time, j, "expiration_time");
-  ToJson(t.creation_time, j, "creation_time");
+  ToJson(t.last_modified_time, j, "lastModifiedTime");
+  ToJson(t.expiration_time, j, "expirationTime");
+  ToJson(t.creation_time, j, "creationTime");
 }
 
 void from_json(nlohmann::json const& j, Table& t) {
@@ -215,66 +215,112 @@ void from_json(nlohmann::json const& j, Table& t) {
   if (j.contains("etag")) j.at("etag").get_to(t.etag);
   if (j.contains("id")) j.at("id").get_to(t.id);
   if (j.contains("type")) j.at("type").get_to(t.type);
-  if (j.contains("self_link")) j.at("self_link").get_to(t.self_link);
-  if (j.contains("friendly_name"))
-    j.at("friendly_name").get_to(t.friendly_name);
+  if (j.contains("selfLink")) j.at("selfLink").get_to(t.self_link);
+  if (j.contains("friendlyName")) j.at("friendlyName").get_to(t.friendly_name);
   if (j.contains("description")) j.at("description").get_to(t.description);
   if (j.contains("location")) j.at("location").get_to(t.location);
-  if (j.contains("default_collation"))
-    j.at("default_collation").get_to(t.default_collation);
-  if (j.contains("max_staleness"))
-    j.at("max_staleness").get_to(t.max_staleness);
-  if (j.contains("require_partition_filter"))
+  if (j.contains("defaultCollation")) {
+    j.at("defaultCollation").get_to(t.default_collation);
+  }
+  if (j.contains("requirePartitionFilter")) {
+    j.at("requirePartitionFilter").get_to(t.require_partition_filter);
+  }
+  if (j.contains("maxStaleness")) j.at("maxStaleness").get_to(t.max_staleness);
+  if (j.contains("require_partition_filter")) {
     j.at("require_partition_filter").get_to(t.require_partition_filter);
-  if (j.contains("case_insensitive"))
-    j.at("case_insensitive").get_to(t.case_insensitive);
-  if (j.contains("num_time_travel_physical_bytes"))
-    j.at("num_time_travel_physical_bytes")
-        .get_to(t.num_time_travel_physical_bytes);
-  if (j.contains("num_total_logical_bytes"))
-    j.at("num_total_logical_bytes").get_to(t.num_total_logical_bytes);
-  if (j.contains("num_active_logical_bytes"))
-    j.at("num_active_logical_bytes").get_to(t.num_active_logical_bytes);
-  if (j.contains("num_long_term_logical_bytes"))
-    j.at("num_long_term_logical_bytes").get_to(t.num_long_term_logical_bytes);
-  if (j.contains("num_total_physical_bytes"))
-    j.at("num_total_physical_bytes").get_to(t.num_total_physical_bytes);
-  if (j.contains("num_active_physical_bytes"))
-    j.at("num_active_physical_bytes").get_to(t.num_active_physical_bytes);
-  if (j.contains("num_long_term_physical_bytes"))
-    j.at("num_long_term_physical_bytes").get_to(t.num_long_term_physical_bytes);
-  if (j.contains("num_partitions"))
-    j.at("num_partitions").get_to(t.num_partitions);
-  if (j.contains("num_bytes")) j.at("num_bytes").get_to(t.num_bytes);
-  if (j.contains("num_physical_bytes"))
-    j.at("num_physical_bytes").get_to(t.num_physical_bytes);
-  if (j.contains("num_long_term_bytes"))
-    j.at("num_long_term_bytes").get_to(t.num_long_term_bytes);
-  if (j.contains("num_rows")) j.at("num_rows").get_to(t.num_rows);
+  }
+  if (j.contains("numTimeTravelPhysicalBytes")) {
+    j.at("numTimeTravelPhysicalBytes").get_to(t.num_time_travel_physical_bytes);
+  }
+  if (j.contains("numTotalLogicalBytes")) {
+    j.at("numTotalLogicalBytes").get_to(t.num_total_logical_bytes);
+  }
+  if (j.contains("numActiveLogicalBytes")) {
+    j.at("numActiveLogicalBytes").get_to(t.num_active_logical_bytes);
+  }
+  if (j.contains("numLongTermLogicalBytes")) {
+    j.at("numLongTermLogicalBytes").get_to(t.num_long_term_logical_bytes);
+  }
+  if (j.contains("numTotalPhysicalBytes")) {
+    j.at("numTotalPhysicalBytes").get_to(t.num_total_physical_bytes);
+  }
+  if (j.contains("numActivePhysicalBytes")) {
+    j.at("numActivePhysicalBytes").get_to(t.num_active_physical_bytes);
+  }
+  if (j.contains("numLongTermPhysicalBytes")) {
+    j.at("numLongTermPhysicalBytes").get_to(t.num_long_term_physical_bytes);
+  }
+  if (j.contains("numPartitions")) {
+    j.at("numPartitions").get_to(t.num_partitions);
+  }
+  if (j.contains("numBytes")) j.at("numBytes").get_to(t.num_bytes);
+  if (j.contains("numPhysicalBytes")) {
+    j.at("numPhysicalBytes").get_to(t.num_physical_bytes);
+  }
+  if (j.contains("numLongTermBytes")) {
+    j.at("numLongTermBytes").get_to(t.num_long_term_bytes);
+  }
+  if (j.contains("numRows")) j.at("numRows").get_to(t.num_rows);
   if (j.contains("labels")) j.at("labels").get_to(t.labels);
-  if (j.contains("table_reference"))
-    j.at("table_reference").get_to(t.table_reference);
+  if (j.contains("tableReference")) {
+    j.at("tableReference").get_to(t.table_reference);
+  }
   if (j.contains("schema")) j.at("schema").get_to(t.schema);
-  if (j.contains("default_rounding_mode"))
-    j.at("default_rounding_mode").get_to(t.default_rounding_mode);
-  if (j.contains("time_partitioning"))
-    j.at("time_partitioning").get_to(t.time_partitioning);
-  if (j.contains("range_partitioning"))
-    j.at("range_partitioning").get_to(t.range_partitioning);
+  if (j.contains("defaultRoundingMode")) {
+    j.at("defaultRoundingMode").get_to(t.default_rounding_mode);
+  }
+  if (j.contains("timePartitioning")) {
+    j.at("timePartitioning").get_to(t.time_partitioning);
+  }
+  if (j.contains("rangePartitioning")) {
+    j.at("rangePartitioning").get_to(t.range_partitioning);
+  }
   if (j.contains("clustering")) j.at("clustering").get_to(t.clustering);
-  if (j.contains("clone_definition"))
-    j.at("clone_definition").get_to(t.clone_definition);
-  if (j.contains("table_constraints"))
-    j.at("table_constraints").get_to(t.table_constraints);
+  if (j.contains("cloneDefinition")) {
+    j.at("cloneDefinition").get_to(t.clone_definition);
+  }
+  if (j.contains("tableConstraints")) {
+    j.at("tableConstraints").get_to(t.table_constraints);
+  }
   if (j.contains("view")) j.at("view").get_to(t.view);
-  if (j.contains("materialized_view"))
-    j.at("materialized_view").get_to(t.materialized_view);
-  if (j.contains("materialized_view_status"))
-    j.at("materialized_view_status").get_to(t.materialized_view_status);
+  if (j.contains("materializedView")) {
+    j.at("materializedView").get_to(t.materialized_view);
+  }
+  if (j.contains("materializedViewStatus")) {
+    j.at("materializedViewStatus").get_to(t.materialized_view_status);
+  }
 
-  FromJson(t.last_modified_time, j, "last_modified_time");
-  FromJson(t.expiration_time, j, "expiration_time");
-  FromJson(t.creation_time, j, "creation_time");
+  FromJson(t.last_modified_time, j, "lastModifiedTime");
+  FromJson(t.expiration_time, j, "expirationTime");
+  FromJson(t.creation_time, j, "creationTime");
+}
+
+void to_json(nlohmann::json& j, HivePartitioningOptions const& h) {
+  j = nlohmann::json{{"mode", h.mode},
+                     {"sourceUriPrefix", h.source_uri_prefix},
+                     {"requirePartitionFilter", h.require_partition_filter},
+                     {"fields", h.fields}};
+}
+void from_json(nlohmann::json const& j, HivePartitioningOptions& h) {
+  // TODO(#12188): Implement SafeGetTo(...) for potential performance
+  // improvement.
+  if (j.contains("mode")) j.at("mode").get_to(h.mode);
+  if (j.contains("sourceUriPrefix")) {
+    j.at("sourceUriPrefix").get_to(h.source_uri_prefix);
+  }
+  if (j.contains("requirePartitionFilter")) {
+    j.at("requirePartitionFilter").get_to(h.require_partition_filter);
+  }
+  if (j.contains("fields")) j.at("fields").get_to(h.fields);
+}
+
+void to_json(nlohmann::json& j, ListFormatView const& v) {
+  j = nlohmann::json{{"useLegacySql", v.use_legacy_sql}};
+}
+void from_json(nlohmann::json const& j, ListFormatView& v) {
+  // TODO(#12188): Implement SafeGetTo(...) for potential performance
+  // improvement.
+  if (j.contains("useLegacySql")) j.at("useLegacySql").get_to(v.use_legacy_sql);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
