@@ -120,8 +120,9 @@ void to_json(nlohmann::json& j, CloneDefinition const& c) {
 }
 
 void from_json(nlohmann::json const& j, CloneDefinition& c) {
-  if (j.contains("baseTableReference"))
+  if (j.contains("baseTableReference")) {
     j.at("baseTableReference").get_to(c.base_table_reference);
+  }
   FromJson(c.clone_time, j, "cloneTime");
 }
 
@@ -146,15 +147,19 @@ void from_json(nlohmann::json const& j, ListFormatTable& t) {
   if (j.contains("id")) j.at("id").get_to(t.id);
   if (j.contains("type")) j.at("type").get_to(t.type);
   if (j.contains("friendlyName")) j.at("friendlyName").get_to(t.friendly_name);
-  if (j.contains("tableReference"))
+  if (j.contains("tableReference")) {
     j.at("tableReference").get_to(t.table_reference);
-  if (j.contains("timePartitioning"))
+  }
+  if (j.contains("timePartitioning")) {
     j.at("timePartitioning").get_to(t.time_partitioning);
-  if (j.contains("rangePartitioning"))
+  }
+  if (j.contains("rangePartitioning")) {
     j.at("rangePartitioning").get_to(t.range_partitioning);
+  }
   if (j.contains("clustering")) j.at("clustering").get_to(t.clustering);
-  if (j.contains("hivePartitioningOptions"))
+  if (j.contains("hivePartitioningOptions")) {
     j.at("hivePartitioningOptions").get_to(t.hive_partitioning_options);
+  }
   if (j.contains("view")) j.at("view").get_to(t.view);
   if (j.contains("labels")) j.at("labels").get_to(t.labels);
 
@@ -214,55 +219,76 @@ void from_json(nlohmann::json const& j, Table& t) {
   if (j.contains("friendlyName")) j.at("friendlyName").get_to(t.friendly_name);
   if (j.contains("description")) j.at("description").get_to(t.description);
   if (j.contains("location")) j.at("location").get_to(t.location);
-  if (j.contains("defaultCollation"))
+  if (j.contains("defaultCollation")) {
     j.at("defaultCollation").get_to(t.default_collation);
-  if (j.contains("requirePartitionFilter"))
+  }
+  if (j.contains("requirePartitionFilter")) {
     j.at("requirePartitionFilter").get_to(t.require_partition_filter);
+  }
   if (j.contains("maxStaleness")) j.at("maxStaleness").get_to(t.max_staleness);
-  if (j.contains("require_partition_filter"))
+  if (j.contains("require_partition_filter")) {
     j.at("require_partition_filter").get_to(t.require_partition_filter);
-  if (j.contains("numTimeTravelPhysicalBytes"))
+  }
+  if (j.contains("numTimeTravelPhysicalBytes")) {
     j.at("numTimeTravelPhysicalBytes").get_to(t.num_time_travel_physical_bytes);
-  if (j.contains("numTotalLogicalBytes"))
+  }
+  if (j.contains("numTotalLogicalBytes")) {
     j.at("numTotalLogicalBytes").get_to(t.num_total_logical_bytes);
-  if (j.contains("numActiveLogicalBytes"))
+  }
+  if (j.contains("numActiveLogicalBytes")) {
     j.at("numActiveLogicalBytes").get_to(t.num_active_logical_bytes);
-  if (j.contains("numLongTermLogicalBytes"))
+  }
+  if (j.contains("numLongTermLogicalBytes")) {
     j.at("numLongTermLogicalBytes").get_to(t.num_long_term_logical_bytes);
-  if (j.contains("numTotalPhysicalBytes"))
+  }
+  if (j.contains("numTotalPhysicalBytes")) {
     j.at("numTotalPhysicalBytes").get_to(t.num_total_physical_bytes);
-  if (j.contains("numActivePhysicalBytes"))
+  }
+  if (j.contains("numActivePhysicalBytes")) {
     j.at("numActivePhysicalBytes").get_to(t.num_active_physical_bytes);
-  if (j.contains("numLongTermPhysicalBytes"))
+  }
+  if (j.contains("numLongTermPhysicalBytes")) {
     j.at("numLongTermPhysicalBytes").get_to(t.num_long_term_physical_bytes);
-  if (j.contains("numPartitions"))
+  }
+  if (j.contains("numPartitions")) {
     j.at("numPartitions").get_to(t.num_partitions);
+  }
   if (j.contains("numBytes")) j.at("numBytes").get_to(t.num_bytes);
-  if (j.contains("numPhysicalBytes"))
+  if (j.contains("numPhysicalBytes")) {
     j.at("numPhysicalBytes").get_to(t.num_physical_bytes);
-  if (j.contains("numLongTermBytes"))
+  }
+  if (j.contains("numLongTermBytes")) {
     j.at("numLongTermBytes").get_to(t.num_long_term_bytes);
+  }
   if (j.contains("numRows")) j.at("numRows").get_to(t.num_rows);
   if (j.contains("labels")) j.at("labels").get_to(t.labels);
-  if (j.contains("tableReference"))
+  if (j.contains("tableReference")) {
     j.at("tableReference").get_to(t.table_reference);
+  }
   if (j.contains("schema")) j.at("schema").get_to(t.schema);
-  if (j.contains("defaultRoundingMode"))
+  if (j.contains("defaultRoundingMode")) {
     j.at("defaultRoundingMode").get_to(t.default_rounding_mode);
-  if (j.contains("timePartitioning"))
+  }
+  if (j.contains("timePartitioning")) {
     j.at("timePartitioning").get_to(t.time_partitioning);
-  if (j.contains("rangePartitioning"))
+  }
+  if (j.contains("rangePartitioning")) {
     j.at("rangePartitioning").get_to(t.range_partitioning);
+  }
   if (j.contains("clustering")) j.at("clustering").get_to(t.clustering);
-  if (j.contains("cloneDefinition"))
+  if (j.contains("cloneDefinition")) {
     j.at("cloneDefinition").get_to(t.clone_definition);
-  if (j.contains("tableConstraints"))
+  }
+  if (j.contains("tableConstraints")) {
     j.at("tableConstraints").get_to(t.table_constraints);
+  }
   if (j.contains("view")) j.at("view").get_to(t.view);
-  if (j.contains("materializedView"))
+  if (j.contains("materializedView")) {
     j.at("materializedView").get_to(t.materialized_view);
-  if (j.contains("materializedViewStatus"))
+  }
+  if (j.contains("materializedViewStatus")) {
     j.at("materializedViewStatus").get_to(t.materialized_view_status);
+  }
 
   FromJson(t.last_modified_time, j, "lastModifiedTime");
   FromJson(t.expiration_time, j, "expirationTime");
@@ -279,10 +305,12 @@ void from_json(nlohmann::json const& j, HivePartitioningOptions& h) {
   // TODO(#12188): Implement SafeGetTo(...) for potential performance
   // improvement.
   if (j.contains("mode")) j.at("mode").get_to(h.mode);
-  if (j.contains("sourceUriPrefix"))
+  if (j.contains("sourceUriPrefix")) {
     j.at("sourceUriPrefix").get_to(h.source_uri_prefix);
-  if (j.contains("requirePartitionFilter"))
+  }
+  if (j.contains("requirePartitionFilter")) {
     j.at("requirePartitionFilter").get_to(h.require_partition_filter);
+  }
   if (j.contains("fields")) j.at("fields").get_to(h.fields);
 }
 
