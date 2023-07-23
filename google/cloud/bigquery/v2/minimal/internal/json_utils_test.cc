@@ -21,6 +21,8 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::testing::IsEmpty;
+
 TEST(JsonUtilsTest, FromJsonMilliseconds) {
   auto const* const name = "start_time";
   auto const* json_text = R"({"start_time":10})";
@@ -96,6 +98,30 @@ TEST(JsonUtilsTest, ToJsonTimepoint) {
   ToJson(field, actual_json, name);
 
   EXPECT_EQ(expected_json, actual_json);
+}
+
+TEST(JsonUtilsTest, SafeGetToKeyPresent) {
+  auto const* const key = "project_id";
+  auto const* json_text = R"({"project_id":"123"})";
+  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  std::string val;
+  SafeGetTo(val, json, key);
+
+  EXPECT_EQ(val, "123");
+}
+
+TEST(JsonUtilsTest, SafeGetToKeyAbsent) {
+  auto const* const key = "job_id";
+  auto const* json_text = R"({"project_id":"123"})";
+  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  std::string val;
+  SafeGetTo(val, json, key);
+
+  EXPECT_THAT(val, IsEmpty());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
