@@ -180,7 +180,7 @@ void SetHttpGetQueryParameters(
     //   patch: "/v1/projects/{project}/instances/{instance}/databases"
     // In the first case 'parent' is expected to be found as a field in the
     // protobuf request message and is already included in the url. In the
-    // second case, both 'project' and 'instance' are exepcted as fields in
+    // second case, both 'project' and 'instance' are expected as fields in
     // the request and are already present in the url. No need to duplicate
     // these fields as query parameters.
     void operator()(HttpExtensionInfo const& info) {
