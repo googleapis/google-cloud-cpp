@@ -114,6 +114,36 @@ Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteEvent(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateAsset(
+    google::cloud::video::livestream::v1::CreateAssetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteAsset(
+    google::cloud::video::livestream::v1::DeleteAssetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetAsset(
+    google::cloud::video::livestream::v1::GetAssetRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListAssets(
+    google::cloud::video::livestream::v1::ListAssetsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetPool(
+    google::cloud::video::livestream::v1::GetPoolRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::UpdatePool(
+    google::cloud::video::livestream::v1::UpdatePoolRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<LivestreamServiceConnectionIdempotencyPolicy>
 MakeDefaultLivestreamServiceConnectionIdempotencyPolicy() {
   return std::make_unique<LivestreamServiceConnectionIdempotencyPolicy>();

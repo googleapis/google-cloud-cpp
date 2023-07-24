@@ -250,6 +250,28 @@ class LivestreamServiceConnection {
 
   virtual Status DeleteEvent(
       google::cloud::video::livestream::v1::DeleteEventRequest const& request);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::Asset>>
+  CreateAsset(
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteAsset(
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request);
+
+  virtual StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
+      google::cloud::video::livestream::v1::GetAssetRequest const& request);
+
+  virtual StreamRange<google::cloud::video::livestream::v1::Asset> ListAssets(
+      google::cloud::video::livestream::v1::ListAssetsRequest request);
+
+  virtual StatusOr<google::cloud::video::livestream::v1::Pool> GetPool(
+      google::cloud::video::livestream::v1::GetPoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::Pool>>
+  UpdatePool(
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request);
 };
 
 /**

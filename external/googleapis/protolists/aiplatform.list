@@ -99,6 +99,8 @@
 @com_google_googleapis//google/cloud/aiplatform/v1:prediction_service.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:publisher_model.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:saved_query.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:schedule.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:schedule_service.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:service_networking.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:specialist_pool.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:specialist_pool_service.proto

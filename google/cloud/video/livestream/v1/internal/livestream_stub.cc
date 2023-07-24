@@ -270,6 +270,96 @@ Status DefaultLivestreamServiceStub::DeleteEvent(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultLivestreamServiceStub::AsyncCreateAsset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::livestream::v1::CreateAssetRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::video::livestream::v1::CreateAssetRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateAsset(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultLivestreamServiceStub::AsyncDeleteAsset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::livestream::v1::DeleteAssetRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::video::livestream::v1::DeleteAssetRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteAsset(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::cloud::video::livestream::v1::Asset>
+DefaultLivestreamServiceStub::GetAsset(
+    grpc::ClientContext& client_context,
+    google::cloud::video::livestream::v1::GetAssetRequest const& request) {
+  google::cloud::video::livestream::v1::Asset response;
+  auto status = grpc_stub_->GetAsset(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse>
+DefaultLivestreamServiceStub::ListAssets(
+    grpc::ClientContext& client_context,
+    google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
+  google::cloud::video::livestream::v1::ListAssetsResponse response;
+  auto status = grpc_stub_->ListAssets(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::video::livestream::v1::Pool>
+DefaultLivestreamServiceStub::GetPool(
+    grpc::ClientContext& client_context,
+    google::cloud::video::livestream::v1::GetPoolRequest const& request) {
+  google::cloud::video::livestream::v1::Pool response;
+  auto status = grpc_stub_->GetPool(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultLivestreamServiceStub::AsyncUpdatePool(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::livestream::v1::UpdatePoolRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::video::livestream::v1::UpdatePoolRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdatePool(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

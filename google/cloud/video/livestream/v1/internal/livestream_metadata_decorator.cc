@@ -174,6 +174,57 @@ Status LivestreamServiceMetadata::DeleteEvent(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceMetadata::AsyncCreateAsset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncCreateAsset(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceMetadata::AsyncDeleteAsset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeleteAsset(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::Asset>
+LivestreamServiceMetadata::GetAsset(
+    grpc::ClientContext& context,
+    google::cloud::video::livestream::v1::GetAssetRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetAsset(context, request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse>
+LivestreamServiceMetadata::ListAssets(
+    grpc::ClientContext& context,
+    google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListAssets(context, request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::Pool>
+LivestreamServiceMetadata::GetPool(
+    grpc::ClientContext& context,
+    google::cloud::video::livestream::v1::GetPoolRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetPool(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceMetadata::AsyncUpdatePool(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+  SetMetadata(*context, "pool.name=" + request.pool().name());
+  return child_->AsyncUpdatePool(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

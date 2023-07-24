@@ -428,6 +428,150 @@ Status LivestreamServiceConnectionImpl::DeleteEvent(
       request, __func__);
 }
 
+future<StatusOr<google::cloud::video::livestream::v1::Asset>>
+LivestreamServiceConnectionImpl::CreateAsset(
+    google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::livestream::v1::Asset>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::video::livestream::v1::CreateAssetRequest const&
+                 request) {
+        return stub->AsyncCreateAsset(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::livestream::v1::Asset>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateAsset(request), polling_policy(), __func__);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceConnectionImpl::DeleteAsset(
+    google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::livestream::v1::OperationMetadata>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::video::livestream::v1::DeleteAssetRequest const&
+                 request) {
+        return stub->AsyncDeleteAsset(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::video::livestream::v1::OperationMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteAsset(request), polling_policy(), __func__);
+}
+
+StatusOr<google::cloud::video::livestream::v1::Asset>
+LivestreamServiceConnectionImpl::GetAsset(
+    google::cloud::video::livestream::v1::GetAssetRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(), idempotency_policy()->GetAsset(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::video::livestream::v1::GetAssetRequest const&
+                 request) { return stub_->GetAsset(context, request); },
+      request, __func__);
+}
+
+StreamRange<google::cloud::video::livestream::v1::Asset>
+LivestreamServiceConnectionImpl::ListAssets(
+    google::cloud::video::livestream::v1::ListAssetsRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<video_livestream_v1::LivestreamServiceRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListAssets(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::video::livestream::v1::Asset>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::video::livestream::v1::ListAssetsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::video::livestream::v1::ListAssetsRequest const&
+                    request) { return stub->ListAssets(context, request); },
+            r, function_name);
+      },
+      [](google::cloud::video::livestream::v1::ListAssetsResponse r) {
+        std::vector<google::cloud::video::livestream::v1::Asset> result(
+            r.assets().size());
+        auto& messages = *r.mutable_assets();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::video::livestream::v1::Pool>
+LivestreamServiceConnectionImpl::GetPool(
+    google::cloud::video::livestream::v1::GetPoolRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(), idempotency_policy()->GetPool(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::video::livestream::v1::GetPoolRequest const& request) {
+        return stub_->GetPool(context, request);
+      },
+      request, __func__);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::Pool>>
+LivestreamServiceConnectionImpl::UpdatePool(
+    google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::livestream::v1::Pool>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::video::livestream::v1::UpdatePoolRequest const&
+                 request) {
+        return stub->AsyncUpdatePool(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::livestream::v1::Pool>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdatePool(request), polling_policy(), __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_livestream_v1_internal
 }  // namespace cloud

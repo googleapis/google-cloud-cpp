@@ -307,6 +307,110 @@ Status LivestreamServiceClient::DeleteEvent(
   return connection_->DeleteEvent(request);
 }
 
+future<StatusOr<google::cloud::video::livestream::v1::Asset>>
+LivestreamServiceClient::CreateAsset(
+    std::string const& parent,
+    google::cloud::video::livestream::v1::Asset const& asset,
+    std::string const& asset_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::CreateAssetRequest request;
+  request.set_parent(parent);
+  *request.mutable_asset() = asset;
+  request.set_asset_id(asset_id);
+  return connection_->CreateAsset(request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::Asset>>
+LivestreamServiceClient::CreateAsset(
+    google::cloud::video::livestream::v1::CreateAssetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAsset(request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceClient::DeleteAsset(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::DeleteAssetRequest request;
+  request.set_name(name);
+  return connection_->DeleteAsset(request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceClient::DeleteAsset(
+    google::cloud::video::livestream::v1::DeleteAssetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAsset(request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::Asset>
+LivestreamServiceClient::GetAsset(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::GetAssetRequest request;
+  request.set_name(name);
+  return connection_->GetAsset(request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::Asset>
+LivestreamServiceClient::GetAsset(
+    google::cloud::video::livestream::v1::GetAssetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAsset(request);
+}
+
+StreamRange<google::cloud::video::livestream::v1::Asset>
+LivestreamServiceClient::ListAssets(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::ListAssetsRequest request;
+  request.set_parent(parent);
+  return connection_->ListAssets(request);
+}
+
+StreamRange<google::cloud::video::livestream::v1::Asset>
+LivestreamServiceClient::ListAssets(
+    google::cloud::video::livestream::v1::ListAssetsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAssets(std::move(request));
+}
+
+StatusOr<google::cloud::video::livestream::v1::Pool>
+LivestreamServiceClient::GetPool(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::GetPoolRequest request;
+  request.set_name(name);
+  return connection_->GetPool(request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::Pool>
+LivestreamServiceClient::GetPool(
+    google::cloud::video::livestream::v1::GetPoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetPool(request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::Pool>>
+LivestreamServiceClient::UpdatePool(
+    google::cloud::video::livestream::v1::Pool const& pool,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::UpdatePoolRequest request;
+  *request.mutable_pool() = pool;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdatePool(request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::Pool>>
+LivestreamServiceClient::UpdatePool(
+    google::cloud::video::livestream::v1::UpdatePoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePool(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_livestream_v1
 }  // namespace cloud
