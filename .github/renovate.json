@@ -20,8 +20,7 @@
     {
       "fileMatch": [
         "^ci/cloudbuild/builds/lib/bazel.sh$",
-        "^ci/kokoro/.*\\.sh$",
-        "^ci/kokoro/.*\\.ps1$"
+        "^ci/gha/builds/lib/bazel.sh$"
       ],
       "matchStrings": [
         "{USE_BAZEL_VERSION:=\"(?<currentValue>.*?)\"}",
