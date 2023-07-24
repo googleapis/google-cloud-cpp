@@ -17,6 +17,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
+#include <cassert>
 #include <functional>
 
 namespace google {
@@ -51,7 +52,7 @@ using SegmentParser = std::function<ParseResult<PathTemplate::Segment>(
     absl::string_view, std::size_t)>;
 
 ParseResult<PathTemplate::Segments> ParseSegmentsImpl(
-    absl::string_view input, std::size_t offset, SegmentParser parser,
+    absl::string_view input, std::size_t offset, SegmentParser const& parser,
     internal::ErrorInfoBuilder error_info) {
   PathTemplate::Segments segments;
   while (offset != input.size()) {
@@ -189,7 +190,7 @@ ParseResult<std::string> ParseFieldPath(absl::string_view input,
 
 ParseResult<PathTemplate::Segment> ParseVariable(absl::string_view input,
                                                  std::size_t offset) {
-  // assert(offset != input.size() && input[offset] == '{');
+  assert(offset != input.size() && input[offset] == '{');
   auto fp = ParseFieldPath(input, offset + 1);
   if (!fp) return std::move(fp).status();
   auto result = PathTemplate::Variable{std::move(fp->value), {}};
