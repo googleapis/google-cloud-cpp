@@ -31,10 +31,15 @@ doc_args=(
   "-DGOOGLE_CLOUD_CPP_INTERNAL_DOCFX=ON"
   "-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=ON"
   "-DGOOGLE_CLOUD_CPP_ENABLE=${ENABLED_FEATURES}"
-  "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
+  "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF"
   "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON"
   "-DGOOGLE_CLOUD_CPP_DOXYGEN_CLANG_OPTIONS=-resource-dir=$(clang -print-resource-dir)"
 )
+if command -v /usr/local/bin/sccache >/dev/null 2>&1; then
+  doc_args+=(
+    -DCMAKE_CXX_COMPILER_LAUNCHER=/usr/local/bin/sccache
+  )
+fi
 
 # Extract the version number if we're on a release branch.
 if grep -qP 'v\d+\.\d+\..*' <<<"${BRANCH_NAME}"; then
