@@ -40,7 +40,7 @@ service FirewallPolicies {
   rpc AddAssociation(AddAssociationRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy=firewall_policy}/addAssociation"
+      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/addAssociation"
       body: "firewall_policy_association_resource"
     };
     option (google.api.method_signature) =
@@ -51,7 +51,7 @@ service FirewallPolicies {
   // Inserts a rule into a firewall policy.
   rpc AddRule(AddRuleRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy=firewall_policy}/addRule"
+      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/addRule"
       body: "firewall_policy_rule_resource"
     };
     option (google.api.method_signature) =
@@ -63,7 +63,7 @@ service FirewallPolicies {
   rpc CloneRules(CloneRulesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy=firewall_policy}/cloneRules"
+      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/cloneRules"
       body: "*"
     };
     option (google.api.method_signature) = "firewall_policy";
@@ -74,7 +74,7 @@ service FirewallPolicies {
   rpc DeleteFirewallPolicies(DeleteFirewallPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/locations/global/firewallPolicies/{firewall_policy=firewall_policy}"
+      delete: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}"
     };
     option (google.api.method_signature) = "firewall_policy";
     option (google.cloud.operation_service) = "GlobalOrganizationOperations";
@@ -84,7 +84,7 @@ service FirewallPolicies {
   rpc GetFirewallPolicies(GetFirewallPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.FirewallPolicy) {
     option (google.api.http) = {
-      get: "/compute/v1/locations/global/firewallPolicies/{firewall_policy=firewall_policy}"
+      get: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}"
     };
     option (google.api.method_signature) = "firewall_policy";
   }
@@ -93,7 +93,7 @@ service FirewallPolicies {
   rpc GetAssociation(GetAssociationRequest)
       returns (google.cloud.cpp.compute.v1.FirewallPolicyAssociation) {
     option (google.api.http) = {
-      get: "/compute/v1/locations/global/firewallPolicies/{firewall_policy=firewall_policy}/getAssociation"
+      get: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/getAssociation"
     };
     option (google.api.method_signature) = "firewall_policy";
   }
@@ -103,7 +103,7 @@ service FirewallPolicies {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/locations/global/firewallPolicies/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/locations/global/firewallPolicies/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "resource";
   }
@@ -112,7 +112,7 @@ service FirewallPolicies {
   rpc GetRule(GetRuleRequest)
       returns (google.cloud.cpp.compute.v1.FirewallPolicyRule) {
     option (google.api.http) = {
-      get: "/compute/v1/locations/global/firewallPolicies/{firewall_policy=firewall_policy}/getRule"
+      get: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/getRule"
     };
     option (google.api.method_signature) = "firewall_policy";
   }
@@ -148,7 +148,7 @@ service FirewallPolicies {
   // Moves the specified firewall policy.
   rpc Move(MoveRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy=firewall_policy}/move"
+      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/move"
       body: "*"
     };
     option (google.api.method_signature) = "firewall_policy";
@@ -159,7 +159,7 @@ service FirewallPolicies {
   rpc PatchFirewallPolicies(PatchFirewallPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/locations/global/firewallPolicies/{firewall_policy=firewall_policy}"
+      patch: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}"
       body: "firewall_policy_resource"
     };
     option (google.api.method_signature) =
@@ -171,7 +171,7 @@ service FirewallPolicies {
   rpc PatchRule(PatchRuleRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy=firewall_policy}/patchRule"
+      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/patchRule"
       body: "firewall_policy_rule_resource"
     };
     option (google.api.method_signature) =
@@ -183,7 +183,7 @@ service FirewallPolicies {
   rpc RemoveAssociation(RemoveAssociationRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy=firewall_policy}/removeAssociation"
+      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/removeAssociation"
       body: "*"
     };
     option (google.api.method_signature) = "firewall_policy";
@@ -194,7 +194,7 @@ service FirewallPolicies {
   rpc RemoveRule(RemoveRuleRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy=firewall_policy}/removeRule"
+      post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/removeRule"
       body: "*"
     };
     option (google.api.method_signature) = "firewall_policy";
@@ -206,7 +206,7 @@ service FirewallPolicies {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/locations/global/firewallPolicies/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/locations/global/firewallPolicies/{resource}/setIamPolicy"
       body: "global_organization_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -217,7 +217,7 @@ service FirewallPolicies {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/locations/global/firewallPolicies/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/locations/global/firewallPolicies/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

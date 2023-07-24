@@ -40,7 +40,7 @@ service RegionHealthCheckServices {
   rpc DeleteRegionHealthCheckServices(DeleteRegionHealthCheckServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/healthCheckServices/{health_check_service=health_check_service}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices/{health_check_service}"
     };
     option (google.api.method_signature) =
         "project,region,health_check_service";
@@ -51,7 +51,7 @@ service RegionHealthCheckServices {
   rpc GetRegionHealthCheckServices(GetRegionHealthCheckServicesRequest)
       returns (google.cloud.cpp.compute.v1.HealthCheckService) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/healthCheckServices/{health_check_service=health_check_service}"
+      get: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices/{health_check_service}"
     };
     option (google.api.method_signature) =
         "project,region,health_check_service";
@@ -62,7 +62,7 @@ service RegionHealthCheckServices {
   rpc InsertRegionHealthCheckServices(InsertRegionHealthCheckServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/healthCheckServices"
+      post: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices"
       body: "health_check_service_resource"
     };
     option (google.api.method_signature) =
@@ -75,7 +75,7 @@ service RegionHealthCheckServices {
   rpc ListRegionHealthCheckServices(ListRegionHealthCheckServicesRequest)
       returns (google.cloud.cpp.compute.v1.HealthCheckServicesList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/healthCheckServices"
+      get: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -86,7 +86,7 @@ service RegionHealthCheckServices {
   rpc PatchRegionHealthCheckServices(PatchRegionHealthCheckServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/healthCheckServices/{health_check_service=health_check_service}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices/{health_check_service}"
       body: "health_check_service_resource"
     };
     option (google.api.method_signature) =

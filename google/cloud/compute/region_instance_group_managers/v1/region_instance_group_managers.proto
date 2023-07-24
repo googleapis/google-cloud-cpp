@@ -51,7 +51,7 @@ service RegionInstanceGroupManagers {
   rpc AbandonInstances(AbandonInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/abandonInstances"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/abandonInstances"
       body: "region_instance_group_managers_abandon_instances_request_resource"
     };
     option (google.api.method_signature) =
@@ -63,7 +63,7 @@ service RegionInstanceGroupManagers {
   rpc ApplyUpdatesToInstances(ApplyUpdatesToInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/applyUpdatesToInstances"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/applyUpdatesToInstances"
       body: "region_instance_group_managers_apply_updates_request_resource"
     };
     option (google.api.method_signature) =
@@ -80,7 +80,7 @@ service RegionInstanceGroupManagers {
   rpc CreateInstances(CreateInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/createInstances"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/createInstances"
       body: "region_instance_group_managers_create_instances_request_resource"
     };
     option (google.api.method_signature) =
@@ -94,7 +94,7 @@ service RegionInstanceGroupManagers {
       DeleteRegionInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}"
     };
     option (google.api.method_signature) =
         "project,region,instance_group_manager";
@@ -116,7 +116,7 @@ service RegionInstanceGroupManagers {
   rpc DeleteInstances(DeleteInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/deleteInstances"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/deleteInstances"
       body: "region_instance_group_managers_delete_instances_request_resource"
     };
     option (google.api.method_signature) =
@@ -129,7 +129,7 @@ service RegionInstanceGroupManagers {
   rpc DeletePerInstanceConfigs(DeletePerInstanceConfigsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/deletePerInstanceConfigs"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/deletePerInstanceConfigs"
       body: "region_instance_group_manager_delete_instance_config_req_resource"
     };
     option (google.api.method_signature) =
@@ -141,7 +141,7 @@ service RegionInstanceGroupManagers {
   rpc GetRegionInstanceGroupManagers(GetRegionInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.InstanceGroupManager) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}"
+      get: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}"
     };
     option (google.api.method_signature) =
         "project,region,instance_group_manager";
@@ -158,7 +158,7 @@ service RegionInstanceGroupManagers {
       InsertRegionInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers"
       body: "instance_group_manager_resource"
     };
     option (google.api.method_signature) =
@@ -171,7 +171,7 @@ service RegionInstanceGroupManagers {
   rpc ListRegionInstanceGroupManagers(ListRegionInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.RegionInstanceGroupManagerList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers"
+      get: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -183,7 +183,7 @@ service RegionInstanceGroupManagers {
       returns (google.cloud.cpp.compute.v1
                    .RegionInstanceGroupManagersListErrorsResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/listErrors"
+      get: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/listErrors"
     };
     option (google.api.method_signature) =
         "project,region,instance_group_manager";
@@ -199,7 +199,7 @@ service RegionInstanceGroupManagers {
       returns (google.cloud.cpp.compute.v1
                    .RegionInstanceGroupManagersListInstancesResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/listManagedInstances"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/listManagedInstances"
       body: "*"
     };
     option (google.api.method_signature) =
@@ -212,7 +212,7 @@ service RegionInstanceGroupManagers {
       returns (google.cloud.cpp.compute.v1
                    .RegionInstanceGroupManagersListInstanceConfigsResp) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/listPerInstanceConfigs"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/listPerInstanceConfigs"
       body: "*"
     };
     option (google.api.method_signature) =
@@ -232,7 +232,7 @@ service RegionInstanceGroupManagers {
   rpc PatchRegionInstanceGroupManagers(PatchRegionInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}"
       body: "instance_group_manager_resource"
     };
     option (google.api.method_signature) =
@@ -246,7 +246,7 @@ service RegionInstanceGroupManagers {
   rpc PatchPerInstanceConfigs(PatchPerInstanceConfigsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/patchPerInstanceConfigs"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/patchPerInstanceConfigs"
       body: "region_instance_group_manager_patch_instance_config_req_resource"
     };
     option (google.api.method_signature) =
@@ -267,7 +267,7 @@ service RegionInstanceGroupManagers {
   rpc RecreateInstances(RecreateInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/recreateInstances"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/recreateInstances"
       body: "region_instance_group_managers_recreate_request_resource"
     };
     option (google.api.method_signature) =
@@ -287,7 +287,7 @@ service RegionInstanceGroupManagers {
   // or deleted.
   rpc Resize(ResizeRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/resize"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/resize"
       body: "*"
     };
     option (google.api.method_signature) =
@@ -300,7 +300,7 @@ service RegionInstanceGroupManagers {
   rpc SetInstanceTemplate(SetInstanceTemplateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/setInstanceTemplate"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/setInstanceTemplate"
       body: "region_instance_group_managers_set_template_request_resource"
     };
     option (google.api.method_signature) =
@@ -313,7 +313,7 @@ service RegionInstanceGroupManagers {
   rpc SetTargetPools(SetTargetPoolsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/setTargetPools"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/setTargetPools"
       body: "region_instance_group_managers_set_target_pools_request_resource"
     };
     option (google.api.method_signature) =
@@ -327,7 +327,7 @@ service RegionInstanceGroupManagers {
   rpc UpdatePerInstanceConfigs(UpdatePerInstanceConfigsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroupManagers/{instance_group_manager=instance_group_manager}/updatePerInstanceConfigs"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/updatePerInstanceConfigs"
       body: "region_instance_group_manager_update_instance_config_req_resource"
     };
     option (google.api.method_signature) =

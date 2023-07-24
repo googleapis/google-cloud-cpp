@@ -40,7 +40,7 @@ service HttpsHealthChecks {
   rpc DeleteHttpsHealthChecks(DeleteHttpsHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/httpsHealthChecks/{https_health_check=https_health_check}"
+      delete: "/compute/v1/projects/{project}/global/httpsHealthChecks/{https_health_check}"
     };
     option (google.api.method_signature) = "project,https_health_check";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -50,7 +50,7 @@ service HttpsHealthChecks {
   rpc GetHttpsHealthChecks(GetHttpsHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.HttpsHealthCheck) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/httpsHealthChecks/{https_health_check=https_health_check}"
+      get: "/compute/v1/projects/{project}/global/httpsHealthChecks/{https_health_check}"
     };
     option (google.api.method_signature) = "project,https_health_check";
   }
@@ -60,7 +60,7 @@ service HttpsHealthChecks {
   rpc InsertHttpsHealthChecks(InsertHttpsHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/httpsHealthChecks"
+      post: "/compute/v1/projects/{project}/global/httpsHealthChecks"
       body: "https_health_check_resource"
     };
     option (google.api.method_signature) =
@@ -73,7 +73,7 @@ service HttpsHealthChecks {
   rpc ListHttpsHealthChecks(ListHttpsHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.HttpsHealthCheckList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/httpsHealthChecks"
+      get: "/compute/v1/projects/{project}/global/httpsHealthChecks"
     };
     option (google.api.method_signature) = "project";
   }
@@ -84,7 +84,7 @@ service HttpsHealthChecks {
   rpc PatchHttpsHealthChecks(PatchHttpsHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/httpsHealthChecks/{https_health_check=https_health_check}"
+      patch: "/compute/v1/projects/{project}/global/httpsHealthChecks/{https_health_check}"
       body: "https_health_check_resource"
     };
     option (google.api.method_signature) =
@@ -97,7 +97,7 @@ service HttpsHealthChecks {
   rpc UpdateHttpsHealthChecks(UpdateHttpsHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      put: "/compute/v1/projects/{project=project}/global/httpsHealthChecks/{https_health_check=https_health_check}"
+      put: "/compute/v1/projects/{project}/global/httpsHealthChecks/{https_health_check}"
       body: "https_health_check_resource"
     };
     option (google.api.method_signature) =

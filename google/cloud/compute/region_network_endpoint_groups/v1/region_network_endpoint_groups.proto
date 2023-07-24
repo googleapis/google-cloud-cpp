@@ -42,7 +42,7 @@ service RegionNetworkEndpointGroups {
       DeleteRegionNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_group}"
     };
     option (google.api.method_signature) =
         "project,region,network_endpoint_group";
@@ -53,7 +53,7 @@ service RegionNetworkEndpointGroups {
   rpc GetRegionNetworkEndpointGroups(GetRegionNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkEndpointGroup) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}"
+      get: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_group}"
     };
     option (google.api.method_signature) =
         "project,region,network_endpoint_group";
@@ -65,7 +65,7 @@ service RegionNetworkEndpointGroups {
       InsertRegionNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/networkEndpointGroups"
+      post: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups"
       body: "network_endpoint_group_resource"
     };
     option (google.api.method_signature) =
@@ -78,7 +78,7 @@ service RegionNetworkEndpointGroups {
   rpc ListRegionNetworkEndpointGroups(ListRegionNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/networkEndpointGroups"
+      get: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups"
     };
     option (google.api.method_signature) = "project,region";
   }

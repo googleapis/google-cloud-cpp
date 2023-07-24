@@ -40,7 +40,7 @@ service RegionSecurityPolicies {
   rpc DeleteRegionSecurityPolicies(DeleteRegionSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/securityPolicies/{security_policy=security_policy}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/securityPolicies/{security_policy}"
     };
     option (google.api.method_signature) = "project,region,security_policy";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -50,7 +50,7 @@ service RegionSecurityPolicies {
   rpc GetRegionSecurityPolicies(GetRegionSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SecurityPolicy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/securityPolicies/{security_policy=security_policy}"
+      get: "/compute/v1/projects/{project}/regions/{region}/securityPolicies/{security_policy}"
     };
     option (google.api.method_signature) = "project,region,security_policy";
   }
@@ -60,7 +60,7 @@ service RegionSecurityPolicies {
   rpc InsertRegionSecurityPolicies(InsertRegionSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/securityPolicies"
+      post: "/compute/v1/projects/{project}/regions/{region}/securityPolicies"
       body: "security_policy_resource"
     };
     option (google.api.method_signature) =
@@ -73,7 +73,7 @@ service RegionSecurityPolicies {
   rpc ListRegionSecurityPolicies(ListRegionSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SecurityPolicyList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/securityPolicies"
+      get: "/compute/v1/projects/{project}/regions/{region}/securityPolicies"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -86,7 +86,7 @@ service RegionSecurityPolicies {
   rpc PatchRegionSecurityPolicies(PatchRegionSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/securityPolicies/{security_policy=security_policy}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/securityPolicies/{security_policy}"
       body: "security_policy_resource"
     };
     option (google.api.method_signature) =

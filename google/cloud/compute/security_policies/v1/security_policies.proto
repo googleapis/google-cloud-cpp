@@ -39,7 +39,7 @@ service SecurityPolicies {
   // Inserts a rule into a security policy.
   rpc AddRule(AddRuleRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}/addRule"
+      post: "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}/addRule"
       body: "security_policy_rule_resource"
     };
     option (google.api.method_signature) =
@@ -52,7 +52,7 @@ service SecurityPolicies {
   rpc AggregatedListSecurityPolicies(AggregatedListSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SecurityPoliciesAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/securityPolicies"
+      get: "/compute/v1/projects/{project}/aggregated/securityPolicies"
     };
     option (google.api.method_signature) = "project";
   }
@@ -61,7 +61,7 @@ service SecurityPolicies {
   rpc DeleteSecurityPolicies(DeleteSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}"
+      delete: "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}"
     };
     option (google.api.method_signature) = "project,security_policy";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -71,7 +71,7 @@ service SecurityPolicies {
   rpc GetSecurityPolicies(GetSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SecurityPolicy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}"
+      get: "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}"
     };
     option (google.api.method_signature) = "project,security_policy";
   }
@@ -80,7 +80,7 @@ service SecurityPolicies {
   rpc GetRule(GetRuleRequest)
       returns (google.cloud.cpp.compute.v1.SecurityPolicyRule) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}/getRule"
+      get: "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}/getRule"
     };
     option (google.api.method_signature) = "project,security_policy";
   }
@@ -90,7 +90,7 @@ service SecurityPolicies {
   rpc InsertSecurityPolicies(InsertSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/securityPolicies"
+      post: "/compute/v1/projects/{project}/global/securityPolicies"
       body: "security_policy_resource"
     };
     option (google.api.method_signature) = "project,security_policy_resource";
@@ -101,7 +101,7 @@ service SecurityPolicies {
   rpc ListSecurityPolicies(ListSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SecurityPolicyList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/securityPolicies"
+      get: "/compute/v1/projects/{project}/global/securityPolicies"
     };
     option (google.api.method_signature) = "project";
   }
@@ -112,7 +112,7 @@ service SecurityPolicies {
       returns (google.cloud.cpp.compute.v1
                    .SecurityPoliciesListPreconfiguredExpressionSetsResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/securityPolicies/listPreconfiguredExpressionSets"
+      get: "/compute/v1/projects/{project}/global/securityPolicies/listPreconfiguredExpressionSets"
     };
     option (google.api.method_signature) = "project";
   }
@@ -125,7 +125,7 @@ service SecurityPolicies {
   rpc PatchSecurityPolicies(PatchSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}"
+      patch: "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}"
       body: "security_policy_resource"
     };
     option (google.api.method_signature) =
@@ -137,7 +137,7 @@ service SecurityPolicies {
   rpc PatchRule(PatchRuleRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}/patchRule"
+      post: "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}/patchRule"
       body: "security_policy_rule_resource"
     };
     option (google.api.method_signature) =
@@ -149,7 +149,7 @@ service SecurityPolicies {
   rpc RemoveRule(RemoveRuleRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/securityPolicies/{security_policy=security_policy}/removeRule"
+      post: "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}/removeRule"
       body: "*"
     };
     option (google.api.method_signature) = "project,security_policy";
@@ -161,7 +161,7 @@ service SecurityPolicies {
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/securityPolicies/{resource=resource}/setLabels"
+      post: "/compute/v1/projects/{project}/global/securityPolicies/{resource}/setLabels"
       body: "global_set_labels_request_resource"
     };
     option (google.api.method_signature) =

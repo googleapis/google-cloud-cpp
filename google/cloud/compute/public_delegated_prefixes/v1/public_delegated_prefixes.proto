@@ -43,7 +43,7 @@ service PublicDelegatedPrefixes {
       returns (
           google.cloud.cpp.compute.v1.PublicDelegatedPrefixAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/publicDelegatedPrefixes"
+      get: "/compute/v1/projects/{project}/aggregated/publicDelegatedPrefixes"
     };
     option (google.api.method_signature) = "project";
   }
@@ -52,7 +52,7 @@ service PublicDelegatedPrefixes {
   rpc DeletePublicDelegatedPrefixes(DeletePublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/publicDelegatedPrefixes/{public_delegated_prefix=public_delegated_prefix}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/publicDelegatedPrefixes/{public_delegated_prefix}"
     };
     option (google.api.method_signature) =
         "project,region,public_delegated_prefix";
@@ -63,7 +63,7 @@ service PublicDelegatedPrefixes {
   rpc GetPublicDelegatedPrefixes(GetPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefix) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/publicDelegatedPrefixes/{public_delegated_prefix=public_delegated_prefix}"
+      get: "/compute/v1/projects/{project}/regions/{region}/publicDelegatedPrefixes/{public_delegated_prefix}"
     };
     option (google.api.method_signature) =
         "project,region,public_delegated_prefix";
@@ -74,7 +74,7 @@ service PublicDelegatedPrefixes {
   rpc InsertPublicDelegatedPrefixes(InsertPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/publicDelegatedPrefixes"
+      post: "/compute/v1/projects/{project}/regions/{region}/publicDelegatedPrefixes"
       body: "public_delegated_prefix_resource"
     };
     option (google.api.method_signature) =
@@ -86,7 +86,7 @@ service PublicDelegatedPrefixes {
   rpc ListPublicDelegatedPrefixes(ListPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefixList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/publicDelegatedPrefixes"
+      get: "/compute/v1/projects/{project}/regions/{region}/publicDelegatedPrefixes"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -97,7 +97,7 @@ service PublicDelegatedPrefixes {
   rpc PatchPublicDelegatedPrefixes(PatchPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/publicDelegatedPrefixes/{public_delegated_prefix=public_delegated_prefix}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/publicDelegatedPrefixes/{public_delegated_prefix}"
       body: "public_delegated_prefix_resource"
     };
     option (google.api.method_signature) =

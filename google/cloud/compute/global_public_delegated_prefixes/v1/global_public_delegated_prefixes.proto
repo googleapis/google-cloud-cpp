@@ -41,7 +41,7 @@ service GlobalPublicDelegatedPrefixes {
       DeleteGlobalPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/publicDelegatedPrefixes/{public_delegated_prefix=public_delegated_prefix}"
+      delete: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes/{public_delegated_prefix}"
     };
     option (google.api.method_signature) = "project,public_delegated_prefix";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -51,7 +51,7 @@ service GlobalPublicDelegatedPrefixes {
   rpc GetGlobalPublicDelegatedPrefixes(GetGlobalPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefix) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/publicDelegatedPrefixes/{public_delegated_prefix=public_delegated_prefix}"
+      get: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes/{public_delegated_prefix}"
     };
     option (google.api.method_signature) = "project,public_delegated_prefix";
   }
@@ -62,7 +62,7 @@ service GlobalPublicDelegatedPrefixes {
       InsertGlobalPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/publicDelegatedPrefixes"
+      post: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes"
       body: "public_delegated_prefix_resource"
     };
     option (google.api.method_signature) =
@@ -75,7 +75,7 @@ service GlobalPublicDelegatedPrefixes {
       ListGlobalPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefixList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/publicDelegatedPrefixes"
+      get: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes"
     };
     option (google.api.method_signature) = "project";
   }
@@ -87,7 +87,7 @@ service GlobalPublicDelegatedPrefixes {
       PatchGlobalPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/publicDelegatedPrefixes/{public_delegated_prefix=public_delegated_prefix}"
+      patch: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes/{public_delegated_prefix}"
       body: "public_delegated_prefix_resource"
     };
     option (google.api.method_signature) =

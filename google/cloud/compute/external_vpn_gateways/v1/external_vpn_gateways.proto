@@ -40,7 +40,7 @@ service ExternalVpnGateways {
   rpc DeleteExternalVpnGateways(DeleteExternalVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/externalVpnGateways/{external_vpn_gateway=external_vpn_gateway}"
+      delete: "/compute/v1/projects/{project}/global/externalVpnGateways/{external_vpn_gateway}"
     };
     option (google.api.method_signature) = "project,external_vpn_gateway";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -51,7 +51,7 @@ service ExternalVpnGateways {
   rpc GetExternalVpnGateways(GetExternalVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.ExternalVpnGateway) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/externalVpnGateways/{external_vpn_gateway=external_vpn_gateway}"
+      get: "/compute/v1/projects/{project}/global/externalVpnGateways/{external_vpn_gateway}"
     };
     option (google.api.method_signature) = "project,external_vpn_gateway";
   }
@@ -61,7 +61,7 @@ service ExternalVpnGateways {
   rpc InsertExternalVpnGateways(InsertExternalVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/externalVpnGateways"
+      post: "/compute/v1/projects/{project}/global/externalVpnGateways"
       body: "external_vpn_gateway_resource"
     };
     option (google.api.method_signature) =
@@ -74,7 +74,7 @@ service ExternalVpnGateways {
   rpc ListExternalVpnGateways(ListExternalVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.ExternalVpnGatewayList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/externalVpnGateways"
+      get: "/compute/v1/projects/{project}/global/externalVpnGateways"
     };
     option (google.api.method_signature) = "project";
   }
@@ -84,7 +84,7 @@ service ExternalVpnGateways {
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/externalVpnGateways/{resource=resource}/setLabels"
+      post: "/compute/v1/projects/{project}/global/externalVpnGateways/{resource}/setLabels"
       body: "global_set_labels_request_resource"
     };
     option (google.api.method_signature) =
@@ -96,7 +96,7 @@ service ExternalVpnGateways {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/externalVpnGateways/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/global/externalVpnGateways/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

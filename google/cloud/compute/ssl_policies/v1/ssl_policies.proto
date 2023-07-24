@@ -41,7 +41,7 @@ service SslPolicies {
   rpc AggregatedListSslPolicies(AggregatedListSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SslPoliciesAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/sslPolicies"
+      get: "/compute/v1/projects/{project}/aggregated/sslPolicies"
     };
     option (google.api.method_signature) = "project";
   }
@@ -52,7 +52,7 @@ service SslPolicies {
   rpc DeleteSslPolicies(DeleteSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/sslPolicies/{ssl_policy=ssl_policy}"
+      delete: "/compute/v1/projects/{project}/global/sslPolicies/{ssl_policy}"
     };
     option (google.api.method_signature) = "project,ssl_policy";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -62,7 +62,7 @@ service SslPolicies {
   rpc GetSslPolicies(GetSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SslPolicy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/sslPolicies/{ssl_policy=ssl_policy}"
+      get: "/compute/v1/projects/{project}/global/sslPolicies/{ssl_policy}"
     };
     option (google.api.method_signature) = "project,ssl_policy";
   }
@@ -71,7 +71,7 @@ service SslPolicies {
   rpc InsertSslPolicies(InsertSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/sslPolicies"
+      post: "/compute/v1/projects/{project}/global/sslPolicies"
       body: "ssl_policy_resource"
     };
     option (google.api.method_signature) = "project,ssl_policy_resource";
@@ -83,7 +83,7 @@ service SslPolicies {
   rpc ListSslPolicies(ListSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SslPoliciesList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/sslPolicies"
+      get: "/compute/v1/projects/{project}/global/sslPolicies"
     };
     option (google.api.method_signature) = "project";
   }
@@ -93,7 +93,7 @@ service SslPolicies {
   rpc ListAvailableFeatures(ListAvailableFeaturesRequest) returns (
       google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/sslPolicies/listAvailableFeatures"
+      get: "/compute/v1/projects/{project}/global/sslPolicies/listAvailableFeatures"
     };
     option (google.api.method_signature) = "project";
   }
@@ -102,7 +102,7 @@ service SslPolicies {
   rpc PatchSslPolicies(PatchSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/sslPolicies/{ssl_policy=ssl_policy}"
+      patch: "/compute/v1/projects/{project}/global/sslPolicies/{ssl_policy}"
       body: "ssl_policy_resource"
     };
     option (google.api.method_signature) =

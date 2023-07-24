@@ -40,7 +40,7 @@ service Routers {
   rpc AggregatedListRouters(AggregatedListRoutersRequest)
       returns (google.cloud.cpp.compute.v1.RouterAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/routers"
+      get: "/compute/v1/projects/{project}/aggregated/routers"
     };
     option (google.api.method_signature) = "project";
   }
@@ -49,7 +49,7 @@ service Routers {
   rpc DeleteRouters(DeleteRoutersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/routers/{router}"
     };
     option (google.api.method_signature) = "project,region,router";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -59,7 +59,7 @@ service Routers {
   rpc GetRouters(GetRoutersRequest)
       returns (google.cloud.cpp.compute.v1.Router) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}"
+      get: "/compute/v1/projects/{project}/regions/{region}/routers/{router}"
     };
     option (google.api.method_signature) = "project,region,router";
   }
@@ -68,7 +68,7 @@ service Routers {
   rpc GetNatMappingInfo(GetNatMappingInfoRequest)
       returns (google.cloud.cpp.compute.v1.VmEndpointNatMappingsList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}/getNatMappingInfo"
+      get: "/compute/v1/projects/{project}/regions/{region}/routers/{router}/getNatMappingInfo"
     };
     option (google.api.method_signature) = "project,region,router";
   }
@@ -77,7 +77,7 @@ service Routers {
   rpc GetRouterStatus(GetRouterStatusRequest)
       returns (google.cloud.cpp.compute.v1.RouterStatusResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}/getRouterStatus"
+      get: "/compute/v1/projects/{project}/regions/{region}/routers/{router}/getRouterStatus"
     };
     option (google.api.method_signature) = "project,region,router";
   }
@@ -87,7 +87,7 @@ service Routers {
   rpc InsertRouters(InsertRoutersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/routers"
+      post: "/compute/v1/projects/{project}/regions/{region}/routers"
       body: "router_resource"
     };
     option (google.api.method_signature) = "project,region,router_resource";
@@ -98,7 +98,7 @@ service Routers {
   rpc ListRouters(ListRoutersRequest)
       returns (google.cloud.cpp.compute.v1.RouterList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/routers"
+      get: "/compute/v1/projects/{project}/regions/{region}/routers"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -109,7 +109,7 @@ service Routers {
   rpc PatchRouters(PatchRoutersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/routers/{router}"
       body: "router_resource"
     };
     option (google.api.method_signature) =
@@ -122,7 +122,7 @@ service Routers {
   rpc Preview(PreviewRequest)
       returns (google.cloud.cpp.compute.v1.RoutersPreviewResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}/preview"
+      post: "/compute/v1/projects/{project}/regions/{region}/routers/{router}/preview"
       body: "router_resource"
     };
     option (google.api.method_signature) =
@@ -136,7 +136,7 @@ service Routers {
   rpc UpdateRouters(UpdateRoutersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      put: "/compute/v1/projects/{project=project}/regions/{region=region}/routers/{router=router}"
+      put: "/compute/v1/projects/{project}/regions/{region}/routers/{router}"
       body: "router_resource"
     };
     option (google.api.method_signature) =

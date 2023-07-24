@@ -40,7 +40,7 @@ service TargetPools {
   rpc AddHealthCheck(AddHealthCheckRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}/addHealthCheck"
+      post: "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}/addHealthCheck"
       body: "target_pools_add_health_check_request_resource"
     };
     option (google.api.method_signature) =
@@ -52,7 +52,7 @@ service TargetPools {
   rpc AddInstance(AddInstanceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}/addInstance"
+      post: "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}/addInstance"
       body: "target_pools_add_instance_request_resource"
     };
     option (google.api.method_signature) =
@@ -64,7 +64,7 @@ service TargetPools {
   rpc AggregatedListTargetPools(AggregatedListTargetPoolsRequest)
       returns (google.cloud.cpp.compute.v1.TargetPoolAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/targetPools"
+      get: "/compute/v1/projects/{project}/aggregated/targetPools"
     };
     option (google.api.method_signature) = "project";
   }
@@ -73,7 +73,7 @@ service TargetPools {
   rpc DeleteTargetPools(DeleteTargetPoolsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}"
     };
     option (google.api.method_signature) = "project,region,target_pool";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -83,7 +83,7 @@ service TargetPools {
   rpc GetTargetPools(GetTargetPoolsRequest)
       returns (google.cloud.cpp.compute.v1.TargetPool) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}"
+      get: "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}"
     };
     option (google.api.method_signature) = "project,region,target_pool";
   }
@@ -93,7 +93,7 @@ service TargetPools {
   rpc GetHealth(GetHealthRequest)
       returns (google.cloud.cpp.compute.v1.TargetPoolInstanceHealth) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}/getHealth"
+      post: "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}/getHealth"
       body: "instance_reference_resource"
     };
     option (google.api.method_signature) =
@@ -105,7 +105,7 @@ service TargetPools {
   rpc InsertTargetPools(InsertTargetPoolsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools"
+      post: "/compute/v1/projects/{project}/regions/{region}/targetPools"
       body: "target_pool_resource"
     };
     option (google.api.method_signature) =
@@ -118,7 +118,7 @@ service TargetPools {
   rpc ListTargetPools(ListTargetPoolsRequest)
       returns (google.cloud.cpp.compute.v1.TargetPoolList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools"
+      get: "/compute/v1/projects/{project}/regions/{region}/targetPools"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -127,7 +127,7 @@ service TargetPools {
   rpc RemoveHealthCheck(RemoveHealthCheckRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}/removeHealthCheck"
+      post: "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}/removeHealthCheck"
       body: "target_pools_remove_health_check_request_resource"
     };
     option (google.api.method_signature) =
@@ -139,7 +139,7 @@ service TargetPools {
   rpc RemoveInstance(RemoveInstanceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}/removeInstance"
+      post: "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}/removeInstance"
       body: "target_pools_remove_instance_request_resource"
     };
     option (google.api.method_signature) =
@@ -151,7 +151,7 @@ service TargetPools {
   rpc SetBackup(SetBackupRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetPools/{target_pool=target_pool}/setBackup"
+      post: "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}/setBackup"
       body: "target_reference_resource"
     };
     option (google.api.method_signature) =

@@ -42,7 +42,7 @@ service LicenseCodes {
   rpc GetLicenseCodes(GetLicenseCodesRequest)
       returns (google.cloud.cpp.compute.v1.LicenseCode) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/licenseCodes/{license_code=license_code}"
+      get: "/compute/v1/projects/{project}/global/licenseCodes/{license_code}"
     };
     option (google.api.method_signature) = "project,license_code";
   }
@@ -53,7 +53,7 @@ service LicenseCodes {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/licenseCodes/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/global/licenseCodes/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

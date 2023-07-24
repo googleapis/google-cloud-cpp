@@ -38,7 +38,7 @@ service Zones {
   // Returns the specified Zone resource.
   rpc GetZones(GetZonesRequest) returns (google.cloud.cpp.compute.v1.Zone) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}"
+      get: "/compute/v1/projects/{project}/zones/{zone}"
     };
     option (google.api.method_signature) = "project,zone";
   }
@@ -47,7 +47,7 @@ service Zones {
   rpc ListZones(ListZonesRequest)
       returns (google.cloud.cpp.compute.v1.ZoneList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones"
+      get: "/compute/v1/projects/{project}/zones"
     };
     option (google.api.method_signature) = "project";
   }

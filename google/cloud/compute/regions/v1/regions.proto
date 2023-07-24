@@ -45,7 +45,7 @@ service Regions {
   rpc GetRegions(GetRegionsRequest)
       returns (google.cloud.cpp.compute.v1.Region) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}"
+      get: "/compute/v1/projects/{project}/regions/{region}"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -61,7 +61,7 @@ service Regions {
   rpc ListRegions(ListRegionsRequest)
       returns (google.cloud.cpp.compute.v1.RegionList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions"
+      get: "/compute/v1/projects/{project}/regions"
     };
     option (google.api.method_signature) = "project";
   }

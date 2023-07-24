@@ -40,7 +40,7 @@ service Routes {
   rpc DeleteRoutes(DeleteRoutesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/routes/{route=route}"
+      delete: "/compute/v1/projects/{project}/global/routes/{route}"
     };
     option (google.api.method_signature) = "project,route";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -49,7 +49,7 @@ service Routes {
   // Returns the specified Route resource.
   rpc GetRoutes(GetRoutesRequest) returns (google.cloud.cpp.compute.v1.Route) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/routes/{route=route}"
+      get: "/compute/v1/projects/{project}/global/routes/{route}"
     };
     option (google.api.method_signature) = "project,route";
   }
@@ -59,7 +59,7 @@ service Routes {
   rpc InsertRoutes(InsertRoutesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/routes"
+      post: "/compute/v1/projects/{project}/global/routes"
       body: "route_resource"
     };
     option (google.api.method_signature) = "project,route_resource";
@@ -70,7 +70,7 @@ service Routes {
   rpc ListRoutes(ListRoutesRequest)
       returns (google.cloud.cpp.compute.v1.RouteList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/routes"
+      get: "/compute/v1/projects/{project}/global/routes"
     };
     option (google.api.method_signature) = "project";
   }

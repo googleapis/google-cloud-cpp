@@ -40,7 +40,7 @@ service RegionSslCertificates {
   rpc DeleteRegionSslCertificates(DeleteRegionSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/sslCertificates/{ssl_certificate=ssl_certificate}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/sslCertificates/{ssl_certificate}"
     };
     option (google.api.method_signature) = "project,region,ssl_certificate";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -51,7 +51,7 @@ service RegionSslCertificates {
   rpc GetRegionSslCertificates(GetRegionSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.SslCertificate) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/sslCertificates/{ssl_certificate=ssl_certificate}"
+      get: "/compute/v1/projects/{project}/regions/{region}/sslCertificates/{ssl_certificate}"
     };
     option (google.api.method_signature) = "project,region,ssl_certificate";
   }
@@ -61,7 +61,7 @@ service RegionSslCertificates {
   rpc InsertRegionSslCertificates(InsertRegionSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/sslCertificates"
+      post: "/compute/v1/projects/{project}/regions/{region}/sslCertificates"
       body: "ssl_certificate_resource"
     };
     option (google.api.method_signature) =
@@ -74,7 +74,7 @@ service RegionSslCertificates {
   rpc ListRegionSslCertificates(ListRegionSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.SslCertificateList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/sslCertificates"
+      get: "/compute/v1/projects/{project}/regions/{region}/sslCertificates"
     };
     option (google.api.method_signature) = "project,region";
   }

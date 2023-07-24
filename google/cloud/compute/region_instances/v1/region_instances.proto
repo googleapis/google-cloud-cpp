@@ -40,7 +40,7 @@ service RegionInstances {
   rpc BulkInsert(BulkInsertRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instances/bulkInsert"
+      post: "/compute/v1/projects/{project}/regions/{region}/instances/bulkInsert"
       body: "bulk_insert_instance_resource"
     };
     option (google.api.method_signature) =

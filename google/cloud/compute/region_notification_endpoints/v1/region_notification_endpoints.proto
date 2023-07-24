@@ -41,7 +41,7 @@ service RegionNotificationEndpoints {
       DeleteRegionNotificationEndpointsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/notificationEndpoints/{notification_endpoint=notification_endpoint}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/notificationEndpoints/{notification_endpoint}"
     };
     option (google.api.method_signature) =
         "project,region,notification_endpoint";
@@ -52,7 +52,7 @@ service RegionNotificationEndpoints {
   rpc GetRegionNotificationEndpoints(GetRegionNotificationEndpointsRequest)
       returns (google.cloud.cpp.compute.v1.NotificationEndpoint) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/notificationEndpoints/{notification_endpoint=notification_endpoint}"
+      get: "/compute/v1/projects/{project}/regions/{region}/notificationEndpoints/{notification_endpoint}"
     };
     option (google.api.method_signature) =
         "project,region,notification_endpoint";
@@ -64,7 +64,7 @@ service RegionNotificationEndpoints {
       InsertRegionNotificationEndpointsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/notificationEndpoints"
+      post: "/compute/v1/projects/{project}/regions/{region}/notificationEndpoints"
       body: "notification_endpoint_resource"
     };
     option (google.api.method_signature) =
@@ -76,7 +76,7 @@ service RegionNotificationEndpoints {
   rpc ListRegionNotificationEndpoints(ListRegionNotificationEndpointsRequest)
       returns (google.cloud.cpp.compute.v1.NotificationEndpointList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/notificationEndpoints"
+      get: "/compute/v1/projects/{project}/regions/{region}/notificationEndpoints"
     };
     option (google.api.method_signature) = "project,region";
   }

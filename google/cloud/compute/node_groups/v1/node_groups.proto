@@ -40,7 +40,7 @@ service NodeGroups {
   rpc AddNodes(AddNodesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}/addNodes"
+      post: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}/addNodes"
       body: "node_groups_add_nodes_request_resource"
     };
     option (google.api.method_signature) =
@@ -53,7 +53,7 @@ service NodeGroups {
   rpc AggregatedListNodeGroups(AggregatedListNodeGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NodeGroupAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/nodeGroups"
+      get: "/compute/v1/projects/{project}/aggregated/nodeGroups"
     };
     option (google.api.method_signature) = "project";
   }
@@ -62,7 +62,7 @@ service NodeGroups {
   rpc DeleteNodeGroups(DeleteNodeGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}"
+      delete: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}"
     };
     option (google.api.method_signature) = "project,zone,node_group";
     option (google.cloud.operation_service) = "ZoneOperations";
@@ -72,7 +72,7 @@ service NodeGroups {
   rpc DeleteNodes(DeleteNodesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}/deleteNodes"
+      post: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}/deleteNodes"
       body: "node_groups_delete_nodes_request_resource"
     };
     option (google.api.method_signature) =
@@ -86,7 +86,7 @@ service NodeGroups {
   rpc GetNodeGroups(GetNodeGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NodeGroup) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}"
+      get: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}"
     };
     option (google.api.method_signature) = "project,zone,node_group";
   }
@@ -96,7 +96,7 @@ service NodeGroups {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,zone,resource";
   }
@@ -106,7 +106,7 @@ service NodeGroups {
   rpc InsertNodeGroups(InsertNodeGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups"
+      post: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups"
       body: "node_group_resource"
     };
     option (google.api.method_signature) =
@@ -119,7 +119,7 @@ service NodeGroups {
   rpc ListNodeGroups(ListNodeGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NodeGroupList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups"
+      get: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups"
     };
     option (google.api.method_signature) = "project,zone";
   }
@@ -128,7 +128,7 @@ service NodeGroups {
   rpc ListNodes(ListNodesRequest)
       returns (google.cloud.cpp.compute.v1.NodeGroupsListNodes) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}/listNodes"
+      post: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}/listNodes"
       body: "*"
     };
     option (google.api.method_signature) = "project,zone,node_group";
@@ -138,7 +138,7 @@ service NodeGroups {
   rpc PatchNodeGroups(PatchNodeGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}"
+      patch: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}"
       body: "node_group_resource"
     };
     option (google.api.method_signature) =
@@ -151,7 +151,7 @@ service NodeGroups {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{resource}/setIamPolicy"
       body: "zone_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -162,7 +162,7 @@ service NodeGroups {
   rpc SetNodeTemplate(SetNodeTemplateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{node_group=node_group}/setNodeTemplate"
+      post: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}/setNodeTemplate"
       body: "node_groups_set_node_template_request_resource"
     };
     option (google.api.method_signature) =
@@ -174,7 +174,7 @@ service NodeGroups {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeGroups/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

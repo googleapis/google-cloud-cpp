@@ -40,7 +40,7 @@ service Interconnects {
   rpc DeleteInterconnects(DeleteInterconnectsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/interconnects/{interconnect=interconnect}"
+      delete: "/compute/v1/projects/{project}/global/interconnects/{interconnect}"
     };
     option (google.api.method_signature) = "project,interconnect";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -51,7 +51,7 @@ service Interconnects {
   rpc GetInterconnects(GetInterconnectsRequest)
       returns (google.cloud.cpp.compute.v1.Interconnect) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/interconnects/{interconnect=interconnect}"
+      get: "/compute/v1/projects/{project}/global/interconnects/{interconnect}"
     };
     option (google.api.method_signature) = "project,interconnect";
   }
@@ -60,7 +60,7 @@ service Interconnects {
   rpc GetDiagnostics(GetDiagnosticsRequest) returns (
       google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/interconnects/{interconnect=interconnect}/getDiagnostics"
+      get: "/compute/v1/projects/{project}/global/interconnects/{interconnect}/getDiagnostics"
     };
     option (google.api.method_signature) = "project,interconnect";
   }
@@ -70,7 +70,7 @@ service Interconnects {
   rpc InsertInterconnects(InsertInterconnectsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/interconnects"
+      post: "/compute/v1/projects/{project}/global/interconnects"
       body: "interconnect_resource"
     };
     option (google.api.method_signature) = "project,interconnect_resource";
@@ -81,7 +81,7 @@ service Interconnects {
   rpc ListInterconnects(ListInterconnectsRequest)
       returns (google.cloud.cpp.compute.v1.InterconnectList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/interconnects"
+      get: "/compute/v1/projects/{project}/global/interconnects"
     };
     option (google.api.method_signature) = "project";
   }
@@ -92,7 +92,7 @@ service Interconnects {
   rpc PatchInterconnects(PatchInterconnectsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/interconnects/{interconnect=interconnect}"
+      patch: "/compute/v1/projects/{project}/global/interconnects/{interconnect}"
       body: "interconnect_resource"
     };
     option (google.api.method_signature) =
@@ -105,7 +105,7 @@ service Interconnects {
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/interconnects/{resource=resource}/setLabels"
+      post: "/compute/v1/projects/{project}/global/interconnects/{resource}/setLabels"
       body: "global_set_labels_request_resource"
     };
     option (google.api.method_signature) =

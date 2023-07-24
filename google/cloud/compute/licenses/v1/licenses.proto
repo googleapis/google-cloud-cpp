@@ -44,7 +44,7 @@ service Licenses {
   rpc DeleteLicenses(DeleteLicensesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/licenses/{license=license}"
+      delete: "/compute/v1/projects/{project}/global/licenses/{license}"
     };
     option (google.api.method_signature) = "project,license";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -56,7 +56,7 @@ service Licenses {
   rpc GetLicenses(GetLicensesRequest)
       returns (google.cloud.cpp.compute.v1.License) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/licenses/{license=license}"
+      get: "/compute/v1/projects/{project}/global/licenses/{license}"
     };
     option (google.api.method_signature) = "project,license";
   }
@@ -67,7 +67,7 @@ service Licenses {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/licenses/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/global/licenses/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,resource";
   }
@@ -78,7 +78,7 @@ service Licenses {
   rpc InsertLicenses(InsertLicensesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/licenses"
+      post: "/compute/v1/projects/{project}/global/licenses"
       body: "license_resource"
     };
     option (google.api.method_signature) = "project,license_resource";
@@ -95,7 +95,7 @@ service Licenses {
   rpc ListLicenses(ListLicensesRequest)
       returns (google.cloud.cpp.compute.v1.LicensesListResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/licenses"
+      get: "/compute/v1/projects/{project}/global/licenses"
     };
     option (google.api.method_signature) = "project";
   }
@@ -106,7 +106,7 @@ service Licenses {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/licenses/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/global/licenses/{resource}/setIamPolicy"
       body: "global_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -119,7 +119,7 @@ service Licenses {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/licenses/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/global/licenses/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

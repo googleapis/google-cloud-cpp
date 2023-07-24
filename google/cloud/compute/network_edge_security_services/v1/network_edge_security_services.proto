@@ -43,7 +43,7 @@ service NetworkEdgeSecurityServices {
       returns (google.cloud.cpp.compute.v1
                    .NetworkEdgeSecurityServiceAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/networkEdgeSecurityServices"
+      get: "/compute/v1/projects/{project}/aggregated/networkEdgeSecurityServices"
     };
     option (google.api.method_signature) = "project";
   }
@@ -53,7 +53,7 @@ service NetworkEdgeSecurityServices {
       DeleteNetworkEdgeSecurityServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/networkEdgeSecurityServices/{network_edge_security_service=network_edge_security_service}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/networkEdgeSecurityServices/{network_edge_security_service}"
     };
     option (google.api.method_signature) =
         "project,region,network_edge_security_service";
@@ -64,7 +64,7 @@ service NetworkEdgeSecurityServices {
   rpc GetNetworkEdgeSecurityServices(GetNetworkEdgeSecurityServicesRequest)
       returns (google.cloud.cpp.compute.v1.NetworkEdgeSecurityService) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/networkEdgeSecurityServices/{network_edge_security_service=network_edge_security_service}"
+      get: "/compute/v1/projects/{project}/regions/{region}/networkEdgeSecurityServices/{network_edge_security_service}"
     };
     option (google.api.method_signature) =
         "project,region,network_edge_security_service";
@@ -76,7 +76,7 @@ service NetworkEdgeSecurityServices {
       InsertNetworkEdgeSecurityServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/networkEdgeSecurityServices"
+      post: "/compute/v1/projects/{project}/regions/{region}/networkEdgeSecurityServices"
       body: "network_edge_security_service_resource"
     };
     option (google.api.method_signature) =
@@ -88,7 +88,7 @@ service NetworkEdgeSecurityServices {
   rpc PatchNetworkEdgeSecurityServices(PatchNetworkEdgeSecurityServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/networkEdgeSecurityServices/{network_edge_security_service=network_edge_security_service}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/networkEdgeSecurityServices/{network_edge_security_service}"
       body: "network_edge_security_service_resource"
     };
     option (google.api.method_signature) =

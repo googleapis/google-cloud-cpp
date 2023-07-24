@@ -39,7 +39,7 @@ service RegionDiskTypes {
   rpc GetRegionDiskTypes(GetRegionDiskTypesRequest)
       returns (google.cloud.cpp.compute.v1.DiskType) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/diskTypes/{disk_type=disk_type}"
+      get: "/compute/v1/projects/{project}/regions/{region}/diskTypes/{disk_type}"
     };
     option (google.api.method_signature) = "project,region,disk_type";
   }
@@ -48,7 +48,7 @@ service RegionDiskTypes {
   rpc ListRegionDiskTypes(ListRegionDiskTypesRequest)
       returns (google.cloud.cpp.compute.v1.RegionDiskTypeList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/diskTypes"
+      get: "/compute/v1/projects/{project}/regions/{region}/diskTypes"
     };
     option (google.api.method_signature) = "project,region";
   }

@@ -40,7 +40,7 @@ service InterconnectLocations {
   rpc GetInterconnectLocations(GetInterconnectLocationsRequest)
       returns (google.cloud.cpp.compute.v1.InterconnectLocation) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/interconnectLocations/{interconnect_location=interconnect_location}"
+      get: "/compute/v1/projects/{project}/global/interconnectLocations/{interconnect_location}"
     };
     option (google.api.method_signature) = "project,interconnect_location";
   }
@@ -50,7 +50,7 @@ service InterconnectLocations {
   rpc ListInterconnectLocations(ListInterconnectLocationsRequest)
       returns (google.cloud.cpp.compute.v1.InterconnectLocationList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/interconnectLocations"
+      get: "/compute/v1/projects/{project}/global/interconnectLocations"
     };
     option (google.api.method_signature) = "project";
   }

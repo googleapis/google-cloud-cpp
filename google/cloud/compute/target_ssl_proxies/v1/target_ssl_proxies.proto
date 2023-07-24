@@ -40,7 +40,7 @@ service TargetSslProxies {
   rpc DeleteTargetSslProxies(DeleteTargetSslProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}"
+      delete: "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}"
     };
     option (google.api.method_signature) = "project,target_ssl_proxy";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -50,7 +50,7 @@ service TargetSslProxies {
   rpc GetTargetSslProxies(GetTargetSslProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetSslProxy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}"
+      get: "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}"
     };
     option (google.api.method_signature) = "project,target_ssl_proxy";
   }
@@ -60,7 +60,7 @@ service TargetSslProxies {
   rpc InsertTargetSslProxies(InsertTargetSslProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/targetSslProxies"
+      post: "/compute/v1/projects/{project}/global/targetSslProxies"
       body: "target_ssl_proxy_resource"
     };
     option (google.api.method_signature) = "project,target_ssl_proxy_resource";
@@ -72,7 +72,7 @@ service TargetSslProxies {
   rpc ListTargetSslProxies(ListTargetSslProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetSslProxyList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/targetSslProxies"
+      get: "/compute/v1/projects/{project}/global/targetSslProxies"
     };
     option (google.api.method_signature) = "project";
   }
@@ -81,7 +81,7 @@ service TargetSslProxies {
   rpc SetBackendService(SetBackendServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setBackendService"
+      post: "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}/setBackendService"
       body: "target_ssl_proxies_set_backend_service_request_resource"
     };
     option (google.api.method_signature) =
@@ -93,7 +93,7 @@ service TargetSslProxies {
   rpc SetCertificateMap(SetCertificateMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setCertificateMap"
+      post: "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}/setCertificateMap"
       body: "target_ssl_proxies_set_certificate_map_request_resource"
     };
     option (google.api.method_signature) =
@@ -105,7 +105,7 @@ service TargetSslProxies {
   rpc SetProxyHeader(SetProxyHeaderRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setProxyHeader"
+      post: "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}/setProxyHeader"
       body: "target_ssl_proxies_set_proxy_header_request_resource"
     };
     option (google.api.method_signature) =
@@ -117,7 +117,7 @@ service TargetSslProxies {
   rpc SetSslCertificates(SetSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setSslCertificates"
+      post: "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}/setSslCertificates"
       body: "target_ssl_proxies_set_ssl_certificates_request_resource"
     };
     option (google.api.method_signature) =
@@ -132,7 +132,7 @@ service TargetSslProxies {
   rpc SetSslPolicy(SetSslPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/targetSslProxies/{target_ssl_proxy=target_ssl_proxy}/setSslPolicy"
+      post: "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}/setSslPolicy"
       body: "ssl_policy_reference_resource"
     };
     option (google.api.method_signature) =

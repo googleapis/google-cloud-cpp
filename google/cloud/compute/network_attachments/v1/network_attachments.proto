@@ -41,7 +41,7 @@ service NetworkAttachments {
   rpc AggregatedListNetworkAttachments(AggregatedListNetworkAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkAttachmentAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/networkAttachments"
+      get: "/compute/v1/projects/{project}/aggregated/networkAttachments"
     };
     option (google.api.method_signature) = "project";
   }
@@ -50,7 +50,7 @@ service NetworkAttachments {
   rpc DeleteNetworkAttachments(DeleteNetworkAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/networkAttachments/{network_attachment=network_attachment}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/networkAttachments/{network_attachment}"
     };
     option (google.api.method_signature) = "project,region,network_attachment";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -60,7 +60,7 @@ service NetworkAttachments {
   rpc GetNetworkAttachments(GetNetworkAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkAttachment) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/networkAttachments/{network_attachment=network_attachment}"
+      get: "/compute/v1/projects/{project}/regions/{region}/networkAttachments/{network_attachment}"
     };
     option (google.api.method_signature) = "project,region,network_attachment";
   }
@@ -70,7 +70,7 @@ service NetworkAttachments {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/networkAttachments/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/regions/{region}/networkAttachments/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,region,resource";
   }
@@ -80,7 +80,7 @@ service NetworkAttachments {
   rpc InsertNetworkAttachments(InsertNetworkAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/networkAttachments"
+      post: "/compute/v1/projects/{project}/regions/{region}/networkAttachments"
       body: "network_attachment_resource"
     };
     option (google.api.method_signature) =
@@ -92,7 +92,7 @@ service NetworkAttachments {
   rpc ListNetworkAttachments(ListNetworkAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkAttachmentList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/networkAttachments"
+      get: "/compute/v1/projects/{project}/regions/{region}/networkAttachments"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -102,7 +102,7 @@ service NetworkAttachments {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/networkAttachments/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/regions/{region}/networkAttachments/{resource}/setIamPolicy"
       body: "region_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -113,7 +113,7 @@ service NetworkAttachments {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/networkAttachments/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/regions/{region}/networkAttachments/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

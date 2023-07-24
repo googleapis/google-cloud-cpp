@@ -43,7 +43,7 @@ service Images {
   rpc DeleteImages(DeleteImagesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/images/{image=image}"
+      delete: "/compute/v1/projects/{project}/global/images/{image}"
     };
     option (google.api.method_signature) = "project,image";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -54,7 +54,7 @@ service Images {
   rpc Deprecate(DeprecateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/images/{image=image}/deprecate"
+      post: "/compute/v1/projects/{project}/global/images/{image}/deprecate"
       body: "deprecation_status_resource"
     };
     option (google.api.method_signature) =
@@ -65,7 +65,7 @@ service Images {
   // Returns the specified image.
   rpc GetImages(GetImagesRequest) returns (google.cloud.cpp.compute.v1.Image) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/images/{image=image}"
+      get: "/compute/v1/projects/{project}/global/images/{image}"
     };
     option (google.api.method_signature) = "project,image";
   }
@@ -76,7 +76,7 @@ service Images {
   rpc GetFromFamily(GetFromFamilyRequest)
       returns (google.cloud.cpp.compute.v1.Image) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/images/family/{family=family}"
+      get: "/compute/v1/projects/{project}/global/images/family/{family}"
     };
     option (google.api.method_signature) = "project,family";
   }
@@ -86,7 +86,7 @@ service Images {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/images/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/global/images/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,resource";
   }
@@ -96,7 +96,7 @@ service Images {
   rpc InsertImages(InsertImagesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/images"
+      post: "/compute/v1/projects/{project}/global/images"
       body: "image_resource"
     };
     option (google.api.method_signature) = "project,image_resource";
@@ -112,7 +112,7 @@ service Images {
   rpc ListImages(ListImagesRequest)
       returns (google.cloud.cpp.compute.v1.ImageList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/images"
+      get: "/compute/v1/projects/{project}/global/images"
     };
     option (google.api.method_signature) = "project";
   }
@@ -122,7 +122,7 @@ service Images {
   rpc PatchImages(PatchImagesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/images/{image=image}"
+      patch: "/compute/v1/projects/{project}/global/images/{image}"
       body: "image_resource"
     };
     option (google.api.method_signature) = "project,image,image_resource";
@@ -134,7 +134,7 @@ service Images {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/images/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/global/images/{resource}/setIamPolicy"
       body: "global_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -146,7 +146,7 @@ service Images {
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/images/{resource=resource}/setLabels"
+      post: "/compute/v1/projects/{project}/global/images/{resource}/setLabels"
       body: "global_set_labels_request_resource"
     };
     option (google.api.method_signature) =
@@ -158,7 +158,7 @@ service Images {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/images/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/global/images/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

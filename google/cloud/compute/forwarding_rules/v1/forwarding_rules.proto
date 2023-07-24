@@ -40,7 +40,7 @@ service ForwardingRules {
   rpc AggregatedListForwardingRules(AggregatedListForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.ForwardingRuleAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/forwardingRules"
+      get: "/compute/v1/projects/{project}/aggregated/forwardingRules"
     };
     option (google.api.method_signature) = "project";
   }
@@ -49,7 +49,7 @@ service ForwardingRules {
   rpc DeleteForwardingRules(DeleteForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/forwardingRules/{forwarding_rule=forwarding_rule}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}"
     };
     option (google.api.method_signature) = "project,region,forwarding_rule";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -59,7 +59,7 @@ service ForwardingRules {
   rpc GetForwardingRules(GetForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.ForwardingRule) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/forwardingRules/{forwarding_rule=forwarding_rule}"
+      get: "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}"
     };
     option (google.api.method_signature) = "project,region,forwarding_rule";
   }
@@ -69,7 +69,7 @@ service ForwardingRules {
   rpc InsertForwardingRules(InsertForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/forwardingRules"
+      post: "/compute/v1/projects/{project}/regions/{region}/forwardingRules"
       body: "forwarding_rule_resource"
     };
     option (google.api.method_signature) =
@@ -82,7 +82,7 @@ service ForwardingRules {
   rpc ListForwardingRules(ListForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.ForwardingRuleList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/forwardingRules"
+      get: "/compute/v1/projects/{project}/regions/{region}/forwardingRules"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -94,7 +94,7 @@ service ForwardingRules {
   rpc PatchForwardingRules(PatchForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/forwardingRules/{forwarding_rule=forwarding_rule}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}"
       body: "forwarding_rule_resource"
     };
     option (google.api.method_signature) =
@@ -107,7 +107,7 @@ service ForwardingRules {
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/forwardingRules/{resource=resource}/setLabels"
+      post: "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{resource}/setLabels"
       body: "region_set_labels_request_resource"
     };
     option (google.api.method_signature) =
@@ -120,7 +120,7 @@ service ForwardingRules {
   rpc SetTarget(SetTargetRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/forwardingRules/{forwarding_rule=forwarding_rule}/setTarget"
+      post: "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}/setTarget"
       body: "target_reference_resource"
     };
     option (google.api.method_signature) =

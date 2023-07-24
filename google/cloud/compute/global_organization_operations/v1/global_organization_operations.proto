@@ -42,7 +42,7 @@ service GlobalOrganizationOperations {
       DeleteGlobalOrganizationOperationsRequest)
       returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/compute/v1/locations/global/operations/{operation=operation}"
+      delete: "/compute/v1/locations/global/operations/{operation}"
     };
     option (google.api.method_signature) = "operation";
   }
@@ -52,7 +52,7 @@ service GlobalOrganizationOperations {
   rpc GetGlobalOrganizationOperations(GetGlobalOrganizationOperationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      get: "/compute/v1/locations/global/operations/{operation=operation}"
+      get: "/compute/v1/locations/global/operations/{operation}"
     };
     option (google.api.method_signature) = "operation";
   }

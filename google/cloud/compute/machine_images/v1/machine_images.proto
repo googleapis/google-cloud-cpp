@@ -41,7 +41,7 @@ service MachineImages {
   rpc DeleteMachineImages(DeleteMachineImagesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/machineImages/{machine_image=machine_image}"
+      delete: "/compute/v1/projects/{project}/global/machineImages/{machine_image}"
     };
     option (google.api.method_signature) = "project,machine_image";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -51,7 +51,7 @@ service MachineImages {
   rpc GetMachineImages(GetMachineImagesRequest)
       returns (google.cloud.cpp.compute.v1.MachineImage) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/machineImages/{machine_image=machine_image}"
+      get: "/compute/v1/projects/{project}/global/machineImages/{machine_image}"
     };
     option (google.api.method_signature) = "project,machine_image";
   }
@@ -61,7 +61,7 @@ service MachineImages {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/machineImages/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/global/machineImages/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,resource";
   }
@@ -73,7 +73,7 @@ service MachineImages {
   rpc InsertMachineImages(InsertMachineImagesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/machineImages"
+      post: "/compute/v1/projects/{project}/global/machineImages"
       body: "machine_image_resource"
     };
     option (google.api.method_signature) = "project,machine_image_resource";
@@ -85,7 +85,7 @@ service MachineImages {
   rpc ListMachineImages(ListMachineImagesRequest)
       returns (google.cloud.cpp.compute.v1.MachineImageList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/machineImages"
+      get: "/compute/v1/projects/{project}/global/machineImages"
     };
     option (google.api.method_signature) = "project";
   }
@@ -95,7 +95,7 @@ service MachineImages {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/machineImages/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/global/machineImages/{resource}/setIamPolicy"
       body: "global_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -106,7 +106,7 @@ service MachineImages {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/machineImages/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/global/machineImages/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

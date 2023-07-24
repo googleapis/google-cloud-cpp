@@ -40,7 +40,7 @@ service Autoscalers {
   rpc AggregatedListAutoscalers(AggregatedListAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.AutoscalerAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/autoscalers"
+      get: "/compute/v1/projects/{project}/aggregated/autoscalers"
     };
     option (google.api.method_signature) = "project";
   }
@@ -49,7 +49,7 @@ service Autoscalers {
   rpc DeleteAutoscalers(DeleteAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/zones/{zone=zone}/autoscalers/{autoscaler=autoscaler}"
+      delete: "/compute/v1/projects/{project}/zones/{zone}/autoscalers/{autoscaler}"
     };
     option (google.api.method_signature) = "project,zone,autoscaler";
     option (google.cloud.operation_service) = "ZoneOperations";
@@ -59,7 +59,7 @@ service Autoscalers {
   rpc GetAutoscalers(GetAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Autoscaler) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/autoscalers/{autoscaler=autoscaler}"
+      get: "/compute/v1/projects/{project}/zones/{zone}/autoscalers/{autoscaler}"
     };
     option (google.api.method_signature) = "project,zone,autoscaler";
   }
@@ -69,7 +69,7 @@ service Autoscalers {
   rpc InsertAutoscalers(InsertAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/autoscalers"
+      post: "/compute/v1/projects/{project}/zones/{zone}/autoscalers"
       body: "autoscaler_resource"
     };
     option (google.api.method_signature) = "project,zone,autoscaler_resource";
@@ -80,7 +80,7 @@ service Autoscalers {
   rpc ListAutoscalers(ListAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.AutoscalerList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/autoscalers"
+      get: "/compute/v1/projects/{project}/zones/{zone}/autoscalers"
     };
     option (google.api.method_signature) = "project,zone";
   }
@@ -91,7 +91,7 @@ service Autoscalers {
   rpc PatchAutoscalers(PatchAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/zones/{zone=zone}/autoscalers"
+      patch: "/compute/v1/projects/{project}/zones/{zone}/autoscalers"
       body: "autoscaler_resource"
     };
     option (google.api.method_signature) = "project,zone,autoscaler_resource";
@@ -103,7 +103,7 @@ service Autoscalers {
   rpc UpdateAutoscalers(UpdateAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      put: "/compute/v1/projects/{project=project}/zones/{zone=zone}/autoscalers"
+      put: "/compute/v1/projects/{project}/zones/{zone}/autoscalers"
       body: "autoscaler_resource"
     };
     option (google.api.method_signature) = "project,zone,autoscaler_resource";

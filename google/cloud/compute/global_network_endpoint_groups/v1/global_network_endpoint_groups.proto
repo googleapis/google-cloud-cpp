@@ -40,7 +40,7 @@ service GlobalNetworkEndpointGroups {
   rpc AttachNetworkEndpoints(AttachNetworkEndpointsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}/attachNetworkEndpoints"
+      post: "/compute/v1/projects/{project}/global/networkEndpointGroups/{network_endpoint_group}/attachNetworkEndpoints"
       body: "global_network_endpoint_groups_attach_endpoints_request_resource"
     };
     option (google.api.method_signature) =
@@ -54,7 +54,7 @@ service GlobalNetworkEndpointGroups {
       DeleteGlobalNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}"
+      delete: "/compute/v1/projects/{project}/global/networkEndpointGroups/{network_endpoint_group}"
     };
     option (google.api.method_signature) = "project,network_endpoint_group";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -64,7 +64,7 @@ service GlobalNetworkEndpointGroups {
   rpc DetachNetworkEndpoints(DetachNetworkEndpointsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}/detachNetworkEndpoints"
+      post: "/compute/v1/projects/{project}/global/networkEndpointGroups/{network_endpoint_group}/detachNetworkEndpoints"
       body: "global_network_endpoint_groups_detach_endpoints_request_resource"
     };
     option (google.api.method_signature) =
@@ -76,7 +76,7 @@ service GlobalNetworkEndpointGroups {
   rpc GetGlobalNetworkEndpointGroups(GetGlobalNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkEndpointGroup) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}"
+      get: "/compute/v1/projects/{project}/global/networkEndpointGroups/{network_endpoint_group}"
     };
     option (google.api.method_signature) = "project,network_endpoint_group";
   }
@@ -87,7 +87,7 @@ service GlobalNetworkEndpointGroups {
       InsertGlobalNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/networkEndpointGroups"
+      post: "/compute/v1/projects/{project}/global/networkEndpointGroups"
       body: "network_endpoint_group_resource"
     };
     option (google.api.method_signature) =
@@ -100,7 +100,7 @@ service GlobalNetworkEndpointGroups {
   rpc ListGlobalNetworkEndpointGroups(ListGlobalNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/networkEndpointGroups"
+      get: "/compute/v1/projects/{project}/global/networkEndpointGroups"
     };
     option (google.api.method_signature) = "project";
   }
@@ -109,7 +109,7 @@ service GlobalNetworkEndpointGroups {
   rpc ListNetworkEndpoints(ListNetworkEndpointsRequest) returns (
       google.cloud.cpp.compute.v1.NetworkEndpointGroupsListNetworkEndpoints) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/networkEndpointGroups/{network_endpoint_group=network_endpoint_group}/listNetworkEndpoints"
+      post: "/compute/v1/projects/{project}/global/networkEndpointGroups/{network_endpoint_group}/listNetworkEndpoints"
       body: "*"
     };
     option (google.api.method_signature) = "project,network_endpoint_group";

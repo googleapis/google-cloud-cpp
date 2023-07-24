@@ -40,7 +40,7 @@ service RegionTargetTcpProxies {
   rpc DeleteRegionTargetTcpProxies(DeleteRegionTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/targetTcpProxies/{target_tcp_proxy=target_tcp_proxy}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/targetTcpProxies/{target_tcp_proxy}"
     };
     option (google.api.method_signature) = "project,region,target_tcp_proxy";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -50,7 +50,7 @@ service RegionTargetTcpProxies {
   rpc GetRegionTargetTcpProxies(GetRegionTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetTcpProxy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/targetTcpProxies/{target_tcp_proxy=target_tcp_proxy}"
+      get: "/compute/v1/projects/{project}/regions/{region}/targetTcpProxies/{target_tcp_proxy}"
     };
     option (google.api.method_signature) = "project,region,target_tcp_proxy";
   }
@@ -60,7 +60,7 @@ service RegionTargetTcpProxies {
   rpc InsertRegionTargetTcpProxies(InsertRegionTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetTcpProxies"
+      post: "/compute/v1/projects/{project}/regions/{region}/targetTcpProxies"
       body: "target_tcp_proxy_resource"
     };
     option (google.api.method_signature) =
@@ -73,7 +73,7 @@ service RegionTargetTcpProxies {
   rpc ListRegionTargetTcpProxies(ListRegionTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetTcpProxyList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/targetTcpProxies"
+      get: "/compute/v1/projects/{project}/regions/{region}/targetTcpProxies"
     };
     option (google.api.method_signature) = "project,region";
   }

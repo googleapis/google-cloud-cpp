@@ -40,7 +40,7 @@ service VpnTunnels {
   rpc AggregatedListVpnTunnels(AggregatedListVpnTunnelsRequest)
       returns (google.cloud.cpp.compute.v1.VpnTunnelAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/vpnTunnels"
+      get: "/compute/v1/projects/{project}/aggregated/vpnTunnels"
     };
     option (google.api.method_signature) = "project";
   }
@@ -49,7 +49,7 @@ service VpnTunnels {
   rpc DeleteVpnTunnels(DeleteVpnTunnelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/vpnTunnels/{vpn_tunnel=vpn_tunnel}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/vpnTunnels/{vpn_tunnel}"
     };
     option (google.api.method_signature) = "project,region,vpn_tunnel";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -59,7 +59,7 @@ service VpnTunnels {
   rpc GetVpnTunnels(GetVpnTunnelsRequest)
       returns (google.cloud.cpp.compute.v1.VpnTunnel) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/vpnTunnels/{vpn_tunnel=vpn_tunnel}"
+      get: "/compute/v1/projects/{project}/regions/{region}/vpnTunnels/{vpn_tunnel}"
     };
     option (google.api.method_signature) = "project,region,vpn_tunnel";
   }
@@ -69,7 +69,7 @@ service VpnTunnels {
   rpc InsertVpnTunnels(InsertVpnTunnelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/vpnTunnels"
+      post: "/compute/v1/projects/{project}/regions/{region}/vpnTunnels"
       body: "vpn_tunnel_resource"
     };
     option (google.api.method_signature) = "project,region,vpn_tunnel_resource";
@@ -81,7 +81,7 @@ service VpnTunnels {
   rpc ListVpnTunnels(ListVpnTunnelsRequest)
       returns (google.cloud.cpp.compute.v1.VpnTunnelList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/vpnTunnels"
+      get: "/compute/v1/projects/{project}/regions/{region}/vpnTunnels"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -91,7 +91,7 @@ service VpnTunnels {
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/vpnTunnels/{resource=resource}/setLabels"
+      post: "/compute/v1/projects/{project}/regions/{region}/vpnTunnels/{resource}/setLabels"
       body: "region_set_labels_request_resource"
     };
     option (google.api.method_signature) =

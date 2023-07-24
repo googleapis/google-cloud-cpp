@@ -40,7 +40,7 @@ service RegionTargetHttpsProxies {
   rpc DeleteRegionTargetHttpsProxies(DeleteRegionTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/targetHttpsProxies/{target_https_proxy=target_https_proxy}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/targetHttpsProxies/{target_https_proxy}"
     };
     option (google.api.method_signature) = "project,region,target_https_proxy";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -50,7 +50,7 @@ service RegionTargetHttpsProxies {
   rpc GetRegionTargetHttpsProxies(GetRegionTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpsProxy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/targetHttpsProxies/{target_https_proxy=target_https_proxy}"
+      get: "/compute/v1/projects/{project}/regions/{region}/targetHttpsProxies/{target_https_proxy}"
     };
     option (google.api.method_signature) = "project,region,target_https_proxy";
   }
@@ -60,7 +60,7 @@ service RegionTargetHttpsProxies {
   rpc InsertRegionTargetHttpsProxies(InsertRegionTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetHttpsProxies"
+      post: "/compute/v1/projects/{project}/regions/{region}/targetHttpsProxies"
       body: "target_https_proxy_resource"
     };
     option (google.api.method_signature) =
@@ -73,7 +73,7 @@ service RegionTargetHttpsProxies {
   rpc ListRegionTargetHttpsProxies(ListRegionTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpsProxyList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/targetHttpsProxies"
+      get: "/compute/v1/projects/{project}/regions/{region}/targetHttpsProxies"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -84,7 +84,7 @@ service RegionTargetHttpsProxies {
   rpc PatchRegionTargetHttpsProxies(PatchRegionTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/targetHttpsProxies/{target_https_proxy=target_https_proxy}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/targetHttpsProxies/{target_https_proxy}"
       body: "target_https_proxy_resource"
     };
     option (google.api.method_signature) =
@@ -96,7 +96,7 @@ service RegionTargetHttpsProxies {
   rpc SetSslCertificates(SetSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetHttpsProxies/{target_https_proxy=target_https_proxy}/setSslCertificates"
+      post: "/compute/v1/projects/{project}/regions/{region}/targetHttpsProxies/{target_https_proxy}/setSslCertificates"
       body: "region_target_https_proxies_set_ssl_certificates_request_resource"
     };
     option (google.api.method_signature) =
@@ -108,7 +108,7 @@ service RegionTargetHttpsProxies {
   rpc SetUrlMap(SetUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/targetHttpsProxies/{target_https_proxy=target_https_proxy}/setUrlMap"
+      post: "/compute/v1/projects/{project}/regions/{region}/targetHttpsProxies/{target_https_proxy}/setUrlMap"
       body: "url_map_reference_resource"
     };
     option (google.api.method_signature) =

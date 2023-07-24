@@ -40,7 +40,7 @@ service RegionInstanceGroups {
   rpc GetRegionInstanceGroups(GetRegionInstanceGroupsRequest)
       returns (google.cloud.cpp.compute.v1.InstanceGroup) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroups/{instance_group=instance_group}"
+      get: "/compute/v1/projects/{project}/regions/{region}/instanceGroups/{instance_group}"
     };
     option (google.api.method_signature) = "project,region,instance_group";
   }
@@ -50,7 +50,7 @@ service RegionInstanceGroups {
   rpc ListRegionInstanceGroups(ListRegionInstanceGroupsRequest)
       returns (google.cloud.cpp.compute.v1.RegionInstanceGroupList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroups"
+      get: "/compute/v1/projects/{project}/regions/{region}/instanceGroups"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -62,7 +62,7 @@ service RegionInstanceGroups {
   rpc ListInstances(ListInstancesRequest)
       returns (google.cloud.cpp.compute.v1.RegionInstanceGroupsListInstances) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroups/{instance_group=instance_group}/listInstances"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroups/{instance_group}/listInstances"
       body: "region_instance_groups_list_instances_request_resource"
     };
     option (google.api.method_signature) =
@@ -73,7 +73,7 @@ service RegionInstanceGroups {
   rpc SetNamedPorts(SetNamedPortsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceGroups/{instance_group=instance_group}/setNamedPorts"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceGroups/{instance_group}/setNamedPorts"
       body: "region_instance_groups_set_named_ports_request_resource"
     };
     option (google.api.method_signature) =

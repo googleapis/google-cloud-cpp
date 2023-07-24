@@ -41,7 +41,7 @@ service TargetTcpProxies {
   rpc AggregatedListTargetTcpProxies(AggregatedListTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/targetTcpProxies"
+      get: "/compute/v1/projects/{project}/aggregated/targetTcpProxies"
     };
     option (google.api.method_signature) = "project";
   }
@@ -50,7 +50,7 @@ service TargetTcpProxies {
   rpc DeleteTargetTcpProxies(DeleteTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/targetTcpProxies/{target_tcp_proxy=target_tcp_proxy}"
+      delete: "/compute/v1/projects/{project}/global/targetTcpProxies/{target_tcp_proxy}"
     };
     option (google.api.method_signature) = "project,target_tcp_proxy";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -60,7 +60,7 @@ service TargetTcpProxies {
   rpc GetTargetTcpProxies(GetTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetTcpProxy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/targetTcpProxies/{target_tcp_proxy=target_tcp_proxy}"
+      get: "/compute/v1/projects/{project}/global/targetTcpProxies/{target_tcp_proxy}"
     };
     option (google.api.method_signature) = "project,target_tcp_proxy";
   }
@@ -70,7 +70,7 @@ service TargetTcpProxies {
   rpc InsertTargetTcpProxies(InsertTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/targetTcpProxies"
+      post: "/compute/v1/projects/{project}/global/targetTcpProxies"
       body: "target_tcp_proxy_resource"
     };
     option (google.api.method_signature) = "project,target_tcp_proxy_resource";
@@ -82,7 +82,7 @@ service TargetTcpProxies {
   rpc ListTargetTcpProxies(ListTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetTcpProxyList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/targetTcpProxies"
+      get: "/compute/v1/projects/{project}/global/targetTcpProxies"
     };
     option (google.api.method_signature) = "project";
   }
@@ -91,7 +91,7 @@ service TargetTcpProxies {
   rpc SetBackendService(SetBackendServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/targetTcpProxies/{target_tcp_proxy=target_tcp_proxy}/setBackendService"
+      post: "/compute/v1/projects/{project}/global/targetTcpProxies/{target_tcp_proxy}/setBackendService"
       body: "target_tcp_proxies_set_backend_service_request_resource"
     };
     option (google.api.method_signature) =
@@ -103,7 +103,7 @@ service TargetTcpProxies {
   rpc SetProxyHeader(SetProxyHeaderRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/targetTcpProxies/{target_tcp_proxy=target_tcp_proxy}/setProxyHeader"
+      post: "/compute/v1/projects/{project}/global/targetTcpProxies/{target_tcp_proxy}/setProxyHeader"
       body: "target_tcp_proxies_set_proxy_header_request_resource"
     };
     option (google.api.method_signature) =

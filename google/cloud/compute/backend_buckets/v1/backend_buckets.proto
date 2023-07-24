@@ -41,7 +41,7 @@ service BackendBuckets {
   rpc AddSignedUrlKey(AddSignedUrlKeyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/backendBuckets/{backend_bucket=backend_bucket}/addSignedUrlKey"
+      post: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}/addSignedUrlKey"
       body: "signed_url_key_resource"
     };
     option (google.api.method_signature) =
@@ -53,7 +53,7 @@ service BackendBuckets {
   rpc DeleteBackendBuckets(DeleteBackendBucketsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/backendBuckets/{backend_bucket=backend_bucket}"
+      delete: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}"
     };
     option (google.api.method_signature) = "project,backend_bucket";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -64,7 +64,7 @@ service BackendBuckets {
   rpc DeleteSignedUrlKey(DeleteSignedUrlKeyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/backendBuckets/{backend_bucket=backend_bucket}/deleteSignedUrlKey"
+      post: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}/deleteSignedUrlKey"
       body: "*"
     };
     option (google.api.method_signature) = "project,backend_bucket,key_name";
@@ -75,7 +75,7 @@ service BackendBuckets {
   rpc GetBackendBuckets(GetBackendBucketsRequest)
       returns (google.cloud.cpp.compute.v1.BackendBucket) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/backendBuckets/{backend_bucket=backend_bucket}"
+      get: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}"
     };
     option (google.api.method_signature) = "project,backend_bucket";
   }
@@ -85,7 +85,7 @@ service BackendBuckets {
   rpc InsertBackendBuckets(InsertBackendBucketsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/backendBuckets"
+      post: "/compute/v1/projects/{project}/global/backendBuckets"
       body: "backend_bucket_resource"
     };
     option (google.api.method_signature) = "project,backend_bucket_resource";
@@ -97,7 +97,7 @@ service BackendBuckets {
   rpc ListBackendBuckets(ListBackendBucketsRequest)
       returns (google.cloud.cpp.compute.v1.BackendBucketList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/backendBuckets"
+      get: "/compute/v1/projects/{project}/global/backendBuckets"
     };
     option (google.api.method_signature) = "project";
   }
@@ -108,7 +108,7 @@ service BackendBuckets {
   rpc PatchBackendBuckets(PatchBackendBucketsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/backendBuckets/{backend_bucket=backend_bucket}"
+      patch: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}"
       body: "backend_bucket_resource"
     };
     option (google.api.method_signature) =
@@ -120,7 +120,7 @@ service BackendBuckets {
   rpc SetEdgeSecurityPolicy(SetEdgeSecurityPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/backendBuckets/{backend_bucket=backend_bucket}/setEdgeSecurityPolicy"
+      post: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}/setEdgeSecurityPolicy"
       body: "security_policy_reference_resource"
     };
     option (google.api.method_signature) =
@@ -133,7 +133,7 @@ service BackendBuckets {
   rpc UpdateBackendBuckets(UpdateBackendBucketsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      put: "/compute/v1/projects/{project=project}/global/backendBuckets/{backend_bucket=backend_bucket}"
+      put: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}"
       body: "backend_bucket_resource"
     };
     option (google.api.method_signature) =

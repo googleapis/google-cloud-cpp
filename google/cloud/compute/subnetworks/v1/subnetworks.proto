@@ -40,7 +40,7 @@ service Subnetworks {
   rpc AggregatedListSubnetworks(AggregatedListSubnetworksRequest)
       returns (google.cloud.cpp.compute.v1.SubnetworkAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/subnetworks"
+      get: "/compute/v1/projects/{project}/aggregated/subnetworks"
     };
     option (google.api.method_signature) = "project";
   }
@@ -49,7 +49,7 @@ service Subnetworks {
   rpc DeleteSubnetworks(DeleteSubnetworksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{subnetwork=subnetwork}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}"
     };
     option (google.api.method_signature) = "project,region,subnetwork";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -59,7 +59,7 @@ service Subnetworks {
   rpc ExpandIpCidrRange(ExpandIpCidrRangeRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{subnetwork=subnetwork}/expandIpCidrRange"
+      post: "/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}/expandIpCidrRange"
       body: "subnetworks_expand_ip_cidr_range_request_resource"
     };
     option (google.api.method_signature) =
@@ -71,7 +71,7 @@ service Subnetworks {
   rpc GetSubnetworks(GetSubnetworksRequest)
       returns (google.cloud.cpp.compute.v1.Subnetwork) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{subnetwork=subnetwork}"
+      get: "/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}"
     };
     option (google.api.method_signature) = "project,region,subnetwork";
   }
@@ -81,7 +81,7 @@ service Subnetworks {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/regions/{region}/subnetworks/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,region,resource";
   }
@@ -91,7 +91,7 @@ service Subnetworks {
   rpc InsertSubnetworks(InsertSubnetworksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks"
+      post: "/compute/v1/projects/{project}/regions/{region}/subnetworks"
       body: "subnetwork_resource"
     };
     option (google.api.method_signature) = "project,region,subnetwork_resource";
@@ -102,7 +102,7 @@ service Subnetworks {
   rpc ListSubnetworks(ListSubnetworksRequest)
       returns (google.cloud.cpp.compute.v1.SubnetworkList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks"
+      get: "/compute/v1/projects/{project}/regions/{region}/subnetworks"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -111,7 +111,7 @@ service Subnetworks {
   rpc ListUsable(ListUsableRequest)
       returns (google.cloud.cpp.compute.v1.UsableSubnetworksAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/subnetworks/listUsable"
+      get: "/compute/v1/projects/{project}/aggregated/subnetworks/listUsable"
     };
     option (google.api.method_signature) = "project";
   }
@@ -123,7 +123,7 @@ service Subnetworks {
   rpc PatchSubnetworks(PatchSubnetworksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{subnetwork=subnetwork}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}"
       body: "subnetwork_resource"
     };
     option (google.api.method_signature) =
@@ -136,7 +136,7 @@ service Subnetworks {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/regions/{region}/subnetworks/{resource}/setIamPolicy"
       body: "region_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -148,7 +148,7 @@ service Subnetworks {
   rpc SetPrivateIpGoogleAccess(SetPrivateIpGoogleAccessRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{subnetwork=subnetwork}/setPrivateIpGoogleAccess"
+      post: "/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}/setPrivateIpGoogleAccess"
       body: "subnetworks_set_private_ip_google_access_request_resource"
     };
     option (google.api.method_signature) =
@@ -160,7 +160,7 @@ service Subnetworks {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/subnetworks/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/regions/{region}/subnetworks/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

@@ -41,7 +41,7 @@ service RegionOperations {
   rpc DeleteRegionOperations(DeleteRegionOperationsRequest)
       returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/operations/{operation=operation}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/operations/{operation}"
     };
     option (google.api.method_signature) = "project,region,operation";
   }
@@ -50,7 +50,7 @@ service RegionOperations {
   rpc GetRegionOperations(GetRegionOperationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/operations/{operation=operation}"
+      get: "/compute/v1/projects/{project}/regions/{region}/operations/{operation}"
     };
     option (google.api.method_signature) = "project,region,operation";
   }
@@ -60,7 +60,7 @@ service RegionOperations {
   rpc ListRegionOperations(ListRegionOperationsRequest)
       returns (google.cloud.cpp.compute.v1.OperationList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/operations"
+      get: "/compute/v1/projects/{project}/regions/{region}/operations"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -78,7 +78,7 @@ service RegionOperations {
   // the operation is not `DONE`.
   rpc Wait(WaitRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/operations/{operation=operation}/wait"
+      post: "/compute/v1/projects/{project}/regions/{region}/operations/{operation}/wait"
       body: "*"
     };
     option (google.api.method_signature) = "project,region,operation";

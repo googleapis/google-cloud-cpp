@@ -40,7 +40,7 @@ service RegionAutoscalers {
   rpc DeleteRegionAutoscalers(DeleteRegionAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/autoscalers/{autoscaler=autoscaler}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/autoscalers/{autoscaler}"
     };
     option (google.api.method_signature) = "project,region,autoscaler";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -50,7 +50,7 @@ service RegionAutoscalers {
   rpc GetRegionAutoscalers(GetRegionAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Autoscaler) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/autoscalers/{autoscaler=autoscaler}"
+      get: "/compute/v1/projects/{project}/regions/{region}/autoscalers/{autoscaler}"
     };
     option (google.api.method_signature) = "project,region,autoscaler";
   }
@@ -60,7 +60,7 @@ service RegionAutoscalers {
   rpc InsertRegionAutoscalers(InsertRegionAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/autoscalers"
+      post: "/compute/v1/projects/{project}/regions/{region}/autoscalers"
       body: "autoscaler_resource"
     };
     option (google.api.method_signature) = "project,region,autoscaler_resource";
@@ -71,7 +71,7 @@ service RegionAutoscalers {
   rpc ListRegionAutoscalers(ListRegionAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.RegionAutoscalerList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/autoscalers"
+      get: "/compute/v1/projects/{project}/regions/{region}/autoscalers"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -82,7 +82,7 @@ service RegionAutoscalers {
   rpc PatchRegionAutoscalers(PatchRegionAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/autoscalers"
+      patch: "/compute/v1/projects/{project}/regions/{region}/autoscalers"
       body: "autoscaler_resource"
     };
     option (google.api.method_signature) = "project,region,autoscaler_resource";
@@ -94,7 +94,7 @@ service RegionAutoscalers {
   rpc UpdateRegionAutoscalers(UpdateRegionAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      put: "/compute/v1/projects/{project=project}/regions/{region=region}/autoscalers"
+      put: "/compute/v1/projects/{project}/regions/{region}/autoscalers"
       body: "autoscaler_resource"
     };
     option (google.api.method_signature) = "project,region,autoscaler_resource";

@@ -40,7 +40,7 @@ service Firewalls {
   rpc DeleteFirewalls(DeleteFirewallsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/firewalls/{firewall=firewall}"
+      delete: "/compute/v1/projects/{project}/global/firewalls/{firewall}"
     };
     option (google.api.method_signature) = "project,firewall";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -50,7 +50,7 @@ service Firewalls {
   rpc GetFirewalls(GetFirewallsRequest)
       returns (google.cloud.cpp.compute.v1.Firewall) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/firewalls/{firewall=firewall}"
+      get: "/compute/v1/projects/{project}/global/firewalls/{firewall}"
     };
     option (google.api.method_signature) = "project,firewall";
   }
@@ -60,7 +60,7 @@ service Firewalls {
   rpc InsertFirewalls(InsertFirewallsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/firewalls"
+      post: "/compute/v1/projects/{project}/global/firewalls"
       body: "firewall_resource"
     };
     option (google.api.method_signature) = "project,firewall_resource";
@@ -71,7 +71,7 @@ service Firewalls {
   rpc ListFirewalls(ListFirewallsRequest)
       returns (google.cloud.cpp.compute.v1.FirewallList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/firewalls"
+      get: "/compute/v1/projects/{project}/global/firewalls"
     };
     option (google.api.method_signature) = "project";
   }
@@ -82,7 +82,7 @@ service Firewalls {
   rpc PatchFirewalls(PatchFirewallsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/firewalls/{firewall=firewall}"
+      patch: "/compute/v1/projects/{project}/global/firewalls/{firewall}"
       body: "firewall_resource"
     };
     option (google.api.method_signature) = "project,firewall,firewall_resource";
@@ -95,7 +95,7 @@ service Firewalls {
   rpc UpdateFirewalls(UpdateFirewallsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      put: "/compute/v1/projects/{project=project}/global/firewalls/{firewall=firewall}"
+      put: "/compute/v1/projects/{project}/global/firewalls/{firewall}"
       body: "firewall_resource"
     };
     option (google.api.method_signature) = "project,firewall,firewall_resource";

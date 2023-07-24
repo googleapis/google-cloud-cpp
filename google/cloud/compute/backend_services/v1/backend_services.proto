@@ -41,7 +41,7 @@ service BackendServices {
   rpc AddSignedUrlKey(AddSignedUrlKeyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}/addSignedUrlKey"
+      post: "/compute/v1/projects/{project}/global/backendServices/{backend_service}/addSignedUrlKey"
       body: "signed_url_key_resource"
     };
     option (google.api.method_signature) =
@@ -54,7 +54,7 @@ service BackendServices {
   rpc AggregatedListBackendServices(AggregatedListBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.BackendServiceAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/backendServices"
+      get: "/compute/v1/projects/{project}/aggregated/backendServices"
     };
     option (google.api.method_signature) = "project";
   }
@@ -63,7 +63,7 @@ service BackendServices {
   rpc DeleteBackendServices(DeleteBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}"
+      delete: "/compute/v1/projects/{project}/global/backendServices/{backend_service}"
     };
     option (google.api.method_signature) = "project,backend_service";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -74,7 +74,7 @@ service BackendServices {
   rpc DeleteSignedUrlKey(DeleteSignedUrlKeyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}/deleteSignedUrlKey"
+      post: "/compute/v1/projects/{project}/global/backendServices/{backend_service}/deleteSignedUrlKey"
       body: "*"
     };
     option (google.api.method_signature) = "project,backend_service,key_name";
@@ -85,7 +85,7 @@ service BackendServices {
   rpc GetBackendServices(GetBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.BackendService) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}"
+      get: "/compute/v1/projects/{project}/global/backendServices/{backend_service}"
     };
     option (google.api.method_signature) = "project,backend_service";
   }
@@ -96,7 +96,7 @@ service BackendServices {
   rpc GetHealth(GetHealthRequest)
       returns (google.cloud.cpp.compute.v1.BackendServiceGroupHealth) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}/getHealth"
+      post: "/compute/v1/projects/{project}/global/backendServices/{backend_service}/getHealth"
       body: "resource_group_reference_resource"
     };
     option (google.api.method_signature) =
@@ -108,7 +108,7 @@ service BackendServices {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/backendServices/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/global/backendServices/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,resource";
   }
@@ -119,7 +119,7 @@ service BackendServices {
   rpc InsertBackendServices(InsertBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/backendServices"
+      post: "/compute/v1/projects/{project}/global/backendServices"
       body: "backend_service_resource"
     };
     option (google.api.method_signature) = "project,backend_service_resource";
@@ -131,7 +131,7 @@ service BackendServices {
   rpc ListBackendServices(ListBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.BackendServiceList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/backendServices"
+      get: "/compute/v1/projects/{project}/global/backendServices"
     };
     option (google.api.method_signature) = "project";
   }
@@ -143,7 +143,7 @@ service BackendServices {
   rpc PatchBackendServices(PatchBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}"
+      patch: "/compute/v1/projects/{project}/global/backendServices/{backend_service}"
       body: "backend_service_resource"
     };
     option (google.api.method_signature) =
@@ -155,7 +155,7 @@ service BackendServices {
   rpc SetEdgeSecurityPolicy(SetEdgeSecurityPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}/setEdgeSecurityPolicy"
+      post: "/compute/v1/projects/{project}/global/backendServices/{backend_service}/setEdgeSecurityPolicy"
       body: "security_policy_reference_resource"
     };
     option (google.api.method_signature) =
@@ -168,7 +168,7 @@ service BackendServices {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/backendServices/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/global/backendServices/{resource}/setIamPolicy"
       body: "global_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -180,7 +180,7 @@ service BackendServices {
   rpc SetSecurityPolicy(SetSecurityPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}/setSecurityPolicy"
+      post: "/compute/v1/projects/{project}/global/backendServices/{backend_service}/setSecurityPolicy"
       body: "security_policy_reference_resource"
     };
     option (google.api.method_signature) =
@@ -193,7 +193,7 @@ service BackendServices {
   rpc UpdateBackendServices(UpdateBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      put: "/compute/v1/projects/{project=project}/global/backendServices/{backend_service=backend_service}"
+      put: "/compute/v1/projects/{project}/global/backendServices/{backend_service}"
       body: "backend_service_resource"
     };
     option (google.api.method_signature) =

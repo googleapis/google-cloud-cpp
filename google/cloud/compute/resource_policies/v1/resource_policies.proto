@@ -40,7 +40,7 @@ service ResourcePolicies {
   rpc AggregatedListResourcePolicies(AggregatedListResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.ResourcePolicyAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/resourcePolicies"
+      get: "/compute/v1/projects/{project}/aggregated/resourcePolicies"
     };
     option (google.api.method_signature) = "project";
   }
@@ -49,7 +49,7 @@ service ResourcePolicies {
   rpc DeleteResourcePolicies(DeleteResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies/{resource_policy=resource_policy}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/resourcePolicies/{resource_policy}"
     };
     option (google.api.method_signature) = "project,region,resource_policy";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -59,7 +59,7 @@ service ResourcePolicies {
   rpc GetResourcePolicies(GetResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.ResourcePolicy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies/{resource_policy=resource_policy}"
+      get: "/compute/v1/projects/{project}/regions/{region}/resourcePolicies/{resource_policy}"
     };
     option (google.api.method_signature) = "project,region,resource_policy";
   }
@@ -69,7 +69,7 @@ service ResourcePolicies {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/regions/{region}/resourcePolicies/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,region,resource";
   }
@@ -78,7 +78,7 @@ service ResourcePolicies {
   rpc InsertResourcePolicies(InsertResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies"
+      post: "/compute/v1/projects/{project}/regions/{region}/resourcePolicies"
       body: "resource_policy_resource"
     };
     option (google.api.method_signature) =
@@ -91,7 +91,7 @@ service ResourcePolicies {
   rpc ListResourcePolicies(ListResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.ResourcePolicyList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies"
+      get: "/compute/v1/projects/{project}/regions/{region}/resourcePolicies"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -101,7 +101,7 @@ service ResourcePolicies {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/regions/{region}/resourcePolicies/{resource}/setIamPolicy"
       body: "region_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -112,7 +112,7 @@ service ResourcePolicies {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/resourcePolicies/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/regions/{region}/resourcePolicies/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

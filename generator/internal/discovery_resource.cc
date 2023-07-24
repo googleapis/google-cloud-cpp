@@ -101,8 +101,7 @@ std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
     current = open + 1;
     auto close = path.find('}', current);
     absl::StrAppend(
-        &output, CamelCaseToSnakeCase(path.substr(current, close - current)),
-        "=", CamelCaseToSnakeCase(path.substr(current, close - current)));
+        &output, CamelCaseToSnakeCase(path.substr(current, close - current)));
     current = close;
   }
   absl::StrAppend(&output, path.substr(current));
