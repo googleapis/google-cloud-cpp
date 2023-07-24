@@ -59,17 +59,17 @@ TEST(DiscoveryResourceTest, FormatUrlPath) {
               Eq("base/path/test"));
   EXPECT_THAT(DiscoveryResource::FormatUrlPath(
                   "projects/{project}/zones/{zone}/myTests/{foo}/method1"),
-              Eq("projects/{project=project}/zones/{zone=zone}/myTests/"
-                 "{foo=foo}/method1"));
+              Eq("projects/{project}/zones/{zone}/myTests/"
+                 "{foo}/method1"));
   EXPECT_THAT(DiscoveryResource::FormatUrlPath(
                   "projects/{project}/zones/{zone}/myTests/{fooId}/method1"),
-              Eq("projects/{project=project}/zones/{zone=zone}/myTests/"
-                 "{foo_id=foo_id}/method1"));
+              Eq("projects/{project}/zones/{zone}/myTests/"
+                 "{foo_id}/method1"));
   EXPECT_THAT(
       DiscoveryResource::FormatUrlPath(
           "projects/{project}/zones/{zoneName}/myTests/{fooId}:method1"),
-      Eq("projects/{project=project}/zones/{zone_name=zone_name}/myTests/"
-         "{foo_id=foo_id}:method1"));
+      Eq("projects/{project}/zones/{zone_name}/myTests/"
+         "{foo_id}:method1"));
 }
 
 TEST(DiscoveryResourceTest, FormatRpcOptionsGetRegion) {
@@ -85,7 +85,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsGetRegion) {
 })""";
   auto constexpr kExpectedProto =
       R"""(    option (google.api.http) = {
-      get: "base/path/projects/{project=project}/regions/{region=region}/myTests/{foo=foo}"
+      get: "base/path/projects/{project}/regions/{region}/myTests/{foo}"
     };
     option (google.api.method_signature) = "project,region,foo";)""";
   auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
@@ -117,7 +117,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPatchZone) {
 })""";
   auto constexpr kExpectedProto =
       R"""(    option (google.api.http) = {
-      patch: "base/path/projects/{project=project}/zones/{zone=zone}/myTests/{foo_id=foo_id}/method1"
+      patch: "base/path/projects/{project}/zones/{zone}/myTests/{foo_id}/method1"
       body: "my_request_resource"
     };
     option (google.api.method_signature) = "project,zone,foo_id,my_request_resource";
@@ -151,7 +151,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPutRegion) {
 })""";
   auto constexpr kExpectedProto =
       R"""(    option (google.api.http) = {
-      put: "base/path/projects/{project=project}/regions/{region=region}/myTests/{foo_id=foo_id}/method1"
+      put: "base/path/projects/{project}/regions/{region}/myTests/{foo_id}/method1"
       body: "my_request_resource"
     };
     option (google.api.method_signature) = "project,region,foo_id,my_request_resource";
@@ -179,7 +179,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPostGlobal) {
 })""";
   auto constexpr kExpectedProto =
       R"""(    option (google.api.http) = {
-      post: "base/path/projects/{project=project}/global/myTests/{foo=foo}:cancel"
+      post: "base/path/projects/{project}/global/myTests/{foo}:cancel"
       body: "*"
     };
     option (google.api.method_signature) = "project,foo";)""";
@@ -209,7 +209,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPostGlobalOperationResponse) {
 })""";
   auto constexpr kExpectedProto =
       R"""(    option (google.api.http) = {
-      post: "base/path/projects/{project=project}/global/myTests/{foo=foo}:cancel"
+      post: "base/path/projects/{project}/global/myTests/{foo}:cancel"
       body: "*"
     };
     option (google.api.method_signature) = "project,foo";
@@ -326,7 +326,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPutRegionOperationService) {
 })""";
   auto constexpr kExpectedProto =
       R"""(    option (google.api.http) = {
-      put: "base/path/projects/{project=project}/regions/{region=region}/myTests/{foo_id=foo_id}/method1"
+      put: "base/path/projects/{project}/regions/{region}/myTests/{foo_id}/method1"
       body: "my_request_resource"
     };
     option (google.api.method_signature) = "project,region,foo_id,my_request_resource";)""";
@@ -357,7 +357,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPostGlobalOperationService) {
 })""";
   auto constexpr kExpectedProto =
       R"""(    option (google.api.http) = {
-      post: "base/path/projects/{project=project}/global/myTests/{foo=foo}:cancel"
+      post: "base/path/projects/{project}/global/myTests/{foo}:cancel"
       body: "*"
     };
     option (google.api.method_signature) = "project,foo";)""";
@@ -520,7 +520,7 @@ service MyResources {
 
   rpc DoFoo(DoFooRequest) returns (other.package.Operation) {
     option (google.api.http) = {
-      post: "base/path/projects/{project=project}/zones/{zone=zone}/myResources/{foo_id=foo_id}/doFoo"
+      post: "base/path/projects/{project}/zones/{zone}/myResources/{foo_id}/doFoo"
       body: "my_foo_resource"
     };
     option (google.api.method_signature) = "project,zone,foo_id,my_foo_resource";
@@ -530,7 +530,7 @@ service MyResources {
   // Description for the get method.
   rpc GetMyResources(GetMyResourcesRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get: "base/path/projects/{project=project}/regions/{region=region}/myResources/{foo=foo}"
+      get: "base/path/projects/{project}/regions/{region}/myResources/{foo}"
     };
     option (google.api.method_signature) = "project,region,foo";
   }
