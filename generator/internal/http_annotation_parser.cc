@@ -17,6 +17,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
+#include <functional>
 
 namespace google {
 namespace cloud {
@@ -46,6 +47,28 @@ Status MakeParseError(absl::string_view input, std::size_t offset,
       std::move(builder));
 }
 
+using SegmentParser = std::function<ParseResult<PathTemplate::Segment>(
+    absl::string_view, std::size_t)>;
+
+ParseResult<PathTemplate::Segments> ParseSegmentsImpl(
+    absl::string_view input, std::size_t offset, SegmentParser parser,
+    internal::ErrorInfoBuilder error_info) {
+  PathTemplate::Segments segments;
+  while (offset != input.size()) {
+    auto s = parser(input, offset);
+    if (!s) return std::move(s).status();
+    segments.push_back(
+        std::make_shared<PathTemplate::Segment>(std::move(s->value)));
+    offset = s->end;
+    if (input.size() == offset || input[offset] != '/') break;
+    ++offset;
+  }
+  if (segments.empty()) {
+    return MakeParseError(input, offset, " segment", std::move(error_info));
+  }
+  return MakeParseSuccess(std::move(segments), offset);
+}
+
 ParseResult<PathTemplate::Segments> ParseSegments(absl::string_view input,
                                                   std::size_t offset);
 
@@ -63,38 +86,12 @@ ParseResult<PathTemplate::Segment> ParseVariable(absl::string_view input,
 
 ParseResult<PathTemplate::Segments> ParsePlainSegments(absl::string_view input,
                                                        std::size_t offset) {
-  PathTemplate::Segments segments;
-  while (offset != input.size()) {
-    auto s = ParsePlainSegment(input, offset);
-    if (!s) return std::move(s).status();
-    segments.push_back(
-        std::make_shared<PathTemplate::Segment>(std::move(s->value)));
-    offset = s->end;
-    if (input.size() == offset || input[offset] != '/') break;
-    ++offset;
-  }
-  if (segments.empty()) {
-    return MakeParseError(input, offset, " segment", GCP_ERROR_INFO());
-  }
-  return MakeParseSuccess(std::move(segments), offset);
+  return ParseSegmentsImpl(input, offset, ParsePlainSegment, GCP_ERROR_INFO());
 }
 
 ParseResult<PathTemplate::Segments> ParseSegments(absl::string_view input,
                                                   std::size_t offset) {
-  PathTemplate::Segments segments;
-  while (offset != input.size()) {
-    auto s = ParseSegment(input, offset);
-    if (!s) return std::move(s).status();
-    segments.push_back(
-        std::make_shared<PathTemplate::Segment>(std::move(s->value)));
-    offset = s->end;
-    if (input.size() == offset || input[offset] != '/') break;
-    ++offset;
-  }
-  if (segments.empty()) {
-    return MakeParseError(input, offset, " segment", GCP_ERROR_INFO());
-  }
-  return MakeParseSuccess(std::move(segments), offset);
+  return ParseSegmentsImpl(input, offset, ParseSegment, GCP_ERROR_INFO());
 }
 
 ParseResult<PathTemplate::Segment> ParseLiteral(absl::string_view input,
