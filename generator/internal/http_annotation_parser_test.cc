@@ -224,6 +224,7 @@ TEST(ParseHttpTemplate, Errors) {
       {"/v1//", " offset 4\n"},
       {"/v1/|**/", " offset 4\n"},
       {"/v1/a/{p|}", " offset 8\n"},
+      {"/v1/a/{p=", " offset 9\n"},
       {"/v1/a/{p=}", " offset 9\n"},
       {"/v1/a/{=abc}", " offset 7\n"},
       {"/v1/a/{p=**|}", " offset 11\n"},
