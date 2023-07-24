@@ -41,7 +41,7 @@ service ServiceAttachments {
   rpc AggregatedListServiceAttachments(AggregatedListServiceAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.ServiceAttachmentAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/serviceAttachments"
+      get: "/compute/v1/projects/{project}/aggregated/serviceAttachments"
     };
     option (google.api.method_signature) = "project";
   }
@@ -50,7 +50,7 @@ service ServiceAttachments {
   rpc DeleteServiceAttachments(DeleteServiceAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments/{service_attachment=service_attachment}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/{service_attachment}"
     };
     option (google.api.method_signature) = "project,region,service_attachment";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -60,7 +60,7 @@ service ServiceAttachments {
   rpc GetServiceAttachments(GetServiceAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.ServiceAttachment) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments/{service_attachment=service_attachment}"
+      get: "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/{service_attachment}"
     };
     option (google.api.method_signature) = "project,region,service_attachment";
   }
@@ -70,7 +70,7 @@ service ServiceAttachments {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,region,resource";
   }
@@ -80,7 +80,7 @@ service ServiceAttachments {
   rpc InsertServiceAttachments(InsertServiceAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments"
+      post: "/compute/v1/projects/{project}/regions/{region}/serviceAttachments"
       body: "service_attachment_resource"
     };
     option (google.api.method_signature) =
@@ -92,7 +92,7 @@ service ServiceAttachments {
   rpc ListServiceAttachments(ListServiceAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.ServiceAttachmentList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments"
+      get: "/compute/v1/projects/{project}/regions/{region}/serviceAttachments"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -103,7 +103,7 @@ service ServiceAttachments {
   rpc PatchServiceAttachments(PatchServiceAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments/{service_attachment=service_attachment}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/{service_attachment}"
       body: "service_attachment_resource"
     };
     option (google.api.method_signature) =
@@ -116,7 +116,7 @@ service ServiceAttachments {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/{resource}/setIamPolicy"
       body: "region_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -127,7 +127,7 @@ service ServiceAttachments {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/serviceAttachments/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

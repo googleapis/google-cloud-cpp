@@ -39,7 +39,7 @@ service MachineTypes {
   rpc AggregatedListMachineTypes(AggregatedListMachineTypesRequest)
       returns (google.cloud.cpp.compute.v1.MachineTypeAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/machineTypes"
+      get: "/compute/v1/projects/{project}/aggregated/machineTypes"
     };
     option (google.api.method_signature) = "project";
   }
@@ -48,7 +48,7 @@ service MachineTypes {
   rpc GetMachineTypes(GetMachineTypesRequest)
       returns (google.cloud.cpp.compute.v1.MachineType) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/machineTypes/{machine_type=machine_type}"
+      get: "/compute/v1/projects/{project}/zones/{zone}/machineTypes/{machine_type}"
     };
     option (google.api.method_signature) = "project,zone,machine_type";
   }
@@ -57,7 +57,7 @@ service MachineTypes {
   rpc ListMachineTypes(ListMachineTypesRequest)
       returns (google.cloud.cpp.compute.v1.MachineTypeList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/machineTypes"
+      get: "/compute/v1/projects/{project}/zones/{zone}/machineTypes"
     };
     option (google.api.method_signature) = "project,zone";
   }

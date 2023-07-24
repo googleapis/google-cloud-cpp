@@ -41,7 +41,7 @@ service InstanceTemplates {
   rpc AggregatedListInstanceTemplates(AggregatedListInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceTemplateAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/instanceTemplates"
+      get: "/compute/v1/projects/{project}/aggregated/instanceTemplates"
     };
     option (google.api.method_signature) = "project";
   }
@@ -52,7 +52,7 @@ service InstanceTemplates {
   rpc DeleteInstanceTemplates(DeleteInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/instanceTemplates/{instance_template=instance_template}"
+      delete: "/compute/v1/projects/{project}/global/instanceTemplates/{instance_template}"
     };
     option (google.api.method_signature) = "project,instance_template";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -62,7 +62,7 @@ service InstanceTemplates {
   rpc GetInstanceTemplates(GetInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceTemplate) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/instanceTemplates/{instance_template=instance_template}"
+      get: "/compute/v1/projects/{project}/global/instanceTemplates/{instance_template}"
     };
     option (google.api.method_signature) = "project,instance_template";
   }
@@ -72,7 +72,7 @@ service InstanceTemplates {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/instanceTemplates/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/global/instanceTemplates/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,resource";
   }
@@ -84,7 +84,7 @@ service InstanceTemplates {
   rpc InsertInstanceTemplates(InsertInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/instanceTemplates"
+      post: "/compute/v1/projects/{project}/global/instanceTemplates"
       body: "instance_template_resource"
     };
     option (google.api.method_signature) = "project,instance_template_resource";
@@ -96,7 +96,7 @@ service InstanceTemplates {
   rpc ListInstanceTemplates(ListInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceTemplateList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/instanceTemplates"
+      get: "/compute/v1/projects/{project}/global/instanceTemplates"
     };
     option (google.api.method_signature) = "project";
   }
@@ -106,7 +106,7 @@ service InstanceTemplates {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/instanceTemplates/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/global/instanceTemplates/{resource}/setIamPolicy"
       body: "global_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -117,7 +117,7 @@ service InstanceTemplates {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/instanceTemplates/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/global/instanceTemplates/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

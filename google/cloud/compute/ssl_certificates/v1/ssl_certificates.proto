@@ -41,7 +41,7 @@ service SslCertificates {
   rpc AggregatedListSslCertificates(AggregatedListSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.SslCertificateAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/sslCertificates"
+      get: "/compute/v1/projects/{project}/aggregated/sslCertificates"
     };
     option (google.api.method_signature) = "project";
   }
@@ -50,7 +50,7 @@ service SslCertificates {
   rpc DeleteSslCertificates(DeleteSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/sslCertificates/{ssl_certificate=ssl_certificate}"
+      delete: "/compute/v1/projects/{project}/global/sslCertificates/{ssl_certificate}"
     };
     option (google.api.method_signature) = "project,ssl_certificate";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -60,7 +60,7 @@ service SslCertificates {
   rpc GetSslCertificates(GetSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.SslCertificate) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/sslCertificates/{ssl_certificate=ssl_certificate}"
+      get: "/compute/v1/projects/{project}/global/sslCertificates/{ssl_certificate}"
     };
     option (google.api.method_signature) = "project,ssl_certificate";
   }
@@ -70,7 +70,7 @@ service SslCertificates {
   rpc InsertSslCertificates(InsertSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/sslCertificates"
+      post: "/compute/v1/projects/{project}/global/sslCertificates"
       body: "ssl_certificate_resource"
     };
     option (google.api.method_signature) = "project,ssl_certificate_resource";
@@ -82,7 +82,7 @@ service SslCertificates {
   rpc ListSslCertificates(ListSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.SslCertificateList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/sslCertificates"
+      get: "/compute/v1/projects/{project}/global/sslCertificates"
     };
     option (google.api.method_signature) = "project";
   }

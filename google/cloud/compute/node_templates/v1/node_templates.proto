@@ -40,7 +40,7 @@ service NodeTemplates {
   rpc AggregatedListNodeTemplates(AggregatedListNodeTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.NodeTemplateAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/nodeTemplates"
+      get: "/compute/v1/projects/{project}/aggregated/nodeTemplates"
     };
     option (google.api.method_signature) = "project";
   }
@@ -49,7 +49,7 @@ service NodeTemplates {
   rpc DeleteNodeTemplates(DeleteNodeTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/nodeTemplates/{node_template=node_template}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/{node_template}"
     };
     option (google.api.method_signature) = "project,region,node_template";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -59,7 +59,7 @@ service NodeTemplates {
   rpc GetNodeTemplates(GetNodeTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.NodeTemplate) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/nodeTemplates/{node_template=node_template}"
+      get: "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/{node_template}"
     };
     option (google.api.method_signature) = "project,region,node_template";
   }
@@ -69,7 +69,7 @@ service NodeTemplates {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/nodeTemplates/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,region,resource";
   }
@@ -79,7 +79,7 @@ service NodeTemplates {
   rpc InsertNodeTemplates(InsertNodeTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/nodeTemplates"
+      post: "/compute/v1/projects/{project}/regions/{region}/nodeTemplates"
       body: "node_template_resource"
     };
     option (google.api.method_signature) =
@@ -91,7 +91,7 @@ service NodeTemplates {
   rpc ListNodeTemplates(ListNodeTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.NodeTemplateList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/nodeTemplates"
+      get: "/compute/v1/projects/{project}/regions/{region}/nodeTemplates"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -101,7 +101,7 @@ service NodeTemplates {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/nodeTemplates/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/{resource}/setIamPolicy"
       body: "region_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -112,7 +112,7 @@ service NodeTemplates {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/nodeTemplates/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

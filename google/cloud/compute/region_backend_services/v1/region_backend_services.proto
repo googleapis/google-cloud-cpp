@@ -40,7 +40,7 @@ service RegionBackendServices {
   rpc DeleteRegionBackendServices(DeleteRegionBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/backendServices/{backend_service=backend_service}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/backendServices/{backend_service}"
     };
     option (google.api.method_signature) = "project,region,backend_service";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -50,7 +50,7 @@ service RegionBackendServices {
   rpc GetRegionBackendServices(GetRegionBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.BackendService) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/backendServices/{backend_service=backend_service}"
+      get: "/compute/v1/projects/{project}/regions/{region}/backendServices/{backend_service}"
     };
     option (google.api.method_signature) = "project,region,backend_service";
   }
@@ -59,7 +59,7 @@ service RegionBackendServices {
   rpc GetHealth(GetHealthRequest)
       returns (google.cloud.cpp.compute.v1.BackendServiceGroupHealth) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/backendServices/{backend_service=backend_service}/getHealth"
+      post: "/compute/v1/projects/{project}/regions/{region}/backendServices/{backend_service}/getHealth"
       body: "resource_group_reference_resource"
     };
     option (google.api.method_signature) =
@@ -71,7 +71,7 @@ service RegionBackendServices {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/backendServices/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/regions/{region}/backendServices/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,region,resource";
   }
@@ -82,7 +82,7 @@ service RegionBackendServices {
   rpc InsertRegionBackendServices(InsertRegionBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/backendServices"
+      post: "/compute/v1/projects/{project}/regions/{region}/backendServices"
       body: "backend_service_resource"
     };
     option (google.api.method_signature) =
@@ -95,7 +95,7 @@ service RegionBackendServices {
   rpc ListRegionBackendServices(ListRegionBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.BackendServiceList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/backendServices"
+      get: "/compute/v1/projects/{project}/regions/{region}/backendServices"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -107,7 +107,7 @@ service RegionBackendServices {
   rpc PatchRegionBackendServices(PatchRegionBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/backendServices/{backend_service=backend_service}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/backendServices/{backend_service}"
       body: "backend_service_resource"
     };
     option (google.api.method_signature) =
@@ -120,7 +120,7 @@ service RegionBackendServices {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/backendServices/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/regions/{region}/backendServices/{resource}/setIamPolicy"
       body: "region_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -133,7 +133,7 @@ service RegionBackendServices {
   rpc UpdateRegionBackendServices(UpdateRegionBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      put: "/compute/v1/projects/{project=project}/regions/{region=region}/backendServices/{backend_service=backend_service}"
+      put: "/compute/v1/projects/{project}/regions/{region}/backendServices/{backend_service}"
       body: "backend_service_resource"
     };
     option (google.api.method_signature) =

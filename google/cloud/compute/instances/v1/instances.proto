@@ -41,7 +41,7 @@ service Instances {
   rpc AddAccessConfig(AddAccessConfigRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/addAccessConfig"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/addAccessConfig"
       body: "access_config_resource"
     };
     option (google.api.method_signature) =
@@ -55,7 +55,7 @@ service Instances {
   rpc AddResourcePolicies(AddResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/addResourcePolicies"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/addResourcePolicies"
       body: "instances_add_resource_policies_request_resource"
     };
     option (google.api.method_signature) =
@@ -69,7 +69,7 @@ service Instances {
   rpc AggregatedListInstances(AggregatedListInstancesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/instances"
+      get: "/compute/v1/projects/{project}/aggregated/instances"
     };
     option (google.api.method_signature) = "project";
   }
@@ -81,7 +81,7 @@ service Instances {
   rpc AttachDisk(AttachDiskRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/attachDisk"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/attachDisk"
       body: "attached_disk_resource"
     };
     option (google.api.method_signature) =
@@ -94,7 +94,7 @@ service Instances {
   rpc BulkInsert(BulkInsertRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/bulkInsert"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/bulkInsert"
       body: "bulk_insert_instance_resource"
     };
     option (google.api.method_signature) =
@@ -107,7 +107,7 @@ service Instances {
   rpc DeleteInstances(DeleteInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}"
+      delete: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}"
     };
     option (google.api.method_signature) = "project,zone,instance";
     option (google.cloud.operation_service) = "ZoneOperations";
@@ -117,7 +117,7 @@ service Instances {
   rpc DeleteAccessConfig(DeleteAccessConfigRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/deleteAccessConfig"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/deleteAccessConfig"
       body: "*"
     };
     option (google.api.method_signature) =
@@ -129,7 +129,7 @@ service Instances {
   rpc DetachDisk(DetachDiskRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/detachDisk"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/detachDisk"
       body: "*"
     };
     option (google.api.method_signature) = "project,zone,instance,device_name";
@@ -140,7 +140,7 @@ service Instances {
   rpc GetInstances(GetInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Instance) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}"
+      get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}"
     };
     option (google.api.method_signature) = "project,zone,instance";
   }
@@ -149,7 +149,7 @@ service Instances {
   rpc GetEffectiveFirewalls(GetEffectiveFirewallsRequest) returns (
       google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/getEffectiveFirewalls"
+      get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/getEffectiveFirewalls"
     };
     option (google.api.method_signature) =
         "project,zone,instance,network_interface";
@@ -159,7 +159,7 @@ service Instances {
   rpc GetGuestAttributes(GetGuestAttributesRequest)
       returns (google.cloud.cpp.compute.v1.GuestAttributes) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/getGuestAttributes"
+      get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/getGuestAttributes"
     };
     option (google.api.method_signature) = "project,zone,instance";
   }
@@ -169,7 +169,7 @@ service Instances {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,zone,resource";
   }
@@ -178,7 +178,7 @@ service Instances {
   rpc GetScreenshot(GetScreenshotRequest)
       returns (google.cloud.cpp.compute.v1.Screenshot) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/screenshot"
+      get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/screenshot"
     };
     option (google.api.method_signature) = "project,zone,instance";
   }
@@ -187,7 +187,7 @@ service Instances {
   rpc GetSerialPortOutput(GetSerialPortOutputRequest)
       returns (google.cloud.cpp.compute.v1.SerialPortOutput) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/serialPort"
+      get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/serialPort"
     };
     option (google.api.method_signature) = "project,zone,instance";
   }
@@ -196,7 +196,7 @@ service Instances {
   rpc GetShieldedInstanceIdentity(GetShieldedInstanceIdentityRequest)
       returns (google.cloud.cpp.compute.v1.ShieldedInstanceIdentity) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/getShieldedInstanceIdentity"
+      get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/getShieldedInstanceIdentity"
     };
     option (google.api.method_signature) = "project,zone,instance";
   }
@@ -206,7 +206,7 @@ service Instances {
   rpc InsertInstances(InsertInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances"
       body: "instance_resource"
     };
     option (google.api.method_signature) = "project,zone,instance_resource";
@@ -217,7 +217,7 @@ service Instances {
   rpc ListInstances(ListInstancesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances"
+      get: "/compute/v1/projects/{project}/zones/{zone}/instances"
     };
     option (google.api.method_signature) = "project,zone";
   }
@@ -229,7 +229,7 @@ service Instances {
   rpc ListReferrers(ListReferrersRequest)
       returns (google.cloud.cpp.compute.v1.InstanceListReferrers) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/referrers"
+      get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/referrers"
     };
     option (google.api.method_signature) = "project,zone,instance";
   }
@@ -238,7 +238,7 @@ service Instances {
   rpc RemoveResourcePolicies(RemoveResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/removeResourcePolicies"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/removeResourcePolicies"
       body: "instances_remove_resource_policies_request_resource"
     };
     option (google.api.method_signature) =
@@ -250,7 +250,7 @@ service Instances {
   // a graceful shutdown. For more information, see Resetting an instance.
   rpc Reset(ResetRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/reset"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/reset"
       body: "*"
     };
     option (google.api.method_signature) = "project,zone,instance";
@@ -261,7 +261,7 @@ service Instances {
   // method.
   rpc Resume(ResumeRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/resume"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/resume"
       body: "*"
     };
     option (google.api.method_signature) = "project,zone,instance";
@@ -272,7 +272,7 @@ service Instances {
   rpc SendDiagnosticInterrupt(SendDiagnosticInterruptRequest)
       returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/sendDiagnosticInterrupt"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/sendDiagnosticInterrupt"
       body: "*"
     };
     option (google.api.method_signature) = "project,zone,instance";
@@ -282,7 +282,7 @@ service Instances {
   rpc SetDeletionProtection(SetDeletionProtectionRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{resource=resource}/setDeletionProtection"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/setDeletionProtection"
       body: "*"
     };
     option (google.api.method_signature) = "project,zone,resource";
@@ -293,7 +293,7 @@ service Instances {
   rpc SetDiskAutoDelete(SetDiskAutoDeleteRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/setDiskAutoDelete"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setDiskAutoDelete"
       body: "*"
     };
     option (google.api.method_signature) =
@@ -306,7 +306,7 @@ service Instances {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/setIamPolicy"
       body: "zone_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -318,7 +318,7 @@ service Instances {
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/setLabels"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setLabels"
       body: "instances_set_labels_request_resource"
     };
     option (google.api.method_signature) =
@@ -331,7 +331,7 @@ service Instances {
   rpc SetMachineResources(SetMachineResourcesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/setMachineResources"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setMachineResources"
       body: "instances_set_machine_resources_request_resource"
     };
     option (google.api.method_signature) =
@@ -344,7 +344,7 @@ service Instances {
   rpc SetMachineType(SetMachineTypeRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/setMachineType"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setMachineType"
       body: "instances_set_machine_type_request_resource"
     };
     option (google.api.method_signature) =
@@ -357,7 +357,7 @@ service Instances {
   rpc SetMetadata(SetMetadataRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/setMetadata"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setMetadata"
       body: "metadata_resource"
     };
     option (google.api.method_signature) =
@@ -371,7 +371,7 @@ service Instances {
   rpc SetMinCpuPlatform(SetMinCpuPlatformRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/setMinCpuPlatform"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setMinCpuPlatform"
       body: "instances_set_min_cpu_platform_request_resource"
     };
     option (google.api.method_signature) =
@@ -382,7 +382,7 @@ service Instances {
   // Sets name of an instance.
   rpc SetName(SetNameRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/setName"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setName"
       body: "instances_set_name_request_resource"
     };
     option (google.api.method_signature) =
@@ -398,7 +398,7 @@ service Instances {
   rpc SetScheduling(SetSchedulingRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/setScheduling"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setScheduling"
       body: "scheduling_resource"
     };
     option (google.api.method_signature) =
@@ -411,7 +411,7 @@ service Instances {
   rpc SetServiceAccount(SetServiceAccountRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/setServiceAccount"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setServiceAccount"
       body: "instances_set_service_account_request_resource"
     };
     option (google.api.method_signature) =
@@ -426,7 +426,7 @@ service Instances {
       SetShieldedInstanceIntegrityPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/setShieldedInstanceIntegrityPolicy"
+      patch: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setShieldedInstanceIntegrityPolicy"
       body: "shielded_instance_integrity_policy_resource"
     };
     option (google.api.method_signature) =
@@ -438,7 +438,7 @@ service Instances {
   // request.
   rpc SetTags(SetTagsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/setTags"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setTags"
       body: "tags_resource"
     };
     option (google.api.method_signature) =
@@ -451,7 +451,7 @@ service Instances {
   rpc SimulateMaintenanceEvent(SimulateMaintenanceEventRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/simulateMaintenanceEvent"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/simulateMaintenanceEvent"
       body: "*"
     };
     option (google.api.method_signature) = "project,zone,instance";
@@ -462,7 +462,7 @@ service Instances {
   // more information, see Restart an instance.
   rpc Start(StartRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/start"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/start"
       body: "*"
     };
     option (google.api.method_signature) = "project,zone,instance";
@@ -474,7 +474,7 @@ service Instances {
   rpc StartWithEncryptionKey(StartWithEncryptionKeyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/startWithEncryptionKey"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/startWithEncryptionKey"
       body: "instances_start_with_encryption_key_request_resource"
     };
     option (google.api.method_signature) =
@@ -490,7 +490,7 @@ service Instances {
   // instance.
   rpc Stop(StopRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/stop"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/stop"
       body: "*"
     };
     option (google.api.method_signature) = "project,zone,instance";
@@ -506,7 +506,7 @@ service Instances {
   // more information, see Suspending and resuming an instance.
   rpc Suspend(SuspendRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/suspend"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/suspend"
       body: "*"
     };
     option (google.api.method_signature) = "project,zone,instance";
@@ -517,7 +517,7 @@ service Instances {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =
@@ -530,7 +530,7 @@ service Instances {
   rpc UpdateInstances(UpdateInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      put: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}"
+      put: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}"
       body: "instance_resource"
     };
     option (google.api.method_signature) =
@@ -544,7 +544,7 @@ service Instances {
   rpc UpdateAccessConfig(UpdateAccessConfigRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/updateAccessConfig"
+      post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/updateAccessConfig"
       body: "access_config_resource"
     };
     option (google.api.method_signature) =
@@ -558,7 +558,7 @@ service Instances {
   rpc UpdateDisplayDevice(UpdateDisplayDeviceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/updateDisplayDevice"
+      patch: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/updateDisplayDevice"
       body: "display_device_resource"
     };
     option (google.api.method_signature) =
@@ -574,7 +574,7 @@ service Instances {
   rpc UpdateNetworkInterface(UpdateNetworkInterfaceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/updateNetworkInterface"
+      patch: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/updateNetworkInterface"
       body: "network_interface_resource"
     };
     option (google.api.method_signature) =
@@ -588,7 +588,7 @@ service Instances {
   rpc UpdateShieldedInstanceConfig(UpdateShieldedInstanceConfigRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/zones/{zone=zone}/instances/{instance=instance}/updateShieldedInstanceConfig"
+      patch: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/updateShieldedInstanceConfig"
       body: "shielded_instance_config_resource"
     };
     option (google.api.method_signature) =

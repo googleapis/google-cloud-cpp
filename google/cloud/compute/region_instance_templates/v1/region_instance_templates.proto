@@ -41,7 +41,7 @@ service RegionInstanceTemplates {
   rpc DeleteRegionInstanceTemplates(DeleteRegionInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceTemplates/{instance_template=instance_template}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/instanceTemplates/{instance_template}"
     };
     option (google.api.method_signature) = "project,region,instance_template";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -51,7 +51,7 @@ service RegionInstanceTemplates {
   rpc GetRegionInstanceTemplates(GetRegionInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceTemplate) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceTemplates/{instance_template=instance_template}"
+      get: "/compute/v1/projects/{project}/regions/{region}/instanceTemplates/{instance_template}"
     };
     option (google.api.method_signature) = "project,region,instance_template";
   }
@@ -61,7 +61,7 @@ service RegionInstanceTemplates {
   rpc InsertRegionInstanceTemplates(InsertRegionInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceTemplates"
+      post: "/compute/v1/projects/{project}/regions/{region}/instanceTemplates"
       body: "instance_template_resource"
     };
     option (google.api.method_signature) =
@@ -74,7 +74,7 @@ service RegionInstanceTemplates {
   rpc ListRegionInstanceTemplates(ListRegionInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceTemplateList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/instanceTemplates"
+      get: "/compute/v1/projects/{project}/regions/{region}/instanceTemplates"
     };
     option (google.api.method_signature) = "project,region";
   }

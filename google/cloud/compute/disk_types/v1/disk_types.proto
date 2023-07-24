@@ -39,7 +39,7 @@ service DiskTypes {
   rpc AggregatedListDiskTypes(AggregatedListDiskTypesRequest)
       returns (google.cloud.cpp.compute.v1.DiskTypeAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/diskTypes"
+      get: "/compute/v1/projects/{project}/aggregated/diskTypes"
     };
     option (google.api.method_signature) = "project";
   }
@@ -48,7 +48,7 @@ service DiskTypes {
   rpc GetDiskTypes(GetDiskTypesRequest)
       returns (google.cloud.cpp.compute.v1.DiskType) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/diskTypes/{disk_type=disk_type}"
+      get: "/compute/v1/projects/{project}/zones/{zone}/diskTypes/{disk_type}"
     };
     option (google.api.method_signature) = "project,zone,disk_type";
   }
@@ -57,7 +57,7 @@ service DiskTypes {
   rpc ListDiskTypes(ListDiskTypesRequest)
       returns (google.cloud.cpp.compute.v1.DiskTypeList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/diskTypes"
+      get: "/compute/v1/projects/{project}/zones/{zone}/diskTypes"
     };
     option (google.api.method_signature) = "project,zone";
   }

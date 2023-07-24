@@ -40,7 +40,7 @@ service PublicAdvertisedPrefixes {
   rpc DeletePublicAdvertisedPrefixes(DeletePublicAdvertisedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/publicAdvertisedPrefixes/{public_advertised_prefix=public_advertised_prefix}"
+      delete: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes/{public_advertised_prefix}"
     };
     option (google.api.method_signature) = "project,public_advertised_prefix";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -50,7 +50,7 @@ service PublicAdvertisedPrefixes {
   rpc GetPublicAdvertisedPrefixes(GetPublicAdvertisedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.PublicAdvertisedPrefix) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/publicAdvertisedPrefixes/{public_advertised_prefix=public_advertised_prefix}"
+      get: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes/{public_advertised_prefix}"
     };
     option (google.api.method_signature) = "project,public_advertised_prefix";
   }
@@ -60,7 +60,7 @@ service PublicAdvertisedPrefixes {
   rpc InsertPublicAdvertisedPrefixes(InsertPublicAdvertisedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/publicAdvertisedPrefixes"
+      post: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes"
       body: "public_advertised_prefix_resource"
     };
     option (google.api.method_signature) =
@@ -72,7 +72,7 @@ service PublicAdvertisedPrefixes {
   rpc ListPublicAdvertisedPrefixes(ListPublicAdvertisedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.PublicAdvertisedPrefixList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/publicAdvertisedPrefixes"
+      get: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes"
     };
     option (google.api.method_signature) = "project";
   }
@@ -83,7 +83,7 @@ service PublicAdvertisedPrefixes {
   rpc PatchPublicAdvertisedPrefixes(PatchPublicAdvertisedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/publicAdvertisedPrefixes/{public_advertised_prefix=public_advertised_prefix}"
+      patch: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes/{public_advertised_prefix}"
       body: "public_advertised_prefix_resource"
     };
     option (google.api.method_signature) =

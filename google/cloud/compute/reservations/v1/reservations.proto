@@ -40,7 +40,7 @@ service Reservations {
   rpc AggregatedListReservations(AggregatedListReservationsRequest)
       returns (google.cloud.cpp.compute.v1.ReservationAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/reservations"
+      get: "/compute/v1/projects/{project}/aggregated/reservations"
     };
     option (google.api.method_signature) = "project";
   }
@@ -49,7 +49,7 @@ service Reservations {
   rpc DeleteReservations(DeleteReservationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/zones/{zone=zone}/reservations/{reservation=reservation}"
+      delete: "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}"
     };
     option (google.api.method_signature) = "project,zone,reservation";
     option (google.cloud.operation_service) = "ZoneOperations";
@@ -59,7 +59,7 @@ service Reservations {
   rpc GetReservations(GetReservationsRequest)
       returns (google.cloud.cpp.compute.v1.Reservation) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/reservations/{reservation=reservation}"
+      get: "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}"
     };
     option (google.api.method_signature) = "project,zone,reservation";
   }
@@ -69,7 +69,7 @@ service Reservations {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/reservations/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/zones/{zone}/reservations/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,zone,resource";
   }
@@ -79,7 +79,7 @@ service Reservations {
   rpc InsertReservations(InsertReservationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/reservations"
+      post: "/compute/v1/projects/{project}/zones/{zone}/reservations"
       body: "reservation_resource"
     };
     option (google.api.method_signature) = "project,zone,reservation_resource";
@@ -91,7 +91,7 @@ service Reservations {
   rpc ListReservations(ListReservationsRequest)
       returns (google.cloud.cpp.compute.v1.ReservationList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/reservations"
+      get: "/compute/v1/projects/{project}/zones/{zone}/reservations"
     };
     option (google.api.method_signature) = "project,zone";
   }
@@ -100,7 +100,7 @@ service Reservations {
   // more information, read Modifying reservations.
   rpc Resize(ResizeRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/reservations/{reservation=reservation}/resize"
+      post: "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}/resize"
       body: "reservations_resize_request_resource"
     };
     option (google.api.method_signature) =
@@ -113,7 +113,7 @@ service Reservations {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/reservations/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/zones/{zone}/reservations/{resource}/setIamPolicy"
       body: "zone_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -124,7 +124,7 @@ service Reservations {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/reservations/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/zones/{zone}/reservations/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =
@@ -135,7 +135,7 @@ service Reservations {
   rpc UpdateReservations(UpdateReservationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/zones/{zone=zone}/reservations/{reservation=reservation}"
+      patch: "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}"
       body: "reservation_resource"
     };
     option (google.api.method_signature) =

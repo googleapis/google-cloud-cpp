@@ -44,7 +44,7 @@ service Snapshots {
   rpc DeleteSnapshots(DeleteSnapshotsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/snapshots/{snapshot=snapshot}"
+      delete: "/compute/v1/projects/{project}/global/snapshots/{snapshot}"
     };
     option (google.api.method_signature) = "project,snapshot";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -54,7 +54,7 @@ service Snapshots {
   rpc GetSnapshots(GetSnapshotsRequest)
       returns (google.cloud.cpp.compute.v1.Snapshot) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/snapshots/{snapshot=snapshot}"
+      get: "/compute/v1/projects/{project}/global/snapshots/{snapshot}"
     };
     option (google.api.method_signature) = "project,snapshot";
   }
@@ -64,7 +64,7 @@ service Snapshots {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/snapshots/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/global/snapshots/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,resource";
   }
@@ -76,7 +76,7 @@ service Snapshots {
   rpc InsertSnapshots(InsertSnapshotsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/snapshots"
+      post: "/compute/v1/projects/{project}/global/snapshots"
       body: "snapshot_resource"
     };
     option (google.api.method_signature) = "project,snapshot_resource";
@@ -88,7 +88,7 @@ service Snapshots {
   rpc ListSnapshots(ListSnapshotsRequest)
       returns (google.cloud.cpp.compute.v1.SnapshotList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/snapshots"
+      get: "/compute/v1/projects/{project}/global/snapshots"
     };
     option (google.api.method_signature) = "project";
   }
@@ -98,7 +98,7 @@ service Snapshots {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/snapshots/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/global/snapshots/{resource}/setIamPolicy"
       body: "global_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -110,7 +110,7 @@ service Snapshots {
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/snapshots/{resource=resource}/setLabels"
+      post: "/compute/v1/projects/{project}/global/snapshots/{resource}/setLabels"
       body: "global_set_labels_request_resource"
     };
     option (google.api.method_signature) =
@@ -122,7 +122,7 @@ service Snapshots {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/snapshots/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/global/snapshots/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

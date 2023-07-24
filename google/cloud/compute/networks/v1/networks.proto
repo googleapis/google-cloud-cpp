@@ -40,7 +40,7 @@ service Networks {
   rpc AddPeering(AddPeeringRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/networks/{network=network}/addPeering"
+      post: "/compute/v1/projects/{project}/global/networks/{network}/addPeering"
       body: "networks_add_peering_request_resource"
     };
     option (google.api.method_signature) =
@@ -52,7 +52,7 @@ service Networks {
   rpc DeleteNetworks(DeleteNetworksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/networks/{network=network}"
+      delete: "/compute/v1/projects/{project}/global/networks/{network}"
     };
     option (google.api.method_signature) = "project,network";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -62,7 +62,7 @@ service Networks {
   rpc GetNetworks(GetNetworksRequest)
       returns (google.cloud.cpp.compute.v1.Network) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/networks/{network=network}"
+      get: "/compute/v1/projects/{project}/global/networks/{network}"
     };
     option (google.api.method_signature) = "project,network";
   }
@@ -71,7 +71,7 @@ service Networks {
   rpc GetEffectiveFirewalls(GetEffectiveFirewallsRequest) returns (
       google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/networks/{network=network}/getEffectiveFirewalls"
+      get: "/compute/v1/projects/{project}/global/networks/{network}/getEffectiveFirewalls"
     };
     option (google.api.method_signature) = "project,network";
   }
@@ -81,7 +81,7 @@ service Networks {
   rpc InsertNetworks(InsertNetworksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/networks"
+      post: "/compute/v1/projects/{project}/global/networks"
       body: "network_resource"
     };
     option (google.api.method_signature) = "project,network_resource";
@@ -92,7 +92,7 @@ service Networks {
   rpc ListNetworks(ListNetworksRequest)
       returns (google.cloud.cpp.compute.v1.NetworkList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/networks"
+      get: "/compute/v1/projects/{project}/global/networks"
     };
     option (google.api.method_signature) = "project";
   }
@@ -101,7 +101,7 @@ service Networks {
   rpc ListPeeringRoutes(ListPeeringRoutesRequest)
       returns (google.cloud.cpp.compute.v1.ExchangedPeeringRoutesList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/networks/{network=network}/listPeeringRoutes"
+      get: "/compute/v1/projects/{project}/global/networks/{network}/listPeeringRoutes"
     };
     option (google.api.method_signature) = "project,network";
   }
@@ -111,7 +111,7 @@ service Networks {
   rpc PatchNetworks(PatchNetworksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/networks/{network=network}"
+      patch: "/compute/v1/projects/{project}/global/networks/{network}"
       body: "network_resource"
     };
     option (google.api.method_signature) = "project,network,network_resource";
@@ -122,7 +122,7 @@ service Networks {
   rpc RemovePeering(RemovePeeringRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/networks/{network=network}/removePeering"
+      post: "/compute/v1/projects/{project}/global/networks/{network}/removePeering"
       body: "networks_remove_peering_request_resource"
     };
     option (google.api.method_signature) =
@@ -134,7 +134,7 @@ service Networks {
   rpc SwitchToCustomMode(SwitchToCustomModeRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/networks/{network=network}/switchToCustomMode"
+      post: "/compute/v1/projects/{project}/global/networks/{network}/switchToCustomMode"
       body: "*"
     };
     option (google.api.method_signature) = "project,network";
@@ -147,7 +147,7 @@ service Networks {
   rpc UpdatePeering(UpdatePeeringRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/networks/{network=network}/updatePeering"
+      patch: "/compute/v1/projects/{project}/global/networks/{network}/updatePeering"
       body: "networks_update_peering_request_resource"
     };
     option (google.api.method_signature) =

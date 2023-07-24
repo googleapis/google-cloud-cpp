@@ -42,7 +42,7 @@ service RegionSslPolicies {
   rpc DeleteRegionSslPolicies(DeleteRegionSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/sslPolicies/{ssl_policy=ssl_policy}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/sslPolicies/{ssl_policy}"
     };
     option (google.api.method_signature) = "project,region,ssl_policy";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -52,7 +52,7 @@ service RegionSslPolicies {
   rpc GetRegionSslPolicies(GetRegionSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SslPolicy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/sslPolicies/{ssl_policy=ssl_policy}"
+      get: "/compute/v1/projects/{project}/regions/{region}/sslPolicies/{ssl_policy}"
     };
     option (google.api.method_signature) = "project,region,ssl_policy";
   }
@@ -62,7 +62,7 @@ service RegionSslPolicies {
   rpc InsertRegionSslPolicies(InsertRegionSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/sslPolicies"
+      post: "/compute/v1/projects/{project}/regions/{region}/sslPolicies"
       body: "ssl_policy_resource"
     };
     option (google.api.method_signature) = "project,region,ssl_policy_resource";
@@ -74,7 +74,7 @@ service RegionSslPolicies {
   rpc ListRegionSslPolicies(ListRegionSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SslPoliciesList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/sslPolicies"
+      get: "/compute/v1/projects/{project}/regions/{region}/sslPolicies"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -84,7 +84,7 @@ service RegionSslPolicies {
   rpc ListAvailableFeatures(ListAvailableFeaturesRequest) returns (
       google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/sslPolicies/listAvailableFeatures"
+      get: "/compute/v1/projects/{project}/regions/{region}/sslPolicies/listAvailableFeatures"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -93,7 +93,7 @@ service RegionSslPolicies {
   rpc PatchRegionSslPolicies(PatchRegionSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/sslPolicies/{ssl_policy=ssl_policy}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/sslPolicies/{ssl_policy}"
       body: "ssl_policy_resource"
     };
     option (google.api.method_signature) =

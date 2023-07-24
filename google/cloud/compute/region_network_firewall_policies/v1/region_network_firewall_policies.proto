@@ -40,7 +40,7 @@ service RegionNetworkFirewallPolicies {
   rpc AddAssociation(AddAssociationRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/addAssociation"
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/addAssociation"
       body: "firewall_policy_association_resource"
     };
     option (google.api.method_signature) =
@@ -51,7 +51,7 @@ service RegionNetworkFirewallPolicies {
   // Inserts a rule into a network firewall policy.
   rpc AddRule(AddRuleRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/addRule"
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/addRule"
       body: "firewall_policy_rule_resource"
     };
     option (google.api.method_signature) =
@@ -63,7 +63,7 @@ service RegionNetworkFirewallPolicies {
   rpc CloneRules(CloneRulesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/cloneRules"
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/cloneRules"
       body: "*"
     };
     option (google.api.method_signature) = "project,region,firewall_policy";
@@ -75,7 +75,7 @@ service RegionNetworkFirewallPolicies {
       DeleteRegionNetworkFirewallPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}"
     };
     option (google.api.method_signature) = "project,region,firewall_policy";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -85,7 +85,7 @@ service RegionNetworkFirewallPolicies {
   rpc GetRegionNetworkFirewallPolicies(GetRegionNetworkFirewallPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.FirewallPolicy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}"
+      get: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}"
     };
     option (google.api.method_signature) = "project,region,firewall_policy";
   }
@@ -94,7 +94,7 @@ service RegionNetworkFirewallPolicies {
   rpc GetAssociation(GetAssociationRequest)
       returns (google.cloud.cpp.compute.v1.FirewallPolicyAssociation) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/getAssociation"
+      get: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/getAssociation"
     };
     option (google.api.method_signature) = "project,region,firewall_policy";
   }
@@ -104,7 +104,7 @@ service RegionNetworkFirewallPolicies {
       google.cloud.cpp.compute.v1
           .RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponse) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/getEffectiveFirewalls"
+      get: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/getEffectiveFirewalls"
     };
     option (google.api.method_signature) = "project,region,network";
   }
@@ -114,7 +114,7 @@ service RegionNetworkFirewallPolicies {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,region,resource";
   }
@@ -123,7 +123,7 @@ service RegionNetworkFirewallPolicies {
   rpc GetRule(GetRuleRequest)
       returns (google.cloud.cpp.compute.v1.FirewallPolicyRule) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/getRule"
+      get: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/getRule"
     };
     option (google.api.method_signature) = "project,region,firewall_policy";
   }
@@ -133,7 +133,7 @@ service RegionNetworkFirewallPolicies {
       InsertRegionNetworkFirewallPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies"
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies"
       body: "firewall_policy_resource"
     };
     option (google.api.method_signature) =
@@ -147,7 +147,7 @@ service RegionNetworkFirewallPolicies {
       ListRegionNetworkFirewallPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.FirewallPolicyList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies"
+      get: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -157,7 +157,7 @@ service RegionNetworkFirewallPolicies {
       PatchRegionNetworkFirewallPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}"
       body: "firewall_policy_resource"
     };
     option (google.api.method_signature) =
@@ -169,7 +169,7 @@ service RegionNetworkFirewallPolicies {
   rpc PatchRule(PatchRuleRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/patchRule"
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/patchRule"
       body: "firewall_policy_rule_resource"
     };
     option (google.api.method_signature) =
@@ -181,7 +181,7 @@ service RegionNetworkFirewallPolicies {
   rpc RemoveAssociation(RemoveAssociationRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/removeAssociation"
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/removeAssociation"
       body: "*"
     };
     option (google.api.method_signature) = "project,region,firewall_policy";
@@ -192,7 +192,7 @@ service RegionNetworkFirewallPolicies {
   rpc RemoveRule(RemoveRuleRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{firewall_policy=firewall_policy}/removeRule"
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/removeRule"
       body: "*"
     };
     option (google.api.method_signature) = "project,region,firewall_policy";
@@ -204,7 +204,7 @@ service RegionNetworkFirewallPolicies {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{resource}/setIamPolicy"
       body: "region_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -215,7 +215,7 @@ service RegionNetworkFirewallPolicies {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/firewallPolicies/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

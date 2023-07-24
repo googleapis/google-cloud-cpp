@@ -40,7 +40,7 @@ service PacketMirrorings {
   rpc AggregatedListPacketMirrorings(AggregatedListPacketMirroringsRequest)
       returns (google.cloud.cpp.compute.v1.PacketMirroringAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/packetMirrorings"
+      get: "/compute/v1/projects/{project}/aggregated/packetMirrorings"
     };
     option (google.api.method_signature) = "project";
   }
@@ -49,7 +49,7 @@ service PacketMirrorings {
   rpc DeletePacketMirrorings(DeletePacketMirroringsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/packetMirrorings/{packet_mirroring=packet_mirroring}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/{packet_mirroring}"
     };
     option (google.api.method_signature) = "project,region,packet_mirroring";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -59,7 +59,7 @@ service PacketMirrorings {
   rpc GetPacketMirrorings(GetPacketMirroringsRequest)
       returns (google.cloud.cpp.compute.v1.PacketMirroring) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/packetMirrorings/{packet_mirroring=packet_mirroring}"
+      get: "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/{packet_mirroring}"
     };
     option (google.api.method_signature) = "project,region,packet_mirroring";
   }
@@ -69,7 +69,7 @@ service PacketMirrorings {
   rpc InsertPacketMirrorings(InsertPacketMirroringsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/packetMirrorings"
+      post: "/compute/v1/projects/{project}/regions/{region}/packetMirrorings"
       body: "packet_mirroring_resource"
     };
     option (google.api.method_signature) =
@@ -82,7 +82,7 @@ service PacketMirrorings {
   rpc ListPacketMirrorings(ListPacketMirroringsRequest)
       returns (google.cloud.cpp.compute.v1.PacketMirroringList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/packetMirrorings"
+      get: "/compute/v1/projects/{project}/regions/{region}/packetMirrorings"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -93,7 +93,7 @@ service PacketMirrorings {
   rpc PatchPacketMirrorings(PatchPacketMirroringsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/packetMirrorings/{packet_mirroring=packet_mirroring}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/{packet_mirroring}"
       body: "packet_mirroring_resource"
     };
     option (google.api.method_signature) =
@@ -105,7 +105,7 @@ service PacketMirrorings {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/packetMirrorings/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =

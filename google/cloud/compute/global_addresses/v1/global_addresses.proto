@@ -40,7 +40,7 @@ service GlobalAddresses {
   rpc DeleteGlobalAddresses(DeleteGlobalAddressesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/addresses/{address=address}"
+      delete: "/compute/v1/projects/{project}/global/addresses/{address}"
     };
     option (google.api.method_signature) = "project,address";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -50,7 +50,7 @@ service GlobalAddresses {
   rpc GetGlobalAddresses(GetGlobalAddressesRequest)
       returns (google.cloud.cpp.compute.v1.Address) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/addresses/{address=address}"
+      get: "/compute/v1/projects/{project}/global/addresses/{address}"
     };
     option (google.api.method_signature) = "project,address";
   }
@@ -60,7 +60,7 @@ service GlobalAddresses {
   rpc InsertGlobalAddresses(InsertGlobalAddressesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/addresses"
+      post: "/compute/v1/projects/{project}/global/addresses"
       body: "address_resource"
     };
     option (google.api.method_signature) = "project,address_resource";
@@ -71,7 +71,7 @@ service GlobalAddresses {
   rpc ListGlobalAddresses(ListGlobalAddressesRequest)
       returns (google.cloud.cpp.compute.v1.AddressList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/addresses"
+      get: "/compute/v1/projects/{project}/global/addresses"
     };
     option (google.api.method_signature) = "project";
   }
@@ -81,7 +81,7 @@ service GlobalAddresses {
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/addresses/{resource=resource}/setLabels"
+      post: "/compute/v1/projects/{project}/global/addresses/{resource}/setLabels"
       body: "global_set_labels_request_resource"
     };
     option (google.api.method_signature) =

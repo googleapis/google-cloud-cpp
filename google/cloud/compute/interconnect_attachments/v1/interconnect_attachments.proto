@@ -42,7 +42,7 @@ service InterconnectAttachments {
       returns (
           google.cloud.cpp.compute.v1.InterconnectAttachmentAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/interconnectAttachments"
+      get: "/compute/v1/projects/{project}/aggregated/interconnectAttachments"
     };
     option (google.api.method_signature) = "project";
   }
@@ -51,7 +51,7 @@ service InterconnectAttachments {
   rpc DeleteInterconnectAttachments(DeleteInterconnectAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/interconnectAttachments/{interconnect_attachment=interconnect_attachment}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments/{interconnect_attachment}"
     };
     option (google.api.method_signature) =
         "project,region,interconnect_attachment";
@@ -62,7 +62,7 @@ service InterconnectAttachments {
   rpc GetInterconnectAttachments(GetInterconnectAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.InterconnectAttachment) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/interconnectAttachments/{interconnect_attachment=interconnect_attachment}"
+      get: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments/{interconnect_attachment}"
     };
     option (google.api.method_signature) =
         "project,region,interconnect_attachment";
@@ -73,7 +73,7 @@ service InterconnectAttachments {
   rpc InsertInterconnectAttachments(InsertInterconnectAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/interconnectAttachments"
+      post: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments"
       body: "interconnect_attachment_resource"
     };
     option (google.api.method_signature) =
@@ -86,7 +86,7 @@ service InterconnectAttachments {
   rpc ListInterconnectAttachments(ListInterconnectAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.InterconnectAttachmentList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/interconnectAttachments"
+      get: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -97,7 +97,7 @@ service InterconnectAttachments {
   rpc PatchInterconnectAttachments(PatchInterconnectAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/interconnectAttachments/{interconnect_attachment=interconnect_attachment}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments/{interconnect_attachment}"
       body: "interconnect_attachment_resource"
     };
     option (google.api.method_signature) =
@@ -110,7 +110,7 @@ service InterconnectAttachments {
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/interconnectAttachments/{resource=resource}/setLabels"
+      post: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments/{resource}/setLabels"
       body: "region_set_labels_request_resource"
     };
     option (google.api.method_signature) =

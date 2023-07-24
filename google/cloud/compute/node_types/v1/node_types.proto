@@ -39,7 +39,7 @@ service NodeTypes {
   rpc AggregatedListNodeTypes(AggregatedListNodeTypesRequest)
       returns (google.cloud.cpp.compute.v1.NodeTypeAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/nodeTypes"
+      get: "/compute/v1/projects/{project}/aggregated/nodeTypes"
     };
     option (google.api.method_signature) = "project";
   }
@@ -48,7 +48,7 @@ service NodeTypes {
   rpc GetNodeTypes(GetNodeTypesRequest)
       returns (google.cloud.cpp.compute.v1.NodeType) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeTypes/{node_type=node_type}"
+      get: "/compute/v1/projects/{project}/zones/{zone}/nodeTypes/{node_type}"
     };
     option (google.api.method_signature) = "project,zone,node_type";
   }
@@ -57,7 +57,7 @@ service NodeTypes {
   rpc ListNodeTypes(ListNodeTypesRequest)
       returns (google.cloud.cpp.compute.v1.NodeTypeList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/nodeTypes"
+      get: "/compute/v1/projects/{project}/zones/{zone}/nodeTypes"
     };
     option (google.api.method_signature) = "project,zone";
   }

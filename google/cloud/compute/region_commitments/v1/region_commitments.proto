@@ -40,7 +40,7 @@ service RegionCommitments {
   rpc AggregatedListRegionCommitments(AggregatedListRegionCommitmentsRequest)
       returns (google.cloud.cpp.compute.v1.CommitmentAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/commitments"
+      get: "/compute/v1/projects/{project}/aggregated/commitments"
     };
     option (google.api.method_signature) = "project";
   }
@@ -49,7 +49,7 @@ service RegionCommitments {
   rpc GetRegionCommitments(GetRegionCommitmentsRequest)
       returns (google.cloud.cpp.compute.v1.Commitment) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/commitments/{commitment=commitment}"
+      get: "/compute/v1/projects/{project}/regions/{region}/commitments/{commitment}"
     };
     option (google.api.method_signature) = "project,region,commitment";
   }
@@ -59,7 +59,7 @@ service RegionCommitments {
   rpc InsertRegionCommitments(InsertRegionCommitmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/commitments"
+      post: "/compute/v1/projects/{project}/regions/{region}/commitments"
       body: "commitment_resource"
     };
     option (google.api.method_signature) = "project,region,commitment_resource";
@@ -70,7 +70,7 @@ service RegionCommitments {
   rpc ListRegionCommitments(ListRegionCommitmentsRequest)
       returns (google.cloud.cpp.compute.v1.CommitmentList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/commitments"
+      get: "/compute/v1/projects/{project}/regions/{region}/commitments"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -81,7 +81,7 @@ service RegionCommitments {
   rpc UpdateRegionCommitments(UpdateRegionCommitmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/regions/{region=region}/commitments/{commitment=commitment}"
+      patch: "/compute/v1/projects/{project}/regions/{region}/commitments/{commitment}"
       body: "commitment_resource"
     };
     option (google.api.method_signature) =

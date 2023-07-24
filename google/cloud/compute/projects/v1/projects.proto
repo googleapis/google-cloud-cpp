@@ -43,7 +43,7 @@ service Projects {
   rpc DisableXpnHost(DisableXpnHostRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/disableXpnHost"
+      post: "/compute/v1/projects/{project}/disableXpnHost"
       body: "*"
     };
     option (google.api.method_signature) = "project";
@@ -55,7 +55,7 @@ service Projects {
   rpc DisableXpnResource(DisableXpnResourceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/disableXpnResource"
+      post: "/compute/v1/projects/{project}/disableXpnResource"
       body: "projects_disable_xpn_resource_request_resource"
     };
     option (google.api.method_signature) =
@@ -67,7 +67,7 @@ service Projects {
   rpc EnableXpnHost(EnableXpnHostRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/enableXpnHost"
+      post: "/compute/v1/projects/{project}/enableXpnHost"
       body: "*"
     };
     option (google.api.method_signature) = "project";
@@ -80,7 +80,7 @@ service Projects {
   rpc EnableXpnResource(EnableXpnResourceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/enableXpnResource"
+      post: "/compute/v1/projects/{project}/enableXpnResource"
       body: "projects_enable_xpn_resource_request_resource"
     };
     option (google.api.method_signature) =
@@ -98,7 +98,7 @@ service Projects {
   rpc GetProjects(GetProjectsRequest)
       returns (google.cloud.cpp.compute.v1.Project) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}"
+      get: "/compute/v1/projects/{project}"
     };
     option (google.api.method_signature) = "project";
   }
@@ -108,7 +108,7 @@ service Projects {
   rpc GetXpnHost(GetXpnHostRequest)
       returns (google.cloud.cpp.compute.v1.Project) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/getXpnHost"
+      get: "/compute/v1/projects/{project}/getXpnHost"
     };
     option (google.api.method_signature) = "project";
   }
@@ -118,7 +118,7 @@ service Projects {
   rpc GetXpnResources(GetXpnResourcesRequest)
       returns (google.cloud.cpp.compute.v1.ProjectsGetXpnResources) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/getXpnResources"
+      get: "/compute/v1/projects/{project}/getXpnResources"
     };
     option (google.api.method_signature) = "project";
   }
@@ -127,7 +127,7 @@ service Projects {
   rpc ListXpnHosts(ListXpnHostsRequest)
       returns (google.cloud.cpp.compute.v1.XpnHostList) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/listXpnHosts"
+      post: "/compute/v1/projects/{project}/listXpnHosts"
       body: "projects_list_xpn_hosts_request_resource"
     };
     option (google.api.method_signature) =
@@ -138,7 +138,7 @@ service Projects {
   rpc MoveDisk(MoveDiskRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/moveDisk"
+      post: "/compute/v1/projects/{project}/moveDisk"
       body: "disk_move_request_resource"
     };
     option (google.api.method_signature) = "project,disk_move_request_resource";
@@ -152,7 +152,7 @@ service Projects {
   rpc MoveInstance(MoveInstanceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/moveInstance"
+      post: "/compute/v1/projects/{project}/moveInstance"
       body: "instance_move_request_resource"
     };
     option (google.api.method_signature) =
@@ -165,7 +165,7 @@ service Projects {
   rpc SetCommonInstanceMetadata(SetCommonInstanceMetadataRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/setCommonInstanceMetadata"
+      post: "/compute/v1/projects/{project}/setCommonInstanceMetadata"
       body: "metadata_resource"
     };
     option (google.api.method_signature) = "project,metadata_resource";
@@ -178,7 +178,7 @@ service Projects {
   rpc SetDefaultNetworkTier(SetDefaultNetworkTierRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/setDefaultNetworkTier"
+      post: "/compute/v1/projects/{project}/setDefaultNetworkTier"
       body: "projects_set_default_network_tier_request_resource"
     };
     option (google.api.method_signature) =
@@ -192,7 +192,7 @@ service Projects {
   rpc SetUsageExportBucket(SetUsageExportBucketRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/setUsageExportBucket"
+      post: "/compute/v1/projects/{project}/setUsageExportBucket"
       body: "usage_export_location_resource"
     };
     option (google.api.method_signature) =

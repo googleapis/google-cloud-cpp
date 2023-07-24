@@ -41,7 +41,7 @@ service Disks {
   rpc AddResourcePolicies(AddResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/disks/{disk=disk}/addResourcePolicies"
+      post: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/addResourcePolicies"
       body: "disks_add_resource_policies_request_resource"
     };
     option (google.api.method_signature) =
@@ -53,7 +53,7 @@ service Disks {
   rpc AggregatedListDisks(AggregatedListDisksRequest)
       returns (google.cloud.cpp.compute.v1.DiskAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/disks"
+      get: "/compute/v1/projects/{project}/aggregated/disks"
     };
     option (google.api.method_signature) = "project";
   }
@@ -65,7 +65,7 @@ service Disks {
   rpc CreateSnapshot(CreateSnapshotRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/disks/{disk=disk}/createSnapshot"
+      post: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/createSnapshot"
       body: "snapshot_resource"
     };
     option (google.api.method_signature) =
@@ -80,7 +80,7 @@ service Disks {
   rpc DeleteDisks(DeleteDisksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/zones/{zone=zone}/disks/{disk=disk}"
+      delete: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}"
     };
     option (google.api.method_signature) = "project,zone,disk";
     option (google.cloud.operation_service) = "ZoneOperations";
@@ -89,7 +89,7 @@ service Disks {
   // Returns the specified persistent disk.
   rpc GetDisks(GetDisksRequest) returns (google.cloud.cpp.compute.v1.Disk) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/disks/{disk=disk}"
+      get: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}"
     };
     option (google.api.method_signature) = "project,zone,disk";
   }
@@ -99,7 +99,7 @@ service Disks {
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/disks/{resource=resource}/getIamPolicy"
+      get: "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/getIamPolicy"
     };
     option (google.api.method_signature) = "project,zone,resource";
   }
@@ -112,7 +112,7 @@ service Disks {
   rpc InsertDisks(InsertDisksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/disks"
+      post: "/compute/v1/projects/{project}/zones/{zone}/disks"
       body: "disk_resource"
     };
     option (google.api.method_signature) = "project,zone,disk_resource";
@@ -123,7 +123,7 @@ service Disks {
   rpc ListDisks(ListDisksRequest)
       returns (google.cloud.cpp.compute.v1.DiskList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/disks"
+      get: "/compute/v1/projects/{project}/zones/{zone}/disks"
     };
     option (google.api.method_signature) = "project,zone";
   }
@@ -132,7 +132,7 @@ service Disks {
   rpc RemoveResourcePolicies(RemoveResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/disks/{disk=disk}/removeResourcePolicies"
+      post: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/removeResourcePolicies"
       body: "disks_remove_resource_policies_request_resource"
     };
     option (google.api.method_signature) =
@@ -144,7 +144,7 @@ service Disks {
   // the disk.
   rpc Resize(ResizeRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/disks/{disk=disk}/resize"
+      post: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/resize"
       body: "disks_resize_request_resource"
     };
     option (google.api.method_signature) =
@@ -157,7 +157,7 @@ service Disks {
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/disks/{resource=resource}/setIamPolicy"
+      post: "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/setIamPolicy"
       body: "zone_set_policy_request_resource"
     };
     option (google.api.method_signature) =
@@ -169,7 +169,7 @@ service Disks {
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/disks/{resource=resource}/setLabels"
+      post: "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/setLabels"
       body: "zone_set_labels_request_resource"
     };
     option (google.api.method_signature) =
@@ -181,7 +181,7 @@ service Disks {
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/disks/{resource=resource}/testIamPermissions"
+      post: "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
     option (google.api.method_signature) =
@@ -194,7 +194,7 @@ service Disks {
   rpc UpdateDisks(UpdateDisksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/zones/{zone=zone}/disks/{disk=disk}"
+      patch: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}"
       body: "disk_resource"
     };
     option (google.api.method_signature) = "project,zone,disk,disk_resource";

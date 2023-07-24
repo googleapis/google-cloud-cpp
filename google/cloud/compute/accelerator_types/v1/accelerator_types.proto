@@ -39,7 +39,7 @@ service AcceleratorTypes {
   rpc AggregatedListAcceleratorTypes(AggregatedListAcceleratorTypesRequest)
       returns (google.cloud.cpp.compute.v1.AcceleratorTypeAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/acceleratorTypes"
+      get: "/compute/v1/projects/{project}/aggregated/acceleratorTypes"
     };
     option (google.api.method_signature) = "project";
   }
@@ -48,7 +48,7 @@ service AcceleratorTypes {
   rpc GetAcceleratorTypes(GetAcceleratorTypesRequest)
       returns (google.cloud.cpp.compute.v1.AcceleratorType) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/acceleratorTypes/{accelerator_type=accelerator_type}"
+      get: "/compute/v1/projects/{project}/zones/{zone}/acceleratorTypes/{accelerator_type}"
     };
     option (google.api.method_signature) = "project,zone,accelerator_type";
   }
@@ -58,7 +58,7 @@ service AcceleratorTypes {
   rpc ListAcceleratorTypes(ListAcceleratorTypesRequest)
       returns (google.cloud.cpp.compute.v1.AcceleratorTypeList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/acceleratorTypes"
+      get: "/compute/v1/projects/{project}/zones/{zone}/acceleratorTypes"
     };
     option (google.api.method_signature) = "project,zone";
   }

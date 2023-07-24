@@ -40,7 +40,7 @@ service TargetGrpcProxies {
   rpc DeleteTargetGrpcProxies(DeleteTargetGrpcProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/targetGrpcProxies/{target_grpc_proxy=target_grpc_proxy}"
+      delete: "/compute/v1/projects/{project}/global/targetGrpcProxies/{target_grpc_proxy}"
     };
     option (google.api.method_signature) = "project,target_grpc_proxy";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -50,7 +50,7 @@ service TargetGrpcProxies {
   rpc GetTargetGrpcProxies(GetTargetGrpcProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetGrpcProxy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/targetGrpcProxies/{target_grpc_proxy=target_grpc_proxy}"
+      get: "/compute/v1/projects/{project}/global/targetGrpcProxies/{target_grpc_proxy}"
     };
     option (google.api.method_signature) = "project,target_grpc_proxy";
   }
@@ -60,7 +60,7 @@ service TargetGrpcProxies {
   rpc InsertTargetGrpcProxies(InsertTargetGrpcProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/targetGrpcProxies"
+      post: "/compute/v1/projects/{project}/global/targetGrpcProxies"
       body: "target_grpc_proxy_resource"
     };
     option (google.api.method_signature) = "project,target_grpc_proxy_resource";
@@ -71,7 +71,7 @@ service TargetGrpcProxies {
   rpc ListTargetGrpcProxies(ListTargetGrpcProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetGrpcProxyList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/targetGrpcProxies"
+      get: "/compute/v1/projects/{project}/global/targetGrpcProxies"
     };
     option (google.api.method_signature) = "project";
   }
@@ -82,7 +82,7 @@ service TargetGrpcProxies {
   rpc PatchTargetGrpcProxies(PatchTargetGrpcProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/targetGrpcProxies/{target_grpc_proxy=target_grpc_proxy}"
+      patch: "/compute/v1/projects/{project}/global/targetGrpcProxies/{target_grpc_proxy}"
       body: "target_grpc_proxy_resource"
     };
     option (google.api.method_signature) =

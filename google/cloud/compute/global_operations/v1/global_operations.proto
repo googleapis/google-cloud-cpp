@@ -41,7 +41,7 @@ service GlobalOperations {
   rpc AggregatedListGlobalOperations(AggregatedListGlobalOperationsRequest)
       returns (google.cloud.cpp.compute.v1.OperationAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/operations"
+      get: "/compute/v1/projects/{project}/aggregated/operations"
     };
     option (google.api.method_signature) = "project";
   }
@@ -50,7 +50,7 @@ service GlobalOperations {
   rpc DeleteGlobalOperations(DeleteGlobalOperationsRequest)
       returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/operations/{operation=operation}"
+      delete: "/compute/v1/projects/{project}/global/operations/{operation}"
     };
     option (google.api.method_signature) = "project,operation";
   }
@@ -59,7 +59,7 @@ service GlobalOperations {
   rpc GetGlobalOperations(GetGlobalOperationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/operations/{operation=operation}"
+      get: "/compute/v1/projects/{project}/global/operations/{operation}"
     };
     option (google.api.method_signature) = "project,operation";
   }
@@ -69,7 +69,7 @@ service GlobalOperations {
   rpc ListGlobalOperations(ListGlobalOperationsRequest)
       returns (google.cloud.cpp.compute.v1.OperationList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/operations"
+      get: "/compute/v1/projects/{project}/global/operations"
     };
     option (google.api.method_signature) = "project";
   }
@@ -87,7 +87,7 @@ service GlobalOperations {
   // the operation is not `DONE`.
   rpc Wait(WaitRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/operations/{operation=operation}/wait"
+      post: "/compute/v1/projects/{project}/global/operations/{operation}/wait"
       body: "*"
     };
     option (google.api.method_signature) = "project,operation";

@@ -41,7 +41,7 @@ service ZoneOperations {
   rpc DeleteZoneOperations(DeleteZoneOperationsRequest)
       returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/zones/{zone=zone}/operations/{operation=operation}"
+      delete: "/compute/v1/projects/{project}/zones/{zone}/operations/{operation}"
     };
     option (google.api.method_signature) = "project,zone,operation";
   }
@@ -50,7 +50,7 @@ service ZoneOperations {
   rpc GetZoneOperations(GetZoneOperationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/operations/{operation=operation}"
+      get: "/compute/v1/projects/{project}/zones/{zone}/operations/{operation}"
     };
     option (google.api.method_signature) = "project,zone,operation";
   }
@@ -60,7 +60,7 @@ service ZoneOperations {
   rpc ListZoneOperations(ListZoneOperationsRequest)
       returns (google.cloud.cpp.compute.v1.OperationList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/operations"
+      get: "/compute/v1/projects/{project}/zones/{zone}/operations"
     };
     option (google.api.method_signature) = "project,zone";
   }
@@ -77,7 +77,7 @@ service ZoneOperations {
   // Be prepared to retry if the operation is not `DONE`.
   rpc Wait(WaitRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/operations/{operation=operation}/wait"
+      post: "/compute/v1/projects/{project}/zones/{zone}/operations/{operation}/wait"
       body: "*"
     };
     option (google.api.method_signature) = "project,zone,operation";

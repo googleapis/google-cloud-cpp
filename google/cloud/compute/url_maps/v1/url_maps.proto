@@ -41,7 +41,7 @@ service UrlMaps {
   rpc AggregatedListUrlMaps(AggregatedListUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.UrlMapsAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/urlMaps"
+      get: "/compute/v1/projects/{project}/aggregated/urlMaps"
     };
     option (google.api.method_signature) = "project";
   }
@@ -50,7 +50,7 @@ service UrlMaps {
   rpc DeleteUrlMaps(DeleteUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/urlMaps/{url_map=url_map}"
+      delete: "/compute/v1/projects/{project}/global/urlMaps/{url_map}"
     };
     option (google.api.method_signature) = "project,url_map";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -60,7 +60,7 @@ service UrlMaps {
   rpc GetUrlMaps(GetUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.UrlMap) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/urlMaps/{url_map=url_map}"
+      get: "/compute/v1/projects/{project}/global/urlMaps/{url_map}"
     };
     option (google.api.method_signature) = "project,url_map";
   }
@@ -70,7 +70,7 @@ service UrlMaps {
   rpc InsertUrlMaps(InsertUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/urlMaps"
+      post: "/compute/v1/projects/{project}/global/urlMaps"
       body: "url_map_resource"
     };
     option (google.api.method_signature) = "project,url_map_resource";
@@ -83,7 +83,7 @@ service UrlMaps {
   rpc InvalidateCache(InvalidateCacheRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/urlMaps/{url_map=url_map}/invalidateCache"
+      post: "/compute/v1/projects/{project}/global/urlMaps/{url_map}/invalidateCache"
       body: "cache_invalidation_rule_resource"
     };
     option (google.api.method_signature) =
@@ -95,7 +95,7 @@ service UrlMaps {
   rpc ListUrlMaps(ListUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.UrlMapList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/urlMaps"
+      get: "/compute/v1/projects/{project}/global/urlMaps"
     };
     option (google.api.method_signature) = "project";
   }
@@ -106,7 +106,7 @@ service UrlMaps {
   rpc PatchUrlMaps(PatchUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/urlMaps/{url_map=url_map}"
+      patch: "/compute/v1/projects/{project}/global/urlMaps/{url_map}"
       body: "url_map_resource"
     };
     option (google.api.method_signature) = "project,url_map,url_map_resource";
@@ -118,7 +118,7 @@ service UrlMaps {
   rpc UpdateUrlMaps(UpdateUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      put: "/compute/v1/projects/{project=project}/global/urlMaps/{url_map=url_map}"
+      put: "/compute/v1/projects/{project}/global/urlMaps/{url_map}"
       body: "url_map_resource"
     };
     option (google.api.method_signature) = "project,url_map,url_map_resource";
@@ -131,7 +131,7 @@ service UrlMaps {
   rpc Validate(ValidateRequest)
       returns (google.cloud.cpp.compute.v1.UrlMapsValidateResponse) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/urlMaps/{url_map=url_map}/validate"
+      post: "/compute/v1/projects/{project}/global/urlMaps/{url_map}/validate"
       body: "url_maps_validate_request_resource"
     };
     option (google.api.method_signature) =

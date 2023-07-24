@@ -41,7 +41,7 @@ service TargetHttpProxies {
   rpc AggregatedListTargetHttpProxies(AggregatedListTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpProxyAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/targetHttpProxies"
+      get: "/compute/v1/projects/{project}/aggregated/targetHttpProxies"
     };
     option (google.api.method_signature) = "project";
   }
@@ -50,7 +50,7 @@ service TargetHttpProxies {
   rpc DeleteTargetHttpProxies(DeleteTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/global/targetHttpProxies/{target_http_proxy=target_http_proxy}"
+      delete: "/compute/v1/projects/{project}/global/targetHttpProxies/{target_http_proxy}"
     };
     option (google.api.method_signature) = "project,target_http_proxy";
     option (google.cloud.operation_service) = "GlobalOperations";
@@ -60,7 +60,7 @@ service TargetHttpProxies {
   rpc GetTargetHttpProxies(GetTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpProxy) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/targetHttpProxies/{target_http_proxy=target_http_proxy}"
+      get: "/compute/v1/projects/{project}/global/targetHttpProxies/{target_http_proxy}"
     };
     option (google.api.method_signature) = "project,target_http_proxy";
   }
@@ -70,7 +70,7 @@ service TargetHttpProxies {
   rpc InsertTargetHttpProxies(InsertTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/global/targetHttpProxies"
+      post: "/compute/v1/projects/{project}/global/targetHttpProxies"
       body: "target_http_proxy_resource"
     };
     option (google.api.method_signature) = "project,target_http_proxy_resource";
@@ -82,7 +82,7 @@ service TargetHttpProxies {
   rpc ListTargetHttpProxies(ListTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpProxyList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/global/targetHttpProxies"
+      get: "/compute/v1/projects/{project}/global/targetHttpProxies"
     };
     option (google.api.method_signature) = "project";
   }
@@ -93,7 +93,7 @@ service TargetHttpProxies {
   rpc PatchTargetHttpProxies(PatchTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      patch: "/compute/v1/projects/{project=project}/global/targetHttpProxies/{target_http_proxy=target_http_proxy}"
+      patch: "/compute/v1/projects/{project}/global/targetHttpProxies/{target_http_proxy}"
       body: "target_http_proxy_resource"
     };
     option (google.api.method_signature) =
@@ -105,7 +105,7 @@ service TargetHttpProxies {
   rpc SetUrlMap(SetUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/targetHttpProxies/{target_http_proxy=target_http_proxy}/setUrlMap"
+      post: "/compute/v1/projects/{project}/targetHttpProxies/{target_http_proxy}/setUrlMap"
       body: "url_map_reference_resource"
     };
     option (google.api.method_signature) =

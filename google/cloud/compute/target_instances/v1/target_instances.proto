@@ -40,7 +40,7 @@ service TargetInstances {
   rpc AggregatedListTargetInstances(AggregatedListTargetInstancesRequest)
       returns (google.cloud.cpp.compute.v1.TargetInstanceAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/targetInstances"
+      get: "/compute/v1/projects/{project}/aggregated/targetInstances"
     };
     option (google.api.method_signature) = "project";
   }
@@ -49,7 +49,7 @@ service TargetInstances {
   rpc DeleteTargetInstances(DeleteTargetInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/zones/{zone=zone}/targetInstances/{target_instance=target_instance}"
+      delete: "/compute/v1/projects/{project}/zones/{zone}/targetInstances/{target_instance}"
     };
     option (google.api.method_signature) = "project,zone,target_instance";
     option (google.cloud.operation_service) = "ZoneOperations";
@@ -59,7 +59,7 @@ service TargetInstances {
   rpc GetTargetInstances(GetTargetInstancesRequest)
       returns (google.cloud.cpp.compute.v1.TargetInstance) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/targetInstances/{target_instance=target_instance}"
+      get: "/compute/v1/projects/{project}/zones/{zone}/targetInstances/{target_instance}"
     };
     option (google.api.method_signature) = "project,zone,target_instance";
   }
@@ -69,7 +69,7 @@ service TargetInstances {
   rpc InsertTargetInstances(InsertTargetInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/zones/{zone=zone}/targetInstances"
+      post: "/compute/v1/projects/{project}/zones/{zone}/targetInstances"
       body: "target_instance_resource"
     };
     option (google.api.method_signature) =
@@ -82,7 +82,7 @@ service TargetInstances {
   rpc ListTargetInstances(ListTargetInstancesRequest)
       returns (google.cloud.cpp.compute.v1.TargetInstanceList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/zones/{zone=zone}/targetInstances"
+      get: "/compute/v1/projects/{project}/zones/{zone}/targetInstances"
     };
     option (google.api.method_signature) = "project,zone";
   }

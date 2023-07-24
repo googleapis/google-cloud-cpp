@@ -40,7 +40,7 @@ service Addresses {
   rpc AggregatedListAddresses(AggregatedListAddressesRequest)
       returns (google.cloud.cpp.compute.v1.AddressAggregatedList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/aggregated/addresses"
+      get: "/compute/v1/projects/{project}/aggregated/addresses"
     };
     option (google.api.method_signature) = "project";
   }
@@ -49,7 +49,7 @@ service Addresses {
   rpc DeleteAddresses(DeleteAddressesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      delete: "/compute/v1/projects/{project=project}/regions/{region=region}/addresses/{address=address}"
+      delete: "/compute/v1/projects/{project}/regions/{region}/addresses/{address}"
     };
     option (google.api.method_signature) = "project,region,address";
     option (google.cloud.operation_service) = "RegionOperations";
@@ -59,7 +59,7 @@ service Addresses {
   rpc GetAddresses(GetAddressesRequest)
       returns (google.cloud.cpp.compute.v1.Address) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/addresses/{address=address}"
+      get: "/compute/v1/projects/{project}/regions/{region}/addresses/{address}"
     };
     option (google.api.method_signature) = "project,region,address";
   }
@@ -69,7 +69,7 @@ service Addresses {
   rpc InsertAddresses(InsertAddressesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/addresses"
+      post: "/compute/v1/projects/{project}/regions/{region}/addresses"
       body: "address_resource"
     };
     option (google.api.method_signature) = "project,region,address_resource";
@@ -80,7 +80,7 @@ service Addresses {
   rpc ListAddresses(ListAddressesRequest)
       returns (google.cloud.cpp.compute.v1.AddressList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project=project}/regions/{region=region}/addresses"
+      get: "/compute/v1/projects/{project}/regions/{region}/addresses"
     };
     option (google.api.method_signature) = "project,region";
   }
@@ -90,7 +90,7 @@ service Addresses {
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
-      post: "/compute/v1/projects/{project=project}/regions/{region=region}/addresses/{resource=resource}/setLabels"
+      post: "/compute/v1/projects/{project}/regions/{region}/addresses/{resource}/setLabels"
       body: "region_set_labels_request_resource"
     };
     option (google.api.method_signature) =
