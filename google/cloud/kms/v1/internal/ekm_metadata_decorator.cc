@@ -18,6 +18,7 @@
 
 #include "google/cloud/kms/v1/internal/ekm_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/kms/v1/ekm_service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
 EkmServiceMetadata::ListEkmConnections(
     grpc::ClientContext& context,
     google::cloud::kms::v1::ListEkmConnectionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListEkmConnections(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceMetadata::GetEkmConnection(
     grpc::ClientContext& context,
     google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEkmConnection(context, request);
 }
 
@@ -56,7 +57,7 @@ StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceMetadata::CreateEkmConnection(
     grpc::ClientContext& context,
     google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateEkmConnection(context, request);
 }
 
@@ -64,22 +65,23 @@ StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceMetadata::UpdateEkmConnection(
     grpc::ClientContext& context,
     google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
-  SetMetadata(context,
-              "ekm_connection.name=" + request.ekm_connection().name());
+  SetMetadata(context, absl::StrCat("ekm_connection.name=",
+                                    request.ekm_connection().name()));
   return child_->UpdateEkmConnection(context, request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceMetadata::GetEkmConfig(
     grpc::ClientContext& context,
     google::cloud::kms::v1::GetEkmConfigRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEkmConfig(context, request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceMetadata::UpdateEkmConfig(
     grpc::ClientContext& context,
     google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
-  SetMetadata(context, "ekm_config.name=" + request.ekm_config().name());
+  SetMetadata(context,
+              absl::StrCat("ekm_config.name=", request.ekm_config().name()));
   return child_->UpdateEkmConfig(context, request);
 }
 
@@ -87,7 +89,7 @@ StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
 EkmServiceMetadata::VerifyConnectivity(
     grpc::ClientContext& context,
     google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->VerifyConnectivity(context, request);
 }
 

@@ -80,7 +80,7 @@ DefaultTargetGrpcProxiesRestStub::GetTargetGrpcProxies(
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/targetGrpcProxies/", request.target_grpc_proxy(),
                    ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

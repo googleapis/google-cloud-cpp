@@ -107,8 +107,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::GetNetworkEdgeSecurityServices(
       absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
                    request.region(), "/networkEdgeSecurityServices/",
                    request.network_edge_security_service(), ""),
-      {std::make_pair("project", request.project()),
-       std::make_pair("region", request.region())});
+      {});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

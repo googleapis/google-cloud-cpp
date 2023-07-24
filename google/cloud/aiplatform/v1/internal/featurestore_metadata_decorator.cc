@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/featurestore_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/featurestore_service.grpc.pb.h>
@@ -41,7 +42,7 @@ FeaturestoreServiceMetadata::AsyncCreateFeaturestore(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateFeaturestore(cq, std::move(context), request);
 }
 
@@ -49,7 +50,7 @@ StatusOr<google::cloud::aiplatform::v1::Featurestore>
 FeaturestoreServiceMetadata::GetFeaturestore(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetFeaturestore(context, request);
 }
 
@@ -57,7 +58,7 @@ StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse>
 FeaturestoreServiceMetadata::ListFeaturestores(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListFeaturestoresRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListFeaturestores(context, request);
 }
 
@@ -66,7 +67,8 @@ FeaturestoreServiceMetadata::AsyncUpdateFeaturestore(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
-  SetMetadata(*context, "featurestore.name=" + request.featurestore().name());
+  SetMetadata(*context, absl::StrCat("featurestore.name=",
+                                     request.featurestore().name()));
   return child_->AsyncUpdateFeaturestore(cq, std::move(context), request);
 }
 
@@ -75,7 +77,7 @@ FeaturestoreServiceMetadata::AsyncDeleteFeaturestore(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteFeaturestore(cq, std::move(context), request);
 }
 
@@ -84,7 +86,7 @@ FeaturestoreServiceMetadata::AsyncCreateEntityType(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateEntityType(cq, std::move(context), request);
 }
 
@@ -92,7 +94,7 @@ StatusOr<google::cloud::aiplatform::v1::EntityType>
 FeaturestoreServiceMetadata::GetEntityType(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEntityType(context, request);
 }
 
@@ -100,7 +102,7 @@ StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse>
 FeaturestoreServiceMetadata::ListEntityTypes(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListEntityTypesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListEntityTypes(context, request);
 }
 
@@ -108,7 +110,8 @@ StatusOr<google::cloud::aiplatform::v1::EntityType>
 FeaturestoreServiceMetadata::UpdateEntityType(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request) {
-  SetMetadata(context, "entity_type.name=" + request.entity_type().name());
+  SetMetadata(context,
+              absl::StrCat("entity_type.name=", request.entity_type().name()));
   return child_->UpdateEntityType(context, request);
 }
 
@@ -117,7 +120,7 @@ FeaturestoreServiceMetadata::AsyncDeleteEntityType(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteEntityType(cq, std::move(context), request);
 }
 
@@ -126,7 +129,7 @@ FeaturestoreServiceMetadata::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateFeature(cq, std::move(context), request);
 }
 
@@ -135,7 +138,7 @@ FeaturestoreServiceMetadata::AsyncBatchCreateFeatures(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchCreateFeatures(cq, std::move(context), request);
 }
 
@@ -143,7 +146,7 @@ StatusOr<google::cloud::aiplatform::v1::Feature>
 FeaturestoreServiceMetadata::GetFeature(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetFeatureRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetFeature(context, request);
 }
 
@@ -151,7 +154,7 @@ StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse>
 FeaturestoreServiceMetadata::ListFeatures(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListFeaturesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListFeatures(context, request);
 }
 
@@ -159,7 +162,7 @@ StatusOr<google::cloud::aiplatform::v1::Feature>
 FeaturestoreServiceMetadata::UpdateFeature(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
-  SetMetadata(context, "feature.name=" + request.feature().name());
+  SetMetadata(context, absl::StrCat("feature.name=", request.feature().name()));
   return child_->UpdateFeature(context, request);
 }
 
@@ -168,7 +171,7 @@ FeaturestoreServiceMetadata::AsyncDeleteFeature(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteFeature(cq, std::move(context), request);
 }
 
@@ -177,7 +180,7 @@ FeaturestoreServiceMetadata::AsyncImportFeatureValues(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
-  SetMetadata(*context, "entity_type=" + request.entity_type());
+  SetMetadata(*context, absl::StrCat("entity_type=", request.entity_type()));
   return child_->AsyncImportFeatureValues(cq, std::move(context), request);
 }
 
@@ -187,7 +190,7 @@ FeaturestoreServiceMetadata::AsyncBatchReadFeatureValues(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
         request) {
-  SetMetadata(*context, "featurestore=" + request.featurestore());
+  SetMetadata(*context, absl::StrCat("featurestore=", request.featurestore()));
   return child_->AsyncBatchReadFeatureValues(cq, std::move(context), request);
 }
 
@@ -196,7 +199,7 @@ FeaturestoreServiceMetadata::AsyncExportFeatureValues(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
-  SetMetadata(*context, "entity_type=" + request.entity_type());
+  SetMetadata(*context, absl::StrCat("entity_type=", request.entity_type()));
   return child_->AsyncExportFeatureValues(cq, std::move(context), request);
 }
 
@@ -205,7 +208,7 @@ FeaturestoreServiceMetadata::AsyncDeleteFeatureValues(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
-  SetMetadata(*context, "entity_type=" + request.entity_type());
+  SetMetadata(*context, absl::StrCat("entity_type=", request.entity_type()));
   return child_->AsyncDeleteFeatureValues(cq, std::move(context), request);
 }
 
@@ -213,7 +216,7 @@ StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>
 FeaturestoreServiceMetadata::SearchFeatures(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::SearchFeaturesRequest const& request) {
-  SetMetadata(context, "location=" + request.location());
+  SetMetadata(context, absl::StrCat("location=", request.location()));
   return child_->SearchFeatures(context, request);
 }
 

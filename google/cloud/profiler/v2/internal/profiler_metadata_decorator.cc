@@ -18,6 +18,7 @@
 
 #include "google/cloud/profiler/v2/internal/profiler_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceMetadata::CreateProfile(
     grpc::ClientContext& context,
     google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateProfile(context, request);
 }
 
@@ -49,7 +50,7 @@ ProfilerServiceMetadata::CreateOfflineProfile(
     grpc::ClientContext& context,
     google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateOfflineProfile(context, request);
 }
 
@@ -57,7 +58,7 @@ StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceMetadata::UpdateProfile(
     grpc::ClientContext& context,
     google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
-  SetMetadata(context, "profile.name=" + request.profile().name());
+  SetMetadata(context, absl::StrCat("profile.name=", request.profile().name()));
   return child_->UpdateProfile(context, request);
 }
 

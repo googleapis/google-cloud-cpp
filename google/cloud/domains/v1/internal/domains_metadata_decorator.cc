@@ -18,6 +18,7 @@
 
 #include "google/cloud/domains/v1/internal/domains_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/domains/v1/domains.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::domains::v1::SearchDomainsResponse>
 DomainsMetadata::SearchDomains(
     grpc::ClientContext& context,
     google::cloud::domains::v1::SearchDomainsRequest const& request) {
-  SetMetadata(context, "location=" + request.location());
+  SetMetadata(context, absl::StrCat("location=", request.location()));
   return child_->SearchDomains(context, request);
 }
 
@@ -49,7 +50,7 @@ DomainsMetadata::RetrieveRegisterParameters(
     grpc::ClientContext& context,
     google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
         request) {
-  SetMetadata(context, "location=" + request.location());
+  SetMetadata(context, absl::StrCat("location=", request.location()));
   return child_->RetrieveRegisterParameters(context, request);
 }
 
@@ -58,7 +59,7 @@ DomainsMetadata::AsyncRegisterDomain(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::domains::v1::RegisterDomainRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncRegisterDomain(cq, std::move(context), request);
 }
 
@@ -67,7 +68,7 @@ DomainsMetadata::RetrieveTransferParameters(
     grpc::ClientContext& context,
     google::cloud::domains::v1::RetrieveTransferParametersRequest const&
         request) {
-  SetMetadata(context, "location=" + request.location());
+  SetMetadata(context, absl::StrCat("location=", request.location()));
   return child_->RetrieveTransferParameters(context, request);
 }
 
@@ -76,7 +77,7 @@ DomainsMetadata::AsyncTransferDomain(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::domains::v1::TransferDomainRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncTransferDomain(cq, std::move(context), request);
 }
 
@@ -84,7 +85,7 @@ StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
 DomainsMetadata::ListRegistrations(
     grpc::ClientContext& context,
     google::cloud::domains::v1::ListRegistrationsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListRegistrations(context, request);
 }
 
@@ -92,7 +93,7 @@ StatusOr<google::cloud::domains::v1::Registration>
 DomainsMetadata::GetRegistration(
     grpc::ClientContext& context,
     google::cloud::domains::v1::GetRegistrationRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetRegistration(context, request);
 }
 
@@ -101,7 +102,8 @@ DomainsMetadata::AsyncUpdateRegistration(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
-  SetMetadata(*context, "registration.name=" + request.registration().name());
+  SetMetadata(*context, absl::StrCat("registration.name=",
+                                     request.registration().name()));
   return child_->AsyncUpdateRegistration(cq, std::move(context), request);
 }
 
@@ -111,7 +113,7 @@ DomainsMetadata::AsyncConfigureManagementSettings(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
         request) {
-  SetMetadata(*context, "registration=" + request.registration());
+  SetMetadata(*context, absl::StrCat("registration=", request.registration()));
   return child_->AsyncConfigureManagementSettings(cq, std::move(context),
                                                   request);
 }
@@ -121,7 +123,7 @@ DomainsMetadata::AsyncConfigureDnsSettings(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
-  SetMetadata(*context, "registration=" + request.registration());
+  SetMetadata(*context, absl::StrCat("registration=", request.registration()));
   return child_->AsyncConfigureDnsSettings(cq, std::move(context), request);
 }
 
@@ -131,7 +133,7 @@ DomainsMetadata::AsyncConfigureContactSettings(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::domains::v1::ConfigureContactSettingsRequest const&
         request) {
-  SetMetadata(*context, "registration=" + request.registration());
+  SetMetadata(*context, absl::StrCat("registration=", request.registration()));
   return child_->AsyncConfigureContactSettings(cq, std::move(context), request);
 }
 
@@ -140,7 +142,7 @@ DomainsMetadata::AsyncExportRegistration(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::domains::v1::ExportRegistrationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncExportRegistration(cq, std::move(context), request);
 }
 
@@ -149,7 +151,7 @@ DomainsMetadata::AsyncDeleteRegistration(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteRegistration(cq, std::move(context), request);
 }
 
@@ -158,7 +160,7 @@ DomainsMetadata::RetrieveAuthorizationCode(
     grpc::ClientContext& context,
     google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
         request) {
-  SetMetadata(context, "registration=" + request.registration());
+  SetMetadata(context, absl::StrCat("registration=", request.registration()));
   return child_->RetrieveAuthorizationCode(context, request);
 }
 
@@ -166,7 +168,7 @@ StatusOr<google::cloud::domains::v1::AuthorizationCode>
 DomainsMetadata::ResetAuthorizationCode(
     grpc::ClientContext& context,
     google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request) {
-  SetMetadata(context, "registration=" + request.registration());
+  SetMetadata(context, absl::StrCat("registration=", request.registration()));
   return child_->ResetAuthorizationCode(context, request);
 }
 

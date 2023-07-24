@@ -18,6 +18,7 @@
 
 #include "google/cloud/logging/v2/internal/logging_service_v2_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/logging/v2/logging.grpc.pb.h>
@@ -39,7 +40,7 @@ LoggingServiceV2Metadata::LoggingServiceV2Metadata(
 Status LoggingServiceV2Metadata::DeleteLog(
     grpc::ClientContext& context,
     google::logging::v2::DeleteLogRequest const& request) {
-  SetMetadata(context, "log_name=" + request.log_name());
+  SetMetadata(context, absl::StrCat("log_name=", request.log_name()));
   return child_->DeleteLog(context, request);
 }
 
@@ -72,7 +73,7 @@ StatusOr<google::logging::v2::ListLogsResponse>
 LoggingServiceV2Metadata::ListLogs(
     grpc::ClientContext& context,
     google::logging::v2::ListLogsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListLogs(context, request);
 }
 

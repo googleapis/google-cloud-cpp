@@ -18,6 +18,7 @@
 
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
@@ -41,7 +42,7 @@ SystemPolicyV1Metadata::GetSystemPolicy(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetSystemPolicy(context, request);
 }
 

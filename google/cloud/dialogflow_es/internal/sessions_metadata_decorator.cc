@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/sessions_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/session.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 SessionsMetadata::DetectIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
-  SetMetadata(context, "session=" + request.session());
+  SetMetadata(context, absl::StrCat("session=", request.session()));
   return child_->DetectIntent(context, request);
 }
 

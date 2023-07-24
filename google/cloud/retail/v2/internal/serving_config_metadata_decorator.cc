@@ -18,6 +18,7 @@
 
 #include "google/cloud/retail/v2/internal/serving_config_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/retail/v2/serving_config_service.grpc.pb.h>
@@ -40,14 +41,14 @@ StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::CreateServingConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::CreateServingConfigRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateServingConfig(context, request);
 }
 
 Status ServingConfigServiceMetadata::DeleteServingConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteServingConfig(context, request);
 }
 
@@ -55,8 +56,8 @@ StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::UpdateServingConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
-  SetMetadata(context,
-              "serving_config.name=" + request.serving_config().name());
+  SetMetadata(context, absl::StrCat("serving_config.name=",
+                                    request.serving_config().name()));
   return child_->UpdateServingConfig(context, request);
 }
 
@@ -64,7 +65,7 @@ StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::GetServingConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetServingConfigRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetServingConfig(context, request);
 }
 
@@ -72,7 +73,7 @@ StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
 ServingConfigServiceMetadata::ListServingConfigs(
     grpc::ClientContext& context,
     google::cloud::retail::v2::ListServingConfigsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListServingConfigs(context, request);
 }
 
@@ -80,7 +81,8 @@ StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::AddControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::AddControlRequest const& request) {
-  SetMetadata(context, "serving_config=" + request.serving_config());
+  SetMetadata(context,
+              absl::StrCat("serving_config=", request.serving_config()));
   return child_->AddControl(context, request);
 }
 
@@ -88,7 +90,8 @@ StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::RemoveControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::RemoveControlRequest const& request) {
-  SetMetadata(context, "serving_config=" + request.serving_config());
+  SetMetadata(context,
+              absl::StrCat("serving_config=", request.serving_config()));
   return child_->RemoveControl(context, request);
 }
 

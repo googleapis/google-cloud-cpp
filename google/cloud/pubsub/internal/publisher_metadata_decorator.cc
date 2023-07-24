@@ -18,6 +18,7 @@
 
 #include "google/cloud/pubsub/internal/publisher_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
@@ -38,35 +39,35 @@ PublisherMetadata::PublisherMetadata(
 
 StatusOr<google::pubsub::v1::Topic> PublisherMetadata::CreateTopic(
     grpc::ClientContext& context, google::pubsub::v1::Topic const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CreateTopic(context, request);
 }
 
 StatusOr<google::pubsub::v1::Topic> PublisherMetadata::UpdateTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::UpdateTopicRequest const& request) {
-  SetMetadata(context, "topic.name=" + request.topic().name());
+  SetMetadata(context, absl::StrCat("topic.name=", request.topic().name()));
   return child_->UpdateTopic(context, request);
 }
 
 StatusOr<google::pubsub::v1::PublishResponse> PublisherMetadata::Publish(
     grpc::ClientContext& context,
     google::pubsub::v1::PublishRequest const& request) {
-  SetMetadata(context, "topic=" + request.topic());
+  SetMetadata(context, absl::StrCat("topic=", request.topic()));
   return child_->Publish(context, request);
 }
 
 StatusOr<google::pubsub::v1::Topic> PublisherMetadata::GetTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::GetTopicRequest const& request) {
-  SetMetadata(context, "topic=" + request.topic());
+  SetMetadata(context, absl::StrCat("topic=", request.topic()));
   return child_->GetTopic(context, request);
 }
 
 StatusOr<google::pubsub::v1::ListTopicsResponse> PublisherMetadata::ListTopics(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicsRequest const& request) {
-  SetMetadata(context, "project=" + request.project());
+  SetMetadata(context, absl::StrCat("project=", request.project()));
   return child_->ListTopics(context, request);
 }
 
@@ -74,7 +75,7 @@ StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
 PublisherMetadata::ListTopicSubscriptions(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
-  SetMetadata(context, "topic=" + request.topic());
+  SetMetadata(context, absl::StrCat("topic=", request.topic()));
   return child_->ListTopicSubscriptions(context, request);
 }
 
@@ -82,14 +83,14 @@ StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
 PublisherMetadata::ListTopicSnapshots(
     grpc::ClientContext& context,
     google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
-  SetMetadata(context, "topic=" + request.topic());
+  SetMetadata(context, absl::StrCat("topic=", request.topic()));
   return child_->ListTopicSnapshots(context, request);
 }
 
 Status PublisherMetadata::DeleteTopic(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteTopicRequest const& request) {
-  SetMetadata(context, "topic=" + request.topic());
+  SetMetadata(context, absl::StrCat("topic=", request.topic()));
   return child_->DeleteTopic(context, request);
 }
 
@@ -97,7 +98,7 @@ StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
 PublisherMetadata::DetachSubscription(
     grpc::ClientContext& context,
     google::pubsub::v1::DetachSubscriptionRequest const& request) {
-  SetMetadata(context, "subscription=" + request.subscription());
+  SetMetadata(context, absl::StrCat("subscription=", request.subscription()));
   return child_->DetachSubscription(context, request);
 }
 
@@ -106,7 +107,7 @@ PublisherMetadata::AsyncPublish(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::pubsub::v1::PublishRequest const& request) {
-  SetMetadata(*context, "topic=" + request.topic());
+  SetMetadata(*context, absl::StrCat("topic=", request.topic()));
   return child_->AsyncPublish(cq, std::move(context), request);
 }
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/gkehub/v1/internal/gke_hub_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/gkehub/v1/service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
 GkeHubMetadata::ListMemberships(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::ListMembershipsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListMemberships(context, request);
 }
 
@@ -48,21 +49,21 @@ StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>
 GkeHubMetadata::ListFeatures(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::ListFeaturesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListFeatures(context, request);
 }
 
 StatusOr<google::cloud::gkehub::v1::Membership> GkeHubMetadata::GetMembership(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::GetMembershipRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetMembership(context, request);
 }
 
 StatusOr<google::cloud::gkehub::v1::Feature> GkeHubMetadata::GetFeature(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::GetFeatureRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetFeature(context, request);
 }
 
@@ -71,7 +72,7 @@ GkeHubMetadata::AsyncCreateMembership(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateMembership(cq, std::move(context), request);
 }
 
@@ -80,7 +81,7 @@ GkeHubMetadata::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateFeature(cq, std::move(context), request);
 }
 
@@ -89,7 +90,7 @@ GkeHubMetadata::AsyncDeleteMembership(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteMembership(cq, std::move(context), request);
 }
 
@@ -98,7 +99,7 @@ GkeHubMetadata::AsyncDeleteFeature(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteFeature(cq, std::move(context), request);
 }
 
@@ -107,7 +108,7 @@ GkeHubMetadata::AsyncUpdateMembership(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUpdateMembership(cq, std::move(context), request);
 }
 
@@ -116,7 +117,7 @@ GkeHubMetadata::AsyncUpdateFeature(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUpdateFeature(cq, std::move(context), request);
 }
 
@@ -124,7 +125,7 @@ StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
 GkeHubMetadata::GenerateConnectManifest(
     grpc::ClientContext& context,
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GenerateConnectManifest(context, request);
 }
 

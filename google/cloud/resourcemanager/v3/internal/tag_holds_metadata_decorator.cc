@@ -18,6 +18,7 @@
 
 #include "google/cloud/resourcemanager/v3/internal/tag_holds_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/resourcemanager/v3/tag_holds.grpc.pb.h>
@@ -41,7 +42,7 @@ TagHoldsMetadata::AsyncCreateTagHold(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateTagHold(cq, std::move(context), request);
 }
 
@@ -50,7 +51,7 @@ TagHoldsMetadata::AsyncDeleteTagHold(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteTagHold(cq, std::move(context), request);
 }
 
@@ -58,7 +59,7 @@ StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
 TagHoldsMetadata::ListTagHolds(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::ListTagHoldsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTagHolds(context, request);
 }
 

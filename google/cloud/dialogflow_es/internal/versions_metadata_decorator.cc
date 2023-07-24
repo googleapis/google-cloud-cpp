@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/versions_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/version.grpc.pb.h>
@@ -40,14 +41,14 @@ StatusOr<google::cloud::dialogflow::v2::ListVersionsResponse>
 VersionsMetadata::ListVersions(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListVersionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListVersions(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version> VersionsMetadata::GetVersion(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetVersionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetVersion(context, request);
 }
 
@@ -55,7 +56,7 @@ StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsMetadata::CreateVersion(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateVersionRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateVersion(context, request);
 }
 
@@ -63,14 +64,14 @@ StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsMetadata::UpdateVersion(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateVersionRequest const& request) {
-  SetMetadata(context, "version.name=" + request.version().name());
+  SetMetadata(context, absl::StrCat("version.name=", request.version().name()));
   return child_->UpdateVersion(context, request);
 }
 
 Status VersionsMetadata::DeleteVersion(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteVersionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteVersion(context, request);
 }
 

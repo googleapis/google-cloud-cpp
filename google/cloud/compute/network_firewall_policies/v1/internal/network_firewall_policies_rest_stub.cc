@@ -157,7 +157,7 @@ DefaultNetworkFirewallPoliciesRestStub::GetNetworkFirewallPolicies(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/firewallPolicies/", request.firewall_policy(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
@@ -171,8 +171,7 @@ DefaultNetworkFirewallPoliciesRestStub::GetAssociation(
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/firewallPolicies/", request.firewall_policy(),
                    "/getAssociation"),
-      {std::make_pair("name", request.name()),
-       std::make_pair("project", request.project())});
+      {std::make_pair("name", request.name())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -186,9 +185,8 @@ DefaultNetworkFirewallPoliciesRestStub::GetIamPolicy(
                    "/global/firewallPolicies/", request.resource(),
                    "/getIamPolicy"),
       {std::make_pair(
-           "options_requested_policy_version",
-           std::to_string(request.options_requested_policy_version())),
-       std::make_pair("project", request.project())});
+          "options_requested_policy_version",
+          std::to_string(request.options_requested_policy_version()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
@@ -202,8 +200,7 @@ DefaultNetworkFirewallPoliciesRestStub::GetRule(
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/firewallPolicies/", request.firewall_policy(),
                    "/getRule"),
-      {std::make_pair("priority", std::to_string(request.priority())),
-       std::make_pair("project", request.project())});
+      {std::make_pair("priority", std::to_string(request.priority()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

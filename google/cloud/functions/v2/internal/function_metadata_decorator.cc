@@ -18,6 +18,7 @@
 
 #include "google/cloud/functions/v2/internal/function_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/functions/v2/functions.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::functions::v2::Function>
 FunctionServiceMetadata::GetFunction(
     grpc::ClientContext& context,
     google::cloud::functions::v2::GetFunctionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetFunction(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::functions::v2::ListFunctionsResponse>
 FunctionServiceMetadata::ListFunctions(
     grpc::ClientContext& context,
     google::cloud::functions::v2::ListFunctionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListFunctions(context, request);
 }
 
@@ -57,7 +58,7 @@ FunctionServiceMetadata::AsyncCreateFunction(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::functions::v2::CreateFunctionRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateFunction(cq, std::move(context), request);
 }
 
@@ -66,7 +67,8 @@ FunctionServiceMetadata::AsyncUpdateFunction(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::functions::v2::UpdateFunctionRequest const& request) {
-  SetMetadata(*context, "function.name=" + request.function().name());
+  SetMetadata(*context,
+              absl::StrCat("function.name=", request.function().name()));
   return child_->AsyncUpdateFunction(cq, std::move(context), request);
 }
 
@@ -75,7 +77,7 @@ FunctionServiceMetadata::AsyncDeleteFunction(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::functions::v2::DeleteFunctionRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteFunction(cq, std::move(context), request);
 }
 
@@ -83,7 +85,7 @@ StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
 FunctionServiceMetadata::GenerateUploadUrl(
     grpc::ClientContext& context,
     google::cloud::functions::v2::GenerateUploadUrlRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->GenerateUploadUrl(context, request);
 }
 
@@ -91,7 +93,7 @@ StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
 FunctionServiceMetadata::GenerateDownloadUrl(
     grpc::ClientContext& context,
     google::cloud::functions::v2::GenerateDownloadUrlRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GenerateDownloadUrl(context, request);
 }
 
@@ -99,7 +101,7 @@ StatusOr<google::cloud::functions::v2::ListRuntimesResponse>
 FunctionServiceMetadata::ListRuntimes(
     grpc::ClientContext& context,
     google::cloud::functions::v2::ListRuntimesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListRuntimes(context, request);
 }
 

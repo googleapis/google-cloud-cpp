@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/specialist_pool_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/specialist_pool_service.grpc.pb.h>
@@ -41,7 +42,7 @@ SpecialistPoolServiceMetadata::AsyncCreateSpecialistPool(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateSpecialistPool(cq, std::move(context), request);
 }
 
@@ -49,7 +50,7 @@ StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 SpecialistPoolServiceMetadata::GetSpecialistPool(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetSpecialistPool(context, request);
 }
 
@@ -57,7 +58,7 @@ StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
 SpecialistPoolServiceMetadata::ListSpecialistPools(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListSpecialistPools(context, request);
 }
 
@@ -66,7 +67,7 @@ SpecialistPoolServiceMetadata::AsyncDeleteSpecialistPool(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteSpecialistPool(cq, std::move(context), request);
 }
 
@@ -75,8 +76,8 @@ SpecialistPoolServiceMetadata::AsyncUpdateSpecialistPool(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
-  SetMetadata(*context,
-              "specialist_pool.name=" + request.specialist_pool().name());
+  SetMetadata(*context, absl::StrCat("specialist_pool.name=",
+                                     request.specialist_pool().name()));
   return child_->AsyncUpdateSpecialistPool(cq, std::move(context), request);
 }
 

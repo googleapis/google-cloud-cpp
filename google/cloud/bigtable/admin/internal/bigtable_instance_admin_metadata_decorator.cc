@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
@@ -41,7 +42,7 @@ BigtableInstanceAdminMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CreateInstanceRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
 
@@ -49,7 +50,7 @@ StatusOr<google::bigtable::admin::v2::Instance>
 BigtableInstanceAdminMetadata::GetInstance(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::GetInstanceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetInstance(context, request);
 }
 
@@ -57,7 +58,7 @@ StatusOr<google::bigtable::admin::v2::ListInstancesResponse>
 BigtableInstanceAdminMetadata::ListInstances(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::ListInstancesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListInstances(context, request);
 }
 
@@ -65,7 +66,7 @@ StatusOr<google::bigtable::admin::v2::Instance>
 BigtableInstanceAdminMetadata::UpdateInstance(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::Instance const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->UpdateInstance(context, request);
 }
 
@@ -74,14 +75,15 @@ BigtableInstanceAdminMetadata::AsyncPartialUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
-  SetMetadata(*context, "instance.name=" + request.instance().name());
+  SetMetadata(*context,
+              absl::StrCat("instance.name=", request.instance().name()));
   return child_->AsyncPartialUpdateInstance(cq, std::move(context), request);
 }
 
 Status BigtableInstanceAdminMetadata::DeleteInstance(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::DeleteInstanceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteInstance(context, request);
 }
 
@@ -90,7 +92,7 @@ BigtableInstanceAdminMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CreateClusterRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateCluster(cq, std::move(context), request);
 }
 
@@ -98,7 +100,7 @@ StatusOr<google::bigtable::admin::v2::Cluster>
 BigtableInstanceAdminMetadata::GetCluster(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::GetClusterRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetCluster(context, request);
 }
 
@@ -106,7 +108,7 @@ StatusOr<google::bigtable::admin::v2::ListClustersResponse>
 BigtableInstanceAdminMetadata::ListClusters(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::ListClustersRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListClusters(context, request);
 }
 
@@ -115,7 +117,7 @@ BigtableInstanceAdminMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::Cluster const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
 }
 
@@ -124,14 +126,15 @@ BigtableInstanceAdminMetadata::AsyncPartialUpdateCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
-  SetMetadata(*context, "cluster.name=" + request.cluster().name());
+  SetMetadata(*context,
+              absl::StrCat("cluster.name=", request.cluster().name()));
   return child_->AsyncPartialUpdateCluster(cq, std::move(context), request);
 }
 
 Status BigtableInstanceAdminMetadata::DeleteCluster(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::DeleteClusterRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteCluster(context, request);
 }
 
@@ -139,7 +142,7 @@ StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminMetadata::CreateAppProfile(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::CreateAppProfileRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateAppProfile(context, request);
 }
 
@@ -147,7 +150,7 @@ StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminMetadata::GetAppProfile(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::GetAppProfileRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetAppProfile(context, request);
 }
 
@@ -155,7 +158,7 @@ StatusOr<google::bigtable::admin::v2::ListAppProfilesResponse>
 BigtableInstanceAdminMetadata::ListAppProfiles(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::ListAppProfilesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListAppProfiles(context, request);
 }
 
@@ -164,28 +167,29 @@ BigtableInstanceAdminMetadata::AsyncUpdateAppProfile(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
-  SetMetadata(*context, "app_profile.name=" + request.app_profile().name());
+  SetMetadata(*context,
+              absl::StrCat("app_profile.name=", request.app_profile().name()));
   return child_->AsyncUpdateAppProfile(cq, std::move(context), request);
 }
 
 Status BigtableInstanceAdminMetadata::DeleteAppProfile(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::DeleteAppProfileRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteAppProfile(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableInstanceAdminMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableInstanceAdminMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -193,7 +197,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BigtableInstanceAdminMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -201,7 +205,7 @@ StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse>
 BigtableInstanceAdminMetadata::ListHotTablets(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::ListHotTabletsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListHotTablets(context, request);
 }
 

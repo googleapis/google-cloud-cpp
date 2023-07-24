@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/contexts_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/context.grpc.pb.h>
@@ -40,14 +41,14 @@ StatusOr<google::cloud::dialogflow::v2::ListContextsResponse>
 ContextsMetadata::ListContexts(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListContextsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListContexts(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Context> ContextsMetadata::GetContext(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetContextRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetContext(context, request);
 }
 
@@ -55,7 +56,7 @@ StatusOr<google::cloud::dialogflow::v2::Context>
 ContextsMetadata::CreateContext(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateContextRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateContext(context, request);
 }
 
@@ -63,21 +64,21 @@ StatusOr<google::cloud::dialogflow::v2::Context>
 ContextsMetadata::UpdateContext(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateContextRequest const& request) {
-  SetMetadata(context, "context.name=" + request.context().name());
+  SetMetadata(context, absl::StrCat("context.name=", request.context().name()));
   return child_->UpdateContext(context, request);
 }
 
 Status ContextsMetadata::DeleteContext(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteContextRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteContext(context, request);
 }
 
 Status ContextsMetadata::DeleteAllContexts(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->DeleteAllContexts(context, request);
 }
 

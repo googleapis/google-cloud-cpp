@@ -18,6 +18,7 @@
 
 #include "google/cloud/talent/v4/internal/event_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/talent/v4/event_service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::talent::v4::ClientEvent>
 EventServiceMetadata::CreateClientEvent(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CreateClientEventRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateClientEvent(context, request);
 }
 

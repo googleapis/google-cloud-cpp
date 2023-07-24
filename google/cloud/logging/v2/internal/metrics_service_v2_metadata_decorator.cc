@@ -18,6 +18,7 @@
 
 #include "google/cloud/logging/v2/internal/metrics_service_v2_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/logging/v2/logging_metrics.grpc.pb.h>
@@ -40,14 +41,14 @@ StatusOr<google::logging::v2::ListLogMetricsResponse>
 MetricsServiceV2Metadata::ListLogMetrics(
     grpc::ClientContext& context,
     google::logging::v2::ListLogMetricsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListLogMetrics(context, request);
 }
 
 StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Metadata::GetLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::GetLogMetricRequest const& request) {
-  SetMetadata(context, "metric_name=" + request.metric_name());
+  SetMetadata(context, absl::StrCat("metric_name=", request.metric_name()));
   return child_->GetLogMetric(context, request);
 }
 
@@ -55,7 +56,7 @@ StatusOr<google::logging::v2::LogMetric>
 MetricsServiceV2Metadata::CreateLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::CreateLogMetricRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateLogMetric(context, request);
 }
 
@@ -63,14 +64,14 @@ StatusOr<google::logging::v2::LogMetric>
 MetricsServiceV2Metadata::UpdateLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::UpdateLogMetricRequest const& request) {
-  SetMetadata(context, "metric_name=" + request.metric_name());
+  SetMetadata(context, absl::StrCat("metric_name=", request.metric_name()));
   return child_->UpdateLogMetric(context, request);
 }
 
 Status MetricsServiceV2Metadata::DeleteLogMetric(
     grpc::ClientContext& context,
     google::logging::v2::DeleteLogMetricRequest const& request) {
-  SetMetadata(context, "metric_name=" + request.metric_name());
+  SetMetadata(context, absl::StrCat("metric_name=", request.metric_name()));
   return child_->DeleteLogMetric(context, request);
 }
 

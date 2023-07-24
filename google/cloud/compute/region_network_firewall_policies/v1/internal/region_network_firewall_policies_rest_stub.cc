@@ -164,8 +164,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetRegionNetworkFirewallPolicies(
       absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
                    request.region(), "/firewallPolicies/",
                    request.firewall_policy(), ""),
-      {std::make_pair("project", request.project()),
-       std::make_pair("region", request.region())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
@@ -179,9 +178,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetAssociation(
       absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
                    request.region(), "/firewallPolicies/",
                    request.firewall_policy(), "/getAssociation"),
-      {std::make_pair("name", request.name()),
-       std::make_pair("project", request.project()),
-       std::make_pair("region", request.region())});
+      {std::make_pair("name", request.name())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -196,8 +193,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetEffectiveFirewalls(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
                    request.region(), "/firewallPolicies/getEffectiveFirewalls"),
-      {std::make_pair("network", request.network()),
-       std::make_pair("project", request.project())});
+      {std::make_pair("network", request.network())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -211,10 +207,8 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetIamPolicy(
                    request.region(), "/firewallPolicies/", request.resource(),
                    "/getIamPolicy"),
       {std::make_pair(
-           "options_requested_policy_version",
-           std::to_string(request.options_requested_policy_version())),
-       std::make_pair("project", request.project()),
-       std::make_pair("region", request.region())});
+          "options_requested_policy_version",
+          std::to_string(request.options_requested_policy_version()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
@@ -228,9 +222,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetRule(
       absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
                    request.region(), "/firewallPolicies/",
                    request.firewall_policy(), "/getRule"),
-      {std::make_pair("priority", std::to_string(request.priority())),
-       std::make_pair("project", request.project()),
-       std::make_pair("region", request.region())});
+      {std::make_pair("priority", std::to_string(request.priority()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -273,7 +265,6 @@ DefaultRegionNetworkFirewallPoliciesRestStub::ListRegionNetworkFirewallPolicies(
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("project", request.project()),
        std::make_pair("return_partial_success",
                       request.return_partial_success() ? "1" : "0")});
 }

@@ -18,6 +18,7 @@
 
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/iap/v1/service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
@@ -56,7 +57,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IdentityAwareProxyAdminServiceMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -64,7 +65,7 @@ StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceMetadata::GetIapSettings(
     grpc::ClientContext& context,
     google::cloud::iap::v1::GetIapSettingsRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetIapSettings(context, request);
 }
 
@@ -72,7 +73,8 @@ StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceMetadata::UpdateIapSettings(
     grpc::ClientContext& context,
     google::cloud::iap::v1::UpdateIapSettingsRequest const& request) {
-  SetMetadata(context, "iap_settings.name=" + request.iap_settings().name());
+  SetMetadata(context, absl::StrCat("iap_settings.name=",
+                                    request.iap_settings().name()));
   return child_->UpdateIapSettings(context, request);
 }
 
@@ -80,7 +82,7 @@ StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
 IdentityAwareProxyAdminServiceMetadata::ListTunnelDestGroups(
     grpc::ClientContext& context,
     google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTunnelDestGroups(context, request);
 }
 
@@ -88,7 +90,7 @@ StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceMetadata::CreateTunnelDestGroup(
     grpc::ClientContext& context,
     google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateTunnelDestGroup(context, request);
 }
 
@@ -96,14 +98,14 @@ StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceMetadata::GetTunnelDestGroup(
     grpc::ClientContext& context,
     google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTunnelDestGroup(context, request);
 }
 
 Status IdentityAwareProxyAdminServiceMetadata::DeleteTunnelDestGroup(
     grpc::ClientContext& context,
     google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteTunnelDestGroup(context, request);
 }
 
@@ -111,8 +113,8 @@ StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceMetadata::UpdateTunnelDestGroup(
     grpc::ClientContext& context,
     google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
-  SetMetadata(context,
-              "tunnel_dest_group.name=" + request.tunnel_dest_group().name());
+  SetMetadata(context, absl::StrCat("tunnel_dest_group.name=",
+                                    request.tunnel_dest_group().name()));
   return child_->UpdateTunnelDestGroup(context, request);
 }
 

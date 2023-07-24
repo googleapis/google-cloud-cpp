@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/v1/internal/applications_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::appengine::v1::Application>
 ApplicationsMetadata::GetApplication(
     grpc::ClientContext& context,
     google::appengine::v1::GetApplicationRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetApplication(context, request);
 }
 
@@ -58,7 +59,7 @@ ApplicationsMetadata::AsyncUpdateApplication(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateApplicationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUpdateApplication(cq, std::move(context), request);
 }
 
@@ -67,7 +68,7 @@ ApplicationsMetadata::AsyncRepairApplication(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::RepairApplicationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncRepairApplication(cq, std::move(context), request);
 }
 

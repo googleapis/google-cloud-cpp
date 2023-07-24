@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/sessions_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/session.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
 SessionsMetadata::DetectIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
-  SetMetadata(context, "session=" + request.session());
+  SetMetadata(context, absl::StrCat("session=", request.session()));
   return child_->DetectIntent(context, request);
 }
 
@@ -58,7 +59,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
 SessionsMetadata::MatchIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
-  SetMetadata(context, "session=" + request.session());
+  SetMetadata(context, absl::StrCat("session=", request.session()));
   return child_->MatchIntent(context, request);
 }
 
@@ -66,8 +67,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
 SessionsMetadata::FulfillIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) {
-  SetMetadata(context, "match_intent_request.session=" +
-                           request.match_intent_request().session());
+  SetMetadata(context, absl::StrCat("match_intent_request.session=",
+                                    request.match_intent_request().session()));
   return child_->FulfillIntent(context, request);
 }
 

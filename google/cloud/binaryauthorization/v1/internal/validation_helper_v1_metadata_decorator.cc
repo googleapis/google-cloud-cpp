@@ -18,6 +18,7 @@
 
 #include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
@@ -42,7 +43,7 @@ ValidationHelperV1Metadata::ValidateAttestationOccurrence(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::
         ValidateAttestationOccurrenceRequest const& request) {
-  SetMetadata(context, "attestor=" + request.attestor());
+  SetMetadata(context, absl::StrCat("attestor=", request.attestor()));
   return child_->ValidateAttestationOccurrence(context, request);
 }
 

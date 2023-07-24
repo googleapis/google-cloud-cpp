@@ -18,6 +18,7 @@
 
 #include "google/cloud/osconfig/v1/internal/os_config_zonal_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/osconfig/v1/osconfig_zonal_service.grpc.pb.h>
@@ -42,7 +43,7 @@ OsConfigZonalServiceMetadata::AsyncCreateOSPolicyAssignment(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateOSPolicyAssignment(cq, std::move(context), request);
 }
 
@@ -52,8 +53,8 @@ OsConfigZonalServiceMetadata::AsyncUpdateOSPolicyAssignment(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
         request) {
-  SetMetadata(*context, "os_policy_assignment.name=" +
-                            request.os_policy_assignment().name());
+  SetMetadata(*context, absl::StrCat("os_policy_assignment.name=",
+                                     request.os_policy_assignment().name()));
   return child_->AsyncUpdateOSPolicyAssignment(cq, std::move(context), request);
 }
 
@@ -61,7 +62,7 @@ StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
 OsConfigZonalServiceMetadata::GetOSPolicyAssignment(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetOSPolicyAssignment(context, request);
 }
 
@@ -70,7 +71,7 @@ OsConfigZonalServiceMetadata::ListOSPolicyAssignments(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListOSPolicyAssignments(context, request);
 }
 
@@ -79,7 +80,7 @@ OsConfigZonalServiceMetadata::ListOSPolicyAssignmentRevisions(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ListOSPolicyAssignmentRevisions(context, request);
 }
 
@@ -89,7 +90,7 @@ OsConfigZonalServiceMetadata::AsyncDeleteOSPolicyAssignment(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteOSPolicyAssignment(cq, std::move(context), request);
 }
 
@@ -98,7 +99,7 @@ OsConfigZonalServiceMetadata::GetOSPolicyAssignmentReport(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetOSPolicyAssignmentReport(context, request);
 }
 
@@ -107,7 +108,7 @@ OsConfigZonalServiceMetadata::ListOSPolicyAssignmentReports(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListOSPolicyAssignmentReports(context, request);
 }
 
@@ -115,7 +116,7 @@ StatusOr<google::cloud::osconfig::v1::Inventory>
 OsConfigZonalServiceMetadata::GetInventory(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::GetInventoryRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetInventory(context, request);
 }
 
@@ -123,7 +124,7 @@ StatusOr<google::cloud::osconfig::v1::ListInventoriesResponse>
 OsConfigZonalServiceMetadata::ListInventories(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::ListInventoriesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListInventories(context, request);
 }
 
@@ -131,7 +132,7 @@ StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>
 OsConfigZonalServiceMetadata::GetVulnerabilityReport(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetVulnerabilityReport(context, request);
 }
 
@@ -140,7 +141,7 @@ OsConfigZonalServiceMetadata::ListVulnerabilityReports(
     grpc::ClientContext& context,
     google::cloud::osconfig::v1::ListVulnerabilityReportsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListVulnerabilityReports(context, request);
 }
 

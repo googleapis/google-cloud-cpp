@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
@@ -41,7 +42,8 @@ BigQueryReadMetadata::CreateReadSession(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
         request) {
-  SetMetadata(context, "read_session.table=" + request.read_session().table());
+  SetMetadata(context, absl::StrCat("read_session.table=",
+                                    request.read_session().table()));
   return child_->CreateReadSession(context, request);
 }
 
@@ -50,7 +52,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigQueryReadMetadata::ReadRows(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
-  SetMetadata(*context, "read_stream=" + request.read_stream());
+  SetMetadata(*context, absl::StrCat("read_stream=", request.read_stream()));
   return child_->ReadRows(std::move(context), request);
 }
 
@@ -59,7 +61,7 @@ BigQueryReadMetadata::SplitReadStream(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->SplitReadStream(context, request);
 }
 

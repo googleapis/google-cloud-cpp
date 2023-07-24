@@ -101,7 +101,7 @@ DefaultTargetHttpsProxiesRestStub::GetTargetHttpsProxies(
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/targetHttpsProxies/", request.target_https_proxy(),
                    ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

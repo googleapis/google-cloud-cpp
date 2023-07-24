@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataproc/v1/internal/workflow_template_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dataproc/v1/workflow_templates.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceMetadata::CreateWorkflowTemplate(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateWorkflowTemplate(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceMetadata::GetWorkflowTemplate(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetWorkflowTemplate(context, request);
 }
 
@@ -58,7 +59,7 @@ WorkflowTemplateServiceMetadata::AsyncInstantiateWorkflowTemplate(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncInstantiateWorkflowTemplate(cq, std::move(context),
                                                   request);
 }
@@ -69,7 +70,7 @@ WorkflowTemplateServiceMetadata::AsyncInstantiateInlineWorkflowTemplate(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncInstantiateInlineWorkflowTemplate(cq, std::move(context),
                                                         request);
 }
@@ -78,7 +79,8 @@ StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceMetadata::UpdateWorkflowTemplate(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request) {
-  SetMetadata(context, "template.name=" + request.template_().name());
+  SetMetadata(context,
+              absl::StrCat("template.name=", request.template_().name()));
   return child_->UpdateWorkflowTemplate(context, request);
 }
 
@@ -86,14 +88,14 @@ StatusOr<google::cloud::dataproc::v1::ListWorkflowTemplatesResponse>
 WorkflowTemplateServiceMetadata::ListWorkflowTemplates(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListWorkflowTemplates(context, request);
 }
 
 Status WorkflowTemplateServiceMetadata::DeleteWorkflowTemplate(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteWorkflowTemplate(context, request);
 }
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/retail/v2/internal/control_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/retail/v2/control_service.grpc.pb.h>
@@ -40,14 +41,14 @@ StatusOr<google::cloud::retail::v2::Control>
 ControlServiceMetadata::CreateControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::CreateControlRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateControl(context, request);
 }
 
 Status ControlServiceMetadata::DeleteControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::DeleteControlRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteControl(context, request);
 }
 
@@ -55,14 +56,14 @@ StatusOr<google::cloud::retail::v2::Control>
 ControlServiceMetadata::UpdateControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateControlRequest const& request) {
-  SetMetadata(context, "control.name=" + request.control().name());
+  SetMetadata(context, absl::StrCat("control.name=", request.control().name()));
   return child_->UpdateControl(context, request);
 }
 
 StatusOr<google::cloud::retail::v2::Control> ControlServiceMetadata::GetControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetControlRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetControl(context, request);
 }
 
@@ -70,7 +71,7 @@ StatusOr<google::cloud::retail::v2::ListControlsResponse>
 ControlServiceMetadata::ListControls(
     grpc::ClientContext& context,
     google::cloud::retail::v2::ListControlsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListControls(context, request);
 }
 

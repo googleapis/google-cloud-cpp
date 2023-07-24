@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h>
@@ -41,7 +42,7 @@ ReservationServiceMetadata::CreateReservation(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateReservation(context, request);
 }
 
@@ -50,7 +51,7 @@ ReservationServiceMetadata::ListReservations(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::ListReservationsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListReservations(context, request);
 }
 
@@ -59,7 +60,7 @@ ReservationServiceMetadata::GetReservation(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::GetReservationRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetReservation(context, request);
 }
 
@@ -67,7 +68,7 @@ Status ReservationServiceMetadata::DeleteReservation(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteReservation(context, request);
 }
 
@@ -76,7 +77,8 @@ ReservationServiceMetadata::UpdateReservation(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
         request) {
-  SetMetadata(context, "reservation.name=" + request.reservation().name());
+  SetMetadata(context,
+              absl::StrCat("reservation.name=", request.reservation().name()));
   return child_->UpdateReservation(context, request);
 }
 
@@ -85,7 +87,7 @@ ReservationServiceMetadata::CreateCapacityCommitment(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         CreateCapacityCommitmentRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateCapacityCommitment(context, request);
 }
 
@@ -95,7 +97,7 @@ ReservationServiceMetadata::ListCapacityCommitments(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         ListCapacityCommitmentsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListCapacityCommitments(context, request);
 }
 
@@ -104,7 +106,7 @@ ReservationServiceMetadata::GetCapacityCommitment(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         GetCapacityCommitmentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetCapacityCommitment(context, request);
 }
 
@@ -112,7 +114,7 @@ Status ReservationServiceMetadata::DeleteCapacityCommitment(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         DeleteCapacityCommitmentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteCapacityCommitment(context, request);
 }
 
@@ -121,8 +123,8 @@ ReservationServiceMetadata::UpdateCapacityCommitment(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         UpdateCapacityCommitmentRequest const& request) {
-  SetMetadata(context, "capacity_commitment.name=" +
-                           request.capacity_commitment().name());
+  SetMetadata(context, absl::StrCat("capacity_commitment.name=",
+                                    request.capacity_commitment().name()));
   return child_->UpdateCapacityCommitment(context, request);
 }
 
@@ -132,7 +134,7 @@ ReservationServiceMetadata::SplitCapacityCommitment(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         SplitCapacityCommitmentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->SplitCapacityCommitment(context, request);
 }
 
@@ -141,7 +143,7 @@ ReservationServiceMetadata::MergeCapacityCommitments(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::
         MergeCapacityCommitmentsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->MergeCapacityCommitments(context, request);
 }
 
@@ -150,7 +152,7 @@ ReservationServiceMetadata::CreateAssignment(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateAssignment(context, request);
 }
 
@@ -159,7 +161,7 @@ ReservationServiceMetadata::ListAssignments(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::ListAssignmentsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListAssignments(context, request);
 }
 
@@ -167,7 +169,7 @@ Status ReservationServiceMetadata::DeleteAssignment(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteAssignment(context, request);
 }
 
@@ -176,7 +178,7 @@ ReservationServiceMetadata::SearchAssignments(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->SearchAssignments(context, request);
 }
 
@@ -185,7 +187,7 @@ ReservationServiceMetadata::SearchAllAssignments(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->SearchAllAssignments(context, request);
 }
 
@@ -194,7 +196,7 @@ ReservationServiceMetadata::MoveAssignment(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->MoveAssignment(context, request);
 }
 
@@ -203,7 +205,8 @@ ReservationServiceMetadata::UpdateAssignment(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
         request) {
-  SetMetadata(context, "assignment.name=" + request.assignment().name());
+  SetMetadata(context,
+              absl::StrCat("assignment.name=", request.assignment().name()));
   return child_->UpdateAssignment(context, request);
 }
 
@@ -212,7 +215,7 @@ ReservationServiceMetadata::GetBiReservation(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetBiReservation(context, request);
 }
 
@@ -221,8 +224,8 @@ ReservationServiceMetadata::UpdateBiReservation(
     grpc::ClientContext& context,
     google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const&
         request) {
-  SetMetadata(context,
-              "bi_reservation.name=" + request.bi_reservation().name());
+  SetMetadata(context, absl::StrCat("bi_reservation.name=",
+                                    request.bi_reservation().name()));
   return child_->UpdateBiReservation(context, request);
 }
 

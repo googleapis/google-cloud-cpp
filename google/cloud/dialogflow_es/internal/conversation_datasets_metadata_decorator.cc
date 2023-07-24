@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/conversation_dataset.grpc.pb.h>
@@ -42,7 +43,7 @@ ConversationDatasetsMetadata::AsyncCreateConversationDataset(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateConversationDataset(cq, std::move(context),
                                                 request);
 }
@@ -52,7 +53,7 @@ ConversationDatasetsMetadata::GetConversationDataset(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetConversationDataset(context, request);
 }
 
@@ -61,7 +62,7 @@ ConversationDatasetsMetadata::ListConversationDatasets(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListConversationDatasets(context, request);
 }
 
@@ -71,7 +72,7 @@ ConversationDatasetsMetadata::AsyncDeleteConversationDataset(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteConversationDataset(cq, std::move(context),
                                                 request);
 }
@@ -82,7 +83,7 @@ ConversationDatasetsMetadata::AsyncImportConversationData(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::ImportConversationDataRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncImportConversationData(cq, std::move(context), request);
 }
 

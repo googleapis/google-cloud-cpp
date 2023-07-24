@@ -18,6 +18,7 @@
 
 #include "google/cloud/speech/v2/internal/speech_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/speech/v2/cloud_speech.grpc.pb.h>
@@ -41,7 +42,7 @@ SpeechMetadata::AsyncCreateRecognizer(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::CreateRecognizerRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateRecognizer(cq, std::move(context), request);
 }
 
@@ -49,14 +50,14 @@ StatusOr<google::cloud::speech::v2::ListRecognizersResponse>
 SpeechMetadata::ListRecognizers(
     grpc::ClientContext& context,
     google::cloud::speech::v2::ListRecognizersRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListRecognizers(context, request);
 }
 
 StatusOr<google::cloud::speech::v2::Recognizer> SpeechMetadata::GetRecognizer(
     grpc::ClientContext& context,
     google::cloud::speech::v2::GetRecognizerRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetRecognizer(context, request);
 }
 
@@ -65,7 +66,8 @@ SpeechMetadata::AsyncUpdateRecognizer(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
-  SetMetadata(*context, "recognizer.name=" + request.recognizer().name());
+  SetMetadata(*context,
+              absl::StrCat("recognizer.name=", request.recognizer().name()));
   return child_->AsyncUpdateRecognizer(cq, std::move(context), request);
 }
 
@@ -74,7 +76,7 @@ SpeechMetadata::AsyncDeleteRecognizer(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteRecognizer(cq, std::move(context), request);
 }
 
@@ -83,7 +85,7 @@ SpeechMetadata::AsyncUndeleteRecognizer(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUndeleteRecognizer(cq, std::move(context), request);
 }
 
@@ -91,7 +93,7 @@ StatusOr<google::cloud::speech::v2::RecognizeResponse>
 SpeechMetadata::Recognize(
     grpc::ClientContext& context,
     google::cloud::speech::v2::RecognizeRequest const& request) {
-  SetMetadata(context, "recognizer=" + request.recognizer());
+  SetMetadata(context, absl::StrCat("recognizer=", request.recognizer()));
   return child_->Recognize(context, request);
 }
 
@@ -110,21 +112,21 @@ SpeechMetadata::AsyncBatchRecognize(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::BatchRecognizeRequest const& request) {
-  SetMetadata(*context, "recognizer=" + request.recognizer());
+  SetMetadata(*context, absl::StrCat("recognizer=", request.recognizer()));
   return child_->AsyncBatchRecognize(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::speech::v2::Config> SpeechMetadata::GetConfig(
     grpc::ClientContext& context,
     google::cloud::speech::v2::GetConfigRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetConfig(context, request);
 }
 
 StatusOr<google::cloud::speech::v2::Config> SpeechMetadata::UpdateConfig(
     grpc::ClientContext& context,
     google::cloud::speech::v2::UpdateConfigRequest const& request) {
-  SetMetadata(context, "config.name=" + request.config().name());
+  SetMetadata(context, absl::StrCat("config.name=", request.config().name()));
   return child_->UpdateConfig(context, request);
 }
 
@@ -133,7 +135,7 @@ SpeechMetadata::AsyncCreateCustomClass(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::CreateCustomClassRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateCustomClass(cq, std::move(context), request);
 }
 
@@ -141,14 +143,14 @@ StatusOr<google::cloud::speech::v2::ListCustomClassesResponse>
 SpeechMetadata::ListCustomClasses(
     grpc::ClientContext& context,
     google::cloud::speech::v2::ListCustomClassesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListCustomClasses(context, request);
 }
 
 StatusOr<google::cloud::speech::v2::CustomClass> SpeechMetadata::GetCustomClass(
     grpc::ClientContext& context,
     google::cloud::speech::v2::GetCustomClassRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetCustomClass(context, request);
 }
 
@@ -157,7 +159,8 @@ SpeechMetadata::AsyncUpdateCustomClass(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
-  SetMetadata(*context, "custom_class.name=" + request.custom_class().name());
+  SetMetadata(*context, absl::StrCat("custom_class.name=",
+                                     request.custom_class().name()));
   return child_->AsyncUpdateCustomClass(cq, std::move(context), request);
 }
 
@@ -166,7 +169,7 @@ SpeechMetadata::AsyncDeleteCustomClass(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteCustomClass(cq, std::move(context), request);
 }
 
@@ -175,7 +178,7 @@ SpeechMetadata::AsyncUndeleteCustomClass(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUndeleteCustomClass(cq, std::move(context), request);
 }
 
@@ -184,7 +187,7 @@ SpeechMetadata::AsyncCreatePhraseSet(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreatePhraseSet(cq, std::move(context), request);
 }
 
@@ -192,14 +195,14 @@ StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse>
 SpeechMetadata::ListPhraseSets(
     grpc::ClientContext& context,
     google::cloud::speech::v2::ListPhraseSetsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListPhraseSets(context, request);
 }
 
 StatusOr<google::cloud::speech::v2::PhraseSet> SpeechMetadata::GetPhraseSet(
     grpc::ClientContext& context,
     google::cloud::speech::v2::GetPhraseSetRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetPhraseSet(context, request);
 }
 
@@ -208,7 +211,8 @@ SpeechMetadata::AsyncUpdatePhraseSet(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
-  SetMetadata(*context, "phrase_set.name=" + request.phrase_set().name());
+  SetMetadata(*context,
+              absl::StrCat("phrase_set.name=", request.phrase_set().name()));
   return child_->AsyncUpdatePhraseSet(cq, std::move(context), request);
 }
 
@@ -217,7 +221,7 @@ SpeechMetadata::AsyncDeletePhraseSet(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeletePhraseSet(cq, std::move(context), request);
 }
 
@@ -226,7 +230,7 @@ SpeechMetadata::AsyncUndeletePhraseSet(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUndeletePhraseSet(cq, std::move(context), request);
 }
 

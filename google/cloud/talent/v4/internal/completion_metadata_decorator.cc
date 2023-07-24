@@ -18,6 +18,7 @@
 
 #include "google/cloud/talent/v4/internal/completion_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/talent/v4/completion_service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionMetadata::CompleteQuery(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
-  SetMetadata(context, "tenant=" + request.tenant());
+  SetMetadata(context, absl::StrCat("tenant=", request.tenant()));
   return child_->CompleteQuery(context, request);
 }
 

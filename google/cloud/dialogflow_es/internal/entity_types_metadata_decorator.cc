@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/entity_types_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/entity_type.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::dialogflow::v2::ListEntityTypesResponse>
 EntityTypesMetadata::ListEntityTypes(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListEntityTypesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListEntityTypes(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesMetadata::GetEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetEntityTypeRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEntityType(context, request);
 }
 
@@ -56,7 +57,7 @@ StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesMetadata::CreateEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateEntityType(context, request);
 }
 
@@ -64,14 +65,15 @@ StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesMetadata::UpdateEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request) {
-  SetMetadata(context, "entity_type.name=" + request.entity_type().name());
+  SetMetadata(context,
+              absl::StrCat("entity_type.name=", request.entity_type().name()));
   return child_->UpdateEntityType(context, request);
 }
 
 Status EntityTypesMetadata::DeleteEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteEntityType(context, request);
 }
 
@@ -81,7 +83,7 @@ EntityTypesMetadata::AsyncBatchUpdateEntityTypes(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchUpdateEntityTypes(cq, std::move(context), request);
 }
 
@@ -91,7 +93,7 @@ EntityTypesMetadata::AsyncBatchDeleteEntityTypes(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchDeleteEntityTypes(cq, std::move(context), request);
 }
 
@@ -100,7 +102,7 @@ EntityTypesMetadata::AsyncBatchCreateEntities(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchCreateEntities(cq, std::move(context), request);
 }
 
@@ -109,7 +111,7 @@ EntityTypesMetadata::AsyncBatchUpdateEntities(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchUpdateEntities(cq, std::move(context), request);
 }
 
@@ -118,7 +120,7 @@ EntityTypesMetadata::AsyncBatchDeleteEntities(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchDeleteEntities(cq, std::move(context), request);
 }
 

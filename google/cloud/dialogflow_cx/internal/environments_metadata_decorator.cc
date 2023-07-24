@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/environments_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/environment.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse>
 EnvironmentsMetadata::ListEnvironments(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListEnvironments(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Environment>
 EnvironmentsMetadata::GetEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEnvironment(context, request);
 }
 
@@ -58,7 +59,7 @@ EnvironmentsMetadata::AsyncCreateEnvironment(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateEnvironment(cq, std::move(context), request);
 }
 
@@ -68,7 +69,8 @@ EnvironmentsMetadata::AsyncUpdateEnvironment(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
         request) {
-  SetMetadata(*context, "environment.name=" + request.environment().name());
+  SetMetadata(*context,
+              absl::StrCat("environment.name=", request.environment().name()));
   return child_->AsyncUpdateEnvironment(cq, std::move(context), request);
 }
 
@@ -76,7 +78,7 @@ Status EnvironmentsMetadata::DeleteEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteEnvironment(context, request);
 }
 
@@ -85,7 +87,7 @@ EnvironmentsMetadata::LookupEnvironmentHistory(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->LookupEnvironmentHistory(context, request);
 }
 
@@ -95,7 +97,7 @@ EnvironmentsMetadata::AsyncRunContinuousTest(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
         request) {
-  SetMetadata(*context, "environment=" + request.environment());
+  SetMetadata(*context, absl::StrCat("environment=", request.environment()));
   return child_->AsyncRunContinuousTest(cq, std::move(context), request);
 }
 
@@ -104,7 +106,7 @@ EnvironmentsMetadata::ListContinuousTestResults(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListContinuousTestResults(context, request);
 }
 
@@ -113,7 +115,7 @@ EnvironmentsMetadata::AsyncDeployFlow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
-  SetMetadata(*context, "environment=" + request.environment());
+  SetMetadata(*context, absl::StrCat("environment=", request.environment()));
   return child_->AsyncDeployFlow(cq, std::move(context), request);
 }
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/datacatalog/v1/policytagmanager.grpc.pb.h>
@@ -40,14 +41,14 @@ StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerMetadata::CreateTaxonomy(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateTaxonomy(context, request);
 }
 
 Status PolicyTagManagerMetadata::DeleteTaxonomy(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteTaxonomy(context, request);
 }
 
@@ -55,7 +56,8 @@ StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerMetadata::UpdateTaxonomy(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
-  SetMetadata(context, "taxonomy.name=" + request.taxonomy().name());
+  SetMetadata(context,
+              absl::StrCat("taxonomy.name=", request.taxonomy().name()));
   return child_->UpdateTaxonomy(context, request);
 }
 
@@ -63,7 +65,7 @@ StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse>
 PolicyTagManagerMetadata::ListTaxonomies(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ListTaxonomiesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTaxonomies(context, request);
 }
 
@@ -71,7 +73,7 @@ StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerMetadata::GetTaxonomy(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTaxonomy(context, request);
 }
 
@@ -79,14 +81,14 @@ StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerMetadata::CreatePolicyTag(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreatePolicyTag(context, request);
 }
 
 Status PolicyTagManagerMetadata::DeletePolicyTag(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeletePolicyTag(context, request);
 }
 
@@ -94,7 +96,8 @@ StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerMetadata::UpdatePolicyTag(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
-  SetMetadata(context, "policy_tag.name=" + request.policy_tag().name());
+  SetMetadata(context,
+              absl::StrCat("policy_tag.name=", request.policy_tag().name()));
   return child_->UpdatePolicyTag(context, request);
 }
 
@@ -102,7 +105,7 @@ StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse>
 PolicyTagManagerMetadata::ListPolicyTags(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ListPolicyTagsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListPolicyTags(context, request);
 }
 
@@ -110,21 +113,21 @@ StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerMetadata::GetPolicyTag(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetPolicyTag(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -132,7 +135,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 PolicyTagManagerMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 

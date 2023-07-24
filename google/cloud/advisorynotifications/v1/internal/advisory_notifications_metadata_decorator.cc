@@ -18,6 +18,7 @@
 
 #include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/advisorynotifications/v1/service.grpc.pb.h>
@@ -41,7 +42,7 @@ AdvisoryNotificationsServiceMetadata::ListNotifications(
     grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListNotifications(context, request);
 }
 
@@ -50,7 +51,7 @@ AdvisoryNotificationsServiceMetadata::GetNotification(
     grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::GetNotificationRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetNotification(context, request);
 }
 

@@ -45,7 +45,7 @@ StatusOr<google::cloud::cpp::compute::v1::Zone> DefaultZonesRestStub::GetZones(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
                    request.zone(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ZoneList>

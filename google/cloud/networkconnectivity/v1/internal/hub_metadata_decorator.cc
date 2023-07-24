@@ -18,6 +18,7 @@
 
 #include "google/cloud/networkconnectivity/v1/internal/hub_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/networkconnectivity/v1/hub.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse>
 HubServiceMetadata::ListHubs(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::ListHubsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListHubs(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::networkconnectivity::v1::Hub>
 HubServiceMetadata::GetHub(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::GetHubRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetHub(context, request);
 }
 
@@ -57,7 +58,7 @@ HubServiceMetadata::AsyncCreateHub(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateHub(cq, std::move(context), request);
 }
 
@@ -66,7 +67,7 @@ HubServiceMetadata::AsyncUpdateHub(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
-  SetMetadata(*context, "hub.name=" + request.hub().name());
+  SetMetadata(*context, absl::StrCat("hub.name=", request.hub().name()));
   return child_->AsyncUpdateHub(cq, std::move(context), request);
 }
 
@@ -75,7 +76,7 @@ HubServiceMetadata::AsyncDeleteHub(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteHub(cq, std::move(context), request);
 }
 
@@ -83,7 +84,7 @@ StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
 HubServiceMetadata::ListSpokes(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::ListSpokesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListSpokes(context, request);
 }
 
@@ -91,7 +92,7 @@ StatusOr<google::cloud::networkconnectivity::v1::Spoke>
 HubServiceMetadata::GetSpoke(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::GetSpokeRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetSpoke(context, request);
 }
 
@@ -100,7 +101,7 @@ HubServiceMetadata::AsyncCreateSpoke(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateSpoke(cq, std::move(context), request);
 }
 
@@ -109,7 +110,7 @@ HubServiceMetadata::AsyncUpdateSpoke(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
-  SetMetadata(*context, "spoke.name=" + request.spoke().name());
+  SetMetadata(*context, absl::StrCat("spoke.name=", request.spoke().name()));
   return child_->AsyncUpdateSpoke(cq, std::move(context), request);
 }
 
@@ -118,7 +119,7 @@ HubServiceMetadata::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteSpoke(cq, std::move(context), request);
 }
 

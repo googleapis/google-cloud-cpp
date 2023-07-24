@@ -18,6 +18,7 @@
 
 #include "google/cloud/iam/v2/internal/policies_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/iam/v2/policy.grpc.pb.h>
@@ -39,14 +40,14 @@ PoliciesMetadata::PoliciesMetadata(
 StatusOr<google::iam::v2::ListPoliciesResponse> PoliciesMetadata::ListPolicies(
     grpc::ClientContext& context,
     google::iam::v2::ListPoliciesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListPolicies(context, request);
 }
 
 StatusOr<google::iam::v2::Policy> PoliciesMetadata::GetPolicy(
     grpc::ClientContext& context,
     google::iam::v2::GetPolicyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetPolicy(context, request);
 }
 
@@ -55,7 +56,7 @@ PoliciesMetadata::AsyncCreatePolicy(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::iam::v2::CreatePolicyRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreatePolicy(cq, std::move(context), request);
 }
 
@@ -64,7 +65,7 @@ PoliciesMetadata::AsyncUpdatePolicy(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::iam::v2::UpdatePolicyRequest const& request) {
-  SetMetadata(*context, "policy.name=" + request.policy().name());
+  SetMetadata(*context, absl::StrCat("policy.name=", request.policy().name()));
   return child_->AsyncUpdatePolicy(cq, std::move(context), request);
 }
 
@@ -73,7 +74,7 @@ PoliciesMetadata::AsyncDeletePolicy(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::iam::v2::DeletePolicyRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeletePolicy(cq, std::move(context), request);
 }
 

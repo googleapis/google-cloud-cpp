@@ -19,6 +19,7 @@
 
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.grpc.pb.h>
@@ -43,7 +44,7 @@ RapidMigrationAssessmentMetadata::AsyncCreateCollector(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateCollector(cq, std::move(context), request);
 }
 
@@ -53,7 +54,7 @@ RapidMigrationAssessmentMetadata::AsyncCreateAnnotation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateAnnotation(cq, std::move(context), request);
 }
 
@@ -62,7 +63,7 @@ RapidMigrationAssessmentMetadata::GetAnnotation(
     grpc::ClientContext& context,
     google::cloud::rapidmigrationassessment::v1::GetAnnotationRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetAnnotation(context, request);
 }
 
@@ -71,7 +72,7 @@ RapidMigrationAssessmentMetadata::ListCollectors(
     grpc::ClientContext& context,
     google::cloud::rapidmigrationassessment::v1::ListCollectorsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListCollectors(context, request);
 }
 
@@ -80,7 +81,7 @@ RapidMigrationAssessmentMetadata::GetCollector(
     grpc::ClientContext& context,
     google::cloud::rapidmigrationassessment::v1::GetCollectorRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetCollector(context, request);
 }
 
@@ -90,7 +91,8 @@ RapidMigrationAssessmentMetadata::AsyncUpdateCollector(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
         request) {
-  SetMetadata(*context, "collector.name=" + request.collector().name());
+  SetMetadata(*context,
+              absl::StrCat("collector.name=", request.collector().name()));
   return child_->AsyncUpdateCollector(cq, std::move(context), request);
 }
 
@@ -100,7 +102,7 @@ RapidMigrationAssessmentMetadata::AsyncDeleteCollector(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteCollector(cq, std::move(context), request);
 }
 
@@ -110,7 +112,7 @@ RapidMigrationAssessmentMetadata::AsyncResumeCollector(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncResumeCollector(cq, std::move(context), request);
 }
 
@@ -120,7 +122,7 @@ RapidMigrationAssessmentMetadata::AsyncRegisterCollector(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncRegisterCollector(cq, std::move(context), request);
 }
 
@@ -130,7 +132,7 @@ RapidMigrationAssessmentMetadata::AsyncPauseCollector(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncPauseCollector(cq, std::move(context), request);
 }
 

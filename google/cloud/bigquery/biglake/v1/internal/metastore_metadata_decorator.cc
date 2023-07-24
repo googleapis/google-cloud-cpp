@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/biglake/v1/metastore.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 MetastoreServiceMetadata::CreateCatalog(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateCatalog(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 MetastoreServiceMetadata::DeleteCatalog(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteCatalog(context, request);
 }
 
@@ -56,7 +57,7 @@ StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 MetastoreServiceMetadata::GetCatalog(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetCatalog(context, request);
 }
 
@@ -64,7 +65,7 @@ StatusOr<google::cloud::bigquery::biglake::v1::ListCatalogsResponse>
 MetastoreServiceMetadata::ListCatalogs(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::ListCatalogsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListCatalogs(context, request);
 }
 
@@ -73,7 +74,7 @@ MetastoreServiceMetadata::CreateDatabase(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateDatabase(context, request);
 }
 
@@ -82,7 +83,7 @@ MetastoreServiceMetadata::DeleteDatabase(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteDatabase(context, request);
 }
 
@@ -91,7 +92,8 @@ MetastoreServiceMetadata::UpdateDatabase(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
         request) {
-  SetMetadata(context, "database.name=" + request.database().name());
+  SetMetadata(context,
+              absl::StrCat("database.name=", request.database().name()));
   return child_->UpdateDatabase(context, request);
 }
 
@@ -99,7 +101,7 @@ StatusOr<google::cloud::bigquery::biglake::v1::Database>
 MetastoreServiceMetadata::GetDatabase(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetDatabase(context, request);
 }
 
@@ -107,7 +109,7 @@ StatusOr<google::cloud::bigquery::biglake::v1::ListDatabasesResponse>
 MetastoreServiceMetadata::ListDatabases(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::ListDatabasesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDatabases(context, request);
 }
 
@@ -115,7 +117,7 @@ StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceMetadata::CreateTable(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::CreateTableRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateTable(context, request);
 }
 
@@ -123,7 +125,7 @@ StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceMetadata::DeleteTable(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteTable(context, request);
 }
 
@@ -131,7 +133,7 @@ StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceMetadata::UpdateTable(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request) {
-  SetMetadata(context, "table.name=" + request.table().name());
+  SetMetadata(context, absl::StrCat("table.name=", request.table().name()));
   return child_->UpdateTable(context, request);
 }
 
@@ -139,7 +141,7 @@ StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceMetadata::RenameTable(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::RenameTableRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->RenameTable(context, request);
 }
 
@@ -147,7 +149,7 @@ StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceMetadata::GetTable(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::GetTableRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTable(context, request);
 }
 
@@ -155,7 +157,7 @@ StatusOr<google::cloud::bigquery::biglake::v1::ListTablesResponse>
 MetastoreServiceMetadata::ListTables(
     grpc::ClientContext& context,
     google::cloud::bigquery::biglake::v1::ListTablesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTables(context, request);
 }
 

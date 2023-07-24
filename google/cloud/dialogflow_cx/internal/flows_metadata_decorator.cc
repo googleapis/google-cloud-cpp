@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/flows_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/flow.grpc.pb.h>
@@ -39,14 +40,14 @@ FlowsMetadata::FlowsMetadata(
 StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsMetadata::CreateFlow(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateFlow(context, request);
 }
 
 Status FlowsMetadata::DeleteFlow(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteFlow(context, request);
 }
 
@@ -54,21 +55,21 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListFlowsResponse>
 FlowsMetadata::ListFlows(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListFlowsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListFlows(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsMetadata::GetFlow(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetFlowRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetFlow(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsMetadata::UpdateFlow(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request) {
-  SetMetadata(context, "flow.name=" + request.flow().name());
+  SetMetadata(context, absl::StrCat("flow.name=", request.flow().name()));
   return child_->UpdateFlow(context, request);
 }
 
@@ -76,7 +77,7 @@ future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncTrainFlow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncTrainFlow(cq, std::move(context), request);
 }
 
@@ -84,7 +85,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 FlowsMetadata::ValidateFlow(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ValidateFlow(context, request);
 }
 
@@ -93,7 +94,7 @@ FlowsMetadata::GetFlowValidationResult(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetFlowValidationResult(context, request);
 }
 
@@ -101,7 +102,7 @@ future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncImportFlow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncImportFlow(cq, std::move(context), request);
 }
 
@@ -109,7 +110,7 @@ future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncExportFlow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncExportFlow(cq, std::move(context), request);
 }
 

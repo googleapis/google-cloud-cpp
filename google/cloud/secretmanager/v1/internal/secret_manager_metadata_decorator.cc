@@ -18,6 +18,7 @@
 
 #include "google/cloud/secretmanager/v1/internal/secret_manager_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/secretmanager/v1/service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse>
 SecretManagerServiceMetadata::ListSecrets(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::ListSecretsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListSecrets(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceMetadata::CreateSecret(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::CreateSecretRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateSecret(context, request);
 }
 
@@ -56,7 +57,7 @@ StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceMetadata::AddSecretVersion(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->AddSecretVersion(context, request);
 }
 
@@ -64,7 +65,7 @@ StatusOr<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceMetadata::GetSecret(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::GetSecretRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetSecret(context, request);
 }
 
@@ -72,14 +73,14 @@ StatusOr<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceMetadata::UpdateSecret(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::UpdateSecretRequest const& request) {
-  SetMetadata(context, "secret.name=" + request.secret().name());
+  SetMetadata(context, absl::StrCat("secret.name=", request.secret().name()));
   return child_->UpdateSecret(context, request);
 }
 
 Status SecretManagerServiceMetadata::DeleteSecret(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::DeleteSecretRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteSecret(context, request);
 }
 
@@ -88,7 +89,7 @@ SecretManagerServiceMetadata::ListSecretVersions(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::ListSecretVersionsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListSecretVersions(context, request);
 }
 
@@ -96,7 +97,7 @@ StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceMetadata::GetSecretVersion(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetSecretVersion(context, request);
 }
 
@@ -105,7 +106,7 @@ SecretManagerServiceMetadata::AccessSecretVersion(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->AccessSecretVersion(context, request);
 }
 
@@ -114,7 +115,7 @@ SecretManagerServiceMetadata::DisableSecretVersion(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DisableSecretVersion(context, request);
 }
 
@@ -123,7 +124,7 @@ SecretManagerServiceMetadata::EnableSecretVersion(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->EnableSecretVersion(context, request);
 }
 
@@ -132,21 +133,21 @@ SecretManagerServiceMetadata::DestroySecretVersion(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DestroySecretVersion(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> SecretManagerServiceMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> SecretManagerServiceMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
@@ -154,7 +155,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecretManagerServiceMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 

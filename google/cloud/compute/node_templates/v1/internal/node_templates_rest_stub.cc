@@ -99,8 +99,7 @@ DefaultNodeTemplatesRestStub::GetNodeTemplates(
       absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
                    request.region(), "/nodeTemplates/", request.node_template(),
                    ""),
-      {std::make_pair("project", request.project()),
-       std::make_pair("region", request.region())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -114,10 +113,8 @@ DefaultNodeTemplatesRestStub::GetIamPolicy(
                    request.region(), "/nodeTemplates/", request.resource(),
                    "/getIamPolicy"),
       {std::make_pair(
-           "options_requested_policy_version",
-           std::to_string(request.options_requested_policy_version())),
-       std::make_pair("project", request.project()),
-       std::make_pair("region", request.region())});
+          "options_requested_policy_version",
+          std::to_string(request.options_requested_policy_version()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -157,7 +154,6 @@ DefaultNodeTemplatesRestStub::ListNodeTemplates(
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("project", request.project()),
        std::make_pair("return_partial_success",
                       request.return_partial_success() ? "1" : "0")});
 }

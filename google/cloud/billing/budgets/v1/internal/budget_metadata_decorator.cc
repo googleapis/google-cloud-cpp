@@ -18,6 +18,7 @@
 
 #include "google/cloud/billing/budgets/v1/internal/budget_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/billing/budgets/v1/budget_service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceMetadata::CreateBudget(
     grpc::ClientContext& context,
     google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateBudget(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceMetadata::UpdateBudget(
     grpc::ClientContext& context,
     google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
-  SetMetadata(context, "budget.name=" + request.budget().name());
+  SetMetadata(context, absl::StrCat("budget.name=", request.budget().name()));
   return child_->UpdateBudget(context, request);
 }
 
@@ -56,7 +57,7 @@ StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceMetadata::GetBudget(
     grpc::ClientContext& context,
     google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetBudget(context, request);
 }
 
@@ -64,14 +65,14 @@ StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
 BudgetServiceMetadata::ListBudgets(
     grpc::ClientContext& context,
     google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListBudgets(context, request);
 }
 
 Status BudgetServiceMetadata::DeleteBudget(
     grpc::ClientContext& context,
     google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteBudget(context, request);
 }
 

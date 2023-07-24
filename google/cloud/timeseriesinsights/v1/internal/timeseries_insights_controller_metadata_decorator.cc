@@ -18,6 +18,7 @@
 
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/timeseriesinsights/v1/timeseries_insights.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse>
 TimeseriesInsightsControllerMetadata::ListDataSets(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::ListDataSetsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDataSets(context, request);
 }
 
@@ -49,7 +50,7 @@ TimeseriesInsightsControllerMetadata::CreateDataSet(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateDataSet(context, request);
 }
 
@@ -57,7 +58,7 @@ Status TimeseriesInsightsControllerMetadata::DeleteDataSet(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteDataSet(context, request);
 }
 
@@ -65,7 +66,7 @@ StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
 TimeseriesInsightsControllerMetadata::AppendEvents(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) {
-  SetMetadata(context, "dataset=" + request.dataset());
+  SetMetadata(context, absl::StrCat("dataset=", request.dataset()));
   return child_->AppendEvents(context, request);
 }
 
@@ -73,7 +74,7 @@ StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
 TimeseriesInsightsControllerMetadata::QueryDataSet(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->QueryDataSet(context, request);
 }
 
@@ -82,7 +83,7 @@ TimeseriesInsightsControllerMetadata::EvaluateSlice(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
         request) {
-  SetMetadata(context, "dataset=" + request.dataset());
+  SetMetadata(context, absl::StrCat("dataset=", request.dataset()));
   return child_->EvaluateSlice(context, request);
 }
 
@@ -91,7 +92,7 @@ TimeseriesInsightsControllerMetadata::EvaluateTimeseries(
     grpc::ClientContext& context,
     google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->EvaluateTimeseries(context, request);
 }
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/serviceusage/v1/internal/service_usage_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/api/serviceusage/v1/serviceusage.grpc.pb.h>
@@ -41,7 +42,7 @@ ServiceUsageMetadata::AsyncEnableService(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::api::serviceusage::v1::EnableServiceRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncEnableService(cq, std::move(context), request);
 }
 
@@ -50,7 +51,7 @@ ServiceUsageMetadata::AsyncDisableService(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDisableService(cq, std::move(context), request);
 }
 
@@ -58,7 +59,7 @@ StatusOr<google::api::serviceusage::v1::Service>
 ServiceUsageMetadata::GetService(
     grpc::ClientContext& context,
     google::api::serviceusage::v1::GetServiceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetService(context, request);
 }
 
@@ -66,7 +67,7 @@ StatusOr<google::api::serviceusage::v1::ListServicesResponse>
 ServiceUsageMetadata::ListServices(
     grpc::ClientContext& context,
     google::api::serviceusage::v1::ListServicesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListServices(context, request);
 }
 
@@ -75,7 +76,7 @@ ServiceUsageMetadata::AsyncBatchEnableServices(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchEnableServices(cq, std::move(context), request);
 }
 
@@ -83,7 +84,7 @@ StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
 ServiceUsageMetadata::BatchGetServices(
     grpc::ClientContext& context,
     google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->BatchGetServices(context, request);
 }
 

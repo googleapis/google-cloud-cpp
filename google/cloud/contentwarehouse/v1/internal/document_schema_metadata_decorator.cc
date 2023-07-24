@@ -18,6 +18,7 @@
 
 #include "google/cloud/contentwarehouse/v1/internal/document_schema_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/contentwarehouse/v1/document_schema_service.grpc.pb.h>
@@ -41,7 +42,7 @@ DocumentSchemaServiceMetadata::CreateDocumentSchema(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateDocumentSchema(context, request);
 }
 
@@ -50,7 +51,7 @@ DocumentSchemaServiceMetadata::UpdateDocumentSchema(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->UpdateDocumentSchema(context, request);
 }
 
@@ -59,7 +60,7 @@ DocumentSchemaServiceMetadata::GetDocumentSchema(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetDocumentSchema(context, request);
 }
 
@@ -67,7 +68,7 @@ Status DocumentSchemaServiceMetadata::DeleteDocumentSchema(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteDocumentSchema(context, request);
 }
 
@@ -76,7 +77,7 @@ DocumentSchemaServiceMetadata::ListDocumentSchemas(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDocumentSchemas(context, request);
 }
 

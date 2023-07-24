@@ -18,6 +18,7 @@
 
 #include "google/cloud/contentwarehouse/v1/internal/rule_set_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/contentwarehouse/v1/ruleset_service.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::CreateRuleSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateRuleSet(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::GetRuleSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetRuleSet(context, request);
 }
 
@@ -56,14 +57,14 @@ StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::UpdateRuleSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->UpdateRuleSet(context, request);
 }
 
 Status RuleSetServiceMetadata::DeleteRuleSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteRuleSet(context, request);
 }
 
@@ -71,7 +72,7 @@ StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
 RuleSetServiceMetadata::ListRuleSets(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListRuleSets(context, request);
 }
 

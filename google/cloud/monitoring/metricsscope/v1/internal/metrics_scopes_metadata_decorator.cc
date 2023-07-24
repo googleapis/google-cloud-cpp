@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/monitoring/metricsscope/v1/metrics_scopes.grpc.pb.h>
@@ -41,7 +42,7 @@ MetricsScopesMetadata::GetMetricsScope(
     grpc::ClientContext& context,
     google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetMetricsScope(context, request);
 }
 
@@ -61,7 +62,7 @@ MetricsScopesMetadata::AsyncCreateMonitoredProject(
     std::shared_ptr<grpc::ClientContext> context,
     google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateMonitoredProject(cq, std::move(context), request);
 }
 
@@ -71,7 +72,7 @@ MetricsScopesMetadata::AsyncDeleteMonitoredProject(
     std::shared_ptr<grpc::ClientContext> context,
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteMonitoredProject(cq, std::move(context), request);
 }
 

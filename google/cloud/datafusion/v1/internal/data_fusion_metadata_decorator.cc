@@ -18,6 +18,7 @@
 
 #include "google/cloud/datafusion/v1/internal/data_fusion_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/datafusion/v1/datafusion.grpc.pb.h>
@@ -41,7 +42,7 @@ DataFusionMetadata::ListAvailableVersions(
     grpc::ClientContext& context,
     google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListAvailableVersions(context, request);
 }
 
@@ -49,7 +50,7 @@ StatusOr<google::cloud::datafusion::v1::ListInstancesResponse>
 DataFusionMetadata::ListInstances(
     grpc::ClientContext& context,
     google::cloud::datafusion::v1::ListInstancesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListInstances(context, request);
 }
 
@@ -57,7 +58,7 @@ StatusOr<google::cloud::datafusion::v1::Instance>
 DataFusionMetadata::GetInstance(
     grpc::ClientContext& context,
     google::cloud::datafusion::v1::GetInstanceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetInstance(context, request);
 }
 
@@ -66,7 +67,7 @@ DataFusionMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
 
@@ -75,7 +76,7 @@ DataFusionMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
 
@@ -84,7 +85,8 @@ DataFusionMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
-  SetMetadata(*context, "instance.name=" + request.instance().name());
+  SetMetadata(*context,
+              absl::StrCat("instance.name=", request.instance().name()));
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
 }
 
@@ -93,7 +95,7 @@ DataFusionMetadata::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncRestartInstance(cq, std::move(context), request);
 }
 

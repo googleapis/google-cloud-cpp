@@ -125,7 +125,7 @@ DefaultSecurityPoliciesRestStub::GetSecurityPolicies(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/securityPolicies/", request.security_policy(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
@@ -139,8 +139,7 @@ DefaultSecurityPoliciesRestStub::GetRule(
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/securityPolicies/", request.security_policy(),
                    "/getRule"),
-      {std::make_pair("priority", std::to_string(request.priority())),
-       std::make_pair("project", request.project())});
+      {std::make_pair("priority", std::to_string(request.priority()))});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

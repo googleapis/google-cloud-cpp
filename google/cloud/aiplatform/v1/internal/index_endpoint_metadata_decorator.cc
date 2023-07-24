@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/index_endpoint_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/index_endpoint_service.grpc.pb.h>
@@ -41,7 +42,7 @@ IndexEndpointServiceMetadata::AsyncCreateIndexEndpoint(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateIndexEndpoint(cq, std::move(context), request);
 }
 
@@ -49,7 +50,7 @@ StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceMetadata::GetIndexEndpoint(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetIndexEndpoint(context, request);
 }
 
@@ -57,7 +58,7 @@ StatusOr<google::cloud::aiplatform::v1::ListIndexEndpointsResponse>
 IndexEndpointServiceMetadata::ListIndexEndpoints(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListIndexEndpointsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListIndexEndpoints(context, request);
 }
 
@@ -65,8 +66,8 @@ StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceMetadata::UpdateIndexEndpoint(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request) {
-  SetMetadata(context,
-              "index_endpoint.name=" + request.index_endpoint().name());
+  SetMetadata(context, absl::StrCat("index_endpoint.name=",
+                                    request.index_endpoint().name()));
   return child_->UpdateIndexEndpoint(context, request);
 }
 
@@ -75,7 +76,7 @@ IndexEndpointServiceMetadata::AsyncDeleteIndexEndpoint(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteIndexEndpoint(cq, std::move(context), request);
 }
 
@@ -84,7 +85,8 @@ IndexEndpointServiceMetadata::AsyncDeployIndex(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
-  SetMetadata(*context, "index_endpoint=" + request.index_endpoint());
+  SetMetadata(*context,
+              absl::StrCat("index_endpoint=", request.index_endpoint()));
   return child_->AsyncDeployIndex(cq, std::move(context), request);
 }
 
@@ -93,7 +95,8 @@ IndexEndpointServiceMetadata::AsyncUndeployIndex(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
-  SetMetadata(*context, "index_endpoint=" + request.index_endpoint());
+  SetMetadata(*context,
+              absl::StrCat("index_endpoint=", request.index_endpoint()));
   return child_->AsyncUndeployIndex(cq, std::move(context), request);
 }
 
@@ -102,7 +105,8 @@ IndexEndpointServiceMetadata::AsyncMutateDeployedIndex(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
-  SetMetadata(*context, "index_endpoint=" + request.index_endpoint());
+  SetMetadata(*context,
+              absl::StrCat("index_endpoint=", request.index_endpoint()));
   return child_->AsyncMutateDeployedIndex(cq, std::move(context), request);
 }
 

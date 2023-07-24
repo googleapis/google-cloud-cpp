@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/knowledge_base.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
 KnowledgeBasesMetadata::ListKnowledgeBases(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListKnowledgeBases(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesMetadata::GetKnowledgeBase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetKnowledgeBase(context, request);
 }
 
@@ -56,14 +57,14 @@ StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesMetadata::CreateKnowledgeBase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateKnowledgeBase(context, request);
 }
 
 Status KnowledgeBasesMetadata::DeleteKnowledgeBase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteKnowledgeBase(context, request);
 }
 
@@ -71,8 +72,8 @@ StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesMetadata::UpdateKnowledgeBase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
-  SetMetadata(context,
-              "knowledge_base.name=" + request.knowledge_base().name());
+  SetMetadata(context, absl::StrCat("knowledge_base.name=",
+                                    request.knowledge_base().name()));
   return child_->UpdateKnowledgeBase(context, request);
 }
 

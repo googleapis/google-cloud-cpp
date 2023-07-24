@@ -98,7 +98,7 @@ DefaultSslPoliciesRestStub::GetSslPolicies(
       *service_, rest_context, request,
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/sslPolicies/", request.ssl_policy(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

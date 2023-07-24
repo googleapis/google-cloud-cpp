@@ -18,6 +18,7 @@
 
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/metastore/v1/metastore.grpc.pb.h>
@@ -40,7 +41,7 @@ StatusOr<google::cloud::metastore::v1::ListServicesResponse>
 DataprocMetastoreMetadata::ListServices(
     grpc::ClientContext& context,
     google::cloud::metastore::v1::ListServicesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListServices(context, request);
 }
 
@@ -48,7 +49,7 @@ StatusOr<google::cloud::metastore::v1::Service>
 DataprocMetastoreMetadata::GetService(
     grpc::ClientContext& context,
     google::cloud::metastore::v1::GetServiceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetService(context, request);
 }
 
@@ -57,7 +58,7 @@ DataprocMetastoreMetadata::AsyncCreateService(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::CreateServiceRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateService(cq, std::move(context), request);
 }
 
@@ -66,7 +67,8 @@ DataprocMetastoreMetadata::AsyncUpdateService(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::UpdateServiceRequest const& request) {
-  SetMetadata(*context, "service.name=" + request.service().name());
+  SetMetadata(*context,
+              absl::StrCat("service.name=", request.service().name()));
   return child_->AsyncUpdateService(cq, std::move(context), request);
 }
 
@@ -75,7 +77,7 @@ DataprocMetastoreMetadata::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::DeleteServiceRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteService(cq, std::move(context), request);
 }
 
@@ -83,7 +85,7 @@ StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
 DataprocMetastoreMetadata::ListMetadataImports(
     grpc::ClientContext& context,
     google::cloud::metastore::v1::ListMetadataImportsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListMetadataImports(context, request);
 }
 
@@ -91,7 +93,7 @@ StatusOr<google::cloud::metastore::v1::MetadataImport>
 DataprocMetastoreMetadata::GetMetadataImport(
     grpc::ClientContext& context,
     google::cloud::metastore::v1::GetMetadataImportRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetMetadataImport(context, request);
 }
 
@@ -100,7 +102,7 @@ DataprocMetastoreMetadata::AsyncCreateMetadataImport(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateMetadataImport(cq, std::move(context), request);
 }
 
@@ -109,8 +111,8 @@ DataprocMetastoreMetadata::AsyncUpdateMetadataImport(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
-  SetMetadata(*context,
-              "metadata_import.name=" + request.metadata_import().name());
+  SetMetadata(*context, absl::StrCat("metadata_import.name=",
+                                     request.metadata_import().name()));
   return child_->AsyncUpdateMetadataImport(cq, std::move(context), request);
 }
 
@@ -119,7 +121,7 @@ DataprocMetastoreMetadata::AsyncExportMetadata(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::ExportMetadataRequest const& request) {
-  SetMetadata(*context, "service=" + request.service());
+  SetMetadata(*context, absl::StrCat("service=", request.service()));
   return child_->AsyncExportMetadata(cq, std::move(context), request);
 }
 
@@ -128,7 +130,7 @@ DataprocMetastoreMetadata::AsyncRestoreService(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::RestoreServiceRequest const& request) {
-  SetMetadata(*context, "service=" + request.service());
+  SetMetadata(*context, absl::StrCat("service=", request.service()));
   return child_->AsyncRestoreService(cq, std::move(context), request);
 }
 
@@ -136,7 +138,7 @@ StatusOr<google::cloud::metastore::v1::ListBackupsResponse>
 DataprocMetastoreMetadata::ListBackups(
     grpc::ClientContext& context,
     google::cloud::metastore::v1::ListBackupsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListBackups(context, request);
 }
 
@@ -144,7 +146,7 @@ StatusOr<google::cloud::metastore::v1::Backup>
 DataprocMetastoreMetadata::GetBackup(
     grpc::ClientContext& context,
     google::cloud::metastore::v1::GetBackupRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetBackup(context, request);
 }
 
@@ -153,7 +155,7 @@ DataprocMetastoreMetadata::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::CreateBackupRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateBackup(cq, std::move(context), request);
 }
 
@@ -162,7 +164,7 @@ DataprocMetastoreMetadata::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::DeleteBackupRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteBackup(cq, std::move(context), request);
 }
 
@@ -171,7 +173,7 @@ DataprocMetastoreMetadata::AsyncQueryMetadata(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::QueryMetadataRequest const& request) {
-  SetMetadata(*context, "service=" + request.service());
+  SetMetadata(*context, absl::StrCat("service=", request.service()));
   return child_->AsyncQueryMetadata(cq, std::move(context), request);
 }
 
@@ -180,7 +182,7 @@ DataprocMetastoreMetadata::AsyncMoveTableToDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
-  SetMetadata(*context, "service=" + request.service());
+  SetMetadata(*context, absl::StrCat("service=", request.service()));
   return child_->AsyncMoveTableToDatabase(cq, std::move(context), request);
 }
 
@@ -190,7 +192,7 @@ DataprocMetastoreMetadata::AsyncAlterMetadataResourceLocation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
         request) {
-  SetMetadata(*context, "service=" + request.service());
+  SetMetadata(*context, absl::StrCat("service=", request.service()));
   return child_->AsyncAlterMetadataResourceLocation(cq, std::move(context),
                                                     request);
 }

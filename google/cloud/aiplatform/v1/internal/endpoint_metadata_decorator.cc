@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/endpoint_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/endpoint_service.grpc.pb.h>
@@ -41,7 +42,7 @@ EndpointServiceMetadata::AsyncCreateEndpoint(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateEndpoint(cq, std::move(context), request);
 }
 
@@ -49,7 +50,7 @@ StatusOr<google::cloud::aiplatform::v1::Endpoint>
 EndpointServiceMetadata::GetEndpoint(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetEndpointRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEndpoint(context, request);
 }
 
@@ -57,7 +58,7 @@ StatusOr<google::cloud::aiplatform::v1::ListEndpointsResponse>
 EndpointServiceMetadata::ListEndpoints(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListEndpointsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListEndpoints(context, request);
 }
 
@@ -65,7 +66,8 @@ StatusOr<google::cloud::aiplatform::v1::Endpoint>
 EndpointServiceMetadata::UpdateEndpoint(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpdateEndpointRequest const& request) {
-  SetMetadata(context, "endpoint.name=" + request.endpoint().name());
+  SetMetadata(context,
+              absl::StrCat("endpoint.name=", request.endpoint().name()));
   return child_->UpdateEndpoint(context, request);
 }
 
@@ -74,7 +76,7 @@ EndpointServiceMetadata::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteEndpoint(cq, std::move(context), request);
 }
 
@@ -83,7 +85,7 @@ EndpointServiceMetadata::AsyncDeployModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeployModelRequest const& request) {
-  SetMetadata(*context, "endpoint=" + request.endpoint());
+  SetMetadata(*context, absl::StrCat("endpoint=", request.endpoint()));
   return child_->AsyncDeployModel(cq, std::move(context), request);
 }
 
@@ -92,7 +94,7 @@ EndpointServiceMetadata::AsyncUndeployModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
-  SetMetadata(*context, "endpoint=" + request.endpoint());
+  SetMetadata(*context, absl::StrCat("endpoint=", request.endpoint()));
   return child_->AsyncUndeployModel(cq, std::move(context), request);
 }
 
@@ -101,7 +103,7 @@ EndpointServiceMetadata::AsyncMutateDeployedModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
-  SetMetadata(*context, "endpoint=" + request.endpoint());
+  SetMetadata(*context, absl::StrCat("endpoint=", request.endpoint()));
   return child_->AsyncMutateDeployedModel(cq, std::move(context), request);
 }
 

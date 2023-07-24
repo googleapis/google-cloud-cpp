@@ -84,7 +84,7 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::GetGlobalPublicDelegatedPrefixes(
       absl::StrCat("/compute/v1/projects/", request.project(),
                    "/global/publicDelegatedPrefixes/",
                    request.public_delegated_prefix(), ""),
-      {std::make_pair("project", request.project())});
+      {});
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

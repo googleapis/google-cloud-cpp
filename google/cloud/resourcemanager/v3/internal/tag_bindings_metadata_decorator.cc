@@ -18,6 +18,7 @@
 
 #include "google/cloud/resourcemanager/v3/internal/tag_bindings_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/resourcemanager/v3/tag_bindings.grpc.pb.h>
@@ -60,7 +61,7 @@ TagBindingsMetadata::AsyncDeleteTagBinding(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteTagBinding(cq, std::move(context), request);
 }
 
