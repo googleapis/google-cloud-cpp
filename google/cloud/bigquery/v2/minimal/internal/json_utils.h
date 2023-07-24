@@ -42,12 +42,16 @@ void FromJson(std::chrono::hours& field, nlohmann::json const& j,
 void ToJson(std::chrono::hours const& field, nlohmann::json& j,
             char const* name);
 
+// Suppress recursive clang-tidy warnings
+//
+// NOLINTBEGIN(misc-no-recursion)
 template <typename ResponseType>
 void SafeGetTo(ResponseType& value, nlohmann::json const& j,
                std::string const& key) {
   auto i = j.find(key);
   if (i != j.end()) i->get_to(value);
 }
+// NOLINTEND(misc-no-recursion)
 
 template <typename C, typename T, typename R>
 void SafeGetTo(nlohmann::json const& j, std::string const& key, R& (C::*f)(T) &,
