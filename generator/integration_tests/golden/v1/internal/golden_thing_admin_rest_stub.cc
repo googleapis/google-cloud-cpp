@@ -158,7 +158,7 @@ DefaultGoldenThingAdminRestStub::AsyncCreateBackup(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{[](auto p, auto service, auto request, auto rest_context) {
       p.set_value(rest_internal::Post<google::longrunning::Operation>(
-          *service, *rest_context, request,
+          *service, *rest_context, request.backup(),
           absl::StrCat("/v1/", request.parent(), "/backups")));
   }, std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -183,7 +183,7 @@ DefaultGoldenThingAdminRestStub::UpdateBackup(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::UpdateBackupRequest const& request) {
   return rest_internal::Patch<google::test::admin::database::v1::Backup>(
-      *service_, rest_context, request,
+      *service_, rest_context, request.backup(),
       absl::StrCat("/v1/", request.backup().name(), ""));
 }
 

@@ -97,7 +97,7 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabase(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
-            *service, *rest_context, request,
+            *service, *rest_context, request.database(),
             absl::StrCat("/v1/", request.database().name(), "")));
       },
       std::move(p), service_, request, std::move(rest_context)};
@@ -181,7 +181,7 @@ DefaultDatabaseAdminRestStub::AsyncCreateBackup(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service, *rest_context, request,
+            *service, *rest_context, request.backup(),
             absl::StrCat("/v1/", request.parent(), "/backups")));
       },
       std::move(p), service_, request, std::move(rest_context)};
@@ -225,7 +225,7 @@ DefaultDatabaseAdminRestStub::UpdateBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
   return rest_internal::Patch<google::spanner::admin::database::v1::Backup>(
-      *service_, rest_context, request,
+      *service_, rest_context, request.backup(),
       absl::StrCat("/v1/", request.backup().name(), ""));
 }
 
