@@ -18,6 +18,7 @@
 
 #include "google/cloud/run/v2/internal/executions_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/run/v2/execution.grpc.pb.h>
@@ -39,7 +40,7 @@ ExecutionsMetadata::ExecutionsMetadata(
 StatusOr<google::cloud::run::v2::Execution> ExecutionsMetadata::GetExecution(
     grpc::ClientContext& context,
     google::cloud::run::v2::GetExecutionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetExecution(context, request);
 }
 
@@ -47,7 +48,7 @@ StatusOr<google::cloud::run::v2::ListExecutionsResponse>
 ExecutionsMetadata::ListExecutions(
     grpc::ClientContext& context,
     google::cloud::run::v2::ListExecutionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListExecutions(context, request);
 }
 
@@ -56,7 +57,7 @@ ExecutionsMetadata::AsyncDeleteExecution(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::DeleteExecutionRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteExecution(cq, std::move(context), request);
 }
 

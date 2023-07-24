@@ -18,6 +18,7 @@
 
 #include "google/cloud/run/v2/internal/tasks_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/run/v2/task.grpc.pb.h>
@@ -39,14 +40,14 @@ TasksMetadata::TasksMetadata(
 StatusOr<google::cloud::run::v2::Task> TasksMetadata::GetTask(
     grpc::ClientContext& context,
     google::cloud::run::v2::GetTaskRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTask(context, request);
 }
 
 StatusOr<google::cloud::run::v2::ListTasksResponse> TasksMetadata::ListTasks(
     grpc::ClientContext& context,
     google::cloud::run::v2::ListTasksRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTasks(context, request);
 }
 

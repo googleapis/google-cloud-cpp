@@ -18,6 +18,7 @@
 
 #include "google/cloud/run/v2/internal/jobs_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/run/v2/job.grpc.pb.h>
@@ -40,21 +41,21 @@ future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncCreateJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::CreateJobRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateJob(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::run::v2::Job> JobsMetadata::GetJob(
     grpc::ClientContext& context,
     google::cloud::run::v2::GetJobRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetJob(context, request);
 }
 
 StatusOr<google::cloud::run::v2::ListJobsResponse> JobsMetadata::ListJobs(
     grpc::ClientContext& context,
     google::cloud::run::v2::ListJobsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListJobs(context, request);
 }
 
@@ -62,7 +63,7 @@ future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncUpdateJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::UpdateJobRequest const& request) {
-  SetMetadata(*context, "job.name=" + request.job().name());
+  SetMetadata(*context, absl::StrCat("job.name=", request.job().name()));
   return child_->AsyncUpdateJob(cq, std::move(context), request);
 }
 
@@ -70,7 +71,7 @@ future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncDeleteJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::DeleteJobRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteJob(cq, std::move(context), request);
 }
 
@@ -78,21 +79,21 @@ future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncRunJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::RunJobRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncRunJob(cq, std::move(context), request);
 }
 
 StatusOr<google::iam::v1::Policy> JobsMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> JobsMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -100,7 +101,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 JobsMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 

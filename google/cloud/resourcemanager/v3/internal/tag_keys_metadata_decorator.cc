@@ -18,6 +18,7 @@
 
 #include "google/cloud/resourcemanager/v3/internal/tag_keys_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/resourcemanager/v3/tag_keys.grpc.pb.h>
@@ -47,7 +48,7 @@ TagKeysMetadata::ListTagKeys(
 StatusOr<google::cloud::resourcemanager::v3::TagKey> TagKeysMetadata::GetTagKey(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTagKey(context, request);
 }
 
@@ -74,7 +75,8 @@ TagKeysMetadata::AsyncUpdateTagKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
-  SetMetadata(*context, "tag_key.name=" + request.tag_key().name());
+  SetMetadata(*context,
+              absl::StrCat("tag_key.name=", request.tag_key().name()));
   return child_->AsyncUpdateTagKey(cq, std::move(context), request);
 }
 
@@ -83,21 +85,21 @@ TagKeysMetadata::AsyncDeleteTagKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteTagKey(cq, std::move(context), request);
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -105,7 +107,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 TagKeysMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 

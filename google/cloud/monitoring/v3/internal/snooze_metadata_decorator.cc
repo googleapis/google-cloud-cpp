@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/v3/internal/snooze_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/snooze_service.grpc.pb.h>
@@ -39,7 +40,7 @@ SnoozeServiceMetadata::SnoozeServiceMetadata(
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::CreateSnooze(
     grpc::ClientContext& context,
     google::monitoring::v3::CreateSnoozeRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateSnooze(context, request);
 }
 
@@ -47,21 +48,21 @@ StatusOr<google::monitoring::v3::ListSnoozesResponse>
 SnoozeServiceMetadata::ListSnoozes(
     grpc::ClientContext& context,
     google::monitoring::v3::ListSnoozesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListSnoozes(context, request);
 }
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::GetSnooze(
     grpc::ClientContext& context,
     google::monitoring::v3::GetSnoozeRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetSnooze(context, request);
 }
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::UpdateSnooze(
     grpc::ClientContext& context,
     google::monitoring::v3::UpdateSnoozeRequest const& request) {
-  SetMetadata(context, "snooze.name=" + request.snooze().name());
+  SetMetadata(context, absl::StrCat("snooze.name=", request.snooze().name()));
   return child_->UpdateSnooze(context, request);
 }
 
