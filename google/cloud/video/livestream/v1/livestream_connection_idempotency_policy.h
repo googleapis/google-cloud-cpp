@@ -87,6 +87,24 @@ class LivestreamServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteEvent(
       google::cloud::video::livestream::v1::DeleteEventRequest const& request);
+
+  virtual google::cloud::Idempotency CreateAsset(
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteAsset(
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request);
+
+  virtual google::cloud::Idempotency GetAsset(
+      google::cloud::video::livestream::v1::GetAssetRequest const& request);
+
+  virtual google::cloud::Idempotency ListAssets(
+      google::cloud::video::livestream::v1::ListAssetsRequest request);
+
+  virtual google::cloud::Idempotency GetPool(
+      google::cloud::video::livestream::v1::GetPoolRequest const& request);
+
+  virtual google::cloud::Idempotency UpdatePool(
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request);
 };
 
 std::unique_ptr<LivestreamServiceConnectionIdempotencyPolicy>

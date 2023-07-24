@@ -74,7 +74,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.servicedirectory.v1.Endpoint]:
-/// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+/// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L38}
 /// [google.cloud.servicedirectory.v1.Namespace]:
 /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
 /// [google.cloud.servicedirectory.v1.Service]:
@@ -110,7 +110,7 @@ class RegistrationServiceClient {
 
   // clang-format off
   ///
-  /// Creates a namespace, and returns the new Namespace.
+  /// Creates a namespace, and returns the new namespace.
   ///
   /// @param parent  Required. The resource name of the project and location the namespace
   ///  will be created in.
@@ -147,7 +147,7 @@ class RegistrationServiceClient {
 
   // clang-format off
   ///
-  /// Creates a namespace, and returns the new Namespace.
+  /// Creates a namespace, and returns the new namespace.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -183,7 +183,7 @@ class RegistrationServiceClient {
   /// Lists all namespaces.
   ///
   /// @param parent  Required. The resource name of the project and location whose namespaces
-  ///  we'd like to list.
+  ///  you'd like to list.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -274,7 +274,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.GetNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L322}
+  /// [google.cloud.servicedirectory.v1.GetNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L328}
   /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   // clang-format on
@@ -305,7 +305,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.GetNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L322}
+  /// [google.cloud.servicedirectory.v1.GetNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L328}
   /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
   // clang-format on
@@ -334,7 +334,7 @@ class RegistrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
-  /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L334}
+  /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L340}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
@@ -366,7 +366,7 @@ class RegistrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
-  /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L334}
+  /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L340}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
@@ -392,7 +392,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.DeleteNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L345}
+  /// [google.cloud.servicedirectory.v1.DeleteNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L351}
   ///
   // clang-format on
   Status DeleteNamespace(std::string const& name, Options opts = {});
@@ -420,7 +420,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.DeleteNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L345}
+  /// [google.cloud.servicedirectory.v1.DeleteNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L351}
   ///
   // clang-format on
   Status DeleteNamespace(
@@ -430,7 +430,7 @@ class RegistrationServiceClient {
 
   // clang-format off
   ///
-  /// Creates a service, and returns the new Service.
+  /// Creates a service, and returns the new service.
   ///
   /// @param parent  Required. The resource name of the namespace this service will belong to.
   /// @param service  Required. A service  with initial fields set.
@@ -455,7 +455,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L357}
+  /// [google.cloud.servicedirectory.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L363}
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   // clang-format on
@@ -466,7 +466,7 @@ class RegistrationServiceClient {
 
   // clang-format off
   ///
-  /// Creates a service, and returns the new Service.
+  /// Creates a service, and returns the new service.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -488,7 +488,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L357}
+  /// [google.cloud.servicedirectory.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L363}
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   // clang-format on
@@ -500,7 +500,7 @@ class RegistrationServiceClient {
   ///
   /// Lists all services belonging to a namespace.
   ///
-  /// @param parent  Required. The resource name of the namespace whose services we'd
+  /// @param parent  Required. The resource name of the namespace whose services you'd
   ///  like to list.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -525,7 +525,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L381}
+  /// [google.cloud.servicedirectory.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L387}
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   // clang-format on
@@ -565,7 +565,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L381}
+  /// [google.cloud.servicedirectory.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L387}
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   // clang-format on
@@ -592,7 +592,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L442}
+  /// [google.cloud.servicedirectory.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L464}
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   // clang-format on
@@ -623,7 +623,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L442}
+  /// [google.cloud.servicedirectory.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L464}
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   // clang-format on
@@ -652,7 +652,7 @@ class RegistrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
-  /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L454}
+  /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L476}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
@@ -684,7 +684,7 @@ class RegistrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
-  /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L454}
+  /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L476}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
@@ -709,7 +709,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L465}
+  /// [google.cloud.servicedirectory.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L487}
   ///
   // clang-format on
   Status DeleteService(std::string const& name, Options opts = {});
@@ -737,7 +737,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L465}
+  /// [google.cloud.servicedirectory.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L487}
   ///
   // clang-format on
   Status DeleteService(
@@ -746,7 +746,7 @@ class RegistrationServiceClient {
 
   // clang-format off
   ///
-  /// Creates a endpoint, and returns the new Endpoint.
+  /// Creates an endpoint, and returns the new endpoint.
   ///
   /// @param parent  Required. The resource name of the service that this endpoint provides.
   /// @param endpoint  Required. A endpoint with initial fields set.
@@ -771,8 +771,8 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.CreateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L477}
-  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.CreateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L499}
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> CreateEndpoint(
@@ -782,7 +782,7 @@ class RegistrationServiceClient {
 
   // clang-format off
   ///
-  /// Creates a endpoint, and returns the new Endpoint.
+  /// Creates an endpoint, and returns the new endpoint.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -804,8 +804,8 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.CreateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L477}
-  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.CreateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L499}
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> CreateEndpoint(
@@ -816,7 +816,7 @@ class RegistrationServiceClient {
   ///
   /// Lists all endpoints.
   ///
-  /// @param parent  Required. The resource name of the service whose endpoints we'd like to
+  /// @param parent  Required. The resource name of the service whose endpoints you'd like to
   ///  list.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -841,8 +841,8 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
-  /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L501}
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L38}
+  /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L523}
   ///
   // clang-format on
   StreamRange<google::cloud::servicedirectory::v1::Endpoint> ListEndpoints(
@@ -881,8 +881,8 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
-  /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L501}
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L38}
+  /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L523}
   ///
   // clang-format on
   StreamRange<google::cloud::servicedirectory::v1::Endpoint> ListEndpoints(
@@ -891,7 +891,7 @@ class RegistrationServiceClient {
 
   // clang-format off
   ///
-  /// Gets a endpoint.
+  /// Gets an endpoint.
   ///
   /// @param name  Required. The name of the endpoint to get.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -908,8 +908,8 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
-  /// [google.cloud.servicedirectory.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L564}
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L38}
+  /// [google.cloud.servicedirectory.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L603}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
@@ -917,7 +917,7 @@ class RegistrationServiceClient {
 
   // clang-format off
   ///
-  /// Gets a endpoint.
+  /// Gets an endpoint.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -939,8 +939,8 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
-  /// [google.cloud.servicedirectory.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L564}
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L38}
+  /// [google.cloud.servicedirectory.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L603}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
@@ -949,7 +949,7 @@ class RegistrationServiceClient {
 
   // clang-format off
   ///
-  /// Updates a endpoint.
+  /// Updates an endpoint.
   ///
   /// @param endpoint  Required. The updated endpoint.
   /// @param update_mask  Required. List of fields to be updated in this request.
@@ -967,8 +967,8 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
-  /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L576}
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L38}
+  /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L615}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
@@ -977,7 +977,7 @@ class RegistrationServiceClient {
 
   // clang-format off
   ///
-  /// Updates a endpoint.
+  /// Updates an endpoint.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -999,8 +999,8 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
-  /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L576}
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L38}
+  /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L615}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
@@ -1009,7 +1009,7 @@ class RegistrationServiceClient {
 
   // clang-format off
   ///
-  /// Deletes a endpoint.
+  /// Deletes an endpoint.
   ///
   /// @param name  Required. The name of the endpoint to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1024,14 +1024,14 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.DeleteEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L587}
+  /// [google.cloud.servicedirectory.v1.DeleteEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L626}
   ///
   // clang-format on
   Status DeleteEndpoint(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
-  /// Deletes a endpoint.
+  /// Deletes an endpoint.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1051,7 +1051,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.DeleteEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L587}
+  /// [google.cloud.servicedirectory.v1.DeleteEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L626}
   ///
   // clang-format on
   Status DeleteEndpoint(
