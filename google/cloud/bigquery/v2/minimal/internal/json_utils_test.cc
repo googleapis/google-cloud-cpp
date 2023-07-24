@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
+#include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -124,6 +125,27 @@ TEST(JsonUtilsTest, SafeGetToKeyAbsent) {
   EXPECT_THAT(val, IsEmpty());
 }
 
+TEST(JsonUtilsTest, SafeGetToCustomType) {
+  auto const* const key = "error_result";
+  auto const* json_text =
+      R"({"error_result":{
+    "reason":"testing",
+    "location":"us-east",
+    "message":"testing"
+  }})";
+  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  ErrorProto actual;
+  SafeGetTo(actual, json, key);
+
+  ErrorProto expected;
+  expected.reason = "testing";
+  expected.location = "us-east";
+  expected.message = "testing";
+
+  EXPECT_EQ(expected, actual);
+}
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
