@@ -955,7 +955,7 @@ INSTANTIATE_TEST_SUITE_P(
             "google.protobuf.Service.Method8", "method_request_params",
             "\"namespace.name=\", request.namespace_().name()"),
         MethodVarsTestValues("google.protobuf.Service.Method8",
-                             "request_resource", "request"),
+                             "request_resource", "request.namespace_()"),
         MethodVarsTestValues(
             "google.protobuf.Service.Method8", "method_rest_path",
             "absl::StrCat(\"/v1/\", request.namespace_().name(), \"\")"),

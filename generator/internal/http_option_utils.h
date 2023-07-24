@@ -87,6 +87,20 @@ bool HasHttpRoutingHeader(google::protobuf::MethodDescriptor const& method);
  */
 bool HasHttpAnnotation(google::protobuf::MethodDescriptor const& method);
 
+/**
+ * Determines the value of the "request_resource" value in method_vars.
+ *
+ * If the rpc has the google.api.http extension with the body field specified as
+ * not "*", that field is returned, else if the rpc request message has a field
+ * annotated with:
+ *  [json_name = __json_request_body] that field is returned. Otherwise, the
+ *  entire request is used.
+ */
+std::string FormatRequestResource(
+    google::protobuf::Descriptor const& request,
+    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo> const&
+        parsed_http_info);
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

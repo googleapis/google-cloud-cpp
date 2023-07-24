@@ -323,6 +323,46 @@ bool HasHttpAnnotation(MethodDescriptor const& method) {
          absl::holds_alternative<HttpSimpleInfo>(result);
 }
 
+std::string FormatRequestResource(
+    google::protobuf::Descriptor const& request,
+    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo> const&
+        parsed_http_info) {
+  struct HttpInfoVisitor {
+    std::string operator()(HttpExtensionInfo const& info) { return info.body; }
+    std::string operator()(HttpSimpleInfo const& info) { return info.body; }
+    std::string operator()(absl::monostate) { return ""; }
+  };
+
+  std::string body_field_name =
+      absl::visit(HttpInfoVisitor{}, parsed_http_info);
+  if (body_field_name.empty()) return "request";
+
+  std::string field_name;
+  for (int i = 0; i != request.field_count(); ++i) {
+    auto const* field = request.field(i);
+    if (field->name() == body_field_name) {
+      field_name = FieldName(field);
+    }
+  }
+
+  // TODO(#12204): The resulting field_name from this check may never differ
+  // from the value in info.body due to how we generate the discovery protos.
+  // In fact, we may be able to stop emitting the __json_request_body annotation
+  // and remove this check.
+  if (field_name.empty()) {
+    for (int i = 0; i != request.field_count(); ++i) {
+      auto const* field = request.field(i);
+      if (field->has_json_name() &&
+          field->json_name() == "__json_request_body") {
+        field_name = FieldName(field);
+      }
+    }
+  }
+
+  if (field_name.empty()) return "request";
+  return absl::StrCat("request.", field_name, "()");
+}
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

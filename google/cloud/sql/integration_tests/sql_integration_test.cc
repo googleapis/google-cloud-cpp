@@ -24,6 +24,8 @@ namespace sql_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
@@ -52,6 +54,63 @@ TEST_F(SqlIntegrationTest, PaginatedList) {
     ASSERT_STATUS_OK(database);
     EXPECT_THAT(database->name(), Not(IsEmpty()));
   }
+}
+
+// Test added for issue #12112.
+// This test was added to verify that the correct JSON request body is being
+// sent for rpcs that specify a field of the request as the body.
+//
+// message SqlInstancesCreateEphemeralCertRequest {
+//   // Cloud SQL instance ID. This does not include the project ID.
+//  string instance = 1;
+//  // Project ID of the Cloud SQL project.
+//  string project = 2;
+//  SslCertsCreateEphemeralRequest body = 100;
+//}
+//
+//  rpc CreateEphemeral(SqlInstancesCreateEphemeralCertRequest)
+//      returns (SslCert) {
+//    option (google.api.http) = {
+//      post: "/v1/projects/{project}/instances/{instance}/createEphemeral"
+//      body: "body"
+//    };
+//  }
+//
+// When the `public_key` field was not present in the JSON request body, the
+// server returned the error:
+//   INVALID_ARGUMENT: Error in non-idempotent operation CreateEphemeral:
+//   Missing parameter: public_key.
+// While the request is not successful due to other reasons, depending on
+// the environment/permissions, the public_key field is being read
+// successfully.
+TEST_F(SqlIntegrationTest, CreateEphemeral) {
+  namespace sql = ::google::cloud::sql_v1;
+  auto client =
+      sql::SqlInstancesServiceClient(google::cloud::ExperimentalTag{},
+                                     sql::MakeSqlInstancesServiceConnectionRest(
+                                         google::cloud::ExperimentalTag{}));
+
+  google::cloud::sql::v1::SqlInstancesListRequest list_request;
+  list_request.set_project(project_id_);
+  auto instance = client.List(list_request);
+  ASSERT_STATUS_OK(*instance.begin());
+
+  google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest request;
+  request.set_project(project_id_);
+  request.set_instance((*instance.begin())->name());
+  request.mutable_body()->set_public_key("THE_PUBLIC_KEY");
+
+  auto result = client.CreateEphemeral(request);
+  EXPECT_THAT(
+      result,
+      ::testing::AnyOf(
+          StatusIs(StatusCode::kInvalidArgument,
+                   HasSubstr("Provided public key was in an invalid or "
+                             "unsupported format")),
+          (StatusIs(
+              StatusCode::kPermissionDenied,
+              HasSubstr(
+                  "The client is not authorized to make this request")))));
 }
 
 }  // namespace
