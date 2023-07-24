@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/log.h"
@@ -37,14 +38,14 @@ void to_json(nlohmann::json& j, QueryParameterStructType const& q) {
 }
 
 void from_json(nlohmann::json const& j, QueryParameterStructType& q) {
-  if (j.contains("name")) j.at("name").get_to(q.name);
+  SafeGetTo(q.name, j, "name");
   if (j.contains("type")) {
     if (q.type == nullptr) {
       q.type = std::make_shared<QueryParameterType>();
     }
-    j.at("type").get_to(*q.type);
+    SafeGetTo(*q.type, j, "type");
   }
-  if (j.contains("description")) j.at("description").get_to(q.description);
+  SafeGetTo(q.description, j, "description");
 }
 
 void to_json(nlohmann::json& j, QueryParameterType const& q) {
@@ -58,14 +59,14 @@ void to_json(nlohmann::json& j, QueryParameterType const& q) {
 }
 
 void from_json(nlohmann::json const& j, QueryParameterType& q) {
-  if (j.contains("type")) j.at("type").get_to(q.type);
+  SafeGetTo(q.type, j, "type");
   if (j.contains("arrayType")) {
     if (q.array_type == nullptr) {
       q.array_type = std::make_shared<QueryParameterType>();
     }
-    j.at("arrayType").get_to(*q.array_type);
+    SafeGetTo(*q.array_type, j, "arrayType");
   }
-  if (j.contains("structTypes")) j.at("structTypes").get_to(q.struct_types);
+  SafeGetTo(q.struct_types, j, "structTypes");
 }
 
 void to_json(nlohmann::json& j, QueryParameterValue const& q) {
@@ -75,9 +76,9 @@ void to_json(nlohmann::json& j, QueryParameterValue const& q) {
 }
 
 void from_json(nlohmann::json const& j, QueryParameterValue& q) {
-  if (j.contains("value")) j.at("value").get_to(q.value);
-  if (j.contains("arrayValues")) j.at("arrayValues").get_to(q.array_values);
-  if (j.contains("structValues")) j.at("structValues").get_to(q.struct_values);
+  SafeGetTo(q.value, j, "value");
+  SafeGetTo(q.array_values, j, "arrayValues");
+  SafeGetTo(q.struct_values, j, "structValues");
 }
 
 void to_json(nlohmann::json& j, StandardSqlField const& f) {
@@ -89,11 +90,11 @@ void to_json(nlohmann::json& j, StandardSqlField const& f) {
 }
 
 void from_json(nlohmann::json const& j, StandardSqlField& f) {
-  if (j.contains("name")) j.at("name").get_to(f.name);
+  SafeGetTo(f.name, j, "name");
   if (f.type == nullptr) {
     f.type = std::make_shared<StandardSqlDataType>();
   }
-  if (j.contains("type")) j.at("type").get_to(*f.type);
+  SafeGetTo(*f.type, j, "type");
 }
 
 void to_json(nlohmann::json& j, StandardSqlStructType const& t) {
@@ -101,7 +102,7 @@ void to_json(nlohmann::json& j, StandardSqlStructType const& t) {
 }
 
 void from_json(nlohmann::json const& j, StandardSqlStructType& t) {
-  if (j.contains("fields")) j.at("fields").get_to(t.fields);
+  SafeGetTo(t.fields, j, "fields");
 }
 
 void to_json(nlohmann::json& j, StandardSqlDataType const& t) {
@@ -133,21 +134,21 @@ void to_json(nlohmann::json& j, StandardSqlDataType const& t) {
 }
 
 void from_json(nlohmann::json const& j, StandardSqlDataType& t) {
-  if (j.contains("typeKind")) j.at("typeKind").get_to(t.type_kind);
+  SafeGetTo(t.type_kind, j, "typeKind");
   if (j.contains("sub_type_index")) {
     auto const index = j.at("sub_type_index").get<int>();
     switch (index) {
       case 1: {
-        if (j.contains("arrayElementType")) {
-          t.sub_type = std::make_shared<StandardSqlDataType>(
-              j.at("arrayElementType").get<StandardSqlDataType>());
-        }
+        std::shared_ptr<StandardSqlDataType> sub_type =
+            std::make_shared<StandardSqlDataType>();
+        SafeGetTo(*sub_type, j, "arrayElementType");
+        t.sub_type = sub_type;
         break;
       }
       case 2: {
-        if (j.contains("structType")) {
-          t.sub_type = j.at("structType").get<StandardSqlStructType>();
-        }
+        StandardSqlStructType sub_type;
+        SafeGetTo(sub_type, j, "structType");
+        t.sub_type = sub_type;
         break;
       }
       default:
@@ -194,22 +195,36 @@ void from_json(nlohmann::json const& j, Value& v) {
       case 0:
         // Do not set any value
         break;
-      case 1:
-        v.value_kind = j.at("valueKind").get<double>();
+      case 1: {
+        double val;
+        SafeGetTo(val, j, "valueKind");
+        v.value_kind = val;
         break;
-      case 2:
-        v.value_kind = j.at("valueKind").get<std::string>();
+      }
+      case 2: {
+        std::string val;
+        SafeGetTo(val, j, "valueKind");
+        v.value_kind = val;
         break;
-      case 3:
-        v.value_kind = j.at("valueKind").get<bool>();
+      }
+      case 3: {
+        bool val;
+        SafeGetTo(val, j, "valueKind");
+        v.value_kind = val;
         break;
-      case 4:
-        v.value_kind =
-            std::make_shared<Struct>(j.at("valueKind").get<Struct>());
+      }
+      case 4: {
+        std::shared_ptr<Struct> val = std::make_shared<Struct>();
+        SafeGetTo(*val, j, "valueKind");
+        v.value_kind = val;
         break;
-      case 5:
-        v.value_kind = j.at("valueKind").get<std::vector<Value>>();
+      }
+      case 5: {
+        std::vector<Value> val;
+        SafeGetTo(val, j, "valueKind");
+        v.value_kind = val;
         break;
+      }
       default:
         GCP_LOG(FATAL) << "Invalid kind_index for Value: " << index;
         break;
@@ -222,7 +237,7 @@ void to_json(nlohmann::json& j, Struct const& s) {
 }
 
 void from_json(nlohmann::json const& j, Struct& s) {
-  if (j.contains("fields")) j.at("fields").get_to(s.fields);
+  SafeGetTo(s.fields, j, "fields");
 }
 
 void to_json(nlohmann::json& j, SystemVariables const& s) {
@@ -230,8 +245,8 @@ void to_json(nlohmann::json& j, SystemVariables const& s) {
 }
 
 void from_json(nlohmann::json const& j, SystemVariables& s) {
-  if (j.contains("types")) j.at("types").get_to(s.types);
-  if (j.contains("values")) j.at("values").get_to(s.values);
+  SafeGetTo(s.types, j, "types");
+  SafeGetTo(s.values, j, "values");
 }
 
 bool operator==(ErrorProto const& lhs, ErrorProto const& rhs) {
@@ -548,18 +563,17 @@ void to_json(nlohmann::json& j, TableReference const& t) {
                      {"tableId", t.table_id}};
 }
 void from_json(nlohmann::json const& j, TableReference& t) {
-  // TODO(#12188): Implement SafeGetTo(...)
-  if (j.contains("projectId")) j.at("projectId").get_to(t.project_id);
-  if (j.contains("datasetId")) j.at("datasetId").get_to(t.dataset_id);
-  if (j.contains("tableId")) j.at("tableId").get_to(t.table_id);
+  SafeGetTo(t.project_id, j, "projectId");
+  SafeGetTo(t.dataset_id, j, "datasetId");
+  SafeGetTo(t.table_id, j, "tableId");
 }
 
 void to_json(nlohmann::json& j, DatasetReference const& d) {
   j = nlohmann::json{{"projectId", d.project_id}, {"datasetId", d.dataset_id}};
 }
 void from_json(nlohmann::json const& j, DatasetReference& d) {
-  if (j.contains("projectId")) j.at("projectId").get_to(d.project_id);
-  if (j.contains("datasetId")) j.at("datasetId").get_to(d.dataset_id);
+  SafeGetTo(d.project_id, j, "projectId");
+  SafeGetTo(d.dataset_id, j, "datasetId");
 }
 
 void to_json(nlohmann::json& j, RoutineReference const& r) {
@@ -568,16 +582,16 @@ void to_json(nlohmann::json& j, RoutineReference const& r) {
                      {"routineId", r.routine_id}};
 }
 void from_json(nlohmann::json const& j, RoutineReference& r) {
-  if (j.contains("projectId")) j.at("projectId").get_to(r.project_id);
-  if (j.contains("datasetId")) j.at("datasetId").get_to(r.dataset_id);
-  if (j.contains("routineId")) j.at("routineId").get_to(r.routine_id);
+  SafeGetTo(r.project_id, j, "projectId");
+  SafeGetTo(r.dataset_id, j, "datasetId");
+  SafeGetTo(r.routine_id, j, "routineId");
 }
 
 void to_json(nlohmann::json& j, EncryptionConfiguration const& ec) {
   j = nlohmann::json{{"kmsKeyName", ec.kms_key_name}};
 }
 void from_json(nlohmann::json const& j, EncryptionConfiguration& ec) {
-  if (j.contains("kmsKeyName")) j.at("kmsKeyName").get_to(ec.kms_key_name);
+  SafeGetTo(ec.kms_key_name, j, "kmsKeyName");
 }
 
 void to_json(nlohmann::json& j, ScriptOptions const& s) {
@@ -586,15 +600,9 @@ void to_json(nlohmann::json& j, ScriptOptions const& s) {
                      {"keyResultStatement", s.key_result_statement}};
 }
 void from_json(nlohmann::json const& j, ScriptOptions& s) {
-  if (j.contains("statementTimeoutMs")) {
-    j.at("statementTimeoutMs").get_to(s.statement_timeout_ms);
-  }
-  if (j.contains("statementByteBudget")) {
-    j.at("statementByteBudget").get_to(s.statement_byte_budget);
-  }
-  if (j.contains("keyResultStatement")) {
-    j.at("keyResultStatement").get_to(s.key_result_statement);
-  }
+  SafeGetTo(s.statement_timeout_ms, j, "statementTimeoutMs");
+  SafeGetTo(s.statement_byte_budget, j, "statementByteBudget");
+  SafeGetTo(s.key_result_statement, j, "keyResultStatement");
 }
 
 void to_json(nlohmann::json& j, QueryParameter const& q) {
@@ -603,13 +611,9 @@ void to_json(nlohmann::json& j, QueryParameter const& q) {
                      {"parameterValue", q.parameter_value}};
 }
 void from_json(nlohmann::json const& j, QueryParameter& q) {
-  if (j.contains("name")) j.at("name").get_to(q.name);
-  if (j.contains("parameterType")) {
-    j.at("parameterType").get_to(q.parameter_type);
-  }
-  if (j.contains("parameterValue")) {
-    j.at("parameterValue").get_to(q.parameter_value);
-  }
+  SafeGetTo(q.name, j, "name");
+  SafeGetTo(q.parameter_type, j, "parameterType");
+  SafeGetTo(q.parameter_value, j, "parameterValue");
 }
 // NOLINTEND(misc-no-recursion)
 
