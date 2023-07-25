@@ -148,9 +148,8 @@ target_include_directories(
            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
-    google_cloud_cpp_bigquery_rest
-    PUBLIC google-cloud-cpp::rest_internal google-cloud-cpp::grpc_utils
-           google-cloud-cpp::common)
+    google_cloud_cpp_bigquery_rest PUBLIC google-cloud-cpp::rest_internal
+                                          google-cloud-cpp::common)
 google_cloud_cpp_add_common_options(google_cloud_cpp_bigquery_rest)
 set_target_properties(
     google_cloud_cpp_bigquery_rest
