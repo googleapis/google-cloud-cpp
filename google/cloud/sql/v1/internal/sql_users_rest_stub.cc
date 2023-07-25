@@ -63,7 +63,7 @@ DefaultSqlUsersServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request,
+      *service_, rest_context, request.body(),
       absl::StrCat("/v1/projects/", request.project(), "/instances/",
                    request.instance(), "/users"));
 }
@@ -84,7 +84,7 @@ DefaultSqlUsersServiceRestStub::Update(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request,
+      *service_, rest_context, request.body(),
       absl::StrCat("/v1/projects/", request.project(), "/instances/",
                    request.instance(), "/users"));
 }

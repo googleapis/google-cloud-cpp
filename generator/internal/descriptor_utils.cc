@@ -587,17 +587,6 @@ std::string FormatAdditionalPbHeaderPaths(VarsDictionary& vars) {
   return absl::StrJoin(additional_pb_header_paths, ",");
 }
 
-std::string FormatResourceAccessor(
-    google::protobuf::Descriptor const& request) {
-  for (int i = 0; i != request.field_count(); ++i) {
-    auto const* field = request.field(i);
-    if (field->has_json_name() && field->json_name() == "__json_request_body") {
-      return absl::StrCat("request.", field->name(), "()");
-    }
-  }
-  return "request";
-}
-
 }  // namespace
 
 // TODO(#11545): relocate this function to a separate TU.
@@ -916,8 +905,6 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     }
     method_vars["method_name"] = method.name();
     method_vars["method_name_snake"] = CamelCaseToSnakeCase(method.name());
-    method_vars["request_resource"] =
-        FormatResourceAccessor(*method.input_type());
     method_vars["request_type"] =
         ProtoNameToCppName(method.input_type()->full_name());
     method_vars["response_message_type"] = method.output_type()->full_name();
@@ -928,6 +915,8 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     SetMethodSignatureMethodVars(service, method, emitted_rpcs, omitted_rpcs,
                                  method_vars);
     auto parsed_http_info = ParseHttpExtension(method);
+    method_vars["request_resource"] =
+        FormatRequestResource(*method.input_type(), parsed_http_info);
     SetHttpDerivedMethodVars(parsed_http_info, method, method_vars);
     SetHttpGetQueryParameters(parsed_http_info, method, method_vars);
     service_methods_vars[method.full_name()] = method_vars;

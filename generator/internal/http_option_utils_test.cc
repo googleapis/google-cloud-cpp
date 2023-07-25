@@ -157,7 +157,13 @@ char const* const kServiceProto =
     "message Implicit {\n"
     "  string project = 1;\n"
     "  string instance = 2;\n"
-    "  string Foo = 3;\n"
+    "  Foo body = 3;\n"
+    "}\n"
+    "// Leading comments about message AnnotatedRequestField.\n"
+    "message AnnotatedRequestField {\n"
+    "  string project = 1;\n"
+    "  string instance = 2;\n"
+    "  Namespace namespace = 3 [json_name = \"__json_request_body\"];\n"
     "}\n"
     "// Leading comments about service Service.\n"
     "service Service {\n"
@@ -224,7 +230,14 @@ char const* const kServiceProto =
     "       body: \"*\"\n"
     "    };\n"
     "  }\n"
-
+    "  // Leading comments about rpc Method8.\n"
+    "  rpc Method8(AnnotatedRequestField) returns (Empty) {\n"
+    "    option (google.api.http) = {\n"
+    "       post: "
+    "\"/v1/projects/{project}/instances/{instance}/databases\"\n"
+    "       body: \"*\"\n"
+    "    };\n"
+    "  }\n"
     "}\n";
 
 struct MethodVarsTestValues {
@@ -559,6 +572,47 @@ TEST_F(HttpOptionUtilsTest, HasNoHttpAnnotation) {
       HasHttpRoutingHeader(*service_file_descriptor->service(0)->method(0)));
   EXPECT_FALSE(
       HasHttpAnnotation(*service_file_descriptor->service(0)->method(0)));
+}
+
+TEST_F(HttpOptionUtilsTest, FormatRequestResourceFailedParse) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(2);
+  auto result = FormatRequestResource(
+      *method->input_type(),
+      absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>());
+  EXPECT_THAT(result, Eq("request"));
+}
+
+TEST_F(HttpOptionUtilsTest, FormatRequestResourceWholeMessage) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(2);
+  auto info = ParseHttpExtension(*method);
+  auto result = FormatRequestResource(*method->input_type(), info);
+  EXPECT_THAT(result, Eq("request"));
+}
+
+TEST_F(HttpOptionUtilsTest, FormatRequestResourceMessageField) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(6);
+  auto info = ParseHttpExtension(*method);
+  auto result = FormatRequestResource(*method->input_type(), info);
+  EXPECT_THAT(result, Eq("request.body()"));
+}
+
+TEST_F(HttpOptionUtilsTest, FormatRequestResourceAnnotatedRequestField) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(8);
+  auto info = ParseHttpExtension(*method);
+  auto result = FormatRequestResource(*method->input_type(), info);
+  EXPECT_THAT(result, Eq("request.namespace_()"));
 }
 
 }  // namespace
