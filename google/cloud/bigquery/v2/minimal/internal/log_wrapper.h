@@ -17,7 +17,6 @@
 
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/debug_string.h"
-#include "google/cloud/internal/debug_string_status.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/log.h"
@@ -50,8 +49,7 @@ Result LogWrapper(Functor&& functor, rest_internal::RestContext& context,
 
   auto response = functor(context, request);
   if (!response) {
-    GCP_LOG(DEBUG) << where << "() >> status="
-                   << internal::DebugString(response.status(), options);
+    GCP_LOG(DEBUG) << where << "() >> status=" << response.status();
   } else {
     GCP_LOG(DEBUG) << where << "() >> response="
                    << response->DebugString(response_name, options);
