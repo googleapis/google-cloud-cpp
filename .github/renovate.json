@@ -4,6 +4,9 @@
     "docker:disable",
     "schedule:weekdays"
   ],
+  "python": {
+    "enabled": false
+  },
   "regexManagers": [
     {
       "fileMatch": [
@@ -69,10 +72,6 @@
       "matchPackageNames": ["com_google_googletest", "google/googletest"],
       "groupName": "GoogleTest",
       "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
-    },
-    {
-      "matchManagers": ["pip_requirements"],
-      "schedule": ["before 12pm on Tuesday"]
     }
   ],
   "ignoreDeps": [
