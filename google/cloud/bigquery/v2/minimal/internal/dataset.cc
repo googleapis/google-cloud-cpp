@@ -70,30 +70,24 @@ void to_json(nlohmann::json& j, Dataset const& d) {
 }
 
 void from_json(nlohmann::json const& j, Dataset& d) {
-  if (j.contains("kind")) j.at("kind").get_to(d.kind);
-  if (j.contains("etag")) j.at("etag").get_to(d.etag);
-  if (j.contains("id")) j.at("id").get_to(d.id);
-  if (j.contains("selfLink")) j.at("selfLink").get_to(d.self_link);
-  if (j.contains("friendlyName")) j.at("friendlyName").get_to(d.friendly_name);
-  if (j.contains("description")) j.at("description").get_to(d.description);
-  if (j.contains("type")) j.at("type").get_to(d.type);
-  if (j.contains("location")) j.at("location").get_to(d.location);
-  if (j.contains("defaultCollation"))
-    j.at("defaultCollation").get_to(d.default_collation);
-  if (j.contains("published")) j.at("published").get_to(d.published);
-  if (j.contains("isCaseInsensitive"))
-    j.at("isCaseInsensitive").get_to(d.is_case_insensitive);
-  if (j.contains("labels")) j.at("labels").get_to(d.labels);
-  if (j.contains("access")) j.at("access").get_to(d.access);
-  if (j.contains("tags")) j.at("tags").get_to(d.tags);
-  if (j.contains("datasetReference"))
-    j.at("datasetReference").get_to(d.dataset_reference);
-  if (j.contains("linkedDatasetSource"))
-    j.at("linkedDatasetSource").get_to(d.linked_dataset_source);
-  if (j.contains("defaultRoundingMode"))
-    j.at("defaultRoundingMode").get_to(d.default_rounding_mode);
-  if (j.contains("storageBillingModel"))
-    j.at("storageBillingModel").get_to(d.storage_billing_model);
+  SafeGetTo(d.kind, j, "kind");
+  SafeGetTo(d.etag, j, "etag");
+  SafeGetTo(d.id, j, "id");
+  SafeGetTo(d.self_link, j, "selfLink");
+  SafeGetTo(d.friendly_name, j, "friendlyName");
+  SafeGetTo(d.description, j, "description");
+  SafeGetTo(d.type, j, "type");
+  SafeGetTo(d.location, j, "location");
+  SafeGetTo(d.default_collation, j, "defaultCollation");
+  SafeGetTo(d.published, j, "published");
+  SafeGetTo(d.is_case_insensitive, j, "isCaseInsensitive");
+  SafeGetTo(d.labels, j, "labels");
+  SafeGetTo(d.access, j, "access");
+  SafeGetTo(d.tags, j, "tags");
+  SafeGetTo(d.dataset_reference, j, "datasetReference");
+  SafeGetTo(d.linked_dataset_source, j, "linkedDatasetSource");
+  SafeGetTo(d.default_rounding_mode, j, "defaultRoundingMode");
+  SafeGetTo(d.storage_billing_model, j, "storageBillingModel");
 
   FromJson(d.default_table_expiration, j, "defaultTableExpirationMs");
   FromJson(d.default_partition_expiration, j, "defaultPartitionExpirationMs");
@@ -214,25 +208,21 @@ void to_json(nlohmann::json& j, ListFormatDataset const& d) {
                      {"labels", d.labels}};
 }
 void from_json(nlohmann::json const& j, ListFormatDataset& d) {
-  // TODO(#12188): Implement SafeGetTo(...) for potentially better performance.
-  if (j.contains("kind")) j.at("kind").get_to(d.kind);
-  if (j.contains("id")) j.at("id").get_to(d.id);
-  if (j.contains("friendlyName")) j.at("friendlyName").get_to(d.friendly_name);
-  if (j.contains("location")) j.at("location").get_to(d.location);
-  if (j.contains("type")) j.at("type").get_to(d.type);
-  if (j.contains("datasetReference")) {
-    j.at("datasetReference").get_to(d.dataset_reference);
-  }
-  if (j.contains("labels")) j.at("labels").get_to(d.labels);
+  SafeGetTo(d.kind, j, "kind");
+  SafeGetTo(d.id, j, "id");
+  SafeGetTo(d.friendly_name, j, "friendlyName");
+  SafeGetTo(d.location, j, "location");
+  SafeGetTo(d.type, j, "type");
+  SafeGetTo(d.dataset_reference, j, "datasetReference");
+  SafeGetTo(d.labels, j, "labels");
 }
 
 void to_json(nlohmann::json& j, GcpTag const& t) {
   j = nlohmann::json{{"tagKey", t.tag_key}, {"tagValue", t.tag_value}};
 }
 void from_json(nlohmann::json const& j, GcpTag& t) {
-  // TODO(#12188): Implement SafeGetTo(...) for potentially better performance.
-  if (j.contains("tagKey")) j.at("tagKey").get_to(t.tag_key);
-  if (j.contains("tagValue")) j.at("tagValue").get_to(t.tag_value);
+  SafeGetTo(t.tag_key, j, "tagKey");
+  SafeGetTo(t.tag_value, j, "tagValue");
 }
 
 void to_json(nlohmann::json& j, Access const& a) {
@@ -247,35 +237,30 @@ void to_json(nlohmann::json& j, Access const& a) {
                      {"dataset", a.dataset}};
 }
 void from_json(nlohmann::json const& j, Access& a) {
-  // TODO(#12188): Implement SafeGetTo(...) for potentially better performance.
-  if (j.contains("role")) j.at("role").get_to(a.role);
-  if (j.contains("userByEmail")) j.at("userByEmail").get_to(a.user_by_email);
-  if (j.contains("groupByEmail")) j.at("groupByEmail").get_to(a.group_by_email);
-  if (j.contains("domain")) j.at("domain").get_to(a.domain);
-  if (j.contains("specialGroup")) j.at("specialGroup").get_to(a.special_group);
-  if (j.contains("iamMember")) j.at("iamMember").get_to(a.iam_member);
-  if (j.contains("view")) j.at("view").get_to(a.view);
-  if (j.contains("routine")) j.at("routine").get_to(a.routine);
-  if (j.contains("dataset")) j.at("dataset").get_to(a.dataset);
+  SafeGetTo(a.role, j, "role");
+  SafeGetTo(a.user_by_email, j, "userByEmail");
+  SafeGetTo(a.group_by_email, j, "groupByEmail");
+  SafeGetTo(a.domain, j, "domain");
+  SafeGetTo(a.special_group, j, "specialGroup");
+  SafeGetTo(a.iam_member, j, "iamMember");
+  SafeGetTo(a.view, j, "view");
+  SafeGetTo(a.routine, j, "routine");
+  SafeGetTo(a.dataset, j, "dataset");
 }
 
 void to_json(nlohmann::json& j, DatasetAccessEntry const& d) {
   j = nlohmann::json{{"dataset", d.dataset}, {"targetTypes", d.target_types}};
 }
 void from_json(nlohmann::json const& j, DatasetAccessEntry& d) {
-  // TODO(#12188): Implement SafeGetTo(...) for potentially better performance.
-  if (j.contains("dataset")) j.at("dataset").get_to(d.dataset);
-  if (j.contains("targetTypes")) j.at("targetTypes").get_to(d.target_types);
+  SafeGetTo(d.dataset, j, "dataset");
+  SafeGetTo(d.target_types, j, "targetTypes");
 }
 
 void to_json(nlohmann::json& j, LinkedDatasetSource const& d) {
   j = nlohmann::json{{"sourceDataset", d.source_dataset}};
 }
 void from_json(nlohmann::json const& j, LinkedDatasetSource& d) {
-  // TODO(#12188): Implement SafeGetTo(...) for potentially better performance.
-  if (j.contains("sourceDataset")) {
-    j.at("sourceDataset").get_to(d.source_dataset);
-  }
+  SafeGetTo(d.source_dataset, j, "sourceDataset");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
