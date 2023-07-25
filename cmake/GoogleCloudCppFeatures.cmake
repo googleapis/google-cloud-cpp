@@ -23,6 +23,8 @@ include(CreateBazelConfig)
 set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
     "bigtable;bigquery;iam;logging;pubsub;spanner;storage")
 
+set(GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES "storage;experimental-bigquery_rest")
+
 set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     # cmake-format: sorted
     "compute"
@@ -223,10 +225,13 @@ function (google_cloud_cpp_enable_cleanup)
 
     list(REMOVE_DUPLICATES GOOGLE_CLOUD_CPP_ENABLE)
 
-    set(GOOGLE_CLOUD_CPP_ENABLE_GRPC ON)
-    if ("${GOOGLE_CLOUD_CPP_ENABLE}" STREQUAL "storage")
-        set(GOOGLE_CLOUD_CPP_ENABLE_GRPC OFF)
-    endif ()
+    set(GOOGLE_CLOUD_CPP_ENABLE_GRPC OFF)
+    foreach (feature ${GOOGLE_CLOUD_CPP_ENABLE})
+        if (NOT (${feature} IN_LIST GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES))
+            set(GOOGLE_CLOUD_CPP_ENABLE_GRPC ON)
+            break()
+        endif ()
+    endforeach ()
 
     set(GOOGLE_CLOUD_CPP_ENABLE_REST OFF)
     if ((storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
