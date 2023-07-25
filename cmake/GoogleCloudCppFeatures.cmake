@@ -261,7 +261,7 @@ endfunction ()
 # Most of them are subdirectories in `google/cloud/`. Some number of them have
 # additional samples that are enabled if needed.
 function (google_cloud_cpp_enable_features)
-    foreach (feature IN LISTS ${GOOGLE_CLOUD_CPP_ENABLE})
+    foreach (feature IN LISTS GOOGLE_CLOUD_CPP_ENABLE)
         if ("${feature}" STREQUAL "generator")
             add_subdirectory(generator)
         elseif ("${feature}" STREQUAL "experimental-storage-grpc")
