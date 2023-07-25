@@ -22,6 +22,12 @@ fi # include guard
 
 source module ci/lib/io.sh
 
+# Selects a default bazel version, though individual builds can override this.
+: "${USE_BAZEL_VERSION:="6.2.1"}"
+export USE_BAZEL_VERSION
+io::log "Using bazelisk version"
+bazelisk version
+
 # Outputs a list of args that should be given to all bazel invocations. To read
 # this into an array use `mapfile -t my_array < <(bazel::common_args)`
 function bazel::common_args() {
@@ -73,15 +79,11 @@ function bazel::msvc_args() {
   printf "%s\n" "${args[@]}"
 }
 
-io::log "Using bazelisk version"
-bazelisk version
-
 # Bazel downloads all the dependencies of a project, as well as a number of
 # development tools during startup. In automated builds these downloads fail
 # from time to time due to transient network problems. Running `bazel fetch` at
 # the beginning of the build prevents such transient failures from flaking the
 # build.
-io::log "Prefetching bazel deps..."
 function bazel::prefetch() {
   local args
   mapfile -t args < <(bazel::common_args)
@@ -97,6 +99,7 @@ function bazel::prefetch() {
   "ci/retry-command.sh" 3 120 bazelisk "${args[@]}" fetch "${common_rules[@]}" "${os_rules[@]}"
 }
 
+io::log "Prefetching bazel deps..."
 TIMEFORMAT="==> 🕑 prefetching done in %R seconds"
 time {
   bazel::prefetch

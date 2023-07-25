@@ -136,5 +136,4 @@ jobs:
       run: |
         /usr/local/bin/bash ci/gha/builds/macos-bazel.sh ${{ join(matrix.targets, ' ') }}
     env:
-      USE_BAZEL_VERSION: 6.2.1
       BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.os }}
