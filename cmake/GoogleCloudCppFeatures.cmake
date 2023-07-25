@@ -23,6 +23,10 @@ include(CreateBazelConfig)
 set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
     "bigtable;bigquery;iam;logging;pubsub;spanner;storage")
 
+# Note that libraries like `compute` or `sql` are not REST only. Their API uses
+# Protobuf messages. We do not bother to have an internal library that depends
+# on Protobuf but not gRPC. So these libraries must depend on
+# `google_cloud_cpp_grpc_utils`.
 set(GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES "storage;experimental-bigquery_rest")
 
 set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
@@ -225,13 +229,12 @@ function (google_cloud_cpp_enable_cleanup)
 
     list(REMOVE_DUPLICATES GOOGLE_CLOUD_CPP_ENABLE)
 
+    set(grpc_features ${GOOGLE_CLOUD_CPP_ENABLE})
+    list(REMOVE_ITEM grpc_features ${GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES})
     set(GOOGLE_CLOUD_CPP_ENABLE_GRPC OFF)
-    foreach (feature ${GOOGLE_CLOUD_CPP_ENABLE})
-        if (NOT (${feature} IN_LIST GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES))
-            set(GOOGLE_CLOUD_CPP_ENABLE_GRPC ON)
-            break()
-        endif ()
-    endforeach ()
+    if (grpc_features)
+        set(GOOGLE_CLOUD_CPP_ENABLE_GRPC ON)
+    endif ()
 
     set(GOOGLE_CLOUD_CPP_ENABLE_REST OFF)
     if ((storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
@@ -258,7 +261,7 @@ endfunction ()
 # Most of them are subdirectories in `google/cloud/`. Some number of them have
 # additional samples that are enabled if needed.
 function (google_cloud_cpp_enable_features)
-    foreach (feature ${GOOGLE_CLOUD_CPP_ENABLE})
+    foreach (feature IN LISTS ${GOOGLE_CLOUD_CPP_ENABLE})
         if ("${feature}" STREQUAL "generator")
             add_subdirectory(generator)
         elseif ("${feature}" STREQUAL "experimental-storage-grpc")
