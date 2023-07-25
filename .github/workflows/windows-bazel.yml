@@ -46,6 +46,8 @@ jobs:
         - shard: Other
           targets:
           - //...
+          # Skip top-level targets (e.g. //:bigtable).
+          - -//:all
           # From Core
           - -//google/cloud:all
           - -//generator/...
