@@ -25,6 +25,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::AnyOf;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
@@ -92,25 +93,25 @@ TEST_F(SqlIntegrationTest, CreateEphemeral) {
 
   google::cloud::sql::v1::SqlInstancesListRequest list_request;
   list_request.set_project(project_id_);
-  auto instance = client.List(list_request);
-  ASSERT_STATUS_OK(*instance.begin());
+  auto instances = client.List(list_request);
+  ASSERT_NE(instances.begin(), instances.end());
+  ASSERT_STATUS_OK(*instances.begin());
 
   google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest request;
   request.set_project(project_id_);
-  request.set_instance((*instance.begin())->name());
+  request.set_instance((*instances.begin())->name());
   request.mutable_body()->set_public_key("THE_PUBLIC_KEY");
 
   auto result = client.CreateEphemeral(request);
   EXPECT_THAT(
       result,
-      ::testing::AnyOf(
+      AnyOf(
           StatusIs(StatusCode::kInvalidArgument,
                    HasSubstr("Provided public key was in an invalid or "
                              "unsupported format")),
-          (StatusIs(
+          StatusIs(
               StatusCode::kPermissionDenied,
-              HasSubstr(
-                  "The client is not authorized to make this request")))));
+              HasSubstr("The client is not authorized to make this request"))));
 }
 
 }  // namespace
