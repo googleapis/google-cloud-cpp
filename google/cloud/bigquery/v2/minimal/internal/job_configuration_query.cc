@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_configuration_query.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/debug_string.h"
 
@@ -79,70 +80,30 @@ void to_json(nlohmann::json& j, JobConfigurationQuery const& c) {
                      {"systemVariables", c.system_variables}};
 }
 void from_json(nlohmann::json const& j, JobConfigurationQuery& c) {
-  if (j.contains("query")) j.at("query").get_to(c.query);
-  if (j.contains("createDisposition")) {
-    j.at("createDisposition").get_to(c.create_disposition);
-  }
-  if (j.contains("writeDisposition")) {
-    j.at("writeDisposition").get_to(c.write_disposition);
-  }
-  if (j.contains("priority")) j.at("priority").get_to(c.priority);
-  if (j.contains("parameterMode")) {
-    j.at("parameterMode").get_to(c.parameter_mode);
-  }
-  if (j.contains("preserveNulls")) {
-    j.at("preserveNulls").get_to(c.preserve_nulls);
-  }
-  if (j.contains("allowLargeResults")) {
-    j.at("allowLargeResults").get_to(c.allow_large_results);
-  }
-  if (j.contains("useQueryCache")) {
-    j.at("useQueryCache").get_to(c.use_query_cache);
-  }
-  if (j.contains("flattenResults")) {
-    j.at("flattenResults").get_to(c.flatten_results);
-  }
-  if (j.contains("useLegacySql")) {
-    j.at("useLegacySql").get_to(c.use_legacy_sql);
-  }
-  if (j.contains("createSession")) {
-    j.at("createSession").get_to(c.create_session);
-  }
-  if (j.contains("maximumBytesBilled")) {
-    j.at("maximumBytesBilled").get_to(c.maximum_bytes_billed);
-  }
-  if (j.contains("queryParameters")) {
-    j.at("queryParameters").get_to(c.query_parameters);
-  }
-  if (j.contains("schemaUpdateOptions")) {
-    j.at("schemaUpdateOptions").get_to(c.schema_update_options);
-  }
-  if (j.contains("connectionProperties")) {
-    j.at("connectionProperties").get_to(c.connection_properties);
-  }
-  if (j.contains("defaultDataset")) {
-    j.at("defaultDataset").get_to(c.default_dataset);
-  }
-  if (j.contains("destinationTable")) {
-    j.at("destinationTable").get_to(c.destination_table);
-  }
-  if (j.contains("timePartitioning")) {
-    j.at("timePartitioning").get_to(c.time_partitioning);
-  }
-  if (j.contains("rangePartitioning")) {
-    j.at("rangePartitioning").get_to(c.range_partitioning);
-  }
-  if (j.contains("clustering")) j.at("clustering").get_to(c.clustering);
-  if (j.contains("destinationEncryptionConfiguration")) {
-    j.at("destinationEncryptionConfiguration")
-        .get_to(c.destination_encryption_configuration);
-  }
-  if (j.contains("scriptOptions")) {
-    j.at("scriptOptions").get_to(c.script_options);
-  }
-  if (j.contains("systemVariables")) {
-    j.at("systemVariables").get_to(c.system_variables);
-  }
+  SafeGetTo(c.query, j, "query");
+  SafeGetTo(c.create_disposition, j, "createDisposition");
+  SafeGetTo(c.write_disposition, j, "writeDisposition");
+  SafeGetTo(c.priority, j, "priority");
+  SafeGetTo(c.parameter_mode, j, "parameterMode");
+  SafeGetTo(c.preserve_nulls, j, "preserveNulls");
+  SafeGetTo(c.allow_large_results, j, "allowLargeResults");
+  SafeGetTo(c.use_query_cache, j, "useQueryCache");
+  SafeGetTo(c.flatten_results, j, "flattenResults");
+  SafeGetTo(c.use_legacy_sql, j, "useLegacySql");
+  SafeGetTo(c.create_session, j, "createSession");
+  SafeGetTo(c.maximum_bytes_billed, j, "maximumBytesBilled");
+  SafeGetTo(c.query_parameters, j, "queryParameters");
+  SafeGetTo(c.schema_update_options, j, "schemaUpdateOptions");
+  SafeGetTo(c.connection_properties, j, "connectionProperties");
+  SafeGetTo(c.default_dataset, j, "defaultDataset");
+  SafeGetTo(c.destination_table, j, "destinationTable");
+  SafeGetTo(c.time_partitioning, j, "timePartitioning");
+  SafeGetTo(c.range_partitioning, j, "rangePartitioning");
+  SafeGetTo(c.clustering, j, "clustering");
+  SafeGetTo(c.destination_encryption_configuration, j,
+            "destinationEncryptionConfiguration");
+  SafeGetTo(c.script_options, j, "scriptOptions");
+  SafeGetTo(c.system_variables, j, "systemVariables");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

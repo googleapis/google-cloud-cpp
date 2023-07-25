@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
@@ -268,7 +269,7 @@ void to_json(nlohmann::json& j, SessionInfo const& s) {
   j = nlohmann::json{{"sessionId", s.session_id}};
 }
 void from_json(nlohmann::json const& j, SessionInfo& s) {
-  if (j.contains("sessionId")) j.at("sessionId").get_to(s.session_id);
+  SafeGetTo(s.session_id, j, "sessionId");
 }
 
 void to_json(nlohmann::json& j, QueryResults const& q) {
@@ -288,23 +289,19 @@ void to_json(nlohmann::json& j, QueryResults const& q) {
 }
 
 void from_json(nlohmann::json const& j, QueryResults& q) {
-  if (j.contains("kind")) j.at("kind").get_to(q.kind);
-  if (j.contains("pageToken")) j.at("pageToken").get_to(q.page_token);
-  if (j.contains("totalRows")) j.at("totalRows").get_to(q.total_rows);
-  if (j.contains("totalBytesProcessed")) {
-    j.at("totalBytesProcessed").get_to(q.total_bytes_processed);
-  }
-  if (j.contains("numDmlAffectedRows")) {
-    j.at("numDmlAffectedRows").get_to(q.num_dml_affected_rows);
-  }
-  if (j.contains("jobComplete")) j.at("jobComplete").get_to(q.job_complete);
-  if (j.contains("cacheHit")) j.at("cacheHit").get_to(q.cache_hit);
-  if (j.contains("schema")) j.at("schema").get_to(q.schema);
-  if (j.contains("jobReference")) j.at("jobReference").get_to(q.job_reference);
-  if (j.contains("rows")) j.at("rows").get_to(q.rows);
-  if (j.contains("errors")) j.at("errors").get_to(q.errors);
-  if (j.contains("sessionInfo")) j.at("sessionInfo").get_to(q.session_info);
-  if (j.contains("dmlStats")) j.at("dmlStats").get_to(q.dml_stats);
+  SafeGetTo(q.kind, j, "kind");
+  SafeGetTo(q.page_token, j, "pageToken");
+  SafeGetTo(q.total_rows, j, "totalRows");
+  SafeGetTo(q.total_bytes_processed, j, "totalBytesProcessed");
+  SafeGetTo(q.num_dml_affected_rows, j, "numDmlAffectedRows");
+  SafeGetTo(q.job_complete, j, "jobComplete");
+  SafeGetTo(q.cache_hit, j, "cacheHit");
+  SafeGetTo(q.schema, j, "schema");
+  SafeGetTo(q.job_reference, j, "jobReference");
+  SafeGetTo(q.rows, j, "rows");
+  SafeGetTo(q.errors, j, "errors");
+  SafeGetTo(q.session_info, j, "sessionInfo");
+  SafeGetTo(q.dml_stats, j, "dmlStats");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/debug_string.h"
 
@@ -76,9 +77,9 @@ void to_json(nlohmann::json& j, JobStatus const& jb) {
                      {"state", jb.state}};
 }
 void from_json(nlohmann::json const& j, JobStatus& jb) {
-  if (j.contains("errorResult")) j.at("errorResult").get_to(jb.error_result);
-  if (j.contains("errors")) j.at("errors").get_to(jb.errors);
-  if (j.contains("state")) j.at("state").get_to(jb.state);
+  SafeGetTo(jb.error_result, j, "errorResult");
+  SafeGetTo(jb.errors, j, "errors");
+  SafeGetTo(jb.state, j, "state");
 }
 
 void to_json(nlohmann::json& j, JobReference const& jb) {
@@ -87,9 +88,9 @@ void to_json(nlohmann::json& j, JobReference const& jb) {
                      {"location", jb.location}};
 }
 void from_json(nlohmann::json const& j, JobReference& jb) {
-  if (j.contains("projectId")) j.at("projectId").get_to(jb.project_id);
-  if (j.contains("jobId")) j.at("jobId").get_to(jb.job_id);
-  if (j.contains("location")) j.at("location").get_to(jb.location);
+  SafeGetTo(jb.project_id, j, "projectId");
+  SafeGetTo(jb.job_id, j, "jobId");
+  SafeGetTo(jb.location, j, "location");
 }
 
 void to_json(nlohmann::json& j, Job const& jb) {
@@ -104,17 +105,15 @@ void to_json(nlohmann::json& j, Job const& jb) {
                      {"statistics", jb.statistics}};
 }
 void from_json(nlohmann::json const& j, Job& jb) {
-  if (j.contains("kind")) j.at("kind").get_to(jb.kind);
-  if (j.contains("etag")) j.at("etag").get_to(jb.etag);
-  if (j.contains("id")) j.at("id").get_to(jb.id);
-  if (j.contains("selfLink")) j.at("selfLink").get_to(jb.self_link);
-  if (j.contains("user_email")) j.at("user_email").get_to(jb.user_email);
-  if (j.contains("status")) j.at("status").get_to(jb.status);
-  if (j.contains("jobReference")) j.at("jobReference").get_to(jb.job_reference);
-  if (j.contains("configuration")) {
-    j.at("configuration").get_to(jb.configuration);
-  }
-  if (j.contains("statistics")) j.at("statistics").get_to(jb.statistics);
+  SafeGetTo(jb.kind, j, "kind");
+  SafeGetTo(jb.etag, j, "etag");
+  SafeGetTo(jb.id, j, "id");
+  SafeGetTo(jb.self_link, j, "selfLink");
+  SafeGetTo(jb.user_email, j, "user_email");
+  SafeGetTo(jb.status, j, "status");
+  SafeGetTo(jb.job_reference, j, "jobReference");
+  SafeGetTo(jb.configuration, j, "configuration");
+  SafeGetTo(jb.statistics, j, "statistics");
 }
 
 void to_json(nlohmann::json& j, ListFormatJob const& l) {
@@ -130,20 +129,16 @@ void to_json(nlohmann::json& j, ListFormatJob const& l) {
                      {"errorResult", l.error_result}};
 }
 void from_json(nlohmann::json const& j, ListFormatJob& l) {
-  if (j.contains("id")) j.at("id").get_to(l.id);
-  if (j.contains("kind")) j.at("kind").get_to(l.kind);
-  if (j.contains("user_email")) j.at("user_email").get_to(l.user_email);
-  if (j.contains("state")) j.at("state").get_to(l.state);
-  if (j.contains("principal_subject")) {
-    j.at("principal_subject").get_to(l.principal_subject);
-  }
-  if (j.contains("jobReference")) j.at("jobReference").get_to(l.job_reference);
-  if (j.contains("configuration")) {
-    j.at("configuration").get_to(l.configuration);
-  }
-  if (j.contains("status")) j.at("status").get_to(l.status);
-  if (j.contains("statistics")) j.at("statistics").get_to(l.statistics);
-  if (j.contains("errorResult")) j.at("errorResult").get_to(l.error_result);
+  SafeGetTo(l.id, j, "id");
+  SafeGetTo(l.kind, j, "kind");
+  SafeGetTo(l.user_email, j, "user_email");
+  SafeGetTo(l.state, j, "state");
+  SafeGetTo(l.principal_subject, j, "principal_subject");
+  SafeGetTo(l.job_reference, j, "jobReference");
+  SafeGetTo(l.configuration, j, "configuration");
+  SafeGetTo(l.status, j, "status");
+  SafeGetTo(l.statistics, j, "statistics");
+  SafeGetTo(l.error_result, j, "errorResult");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

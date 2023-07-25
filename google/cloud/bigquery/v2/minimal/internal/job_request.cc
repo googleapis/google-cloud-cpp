@@ -300,62 +300,83 @@ void to_json(nlohmann::json& j, QueryRequest const& q) {
 }
 
 void from_json(nlohmann::json const& j, PostQueryRequest& q) {
-  if (j.contains("projectId")) {
-    q.set_project_id(j.at("projectId").value("projectId", ""));
-  }
-  if (j.contains("queryRequest")) {
-    q.set_query_request(j.at("queryRequest").get<QueryRequest>());
-  }
+  std::string project_id;
+  SafeGetTo(project_id, j, "projectId");
+  q.set_project_id(project_id);
+
+  QueryRequest query_request;
+  SafeGetTo(query_request, j, "queryRequest");
+  q.set_query_request(query_request);
 }
 
 void from_json(nlohmann::json const& j, QueryRequest& q) {
-  if (j.contains("query")) q.set_query(j.at("query").get<std::string>());
-  if (j.contains("kind")) q.set_kind(j.at("kind").get<std::string>());
-  if (j.contains("parameterMode")) {
-    q.set_parameter_mode(j.at("parameterMode").get<std::string>());
-  }
-  if (j.contains("location")) {
-    q.set_location(j.at("location").get<std::string>());
-  }
-  if (j.contains("requestId")) {
-    q.set_request_id(j.at("requestId").get<std::string>());
-  }
-  if (j.contains("dryRun")) q.set_dry_run(j.at("dryRun").get<bool>());
-  if (j.contains("preserveNulls")) {
-    q.set_preserve_nulls(j.at("preserveNulls").get<bool>());
-  }
-  if (j.contains("useQueryCache")) {
-    q.set_use_query_cache(j.at("useQueryCache").get<bool>());
-  }
-  if (j.contains("useLegacySql")) {
-    q.set_use_legacy_sql(j.at("useLegacySql").get<bool>());
-  }
-  if (j.contains("createSession")) {
-    q.set_create_session(j.at("createSession").get<bool>());
-  }
-  if (j.contains("maxResults")) {
-    q.set_max_results(j.at("maxResults").get<std::uint32_t>());
-  }
-  if (j.contains("maximumBytesBilled")) {
-    q.set_maximum_bytes_billed(j.at("maximumBytesBilled").get<std::int64_t>());
-  }
-  if (j.contains("connectionProperties")) {
-    q.set_connection_properties(
-        j.at("connectionProperties").get<std::vector<ConnectionProperty>>());
-  }
-  if (j.contains("queryParameters")) {
-    q.set_query_parameters(
-        j.at("queryParameters").get<std::vector<QueryParameter>>());
-  }
-  if (j.contains("defaultDataset")) {
-    q.set_default_dataset(j.at("defaultDataset").get<DatasetReference>());
-  }
-  if (j.contains("formatOptions")) {
-    q.set_format_options(j.at("formatOptions").get<DataFormatOptions>());
-  }
-  if (j.contains("labels")) {
-    q.set_labels(j.at("labels").get<std::map<std::string, std::string>>());
-  }
+  std::string query;
+  SafeGetTo(query, j, "query");
+  q.set_query(query);
+
+  std::string kind;
+  SafeGetTo(kind, j, "kind");
+  q.set_kind(kind);
+
+  std::string parameter_mode;
+  SafeGetTo(parameter_mode, j, "parameterMode");
+  q.set_parameter_mode(parameter_mode);
+
+  std::string location;
+  SafeGetTo(location, j, "location");
+  q.set_location(location);
+
+  std::string request_id;
+  SafeGetTo(request_id, j, "requestId");
+  q.set_request_id(request_id);
+
+  bool dry_run;
+  SafeGetTo(dry_run, j, "dryRun");
+  q.set_dry_run(dry_run);
+
+  bool preserve_nulls;
+  SafeGetTo(preserve_nulls, j, "preserveNulls");
+  q.set_preserve_nulls(preserve_nulls);
+
+  bool use_query_cache;
+  SafeGetTo(use_query_cache, j, "useQueryCache");
+  q.set_use_query_cache(use_query_cache);
+
+  bool use_legacy_sql;
+  SafeGetTo(use_legacy_sql, j, "useLegacySql");
+  q.set_use_legacy_sql(use_legacy_sql);
+
+  bool create_session;
+  SafeGetTo(create_session, j, "createSession");
+  q.set_create_session(create_session);
+
+  std::int32_t max_results;
+  SafeGetTo(max_results, j, "maxResults");
+  q.set_max_results(max_results);
+
+  std::int64_t maximum_bytes_billed;
+  SafeGetTo(maximum_bytes_billed, j, "maximumBytesBilled");
+  q.set_maximum_bytes_billed(maximum_bytes_billed);
+
+  std::vector<ConnectionProperty> connection_properties;
+  SafeGetTo(connection_properties, j, "connectionProperties");
+  q.set_connection_properties(connection_properties);
+
+  std::vector<QueryParameter> query_parameters;
+  SafeGetTo(query_parameters, j, "queryParameters");
+  q.set_query_parameters(query_parameters);
+
+  DatasetReference default_dataset;
+  SafeGetTo(default_dataset, j, "defaultDataset");
+  q.set_default_dataset(default_dataset);
+
+  DataFormatOptions format_options;
+  SafeGetTo(format_options, j, "formatOptions");
+  q.set_format_options(format_options);
+
+  std::map<std::string, std::string> labels;
+  SafeGetTo(labels, j, "labels");
+  q.set_labels(labels);
 
   std::chrono::milliseconds timeout;
   FromJson(timeout, j, "timeoutMs");
@@ -442,39 +463,45 @@ std::string QueryRequest::DebugString(absl::string_view name,
 
 void to_json(nlohmann::json& j, GetQueryResultsRequest const& q) {
   j = nlohmann::json{
-      {"project_id", q.project_id()},        {"job_id", q.job_id()},
-      {"page_token", q.page_token()},        {"location", q.location()},
-      {"start_index", q.start_index()},      {"max_results", q.max_results()},
-      {"format_options", q.format_options()}};
+      {"projectId", q.project_id()},        {"jobId", q.job_id()},
+      {"pageToken", q.page_token()},        {"location", q.location()},
+      {"startIndex", q.start_index()},      {"maxResults", q.max_results()},
+      {"formatOptions", q.format_options()}};
 
-  ToJson(q.timeout(), j, "timeout");
+  ToJson(q.timeout(), j, "timeoutMs");
 }
 
 void from_json(nlohmann::json const& j, GetQueryResultsRequest& q) {
-  if (j.contains("project_id")) {
-    q.set_project_id(j.at("project_id").value("project_id", ""));
-  }
-  if (j.contains("job_id")) {
-    q.set_job_id(j.at("job_id").value("job_id", ""));
-  }
-  if (j.contains("page_token")) {
-    q.set_page_token(j.at("page_token").value("page_token", ""));
-  }
-  if (j.contains("location")) {
-    q.set_location(j.at("location").value("location", ""));
-  }
-  if (j.contains("start_index")) {
-    q.set_start_index(j.at("start_index").get<std::uint64_t>());
-  }
-  if (j.contains("max_results")) {
-    q.set_max_results(j.at("max_results").get<std::uint32_t>());
-  }
-  if (j.contains("format_options")) {
-    q.set_format_options(j.at("format_options").get<DataFormatOptions>());
-  }
+  std::string project_id;
+  SafeGetTo(project_id, j, "projectId");
+  q.set_project_id(project_id);
+
+  std::string job_id;
+  SafeGetTo(job_id, j, "jobId");
+  q.set_job_id(job_id);
+
+  std::string page_token;
+  SafeGetTo(page_token, j, "pageToken");
+  q.set_page_token(page_token);
+
+  std::string location;
+  SafeGetTo(location, j, "location");
+  q.set_location(location);
+
+  std::uint64_t start_index;
+  SafeGetTo(start_index, j, "startIndex");
+  q.set_start_index(start_index);
+
+  std::uint32_t max_results;
+  SafeGetTo(max_results, j, "maxResults");
+  q.set_max_results(max_results);
+
+  DataFormatOptions format_options;
+  SafeGetTo(format_options, j, "formatOptions");
+  q.set_format_options(format_options);
 
   std::chrono::milliseconds timeout;
-  FromJson(timeout, j, "timeout");
+  FromJson(timeout, j, "timeoutMs");
   q.set_timeout(timeout);
 }
 
