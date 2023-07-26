@@ -322,8 +322,7 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
     std::string const introducer = DetermineIntroducer(field);
     auto field_number_status = GetFieldNumber(
         message_descriptor, field_name,
-        (introducer.empty() ? qualified_type_name
-                            : absl::StrCat(introducer, qualified_type_name)),
+        absl::StrCat(introducer, qualified_type_name),
         message_properties.next_available_field_number);
     if (!field_number_status) return std::move(field_number_status).status();
     message_properties.lines.push_back(
@@ -385,7 +384,7 @@ StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(
     std::string const& field_name, std::string const& field_type,
     int candidate_field_number) {
   if (message_descriptor != nullptr) {
-    auto qualified_type_name = [&](google::protobuf::FieldDescriptor const& f) {
+    auto qualified_type_name = [](google::protobuf::FieldDescriptor const& f) {
       if (f.type() == google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
         return f.message_type()->full_name();
       }
