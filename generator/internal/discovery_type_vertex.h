@@ -58,6 +58,8 @@ class DiscoveryTypeVertex {
   // field type.
   static std::string DetermineIntroducer(nlohmann::json const& field);
 
+  // TODO(#12225): Consider changing is_map and is_message from bool to enum.
+  // Possibly combine the two fields into one field of an enum.
   struct TypeInfo {
     std::string name;
     bool compare_package_name;
@@ -65,7 +67,9 @@ class DiscoveryTypeVertex {
     // synthesized.
     nlohmann::json const* properties;
     bool is_map;
+    bool is_message;
   };
+
   // Determines the type of the field and if a definition of that nested type
   // needs to be defined in the message.
   // Returns a pair containing the name of the type and possibly the json

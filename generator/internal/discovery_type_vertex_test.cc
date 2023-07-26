@@ -150,17 +150,20 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredIsResource) {
 }
 
 struct DetermineTypesSuccess {
+  std::string name;
   std::string json;
   std::string expected_name;
   bool expected_properties_is_null;
   bool expected_is_map;
   bool expected_compare_package_name;
+  bool expected_is_message;
 };
 
-class DiscoveryTypeVertexSuccessTest
+class DiscoveryTypeVertexDetermineTypesSuccessTest
     : public ::testing::TestWithParam<DetermineTypesSuccess> {};
 
-TEST_P(DiscoveryTypeVertexSuccessTest, DetermineTypesAndSynthesisSuccess) {
+TEST_P(DiscoveryTypeVertexDetermineTypesSuccessTest,
+       DetermineTypesAndSynthesisSuccess) {
   auto json = nlohmann::json::parse(GetParam().json, nullptr, false);
   ASSERT_TRUE(json.is_object());
 
@@ -173,46 +176,61 @@ TEST_P(DiscoveryTypeVertexSuccessTest, DetermineTypesAndSynthesisSuccess) {
   EXPECT_THAT(result->is_map, Eq(GetParam().expected_is_map));
   EXPECT_THAT(result->compare_package_name,
               Eq(GetParam().expected_compare_package_name));
+  EXPECT_THAT(result->is_message, Eq(GetParam().expected_is_message));
 }
 
 INSTANTIATE_TEST_SUITE_P(
-    DetermineTypesSuccess, DiscoveryTypeVertexSuccessTest,
+    DetermineTypesSuccess, DiscoveryTypeVertexDetermineTypesSuccessTest,
     testing::Values(
-        DetermineTypesSuccess{R"""({"$ref":"Foo"})""", "Foo", true, false,
-                              true},
-        DetermineTypesSuccess{R"""({"type":"string"})""", "string", true, false,
-                              false},
-        DetermineTypesSuccess{R"""({"type":"boolean"})""", "bool", true, false,
-                              false},
-        DetermineTypesSuccess{R"""({"type":"integer"})""", "int32", true, false,
-                              false},
-        DetermineTypesSuccess{R"""({"type":"integer","format":"uint8"})""",
-                              "uint8", true, false, false},
-        DetermineTypesSuccess{R"""({"type":"number"})""", "float", true, false,
-                              false},
-        DetermineTypesSuccess{R"""({"type":"number","format":"double"})""",
-                              "double", true, false, false},
-        DetermineTypesSuccess{R"""({"type":"integer"})""", "int32", true, false,
-                              false},
-        DetermineTypesSuccess{R"""({"type":"array","items":{"$ref":"Foo"}})""",
-                              "Foo", true, false, true},
+        DetermineTypesSuccess{"message", R"""({"$ref":"Foo"})""", "Foo", true,
+                              false, true, true},
+        DetermineTypesSuccess{"string", R"""({"type":"string"})""", "string",
+                              true, false, false, false},
+        DetermineTypesSuccess{"boolean", R"""({"type":"boolean"})""", "bool",
+                              true, false, false, false},
+        DetermineTypesSuccess{"integer_no_format", R"""({"type":"integer"})""",
+                              "int32", true, false, false, false},
+        DetermineTypesSuccess{"integer_uint8",
+                              R"""({"type":"integer","format":"uint8"})""",
+                              "uint8", true, false, false, false},
+        DetermineTypesSuccess{"number_no_format", R"""({"type":"number"})""",
+                              "float", true, false, false, false},
+        DetermineTypesSuccess{"number_double",
+                              R"""({"type":"number","format":"double"})""",
+                              "double", true, false, false, false},
+        DetermineTypesSuccess{"array_message",
+                              R"""({"type":"array","items":{"$ref":"Foo"}})""",
+                              "Foo", true, false, true, true},
         DetermineTypesSuccess{
-            R"""({"type":"array","items":{"type":"string"}})""", "string", true,
-            false, false},
+            "array_string", R"""({"type":"array","items":{"type":"string"}})""",
+            "string", true, false, false, false},
         DetermineTypesSuccess{
+            "array_int64",
+            R"""({"type":"array","items":{"type":"integer","format":"int64"}})""",
+            "int64", true, false, false, false},
+        DetermineTypesSuccess{
+            "array_nested_message",
             R"""({"type":"array","items":{"type":"object", "properties":{}}})""",
-            "TestFieldItem", false, false, false},
-        DetermineTypesSuccess{R"""({"type":"object","properties":{}})""",
-                              "TestField", false, false, false},
+            "TestFieldItem", false, false, false, true},
+        DetermineTypesSuccess{"nested_message",
+                              R"""({"type":"object","properties":{}})""",
+                              "TestField", false, false, false, true},
         DetermineTypesSuccess{
+            "map_message",
             R"""({"type":"object","additionalProperties":{"$ref":"Foo"}})""",
-            "Foo", true, true, true},
+            "Foo", true, true, true, false},
         DetermineTypesSuccess{
+            "map_string",
             R"""({"type":"object","additionalProperties":{"type":"string"}})""",
-            "string", true, true, false},
+            "string", true, true, false, false},
         DetermineTypesSuccess{
+            "map_nested_message",
             R"""({"type":"object","additionalProperties":{"type":"object", "properties":{}}})""",
-            "TestFieldItem", false, true, false}));
+            "TestFieldItem", false, true, false, true}),
+    [](testing::TestParamInfo<
+        DiscoveryTypeVertexDetermineTypesSuccessTest::ParamType> const& info) {
+      return info.param.name;
+    });
 
 struct DetermineTypesError {
   std::string json;

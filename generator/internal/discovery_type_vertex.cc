@@ -73,9 +73,10 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
                                                std::string const& field_name) {
   nlohmann::json const* properties_for_synthesis = nullptr;
   bool compare_package_name = false;
+  bool is_message = false;
   if (v.contains("$ref"))
     return TypeInfo{std::string(v["$ref"]), true, properties_for_synthesis,
-                    false};
+                    false, true};
   if (!v.contains("type")) {
     return internal::InvalidArgumentError(
         absl::StrFormat("field: %s has neither $ref nor type.", field_name));
@@ -85,7 +86,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
   auto scalar_type = CheckForScalarType(v);
   if (scalar_type) {
     return TypeInfo{*scalar_type, compare_package_name,
-                    properties_for_synthesis, false};
+                    properties_for_synthesis, false, false};
   }
 
   if (type == "object" &&
@@ -99,7 +100,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
   if (type == "object" && v.contains("properties")) {
     // Synthesize nested type for this struct.
     type = CapitalizeFirstLetter(field_name);
-    return TypeInfo{type, compare_package_name, &v, false};
+    return TypeInfo{type, compare_package_name, &v, false, true};
   }
 
   if (type == "object" && v.contains("additionalProperties")) {
@@ -117,6 +118,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
                  additional_properties.contains("properties")) {
         map_type = CapitalizeFirstLetter(field_name + "Item");
         properties_for_synthesis = &additional_properties;
+        is_message = true;
       } else {
         return internal::InvalidArgumentError(absl::StrFormat(
             "field: %s unknown type: %s for map field.", field_name, map_type));
@@ -126,7 +128,8 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
       return internal::InvalidArgumentError(absl::StrFormat(
           "field: %s is a map with neither $ref nor type.", field_name));
     }
-    return TypeInfo{type, compare_package_name, properties_for_synthesis, true};
+    return TypeInfo{type, compare_package_name, properties_for_synthesis, true,
+                    is_message};
   }
 
   if (type == "array") {
@@ -138,6 +141,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
     if (items.contains("$ref")) {
       type = items["$ref"];
       compare_package_name = true;
+      is_message = true;
     } else if (items.contains("type")) {
       type = items["type"];
       scalar_type = CheckForScalarType(items);
@@ -146,7 +150,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
       } else if (type == "object" && items.contains("properties")) {
         // Synthesize a nested type for this array.
         type = CapitalizeFirstLetter(field_name + "Item");
-        return TypeInfo{type, compare_package_name, &items, false};
+        return TypeInfo{type, compare_package_name, &items, false, true};
       } else {
         return internal::InvalidArgumentError(absl::StrFormat(
             "field: %s unknown type: %s for array field.", field_name, type));
@@ -156,8 +160,8 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
           "field: %s is array with items having neither $ref nor type.",
           field_name));
     }
-    return TypeInfo{type, compare_package_name, properties_for_synthesis,
-                    false};
+    return TypeInfo{type, compare_package_name, properties_for_synthesis, false,
+                    is_message};
   }
 
   return internal::InvalidArgumentError(
