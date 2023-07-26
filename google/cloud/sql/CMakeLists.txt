@@ -45,7 +45,7 @@ google_cloud_cpp_load_protolist(
     proto_list "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/sql.list")
 google_cloud_cpp_load_protodeps(
     proto_deps "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/sql.deps")
-google_cloud_cpp_grpcpp_library(
+google_cloud_cpp_proto_library(
     google_cloud_cpp_sql_protos # cmake-format: sort
     ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
