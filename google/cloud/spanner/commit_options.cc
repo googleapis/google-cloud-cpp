@@ -30,6 +30,9 @@ CommitOptions::CommitOptions(Options const& opts)
   if (opts.has<TransactionTagOption>()) {
     transaction_tag_ = opts.get<TransactionTagOption>();
   }
+  if (opts.has<MaxBatchingDelayMsOption>()) {
+    max_batching_delay_ms_ = opts.get<MaxBatchingDelayMsOption>();
+  }
 }
 
 CommitOptions::operator Options() const {

@@ -3951,13 +3951,19 @@ void QueryInformationSchemaDatabaseOptions(
 }
 // [END spanner_query_information_schema_database_options]
 
-// [START spanner_set_batching_delay]
-void CommitWithBatchingDelay(google::cloud::spanner::Client client,
-			     google::cloud::spanner::Mutations mutations,
-			     absl::Duration batching_delay) {
-  google::cloud::spanner::CommitOptions options;
-  auto result = client.Commit(mutations, options);
-  if (!result) throw std::move(result).status();
+// [START spanner_commit_with_batching_delay]
+void UpdateDataWithBatchingDelay(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  Options ops;
+  ops.set<MaxBatchingDelayMsOption>(100);
+  auto commit_result = client.Commit(spanner::Mutations{
+      spanner::UpdateMutationBuilder("Albums",
+                                     {"SingerId", "AlbumId", "MarketingBudget"})
+          .EmplaceRow(1, 1, 100000)
+          .EmplaceRow(2, 2, 500000)
+          .Build()}, ops);
+  if (!commit_result) throw std::move(commit_result).status();
+  std::cout << "Update was successful [spanner_update_data]\n";
 }
 // [END spanner_set_batching_delay]
 
@@ -4157,6 +4163,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("make-delete-mutation", MakeDeleteMutation),
       make_command_entry("query-information-schema-database-options",
                          QueryInformationSchemaDatabaseOptions),
+      make_command_entry("spanner-commit-with-batching-delay",
+			 UpdateDataWithBatchingDelay),
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -4877,6 +4885,11 @@ void RunAll(bool emulator) {
   if (!emulator) {
     SampleBanner("spanner_query_information_schema_database_options");
     QueryInformationSchemaDatabaseOptions(client);
+  }
+
+  if (!emulator) {
+    SampleBanner("spanner_commit_with_batching_delay");
+    UpdateDataWithBatchingDelay(client);
   }
 
   if (!emulator) {

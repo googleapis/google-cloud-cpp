@@ -233,6 +233,15 @@ struct RequestPriorityOption {
 };
 
 /**
+ * Option for `google::cloud::Options` to set a maximum batching delay.
+ *
+ * @ingroup spanner-options
+ */
+struct MaxBatchingDelayMsOption {
+  using Type = int;
+};
+
+/**
  * Option for `google::cloud::Options` to set a per-request tag.
  *
  * @ingroup spanner-options

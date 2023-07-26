@@ -1025,10 +1025,10 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
   request.mutable_request_options()->set_priority(
       ProtoRequestPriority(params.options.request_priority()));
 
-  if (params.options.max_batching_delay().has_value()) {
+  if (params.options.has<spanner::MaxBatchingDelayMsOption>()) {
     *request.mutable_max_batching_delay() =
       google::protobuf::util::TimeUtil::MillisecondsToDuration(
-        absl::ToDoubleMilliseconds(params.options.max_batching_delay().value()));
+       params.options.get<spanner::MaxBatchingDelayMsOption>());
   }
 
   // params.options.transaction_tag() was either already used to set
