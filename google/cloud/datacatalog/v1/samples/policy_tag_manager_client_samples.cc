@@ -92,7 +92,7 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
   auto c2 = google::cloud::datacatalog_v1::PolicyTagManagerClient(connection);
 
   // You can override any of the policies in a new client. This new client
-  // will share the policies from c1 (or c2) *except* from the retry policy.
+  // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::datacatalog_v1::PolicyTagManagerClient(
       connection,
       google::cloud::Options{}
