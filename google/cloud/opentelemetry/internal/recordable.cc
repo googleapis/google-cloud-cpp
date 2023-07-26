@@ -19,7 +19,7 @@
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/time/time.h"
-#include <google/rpc/code.pb.h>
+#include <grpcpp/grpcpp.h>
 
 namespace google {
 namespace cloud {
@@ -399,10 +399,10 @@ void Recordable::SetStatusImpl(opentelemetry::trace::StatusCode code,
   if (code == opentelemetry::trace::StatusCode::kUnset) return;
   auto& s = *span_.mutable_status();
   if (code == opentelemetry::trace::StatusCode::kOk) {
-    s.set_code(google::rpc::Code::OK);
+    s.set_code(grpc::StatusCode::OK);
     return;
   }
-  s.set_code(google::rpc::Code::UNKNOWN);
+  s.set_code(grpc::StatusCode::UNKNOWN);
   *s.mutable_message() = std::string{description.data(), description.size()};
 }
 

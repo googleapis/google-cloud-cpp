@@ -26,7 +26,6 @@ cc_library(
     deps = [
         "//:trace",
         "//google/cloud:google_cloud_cpp_rest_internal",
-        "@com_google_googleapis//google/rpc:code_cc_proto",
         "@io_opentelemetry_cpp//sdk/src/trace",
     ],
 )
