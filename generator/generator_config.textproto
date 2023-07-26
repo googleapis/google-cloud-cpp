@@ -527,8 +527,6 @@ service {
   product_path: "google/cloud/cloudbuild/v2"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
-  # TODO(#11077): Remove experimental when service goes GA.
-  experimental: true
 }
 
 # Cloud Channel
