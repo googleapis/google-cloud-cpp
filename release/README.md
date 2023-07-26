@@ -174,7 +174,7 @@ Please note that we use more strict settings for release branches than for
 - Update the version information (you really do need two commits)
   ```shell
   ./vcpkg x-add-version --all --overwrite-version
-  git commit --amend ---no-edit .
+  git commit --amend --no-edit .
   ```
 - Remove any older versions
   ```shell
@@ -302,7 +302,7 @@ ______________________________________________________________________
 - After merging the PR(s) with all the above changes, use the Release UI on
   GitHub to create a pre-release along with a new tag for the release.
 - After review, publish the release.
-- Nudge `coryan@` to update our [vcpkg port].
+- Update our [vcpkg port].
 
 [conda feedstock repository]: https://github.com/conda-forge/google-cloud-cpp-feedstock
 [git-docs]: https://git-scm.com/doc
