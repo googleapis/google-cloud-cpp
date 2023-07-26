@@ -19,7 +19,6 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/options.h"
 #include "absl/types/optional.h"
-#include "absl/time/time.h"
 #include <string>
 
 namespace google {
