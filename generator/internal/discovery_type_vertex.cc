@@ -36,11 +36,9 @@ absl::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
 
 }  // namespace
 
-DiscoveryTypeVertex::DiscoveryTypeVertex() : json_("") {}
-
-DiscoveryTypeVertex::DiscoveryTypeVertex(std::string name,
-                                         std::string package_name,
-                                         nlohmann::json json)
+DiscoveryTypeVertex::DiscoveryTypeVertex(
+    std::string name, std::string package_name, nlohmann::json json,
+    google::protobuf::DescriptorPool const*)
     : name_(std::move(name)),
       package_name_(std::move(package_name)),
       json_(std::move(json)) {}

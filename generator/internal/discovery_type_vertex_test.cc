@@ -274,7 +274,10 @@ INSTANTIATE_TEST_SUITE_P(
             "field: testField is array with items having neither $ref nor "
             "type."}));
 
-TEST(DiscoveryTypeVertexTest, JsonToProtobufScalarTypes) {
+class DiscoveryTypeVertexDescriptorTest
+    : public generator_testing::DescriptorPoolFixture {};
+
+TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufScalarTypes) {
   auto constexpr kSchemaJson = R"""(
 {
   "id": "TestSchema",
@@ -339,15 +342,15 @@ TEST(DiscoveryTypeVertexTest, JsonToProtobufScalarTypes) {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
   auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
-TEST(DiscoveryTypeVertexTest, JsonToProtobufMapType) {
+TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufMapType) {
   auto constexpr kSchemaJson = R"""(
 {
   "id": "TestSchema",
@@ -405,15 +408,15 @@ TEST(DiscoveryTypeVertexTest, JsonToProtobufMapType) {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
   auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
-TEST(DiscoveryTypeVertexTest, JsonToProtobufArrayTypes) {
+TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufArrayTypes) {
   auto constexpr kSchemaJson = R"""(
 {
   "id": "TestSchema",
@@ -531,15 +534,15 @@ TEST(DiscoveryTypeVertexTest, JsonToProtobufArrayTypes) {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
   auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
-TEST(DiscoveryTypeVertexTest, JsonToProtobufMessageNoDescription) {
+TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufMessageNoDescription) {
   auto constexpr kSchemaJson = R"""(
 {
   "type": "object",
@@ -635,16 +638,18 @@ TEST(DiscoveryTypeVertexTest, JsonToProtobufMessageNoDescription) {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
-  types.emplace("Bar", DiscoveryTypeVertex{"Bar", "other.package", {}});
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
+  types.emplace("Bar",
+                DiscoveryTypeVertex{"Bar", "other.package", {}, &pool()});
   auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
-TEST(DiscoveryTypeVertexTest, JsonToProtobufMessageWithDescription) {
+TEST_F(DiscoveryTypeVertexDescriptorTest,
+       JsonToProtobufMessageWithDescription) {
   auto constexpr kSchemaJson = R"""(
 {
   "description": "Description of the message.",
@@ -668,16 +673,13 @@ message TestSchema {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
   auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
-
-class DiscoveryTypeVertexDescriptorTest
-    : public generator_testing::DescriptorPoolFixture {};
 
 TEST_F(DiscoveryTypeVertexDescriptorTest, DetermineReservedAndMaxFieldNumbers) {
   auto constexpr kProtoFile = R"""(

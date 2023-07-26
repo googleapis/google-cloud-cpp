@@ -51,10 +51,13 @@ std::string GeneratedProtoPreamble() {
 }  // namespace
 
 DiscoveryFile::DiscoveryFile(DiscoveryResource const* resource,
-                             std::string file_path, std::string package_name,
+                             std::string file_path,
+                             std::string relative_proto_path,
+                             std::string package_name,
                              std::vector<DiscoveryTypeVertex const*> types)
     : resource_(resource),
       file_path_(std::move(file_path)),
+      relative_proto_path_(std::move(relative_proto_path)),
       package_name_(std::move(package_name)),
       types_(std::move(types)) {}
 
