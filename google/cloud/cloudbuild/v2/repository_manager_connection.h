@@ -22,7 +22,6 @@
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_retry_traits.h"
 #include "google/cloud/cloudbuild/v2/repository_manager_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -272,7 +271,7 @@ class RepositoryManagerConnection {
  * by this function.
  */
 std::shared_ptr<RepositoryManagerConnection> MakeRepositoryManagerConnection(
-    ExperimentalTag, Options options = {});
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_v2

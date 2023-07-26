@@ -140,7 +140,7 @@ RepositoryManagerConnection::FetchGitRefs(
 }
 
 std::shared_ptr<RepositoryManagerConnection> MakeRepositoryManagerConnection(
-    ExperimentalTag, Options options) {
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  RepositoryManagerPolicyOptionList>(options,
