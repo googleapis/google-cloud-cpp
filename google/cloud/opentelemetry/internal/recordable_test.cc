@@ -16,8 +16,8 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/version.h"
 #include "absl/time/clock.h"
-#include <google/rpc/code.pb.h>
 #include <gmock/gmock.h>
+#include <grpcpp/grpcpp.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
 
@@ -532,17 +532,17 @@ TEST(Recordable, SetStatus) {
   struct TestCase {
     opentelemetry::trace::StatusCode code;
     opentelemetry::nostd::string_view desc;
-    google::rpc::Code expected_code;
+    grpc::StatusCode expected_code;
     std::string expected_message;
   };
 
   for (auto const& test :
        std::vector<TestCase>{{opentelemetry::trace::StatusCode::kUnset, "",
-                              google::rpc::Code::OK, ""},
+                              grpc::StatusCode ::OK, ""},
                              {opentelemetry::trace::StatusCode::kOk, "ignored",
-                              google::rpc::Code::OK, ""},
+                              grpc::StatusCode::OK, ""},
                              {opentelemetry::trace::StatusCode::kError, "fail",
-                              google::rpc::Code::UNKNOWN, "fail"}}) {
+                              grpc::StatusCode::UNKNOWN, "fail"}}) {
     auto rec = Recordable(Project(kProjectId));
     rec.SetStatus(test.code, test.desc);
     auto proto = std::move(rec).as_proto();
